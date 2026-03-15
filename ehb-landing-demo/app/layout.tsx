@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { ReactNode } from "react";
 import { Sora } from "next/font/google";
+import { IndustriesBar } from "@/components/IndustriesBar";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -23,47 +24,51 @@ export const viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`scroll-smooth ${sora.variable}`}>
-      <body className="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased text-readability">
+      <body className="min-h-screen font-sans text-slate-100 antialiased text-readability">
         <div className="min-h-[100dvh] flex flex-col page-mesh relative">
-          {/* Fluid blob gradients – optional animation (mojoda colors) */}
-          <div className="fluid-bg-blob fluid-bg-blob-1" aria-hidden />
-          <div className="fluid-bg-blob fluid-bg-blob-2" aria-hidden />
-          <div className="fluid-bg-blob fluid-bg-blob-3" aria-hidden />
+          {/* Center shine – hero jaisi lighting beech mein */}
+          <div className="fixed inset-0 pointer-events-none z-0" aria-hidden style={{
+            background: 'radial-gradient(ellipse 90% 70% at 50% 45%, rgba(0, 234, 255, 0.06) 0%, rgba(0, 174, 239, 0.03) 35%, transparent 60%)',
+          }} />
           <div className="relative z-10 flex flex-col min-h-[100dvh]">
-          <header className="sticky top-0 z-50 border-b border-slate-800/90 bg-slate-950/85 backdrop-blur-md pt-safe-t shadow-[0_1px_0_0_rgba(255,255,255,0.03)]">
-            <div className="container-ehb py-3 flex items-center justify-between gap-3">
+          <header className="nav-glass sticky top-0 z-50 pt-safe-t">
+            <div className="container-ehb py-3 flex items-center justify-between gap-3 flex-wrap">
               <a href="/" className="flex items-center gap-2 min-h-touch flex-shrink-0">
-                <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-gradient-to-br from-ehb.teal to-ehb.cyan flex items-center justify-center text-xs font-bold flex-shrink-0 shadow-[0_0_20px_-6px_rgba(20,184,166,0.5)] ring-1 ring-white/10">
+                <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl bg-gradient-to-br from-[#00eaff] to-[#3b82f6] flex items-center justify-center text-xs font-bold flex-shrink-0 shadow-neon-electric ring-1 ring-white/20">
                   EHB
                 </div>
                 <div className="hidden xs:block leading-tight">
                   <span className="font-semibold text-xs sm:text-sm">EHB Platform</span>
-                  <span className="text-[11px] sm:text-xs text-white/90">
+                  <span className="text-[11px] sm:text-xs text-slate-300 block">
                     Global Super App · Investor Demo
                   </span>
                 </div>
               </a>
-              <nav className="flex items-center gap-1 sm:gap-3">
-                <a
-                  href="/"
-                  className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-lg px-3 py-2 text-xs sm:text-sm text-white hover:text-ehb.cyan hover:bg-slate-800/60 hover:shadow-[0_0_12px_-4px_rgba(34,211,238,0.3)] transition-all duration-200"
-                >
-                  Landing
-                </a>
-                <a
-                  href="/development"
-                  className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-lg px-3 py-2 text-xs sm:text-sm text-white hover:text-ehb.violet hover:bg-slate-800/60 hover:shadow-[0_0_12px_-4px_rgba(139,92,246,0.3)] transition-all duration-200"
-                >
-                  Development
-                </a>
-              </nav>
+              <div className="flex-1 min-w-0 max-w-md mx-2 hidden sm:flex">
+                <div className="flex items-center gap-2 rounded-xl glass-panel px-4 py-2 w-full text-sm text-slate-400">
+                  <span aria-hidden>🔍</span>
+                  <span>Search apps, games, education, franchises...</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                <nav className="flex items-center gap-1 sm:gap-2">
+                  <a href="/" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 hover:shadow-neon-blue transition-all duration-200">Landing</a>
+                  <a href="/home" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 transition-all duration-200">Home</a>
+                  <a href="/ai-marketplace" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 hover:shadow-neon-blue transition-all duration-200">AI Market</a>
+                  <a href="/development" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 transition-all duration-200">Development</a>
+                  <a href="/admin" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 transition-all duration-200">Admin</a>
+                  <a href="/dmo" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 transition-all duration-200">DMO</a>
+                </nav>
+                <span className="text-xs sm:text-sm font-semibold text-[#00eaff] whitespace-nowrap">850.00 EHBGC</span>
+              </div>
             </div>
           </header>
+          <IndustriesBar />
           <main className="flex-1 w-full overflow-x-hidden">
             {children}
           </main>
-          <footer className="border-t border-slate-800/90 bg-slate-950/85 backdrop-blur-md pb-safe-b shadow-[0_-1px_0_0_rgba(255,255,255,0.02)]">
-            <div className="container-ehb py-3 flex flex-col xs:flex-row justify-between gap-2 text-[11px] sm:text-xs text-white/80">
+          <footer className="nav-glass border-t border-white/5 pb-safe-b">
+            <div className="container-ehb py-3 flex flex-col xs:flex-row justify-between gap-2 text-[11px] sm:text-xs text-slate-400">
               <span className="text-center xs:text-left">EHB · Unified global services, trust & AI platform.</span>
               <span className="text-center xs:text-right">Investor Demo · Not final production UI.</span>
             </div>
