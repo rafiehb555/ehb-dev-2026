@@ -1,7 +1,11 @@
 import "./globals.css";
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { Sora } from "next/font/google";
 import { IndustriesBar } from "@/components/IndustriesBar";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { GlobalAiStatus } from "@/components/GlobalAiStatus";
+import { TopNavTabs } from "@/components/TopNavTabs";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -34,35 +38,51 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <header className="nav-glass sticky top-0 z-50 pt-safe-t">
             <div className="container-ehb py-3 flex items-center justify-between gap-3 flex-wrap">
               <a href="/" className="flex items-center gap-2 min-h-touch flex-shrink-0">
-                <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl bg-gradient-to-br from-[#00eaff] to-[#3b82f6] flex items-center justify-center text-xs font-bold flex-shrink-0 shadow-neon-electric ring-1 ring-white/20">
-                  EHB
+                <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-slate-950/10 flex items-center justify-center flex-shrink-0 shadow-neon-electric ring-1 ring-white/20 overflow-hidden">
+                  <Image
+                    src="/ehb-logo.png"
+                    alt="EHB logo"
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
                 </div>
                 <div className="hidden xs:block leading-tight">
-                  <span className="font-semibold text-xs sm:text-sm">EHB Platform</span>
-                  <span className="text-[11px] sm:text-xs text-slate-300 block">
-                    Global Super App · Investor Demo
+                  <span className="font-semibold text-[11px] sm:text-xs md:text-sm tracking-wide">
+                    EHB TECHNOLOGIES PRIVATE LIMITED
+                  </span>
+                  <span className="text-[10px] sm:text-[11px] text-slate-300 block">
+                    EDUCATION · HEALTH · BUSINESS
                   </span>
                 </div>
               </a>
-              <div className="flex-1 min-w-0 max-w-md mx-2 hidden sm:flex">
-                <div className="flex items-center gap-2 rounded-xl glass-panel px-4 py-2 w-full text-sm text-slate-400">
+              {/* Responsive search bar – full width on mobile, centered on desktop */}
+              <div className="flex-1 min-w-[180px] w-full order-3 sm:order-none max-w-xl mx-0 sm:mx-2">
+                <div className="flex items-center gap-2 rounded-xl glass-panel px-3 sm:px-4 py-1.5 sm:py-2 w-full text-[11px] sm:text-sm text-slate-400">
                   <span aria-hidden>🔍</span>
-                  <span>Search apps, games, education, franchises...</span>
+                  <span className="truncate">
+                    Search apps, games, education, franchises...
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                <nav className="flex items-center gap-1 sm:gap-2">
-                  <a href="/" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 hover:shadow-neon-blue transition-all duration-200">Landing</a>
-                  <a href="/home" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 transition-all duration-200">Home</a>
-                  <a href="/ai-marketplace" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 hover:shadow-neon-blue transition-all duration-200">AI Market</a>
-                  <a href="/development" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 transition-all duration-200">Development</a>
-                  <a href="/admin" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 transition-all duration-200">Admin</a>
-                  <a href="/dmo" className="min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs text-slate-200 hover:text-white hover:bg-white/5 transition-all duration-200">DMO</a>
-                </nav>
+                <TopNavTabs />
+                <button
+                  type="button"
+                  className="relative inline-flex items-center justify-center rounded-full h-7 w-7 text-xs text-slate-200 hover:bg-white/5 transition-colors"
+                  aria-label="Notifications"
+                >
+                  <span aria-hidden>🔔</span>
+                  <span className="absolute -top-0.5 -right-0.5 h-3.5 min-w-[14px] px-[3px] rounded-full bg-rose-500 text-[9px] font-semibold text-white flex items-center justify-center">
+                    3
+                  </span>
+                </button>
                 <span className="text-xs sm:text-sm font-semibold text-[#00eaff] whitespace-nowrap">850.00 EHBGC</span>
               </div>
             </div>
           </header>
+          <GlobalAiStatus />
+          <Breadcrumb />
           <IndustriesBar />
           <main className="flex-1 w-full overflow-x-hidden">
             {children}

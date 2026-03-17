@@ -81,7 +81,9 @@ export default async function IndustryLandingPage({ params }: PageProps) {
         <section className="container-ultra section-pad-ultra">
           <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Overview</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">Industry Overview</h2>
-          <p className="text-slate-400 max-w-2xl">{industry.overview} One platform for trust, payments, and growth.</p>
+          <p className="text-slate-400 max-w-2xl">
+            {industry.overview} Start earning, hiring, or growing your business in this industry today.
+          </p>
         </section>
       </SectionReveal>
 

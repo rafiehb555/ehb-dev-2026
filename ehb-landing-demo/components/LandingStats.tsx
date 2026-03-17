@@ -19,32 +19,42 @@ function AnimatedNumber({ end, suffix = "" }: { end: number; suffix?: string }) 
     }, stepMs);
     return () => clearInterval(t);
   }, [end]);
-  return <span>{count}{suffix}</span>;
+  return (
+    <span>
+      {count}
+      {suffix}
+    </span>
+  );
 }
 
 export function LandingStats() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#00eaff]/20">
-        <p className="text-2xl md:text-3xl font-bold gradient-text">
-          <AnimatedNumber end={32} suffix="+" />
+      <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#3b82f6]/30">
+        <p className="text-2xl md:text-3xl font-bold text-[#3b82f6]">
+          <AnimatedNumber end={10000} suffix="+" />
         </p>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">Industries</p>
+        <p className="text-xs sm:text-sm text-slate-400 mt-1">Users</p>
       </div>
-      <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#00eaff]/20">
-        <p className="text-2xl md:text-3xl font-bold gradient-text">
+      <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#22c55e]/30">
+        <p className="text-2xl md:text-3xl font-bold text-[#22c55e]">
           <AnimatedNumber end={700} suffix="+" />
         </p>
         <p className="text-xs sm:text-sm text-slate-400 mt-1">Services</p>
       </div>
-      <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#8b5cf6]/30">
-        <p className="text-xl md:text-2xl font-bold text-white">Global</p>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">Franchise Network</p>
+      <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#f59e0b]/30">
+        <p className="text-2xl md:text-3xl font-bold text-[#f59e0b]">
+          <AnimatedNumber end={32} />
+        </p>
+        <p className="text-xs sm:text-sm text-slate-400 mt-1">Industries</p>
       </div>
-      <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#00eaff]/20">
-        <p className="text-xl md:text-2xl font-bold text-[#00eaff]">AI Powered</p>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">Marketplace</p>
+      <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#8b5cf6]/30">
+        <p className="text-2xl md:text-3xl font-bold text-[#8b5cf6]">
+          <AnimatedNumber end={120} suffix="+" />
+        </p>
+        <p className="text-xs sm:text-sm text-slate-400 mt-1">Countries</p>
       </div>
     </div>
   );
 }
+
