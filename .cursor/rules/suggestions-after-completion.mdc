@@ -1,0 +1,69 @@
+---
+description: After every completed task, show varied clickable suggestions (all types: UI/UX, data, API, docs, security, roadmap, etc.) in a clear grouped format
+alwaysApply: true
+---
+
+# Suggested Next Steps – Format and Variety
+
+When a user request is **completed**, end your reply with a **suggestions block**. Suggestions must be **varied** (not only UI/UX): include UI/UX, data/API, docs, roadmap, security, testing, deployment, business, and other relevant types. Use a **clear, scannable format** so the user can quickly pick and copy.
+
+## How to show suggestions (the right way)
+
+1. **Section title:** Use: **Try next (click or copy any line into the chat bar):**
+2. **Group by category** – use small subheadings so the user sees types at a glance. Example categories (use 4–6 that fit the project):
+   - **UI & design** (layout, icons, progress, accessibility, theme)
+   - **Data & API** (database, endpoints, real data, AI tools)
+   - **Docs & roadmap** (documentation, phases, INDEX, CHANGELOG)
+   - **Security & quality** (auth, validation, testing, env)
+   - **Deploy & ops** (build, env vars, monitoring, CI)
+   - **Product & business** (franchise, affiliate, analytics, localization)
+3. **Under each category:** list **2–4 short prompts**, one per line. Each line = one copy-paste-ready prompt.
+4. **Total:** Aim for **8–14 suggestions** per reply, across all chosen categories. Do **not** give only UI/UX; always include at least one category from data/API/docs/security/roadmap/deploy/product.
+
+## What to include (all types)
+
+- **Next phase / roadmap** – next phase from roadmap, milestone, feature from docs
+- **UI/UX** – layout, responsiveness, icons, progress bars, loading states, accessibility, dark/light
+- **Icons** – Lucide/Heroicons for nav, cards, sections
+- **Progress** – stepper, progress bar, loading skeletons
+- **Data & AI** – wire to real data, AI suggestions, dashboard data, DB schema
+- **API** – REST/GraphQL endpoints, integration, error handling
+- **Docs** – update INDEX, add doc, DATA-COLLECTION-GUIDE, architecture
+- **Security** – env vars, validation, auth, secrets
+- **Testing** – unit/e2e tests, fixtures
+- **Deploy** – build script, env, Docker, CI
+- **Product** – franchise logic, affiliate, analytics, i18n
+
+Each prompt = **one line**, **under ~90 characters**, **specific to EHB/project** where it makes sense.
+
+## Format example
+
+```markdown
+**Try next (click or copy any line into the chat bar):**
+
+**UI & design**
+Add Lucide icons to landing nav and section headers
+Add a progress bar or stepper to the development dashboard
+Improve contrast and focus states for accessibility
+
+**Data & API**
+Define REST endpoints for industries and trust systems in docs
+Wire the development map to real roadmap phases from docs
+Add a simple API route in Next.js for health or config
+
+**Docs & roadmap**
+Update docs/INDEX.md with the new landing and demo links
+Create a short API or integration doc in docs/
+Add Phase 2 tasks from platform-development-roadmap to a checklist
+
+**Security & quality**
+Add env validation for any API keys or config
+Add a basic test for the landing page render
+```
+
+## Rules
+
+- Only add this block when the **main task is done**.
+- **Never** give only UI/UX suggestions; always mix in data, docs, roadmap, security, or product.
+- Keep prompts in **English** for easy copy-paste unless the user explicitly asks for Urdu.
+- Prefer **concrete** prompts (specific file or feature) over vague ones.

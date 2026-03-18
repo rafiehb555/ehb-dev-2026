@@ -1,0 +1,322 @@
+// EHB Global Database Schema
+// Phase 31-42 · PostgreSQL · Use with: npx prisma generate, npx prisma migrate dev
+// Docs: docs/EHB_DATABASE_ARCHITECTURE.md
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Phase 32 — Users
+// ---------------------------------------------------------------------------
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  phone        String?
+  passwordHash String   @map("password_hash")
+  country      String?
+  city         String?
+  role         UserRole @default(USER)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  profile          Profile?
+  providerServices ProviderService[]
+  products         Product[]
+  ordersAsBuyer    Order[]     @relation("OrderBuyer")
+  ordersAsSeller   Order[]     @relation("OrderSeller")
+  jobApplications  JobApplication[]
+  jobs             Job[]       @relation("JobCompany")
+  franchises       Franchise[]
+  wallet           Wallet?
+  transactions     Transaction[]
+}
+
+enum UserRole {
+  USER
+  PROVIDER
+  SELLER
+  FRANCHISE_OWNER
+  ADMIN
+}
+
+// ---------------------------------------------------------------------------
+// Phase 33 — Profiles (JPS)
+// ---------------------------------------------------------------------------
+model Profile {
+  id                 String   @id @default(cuid())
+  userId             String   @unique @map("user_id")
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  username           String   @unique
+  profilePhoto       String?  @map("profile_photo")
+  frame              String?
+  sqlLevel           String?  @map("sql_level") // Basic, Intermediate, Advanced, Expert
+  verificationStatus VerificationStatus @default(PENDING) @map("verification_status")
+  skills             String[] // or Json for more structure
+  rating             Decimal? @db.Decimal(3, 2)
+  bio                String?  @db.Text
+  headline           String?
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  providerServices ProviderService[]
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+// ---------------------------------------------------------------------------
+// Phase 34 — Industries
+// ---------------------------------------------------------------------------
+model Industry {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  icon        String?
+  description String?  @db.Text
+  sortOrder   Int      @default(0) @map("sort_order")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  services   Service[]
+  products   Product[]
+  jobs       Job[]
+  aiInsights AIInsight[]
+}
+
+// ---------------------------------------------------------------------------
+// Phase 35 — Services
+// ---------------------------------------------------------------------------
+model Service {
+  id          String   @id @default(cuid())
+  industryId  String   @map("industry_id")
+  industry    Industry @relation(fields: [industryId], references: [id], onDelete: Cascade)
+  name        String
+  slug        String
+  description String?  @db.Text
+  category    String?
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  providers ProviderService[]
+}
+
+// ---------------------------------------------------------------------------
+// Phase 36 — Providers (User offers Service)
+// ---------------------------------------------------------------------------
+model ProviderService {
+  id                 String   @id @default(cuid())
+  userId             String   @map("user_id")
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  serviceId          String   @map("service_id")
+  service            Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  profileId          String?  @map("profile_id")
+  profile            Profile? @relation(fields: [profileId], references: [id], onDelete: SetNull)
+  price              Decimal  @db.Decimal(12, 2)
+  priceUnit          String?  @map("price_unit") // per hour, per project, fixed
+  location           String?
+  locationLat        Decimal? @map("location_lat") @db.Decimal(10, 7)
+  locationLng        Decimal? @map("location_lng") @db.Decimal(10, 7)
+  availability       String?  @default("available")
+  verificationStatus VerificationStatus @default(PENDING) @map("verification_status")
+  isActive           Boolean  @default(true) @map("is_active")
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, serviceId])
+  @@index([userId])
+  @@index([serviceId])
+  @@index([location])
+}
+
+// ---------------------------------------------------------------------------
+// Phase 37 — Products (GoSellr)
+// ---------------------------------------------------------------------------
+model Product {
+  id         String   @id @default(cuid())
+  sellerId   String   @map("seller_id")
+  seller     User     @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  industryId String?  @map("industry_id")
+  industry   Industry? @relation(fields: [industryId], references: [id], onDelete: SetNull)
+  name       String
+  slug       String
+  description String? @db.Text
+  category   String?
+  price      Decimal  @db.Decimal(12, 2)
+  stock      Int      @default(0)
+  imageUrl   String?  @map("image_url")
+  rating     Decimal? @db.Decimal(3, 2)
+  isActive   Boolean  @default(true) @map("is_active")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  orders Order[]
+}
+
+// ---------------------------------------------------------------------------
+// Phase 38 — Orders
+// ---------------------------------------------------------------------------
+model Order {
+  id        String      @id @default(cuid())
+  buyerId   String      @map("buyer_id")
+  buyer     User        @relation("OrderBuyer", fields: [buyerId], references: [id], onDelete: Cascade)
+  sellerId  String      @map("seller_id")
+  seller    User        @relation("OrderSeller", fields: [sellerId], references: [id], onDelete: Cascade)
+  productId String      @map("product_id")
+  product   Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int         @default(1)
+  price     Decimal     @db.Decimal(12, 2)
+  status    OrderStatus @default(PENDING)
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+
+  @@index([buyerId])
+  @@index([sellerId])
+  @@index([status])
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+// ---------------------------------------------------------------------------
+// Phase 39 — Jobs (JPS)
+// ---------------------------------------------------------------------------
+model Job {
+  id           String   @id @default(cuid())
+  companyId    String   @map("company_id")
+  company      User     @relation("JobCompany", fields: [companyId], references: [id], onDelete: Cascade)
+  title        String
+  industryId   String   @map("industry_id")
+  industry     Industry @relation(fields: [industryId], references: [id], onDelete: Cascade)
+  description  String?  @db.Text
+  salaryMin    Decimal?  @map("salary_min") @db.Decimal(12, 2)
+  salaryMax    Decimal?  @map("salary_max") @db.Decimal(12, 2)
+  salaryDisplay String? @map("salary_display")
+  location     String?
+  jobType      JobType  @map("job_type")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  applications JobApplication[]
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  FREELANCE
+  REMOTE
+}
+
+model JobApplication {
+  id        String   @id @default(cuid())
+  jobId     String   @map("job_id")
+  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    String   @default("applied") // applied, shortlisted, rejected, hired
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([jobId])
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// Phase 40 — Franchise
+// ---------------------------------------------------------------------------
+model Franchise {
+  id             String   @id @default(cuid())
+  city           String
+  state          String?
+  country        String
+  ownerId        String   @map("owner_id")
+  owner          User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  investment     Decimal? @db.Decimal(12, 2)
+  commissionRate Decimal  @db.Decimal(5, 2) @map("commission_rate")
+  status         String   @default("active")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@index([country])
+  @@index([city])
+  @@index([ownerId])
+}
+
+// ---------------------------------------------------------------------------
+// Phase 41 — Wallet & Transactions
+// ---------------------------------------------------------------------------
+model Wallet {
+  userId          String   @id @map("user_id")
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  balance         Decimal  @default(0) @db.Decimal(14, 2)
+  affiliateIncome Decimal  @default(0) @map("affiliate_income") @db.Decimal(14, 2)
+  serviceIncome   Decimal  @default(0) @map("service_income") @db.Decimal(14, 2)
+  productIncome   Decimal  @default(0) @map("product_income") @db.Decimal(14, 2)
+  franchiseIncome Decimal  @default(0) @map("franchise_income") @db.Decimal(14, 2)
+  updatedAt       DateTime @updatedAt @map("updated_at")
+}
+
+model Transaction {
+  id          String            @id @default(cuid())
+  userId      String            @map("user_id")
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount      Decimal           @db.Decimal(14, 2)
+  type        TransactionType
+  status      TransactionStatus @default(PENDING)
+  referenceId String?           @map("reference_id")
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAW
+  ORDER
+  EARNING
+  AFFILIATE
+  FRANCHISE
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+// ---------------------------------------------------------------------------
+// Phase 42 — AI Insights
+// ---------------------------------------------------------------------------
+model AIInsight {
+  id            String   @id @default(cuid())
+  industryId    String   @map("industry_id")
+  industry      Industry @relation(fields: [industryId], references: [id], onDelete: Cascade)
+  location      String?
+  serviceId     String?  @map("service_id")
+  serviceDemand String?  @map("service_demand") // high, medium, low
+  trendScore    Decimal? @map("trend_score") @db.Decimal(5, 2)
+  insightText   String?  @map("insight_text") @db.Text
+  date          DateTime @db.Date
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@index([industryId])
+  @@index([location])
+  @@index([date])
+}
