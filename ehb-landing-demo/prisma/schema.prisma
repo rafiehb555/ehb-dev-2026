@@ -1,5 +1,5 @@
 // EHB Global Database Schema
-// Phase 31-42 · PostgreSQL · Use with: npx prisma generate, npx prisma migrate dev
+// Phase 31-42 · MongoDB · Use with: npx prisma generate
 // Docs: docs/EHB_DATABASE_ARCHITECTURE.md
 
 generator client {
@@ -7,7 +7,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
@@ -15,7 +15,7 @@ datasource db {
 // Phase 32 — Users
 // ---------------------------------------------------------------------------
 model User {
-  id           String   @id @default(cuid())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   email        String   @unique
   phone        String?
@@ -36,36 +36,61 @@ model User {
   franchises       Franchise[]
   wallet           Wallet?
   transactions     Transaction[]
+
+  dmoApplications      Application[] @relation("ApplicationApplicant")
+  assignedApplications Application[] @relation("ApplicationAssignee")
+  approvalsGiven       Approval[]
+  auditLogs            AuditLog[]
+
+  pssVerifications      PSSVerification[]
+  reviewedPssDocuments  PSSDocument[]
+  pssStepReviews        PSSStepReview[]
+
+  crbApplications CRBApplication[]
+  crbInspections  CRBInspection[]
+
+  createdAutomationRules   AutomationRule[]
+  triggeredAutomationEvents AutomationEvent[]
+
+  franchiseMemberships FranchiseUser[]
+  inspectionTasks      InspectionTask[] @relation("InspectionTaskInspector")
+  inspectionReports    InspectionReport[]
 }
 
 enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  FRANCHISE
   USER
   PROVIDER
   SELLER
   FRANCHISE_OWNER
-  ADMIN
 }
 
 // ---------------------------------------------------------------------------
 // Phase 33 — Profiles (JPS)
 // ---------------------------------------------------------------------------
 model Profile {
-  id                 String   @id @default(cuid())
-  userId             String   @unique @map("user_id")
-  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  username           String   @unique
-  profilePhoto       String?  @map("profile_photo")
+  id                 String             @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String             @unique @map("user_id") @db.ObjectId
+  user               User               @relation(fields: [userId], references: [id])
+  username           String             @unique
+  profilePhoto       String?            @map("profile_photo")
   frame              String?
-  sqlLevel           String?  @map("sql_level") // Basic, Intermediate, Advanced, Expert
+  sqlLevel           String?            @map("sql_level")
   verificationStatus VerificationStatus @default(PENDING) @map("verification_status")
-  skills             String[] // or Json for more structure
-  rating             Decimal? @db.Decimal(3, 2)
-  bio                String?  @db.Text
+  stlStatus          StlStatus          @default(SUSPENDED) @map("stl_status")
+  stlScore           Int                @default(0) @map("stl_score")
+  stlUpdatedAt       DateTime           @default(now()) @map("stl_updated_at")
+  skills             String[]
+  rating             Float?
+  bio                String?
   headline           String?
-  createdAt          DateTime @default(now()) @map("created_at")
-  updatedAt          DateTime @updatedAt @map("updated_at")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
 
   providerServices ProviderService[]
+  pssVerifications PSSVerification[]
 }
 
 enum VerificationStatus {
@@ -74,15 +99,508 @@ enum VerificationStatus {
   REJECTED
 }
 
+enum StlStatus {
+  ACTIVE
+  WARNING
+  LIMITED
+  SUSPENDED
+  DOWNGRADED
+}
+
+// ---------------------------------------------------------------------------
+// PSS v1 — Verification + Refilling Engine
+// ---------------------------------------------------------------------------
+model PSSVerification {
+  id         String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String        @unique @map("user_id") @db.ObjectId
+  user       User          @relation(fields: [userId], references: [id])
+  profileId  String?       @map("profile_id") @db.ObjectId
+  profile    Profile?      @relation(fields: [profileId], references: [id])
+
+  status         PSSCaseStatus @default(UNDER_REVIEW)
+  phaseCompleted Int           @default(0) @map("phase_completed")
+  currentStep    PSSStep       @default(IDENTITY) @map("current_step")
+  riskScore      Int?          @map("risk_score")
+  lastVerifiedAt DateTime?     @map("last_verified_at")
+  riskLevel      String?       @map("risk_level")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  documents   PSSDocument[]
+  stepReviews PSSStepReview[]
+  refills     PSSRefill[]
+
+  @@index([phaseCompleted])
+  @@map("pss_verifications")
+}
+
+enum PSSCaseStatus {
+  UNDER_REVIEW
+  VERIFIED
+  REJECTED
+  REFILL_REQUIRED
+}
+
+enum PSSStep {
+  IDENTITY
+  DOCUMENTS
+  LIVENESS
+  AML_RISK
+  FINAL_DECISION
+}
+
+enum PSSStepDecision {
+  APPROVED
+  REJECTED
+}
+
+enum PSSDocumentStep {
+  IDENTITY
+  DOCUMENTS
+  LIVENESS
+  AML_RISK
+}
+
+enum PSSDocumentType {
+  CNIC
+  PASSPORT
+  LICENSE
+  ADDRESS_PROOF
+  SELFIE
+  VIDEO
+  AML_EVIDENCE
+  OTHER
+}
+
+enum PSSDocumentReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model PSSDocument {
+  id             String                  @id @default(auto()) @map("_id") @db.ObjectId
+  verificationId String                  @map("verification_id") @db.ObjectId
+  verification   PSSVerification         @relation(fields: [verificationId], references: [id])
+  step           PSSDocumentStep
+  type           PSSDocumentType
+  fileUrl        String                  @map("file_url")
+  mimeType       String?                 @map("mime_type")
+  reviewStatus   PSSDocumentReviewStatus @default(PENDING) @map("review_status")
+  reviewedById   String?                 @map("reviewed_by_id") @db.ObjectId
+  reviewedBy     User?                   @relation(fields: [reviewedById], references: [id])
+  reviewedAt     DateTime?               @map("reviewed_at")
+  notes          String?
+  createdAt      DateTime                @default(now()) @map("created_at")
+  updatedAt      DateTime                @updatedAt @map("updated_at")
+
+  @@index([verificationId])
+  @@index([step])
+  @@index([reviewStatus])
+  @@map("pss_documents")
+}
+
+model PSSStepReview {
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  verificationId String          @map("verification_id") @db.ObjectId
+  verification   PSSVerification @relation(fields: [verificationId], references: [id])
+  step           PSSStep
+  decision       PSSStepDecision
+  reviewerId     String          @map("reviewer_id") @db.ObjectId
+  reviewer       User            @relation(fields: [reviewerId], references: [id])
+  riskScore      Int?            @map("risk_score")
+  riskLevel      String?         @map("risk_level")
+  notes          String?
+  metadata       Json?           @map("metadata")
+  createdAt      DateTime        @default(now()) @map("created_at")
+
+  @@index([verificationId])
+  @@index([step])
+  @@map("pss_step_reviews")
+}
+
+enum PSSRefillStatus {
+  PENDING
+  COMPLETED
+  EXPIRED
+}
+
+model PSSRefill {
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  verificationId String          @map("verification_id") @db.ObjectId
+  verification   PSSVerification @relation(fields: [verificationId], references: [id])
+  phase          Int
+  dueDate        DateTime        @map("due_date")
+  graceEndDate   DateTime        @map("grace_end_date")
+  status         PSSRefillStatus @default(PENDING)
+  completedAt    DateTime?       @map("completed_at")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
+
+  @@index([verificationId])
+  @@index([dueDate])
+  @@index([status])
+  @@map("pss_refills")
+}
+
+// ---------------------------------------------------------------------------
+// CRB v1 — Certification & Registry Board
+// ---------------------------------------------------------------------------
+enum CRBApplicationType {
+  SKILL
+  SERVICE
+  PRODUCT
+  COMPANY
+}
+
+enum CRBApplicationStatus {
+  SUBMITTED
+  REVIEW
+  INSPECTION
+  APPROVED
+  REJECTED
+}
+
+model CRBApplication {
+  id           String               @id @default(auto()) @map("_id") @db.ObjectId
+  applicantId  String               @map("applicant_id") @db.ObjectId
+  applicant    User                 @relation(fields: [applicantId], references: [id])
+  type         CRBApplicationType
+  industry     String
+  status       CRBApplicationStatus @default(SUBMITTED)
+  notes        String?
+  dmoTaskId    String?              @map("dmo_task_id")
+  createdAt    DateTime             @default(now()) @map("created_at")
+  updatedAt    DateTime             @updatedAt @map("updated_at")
+
+  documents       CRBDocument[]
+  inspection      CRBInspection?
+  certificate     CRBCertificate?
+  inspectionTasks InspectionTask[]
+
+  @@index([applicantId])
+  @@index([type])
+  @@index([industry])
+  @@index([status])
+  @@map("crb_applications")
+}
+
+enum CRBDocumentType {
+  ID
+  LICENSE
+  PORTFOLIO
+  EXPERIENCE
+  OTHER
+}
+
+model CRBDocument {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  applicationId String          @map("application_id") @db.ObjectId
+  application   CRBApplication  @relation(fields: [applicationId], references: [id])
+  fileUrl       String          @map("file_url")
+  type          CRBDocumentType
+  createdAt     DateTime        @default(now()) @map("created_at")
+
+  @@index([applicationId])
+  @@map("crb_documents")
+}
+
+enum CRBInspectionStatus {
+  ASSIGNED
+  IN_PROGRESS
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+model CRBInspection {
+  id            String              @id @default(auto()) @map("_id") @db.ObjectId
+  applicationId String              @unique @map("application_id") @db.ObjectId
+  application   CRBApplication      @relation(fields: [applicationId], references: [id])
+  inspectorId   String              @map("inspector_id") @db.ObjectId
+  inspector     User                @relation(fields: [inspectorId], references: [id])
+  status        CRBInspectionStatus @default(ASSIGNED)
+  report        String?
+  score         Float?
+  createdAt     DateTime            @default(now()) @map("created_at")
+  updatedAt     DateTime            @updatedAt @map("updated_at")
+
+  @@index([inspectorId])
+  @@index([status])
+  @@map("crb_inspections")
+}
+
+enum CRBCertificateStatus {
+  ACTIVE
+  EXPIRED
+  REVOKED
+}
+
+model CRBCertificate {
+  id            String               @id @default(auto()) @map("_id") @db.ObjectId
+  applicationId String               @unique @map("application_id") @db.ObjectId
+  application   CRBApplication       @relation(fields: [applicationId], references: [id])
+  entityId      String               @map("entity_id") @db.ObjectId
+  type          CRBApplicationType
+  industry      String
+  issuedAt      DateTime             @default(now()) @map("issued_at")
+  expiryDate    DateTime             @map("expiry_date")
+  status        CRBCertificateStatus @default(ACTIVE)
+
+  @@index([entityId])
+  @@index([status])
+  @@index([expiryDate])
+  @@map("crb_certificates")
+}
+
+// ---------------------------------------------------------------------------
+// DMO v1 — Applications, Approvals, Registry, Audit
+// ---------------------------------------------------------------------------
+model Application {
+  id           String                  @id @default(auto()) @map("_id") @db.ObjectId
+  type         ApplicationType
+  status       ApplicationStatus       @default(NEW)
+  sourceSystem ApplicationSourceSystem @default(MANUAL) @map("source_system")
+  sourceRefId  String?                 @map("source_ref_id")
+  priority     ApplicationPriority     @default(MEDIUM)
+  riskScore    Int?                    @map("risk_score")
+  riskLevel    String?                 @map("risk_level")
+  stlImpact    Int?                    @map("stl_impact")
+  slaDueAt     DateTime?               @map("sla_due_at")
+
+  applicantId String @map("applicant_id") @db.ObjectId
+  applicant   User   @relation("ApplicationApplicant", fields: [applicantId], references: [id])
+
+  assignedToId String? @map("assigned_to_id") @db.ObjectId
+  assignedTo   User?   @relation("ApplicationAssignee", fields: [assignedToId], references: [id])
+
+  payload   Json?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  approvals Approval[]
+
+  @@index([type])
+  @@index([status])
+  @@index([applicantId])
+  @@map("applications")
+}
+
+enum ApplicationType {
+  PSS_VERIFICATION
+  PSS
+  PSS_REFILL
+  CRB_CERTIFICATION
+  INDUSTRY_VERIFICATION
+  CRB
+  SERVICE
+  PRODUCT
+  FRANCHISE
+  OTHER
+}
+
+enum ApplicationStatus {
+  NEW
+  IN_REVIEW
+  UNDER_INSPECTION
+  APPROVED
+  REJECTED
+}
+
+enum ApplicationSourceSystem {
+  PSS
+  CRB
+  FRANCHISE
+  INDUSTRY
+  MANUAL
+  AUTOMATION
+}
+
+enum ApplicationPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model Approval {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  applicationId String      @map("application_id") @db.ObjectId
+  application   Application @relation(fields: [applicationId], references: [id])
+
+  approvedById String @map("approved_by_id") @db.ObjectId
+  approvedBy   User   @relation(fields: [approvedById], references: [id])
+
+  decision  ApprovalDecision
+  notes     String?
+  createdAt DateTime         @default(now()) @map("created_at")
+
+  @@index([applicationId])
+  @@index([approvedById])
+  @@map("approvals")
+}
+
+enum ApprovalDecision {
+  APPROVED
+  REJECTED
+}
+
+model RegistryRecord {
+  id                 String             @id @default(auto()) @map("_id") @db.ObjectId
+  entityType         RegistryEntityType @map("entity_type")
+  entityId           String             @map("entity_id")
+  verificationSource VerificationSource @map("verification_source")
+  status             VerificationStatus @default(PENDING)
+  issuedAt           DateTime?          @map("issued_at")
+  expiryDate         DateTime?          @map("expiry_date")
+  createdAt          DateTime           @default(now()) @map("created_at")
+
+  @@index([entityType, entityId])
+  @@index([status])
+  @@map("registry_records")
+}
+
+enum RegistryEntityType {
+  USER
+  SERVICE
+  PRODUCT
+  COMPANY
+}
+
+enum VerificationSource {
+  PSS
+  CRB
+  FRANCHISE
+  MANUAL
+}
+
+model AuditLog {
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  actorId    String?         @map("actor_id") @db.ObjectId
+  actor      User?           @relation(fields: [actorId], references: [id])
+  action     String
+  targetType AuditTargetType @map("target_type")
+  targetId   String          @map("target_id")
+  metadata   Json?           @map("metadata")
+  createdAt  DateTime        @default(now()) @map("created_at")
+
+  @@index([actorId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+enum AuditTargetType {
+  APPLICATION
+  APPROVAL
+  REGISTRY_RECORD
+  PSS_VERIFICATION
+  AUTOMATION_EVENT
+  USER
+  OTHER
+}
+
+// ---------------------------------------------------------------------------
+// Automation Engine v1
+// ---------------------------------------------------------------------------
+model AutomationRule {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  code        String   @unique
+  name        String
+  description String?
+  eventType   String   @map("event_type")
+  isActive    Boolean  @default(true) @map("is_active")
+  priority    Int      @default(100)
+  conditions  Json?    @map("conditions")
+  actions     Json     @map("actions")
+  createdById String?  @map("created_by_id") @db.ObjectId
+  createdBy   User?    @relation(fields: [createdById], references: [id])
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([eventType])
+  @@index([isActive])
+  @@map("automation_rules")
+}
+
+enum AutomationEventStatus {
+  PENDING
+  PROCESSING
+  DONE
+  FAILED
+  DEAD_LETTER
+}
+
+model AutomationEvent {
+  id            String                @id @default(auto()) @map("_id") @db.ObjectId
+  eventType     String                @map("event_type")
+  entityType    String                @map("entity_type")
+  entityId      String                @map("entity_id")
+  payload       Json?
+  status        AutomationEventStatus @default(PENDING)
+  attempts      Int                   @default(0)
+  nextRetryAt   DateTime?             @map("next_retry_at")
+  processedAt   DateTime?             @map("processed_at")
+  lastError     String?               @map("last_error")
+  correlationId String?               @map("correlation_id")
+  triggeredById String?               @map("triggered_by_id") @db.ObjectId
+  triggeredBy   User?                 @relation(fields: [triggeredById], references: [id])
+  createdAt     DateTime              @default(now()) @map("created_at")
+  updatedAt     DateTime              @updatedAt @map("updated_at")
+
+  @@index([eventType])
+  @@index([status])
+  @@map("automation_events")
+}
+
+// ---------------------------------------------------------------------------
+// STL v1 — Trust Intelligence + Ranking Engine
+// ---------------------------------------------------------------------------
+enum STLEntityType {
+  USER
+  SERVICE
+  PRODUCT
+}
+
+model STLScore {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  entityId    String        @map("entity_id")
+  entityType  STLEntityType @map("entity_type")
+  score       Float
+  level       Int
+  breakdown   Json?         @map("breakdown")
+  lastUpdated DateTime      @updatedAt @map("last_updated")
+  createdAt   DateTime      @default(now()) @map("created_at")
+
+  @@unique([entityType, entityId])
+  @@index([entityType])
+  @@index([score])
+  @@map("stl_scores")
+}
+
+model STLLog {
+  id         String        @id @default(auto()) @map("_id") @db.ObjectId
+  entityId   String        @map("entity_id")
+  entityType STLEntityType @map("entity_type")
+  change     Float
+  reason     String
+  metadata   Json?         @map("metadata")
+  createdAt  DateTime      @default(now()) @map("created_at")
+
+  @@index([entityType, entityId])
+  @@index([createdAt])
+  @@map("stl_logs")
+}
+
 // ---------------------------------------------------------------------------
 // Phase 34 — Industries
 // ---------------------------------------------------------------------------
 model Industry {
-  id          String   @id @default(cuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   slug        String   @unique
   icon        String?
-  description String?  @db.Text
+  description String?
   sortOrder   Int      @default(0) @map("sort_order")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
@@ -91,18 +609,99 @@ model Industry {
   products   Product[]
   jobs       Job[]
   aiInsights AIInsight[]
+
+  entityIndustries      EntityIndustry[]
+  industryVerifications IndustryVerification[]
+}
+
+// ---------------------------------------------------------------------------
+// Multi-Industry Verification Engine (v1)
+// ---------------------------------------------------------------------------
+enum VerifiableEntityType {
+  SERVICE
+  PRODUCT
+  COMPANY
+}
+
+model EntityIndustry {
+  id         String               @id @default(auto()) @map("_id") @db.ObjectId
+  entityType VerifiableEntityType @map("entity_type")
+  entityId   String               @map("entity_id")
+  industryId String               @map("industry_id") @db.ObjectId
+  industry   Industry             @relation(fields: [industryId], references: [id])
+  createdAt  DateTime             @default(now()) @map("created_at")
+
+  @@unique([entityType, entityId, industryId])
+  @@index([entityType, entityId])
+  @@index([industryId])
+  @@map("entity_industries")
+}
+
+enum IndustryVerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+  EXPIRED
+}
+
+model IndustryVerification {
+  id         String                     @id @default(auto()) @map("_id") @db.ObjectId
+  entityType VerifiableEntityType       @map("entity_type")
+  entityId   String                     @map("entity_id")
+  industryId String                     @map("industry_id") @db.ObjectId
+  industry   Industry                   @relation(fields: [industryId], references: [id])
+  status     IndustryVerificationStatus @default(PENDING)
+  score      Float?
+  weight     Float                      @default(1.0)
+
+  source     VerificationSource @default(MANUAL) @map("source")
+  issuedAt   DateTime?          @map("issued_at")
+  expiryDate DateTime?          @map("expiry_date")
+
+  dmoTaskId String?  @map("dmo_task_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  refills IndustryRefill[]
+
+  @@unique([entityType, entityId, industryId])
+  @@index([industryId])
+  @@index([entityType, entityId])
+  @@index([status])
+  @@map("industry_verifications")
+}
+
+enum IndustryRefillStatus {
+  PENDING
+  COMPLETED
+  EXPIRED
+}
+
+model IndustryRefill {
+  id             String               @id @default(auto()) @map("_id") @db.ObjectId
+  verificationId String               @map("verification_id") @db.ObjectId
+  verification   IndustryVerification @relation(fields: [verificationId], references: [id])
+  dueDate        DateTime             @map("due_date")
+  status         IndustryRefillStatus @default(PENDING)
+  completedAt    DateTime?            @map("completed_at")
+  createdAt      DateTime             @default(now()) @map("created_at")
+
+  @@index([verificationId])
+  @@index([dueDate])
+  @@index([status])
+  @@map("industry_refills")
 }
 
 // ---------------------------------------------------------------------------
 // Phase 35 — Services
 // ---------------------------------------------------------------------------
 model Service {
-  id          String   @id @default(cuid())
-  industryId  String   @map("industry_id")
-  industry    Industry @relation(fields: [industryId], references: [id], onDelete: Cascade)
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  industryId  String   @map("industry_id") @db.ObjectId
+  industry    Industry @relation(fields: [industryId], references: [id])
   name        String
   slug        String
-  description String?  @db.Text
+  description String?
   category    String?
   isActive    Boolean  @default(true) @map("is_active")
   createdAt   DateTime @default(now()) @map("created_at")
@@ -115,50 +714,49 @@ model Service {
 // Phase 36 — Providers (User offers Service)
 // ---------------------------------------------------------------------------
 model ProviderService {
-  id                 String   @id @default(cuid())
-  userId             String   @map("user_id")
-  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  serviceId          String   @map("service_id")
-  service            Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-  profileId          String?  @map("profile_id")
-  profile            Profile? @relation(fields: [profileId], references: [id], onDelete: SetNull)
-  price              Decimal  @db.Decimal(12, 2)
-  priceUnit          String?  @map("price_unit") // per hour, per project, fixed
+  id                 String             @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String             @map("user_id") @db.ObjectId
+  user               User               @relation(fields: [userId], references: [id])
+  serviceId          String             @map("service_id") @db.ObjectId
+  service            Service            @relation(fields: [serviceId], references: [id])
+  profileId          String?            @map("profile_id") @db.ObjectId
+  profile            Profile?           @relation(fields: [profileId], references: [id])
+  price              Float
+  priceUnit          String?            @map("price_unit")
   location           String?
-  locationLat        Decimal? @map("location_lat") @db.Decimal(10, 7)
-  locationLng        Decimal? @map("location_lng") @db.Decimal(10, 7)
-  availability       String?  @default("available")
+  locationLat        Float?             @map("location_lat")
+  locationLng        Float?             @map("location_lng")
+  availability       String?            @default("available")
   verificationStatus VerificationStatus @default(PENDING) @map("verification_status")
-  isActive           Boolean  @default(true) @map("is_active")
-  createdAt          DateTime @default(now()) @map("created_at")
-  updatedAt         DateTime @updatedAt @map("updated_at")
+  isActive           Boolean            @default(true) @map("is_active")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
 
-  @@unique([userId, serviceId])
   @@index([userId])
   @@index([serviceId])
-  @@index([location])
+  @@map("provider_services")
 }
 
 // ---------------------------------------------------------------------------
 // Phase 37 — Products (GoSellr)
 // ---------------------------------------------------------------------------
 model Product {
-  id         String   @id @default(cuid())
-  sellerId   String   @map("seller_id")
-  seller     User     @relation(fields: [sellerId], references: [id], onDelete: Cascade)
-  industryId String?  @map("industry_id")
-  industry   Industry? @relation(fields: [industryId], references: [id], onDelete: SetNull)
-  name       String
-  slug       String
-  description String? @db.Text
-  category   String?
-  price      Decimal  @db.Decimal(12, 2)
-  stock      Int      @default(0)
-  imageUrl   String?  @map("image_url")
-  rating     Decimal? @db.Decimal(3, 2)
-  isActive   Boolean  @default(true) @map("is_active")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  sellerId    String    @map("seller_id") @db.ObjectId
+  seller      User      @relation(fields: [sellerId], references: [id])
+  industryId  String?   @map("industry_id") @db.ObjectId
+  industry    Industry? @relation(fields: [industryId], references: [id])
+  name        String
+  slug        String
+  description String?
+  category    String?
+  price       Float
+  stock       Int       @default(0)
+  imageUrl    String?   @map("image_url")
+  rating      Float?
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
   orders Order[]
 }
@@ -167,15 +765,15 @@ model Product {
 // Phase 38 — Orders
 // ---------------------------------------------------------------------------
 model Order {
-  id        String      @id @default(cuid())
-  buyerId   String      @map("buyer_id")
-  buyer     User        @relation("OrderBuyer", fields: [buyerId], references: [id], onDelete: Cascade)
-  sellerId  String      @map("seller_id")
-  seller    User        @relation("OrderSeller", fields: [sellerId], references: [id], onDelete: Cascade)
-  productId String      @map("product_id")
-  product   Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  buyerId   String      @map("buyer_id") @db.ObjectId
+  buyer     User        @relation("OrderBuyer", fields: [buyerId], references: [id])
+  sellerId  String      @map("seller_id") @db.ObjectId
+  seller    User        @relation("OrderSeller", fields: [sellerId], references: [id])
+  productId String      @map("product_id") @db.ObjectId
+  product   Product     @relation(fields: [productId], references: [id])
   quantity  Int         @default(1)
-  price     Decimal     @db.Decimal(12, 2)
+  price     Float
   status    OrderStatus @default(PENDING)
   createdAt DateTime    @default(now()) @map("created_at")
   updatedAt DateTime    @updatedAt @map("updated_at")
@@ -197,15 +795,15 @@ enum OrderStatus {
 // Phase 39 — Jobs (JPS)
 // ---------------------------------------------------------------------------
 model Job {
-  id           String   @id @default(cuid())
-  companyId    String   @map("company_id")
-  company      User     @relation("JobCompany", fields: [companyId], references: [id], onDelete: Cascade)
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  companyId    String   @map("company_id") @db.ObjectId
+  company      User     @relation("JobCompany", fields: [companyId], references: [id])
   title        String
-  industryId   String   @map("industry_id")
-  industry     Industry @relation(fields: [industryId], references: [id], onDelete: Cascade)
-  description  String?  @db.Text
-  salaryMin    Decimal?  @map("salary_min") @db.Decimal(12, 2)
-  salaryMax    Decimal?  @map("salary_max") @db.Decimal(12, 2)
+  industryId   String   @map("industry_id") @db.ObjectId
+  industry     Industry @relation(fields: [industryId], references: [id])
+  description  String?
+  salaryMin    Float?   @map("salary_min")
+  salaryMax    Float?   @map("salary_max")
   salaryDisplay String? @map("salary_display")
   location     String?
   jobType      JobType  @map("job_type")
@@ -224,66 +822,167 @@ enum JobType {
 }
 
 model JobApplication {
-  id        String   @id @default(cuid())
-  jobId     String   @map("job_id")
-  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  userId    String   @map("user_id")
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  status    String   @default("applied") // applied, shortlisted, rejected, hired
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  jobId     String   @map("job_id") @db.ObjectId
+  job       Job      @relation(fields: [jobId], references: [id])
+  userId    String   @map("user_id") @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  status    String   @default("applied")
   createdAt DateTime @default(now()) @map("created_at")
 
   @@index([jobId])
   @@index([userId])
+  @@map("job_applications")
 }
 
 // ---------------------------------------------------------------------------
 // Phase 40 — Franchise
 // ---------------------------------------------------------------------------
 model Franchise {
-  id             String   @id @default(cuid())
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  level          String    @default("SUB")
+  location       String?
+  parentId       String?   @map("parent_id") @db.ObjectId
+  parent         Franchise? @relation("FranchiseHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children       Franchise[] @relation("FranchiseHierarchy")
   city           String
   state          String?
   country        String
-  ownerId        String   @map("owner_id")
-  owner          User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  investment     Decimal? @db.Decimal(12, 2)
-  commissionRate Decimal  @db.Decimal(5, 2) @map("commission_rate")
-  status         String   @default("active")
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
+  ownerId        String    @map("owner_id") @db.ObjectId
+  owner          User      @relation(fields: [ownerId], references: [id])
+  investment     Float?
+  commissionRate Float     @map("commission_rate")
+  status         String    @default("active")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  users           FranchiseUser[]
+  inspectionTasks InspectionTask[]
 
   @@index([country])
-  @@index([city])
   @@index([ownerId])
+  @@map("franchises")
+}
+
+model FranchiseUser {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String    @map("user_id") @db.ObjectId
+  user        User      @relation(fields: [userId], references: [id])
+  franchiseId String    @map("franchise_id") @db.ObjectId
+  franchise   Franchise @relation(fields: [franchiseId], references: [id])
+  role        String    @default("INSPECTOR")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@unique([userId, franchiseId])
+  @@index([franchiseId])
+  @@index([userId])
+  @@map("franchise_users")
+}
+
+enum InspectionTaskStatus {
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  ESCALATED
+}
+
+model InspectionTask {
+  id               String               @id @default(auto()) @map("_id") @db.ObjectId
+  crbApplicationId String               @map("crb_application_id") @db.ObjectId
+  crbApplication   CRBApplication       @relation(fields: [crbApplicationId], references: [id])
+  dmoApplicationId String?              @map("dmo_application_id")
+  franchiseId      String               @map("franchise_id") @db.ObjectId
+  franchise        Franchise            @relation(fields: [franchiseId], references: [id])
+  inspectorId      String?              @map("inspector_id") @db.ObjectId
+  inspector        User?                @relation("InspectionTaskInspector", fields: [inspectorId], references: [id])
+  status           InspectionTaskStatus @default(ASSIGNED)
+  dueDate          DateTime             @map("due_date")
+  createdAt        DateTime             @default(now()) @map("created_at")
+  updatedAt        DateTime             @updatedAt @map("updated_at")
+
+  report      InspectionReport?
+  escalations InspectionEscalation[]
+
+  @@index([crbApplicationId])
+  @@index([franchiseId])
+  @@index([status])
+  @@map("inspection_tasks")
+}
+
+model InspectionReport {
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  taskId      String         @unique @map("task_id") @db.ObjectId
+  task        InspectionTask @relation(fields: [taskId], references: [id])
+  inspectorId String         @map("inspector_id") @db.ObjectId
+  inspector   User           @relation(fields: [inspectorId], references: [id])
+  findings    String
+  score       Float
+  mediaUrls   String[]       @map("media_urls")
+  fraudSuspected Boolean     @default(false) @map("fraud_suspected")
+  fraudNotes  String?        @map("fraud_notes")
+
+  geoLat       Float?    @map("geo_lat")
+  geoLng       Float?    @map("geo_lng")
+  geoAccuracyM Float?    @map("geo_accuracy_m")
+  capturedAt   DateTime? @map("captured_at")
+  deviceHash   String?   @map("device_hash")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([inspectorId])
+  @@map("inspection_reports")
+}
+
+enum InspectionEscalationLevel {
+  SUB
+  MASTER
+  CORPORATE
+}
+
+model InspectionEscalation {
+  id        String                    @id @default(auto()) @map("_id") @db.ObjectId
+  taskId    String                    @map("task_id") @db.ObjectId
+  task      InspectionTask            @relation(fields: [taskId], references: [id])
+  level     InspectionEscalationLevel
+  reason    String
+  createdAt DateTime                  @default(now()) @map("created_at")
+
+  @@index([taskId])
+  @@index([level])
+  @@map("inspection_escalations")
 }
 
 // ---------------------------------------------------------------------------
 // Phase 41 — Wallet & Transactions
 // ---------------------------------------------------------------------------
 model Wallet {
-  userId          String   @id @map("user_id")
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  balance         Decimal  @default(0) @db.Decimal(14, 2)
-  affiliateIncome Decimal  @default(0) @map("affiliate_income") @db.Decimal(14, 2)
-  serviceIncome   Decimal  @default(0) @map("service_income") @db.Decimal(14, 2)
-  productIncome   Decimal  @default(0) @map("product_income") @db.Decimal(14, 2)
-  franchiseIncome Decimal  @default(0) @map("franchise_income") @db.Decimal(14, 2)
+  userId          String   @id @map("_id") @db.ObjectId
+  user            User     @relation(fields: [userId], references: [id])
+  balance         Float    @default(0)
+  affiliateIncome Float    @default(0) @map("affiliate_income")
+  serviceIncome   Float    @default(0) @map("service_income")
+  productIncome   Float    @default(0) @map("product_income")
+  franchiseIncome Float    @default(0) @map("franchise_income")
   updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("wallets")
 }
 
 model Transaction {
-  id          String            @id @default(cuid())
-  userId      String            @map("user_id")
-  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  amount      Decimal           @db.Decimal(14, 2)
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String            @map("user_id") @db.ObjectId
+  user        User              @relation(fields: [userId], references: [id])
+  amount      Float
   type        TransactionType
   status      TransactionStatus @default(PENDING)
   referenceId String?           @map("reference_id")
-  createdAt   DateTime         @default(now()) @map("created_at")
+  createdAt   DateTime          @default(now()) @map("created_at")
 
   @@index([userId])
   @@index([type])
   @@index([createdAt])
+  @@map("transactions")
 }
 
 enum TransactionType {
@@ -305,18 +1004,19 @@ enum TransactionStatus {
 // Phase 42 — AI Insights
 // ---------------------------------------------------------------------------
 model AIInsight {
-  id            String   @id @default(cuid())
-  industryId    String   @map("industry_id")
-  industry      Industry @relation(fields: [industryId], references: [id], onDelete: Cascade)
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  industryId    String   @map("industry_id") @db.ObjectId
+  industry      Industry @relation(fields: [industryId], references: [id])
   location      String?
   serviceId     String?  @map("service_id")
-  serviceDemand String?  @map("service_demand") // high, medium, low
-  trendScore    Decimal? @map("trend_score") @db.Decimal(5, 2)
-  insightText   String?  @map("insight_text") @db.Text
-  date          DateTime @db.Date
+  serviceDemand String?  @map("service_demand")
+  trendScore    Float?   @map("trend_score")
+  insightText   String?  @map("insight_text")
+  date          DateTime
   createdAt     DateTime @default(now()) @map("created_at")
 
   @@index([industryId])
   @@index([location])
   @@index([date])
+  @@map("ai_insights")
 }

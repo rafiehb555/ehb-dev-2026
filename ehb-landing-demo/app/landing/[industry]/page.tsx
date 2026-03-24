@@ -257,7 +257,7 @@ export default async function IndustryLandingPage({ params }: PageProps) {
                 Open {industry.name} Home
               </Link>
               <Link
-                href="/"
+                href="/home"
                 className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel border border-white/20 px-5 py-2.5 text-sm font-medium text-slate-200 hover:bg-white/10 transition-colors"
               >
                 Back to EHB Home
@@ -270,7 +270,7 @@ export default async function IndustryLandingPage({ params }: PageProps) {
       {/* Footer */}
       <section className="border-t border-white/5 py-8">
         <div className="container-ultra flex flex-wrap justify-center gap-6 text-sm">
-          <Link href="/" className="text-slate-400 hover:text-white transition-colors">EHB Home</Link>
+          <Link href="/home" className="text-slate-400 hover:text-white transition-colors">EHB Home</Link>
           <Link href="/#industries" className="text-slate-400 hover:text-white transition-colors">All Industries</Link>
           <Link href="/ai-marketplace" className="text-slate-400 hover:text-white transition-colors">Marketplace</Link>
         </div>

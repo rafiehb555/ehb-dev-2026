@@ -293,7 +293,7 @@ export default async function IndustryHomePage({ params }: PageProps) {
           <Link href="/ai-marketplace" className="text-slate-400 hover:text-[#00eaff] transition-colors">
             AI Marketplace →
           </Link>
-          <Link href="/" className="text-slate-400 hover:text-[#00eaff] transition-colors">
+          <Link href="/home" className="text-slate-400 hover:text-[#00eaff] transition-colors">
             EHB Home →
           </Link>
         </section>

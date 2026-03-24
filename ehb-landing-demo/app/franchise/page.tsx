@@ -15,6 +15,16 @@ export default function FranchisePage() {
             <Link href="/admin" className="mt-3 inline-flex items-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-4 py-2 text-xs font-semibold text-slate-950 btn-glow">Learn more</Link>
           </div>
           <div className="glass-panel card-hover p-4">
+            <h2 className="text-sm font-semibold text-white mb-1">Inspection Dashboard</h2>
+            <p className="text-slate-300 text-xs">Assigned CRB inspections. Upload report & score for CRB decision.</p>
+            <Link
+              href="/franchise/inspections"
+              className="mt-3 inline-flex items-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-4 py-2 text-xs font-semibold text-slate-950 btn-glow"
+            >
+              Open inspections
+            </Link>
+          </div>
+          <div className="glass-panel card-hover p-4">
             <h2 className="text-sm font-semibold text-white mb-1">Master Franchise</h2>
             <p className="text-slate-300 text-xs">
               Control multiple cities or regions under one license. Manage corporate and sub franchise partners.

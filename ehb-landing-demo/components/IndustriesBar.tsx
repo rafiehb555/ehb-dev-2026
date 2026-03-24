@@ -8,7 +8,7 @@ export function IndustriesBar() {
   const pathname = usePathname();
 
   return (
-    <div className="border-b border-white/5 bg-[#020c1b]/80 backdrop-blur-sm sticky top-[57px] z-40">
+    <div className="border-b border-white/5 bg-[#020c1b]/80 backdrop-blur-sm sticky top-[56px] sm:top-[57px] z-40">
       <div className="container-ehb">
         <div className="flex items-center gap-1 overflow-x-auto py-2 scrollbar-hide min-h-[44px]" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
           <Link

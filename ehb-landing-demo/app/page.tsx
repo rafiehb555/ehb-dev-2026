@@ -12,6 +12,7 @@ import { FranchiseLevelCard } from "@/components/FranchiseLevelCard";
 import { LiveActivityTicker } from "@/components/LiveActivityTicker";
 import { RecommendedForYou } from "@/components/RecommendedForYou";
 import { QuickActionsStrip } from "@/components/QuickActionsStrip";
+import { DmoLandingSection } from "@/components/DmoLandingSection";
 
 function SectionDivider() {
   return (
@@ -97,6 +98,12 @@ export default function LandingPage() {
           </Link>
         </div>
       </section>
+
+      <SectionDivider />
+      {/* DMO Landing Section — trust system introduction */}
+      <SectionReveal as="div">
+        <DmoLandingSection />
+      </SectionReveal>
 
       <SectionDivider />
       {/* Section 2 — How You Can Earn (4 earning methods) */}

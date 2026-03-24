@@ -1,15 +1,16 @@
 import "./globals.css";
 import type { ReactNode } from "react";
 import Image from "next/image";
-import { Sora } from "next/font/google";
+import { Inter } from "next/font/google";
 import { IndustriesBar } from "@/components/IndustriesBar";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { GlobalAiStatus } from "@/components/GlobalAiStatus";
 import { TopNavTabs } from "@/components/TopNavTabs";
+import { RouteConditional } from "@/components/layout/RouteConditional";
 
-const sora = Sora({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sora",
+  variable: "--font-inter",
   display: "swap"
 });
 
@@ -27,7 +28,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`scroll-smooth ${sora.variable}`}>
+    <html lang="en" className={`scroll-smooth ${inter.variable}`}>
       <body className="min-h-screen font-sans text-slate-100 antialiased text-readability">
         <div className="min-h-[100dvh] flex flex-col page-mesh relative">
           {/* Center shine – hero jaisi lighting beech mein */}
@@ -57,16 +58,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 </div>
               </a>
               {/* Responsive search bar – full width on mobile, centered on desktop */}
-              <div className="flex-1 min-w-[180px] w-full order-3 sm:order-none max-w-xl mx-0 sm:mx-2">
-                <div className="flex items-center gap-2 rounded-xl glass-panel px-3 sm:px-4 py-1.5 sm:py-2 w-full text-[11px] sm:text-sm text-slate-400">
-                  <span aria-hidden>🔍</span>
-                  <span className="truncate">
-                    Search apps, games, education, franchises...
-                  </span>
+              <RouteConditional hideOnStartsWith={["/dmo"]}>
+                <div className="flex-1 min-w-[180px] w-full order-3 sm:order-none max-w-xl mx-0 sm:mx-2">
+                  <div className="flex items-center gap-2 rounded-xl glass-panel px-3 sm:px-4 py-1.5 sm:py-2 w-full text-[11px] sm:text-sm text-slate-400">
+                    <span aria-hidden>🔍</span>
+                    <span className="truncate">
+                      Search apps, games, education, franchises...
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                <TopNavTabs />
+              </RouteConditional>
+              <div className="flex items-center gap-2 sm:gap-3 flex-shrink min-w-0 w-full sm:w-auto justify-between sm:justify-end">
+                <RouteConditional hideOnStartsWith={["/dmo"]}>
+                  <div className="min-w-0 max-w-[70vw] sm:max-w-none">
+                    <TopNavTabs />
+                  </div>
+                </RouteConditional>
                 <button
                   type="button"
                   className="relative inline-flex items-center justify-center rounded-full h-7 w-7 text-xs text-slate-200 hover:bg-white/5 transition-colors"
@@ -81,9 +88,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </div>
             </div>
           </header>
-          <GlobalAiStatus />
-          <Breadcrumb />
-          <IndustriesBar />
+          <RouteConditional hideOnStartsWith={["/dmo"]}>
+            <GlobalAiStatus />
+          </RouteConditional>
+          <RouteConditional hideOnStartsWith={["/dmo"]}>
+            <Breadcrumb />
+          </RouteConditional>
+          <RouteConditional hideOnStartsWith={["/dmo"]}>
+            <IndustriesBar />
+          </RouteConditional>
           <main className="flex-1 w-full overflow-x-hidden">
             {children}
           </main>

@@ -28,8 +28,8 @@ export function Breadcrumb() {
 
   const items: { label: string; href?: string }[] = [];
 
-  // Always start with EHB
-  items.push({ label: "EHB", href: "/" });
+  // Always start with EHB Home
+  items.push({ label: "EHB Home", href: "/home" });
 
   // Industry context
   if (industry) {
@@ -68,7 +68,7 @@ export function Breadcrumb() {
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"
       }`}
     >
-      <nav aria-label="Breadcrumb" className="flex items-center gap-1 sm:gap-1.5">
+      <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1 sm:gap-1.5">
         {items.map((item, idx) => {
           const isLast = idx === lastIndex;
           const content = isLast ? (

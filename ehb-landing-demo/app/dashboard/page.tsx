@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { StlWidget } from "@/components/stl/StlWidget";
 
 const LEVELS = [
   { name: "Beginner", minPoints: 0, maxPoints: 99 },
@@ -49,6 +50,8 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        <StlWidget />
+
         {/* Daily reward + notifications teaser */}
         <div className="grid gap-4 md:grid-cols-3">
           <div className="glass-panel border border-amber-400/50 rounded-2xl p-4 flex flex-col justify-between">
@@ -62,9 +65,12 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="mt-3">
-              <button className="min-h-touch inline-flex items-center justify-center rounded-full bg-amber-400 text-slate-900 px-4 py-1.5 text-[11px] font-semibold hover:bg-amber-300 transition-colors">
-                Claim placeholder (UI only)
-              </button>
+              <Link
+                href="/wallet"
+                className="min-h-touch inline-flex items-center justify-center rounded-full bg-amber-400 text-slate-900 px-4 py-1.5 text-[11px] font-semibold hover:bg-amber-300 transition-colors"
+              >
+                Claim in Wallet
+              </Link>
             </div>
           </div>
           <div className="glass-panel border border-sky-400/50 rounded-2xl p-4 flex flex-col justify-between">
@@ -93,13 +99,13 @@ export default function DashboardPage() {
             </div>
             <div className="mt-3 flex flex-wrap gap-2 text-[11px]">
               <Link
-                href="/dashboard"
+                href="/profile"
                 className="inline-flex items-center justify-center rounded-full bg-emerald-400 text-slate-900 px-3 py-1 font-semibold hover:bg-emerald-300 transition-colors"
               >
                 Create Service
               </Link>
               <Link
-                href="/home"
+                href="/jobs"
                 className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-3 py-1 font-semibold text-slate-100 hover:bg-white/10 transition-colors"
               >
                 Apply for Jobs
@@ -206,13 +212,13 @@ export default function DashboardPage() {
           </div>
           <div className="mt-4 flex flex-wrap gap-2 text-[11px]">
             <Link
-              href="/home"
+              href="/profile"
               className="inline-flex items-center justify-center rounded-full bg-emerald-400 text-slate-900 px-4 py-1.5 font-semibold hover:bg-emerald-300 transition-colors"
             >
               Open profile &amp; services
             </Link>
             <Link
-              href="/home"
+              href="/jobs"
               className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-4 py-1.5 font-semibold text-slate-100 hover:bg-white/10 transition-colors"
             >
               Go to jobs &amp; activity

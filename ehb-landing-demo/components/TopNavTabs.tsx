@@ -7,6 +7,7 @@ const TABS = [
   { label: "Landing", href: "/", color: "from-[#00eaff] to-[#3b82f6]" },
   { label: "Home", href: "/home", color: "from-[#22c55e] to-[#16a34a]" },
   { label: "AI Market", href: "/ai-marketplace", color: "from-[#8b5cf6] to-[#6366f1]" },
+  { label: "Super App", href: "/super", color: "from-[#06b6d4] to-[#3b82f6]" },
   { label: "Development", href: "/development", color: "from-[#f59e0b] to-[#f97316]" },
   { label: "Admin", href: "/admin", color: "from-[#38bdf8] to-[#0ea5e9]" },
   { label: "DMO", href: "/dmo", color: "from-[#ec4899] to-[#f97316]" },
@@ -16,7 +17,8 @@ export function TopNavTabs() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex items-center gap-1 sm:gap-2 flex-wrap">
+    <nav className="max-w-full overflow-x-auto scrollbar-hide">
+      <div className="flex w-max min-w-full items-center gap-1 sm:gap-2">
       {TABS.map((tab) => {
         const active =
           tab.href === "/"
@@ -38,6 +40,7 @@ export function TopNavTabs() {
           </Link>
         );
       })}
+      </div>
     </nav>
   );
 }

@@ -26,6 +26,9 @@ const config: Config = {
         "body": ["16px", { lineHeight: "1.6" }]
       },
       colors: {
+        bg: "#0B0F14",
+        card: "#0F141B",
+        primary: "#6366F1",
         ehb: {
           // Core (base theme – keep)
           background: "#020617",
