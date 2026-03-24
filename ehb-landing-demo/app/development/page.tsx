@@ -1,5 +1,9 @@
 import { KpiCard } from "@/components/ui/KpiCard";
 import { EhbHomeCard } from "@/components/ui/EhbHomeCard";
+import { TrustBadgeLegend } from "@/components/TrustBadgeLegend";
+import { STLLevelsAndSecurity } from "@/components/STLLevelsAndSecurity";
+import { AIToolsSection } from "@/components/AIToolsSection";
+import { RoadmapPhasesSection } from "@/components/RoadmapPhasesSection";
 
 const coreSystems = [
   "AI Department",
@@ -190,6 +194,20 @@ export default function DevelopmentPage() {
         <Section title="5. AI Integration Map">
           <MapCard title="AI Tools by Industry (Examples)" items={["AI Lawyer – Legal (case triage, document drafting, risk analysis).", "AI Diagnosis – Medical (symptom triage, report explanation).", "AI Resume Builder – Jobs (CV generation & optimization).", "AI Course Tutor – Education (adaptive learning paths).", "AI Business Advisor – Commerce & SME services."]} />
         </Section>
+
+        {/* Universal structured blocks (same as home/industry pages) */}
+        <section className="mt-6">
+          <TrustBadgeLegend />
+        </section>
+        <section className="mt-6">
+          <STLLevelsAndSecurity />
+        </section>
+        <section className="mt-6">
+          <AIToolsSection />
+        </section>
+        <section className="mt-6">
+          <RoadmapPhasesSection />
+        </section>
 
         <Section title="6. Affiliate Integration Map">
           <MapCard title="Affiliate Touchpoints" items={["Product affiliate (GoSellr GSM).", "Services affiliate (doctors, lawyers, local experts).", "AI tools affiliate (AI marketplace).", "Franchise recruitment affiliate (lead generation)."]} />

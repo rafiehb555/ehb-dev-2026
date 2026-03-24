@@ -115,7 +115,7 @@ const config: Config = {
       minHeight: {
         touch: "44px",
         "touch-lg": "48px",
-        "hero": "80vh"
+        "hero": "50vh"
       },
       minWidth: {
         touch: "44px"

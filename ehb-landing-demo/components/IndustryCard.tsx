@@ -20,9 +20,40 @@ export function IndustryCard({ industry }: IndustryCardProps) {
   const accent = industry.accentColor;
   const glowColor = hexToRgba(accent, 0.35);
 
+  const miniFlow = (() => {
+    switch (industry.slug) {
+      case "it":
+      case "ai":
+      case "blockchain":
+        return [
+          { label: "Client", emoji: "🧑‍💻" },
+          { label: "Developer", emoji: "🛠️" },
+          { label: "Payment", emoji: "🔒" },
+        ];
+      case "health":
+        return [
+          { label: "Patient", emoji: "👤" },
+          { label: "Doctor", emoji: "🩺" },
+          { label: "Treatment", emoji: "✅" },
+        ];
+      case "education":
+        return [
+          { label: "Student", emoji: "📚" },
+          { label: "Teacher", emoji: "🧑‍🏫" },
+          { label: "Progress", emoji: "📈" },
+        ];
+      default:
+        return [
+          { label: "Request", emoji: "📝" },
+          { label: "Verified", emoji: "🛡️" },
+          { label: "Secure", emoji: "🔒" },
+        ];
+    }
+  })();
+
   return (
     <Link
-      href={`/landing/${industry.slug}`}
+      href={`/industry/${industry.slug}`}
       className="group block rounded-xl glass-panel p-4 border border-white/10 transition-all duration-300 ease-out hover:border-[var(--card-accent)] hover:shadow-[0_0_24px_var(--card-glow)] hover:-translate-y-1.5 hover:scale-[1.03] will-change-transform"
       style={
         {
@@ -43,6 +74,40 @@ export function IndustryCard({ industry }: IndustryCardProps) {
         className="mt-3 h-0.5 w-12 rounded-full transition-opacity group-hover:opacity-100 opacity-80"
         style={{ backgroundColor: accent }}
       />
+
+      {/* Mini industry flow preview */}
+      <div className="mt-3 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          {miniFlow.map((n, idx) => (
+            <div key={n.label} className="flex items-center gap-2">
+              <div
+                className="flex items-center gap-1 rounded-full border px-2 py-1 glass-panel"
+                style={{
+                  borderColor: `${accent}33`,
+                  backgroundColor: "rgba(2,12,27,0.35)",
+                  boxShadow: `0 0 18px ${glowColor}`,
+                }}
+              >
+                <span aria-hidden className="text-[13px]">
+                  {n.emoji}
+                </span>
+                <span className="text-[10px] text-slate-300 max-w-[70px] truncate">
+                  {n.label}
+                </span>
+              </div>
+              {idx !== miniFlow.length - 1 && (
+                <span
+                  className="text-[12px] text-slate-500 animate-pulse"
+                  aria-hidden
+                  style={{ color: accent }}
+                >
+                  →
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
     </Link>
   );
 }

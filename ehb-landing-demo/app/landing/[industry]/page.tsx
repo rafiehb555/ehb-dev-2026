@@ -5,16 +5,25 @@ import { getIndustryServices } from "@/lib/industryServices";
 import { KpiCard } from "@/components/ui/KpiCard";
 import { IndustryIcon } from "@/components/IndustryIcon";
 import { SectionReveal } from "@/components/SectionReveal";
+import { ITIndustry3D } from "@/components/ITIndustry3D";
+import { HealthIndustry3D } from "@/components/HealthIndustry3D";
+import { EHBDepartmentsFlow } from "@/components/EHBDepartmentsFlow";
+import { EducationIndustry3D } from "@/components/EducationIndustry3D";
+import { LawIndustry3D } from "@/components/LawIndustry3D";
+import { FinanceIndustry3D } from "@/components/FinanceIndustry3D";
+import { GenericIndustry3DFallback } from "@/components/GenericIndustry3DFallback";
+import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 
 interface PageProps {
   params: Promise<{ industry: string }>;
+  searchParams?: { country?: string; state?: string; city?: string };
 }
 
 export async function generateStaticParams() {
   return getAllSlugs().map((industry) => ({ industry }));
 }
 
-export default async function IndustryLandingPage({ params }: PageProps) {
+export default async function IndustryLandingPage({ params, searchParams }: PageProps) {
   const { industry: industrySlug } = await params;
   const industry = getIndustryBySlug(industrySlug);
   if (!industry) notFound();
@@ -24,6 +33,26 @@ export default async function IndustryLandingPage({ params }: PageProps) {
   const exampleServices = categories.flatMap((c) => c.services).slice(0, 4);
 
   const accent = industry.accentColor;
+
+  const countryCode = searchParams?.country?.trim() || "";
+  const stateCode = searchParams?.state?.trim() || "";
+  const cityCode = searchParams?.city?.trim() || "";
+
+  const selectedCountry = countryCode ? getCountryByCode(countryCode) : undefined;
+  const selectedState = countryCode && stateCode ? getStateByCode(countryCode, stateCode) : undefined;
+  const selectedCity =
+    countryCode && stateCode && cityCode ? getCityByCode(countryCode, stateCode, cityCode) : undefined;
+
+  const locationLabel = selectedCity?.name || selectedState?.name || selectedCountry?.name || "";
+  const locationAccent = selectedCountry?.accent ?? "#00AEEF";
+  const locationQs = (() => {
+    const sp = new URLSearchParams();
+    if (countryCode) sp.set("country", countryCode);
+    if (stateCode) sp.set("state", stateCode);
+    if (cityCode) sp.set("city", cityCode);
+    const qs = sp.toString();
+    return qs ? `?${qs}` : "";
+  })();
 
   return (
     <main className="min-h-screen text-slate-100">
@@ -58,9 +87,20 @@ export default async function IndustryLandingPage({ params }: PageProps) {
           <p className="text-slate-300 text-sm md:text-base max-w-2xl mb-8">
             {industry.heroSubtitle ?? industry.overview}
           </p>
+          {locationLabel ? (
+            <div
+              className="inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border mb-6"
+              style={{ borderColor: `${locationAccent}55`, boxShadow: `0 0 28px ${locationAccent}22` }}
+            >
+              <span aria-hidden>📍</span>
+              <span>
+                Near you: <span className="text-white font-semibold">{locationLabel}</span>
+              </span>
+            </div>
+          ) : null}
           <div className="flex flex-wrap gap-3 mb-6">
             <Link
-              href={`/industry/${industry.slug}`}
+              href={`/industry/${industry.slug}${locationQs}`}
               className="min-h-touch inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:opacity-95 hover:scale-[1.02]"
               style={{
                 background: `linear-gradient(135deg, ${accent}, ${accent}dd)`,
@@ -85,6 +125,26 @@ export default async function IndustryLandingPage({ params }: PageProps) {
       </section>
 
       {/* Industry Overview */}
+      {/* EHB departments pipeline (trust & verification) */}
+      {(() => {
+        const subtitleBySlug: Record<string, string> = {
+          health: "Patient → AI suggests best doctor → Appointment → Verified care → Secure payment",
+          education: "Student → AI learning path → Verified teacher → Progress & records → Secure payments",
+          it: "Client → AI matching → Verified developers → Project delivery → Secure payment & rating",
+          law: "Client → AI document match → Verified lawyer → Secure settlement → Record saved",
+          finance: "User → Verified finance providers → Secure wallet payment → Reports updated",
+        };
+        const subtitle = subtitleBySlug[industry.slug] ?? "From submission → verification → live & secure.";
+
+        return (
+          <SectionReveal as="div">
+            <section className="container-ultra section-pad-ultra">
+              <EHBDepartmentsFlow accentColor={accent} subtitle={subtitle} />
+            </section>
+          </SectionReveal>
+        );
+      })()}
+
       <SectionReveal as="div">
         <section className="container-ultra section-pad-ultra">
           <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Overview</p>
@@ -94,6 +154,40 @@ export default async function IndustryLandingPage({ params }: PageProps) {
           </p>
         </section>
       </SectionReveal>
+
+      {/* Industry-specific system visuals */}
+      {industry.slug === "it" && (
+        <SectionReveal as="div">
+          <ITIndustry3D />
+        </SectionReveal>
+      )}
+      {industry.slug === "health" && (
+        <SectionReveal as="div">
+          <HealthIndustry3D />
+        </SectionReveal>
+      )}
+      {industry.slug === "education" && (
+        <SectionReveal as="div">
+          <EducationIndustry3D accentColor={accent} />
+        </SectionReveal>
+      )}
+      {industry.slug === "law" && (
+        <SectionReveal as="div">
+          <LawIndustry3D accentColor={accent} />
+        </SectionReveal>
+      )}
+      {industry.slug === "finance" && (
+        <SectionReveal as="div">
+          <FinanceIndustry3D accentColor={accent} />
+        </SectionReveal>
+      )}
+
+      {/* Fallback 3D visual for remaining industries */}
+      {!(["it", "health", "education", "law", "finance"].includes(industry.slug)) && (
+        <SectionReveal as="div">
+          <GenericIndustry3DFallback accentColor={accent} industryName={industry.name} />
+        </SectionReveal>
+      )}
 
       {/* Key Services — categories from industryServices */}
       <SectionReveal as="div">
@@ -176,12 +270,22 @@ export default async function IndustryLandingPage({ params }: PageProps) {
               { title: "Pay & Book", desc: "One wallet, secure payments, and easy scheduling." },
               { title: "Grow", desc: "Providers get visibility; users get the right services." },
             ].map((item) => (
-              <div key={item.title} className="rounded-2xl glass-panel p-6 border border-white/10 hover:border-white/20 transition-colors">
+              <div
+                key={item.title}
+                className="rounded-2xl glass-panel p-6 border border-white/10 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01]"
+                style={{
+                  borderColor: `${accent}22`,
+                  boxShadow: `0 0 0 1px rgba(255,255,255,0.03) inset`,
+                }}
+              >
                 <div className="w-8 h-8 rounded-lg mb-3 flex items-center justify-center" style={{ backgroundColor: `${accent}25` }}>
                   <IndustryIcon name={industry.icon} accentColor={accent} size={18} />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
                 <p className="text-sm text-slate-400">{item.desc}</p>
+                <p className="text-[11px] text-slate-500 mt-3">
+                  Verified by <span className="text-slate-300">PSS</span> · Protected by <span className="text-slate-300">EHB‑STL</span>
+                </p>
               </div>
             ))}
           </div>
@@ -217,6 +321,7 @@ export default async function IndustryLandingPage({ params }: PageProps) {
               >
                 <p className="font-semibold text-white">{typeof s === "string" ? s : s.name}</p>
                 <p className="text-xs text-slate-400 mt-1">{industry.name} · Verified</p>
+                <p className="text-[11px] text-slate-500 mt-2">Verified by PSS · Payment by EHB‑STL</p>
               </Link>
             ))}
           </div>
@@ -236,6 +341,11 @@ export default async function IndustryLandingPage({ params }: PageProps) {
           <div className="rounded-2xl glass-panel card-hover p-8 border" style={{ borderColor: `${accent}30` }}>
             <p className="text-slate-300 mb-6 max-w-2xl">
               Run {industry.name} operations in your city with EHB franchise. Revenue share, support and trust backbone included.
+            </p>
+            <p className="text-[11px] text-slate-400 mb-5">
+              Trust stack included: <span className="text-slate-200">PSS</span> verification ·{" "}
+              <span className="text-slate-200">DMO</span> monitoring ·{" "}
+              <span className="text-slate-200">EHB‑STL</span> secure payments
             </p>
             <Link
               href="/franchise"
@@ -258,7 +368,7 @@ export default async function IndustryLandingPage({ params }: PageProps) {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                href={`/industry/${industry.slug}`}
+                href={`/industry/${industry.slug}${locationQs}`}
                 className="min-h-touch inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-300"
                 style={{ background: `linear-gradient(135deg, ${accent}, ${accent}dd)` }}
               >
@@ -280,7 +390,12 @@ export default async function IndustryLandingPage({ params }: PageProps) {
         <div className="container-ultra flex flex-wrap justify-center gap-6 text-sm">
           <Link href="/" className="text-slate-400 hover:text-white transition-colors">EHB Home</Link>
           <Link href="/#industries" className="text-slate-400 hover:text-white transition-colors">All Industries</Link>
-          <Link href="/ai-marketplace" className="text-slate-400 hover:text-white transition-colors">Marketplace</Link>
+          <Link
+            href={`/ai-marketplace${locationQs}`}
+            className="text-slate-400 hover:text-white transition-colors"
+          >
+            Marketplace
+          </Link>
         </div>
       </section>
     </main>

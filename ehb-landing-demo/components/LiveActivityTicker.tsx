@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 
 const EVENTS = [
-  "Ali earned $25 from a Web Design order.",
-  "Sara sold a product in the E‑Commerce marketplace.",
-  "New IT job posted: React Developer (Remote).",
+  "Ali earned $20 from Web Design order.",
+  "Sara completed a job in IT services.",
+  "New order placed in Delivery services.",
   "Health provider completed 3 doctor consultations.",
   "New franchise inquiry from Dubai for Delivery services.",
   "User from Lahore booked a Travel package.",

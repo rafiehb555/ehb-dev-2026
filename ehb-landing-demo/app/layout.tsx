@@ -5,6 +5,7 @@ import { Sora } from "next/font/google";
 import { IndustriesBar } from "@/components/IndustriesBar";
 import { TopNavTabs } from "@/components/TopNavTabs";
 import { HeaderSearch } from "@/components/HeaderSearch";
+import { NotificationsBell } from "@/components/NotificationsBell";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -59,16 +60,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <HeaderSearch />
               <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 <TopNavTabs />
-                <button
-                  type="button"
-                  className="relative inline-flex items-center justify-center rounded-full h-7 w-7 text-xs text-slate-200 hover:bg-white/5 transition-colors"
-                  aria-label="Notifications"
-                >
-                  <span aria-hidden>🔔</span>
-                  <span className="absolute -top-0.5 -right-0.5 h-3.5 min-w-[14px] px-[3px] rounded-full bg-rose-500 text-[9px] font-semibold text-white flex items-center justify-center">
-                    3
-                  </span>
-                </button>
+                <NotificationsBell />
                 <span className="text-xs sm:text-sm font-semibold text-[#00eaff] whitespace-nowrap">850.00 EHBGC</span>
               </div>
             </div>

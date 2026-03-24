@@ -151,7 +151,7 @@ export function IndustriesBar() {
               <Link
                 key={ind.slug}
                 data-industry-slug={ind.slug}
-                href={landingPath}
+                href={industryHomePath}
                 className={[
                   "shrink-0 min-h-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-[11px] font-medium transition-all duration-200 whitespace-nowrap border gap-1.5",
                   isActive
@@ -244,7 +244,7 @@ export function IndustriesBar() {
                       onClick={() => {
                         setIsPickerOpen(false);
                         setQuery("");
-                        router.push(`/landing/${r.slug}`);
+                        router.push(`/industry/${r.slug}`);
                       }}
                       className="w-full text-left rounded-lg px-3 py-2 hover:bg-white/5 flex items-center gap-2 text-[11px] sm:text-sm"
                     >

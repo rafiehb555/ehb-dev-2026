@@ -218,6 +218,55 @@ export default function AdminPage() {
             </Panel>
           </div>
         </section>
+
+        <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
+          <Panel title="Phase 81 — Fraud Detection" path="/admin/fraud">
+            <p className="text-slate-300 mb-1">
+              Fake providers/orders/listings detect + admin risk flags. (UI mock)
+            </p>
+            <ul className="space-y-1 text-slate-300">
+              <li>• Duplicate listing patterns</li>
+              <li>• Location mismatch signals</li>
+              <li>• Risk score + severity workflow</li>
+            </ul>
+          </Panel>
+
+          <Panel title="Phase 82 — Business Analytics" path="/admin/ai-analytics">
+            <p className="text-slate-300 mb-1">
+              Franchise/provider/platform ke liye auto reports (UI mock).
+            </p>
+            <ul className="space-y-1 text-slate-300">
+              <li>• Industry / Franchise / Provider tabs</li>
+              <li>• Period: 30d / This month / This quarter</li>
+              <li>• Template + later AI NLG</li>
+            </ul>
+          </Panel>
+
+          <Panel title="Phase 83 — Location Intelligence" path="/admin/location-insights">
+            <p className="text-slate-300 mb-1">City/region demand insights + STL-adjusted gaps. (UI mock)</p>
+            <ul className="space-y-1 text-slate-300">
+              <li>• City dropdown</li>
+              <li>• Industry dropdown</li>
+              <li>• Insight cards</li>
+            </ul>
+          </Panel>
+
+          <Panel title="Phase 84 — AI Automation" path="/admin/ai-automation">
+            <p className="text-slate-300 mb-1">AI action suggestions (activate service/add product/apply). (UI mock)</p>
+            <ul className="space-y-1 text-slate-300">
+              <li>• City + industry context</li>
+              <li>• Confirm action flow (mock)</li>
+            </ul>
+          </Panel>
+
+          <Panel title="Phase 85 — Data Pipeline" path="/admin/ai-data-pipeline">
+            <p className="text-slate-300 mb-1">Ingestion → storage → scoring → publish (UI mock).</p>
+            <ul className="space-y-1 text-slate-300">
+              <li>• Run pipeline now (mock)</li>
+              <li>• Stage status cards</li>
+            </ul>
+          </Panel>
+        </section>
       </div>
     </main>
   );
