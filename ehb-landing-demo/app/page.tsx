@@ -10,9 +10,21 @@ import { AIFeatureItem } from "@/components/AIFeatureItem";
 import { MarketplaceSection } from "@/components/MarketplaceSection";
 import { FranchiseLevelCard } from "@/components/FranchiseLevelCard";
 import { LiveActivityTicker } from "@/components/LiveActivityTicker";
+import { LiveActivityCornerFeed } from "@/components/LiveActivityCornerFeed";
 import { RecommendedForYou } from "@/components/RecommendedForYou";
+import { EarningHookMoment } from "@/components/EarningHookMoment";
+import { GoSellrGSMFranchiseMini } from "@/components/GoSellrGSMFranchiseMini";
 import { QuickActionsStrip } from "@/components/QuickActionsStrip";
-import { DmoLandingSection } from "@/components/DmoLandingSection";
+import { EHBSystem3D } from "@/components/EHBSystem3D";
+import { EHBDepartmentsGrid } from "@/components/EHBDepartmentsGrid";
+import { EHBVerificationSystemFlow } from "@/components/EHBVerificationSystemFlow";
+import { EHBValueForEveryone } from "@/components/EHBValueForEveryone";
+import { EHBHowItWorks3DInteractive } from "@/components/EHBHowItWorks3DInteractive";
+import { DailyRewardClaimMini } from "@/components/DailyRewardClaimMini";
+import { TrustBadgeLegend } from "@/components/TrustBadgeLegend";
+import { STLLevelsAndSecurity } from "@/components/STLLevelsAndSecurity";
+import { AIToolsSection } from "@/components/AIToolsSection";
+import { RoadmapPhasesSection } from "@/components/RoadmapPhasesSection";
 
 function SectionDivider() {
   return (
@@ -25,8 +37,9 @@ function SectionDivider() {
 export default function LandingPage() {
   return (
     <main className="min-h-screen text-slate-100">
+      <LiveActivityCornerFeed />
       {/* Section 1 — Hero: simple, powerful, beginner-friendly */}
-      <section className="relative min-h-hero flex flex-col justify-center overflow-hidden border-b border-white/5 hero-bg-ecosystem">
+      <section className="relative min-h-hero flex flex-col justify-start overflow-hidden border-b border-white/5 hero-bg-ecosystem pt-safe-t pb-8">
         {/* Layer 2: mesh grid */}
         <div
           className="absolute inset-0 opacity-[0.04]"
@@ -38,18 +51,18 @@ export default function LandingPage() {
         {/* Layer 3: glow lights */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(0,174,239,0.18),transparent_50%),radial-gradient(ellipse_60%_40%_at_100%_15%,rgba(34,197,94,0.1),transparent_50%),radial-gradient(ellipse_50%_30%_at_0%_70%,rgba(139,92,246,0.08),transparent_50%)]" />
         <HeroParticles />
-        <div className="container-ultra relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-16 lg:py-24">
+        <div className="container-ultra relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-6 lg:py-8">
           <div className="lg:col-span-6 text-center lg:text-left">
             <p className="text-[11px] uppercase tracking-[0.25em] text-slate-400 mb-3">
               Earn Online · Even If You Are New
             </p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight gradient-text max-w-2xl mx-auto lg:mx-0 mb-5">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug gradient-text max-w-2xl mx-auto lg:mx-0 mb-4">
               EHB – Earn, Hire, and Grow in One Global Platform
             </h1>
-            <p className="text-slate-300 text-base md:text-lg max-w-xl mx-auto lg:mx-0 mb-3">
+            <p className="text-slate-300 text-sm md:text-base max-w-xl mx-auto lg:mx-0 mb-2">
               A powerful AI-based platform where you can find jobs, offer services, sell products, and build your own business across 32 industries.
             </p>
-            <p className="text-slate-300 text-sm md:text-base max-w-xl mx-auto lg:mx-0 mb-6">
+            <p className="text-slate-300 text-xs md:text-sm max-w-xl mx-auto lg:mx-0 mb-5">
               Even if you have no experience, you can start and grow with EHB.
             </p>
             <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-6">
@@ -76,33 +89,79 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Live activity ticker just under hero */}
-      <section className="container-ultra pt-4 pb-8">
+      {/* PHASE 3 — You can earn now moment */}
+      <SectionReveal as="div">
+        <EarningHookMoment />
+      </SectionReveal>
+
+      {/* Franchise opportunity preview (GoSellr GSM live booking) */}
+      <SectionReveal as="div">
+        <GoSellrGSMFranchiseMini />
+      </SectionReveal>
+
+      {/* PHASE 1 — How EHB Works & Why It’s Powerful (NEW) */}
+      <SectionReveal as="div">
+        <section className="container-ultra section-pad-ultra pt-6 pb-10">
+          <div className="space-y-4">
+            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">How EHB Works</p>
+            <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
+              How EHB Works &amp; Why It&apos;s Powerful
+            </h2>
+            <p className="text-slate-400 text-sm md:text-base max-w-2xl">
+              Hover nodes to see verified departments. Data flows through the system and outcomes stay trusted.
+            </p>
+            <EHBHowItWorks3DInteractive />
+          </div>
+        </section>
+      </SectionReveal>
+
+      <SectionDivider />
+
+      {/* NEXT SECTION: DEPARTMENTS (CARDS GRID) */}
+      <SectionReveal as="div">
+        <EHBDepartmentsGrid />
+      </SectionReveal>
+
+      {/* NEXT SECTION: VERIFICATION SYSTEM */}
+      <SectionReveal as="div">
+        <EHBVerificationSystemFlow />
+      </SectionReveal>
+
+      {/* NEXT SECTION: TRUST BADGES + STL LEVELS */}
+      <SectionReveal as="div">
+        <TrustBadgeLegend />
+      </SectionReveal>
+      <SectionReveal as="div">
+        <STLLevelsAndSecurity />
+      </SectionReveal>
+
+      {/* NEXT SECTION: VALUE FOR EVERYONE */}
+      <SectionReveal as="div">
+        <EHBValueForEveryone />
+      </SectionReveal>
+
+      {/* Live activity ticker */}
+      <section className="container-ultra pt-6 pb-8">
         <LiveActivityTicker />
       </section>
 
       {/* Daily reward teaser */}
       <section className="container-ultra pb-4">
-        <div className="rounded-2xl glass-panel border border-amber-400/40 px-4 py-3 md:px-6 md:py-4 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-[11px] sm:text-xs text-amber-100">
-            <span aria-hidden>🎁</span>
-            <p className="font-medium">
-              Daily reward available — log in and claim bonus points for today.
-            </p>
-          </div>
-          <Link
-            href="/dashboard"
-            className="min-h-touch inline-flex items-center justify-center rounded-full bg-amber-400 text-slate-950 px-4 py-1.5 text-[11px] sm:text-xs font-semibold hover:bg-amber-300 transition-colors"
-          >
-            View in dashboard
-          </Link>
-        </div>
+        <DailyRewardClaimMini />
       </section>
 
       <SectionDivider />
-      {/* DMO Landing Section — trust system introduction */}
+      {/* EHB system visual – ecosystem level */}
       <SectionReveal as="div">
-        <DmoLandingSection />
+        <EHBSystem3D />
+      </SectionReveal>
+
+      <SectionReveal as="div">
+        <AIToolsSection />
+      </SectionReveal>
+
+      <SectionReveal as="div">
+        <RoadmapPhasesSection />
       </SectionReveal>
 
       <SectionDivider />
@@ -206,21 +265,29 @@ export default function LandingPage() {
               icon="🌍"
               title="Global buyers and sellers"
               description="People from different countries can buy and sell services and products with one simple, verified EHB account."
+              badge="Verified identity (PSS)"
+              accentColor="#00AEEF"
             />
             <AIFeatureItem
               icon="🧩"
               title="All services in one place"
               description="From education and health to IT and logistics, EHB connects 32 industries so you don&apos;t need separate platforms."
+              badge="700+ services"
+              accentColor="#22C55E"
             />
             <AIFeatureItem
               icon="🛡️"
               title="100% verified services and products"
               description="Strong verification checks help remove fake listings so users can trust that services and products are real."
+              badge="DMO + PSS checks"
+              accentColor="#F59E0B"
             />
             <AIFeatureItem
               icon="⛓️"
               title="Blockchain-inspired franchise model"
               description="Franchise layers work like a secure network, so city, regional, and country partners can grow together with clear rules."
+              badge="EHB‑STL protected"
+              accentColor="#E53935"
             />
             <div className="pt-2">
               <Link
@@ -246,6 +313,86 @@ export default function LandingPage() {
       {/* Section 6 — Marketplace Section (services + products tabs) */}
       <SectionReveal as="div">
         <MarketplaceSection />
+      </SectionReveal>
+
+      <SectionDivider />
+      {/* DMO department overview */}
+      <SectionReveal as="div">
+        <section className="container-ultra section-pad-ultra">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+            EHB Departments
+          </p>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
+            DMO – Digital Management Office
+          </h2>
+          <p className="text-slate-400 max-w-2xl mb-6 text-sm md:text-base">
+            DMO (Digital Management Office) is the main department that keeps the EHB platform running
+            smoothly. It connects all online operations, data, and teams so that users, franchises, and
+            admins see one clean and professional experience.
+          </p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="rounded-2xl glass-card border border-[#3b82f6]/40 p-5">
+              <p className="text-xs font-semibold text-[#3b82f6] mb-1 uppercase tracking-[0.12em]">
+                Platform Operations
+              </p>
+              <p className="text-sm text-white mb-2">Daily monitoring and control</p>
+              <p className="text-xs text-slate-400">
+                Handles live platform status, incidents, and quality checks so that services, jobs, and
+                payments stay stable 24/7.
+              </p>
+            </div>
+            <div className="rounded-2xl glass-card border border-emerald-400/40 p-5">
+              <p className="text-xs font-semibold text-emerald-300 mb-1 uppercase tracking-[0.12em]">
+                Data &amp; Reporting
+              </p>
+              <p className="text-sm text-white mb-2">Dashboards and insights</p>
+              <p className="text-xs text-slate-400">
+                Builds internal dashboards for users, orders, and franchise performance so leadership can
+                take fast, data‑backed decisions.
+              </p>
+            </div>
+            <div className="rounded-2xl glass-card border border-amber-400/40 p-5">
+              <p className="text-xs font-semibold text-amber-300 mb-1 uppercase tracking-[0.12em]">
+                Content &amp; Communication
+              </p>
+              <p className="text-sm text-white mb-2">Messaging and guidelines</p>
+              <p className="text-xs text-slate-400">
+                Manages platform text, announcements, and internal documentation so that every department
+                follows the same clear language and rules.
+              </p>
+            </div>
+            <div className="rounded-2xl glass-card border border-violet-400/40 p-5">
+              <p className="text-xs font-semibold text-violet-200 mb-1 uppercase tracking-[0.12em]">
+                Process Automation
+              </p>
+              <p className="text-sm text-white mb-2">Workflows and approvals</p>
+              <p className="text-xs text-slate-400">
+                Designs digital workflows for onboarding, verification, ticketing, and approvals so work
+                moves in a clean, trackable way.
+              </p>
+            </div>
+            <div className="rounded-2xl glass-card border border-rose-400/40 p-5">
+              <p className="text-xs font-semibold text-rose-200 mb-1 uppercase tracking-[0.12em]">
+                Training &amp; Support
+              </p>
+              <p className="text-sm text-white mb-2">Internal enablement</p>
+              <p className="text-xs text-slate-400">
+                Prepares training material, SOPs, and digital help centers for EHB teams, franchises, and
+                support staff.
+              </p>
+            </div>
+            <div className="rounded-2xl glass-card border border-sky-400/40 p-5">
+              <p className="text-xs font-semibold text-sky-200 mb-1 uppercase tracking-[0.12em]">
+                Coordination with Other Departments
+              </p>
+              <p className="text-sm text-white mb-2">Central connection point</p>
+              <p className="text-xs text-slate-400">
+                Works together with Development, Admin, AI, Franchise, and Marketing departments so that
+                every new feature is launched in an organized way.
+              </p>
+            </div>
+          </div>
+        </section>
       </SectionReveal>
 
       <SectionDivider />

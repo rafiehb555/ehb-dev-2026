@@ -1,637 +1,388 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
 import Link from "next/link";
-import { Toast, type ToastState } from "@/components/dmo/Toast";
-import { ApplicationsTable } from "@/components/dmo/ApplicationsTable";
-import { ApplicationDrawer } from "@/components/dmo/ApplicationDrawer";
-import { DmoKpiCard } from "@/components/dmo/DmoKpiCard";
-import { PriorityQueueTabs, type PriorityTab } from "@/components/dmo/PriorityQueueTabs";
-import { AiInsightsPanel } from "@/components/dmo/AiInsightsPanel";
-import { ActionPanel } from "@/components/dmo/ActionPanel";
-import { sectionFadeUp, staggerList, itemFade } from "@/components/dmo/motion";
-import type {
-  ApplicationDetail,
-  ApplicationRow,
-  ApplicationStatus,
-  ApplicationType,
-  ApprovalDecision,
-  AuditLog,
-  SessionUser,
-} from "@/components/dmo/types";
-import { isAdminRole } from "@/components/dmo/ui";
 
-type ApprovalHistoryItem = {
-  id: string;
-  applicationId: string;
-  decision: ApprovalDecision;
-  notes: string | null;
-  createdAt: string;
-  approvedBy: { id: string; name: string; email: string; role: string };
-};
+const DMO_MODULES = [
+  {
+    id: "identity", icon: "🪪", name: "Identity & JPS Profile", shortName: "Identity",
+    color: "from-blue-600 to-blue-800", borderColor: "border-blue-500/40",
+    tagline: "Aapki digital pehchaan — verified aur secure",
+    description: "EHB ka digital identity system. Har user ko ek unique verified profile milta hai — Job Placement Score (JPS) ke saath. Ye score dikhata hai ke aap platform par kitne trustworthy aur active hain.",
+    features: ["🪪 Verified digital ID card", "⭐ JPS Score (0–1000) — trust indicator", "📊 Activity history aur performance", "🔐 Blockchain-secured identity", "🌍 Works in all 50+ countries"],
+    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
+    useCases: ["Job seekers ke liye", "Franchise partners ke liye", "Service providers ke liye"],
+  },
+  {
+    id: "pss", icon: "🛡️", name: "PSS — Platform Security System", shortName: "Security",
+    color: "from-red-600 to-red-800", borderColor: "border-red-500/40",
+    tagline: "Aapka data aur paisa 100% safe",
+    description: "Platform Security System (PSS) EHB ka security core hai. Ye system fraud detection, data encryption, aur unauthorized access prevention karta hai. Har transaction aur action verify hoti hai.",
+    features: ["🔒 End-to-end encryption", "🤖 AI-powered fraud detection", "📱 2-Factor Authentication (2FA)", "🚨 Real-time threat alerts", "🗂️ Audit logs for all actions"],
+    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
+    useCases: ["Transaction security", "Account protection", "Data privacy"],
+  },
+  {
+    id: "crb", icon: "⭐", name: "CRB — Credit & Reputation Badge", shortName: "Reputation",
+    color: "from-yellow-600 to-amber-700", borderColor: "border-yellow-500/40",
+    tagline: "Aapki market value — dikhne wali badge",
+    description: "Credit & Reputation Badge (CRB) ek visual score system hai. Jitna zyada kaam, utni badi badge — aur zyada business opportunities. Bronze se Platinum tak 4 levels hain.",
+    features: ["🏅 Visual badge (Bronze → Silver → Gold → Platinum)", "📈 Score auto-update hota hai", "🤝 High badge = zyada clients", "💼 Job aur franchise ke liye advantage", "📣 Public profile par display"],
+    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
+    useCases: ["Freelancers ke liye", "Businesses ke liye", "Franchise applicants ke liye"],
+  },
+  {
+    id: "stl", icon: "📦", name: "STL — Smart Tracking & Logistics", shortName: "Logistics",
+    color: "from-cyan-600 to-teal-700", borderColor: "border-cyan-500/40",
+    tagline: "Har parcel ka real-time location",
+    description: "Smart Tracking & Logistics (STL) EHB ka delivery network hai. AI automatically orders assign karta hai nearest delivery partner ko. Customer ko real-time tracking milti hai — exact location, estimated time.",
+    features: ["📍 Live GPS tracking on map", "🤖 AI-powered route optimization", "🔔 Automatic status notifications", "⚡ Same-day delivery support", "📊 Delivery analytics dashboard"],
+    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
+    useCases: ["Customers ke liye", "Delivery partners ke liye", "Franchise owners ke liye"],
+  },  {
+    id: "wallet", icon: "💳", name: "EHB Wallet", shortName: "Wallet",
+    color: "from-green-600 to-emerald-700", borderColor: "border-green-500/40",
+    tagline: "Aapka digital bank — instant payments",
+    description: "EHB Wallet ek secure digital wallet hai. Earn, store, aur transfer karein. Franchise income, service payments, aur referral bonuses — sab ek jagah. Bank transfer bhi supported hai.",
+    features: ["💰 Instant income deposits", "🏦 Bank withdrawal (24–48 hrs)", "💸 P2P transfers free", "📊 Full transaction history", "🌐 Multi-currency (USD, PKR, AED)"],
+    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
+    useCases: ["Income receive karna", "Bills pay karna", "Family ko send karna"],
+  },
+  {
+    id: "applications", icon: "📝", name: "Applications & Approvals", shortName: "Applications",
+    color: "from-violet-600 to-purple-700", borderColor: "border-violet-500/40",
+    tagline: "Koi bhi application — online, paperless",
+    description: "EHB ka digital application system. Franchise ke liye apply karo, service registration karo, job post karo — sab kuch online. Koi physical form nahi, koi queue nahi. Approval status real-time track hoti hai.",
+    features: ["📋 Digital application forms", "⏱️ Real-time approval status", "🔔 Email/SMS notifications", "📁 Document upload support", "✅ Digital signature system"],
+    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
+    useCases: ["Franchise apply karna", "Job post karna", "Service register karna"],
+  },
+  {
+    id: "certificates", icon: "🏆", name: "Certificates & Registry", shortName: "Certificates",
+    color: "from-orange-600 to-amber-700", borderColor: "border-orange-500/40",
+    tagline: "Digital certificates — blockchain verified",
+    description: "EHB ka digital certificate system. Training complete karo — certificate milta hai. Franchise approve — license milta hai. Sab certificates blockchain par registered hain, koi fake nahi ho sakta.",
+    features: ["🎓 Training completion certificates", "📜 Franchise license (digital)", "🔗 Blockchain verification", "🖨️ PDF download & print", "🌐 Shareable online (LinkedIn etc.)"],
+    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
+    useCases: ["Training ke baad", "Franchise registration", "Professional profile"],
+  },
+  {
+    id: "notifications", icon: "🔔", name: "Notifications & Compliance", shortName: "Notifications",
+    color: "from-pink-600 to-rose-700", borderColor: "border-pink-500/40",
+    tagline: "Sab updates ek jagah — koi miss nahi",
+    description: "EHB ka smart notification system. Order updates, payment alerts, compliance reminders, aur important announcements — sab kuch ek inbox mein. Push, SMS, aur email — aap choose karo.",
+    features: ["📱 Push notifications (mobile)", "📧 Email alerts", "💬 SMS notifications", "⚠️ Compliance deadline reminders", "📢 Platform announcements"],
+    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
+    useCases: ["Order updates", "Payment alerts", "Rule changes"],
+  },
+  {
+    id: "blockchain", icon: "⛓️", name: "Blockchain Anchoring", shortName: "Blockchain",
+    color: "from-slate-600 to-slate-800", borderColor: "border-slate-400/40",
+    tagline: "Har record tamper-proof — forever",
+    description: "EHB ka blockchain layer sab important records ko permanently anchor karta hai. Koi bhi transaction, certificate, ya identity change — blockchain par record hoti hai. Koi bhi data change nahi kar sakta.",
+    features: ["🔗 Immutable transaction records", "📋 Smart contract automation", "🔍 Public verification available", "⚡ Fast (no mining delays)", "🌐 Cross-chain compatibility"],
+    status: "Active", statusColor: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+    useCases: ["Identity verification", "Contract execution", "Audit trails"],
+  },
+];
 
-function Badge({
-  children,
-  tone,
-}: {
-  children: React.ReactNode;
-  tone: "cyan" | "amber" | "emerald" | "rose" | "slate" | "violet";
-}) {
-  const styles =
-    tone === "cyan"
-      ? "border-[#00eaff]/40 text-[#00eaff]"
-      : tone === "emerald"
-        ? "border-emerald-400/40 text-emerald-300"
-        : tone === "rose"
-          ? "border-rose-400/40 text-rose-200"
-          : tone === "amber"
-            ? "border-amber-400/40 text-amber-200"
-            : tone === "violet"
-              ? "border-violet-400/40 text-violet-200"
-              : "border-white/15 text-slate-200";
-
-  return (
-    <span
-      className={`inline-flex items-center gap-2 rounded-full glass-panel border px-2.5 py-1 text-[10px] font-semibold ${styles}`}
-    >
-      {children}
-    </span>
-  );
-}
-
+const PHASES = [
+  { phase: "Phase 1–3",   range: "Setup",      desc: "Platform infrastructure aur core systems", done: true  },
+  { phase: "Phase 4–10",  range: "Foundation",  desc: "Identity, security, wallet, logistics live", done: true  },
+  { phase: "Phase 11–30", range: "Growth",      desc: "AI modules, marketplace expansion", done: false },
+  { phase: "Phase 31–50", range: "Scale",       desc: "Global rollout, 32 industries live", done: false },
+  { phase: "Phase 51–80", range: "Global",      desc: "Full ecosystem — 50+ countries live", done: false },
+];
 export default function DmoPage() {
-  const queueRef = useRef<HTMLDivElement | null>(null);
-  const [apps, setApps] = useState<ApplicationRow[]>([]);
-  const [me, setMe] = useState<SessionUser | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [detail, setDetail] = useState<ApplicationDetail | null>(null);
-  const [approvalHistory, setApprovalHistory] = useState<ApprovalHistoryItem[]>([]);
-  const [auditTimeline, setAuditTimeline] = useState<AuditLog[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [detailLoading, setDetailLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [toast, setToast] = useState<ToastState>({ open: false, kind: "info", title: "" });
-
-  const [filterStatus, setFilterStatus] = useState<ApplicationStatus | "ALL">("ALL");
-  const [filterType, setFilterType] = useState<ApplicationType | "ALL">("ALL");
-  const [filterRisk, setFilterRisk] = useState<"ALL" | "LOW" | "MEDIUM" | "HIGH">("ALL");
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState({ take: 20, skip: 0 });
-  const [priorityTab, setPriorityTab] = useState<PriorityTab>("ALL");
-  const [assigning, setAssigning] = useState(false);
-  const [assignees, setAssignees] = useState<Array<{ id: string; name: string; email: string; role: string }>>([]);
-  const [creating, setCreating] = useState(false);
-  const [createOpen, setCreateOpen] = useState(false);
-  const [createType, setCreateType] = useState<ApplicationType>("PSS");
-
-  const todayIso = useMemo(() => new Date().toISOString().slice(0, 10), []);
-
-  function riskLevelFor(app: ApplicationRow): "LOW" | "MEDIUM" | "HIGH" {
-    const ageHrs = (Date.now() - new Date(app.updatedAt).getTime()) / (1000 * 60 * 60);
-    if (app.status === "UNDER_INSPECTION" && ageHrs > 12) return "HIGH";
-    if (app.type === "CRB_CERTIFICATION" || app.type === "INDUSTRY_VERIFICATION") return "HIGH";
-    if (ageHrs > 6 || app.status === "IN_REVIEW") return "MEDIUM";
-    return "LOW";
-  }
-
-  function isSlaBreach(app: ApplicationRow) {
-    const ageHrs = (Date.now() - new Date(app.updatedAt).getTime()) / (1000 * 60 * 60);
-    return app.status !== "APPROVED" && app.status !== "REJECTED" && ageHrs > 8;
-  }
-
-  function slaFor(app: ApplicationRow) {
-    if (app.status === "APPROVED" || app.status === "REJECTED") return { label: "Closed", tone: "emerald" as const };
-    const ageMs = Date.now() - new Date(app.updatedAt).getTime();
-    const leftMs = 8 * 60 * 60 * 1000 - ageMs;
-    if (leftMs <= 0) return { label: "Overdue", tone: "rose" as const };
-    const leftHours = leftMs / (1000 * 60 * 60);
-    if (leftHours <= 2) return { label: `${Math.ceil(leftHours)}h left`, tone: "amber" as const };
-    return { label: `${Math.ceil(leftHours)}h left`, tone: "emerald" as const };
-  }
-
-  const stats = useMemo(() => {
-    const total = apps.length;
-    const pending = apps.filter((a) => a.status === "NEW" || a.status === "IN_REVIEW" || a.status === "UNDER_INSPECTION").length;
-    const approvedToday = apps.filter((a) => a.status === "APPROVED" && a.updatedAt.slice(0, 10) === todayIso).length;
-    const highRisk = apps.filter((a) => riskLevelFor(a) === "HIGH").length;
-    const slaBreach = apps.filter(isSlaBreach).length;
-    return { total, pending, approvedToday, highRisk, slaBreach };
-  }, [apps, todayIso]);
-
-  const filteredApps = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    const base = apps.filter((a) => {
-      const statusOk = filterStatus === "ALL" ? true : a.status === filterStatus;
-      const typeOk = filterType === "ALL" ? true : a.type === filterType;
-      const qOk =
-        q.length === 0
-          ? true
-          : a.id.toLowerCase().includes(q) ||
-            a.applicant.name.toLowerCase().includes(q) ||
-            a.applicant.email.toLowerCase().includes(q) ||
-            (a.assignedTo?.name.toLowerCase().includes(q) ?? false) ||
-            (a.assignedTo?.email.toLowerCase().includes(q) ?? false);
-      const risk = riskLevelFor(a);
-      const riskOk = filterRisk === "ALL" ? true : risk === filterRisk;
-      return statusOk && typeOk && qOk && riskOk;
-    });
-    if (priorityTab === "HIGH_RISK") return base.filter((a) => riskLevelFor(a) === "HIGH");
-    if (priorityTab === "SLA_BREACH") return base.filter((a) => isSlaBreach(a));
-    if (priorityTab === "NEW") return base.filter((a) => a.status === "NEW");
-    return base;
-  }, [apps, filterStatus, filterType, filterRisk, query, priorityTab]);
-
-  const insightData = useMemo(() => {
-    const riskApps = apps.filter((a) => riskLevelFor(a) === "HIGH").slice(0, 3);
-    const slaApps = apps.filter((a) => isSlaBreach(a)).slice(0, 3);
-    return {
-      riskAlerts: riskApps.map((a) => `${a.type} · ${a.applicant.name} requires urgent review`),
-      slaWarnings: slaApps.map((a) => `${a.id.slice(0, 8)} is nearing/over SLA`),
-      suggestions: [
-        `${stats.pending} applications are pending action`,
-        `${stats.highRisk} high-risk items should be prioritized`,
-        `${stats.approvedToday} approvals recorded today`,
-      ],
-    };
-  }, [apps, stats.pending, stats.highRisk, stats.approvedToday]);
-
-  const priorityCounts = useMemo(
-    () => ({
-      ALL: apps.length,
-      HIGH_RISK: apps.filter((a) => riskLevelFor(a) === "HIGH").length,
-      SLA_BREACH: apps.filter((a) => isSlaBreach(a)).length,
-      NEW: apps.filter((a) => a.status === "NEW").length,
-    }),
-    [apps]
-  );
-
-  async function load() {
-    setLoading(true);
-    setError(null);
-    try {
-      const qs = new URLSearchParams();
-      qs.set("take", String(page.take));
-      qs.set("skip", String(page.skip));
-      if (filterStatus !== "ALL") qs.set("status", filterStatus);
-      if (filterType !== "ALL") qs.set("type", filterType);
-
-      const [meRes, appsRes] = await Promise.all([
-        fetch("/api/auth/me", { cache: "no-store" }),
-        fetch(`/api/dmo/applications?${qs.toString()}`, { cache: "no-store" }),
-      ]);
-
-      // Auth is soft — failure just means demo/unauthenticated mode
-      const meJson = meRes.ok ? await meRes.json().catch(() => null) : null;
-      if (meJson?.success && meJson.data?.user) setMe(meJson.data.user);
-
-      const appsJson = await appsRes.json().catch(() => null);
-      if (appsRes.status === 503 || appsJson?.error?.code === "DB_UNAVAILABLE") {
-        // DB not yet set up — show demo mode with empty state
-        setApps([]);
-        setError("Database not connected. Configure DATABASE_URL and run prisma migrate dev to load real data.");
-        return;
-      }
-      if (!appsRes.ok) throw new Error(`Applications load failed: ${appsRes.status}`);
-      if (!appsJson?.success) throw new Error(appsJson?.error?.message ?? "Load failed");
-      setApps(appsJson.data.applications ?? []);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load DMO data");
-      setApps([]);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function loadAssignees() {
-    try {
-      const res = await fetch("/api/dmo/users", { cache: "no-store" });
-      if (!res.ok) return;
-      const json = (await res.json()) as
-        | { success: true; data: { users: Array<{ id: string; name: string; email: string; role: string }> } }
-        | { success: false };
-      if (json.success) setAssignees(json.data.users ?? []);
-    } catch {
-      // keep silent; assignment can still work via manual ID
-    }
-  }
-
-  async function loadDetail(id: string) {
-    setSelectedId(id);
-    setDetail(null);
-    setApprovalHistory([]);
-    setAuditTimeline([]);
-    setDetailLoading(true);
-    try {
-      const [res, approvalsRes, auditRes] = await Promise.all([
-        fetch(`/api/dmo/applications/${id}`, { cache: "no-store" }),
-        fetch(`/api/dmo/approvals?applicationId=${id}`, { cache: "no-store" }),
-        fetch(`/api/dmo/audit?applicationId=${id}&take=100`, { cache: "no-store" }),
-      ]);
-      if (!res.ok) throw new Error(`Application detail failed: ${res.status}`);
-      if (!approvalsRes.ok) throw new Error(`Approvals load failed: ${approvalsRes.status}`);
-      if (!auditRes.ok) throw new Error(`Audit timeline load failed: ${auditRes.status}`);
-
-      const json = (await res.json()) as
-        | { success: true; data: { application: ApplicationDetail } }
-        | { success: false; error: { message: string } };
-      const approvalsJson = (await approvalsRes.json()) as
-        | { success: true; data: { approvals: ApprovalHistoryItem[] } }
-        | { success: false; error: { message: string } };
-      const auditJson = (await auditRes.json()) as
-        | { success: true; data: { logs: AuditLog[] } }
-        | { success: false; error: { message: string } };
-      if (!json.success) throw new Error(json.error.message);
-      if (!approvalsJson.success) throw new Error(approvalsJson.error.message);
-      if (!auditJson.success) throw new Error(auditJson.error.message);
-      setDetail(json.data.application);
-      setApprovalHistory(approvalsJson.data.approvals);
-      setAuditTimeline(auditJson.data.logs);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load application detail");
-    } finally {
-      setDetailLoading(false);
-    }
-  }
-
-  async function decide(decision: ApprovalDecision, notes: string) {
-    if (!selectedId) return;
-    setError(null);
-    try {
-      const res = await fetch("/api/dmo/approvals", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ applicationId: selectedId, decision, notes: notes.trim() ? notes.trim() : undefined }),
-      });
-      if (!res.ok) {
-        const j = (await res.json().catch(() => null)) as any;
-        throw new Error(j?.error?.message ? `${j.error.message}` : `Decision failed: ${res.status}`);
-      }
-      setToast({
-        open: true,
-        kind: "success",
-        title: decision === "APPROVED" ? "Approved" : "Rejected",
-        message: "Decision recorded and audit log updated.",
-      });
-      await Promise.all([load(), loadDetail(selectedId)]);
-      setSelectedIds((prev) => prev.filter((id) => id !== selectedId));
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to submit decision");
-      setToast({
-        open: true,
-        kind: "error",
-        title: "Action failed",
-        message: e instanceof Error ? e.message : "Request failed",
-      });
-    } finally {
-    }
-  }
-
-  async function createApplication() {
-    setCreating(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/dmo/applications", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          type: createType,
-          payload: { source: "dmo_dashboard", createdAt: new Date().toISOString() },
-        }),
-      });
-      if (!res.ok) {
-        const j = (await res.json().catch(() => null)) as any;
-        throw new Error(j?.error?.message ? `${j.error.message}` : `Create failed: ${res.status}`);
-      }
-      setToast({
-        open: true,
-        kind: "success",
-        title: "Application created",
-        message: `New ${createType} application added to queue.`,
-      });
-      setCreateOpen(false);
-      await load();
-      queueRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to create application");
-      setToast({
-        open: true,
-        kind: "error",
-        title: "Create failed",
-        message: e instanceof Error ? e.message : "Request failed",
-      });
-    } finally {
-      setCreating(false);
-    }
-  }
-
-  function resetFilters() {
-    setFilterStatus("ALL");
-    setFilterType("ALL");
-    setFilterRisk("ALL");
-    setQuery("");
-    setPriorityTab("ALL");
-    setPage((p) => ({ ...p, skip: 0 }));
-  }
-
-  async function assignApplication(assigneeId: string) {
-    if (!selectedId) return;
-    setAssigning(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/dmo/applications/${selectedId}`, {
-        method: "PATCH",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ assignedToId: assigneeId, status: "IN_REVIEW" }),
-      });
-      if (!res.ok) {
-        const j = (await res.json().catch(() => null)) as any;
-        throw new Error(j?.error?.message ? `${j.error.message}` : `Assignment failed: ${res.status}`);
-      }
-      setToast({
-        open: true,
-        kind: "success",
-        title: "Assignment saved",
-        message: "Application assigned and moved to IN_REVIEW.",
-      });
-      await Promise.all([load(), loadDetail(selectedId)]);
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : "Failed to assign application";
-      setError(msg);
-      setToast({ open: true, kind: "error", title: "Assignment failed", message: msg });
-    } finally {
-      setAssigning(false);
-    }
-  }
-
-  async function bulkDecision(decision: ApprovalDecision) {
-    if (selectedIds.length === 0) return;
-    setError(null);
-    try {
-      const res = await fetch("/api/dmo/approvals/bulk", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ applicationIds: selectedIds, decision, notes: "Bulk decision from DMO table" }),
-      });
-      if (!res.ok) {
-        const j = (await res.json().catch(() => null)) as any;
-        throw new Error(j?.error?.message ? `${j.error.message}` : `Bulk action failed: ${res.status}`);
-      }
-      setToast({
-        open: true,
-        kind: "success",
-        title: decision === "APPROVED" ? "Bulk approved" : "Bulk rejected",
-        message: `${selectedIds.length} applications updated.`,
-      });
-      setSelectedIds([]);
-      await load();
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : "Bulk action failed";
-      setError(msg);
-      setToast({ open: true, kind: "error", title: "Bulk action failed", message: msg });
-    }
-  }
-
-  useEffect(() => {
-    void load();
-  }, [filterStatus, filterType, filterRisk, page.take, page.skip]);
-
-  useEffect(() => {
-    void loadAssignees();
-  }, []);
+  const [activeModule, setActiveModule] = useState(null);
+  const [activeTab, setActiveTab] = useState("modules");
+  const selectedModule = DMO_MODULES.find((m) => m.id === activeModule);
 
   return (
-    <main className="min-h-screen text-slate-100">
-      <div className="container-ehb py-6 sm:py-8 text-[10px] xs:text-[11px]">
-        <Toast toast={toast} onClose={() => setToast((t) => ({ ...t, open: false }))} />
-        <div className="space-y-4">
-          {/* MAIN + RIGHT */}
-          <section className="space-y-4">
-            {/* TOP BAR */}
-            <motion.section
-              variants={sectionFadeUp}
-              initial="hidden"
-              animate="visible"
-                className="glass-panel ehb-hover-lift p-4 border border-white/10"
-            >
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge tone="cyan">DMO · Brain of System</Badge>
-                    <Badge tone={loading ? "amber" : "emerald"}>{loading ? "System Syncing" : "System Healthy"}</Badge>
-                    {me ? <Badge tone="slate">Role: {me.role}</Badge> : null}
-                  </div>
-                  <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">DMO Dashboard</h1>
-                </div>
+    <main className="min-h-screen bg-[#05050f] text-white overflow-x-hidden">
 
-                <div className="flex flex-wrap items-center gap-2">
-                  <div className="w-full sm:w-auto rounded-full glass-panel border border-white/15 px-3 py-1.5 text-xs ehb-text-muted min-w-0 sm:min-w-[220px]">
-                    <input
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
-                      placeholder="Search systems, departments, actions..."
-                      className="w-full bg-transparent outline-none placeholder:text-slate-500"
-                    />
-                  </div>
-                  <Link href="/home" className="ehb-btn-secondary ehb-press">
-                    EHB Home
-                  </Link>
-                  <Link href="/" className="ehb-btn-secondary ehb-press">
-                    EHB Landing
-                  </Link>
-                  <Link href="/admin" className="ehb-btn-secondary ehb-press">
-                    Super Admin Panel
-                  </Link>
-                  <div className="rounded-full glass-panel border border-white/15 px-3 py-1.5 text-xs text-slate-200">🔔 3</div>
-                  <div className="rounded-full glass-panel border border-white/15 px-3 py-1.5 text-xs text-slate-200">
-                    {me?.name ?? "DMO Admin"}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setCreateOpen(true)}
-                    className="ehb-btn-primary ehb-press"
-                  >
-                    + New Application
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setPriorityTab("HIGH_RISK")}
-                    className="ehb-btn-danger ehb-press"
-                  >
-                    High Risk
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void load()}
-                    className="ehb-btn-secondary ehb-press"
-                  >
-                    Refresh
-                  </button>
-                </div>
+      <section className="relative py-16 px-4 text-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/50 via-blue-900/20 to-[#05050f]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-blue-600/8 rounded-full blur-3xl" />
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-sm font-medium mb-6">
+            <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+            DMO — Digital Management & Operations
+          </div>
+          <h1 className="text-4xl md:text-6xl font-black mb-4 leading-tight">
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-300 to-purple-400 bg-clip-text text-transparent">EHB ka Engine</span>
+            <br /><span className="text-white">Platform ke Peeche</span>
+          </h1>
+          <p className="text-xl text-white/60 max-w-2xl mx-auto mb-8">
+            9 powerful modules jo EHB platform ko chalate hain — identity se lekar blockchain tak.
+            <br /><span className="text-white/30 text-base">Sab kuch automated, secure, aur transparent.</span>
+          </p>
+          <div className="flex flex-wrap justify-center gap-8">
+            {[
+              { icon: "⚙️", val: "9", label: "Core Modules" },
+              { icon: "🔒", val: "100%", label: "Secured" },
+              { icon: "⛓️", val: "Blockchain", label: "Verified" },
+              { icon: "🌍", val: "50+", label: "Countries" },
+            ].map((s) => (
+              <div key={s.label} className="text-center">
+                <div className="text-3xl mb-1">{s.icon}</div>
+                <div className="text-2xl font-black text-white">{s.val}</div>
+                <div className="text-xs text-white/40 uppercase tracking-wider">{s.label}</div>
               </div>
-
-              {error ? (
-                <div className="mt-3 rounded-xl border border-rose-400/40 bg-rose-500/10 p-3 text-rose-100">
-                  <div className="font-semibold mb-1">Failed to load applications</div>
-                  <div className="text-xs text-rose-100/90">{error}</div>
-                  <button
-                    type="button"
-                    onClick={() => void load()}
-                    className="mt-2 rounded-full bg-rose-400 text-slate-950 px-3 py-1.5 text-xs font-semibold"
-                  >
-                    Retry
-                  </button>
-                </div>
-              ) : null}
-            </motion.section>
-
-            {/* KPI STRIP */}
-            <motion.section
-              className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5"
-              variants={staggerList}
-              initial="hidden"
-              animate="visible"
-            >
-              <motion.div variants={itemFade}><DmoKpiCard label="Total Applications" value={loading ? "…" : stats.total} detail="All application types" tone="cyan" trend="up" trendText="+12%" /></motion.div>
-              <motion.div variants={itemFade}><DmoKpiCard label="Pending" value={loading ? "…" : stats.pending} detail="Needs decision" tone="amber" trend="flat" trendText="stable" /></motion.div>
-              <motion.div variants={itemFade}><DmoKpiCard label="High Risk" value={loading ? "…" : stats.highRisk} detail="Urgent priority" tone="rose" trend="up" trendText="+2" /></motion.div>
-              <motion.div variants={itemFade}><DmoKpiCard label="SLA Breach" value={loading ? "…" : stats.slaBreach} detail="Over threshold" tone="violet" trend="down" trendText="-1" /></motion.div>
-              <motion.div variants={itemFade}><DmoKpiCard label="Approved Today" value={loading ? "…" : stats.approvedToday} detail="Completed today" tone="emerald" trend="up" trendText="+8" /></motion.div>
-            </motion.section>
-
-            {/* WORKSPACE + ACTION ZONE */}
-            <section className="grid gap-3 grid-cols-1 xl:grid-cols-12 items-start">
-              <div ref={queueRef} className="xl:col-span-8">
-                <div className="mb-3 rounded-xl border border-white/10 bg-white/5 p-3">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <div className="text-xs font-semibold text-white">Priority Queue</div>
-                      <div className="text-[11px] text-slate-400">Decision speed target: under 10 seconds per item.</div>
-                    </div>
-                    <PriorityQueueTabs value={priorityTab} counts={priorityCounts} onChange={setPriorityTab} />
-                  </div>
-                </div>
-                <ApplicationsTable
-                  loading={loading}
-                  error={error}
-                  rows={filteredApps}
-                  selectedIds={selectedIds}
-                  canApprove={isAdminRole(me?.role)}
-                  selectedId={selectedId}
-                  filterStatus={filterStatus}
-                  filterType={filterType}
-                  filterRisk={filterRisk}
-                  search={query}
-                  onChangeFilterStatus={(v) => {
-                    setPage((p) => ({ ...p, skip: 0 }));
-                    setFilterStatus(v);
-                  }}
-                  onChangeFilterType={(v) => {
-                    setPage((p) => ({ ...p, skip: 0 }));
-                    setFilterType(v);
-                  }}
-                  onChangeFilterRisk={setFilterRisk}
-                  onChangeSearch={setQuery}
-                  page={page}
-                  totalShown={filteredApps.length}
-                  onNextPage={() => setPage((p) => ({ ...p, skip: p.skip + p.take }))}
-                  onPrevPage={() => setPage((p) => ({ ...p, skip: Math.max(0, p.skip - p.take) }))}
-                  onSelect={(id) => void loadDetail(id)}
-                  onToggleSelect={(id) =>
-                    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]))
-                  }
-                  onToggleSelectAllOnPage={() =>
-                    setSelectedIds((prev) => {
-                      const pageIds = filteredApps.map((a) => a.id);
-                      const allSelected = pageIds.every((id) => prev.includes(id));
-                      if (allSelected) return prev.filter((id) => !pageIds.includes(id));
-                      return [...new Set([...prev, ...pageIds])];
-                    })
-                  }
-                  onBulkDecision={(decision) => void bulkDecision(decision)}
-                  getRiskLevel={riskLevelFor}
-                  getSla={slaFor}
-                  onRefresh={() => void load()}
-                  onResetFilters={resetFilters}
-                />
-              </div>
-              <div className="xl:col-span-4 space-y-3">
-                <AiInsightsPanel
-                  riskAlerts={insightData.riskAlerts}
-                  slaWarnings={insightData.slaWarnings}
-                  suggestions={insightData.suggestions}
-                />
-                <ActionPanel
-                  selected={detail}
-                  loading={detailLoading || assigning}
-                  meId={me?.id ?? null}
-                  canApprove={isAdminRole(me?.role)}
-                  assignees={assignees}
-                  riskLevel={detail ? riskLevelFor(detail) : undefined}
-                  stlImpact={detail ? { approve: riskLevelFor(detail) === "HIGH" ? 2 : 5, reject: -10 } : undefined}
-                  onQuickDecision={(d) => void decide(d, "Quick action from DMO workspace")}
-                  onAssign={(assigneeId) => void assignApplication(assigneeId)}
-                />
-              </div>
-            </section>
-          </section>
+            ))}
+          </div>
         </div>
+      </section>
 
-        <ApplicationDrawer
-          open={selectedId !== null}
-          me={me}
-          application={detail}
-          approvals={approvalHistory}
-          auditLogs={auditTimeline}
-          loading={detailLoading}
-          onClose={() => {
-            setSelectedId(null);
-            setDetail(null);
-          }}
-          onDecide={decide}
-        />
-        {createOpen ? (
-          <div className="fixed inset-0 z-[80] bg-black/65 flex items-center justify-center p-4">
-            <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#020c1b] p-4">
-              <div className="flex items-center justify-between gap-3 mb-3">
-                <h2 className="text-sm font-semibold text-white">Create DMO Application</h2>
-                <button type="button" className="ehb-btn-secondary ehb-press" onClick={() => setCreateOpen(false)}>
-                  Close
-                </button>
-              </div>
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-xs text-slate-300 mb-1">Application Type</label>
-                  <select
-                    value={createType}
-                    onChange={(e) => setCreateType(e.target.value as ApplicationType)}
-                    className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-xs text-slate-100 outline-none"
-                  >
-                    <option value="PSS">PSS</option>
-                    <option value="PSS_REFILL">PSS_REFILL</option>
-                    <option value="CRB_CERTIFICATION">CRB_CERTIFICATION</option>
-                    <option value="INDUSTRY_VERIFICATION">INDUSTRY_VERIFICATION</option>
-                    <option value="CRB">CRB</option>
-                    <option value="SERVICE">SERVICE</option>
-                    <option value="PRODUCT">PRODUCT</option>
-                    <option value="FRANCHISE">FRANCHISE</option>
-                    <option value="OTHER">OTHER</option>
-                  </select>
-                </div>
+      <section className="py-4 px-4 sticky top-0 z-30 bg-[#05050f]/90 backdrop-blur-md border-b border-white/5">
+        <div className="max-w-5xl mx-auto flex gap-2 flex-wrap justify-center">
+          {[
+            { key: "modules", icon: "⚙️", label: "9 Core Modules" },
+            { key: "phases",  icon: "🗺️", label: "Dev Phases" },
+            { key: "governance", icon: "🏛️", label: "Governance" },
+          ].map((tab) => (
+            <button key={tab.key} onClick={() => setActiveTab(tab.key)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold border transition-all ${
+                activeTab === tab.key ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/30" : "bg-white/5 border-white/10 text-white/60 hover:text-white"
+              }`}>
+              {tab.icon} {tab.label}
+            </button>
+          ))}
+        </div>
+      </section>      {/* ââ 9 MODULES TAB âââââââââââââââââââââââââââââââ */}
+      {activeTab === "modules" && (
+        <section className="py-10 px-4">
+          <div className="max-w-6xl mx-auto">
+
+            {/* Module Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+              {DMO_MODULES.map((mod) => (
                 <button
-                  type="button"
-                  onClick={() => void createApplication()}
-                  disabled={creating}
-                  className="ehb-btn-primary ehb-press disabled:opacity-50"
+                  key={mod.id}
+                  onClick={() => setActiveModule(activeModule === mod.id ? null : mod.id)}
+                  className={`text-left rounded-2xl border overflow-hidden transition-all hover:scale-[1.02] ${mod.borderColor} ${
+                    activeModule === mod.id ? "ring-2 ring-white/20 scale-[1.02]" : ""
+                  }`}
                 >
-                  {creating ? "Creating..." : "Create Application"}
+                  {/* Card header gradient */}
+                  <div className={`bg-gradient-to-br ${mod.color} p-4 flex items-start justify-between`}>
+                    <div className="text-4xl">{mod.icon}</div>
+                    <span className={`text-xs font-bold px-2 py-1 rounded-full border ${mod.statusColor}`}>
+                      {mod.status}
+                    </span>
+                  </div>
+
+                  {/* Card body */}
+                  <div className="bg-white/[0.04] p-4">
+                    <h3 className="font-black text-white text-base mb-1">{mod.shortName}</h3>
+                    <p className="text-xs text-white/50 mb-3">{mod.tagline}</p>
+                    <p className="text-xs text-white/40 leading-relaxed line-clamp-2">{mod.description}</p>
+                    <div className="mt-3 flex items-center gap-1 text-xs text-blue-400 font-semibold">
+                      {activeModule === mod.id ? "Hide details â²" : "See details â¼"}
+                    </div>
+                  </div>
                 </button>
+              ))}
+            </div>
+
+            {/* Expanded module detail */}
+            {selectedModule && (
+              <div className={`rounded-3xl border ${selectedModule.borderColor} overflow-hidden animate-in fade-in`}>
+                <div className={`bg-gradient-to-br ${selectedModule.color} p-6 md:p-8`}>
+                  <div className="flex items-center gap-4">
+                    <div className="text-6xl">{selectedModule.icon}</div>
+                    <div>
+                      <div className="text-sm text-white/60 mb-1">Module Detail</div>
+                      <h2 className="text-2xl font-black text-white">{selectedModule.name}</h2>
+                      <p className="text-white/70 mt-1">{selectedModule.tagline}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/[0.04] p-6 md:p-8">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Description */}
+                    <div className="md:col-span-2">
+                      <h3 className="text-sm font-black text-white/50 uppercase tracking-wider mb-3">Kya Karta Hai?</h3>
+                      <p className="text-white/80 text-base leading-relaxed mb-6">{selectedModule.description}</p>
+
+                      <h3 className="text-sm font-black text-white/50 uppercase tracking-wider mb-3">Features</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {selectedModule.features.map((f) => (
+                          <div key={f} className="flex items-start gap-2 bg-black/20 rounded-xl p-3 text-sm text-white/70">
+                            {f}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Use cases + action */}
+                    <div>
+                      <h3 className="text-sm font-black text-white/50 uppercase tracking-wider mb-3">Kiske Liye?</h3>
+                      <div className="space-y-2 mb-6">
+                        {selectedModule.useCases.map((uc) => (
+                          <div key={uc} className="bg-black/20 rounded-xl p-3 text-sm text-white/70 flex items-center gap-2">
+                            <span className="text-green-400">â</span> {uc}
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-bold mb-4 ${selectedModule.statusColor}`}>
+                        <span className="w-2 h-2 rounded-full bg-current animate-pulse" />
+                        Status: {selectedModule.status}
+                      </div>
+
+                      <button
+                        onClick={() => setActiveModule(null)}
+                        className="w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-semibold transition-all"
+                      >
+                        Close â
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ââ DEV PHASES TAB âââââââââââââââââââââââââââââââ */}
+      {activeTab === "phases" && (
+        <section className="py-10 px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-black text-white mb-2">ðºï¸ Development Roadmap</h2>
+              <p className="text-white/50">Phase 1 se Phase 80 tak â EHB ka safar</p>
+            </div>
+
+            <div className="space-y-4">
+              {PHASES.map((p, i) => (
+                <div
+                  key={i}
+                  className={`rounded-2xl border p-5 flex items-center gap-5 ${
+                    p.done
+                      ? "bg-green-950/20 border-green-500/30"
+                      : "bg-white/5 border-white/10"
+                  }`}
+                >
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0 ${
+                    p.done ? "bg-green-500/20 text-green-400" : "bg-white/10 text-white/30"
+                  }`}>
+                    {p.done ? "â" : "â³"}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3">
+                      <span className="font-black text-white">{p.phase}</span>
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${p.done ? "bg-green-500/20 text-green-300" : "bg-white/10 text-white/40"}`}>
+                        {p.range}
+                      </span>
+                    </div>
+                    <p className="text-sm text-white/50 mt-1">{p.desc}</p>
+                  </div>
+                  <div className={`text-sm font-bold ${p.done ? "text-green-400" : "text-white/20"}`}>
+                    {p.done ? "Complete" : "Upcoming"}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Overall progress */}
+            <div className="mt-8 bg-white/5 border border-white/10 rounded-2xl p-6">
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-white font-bold">Overall Progress</span>
+                <span className="text-green-400 font-black">Phase 10 / 80</span>
+              </div>
+              <div className="bg-white/5 rounded-full h-4 overflow-hidden">
+                <div className="h-full w-[12.5%] bg-gradient-to-r from-green-500 to-emerald-400 rounded-full" />
+              </div>
+              <p className="text-xs text-white/30 mt-2">12.5% complete â Foundation aur core systems live hain</p>
             </div>
           </div>
-        ) : null}
-      </div>
+        </section>
+      )}
+
+      {/* ââ GOVERNANCE TAB âââââââââââââââââââââââââââââââ */}
+      {activeTab === "governance" && (
+        <section className="py-10 px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-black text-white mb-2">ðï¸ Digital Governance System</h2>
+              <p className="text-white/50">EHB ka fair, transparent, aur automated governance</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                {
+                  icon: "âï¸",
+                  title: "Fair Rules",
+                  desc: "Platform ke rules sab ke liye equal hain. Koi special treatment nahi â AI ensure karta hai ke har faisla fair ho.",
+                  color: "border-blue-500/30 bg-blue-950/20",
+                },
+                {
+                  icon: "ð",
+                  title: "Full Transparency",
+                  desc: "Har action, transaction, aur change publicly verifiable hai. Blockchain par permanent record â koi chhupa nahi sakta.",
+                  color: "border-cyan-500/30 bg-cyan-950/20",
+                },
+                {
+                  icon: "ð¤",
+                  title: "AI Decision Making",
+                  desc: "Disputes, approvals, aur flagging â AI handle karta hai. Biasness zero. Speed maximum. 24/7 available.",
+                  color: "border-purple-500/30 bg-purple-950/20",
+                },
+                {
+                  icon: "ð³ï¸",
+                  title: "Community Voting",
+                  desc: "Bade platform changes mein franchisees aur partners vote karte hain. Democracy-based decisions for major updates.",
+                  color: "border-green-500/30 bg-green-950/20",
+                },
+                {
+                  icon: "ð",
+                  title: "Compliance Tracking",
+                  desc: "Har franchisee aur partner ka compliance automatically track hota hai. Reminders milte hain â koi deadline miss nahi hoti.",
+                  color: "border-yellow-500/30 bg-yellow-950/20",
+                },
+                {
+                  icon: "ð¨",
+                  title: "Dispute Resolution",
+                  desc: "Agar koi masla ho â 3-step resolution: AI review â Human review â Final decision. 72 ghante mein hal.",
+                  color: "border-red-500/30 bg-red-950/20",
+                },
+              ].map((item) => (
+                <div key={item.title} className={`rounded-2xl border p-6 ${item.color}`}>
+                  <div className="text-4xl mb-3">{item.icon}</div>
+                  <h3 className="text-lg font-black text-white mb-2">{item.title}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ââ CTA âââââââââââââââââââââââââââââââââââââââââââ */}
+      <section className="py-16 px-4 text-center">
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-gradient-to-r from-blue-900/30 via-purple-900/20 to-cyan-900/30 border border-blue-400/20 rounded-3xl p-10">
+            <div className="text-5xl mb-4">âï¸</div>
+            <h2 className="text-2xl font-black text-white mb-3">EHB Platform Explore Karein</h2>
+            <p className="text-white/60 mb-8">Poora ecosystem dekhein â franchise se lekar AI marketplace tak</p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link href="/franchise" className="px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl text-white font-bold transition-all hover:scale-105">
+                Franchise Apply Karein ð
+              </Link>
+              <Link href="/home" className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl text-white font-semibold transition-all">
+                Home Platform â
+              </Link>
+              <Link href="/development" className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl text-white font-semibold transition-all">
+                Dev Roadmap â
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }

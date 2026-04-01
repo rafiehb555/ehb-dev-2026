@@ -1,5 +1,22 @@
 import Link from "next/link";
 import Image from "next/image";
+import { getIndustryBySlug } from "@/lib/industries";
+import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
+
+type AiTool = {
+  title: string;
+  arrowLine: string;
+  accent: string;
+  emoji: string;
+};
+
+const TOOL_INFO: AiTool[] = [
+  { title: "AI Lawyer", arrowLine: "→ Legal advice, compliance, contracts", accent: "#6B7280", emoji: "⚖️" },
+  { title: "AI Doctor", arrowLine: "→ Medical guidance & health support", accent: "#00AEEF", emoji: "🩺" },
+  { title: "AI Resume Builder", arrowLine: "→ Professional CV generation", accent: "#22C55E", emoji: "💼" },
+  { title: "AI Contract Generator", arrowLine: "→ Automated legal agreements", accent: "#8B5CF6", emoji: "🧾" },
+  { title: "AI Travel Planner", arrowLine: "→ Smart trip planning", accent: "#0EA5E9", emoji: "✈️" },
+];
 
 const trendingProducts = [
   { name: "CleanMaster AI", price: "$0.99", badge: "VIC", tier: "VIP", stars: 5, image: "/images/ai-market/cleanmaster-ai.png" },
@@ -17,7 +34,52 @@ const freeTools = [
   { name: "DocVerify AI", tag: "Verification", stars: 5, image: "/images/ai-market/docverify-ai.png" },
 ];
 
-export default function AIMarketplacePage() {
+export default function AIMarketplacePage({
+  searchParams,
+}: {
+  searchParams?: { tool?: string; industry?: string; country?: string; state?: string; city?: string };
+}) {
+  const selectedToolTitle = searchParams?.tool?.trim() || "";
+  const selectedTool = TOOL_INFO.find((t) => t.title === selectedToolTitle) || null;
+  const selectedIndustrySlug = searchParams?.industry?.trim() || "";
+  const selectedIndustry = selectedIndustrySlug ? getIndustryBySlug(selectedIndustrySlug) : undefined;
+
+  const selectedCountryCode = searchParams?.country?.trim() || "";
+  const selectedStateCode = searchParams?.state?.trim() || "";
+  const selectedCityCode = searchParams?.city?.trim() || "";
+
+  const selectedCountry = selectedCountryCode ? getCountryByCode(selectedCountryCode) : undefined;
+  const selectedState =
+    selectedCountryCode && selectedStateCode ? getStateByCode(selectedCountryCode, selectedStateCode) : undefined;
+  const selectedCity =
+    selectedCountryCode && selectedStateCode && selectedCityCode
+      ? getCityByCode(selectedCountryCode, selectedStateCode, selectedCityCode)
+      : undefined;
+
+  const locationAccent = selectedCountry?.accent ?? "#00AEEF";
+  const locationLabel = selectedCity?.name || selectedState?.name || selectedCountry?.name || "";
+
+  const makeHref = (toolTitle: string) => {
+    const params = new URLSearchParams();
+    params.set("tool", toolTitle);
+    if (selectedIndustrySlug) params.set("industry", selectedIndustrySlug);
+    if (selectedCountryCode) params.set("country", selectedCountryCode);
+    if (selectedStateCode) params.set("state", selectedStateCode);
+    if (selectedCityCode) params.set("city", selectedCityCode);
+    return `/ai-marketplace?${params.toString()}`;
+  };
+
+  const allListingsHref = (() => {
+    const params = new URLSearchParams();
+    if (selectedToolTitle) params.set("tool", selectedToolTitle);
+    if (selectedIndustrySlug) params.set("industry", selectedIndustrySlug);
+    if (selectedCountryCode) params.set("country", selectedCountryCode);
+    if (selectedStateCode) params.set("state", selectedStateCode);
+    if (selectedCityCode) params.set("city", selectedCityCode);
+    const qs = params.toString();
+    return qs ? `/ai-marketplace?${qs}#all` : `/ai-marketplace#all`;
+  })();
+
   return (
     <main className="flex-1 overflow-auto">
       {/* Hero – full-width, premium */}
@@ -124,6 +186,88 @@ export default function AIMarketplacePage() {
 
       {/* Main content sections */}
       <section className="container-ehb py-8 md:py-10 space-y-10">
+        {/* Universal AI tools (structured data from EHB) */}
+        <section className="space-y-4">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">AI Tools · Verified</p>
+              <h2 className="text-lg md:text-xl font-semibold text-white">
+                {selectedTool ? selectedTool.title : "Top Trusted AI Services"}
+              </h2>
+              <p className="text-[12px] text-slate-400">
+                {selectedTool
+                  ? selectedTool.arrowLine
+                  : "AI tools that plug into EHB verified trust flows across industries."}
+              </p>
+              {selectedIndustry ? (
+                <div
+                  className="mt-3 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border"
+                  style={{ borderColor: `${selectedIndustry.accentColor}55`, boxShadow: `0 0 28px ${selectedIndustry.accentColor}22` }}
+                >
+                  <span aria-hidden>🌐</span>
+                  <span>
+                    Industry context: <span className="text-white font-semibold">{selectedIndustry.name}</span>
+                  </span>
+                </div>
+              ) : null}
+
+              {locationLabel ? (
+                <div
+                  className="mt-2 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border"
+                  style={{ borderColor: `${locationAccent}55`, boxShadow: `0 0 28px ${locationAccent}22` }}
+                >
+                  <span aria-hidden>📍</span>
+                  <span>
+                    Near you: <span className="text-white font-semibold">{locationLabel}</span>
+                  </span>
+                </div>
+              ) : null}
+            </div>
+          </div>
+
+          <div id="tools" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {TOOL_INFO.map((t) => {
+              const isActive = t.title === selectedToolTitle;
+              return (
+                <div
+                  key={t.title}
+                  className="rounded-2xl glass-card border p-5 card-hover transition-all duration-300"
+                  style={{
+                    borderColor: isActive ? `${t.accent}88` : `${t.accent}40`,
+                    boxShadow: isActive ? `0 0 32px ${t.accent}22` : `0 0 22px ${t.accent}12`,
+                  }}
+                >
+                  <div className="flex items-start gap-3">
+                    <div
+                      className="h-11 w-11 rounded-2xl flex items-center justify-center text-lg border"
+                      style={{
+                        backgroundColor: `${t.accent}18`,
+                        borderColor: `${t.accent}33`,
+                        boxShadow: `0 0 18px ${t.accent}22`,
+                      }}
+                      aria-hidden
+                    >
+                      {t.emoji}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-white">{t.title}</p>
+                      <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">{t.arrowLine}</p>
+                      <div className="mt-3">
+                        <Link
+                          href={makeHref(t.title)}
+                          className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] text-slate-200 hover:bg-white/10 transition-colors w-full"
+                        >
+                          Open tool
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
         {/* Trending AI Verified Products */}
         <div id="products" className="space-y-4">
           <div className="flex items-center justify-between gap-3">
@@ -137,7 +281,7 @@ export default function AIMarketplacePage() {
               </p>
             </div>
             <Link
-              href="/ai-marketplace#all"
+              href={allListingsHref}
               className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-[11px] text-slate-200 hover:bg-white/5"
             >
               See all listings

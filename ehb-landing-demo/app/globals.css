@@ -2,24 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --ehb-primary: #3b82f6;
-  --ehb-success: #22c55e;
-  --ehb-danger: #ef4444;
-  --ehb-warning: #f59e0b;
-
-  --ehb-bg-main: #0b0f19;
-  --ehb-bg-card: #111827;
-  --ehb-bg-elevated: #1f2937;
-
-  --ehb-text-heading: #ffffff;
-  --ehb-text-body: #d1d5db;
-  --ehb-text-muted: #9ca3af;
-
-  --ehb-glow-blue: rgba(59, 130, 246, 0.3);
-  --ehb-border-soft: rgba(255, 255, 255, 0.08);
-}
-
 /* ========== EHB THEME – slightly lighter base + center shine ========== */
 /* Base a bit lighter than pure #020617; center glow like hero */
 html {
@@ -30,12 +12,12 @@ html {
 }
 
 body {
-  font-family: var(--font-inter), Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
   overflow-x: hidden;
-  color: var(--ehb-text-body);
-  background-color: var(--ehb-bg-main) !important;
+  color: #e5e7eb;
+  background-color: #0a1929 !important;
   min-height: 100vh;
 }
 
@@ -148,133 +130,6 @@ main {
 
 /* Glassmorphism + interactions */
 @layer utilities {
-  .ehb-card {
-    background: color-mix(in srgb, var(--ehb-bg-card) 82%, transparent);
-    border: 1px solid var(--ehb-border-soft);
-    border-radius: 1rem;
-    padding: 1rem;
-    box-shadow: 0 12px 30px rgba(2, 6, 23, 0.45);
-  }
-
-  .ehb-card-elevated {
-    background: color-mix(in srgb, var(--ehb-bg-elevated) 86%, transparent);
-    border: 1px solid color-mix(in srgb, var(--ehb-border-soft) 85%, rgba(59, 130, 246, 0.1));
-    border-radius: 1rem;
-    padding: 1rem;
-    box-shadow: 0 18px 40px rgba(2, 6, 23, 0.55);
-  }
-
-  .ehb-text-heading {
-    color: var(--ehb-text-heading);
-  }
-
-  .ehb-text-muted {
-    color: var(--ehb-text-muted);
-  }
-
-  .ehb-hover-lift {
-    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
-  }
-
-  .ehb-hover-lift:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 38px rgba(2, 6, 23, 0.58), 0 0 0 1px var(--ehb-glow-blue) inset;
-    border-color: color-mix(in srgb, var(--ehb-primary) 45%, var(--ehb-border-soft));
-  }
-
-  .ehb-press {
-    transition: transform 120ms ease;
-  }
-
-  .ehb-press:active {
-    transform: scale(0.98);
-  }
-
-  .ehb-btn-primary {
-    background: linear-gradient(135deg, var(--ehb-primary), #2563eb);
-    color: #ffffff;
-    border: 1px solid color-mix(in srgb, var(--ehb-primary) 50%, transparent);
-    border-radius: 999px;
-    padding: 0.5rem 1rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    box-shadow: 0 0 0 transparent;
-    transition: box-shadow 200ms ease, filter 200ms ease;
-  }
-
-  .ehb-btn-primary:hover {
-    box-shadow: 0 0 24px var(--ehb-glow-blue);
-    filter: brightness(1.05);
-  }
-
-  .ehb-btn-secondary {
-    background: color-mix(in srgb, var(--ehb-bg-card) 72%, transparent);
-    color: var(--ehb-text-body);
-    border: 1px solid var(--ehb-border-soft);
-    border-radius: 999px;
-    padding: 0.5rem 1rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    transition: background-color 200ms ease, border-color 200ms ease;
-  }
-
-  .ehb-btn-secondary:hover {
-    background: color-mix(in srgb, var(--ehb-bg-elevated) 70%, transparent);
-    border-color: color-mix(in srgb, var(--ehb-primary) 35%, var(--ehb-border-soft));
-  }
-
-  .ehb-btn-danger {
-    background: linear-gradient(135deg, var(--ehb-danger), #dc2626);
-    color: #fff;
-    border: 1px solid color-mix(in srgb, var(--ehb-danger) 50%, transparent);
-    border-radius: 999px;
-    padding: 0.5rem 1rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
-  /* Unified dark select for dashboard filter tabs/dropdowns */
-  .ehb-select {
-    background-color: transparent;
-    color: #e2e8f0;
-    outline: none;
-  }
-
-  .ehb-select option {
-    background-color: #06162a;
-    color: #e2e8f0;
-  }
-
-  .ehb-status-new {
-    background: color-mix(in srgb, var(--ehb-primary) 16%, transparent);
-    color: #bfdbfe;
-    border-color: color-mix(in srgb, var(--ehb-primary) 55%, transparent);
-  }
-
-  .ehb-status-review {
-    background: color-mix(in srgb, var(--ehb-warning) 18%, transparent);
-    color: #fde68a;
-    border-color: color-mix(in srgb, var(--ehb-warning) 60%, transparent);
-  }
-
-  .ehb-status-approved {
-    background: color-mix(in srgb, var(--ehb-success) 18%, transparent);
-    color: #bbf7d0;
-    border-color: color-mix(in srgb, var(--ehb-success) 60%, transparent);
-  }
-
-  .ehb-status-rejected {
-    background: color-mix(in srgb, var(--ehb-danger) 16%, transparent);
-    color: #fecaca;
-    border-color: color-mix(in srgb, var(--ehb-danger) 60%, transparent);
-  }
-
-  .ehb-status-risk {
-    background: color-mix(in srgb, #ff0000 22%, transparent);
-    color: #fee2e2;
-    border-color: rgba(255, 0, 0, 0.75);
-  }
-
   .glass-card {
     background: rgba(2, 12, 27, 0.88);
     backdrop-filter: blur(22px);
@@ -380,6 +235,15 @@ main {
   .btn-glow:hover {
     box-shadow: 0 0 28px rgba(0, 234, 255, 0.6), 0 0 56px rgba(59, 130, 246, 0.35);
     transform: scale(1.02);
+  }
+
+  /* Slow spin for orbits */
+  @keyframes spin-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .animate-spin-slow {
+    animation: spin-slow 40s linear infinite;
   }
 
   /* Slow AI status pulse */

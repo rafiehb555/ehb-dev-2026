@@ -56,7 +56,7 @@ export default function NotFound() {
 
           {/* Primary CTA – new theme gradient */}
           <Link
-            href="/home"
+            href="/"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-ehbNew-emerald to-ehbNew-violet px-8 py-3.5 text-sm font-semibold text-ehbNew-bg btn-glow-new shadow-neon-emerald"
           >
             <span>EHB Home par jao</span>

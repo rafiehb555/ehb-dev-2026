@@ -43,32 +43,9 @@ export default function AIMarketplaceLayout({ children }: { children: ReactNode 
             </Link>
           ))}
         </nav>
-        <div className="p-3 border-t border-white/10 space-y-2">
-          <p className="text-[10px] uppercase tracking-wider text-slate-500">Trusty Wallet</p>
-          <p className="text-sm font-semibold text-[#00eaff]">850.0 EHBGC</p>
-          <div className="h-8 w-full rounded-lg bg-[#020617] border border-[#00eaff]/20" />
-        </div>
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="nav-glass h-14 shrink-0 flex items-center justify-between gap-4 px-6">
-          <div className="flex items-center gap-4">
-            <button type="button" className="p-2 rounded-lg hover:bg-white/5 text-slate-400" aria-label="Menu">☰</button>
-            <span className="text-sm font-medium text-slate-300">AI Marketplace</span>
-          </div>
-          <div className="flex-1 max-w-xl mx-4">
-            <div className="flex items-center gap-2 rounded-xl glass-panel px-4 py-2.5 text-sm text-slate-400">
-              <span>🔍</span>
-              <span>Search apps, games, education, franchises...</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-semibold text-[#00eaff]">850.00 EHBGC</span>
-            <div className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-xs">👤</div>
-            <button type="button" className="p-2 rounded-lg hover:bg-white/5 text-slate-400" aria-label="Close">✕</button>
-          </div>
-        </header>
-
         {children}
       </div>
     </div>

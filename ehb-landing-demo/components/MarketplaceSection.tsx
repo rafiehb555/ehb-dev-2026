@@ -10,6 +10,7 @@ interface ServiceCardProps {
   rating: number;
   tag?: string;
   badge?: string;
+  deptHint?: string;
 }
 
 interface ProductCardProps {
@@ -18,6 +19,7 @@ interface ProductCardProps {
   rating: number;
   tag?: string;
   badge?: string;
+  deptHint?: string;
 }
 
 function getThumbEmoji(title: string): string {
@@ -33,6 +35,16 @@ function getThumbEmoji(title: string): string {
   return "✨";
 }
 
+function getIndustryAccent(title: string): { color: string; label: string } {
+  const t = title.toLowerCase();
+  if (t.includes("medical") || t.includes("health") || t.includes("doctor")) return { color: "#00AEEF", label: "Health" };
+  if (t.includes("education") || t.includes("course") || t.includes("books") || t.includes("tutor")) return { color: "#E53935", label: "Education" };
+  if (t.includes("website") || t.includes("web") || t.includes("seo") || t.includes("software") || t.includes("app")) return { color: "#3B82F6", label: "IT" };
+  if (t.includes("delivery") || t.includes("rider") || t.includes("logistics")) return { color: "#FB923C", label: "Delivery" };
+  if (t.includes("laptop") || t.includes("store") || t.includes("product")) return { color: "#F59E0B", label: "E‑commerce" };
+  return { color: "#22C55E", label: "Business" };
+}
+
 function VerifiedBadge() {
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-400/40 px-2 py-[2px] text-[10px] font-medium text-emerald-200">
@@ -42,11 +54,103 @@ function VerifiedBadge() {
   );
 }
 
-function ServiceCard({ title, seller, price, rating, tag, badge }: ServiceCardProps) {
+type TrustBadgesCompactProps = { deptHint?: string };
+
+function TrustBadgesCompact({ deptHint }: TrustBadgesCompactProps) {
+  const hint = (deptHint ?? "").toLowerCase();
+
+  const chips = [
+    {
+      key: "pss",
+      icon: "🛡️",
+      label: "PSS Verified",
+      accent: "rgba(34,197,94,0.55)",
+      keywords: ["pss"],
+    },
+    {
+      key: "crb",
+      icon: "🏛️",
+      label: "CRB Certified",
+      accent: "rgba(59,130,246,0.55)",
+      keywords: ["crb"],
+    },
+    {
+      key: "stl",
+      icon: "⭐",
+      label: "STL Level",
+      accent: "rgba(245,158,11,0.55)",
+      keywords: ["stl"],
+    },
+    {
+      key: "dmo",
+      icon: "🌐",
+      label: "DMO Registered",
+      accent: "rgba(139,92,246,0.55)",
+      keywords: ["dmo"],
+    },
+    {
+      key: "franchise",
+      icon: "🏢",
+      label: "Franchise Verified",
+      accent: "rgba(249,115,22,0.55)",
+      keywords: ["franchise"],
+    },
+    {
+      key: "refilling",
+      icon: "🔁",
+      label: "Refilling Count",
+      accent: "rgba(148,163,184,0.55)",
+      keywords: ["refilling", "renewals"],
+    },
+    {
+      key: "complaints",
+      icon: "⚠️",
+      label: "Complaints",
+      accent: "rgba(239,68,68,0.55)",
+      keywords: ["complaints", "complaint"],
+    },
+  ];
+
+  const matched = chips.filter((c) => c.keywords.some((k) => hint.includes(k)));
+  const finalChips = hint.trim().length === 0 ? chips : matched.length ? matched : chips.filter((c) => c.key === "pss");
+
   return (
-    <div className="rounded-2xl glass-card card-hover border border-white/10 p-4 flex flex-col gap-2 hover:border-[#00eaff]/40 hover:shadow-[0_0_22px_rgba(0,234,255,0.35)] transition-all duration-300">
+    <div className="flex flex-wrap items-center gap-2 mt-2">
+      {finalChips.map((c) => (
+        <span
+          key={c.label}
+          className="inline-flex items-center gap-1 rounded-full border px-2 py-[1px] text-[9px] font-medium text-slate-200 bg-white/5"
+          style={{
+            borderColor: c.accent,
+            boxShadow: `0 0 18px ${c.accent}`,
+          }}
+        >
+          <span aria-hidden>{c.icon}</span>
+          <span>{c.label}</span>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function ServiceCard({ title, seller, price, rating, tag, badge, deptHint }: ServiceCardProps) {
+  const accent = getIndustryAccent(title);
+  return (
+    <div
+      className="rounded-2xl glass-card card-hover border p-4 flex flex-col gap-2 transition-all duration-300"
+      style={{
+        borderColor: `${accent.color}2a`,
+        boxShadow: "0 0 0 1px rgba(255,255,255,0.04) inset",
+      }}
+    >
       {/* Thumbnail – simple visual related to title */}
-      <div className="h-24 rounded-xl bg-gradient-to-br from-sky-500/30 via-slate-900 to-violet-600/30 mb-2 flex items-center justify-center">
+      <div
+        className="h-24 rounded-xl mb-2 flex items-center justify-center border"
+        style={{
+          borderColor: `${accent.color}30`,
+          background: `radial-gradient(circle at 30% 20%, ${accent.color}40, transparent 55%), radial-gradient(circle at 80% 90%, rgba(139,92,246,0.22), transparent 55%), linear-gradient(135deg, rgba(2,12,27,0.85), rgba(2,12,27,0.95))`,
+        }}
+      >
         <div className="text-center">
           <div className="text-2xl mb-1" aria-hidden>
             {getThumbEmoji(title)}
@@ -77,18 +181,47 @@ function ServiceCard({ title, seller, price, rating, tag, badge }: ServiceCardPr
           <span>{rating.toFixed(1)}</span>
         </span>
       </div>
-      <div className="mt-2">
+      <div className="flex items-center justify-between gap-2 mt-2">
         <VerifiedBadge />
+        <span
+          className="text-[10px] rounded-full px-2 py-[2px] border"
+          style={{
+            borderColor: `${accent.color}35`,
+            backgroundColor: `${accent.color}12`,
+            color: "rgba(226,232,240,0.85)",
+          }}
+        >
+          {accent.label}
+        </span>
+      </div>
+      <TrustBadgesCompact deptHint={deptHint} />
+      <div className="mt-2">
+        <p className="text-[10px] text-slate-400">
+          {deptHint ?? "PSS + EHB‑STL protected"}
+        </p>
       </div>
     </div>
   );
 }
 
-function ProductCard({ title, price, rating, tag, badge }: ProductCardProps) {
+function ProductCard({ title, price, rating, tag, badge, deptHint }: ProductCardProps) {
+  const accent = getIndustryAccent(title);
   return (
-    <div className="rounded-2xl glass-card card-hover border border-white/10 p-4 flex flex-col gap-2 hover:border-[#22c55e]/40 hover:shadow-[0_0_22px_rgba(34,197,94,0.35)] transition-all duration-300">
+    <div
+      className="rounded-2xl glass-card card-hover border p-4 flex flex-col gap-2 transition-all duration-300"
+      style={{
+        borderColor: `${accent.color}2a`,
+        boxShadow: "0 0 0 1px rgba(255,255,255,0.04) inset",
+      }}
+    >
       {/* Thumbnail – simple visual related to title */}
-      <div className="h-24 rounded-xl bg-gradient-to-br from-emerald-500/25 via-slate-900 to-sky-500/25 mb-2 flex items-center justify-center">
+      <div
+        className="h-24 rounded-xl mb-2 flex items-center justify-center border"
+        style={{
+          borderColor: `${accent.color}30`,
+          background: `radial-gradient(circle at 30% 20%, ${accent.color}40, transparent 55%), radial-gradient(circle at 80% 90%, rgba(34,197,94,0.18), transparent 55%), linear-gradient(135deg, rgba(2,12,27,0.85), rgba(2,12,27,0.95))`,
+        }}
+      >
         <div className="text-center">
           <div className="text-2xl mb-1" aria-hidden>
             {getThumbEmoji(title)}
@@ -118,8 +251,24 @@ function ProductCard({ title, price, rating, tag, badge }: ProductCardProps) {
           <span>{rating.toFixed(1)}</span>
         </span>
       </div>
-      <div className="mt-2">
+      <div className="flex items-center justify-between gap-2 mt-2">
         <VerifiedBadge />
+        <span
+          className="text-[10px] rounded-full px-2 py-[2px] border"
+          style={{
+            borderColor: `${accent.color}35`,
+            backgroundColor: `${accent.color}12`,
+            color: "rgba(226,232,240,0.85)",
+          }}
+        >
+          {accent.label}
+        </span>
+      </div>
+      <TrustBadgesCompact deptHint={deptHint} />
+      <div className="mt-2">
+        <p className="text-[10px] text-slate-400">
+          {deptHint ?? "PSS + EHB‑STL protected"}
+        </p>
       </div>
     </div>
   );
@@ -156,17 +305,17 @@ export function MarketplaceSection() {
   const [activeTab, setActiveTab] = useState<"services" | "products">("services");
 
   const services: ServiceCardProps[] = [
-    { title: "Logo Design", seller: "Creative Studio", price: "$25", rating: 4.8, tag: "Top Rated", badge: "Pro Seller" },
-    { title: "Website Development", seller: "Rafi Web Studio", price: "$200", rating: 4.9, tag: "Trending", badge: "🔥 Hot" },
-    { title: "SEO Optimization", seller: "Growth Agency", price: "$50", rating: 4.7, tag: "Fast Delivery" },
-    { title: "Social Media Management", seller: "Brand Boosters", price: "$80", rating: 4.6, tag: "New" },
+    { title: "Logo Design", seller: "Creative Studio", price: "$25", rating: 4.8, tag: "High demand", badge: "⭐ Top Rated", deptHint: "DMO quality checks + PSS verified" },
+    { title: "Website Development", seller: "Rafi Web Studio", price: "$200", rating: 4.9, tag: "Fast delivery", badge: "🔥 Trending", deptHint: "PSS + EHB‑STL protected" },
+    { title: "SEO Optimization", seller: "Growth Agency", price: "$50", rating: 4.7, tag: "Fast delivery", badge: "🆕 New", deptHint: "DMO monitoring + secure checkout" },
+    { title: "Social Media Management", seller: "Brand Boosters", price: "$80", rating: 4.6, tag: "High demand", badge: "⭐ Top Rated", deptHint: "Verified provider + safe payment" },
   ];
 
   const products: ProductCardProps[] = [
-    { title: "Laptop (GoSellr Store)", price: "$850", rating: 4.9, tag: "Popular", badge: "Top Rated" },
-    { title: "Medical Equipment Kit", price: "$320", rating: 4.7, tag: "Health" },
-    { title: "Education Bundle: Books + Courses", price: "$99", rating: 4.8, tag: "Education", badge: "Best for beginners" },
-    { title: "Delivery Rider Gear Pack", price: "$60", rating: 4.5, tag: "New" },
+    { title: "Laptop (GoSellr Store)", price: "$850", rating: 4.9, tag: "High demand", badge: "⭐ Top Rated", deptHint: "PSS sellers + EHB‑STL checkout" },
+    { title: "Medical Equipment Kit", price: "$320", rating: 4.7, tag: "Fast delivery", badge: "🔥 Trending", deptHint: "DMO quality checks + secure payment" },
+    { title: "Education Bundle: Books + Courses", price: "$99", rating: 4.8, tag: "Fast delivery", badge: "🆕 New", deptHint: "Verified content + protected purchase" },
+    { title: "Delivery Rider Gear Pack", price: "$60", rating: 4.5, tag: "High demand", badge: "⭐ Top Rated", deptHint: "Verified store + secure checkout" },
   ];
 
   const grid =

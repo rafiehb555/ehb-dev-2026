@@ -4,16 +4,22 @@ import { getIndustryBySlug, getAllSlugs } from "@/lib/industries";
 import { getIndustryServices } from "@/lib/industryServices";
 import { IndustryIcon } from "@/components/IndustryIcon";
 import { SectionReveal } from "@/components/SectionReveal";
+import { TrustBadgeLegend } from "@/components/TrustBadgeLegend";
+import { STLLevelsAndSecurity } from "@/components/STLLevelsAndSecurity";
+import { AIToolsSection } from "@/components/AIToolsSection";
+import { RoadmapPhasesSection } from "@/components/RoadmapPhasesSection";
+import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 
 interface PageProps {
   params: Promise<{ industry: string }>;
+  searchParams?: { country?: string; state?: string; city?: string };
 }
 
 export async function generateStaticParams() {
   return getAllSlugs().map((industry) => ({ industry }));
 }
 
-export default async function IndustryHomePage({ params }: PageProps) {
+export default async function IndustryHomePage({ params, searchParams }: PageProps) {
   const { industry: industrySlug } = await params;
   const industry = getIndustryBySlug(industrySlug);
   if (!industry) notFound();
@@ -22,6 +28,29 @@ export default async function IndustryHomePage({ params }: PageProps) {
   const servicesConfig = getIndustryServices(industry.slug);
   const categories = servicesConfig?.categories ?? [];
   const flatServices = servicesConfig?.categories.flatMap((c) => c.services) ?? [];
+
+  const countryCode = searchParams?.country?.trim() || "";
+  const stateCode = searchParams?.state?.trim() || "";
+  const cityCode = searchParams?.city?.trim() || "";
+
+  const selectedCountry = countryCode ? getCountryByCode(countryCode) : undefined;
+  const selectedState = countryCode && stateCode ? getStateByCode(countryCode, stateCode) : undefined;
+  const selectedCity = countryCode && stateCode && cityCode ? getCityByCode(countryCode, stateCode, cityCode) : undefined;
+  const locationLabel = selectedCity?.name || selectedState?.name || selectedCountry?.name || "";
+  const locationQuery =
+    locationLabel && (countryCode || stateCode || cityCode)
+      ? { country: countryCode, state: stateCode, city: cityCode }
+      : undefined;
+
+  const locationQs = (() => {
+    if (!locationQuery) return "";
+    const sp = new URLSearchParams();
+    if (locationQuery.country) sp.set("country", locationQuery.country);
+    if (locationQuery.state) sp.set("state", locationQuery.state);
+    if (locationQuery.city) sp.set("city", locationQuery.city);
+    const qs = sp.toString();
+    return qs ? `?${qs}` : "";
+  })();
 
   const popularLabels =
     industry.popularServices ??
@@ -50,6 +79,18 @@ export default async function IndustryHomePage({ params }: PageProps) {
               <p className="text-slate-400 text-sm mt-1 max-w-xl">
                 Live marketplace for services, jobs, products, and providers in {industry.name}.
               </p>
+
+              {locationLabel ? (
+                <div
+                  className="mt-3 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border"
+                  style={{ borderColor: `${accent}55`, boxShadow: `0 0 28px ${accent}22` }}
+                >
+                  <span aria-hidden>📍</span>
+                  <span>
+                    Near you: <span className="text-white font-semibold">{locationLabel}</span>
+                  </span>
+                </div>
+              ) : null}
             </div>
             <div className="flex flex-wrap gap-2">
               <Link
@@ -220,14 +261,32 @@ export default async function IndustryHomePage({ params }: PageProps) {
           </section>
         </SectionReveal>
 
-        {/* 8. Nearby Services */}
+        {/* 8. Trust Badges + STL + Security (universal) */}
+        <SectionReveal as="div">
+          <TrustBadgeLegend />
+        </SectionReveal>
+        <SectionReveal as="div">
+          <STLLevelsAndSecurity />
+        </SectionReveal>
+
+        {/* 9. AI Tools (universal, linked to this industry) */}
+        <SectionReveal as="div">
+          <AIToolsSection industrySlug={industry.slug} locationQuery={locationQuery} />
+        </SectionReveal>
+
+        {/* 10. Roadmap (universal) */}
+        <SectionReveal as="div">
+          <RoadmapPhasesSection />
+        </SectionReveal>
+
+        {/* 11. Nearby Services */}
         <SectionReveal as="div">
           <section className="grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl glass-panel card-hover p-5 border border-white/10">
               <h2 className="text-sm font-semibold text-white mb-3">Nearby Services</h2>
               <p className="text-slate-400 text-xs mb-4">
-                Verified {industry.name} services near your location. Demo – location-based data will connect in
-                production.
+                Verified {industry.name} services near your location{locationLabel ? ` in ${locationLabel}` : ""}. Demo
+                – location-based data will connect in production.
               </p>
               <div className="space-y-2">
                 {(flatServices.length > 0 ? flatServices.slice(0, 3) : industry.services.slice(0, 3)).map((s, i) => {
@@ -272,7 +331,7 @@ export default async function IndustryHomePage({ params }: PageProps) {
               {[
                 { label: "Add Service", href: "/dashboard" },
                 { label: "Find Work", href: "/home" },
-                { label: "Hire Provider", href: "/ai-marketplace" },
+                { label: "Hire Provider", href: `/ai-marketplace${locationQs}` },
                 { label: "Start Selling", href: "/services" },
               ].map((a) => (
                 <Link
@@ -290,10 +349,13 @@ export default async function IndustryHomePage({ params }: PageProps) {
 
         {/* Footer links */}
         <section className="flex flex-wrap gap-3 pt-4 text-xs">
-          <Link href="/ai-marketplace" className="text-slate-400 hover:text-[#00eaff] transition-colors">
+          <Link
+            href={`/ai-marketplace${locationQs}`}
+            className="text-slate-400 hover:text-[#00eaff] transition-colors"
+          >
             AI Marketplace →
           </Link>
-          <Link href="/home" className="text-slate-400 hover:text-[#00eaff] transition-colors">
+          <Link href="/" className="text-slate-400 hover:text-[#00eaff] transition-colors">
             EHB Home →
           </Link>
         </section>
