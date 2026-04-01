@@ -7,6 +7,7 @@ type StlBreakdown = {
   crb: number;
   performance: number;
   behavior: number;
+  industries: number;
   refilling: number;
   total: number;
   level: number;
@@ -25,8 +26,21 @@ function toneForLevel(level: number) {
   return "border-rose-400/40 text-rose-100";
 }
 
-function Bar({ label, value, max, tone }: { label: string; value: number; max: number; tone: string }) {
-  const pct = Math.max(0, Math.min(100, (value / max) * 100));
+function Bar({
+  label,
+  value,
+  min,
+  max,
+  tone,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  tone: string;
+}) {
+  const range = Math.max(1, max - min);
+  const pct = Math.max(0, Math.min(100, ((value - min) / range) * 100));
   return (
     <div>
       <div className="flex items-center justify-between text-[11px] text-slate-400">
@@ -103,11 +117,12 @@ export function StlWidget() {
             <div className="text-[11px] text-slate-400 mt-1">0 → 100 trust power</div>
           </div>
           <div className="rounded-2xl bg-white/5 border border-white/10 p-4 space-y-3">
-            <Bar label="PSS (0–40)" value={data.pss} max={40} tone="bg-cyan-400" />
-            <Bar label="CRB (0–20)" value={data.crb} max={20} tone="bg-sky-400" />
-            <Bar label="Performance (0–20)" value={data.performance} max={20} tone="bg-violet-400" />
-            <Bar label="Behavior (-20..10)" value={data.behavior} max={10} tone="bg-amber-400" />
-            <Bar label="Refilling (-40..10)" value={data.refilling} max={10} tone="bg-emerald-400" />
+            <Bar label="PSS (0–40)" value={data.pss} min={0} max={40} tone="bg-cyan-400" />
+            <Bar label="CRB (0–20)" value={data.crb} min={0} max={20} tone="bg-sky-400" />
+            <Bar label="Performance (0–20)" value={data.performance} min={0} max={20} tone="bg-violet-400" />
+            <Bar label="Behavior (-50..20)" value={data.behavior} min={-50} max={20} tone="bg-amber-400" />
+            <Bar label="Industries (0–20)" value={data.industries} min={0} max={20} tone="bg-fuchsia-400" />
+            <Bar label="Refilling (-40..10)" value={data.refilling} min={-40} max={10} tone="bg-emerald-400" />
           </div>
         </div>
       ) : null}

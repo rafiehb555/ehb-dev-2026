@@ -81,9 +81,13 @@ export async function listMarketplaceItems(query: Query) {
 
     const userIds = Array.from(new Set(providers.map((p) => p.userId)));
     const serviceIds = Array.from(new Set(providers.map((p) => p.serviceId)));
-    const [stlRows, companyIndustryRows, serviceIndustryRows] = await Promise.all([
+    const [userStlRows, serviceStlRows, companyIndustryRows, serviceIndustryRows] = await Promise.all([
       prisma.sTLScore.findMany({
         where: { entityType: "USER", entityId: { in: userIds } },
+        select: { entityId: true, score: true, level: true },
+      }),
+      prisma.sTLScore.findMany({
+        where: { entityType: "SERVICE", entityId: { in: serviceIds } },
         select: { entityId: true, score: true, level: true },
       }),
       prisma.industryVerification.findMany({
@@ -106,7 +110,8 @@ export async function listMarketplaceItems(query: Query) {
       }),
     ]);
 
-    const stlMap = new Map(stlRows.map((x) => [x.entityId, { score: Number(x.score), level: x.level }]));
+    const userStlMap = new Map(userStlRows.map((x) => [x.entityId, { score: Number(x.score), level: x.level }]));
+    const serviceStlMap = new Map(serviceStlRows.map((x) => [x.entityId, { score: Number(x.score), level: x.level }]));
     const companyMap = new Map<string, Array<{ id: string; name: string; slug: string }>>();
     for (const row of companyIndustryRows) {
       const arr = companyMap.get(row.entityId) ?? [];
@@ -121,7 +126,7 @@ export async function listMarketplaceItems(query: Query) {
     }
 
     for (const p of providers) {
-      const stl = stlMap.get(p.userId) ?? { score: 0, level: 1 };
+      const stl = serviceStlMap.get(p.id) ?? userStlMap.get(p.userId) ?? { score: 0, level: 1 };
       const rating = p.profile?.rating ? Number(p.profile.rating) : null;
       if (query.minRating && (rating ?? 0) < query.minRating) continue;
       if (query.minStlLevel && stl.level < query.minStlLevel) continue;
@@ -187,9 +192,13 @@ export async function listMarketplaceItems(query: Query) {
 
     const sellerIds = Array.from(new Set(products.map((p) => p.sellerId)));
     const productIds = Array.from(new Set(products.map((p) => p.id)));
-    const [stlRows, companyIndustryRows, productIndustryRows] = await Promise.all([
+    const [userStlRows, productStlRows, companyIndustryRows, productIndustryRows] = await Promise.all([
       prisma.sTLScore.findMany({
         where: { entityType: "USER", entityId: { in: sellerIds } },
+        select: { entityId: true, score: true, level: true },
+      }),
+      prisma.sTLScore.findMany({
+        where: { entityType: "PRODUCT", entityId: { in: productIds } },
         select: { entityId: true, score: true, level: true },
       }),
       prisma.industryVerification.findMany({
@@ -212,7 +221,8 @@ export async function listMarketplaceItems(query: Query) {
       }),
     ]);
 
-    const stlMap = new Map(stlRows.map((x) => [x.entityId, { score: Number(x.score), level: x.level }]));
+    const userStlMap = new Map(userStlRows.map((x) => [x.entityId, { score: Number(x.score), level: x.level }]));
+    const productStlMap = new Map(productStlRows.map((x) => [x.entityId, { score: Number(x.score), level: x.level }]));
     const companyMap = new Map<string, Array<{ id: string; name: string; slug: string }>>();
     for (const row of companyIndustryRows) {
       const arr = companyMap.get(row.entityId) ?? [];
@@ -227,7 +237,7 @@ export async function listMarketplaceItems(query: Query) {
     }
 
     for (const p of products) {
-      const stl = stlMap.get(p.sellerId) ?? { score: 0, level: 1 };
+      const stl = productStlMap.get(p.id) ?? userStlMap.get(p.sellerId) ?? { score: 0, level: 1 };
       const rating = p.rating ? Number(p.rating) : null;
       if (query.minRating && (rating ?? 0) < query.minRating) continue;
       if (query.minStlLevel && stl.level < query.minStlLevel) continue;

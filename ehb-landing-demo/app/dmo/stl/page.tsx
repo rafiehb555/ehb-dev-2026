@@ -43,6 +43,7 @@ export default function DmoStlPage() {
   const [logs, setLogs] = useState<StlLogRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [calcEntityType, setCalcEntityType] = useState<"USER" | "SERVICE" | "PRODUCT">("USER");
   const [calcEntityId, setCalcEntityId] = useState("");
   const [calcRunning, setCalcRunning] = useState(false);
 
@@ -69,7 +70,7 @@ export default function DmoStlPage() {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          entityType: "USER",
+          entityType: calcEntityType,
           ...(calcEntityId.trim() ? { entityId: calcEntityId.trim() } : {}),
           reason: "DMO_STL_MANUAL_CALCULATION",
         }),
@@ -127,16 +128,36 @@ export default function DmoStlPage() {
             <section className="ehb-card-elevated space-y-3">
               <div className="text-xs font-semibold">Manual STL Calculation</div>
               <div className="flex flex-wrap gap-2 items-center">
+                <select
+                  value={calcEntityType}
+                  onChange={(e) => setCalcEntityType(e.target.value as "USER" | "SERVICE" | "PRODUCT")}
+                  className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs"
+                >
+                  <option value="USER">USER</option>
+                  <option value="SERVICE">SERVICE</option>
+                  <option value="PRODUCT">PRODUCT</option>
+                </select>
                 <input
                   value={calcEntityId}
                   onChange={(e) => setCalcEntityId(e.target.value)}
                   className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs min-w-[280px]"
-                  placeholder="Optional userId (leave blank = current user)"
+                  placeholder={
+                    calcEntityType === "USER"
+                      ? "Optional userId (leave blank = current user)"
+                      : `Required ${calcEntityType.toLowerCase()} id`
+                  }
                 />
-                <button onClick={() => void runCalculate()} disabled={calcRunning} className="ehb-btn-primary ehb-press">
+                <button
+                  onClick={() => void runCalculate()}
+                  disabled={calcRunning || (calcEntityType !== "USER" && !calcEntityId.trim())}
+                  className="ehb-btn-primary ehb-press disabled:cursor-not-allowed disabled:opacity-60"
+                >
                   {calcRunning ? "Calculating..." : "Calculate STL"}
                 </button>
               </div>
+              <p className="text-[11px] text-slate-400">
+                STL engine ab `USER`, `SERVICE`, aur `PRODUCT` entities ko support karta hai.
+              </p>
             </section>
 
             <section className="ehb-card-elevated space-y-3">

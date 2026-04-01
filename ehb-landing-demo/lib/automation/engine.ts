@@ -51,20 +51,19 @@ async function actionCreateDmoApplicationFromPss(payload: Record<string, unknown
   }
 
   const existing = caseId
-    ? await prisma.application.findFirst({
-        where: {
-          applicantId: userId,
-          OR: [
-            { type: "PSS_VERIFICATION" as any },
-            { type: "PSS" },
-          ],
-          payload: {
-            path: ["pssVerificationId"],
-            equals: caseId,
+    ? (
+        await prisma.application.findMany({
+          where: {
+            applicantId: userId,
+            OR: [{ type: "PSS_VERIFICATION" as any }, { type: "PSS" }],
           },
-        },
-        select: { id: true },
-      })
+          select: { id: true, payload: true },
+          take: 50,
+        })
+      ).find((row) => {
+        const payloadData = toObject(row.payload);
+        return payloadData.pssVerificationId === caseId;
+      }) ?? null
     : null;
   if (existing) return "SKIP_CREATE_DMO_APPLICATION_ALREADY_EXISTS";
 

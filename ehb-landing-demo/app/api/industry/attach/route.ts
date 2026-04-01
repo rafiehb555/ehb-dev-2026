@@ -19,12 +19,11 @@ export async function POST(req: Request) {
         where: { entityType: body.entityType, entityId: body.entityId },
       });
       const rows = await tx.entityIndustry.createMany({
-        data: body.industryIds.map((industryId) => ({
+        data: Array.from(new Set(body.industryIds)).map((industryId) => ({
           entityType: body.entityType,
           entityId: body.entityId,
           industryId,
         })),
-        skipDuplicates: true,
       });
 
       await writeAuditLog({

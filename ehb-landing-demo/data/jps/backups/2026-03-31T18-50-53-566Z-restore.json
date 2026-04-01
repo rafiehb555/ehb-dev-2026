@@ -1,0 +1,46 @@
+{
+  "profiles": [
+    {
+      "id": "backup-check-1",
+      "name": "Backup Check",
+      "designation": "Verifier",
+      "industry": "Technology",
+      "city": "Lahore",
+      "status": "Verified",
+      "experience": "1 year",
+      "education": "BS",
+      "certifications": [
+        "PSS Verified"
+      ],
+      "skills": [
+        "Testing"
+      ],
+      "services": [
+        "QA"
+      ],
+      "jobs": [
+        "QA Analyst"
+      ],
+      "stlLevel": "High"
+    }
+  ],
+  "skillCategories": [
+    {
+      "category": "Technology",
+      "exampleSkills": [
+        "Testing"
+      ]
+    }
+  ],
+  "designationLadders": {
+    "Technology": [
+      {
+        "level": 1,
+        "title": "Verifier"
+      }
+    ]
+  },
+  "systemNotes": [
+    "Backup verification payload."
+  ]
+}

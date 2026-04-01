@@ -11,7 +11,7 @@ const navItems = [
   { label: "Verification (PSS)", href: "/verification", icon: "🔐" },
   { label: "Certification (CRB)", href: "/certification", icon: "🏛" },
   { label: "Trust Score (STL)", href: "/dmo/stl", icon: "📊" },
-  { label: "Franchise", href: "/franchise/inspections", icon: "🏢" },
+  { label: "Franchise", href: "/franchise", icon: "🏢" },
   { label: "Industries", href: "/industries", icon: "🌐" },
   { label: "Wallet", href: "/wallet", icon: "💰" },
   { label: "Settings", href: "/settings", icon: "⚙️" },

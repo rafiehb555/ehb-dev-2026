@@ -4,7 +4,7 @@ import { fail, ok } from "@/lib/apiResponse";
 import { handleRouteError } from "@/lib/apiErrors";
 import { MarketplaceReviewSchema } from "@/lib/marketplace/schemas";
 import { writeAuditLog } from "@/lib/audit";
-import { recalcUserStl } from "@/lib/stl/engine";
+import { recalcProductStl, recalcServiceStl, recalcUserStl } from "@/lib/stl/engine";
 
 function average(nums: number[]) {
   if (nums.length === 0) return null;
@@ -70,6 +70,11 @@ export async function POST(req: Request) {
         actorId: auth.user.userId,
         reason: "MARKETPLACE_REVIEW_PRODUCT",
       }).catch(() => undefined);
+      await recalcProductStl({
+        productId: product.id,
+        actorId: auth.user.userId,
+        reason: "MARKETPLACE_REVIEW_PRODUCT",
+      }).catch(() => undefined);
       return ok({ itemId: body.itemId, kind: body.kind, averageRating: avg, reviewsCount: ratings.length }, { status: 201 });
     }
 
@@ -88,6 +93,11 @@ export async function POST(req: Request) {
 
     await recalcUserStl({
       userId: provider.userId,
+      actorId: auth.user.userId,
+      reason: "MARKETPLACE_REVIEW_SERVICE_PROVIDER",
+    }).catch(() => undefined);
+    await recalcServiceStl({
+      serviceId: provider.id,
       actorId: auth.user.userId,
       reason: "MARKETPLACE_REVIEW_SERVICE_PROVIDER",
     }).catch(() => undefined);

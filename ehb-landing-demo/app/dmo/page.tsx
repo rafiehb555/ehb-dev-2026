@@ -94,7 +94,7 @@ const PHASES = [
   { phase: "Phase 51–80", range: "Global",      desc: "Full ecosystem — 50+ countries live", done: false },
 ];
 export default function DmoPage() {
-  const [activeModule, setActiveModule] = useState(null);
+  const [activeModule, setActiveModule] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("modules");
   const selectedModule = DMO_MODULES.find((m) => m.id === activeModule);
 

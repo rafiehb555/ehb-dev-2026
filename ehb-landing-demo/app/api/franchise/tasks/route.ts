@@ -12,46 +12,44 @@ export async function POST(req: Request) {
 
     const body = CreateInspectionTaskSchema.parse(await req.json());
 
-    const created = await prisma.$transaction(async (tx) => {
-      const crb = await tx.cRBApplication.findUnique({ where: { id: body.crbApplicationId } });
-      if (!crb) return { kind: "not_found" as const };
+    const crb = await prisma.cRBApplication.findUnique({ where: { id: body.crbApplicationId } });
+    if (!crb) return fail(404, "NOT_FOUND", "CRB application not found");
 
-      const task = await tx.inspectionTask.create({
-        data: {
-          crbApplicationId: body.crbApplicationId,
-          dmoApplicationId: body.dmoApplicationId ?? crb.dmoTaskId ?? null,
-          franchiseId: body.franchiseId,
-          inspectorId: body.inspectorId ?? null,
-          dueDate: body.dueDate,
-          status: "ASSIGNED",
-        },
-        include: {
-          franchise: true,
-          crbApplication: { include: { documents: true } },
-          inspector: { select: { id: true, name: true, email: true, role: true } },
-        },
-      });
-
-      // Mark CRB + DMO as under inspection.
-      await tx.cRBApplication.update({ where: { id: crb.id }, data: { status: "INSPECTION" } });
-      const dmoId = task.dmoApplicationId;
-      if (dmoId) {
-        await tx.application.update({ where: { id: dmoId }, data: { status: "UNDER_INSPECTION" } });
-      }
-
-      await writeAuditLog({
-        actorId: auth.user.userId,
-        action: "FRANCHISE_TASK_ASSIGNED",
-        targetType: "OTHER",
-        targetId: task.id,
-        metadata: { crbApplicationId: crb.id, franchiseId: body.franchiseId, inspectorId: body.inspectorId ?? null, dmoId: dmoId ?? null },
-      });
-
-      return { kind: "ok" as const, task };
+    const task = await prisma.inspectionTask.create({
+      data: {
+        crbApplicationId: body.crbApplicationId,
+        dmoApplicationId: body.dmoApplicationId ?? crb.dmoTaskId ?? null,
+        franchiseId: body.franchiseId,
+        inspectorId: body.inspectorId ?? null,
+        dueDate: body.dueDate,
+        status: "ASSIGNED",
+      },
+      include: {
+        franchise: true,
+        crbApplication: { include: { documents: true } },
+        inspector: { select: { id: true, name: true, email: true, role: true } },
+      },
     });
 
-    if (created.kind === "not_found") return fail(404, "NOT_FOUND", "CRB application not found");
-    return ok(created.task);
+    await prisma.cRBApplication.update({ where: { id: crb.id }, data: { status: "INSPECTION" } });
+    if (task.dmoApplicationId) {
+      await prisma.application.update({ where: { id: task.dmoApplicationId }, data: { status: "UNDER_INSPECTION" } });
+    }
+
+    await writeAuditLog({
+      actorId: auth.user.userId,
+      action: "FRANCHISE_TASK_ASSIGNED",
+      targetType: "OTHER",
+      targetId: task.id,
+      metadata: {
+        crbApplicationId: crb.id,
+        franchiseId: body.franchiseId,
+        inspectorId: body.inspectorId ?? null,
+        dmoId: task.dmoApplicationId ?? null,
+      },
+    });
+
+    return ok(task);
   } catch (err) {
     return handleRouteError(err);
   }
@@ -78,7 +76,7 @@ export async function GET(req: Request) {
     // Non-admin: only tasks assigned to them (inspectorId).
     if (!isAdmin(auth.user.role)) where.inspectorId = auth.user.userId;
 
-    const [items, total] = await prisma.$transaction([
+    const [items, total] = await Promise.all([
       prisma.inspectionTask.findMany({
         where,
         orderBy: { updatedAt: "desc" },
@@ -87,6 +85,7 @@ export async function GET(req: Request) {
         include: {
           franchise: true,
           report: true,
+          escalations: { orderBy: { createdAt: "desc" } },
           crbApplication: { include: { documents: true } },
         },
       }),

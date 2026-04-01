@@ -18,7 +18,11 @@ export async function GET() {
 
     // Optionally persist if missing or drifted.
     if (!persisted || Number(persisted.score) !== breakdown.total || persisted.level !== breakdown.level) {
-      await recalcUserStl({ userId: auth.user.userId, actorId: auth.user.userId, reason: "STL_ME_READ_RECALC" });
+      await recalcUserStl({
+        userId: auth.user.userId,
+        actorId: auth.user.userId,
+        reason: "STL_ME_READ_RECALC",
+      }).catch(() => undefined);
     }
 
     return ok({ breakdown, persisted });

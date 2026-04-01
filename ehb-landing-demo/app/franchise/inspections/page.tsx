@@ -5,10 +5,16 @@ import { useEffect, useState } from "react";
 type InspectionRow = {
   id: string;
   status: string;
-  score: string | number | null;
-  report: string | null;
+  report: {
+    id: string;
+    score: string | number | null;
+    findings: string | null;
+    fraudSuspected?: boolean | null;
+  } | null;
   updatedAt: string;
-  application: {
+  franchise?: { id: string; name?: string | null; city?: string | null; level?: string | null } | null;
+  escalations?: Array<{ id: string; level: string; reason: string; createdAt: string }>;
+  crbApplication: {
     id: string;
     type: string;
     industry: string;
@@ -18,8 +24,7 @@ type InspectionRow = {
   };
 };
 
-type ListResp = { ok: true; data: { items: InspectionRow[]; total: number; take: number; skip: number } };
-type ApiErr = { ok: false; error: { message: string } };
+type ListResp = { success: true; data: { items: InspectionRow[]; total: number; take: number; skip: number } };
 
 export default function FranchiseInspectionsPage() {
   const [items, setItems] = useState<InspectionRow[]>([]);
@@ -34,17 +39,21 @@ export default function FranchiseInspectionsPage() {
   const [fraudNotes, setFraudNotes] = useState("");
   const [mediaUrls, setMediaUrls] = useState<string[]>([""]);
   const [geo, setGeo] = useState<{ lat: number; lng: number; accuracyM?: number; capturedAt?: string } | null>(null);
+  const [escalationLevel, setEscalationLevel] = useState<"SUB" | "MASTER" | "CORPORATE">("MASTER");
+  const [escalationReason, setEscalationReason] = useState("");
 
   async function load() {
     setLoading(true);
     setErr(null);
     try {
       const res = await fetch("/api/franchise/tasks?take=50&skip=0", { cache: "no-store" });
-      const json = (await res.json()) as ListResp | ApiErr;
-      if (!res.ok || !("ok" in json) || json.ok === false) throw new Error((json as any)?.error?.message ?? "Failed");
-      setItems(json.data.items as any);
-    } catch (e: any) {
-      setErr(e?.message ?? "Failed to load");
+      const json = (await res.json()) as ListResp | { error?: { message?: string }; success?: false };
+      if (!res.ok || ("success" in json && json.success === false)) {
+        throw new Error((json as any)?.error?.message ?? "Failed to load inspection queue");
+      }
+      setItems((json as ListResp).data.items);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Failed to load");
     } finally {
       setLoading(false);
     }
@@ -56,12 +65,14 @@ export default function FranchiseInspectionsPage() {
 
   function open(i: InspectionRow) {
     setActive(i);
-    setReport(i.report ?? "");
-    setScore(i.score === null || i.score === undefined ? "" : String(i.score));
-    setFraudSuspected(false);
+    setReport(i.report?.findings ?? "");
+    setScore(i.report?.score === null || i.report?.score === undefined ? "" : String(i.report.score));
+    setFraudSuspected(Boolean(i.report?.fraudSuspected));
     setFraudNotes("");
     setMediaUrls([""]);
     setGeo(null);
+    setEscalationLevel("MASTER");
+    setEscalationReason("");
   }
 
   async function captureGeo() {
@@ -111,12 +122,41 @@ export default function FranchiseInspectionsPage() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const json = await res.json();
-      if (!res.ok || json?.ok === false) throw new Error(json?.error?.message ?? "Save failed");
+      const json = await res.json().catch(() => null);
+      if (!res.ok || json?.success === false) throw new Error(json?.error?.message ?? "Save failed");
       setActive(null);
       await load();
-    } catch (e: any) {
-      setErr(e?.message ?? "Save failed");
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Save failed");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function escalateTask() {
+    if (!active || escalationReason.trim().length < 5) {
+      setErr("Escalation reason at least 5 characters honi chahiye.");
+      return;
+    }
+    setSaving(true);
+    setErr(null);
+    try {
+      const res = await fetch("/api/franchise/escalations", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          taskId: active.id,
+          level: escalationLevel,
+          reason: escalationReason.trim(),
+        }),
+      });
+      const json = await res.json().catch(() => null);
+      if (!res.ok || json?.success === false) throw new Error(json?.error?.message ?? "Escalation failed");
+      setEscalationReason("");
+      setActive(null);
+      await load();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Escalation failed");
     } finally {
       setSaving(false);
     }
@@ -158,16 +198,18 @@ export default function FranchiseInspectionsPage() {
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
-                      <span className="text-xs rounded-full bg-white/10 px-2 py-1">{(i as any).crbApplication?.type ?? "CRB"}</span>
-                      <span className="text-xs rounded-full bg-white/10 px-2 py-1">{i.status}</span>
-                    {i.score !== null && i.score !== undefined ? (
-                      <span className="text-xs rounded-full bg-emerald-500/15 text-emerald-200 px-2 py-1">score {i.score}</span>
+                    <span className="text-xs rounded-full bg-white/10 px-2 py-1">{i.crbApplication?.type ?? "CRB"}</span>
+                    <span className="text-xs rounded-full bg-white/10 px-2 py-1">{i.status}</span>
+                    {i.report?.score !== null && i.report?.score !== undefined ? (
+                      <span className="text-xs rounded-full bg-emerald-500/15 text-emerald-200 px-2 py-1">score {i.report.score}</span>
                     ) : null}
                   </div>
-                    <div className="text-[11px] text-slate-400">#{(i as any).crbApplication?.id?.slice(0, 8) ?? i.id.slice(0, 8)} • {new Date(i.updatedAt).toLocaleString()}</div>
+                  <div className="text-[11px] text-slate-400">#{i.crbApplication?.id?.slice(0, 8) ?? i.id.slice(0, 8)} • {new Date(i.updatedAt).toLocaleString()}</div>
                 </div>
-                  <div className="mt-2 text-sm text-slate-200">{(i as any).crbApplication?.industry ?? "—"}</div>
-                  <div className="mt-1 text-[12px] text-slate-400">Docs: {(i as any).crbApplication?.documents?.length ?? 0}</div>
+                <div className="mt-2 text-sm text-slate-200">{i.crbApplication?.industry ?? "—"}</div>
+                <div className="mt-1 text-[12px] text-slate-400">
+                  Docs: {i.crbApplication?.documents?.length ?? 0} · Franchise: {i.franchise?.name ?? i.franchise?.city ?? "Unmapped"}
+                </div>
               </button>
             ))}
           </div>
@@ -178,7 +220,7 @@ export default function FranchiseInspectionsPage() {
             <div className="flex items-center justify-between gap-2">
               <div>
                 <h3 className="text-sm font-semibold text-white">Inspection #{active.id.slice(0, 8)}</h3>
-                <p className="text-[12px] text-slate-400">{active.application.industry} • {active.application.type}</p>
+                <p className="text-[12px] text-slate-400">{active.crbApplication.industry} • {active.crbApplication.type}</p>
               </div>
               <button className="text-xs rounded-full glass-panel px-3 py-1" onClick={() => setActive(null)} type="button">
                 Close
@@ -189,7 +231,7 @@ export default function FranchiseInspectionsPage() {
               <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3">
                 <div className="text-xs font-semibold text-slate-200 mb-2">Documents</div>
                 <div className="grid gap-1">
-                  {((active as any).crbApplication?.documents ?? []).map((d: any) => (
+                  {(active.crbApplication.documents ?? []).map((d) => (
                     <a
                       key={d.id}
                       href={d.fileUrl}
@@ -284,6 +326,45 @@ export default function FranchiseInspectionsPage() {
                   />
                 </label>
               ) : null}
+            </div>
+
+            <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 space-y-2">
+              <div className="text-xs font-semibold text-slate-200">Escalations</div>
+              <div className="space-y-2">
+                {(active.escalations ?? []).length === 0 ? (
+                  <div className="text-[12px] text-slate-400">No escalations recorded yet.</div>
+                ) : (
+                  active.escalations?.map((item) => (
+                    <div key={item.id} className="rounded-lg border border-white/10 bg-black/20 p-2 text-[11px] text-slate-300">
+                      {item.level} · {item.reason} · {new Date(item.createdAt).toLocaleString()}
+                    </div>
+                  ))
+                )}
+              </div>
+              <div className="grid gap-2 md:grid-cols-[180px_1fr]">
+                <select
+                  value={escalationLevel}
+                  onChange={(e) => setEscalationLevel(e.target.value as "SUB" | "MASTER" | "CORPORATE")}
+                  className="rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
+                >
+                  <option value="SUB">SUB</option>
+                  <option value="MASTER">MASTER</option>
+                  <option value="CORPORATE">CORPORATE</option>
+                </select>
+                <input
+                  value={escalationReason}
+                  onChange={(e) => setEscalationReason(e.target.value)}
+                  className="rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
+                  placeholder="Escalation reason..."
+                />
+              </div>
+              <button
+                disabled={saving}
+                className="ehb-btn-danger ehb-press disabled:opacity-40"
+                onClick={() => void escalateTask()}
+              >
+                Escalate Task
+              </button>
             </div>
 
             <div className="flex flex-wrap gap-2">

@@ -1,12 +1,31 @@
-import Link from "next/link";
+"use client";
 
-const jobs = [
-  { title: "Web UI Update", type: "IT", budget: "$120" },
-  { title: "Logo Design Refresh", type: "Design", budget: "$80" },
-  { title: "Local Delivery Partner", type: "Operations", budget: "$50/day" },
-];
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { fetchJson } from "@/lib/fetchJson";
+import { getJpsOverview, type JpsOverview } from "@/lib/jpsData";
 
 export default function JobsPage() {
+  const [jpsData, setJpsData] = useState<JpsOverview>(getJpsOverview());
+
+  useEffect(() => {
+    void fetchJson<JpsOverview>("/api/jps", getJpsOverview()).then(setJpsData);
+  }, []);
+
+  const jobs = useMemo(
+    () =>
+      jpsData.profiles.flatMap((profile) =>
+        profile.jobs.map((jobTitle, index) => ({
+          id: `${profile.id}-${index}`,
+          title: jobTitle,
+          type: profile.industry,
+          city: profile.city,
+          candidate: profile.name,
+        }))
+      ),
+    [jpsData]
+  );
+
   return (
     <main className="min-h-screen text-slate-100">
       <div className="container-ehb py-8 space-y-5">
@@ -20,12 +39,14 @@ export default function JobsPage() {
           <h2 className="text-sm font-semibold text-white mb-3">Suggested Jobs</h2>
           <div className="space-y-2">
             {jobs.map((j) => (
-              <div key={j.title} className="rounded-xl border border-white/10 bg-white/5 p-3 flex items-center justify-between">
+              <div key={j.id} className="rounded-xl border border-white/10 bg-white/5 p-3 flex items-center justify-between gap-3">
                 <div>
                   <div className="text-xs text-white font-semibold">{j.title}</div>
-                  <div className="text-[11px] text-slate-400">{j.type}</div>
+                  <div className="text-[11px] text-slate-400">
+                    {j.type} · {j.city} · Best match: {j.candidate}
+                  </div>
                 </div>
-                <div className="text-xs text-emerald-300">{j.budget}</div>
+                <div className="text-xs text-emerald-300">JPS Match</div>
               </div>
             ))}
           </div>

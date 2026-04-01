@@ -7,10 +7,10 @@ export const InspectionTaskStatusSchema = z.enum(["ASSIGNED", "IN_PROGRESS", "CO
 export type InspectionTaskStatus = z.infer<typeof InspectionTaskStatusSchema>;
 
 export const CreateInspectionTaskSchema = z.object({
-  crbApplicationId: z.string().cuid(),
-  dmoApplicationId: z.string().cuid().optional(),
-  franchiseId: z.string().cuid(),
-  inspectorId: z.string().cuid().optional(),
+  crbApplicationId: z.string().min(1).max(120),
+  dmoApplicationId: z.string().min(1).max(120).optional(),
+  franchiseId: z.string().min(1).max(120),
+  inspectorId: z.string().min(1).max(120).optional(),
   dueDate: z.coerce.date(),
 });
 
@@ -20,14 +20,14 @@ export const ListInspectionTasksQuerySchema = z.object({
   skip: z.coerce.number().int().min(0).max(5000).optional(),
 });
 
-export const TaskIdParamsSchema = z.object({ id: z.string().cuid() });
+export const TaskIdParamsSchema = z.object({ id: z.string().min(1).max(120) });
 
 export const PatchInspectionTaskSchema = z.object({
   status: InspectionTaskStatusSchema.optional(),
 });
 
 export const SubmitInspectionReportSchema = z.object({
-  taskId: z.string().cuid(),
+  taskId: z.string().min(1).max(120),
   findings: z.string().min(10).max(20000),
   score: z.coerce.number().min(0).max(100),
   mediaUrls: z.array(z.string().url()).max(30).default([]),
@@ -45,7 +45,7 @@ export const SubmitInspectionReportSchema = z.object({
 });
 
 export const CreateEscalationSchema = z.object({
-  taskId: z.string().cuid(),
+  taskId: z.string().min(1).max(120),
   level: z.enum(["SUB", "MASTER", "CORPORATE"]),
   reason: z.string().min(5).max(20000),
 });

@@ -12,30 +12,24 @@ export async function POST(req: Request) {
 
     const body = CreateEscalationSchema.parse(await req.json());
 
-    const result = await prisma.$transaction(async (tx) => {
-      const task = await tx.inspectionTask.findUnique({ where: { id: body.taskId } });
-      if (!task) return { kind: "not_found" as const };
-      if (!isAdmin(auth.user.role) && task.inspectorId !== auth.user.userId) return { kind: "forbidden" as const };
+    const task = await prisma.inspectionTask.findUnique({ where: { id: body.taskId } });
+    if (!task) return fail(404, "NOT_FOUND", "Task not found");
+    if (!isAdmin(auth.user.role) && task.inspectorId !== auth.user.userId) return fail(403, "FORBIDDEN", "Forbidden");
 
-      const esc = await tx.inspectionEscalation.create({
-        data: { taskId: body.taskId, level: body.level, reason: body.reason },
-      });
-      await tx.inspectionTask.update({ where: { id: body.taskId }, data: { status: "ESCALATED" } });
+    const esc = await prisma.inspectionEscalation.create({
+      data: { taskId: body.taskId, level: body.level, reason: body.reason },
+    });
+    await prisma.inspectionTask.update({ where: { id: body.taskId }, data: { status: "ESCALATED" } });
 
-      await writeAuditLog({
-        actorId: auth.user.userId,
-        action: "FRANCHISE_TASK_ESCALATED",
-        targetType: "OTHER",
-        targetId: esc.id,
-        metadata: { taskId: body.taskId, level: body.level },
-      });
-
-      return { kind: "ok" as const, esc };
+    await writeAuditLog({
+      actorId: auth.user.userId,
+      action: "FRANCHISE_TASK_ESCALATED",
+      targetType: "OTHER",
+      targetId: esc.id,
+      metadata: { taskId: body.taskId, level: body.level },
     });
 
-    if (result.kind === "not_found") return fail(404, "NOT_FOUND", "Task not found");
-    if (result.kind === "forbidden") return fail(403, "FORBIDDEN", "Forbidden");
-    return ok(result.esc);
+    return ok(esc);
   } catch (err) {
     return handleRouteError(err);
   }

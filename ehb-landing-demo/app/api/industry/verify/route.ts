@@ -4,7 +4,7 @@ import { handleRouteError } from "@/lib/apiErrors";
 import { requireSession } from "@/lib/rbac";
 import { IndustryVerifySchema } from "@/lib/industry/schemas";
 import { writeAuditLog } from "@/lib/audit";
-import { recalcUserStl } from "@/lib/stl/engine";
+import { recalcServiceStl, recalcProductStl, recalcUserStl } from "@/lib/stl/engine";
 
 export async function POST(req: Request) {
   try {
@@ -121,12 +121,27 @@ export async function POST(req: Request) {
 
     if (!decided) return fail(404, "NOT_FOUND", "Industry verification not found");
 
-    // Best effort STL refresh when entityId is actually a user id in this v1.
-    await recalcUserStl({
-      userId: decided.entityId,
-      actorId: auth.user.userId,
-      reason: "INDUSTRY_VERIFY_DECISION",
-    }).catch(() => undefined);
+    if (decided.entityType === "COMPANY") {
+      await recalcUserStl({
+        userId: decided.entityId,
+        actorId: auth.user.userId,
+        reason: "INDUSTRY_VERIFY_DECISION",
+      }).catch(() => undefined);
+    }
+    if (decided.entityType === "SERVICE") {
+      await recalcServiceStl({
+        serviceId: decided.entityId,
+        actorId: auth.user.userId,
+        reason: "INDUSTRY_VERIFY_DECISION",
+      }).catch(() => undefined);
+    }
+    if (decided.entityType === "PRODUCT") {
+      await recalcProductStl({
+        productId: decided.entityId,
+        actorId: auth.user.userId,
+        reason: "INDUSTRY_VERIFY_DECISION",
+      }).catch(() => undefined);
+    }
 
     return ok(decided, { status: 201 });
   } catch (err) {

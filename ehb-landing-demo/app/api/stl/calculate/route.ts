@@ -2,11 +2,11 @@ import { requireSession } from "@/lib/rbac";
 import { fail, ok } from "@/lib/apiResponse";
 import { handleRouteError } from "@/lib/apiErrors";
 import { prisma } from "@/lib/prisma";
-import { recalcUserStl } from "@/lib/stl/engine";
+import { computeStlByEntity, recalcStlByEntity } from "@/lib/stl/engine";
 import { z } from "zod";
 
 const BodySchema = z.object({
-  entityId: z.string().cuid().optional(),
+  entityId: z.string().min(1).max(120).optional(),
   entityType: z.enum(["USER", "SERVICE", "PRODUCT"]).default("USER"),
   reason: z.string().max(240).optional(),
 });
@@ -24,36 +24,74 @@ export async function POST(req: Request) {
 
   try {
     const body = BodySchema.parse(await req.json());
-    const targetEntityId = body.entityId ?? auth.user.userId;
+    const targetEntityId = body.entityId?.trim() || auth.user.userId;
 
-    if (
-      auth.user.role !== "ADMIN" &&
-      auth.user.role !== "SUPER_ADMIN" &&
-      targetEntityId !== auth.user.userId
-    ) {
-      return fail(403, "FORBIDDEN", "Forbidden");
+    if (body.entityType !== "USER" && !body.entityId?.trim()) {
+      return fail(400, "VALIDATION_ERROR", "entityId is required for SERVICE and PRODUCT STL calculation");
     }
 
-    if (body.entityType !== "USER") {
-      return fail(400, "NOT_IMPLEMENTED", "Only USER STL calculation is enabled in v1");
+    if (auth.user.role !== "ADMIN" && auth.user.role !== "SUPER_ADMIN") {
+      if (body.entityType === "USER" && targetEntityId !== auth.user.userId) {
+        return fail(403, "FORBIDDEN", "Forbidden");
+      }
+
+      if (body.entityType === "SERVICE") {
+        const service = await prisma.providerService.findUnique({
+          where: { id: targetEntityId },
+          select: { userId: true },
+        });
+        if (!service) return fail(404, "NOT_FOUND", "Service not found");
+        if (service.userId !== auth.user.userId) return fail(403, "FORBIDDEN", "Forbidden");
+      }
+
+      if (body.entityType === "PRODUCT") {
+        const product = await prisma.product.findUnique({
+          where: { id: targetEntityId },
+          select: { sellerId: true },
+        });
+        if (!product) return fail(404, "NOT_FOUND", "Product not found");
+        if (product.sellerId !== auth.user.userId) return fail(403, "FORBIDDEN", "Forbidden");
+      }
     }
 
-    const result = await recalcUserStl({
-      userId: targetEntityId,
-      actorId: auth.user.userId,
-      reason: body.reason ?? "STL_CALCULATE_API",
-    });
+    try {
+      const result = await recalcStlByEntity({
+        entityId: targetEntityId,
+        entityType: body.entityType,
+        actorId: auth.user.userId,
+        reason: body.reason ?? "STL_CALCULATE_API",
+      });
 
-    return ok({
-      entityId: targetEntityId,
-      entityType: "USER",
-      score: Number(result.scoreRow.score),
-      level: result.scoreRow.level,
-      breakdown: result.scoreRow.breakdown,
-      change: result.change,
-      prevScore: result.prevScore,
-      nextScore: result.nextScore,
-    });
+      return ok({
+        entityId: targetEntityId,
+        entityType: body.entityType,
+        score: Number(result.scoreRow.score),
+        level: result.scoreRow.level,
+        breakdown: result.scoreRow.breakdown,
+        change: result.change,
+        prevScore: result.prevScore,
+        nextScore: result.nextScore,
+        persisted: true,
+      });
+    } catch {
+      const breakdown = await computeStlByEntity({
+        entityId: targetEntityId,
+        entityType: body.entityType,
+      });
+
+      return ok({
+        entityId: targetEntityId,
+        entityType: body.entityType,
+        score: breakdown.total,
+        level: breakdown.level,
+        breakdown,
+        change: null,
+        prevScore: null,
+        nextScore: breakdown.total,
+        persisted: false,
+        warning: "STL computed successfully but could not be persisted in the current database environment.",
+      });
+    }
   } catch (err) {
     return handleRouteError(err);
   }

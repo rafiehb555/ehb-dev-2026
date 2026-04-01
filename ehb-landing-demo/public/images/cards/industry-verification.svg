@@ -1,0 +1,42 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" rx="32" fill="#2A0916"/>
+  <circle cx="1012" cy="120" r="148" fill="#F43F5E" fill-opacity="0.18"/>
+  <circle cx="174" cy="560" r="185" fill="#00AEEF" fill-opacity="0.14"/>
+  <circle cx="600" cy="332" r="124" fill="#401125" stroke="#FB7185" stroke-width="12"/>
+  <circle cx="600" cy="332" r="52" fill="#FB7185"/>
+  <circle cx="326" cy="208" r="78" fill="#3B0D1C" stroke="#38BDF8" stroke-width="10"/>
+  <circle cx="874" cy="208" r="78" fill="#3B0D1C" stroke="#22C55E" stroke-width="10"/>
+  <circle cx="874" cy="470" r="78" fill="#3B0D1C" stroke="#F59E0B" stroke-width="10"/>
+  <circle cx="326" cy="470" r="78" fill="#3B0D1C" stroke="#A855F7" stroke-width="10"/>
+  <path d="M392 236L506 286" stroke="#FBCFE8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M808 236L694 286" stroke="#FBCFE8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M808 442L694 392" stroke="#FBCFE8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M392 442L506 392" stroke="#FBCFE8" stroke-width="10" stroke-linecap="round"/>
+  <text x="326" y="216" text-anchor="middle" fill="#E0F2FE" font-size="28" font-family="Arial, sans-serif" font-weight="700">Health</text>
+  <text x="874" y="216" text-anchor="middle" fill="#DCFCE7" font-size="28" font-family="Arial, sans-serif" font-weight="700">Tech</text>
+  <text x="874" y="478" text-anchor="middle" fill="#FEF3C7" font-size="24" font-family="Arial, sans-serif" font-weight="700">Manufacturing</text>
+  <text x="326" y="478" text-anchor="middle" fill="#EDE9FE" font-size="26" font-family="Arial, sans-serif" font-weight="700">Education</text>
+  <text x="600" y="340" text-anchor="middle" fill="#FFF1F2" font-size="30" font-family="Arial, sans-serif" font-weight="700">Industry</text>
+  <text x="600" y="376" text-anchor="middle" fill="#FFF1F2" font-size="30" font-family="Arial, sans-serif" font-weight="700">Trust Layer</text>
+</svg>
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" rx="32" fill="#2A0916"/>
+  <circle cx="1012" cy="120" r="148" fill="#F43F5E" fill-opacity="0.18"/>
+  <circle cx="174" cy="560" r="185" fill="#00AEEF" fill-opacity="0.14"/>
+  <circle cx="600" cy="332" r="124" fill="#401125" stroke="#FB7185" stroke-width="12"/>
+  <circle cx="600" cy="332" r="52" fill="#FB7185"/>
+  <circle cx="326" cy="208" r="78" fill="#3B0D1C" stroke="#38BDF8" stroke-width="10"/>
+  <circle cx="874" cy="208" r="78" fill="#3B0D1C" stroke="#22C55E" stroke-width="10"/>
+  <circle cx="874" cy="470" r="78" fill="#3B0D1C" stroke="#F59E0B" stroke-width="10"/>
+  <circle cx="326" cy="470" r="78" fill="#3B0D1C" stroke="#A855F7" stroke-width="10"/>
+  <path d="M392 236L506 286" stroke="#FBCFE8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M808 236L694 286" stroke="#FBCFE8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M808 442L694 392" stroke="#FBCFE8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M392 442L506 392" stroke="#FBCFE8" stroke-width="10" stroke-linecap="round"/>
+  <text x="326" y="216" text-anchor="middle" fill="#E0F2FE" font-size="28" font-family="Arial, sans-serif" font-weight="700">Health</text>
+  <text x="874" y="216" text-anchor="middle" fill="#DCFCE7" font-size="28" font-family="Arial, sans-serif" font-weight="700">Tech</text>
+  <text x="874" y="478" text-anchor="middle" fill="#FEF3C7" font-size="24" font-family="Arial, sans-serif" font-weight="700">Manufacturing</text>
+  <text x="326" y="478" text-anchor="middle" fill="#EDE9FE" font-size="26" font-family="Arial, sans-serif" font-weight="700">Education</text>
+  <text x="600" y="340" text-anchor="middle" fill="#FFF1F2" font-size="30" font-family="Arial, sans-serif" font-weight="700">Industry</text>
+  <text x="600" y="376" text-anchor="middle" fill="#FFF1F2" font-size="30" font-family="Arial, sans-serif" font-weight="700">Trust Layer</text>
+</svg>

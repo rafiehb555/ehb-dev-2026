@@ -96,6 +96,32 @@ export default function AdminPage() {
               <p>Status: Active · Modules: 9 · Industries Connected: 6</p>
             </div>
           </Panel>
+          <Panel title="JPS Import Management" path="/admin/jps-import">
+            <p className="text-slate-300 mb-1">
+              Manage real JPS profile imports with validation, preview counts, and fallback restore.
+            </p>
+            <div className="glass-panel rounded-lg p-2 space-y-1.5">
+              <div className="font-semibold text-slate-100">Connected Sources</div>
+              <p className="text-slate-300">
+                API: <span className="text-cyan-300">/api/jps</span> · Import:{" "}
+                <span className="text-cyan-300">/api/jps/import</span>
+              </p>
+              <p className="text-slate-400">
+                Save imported data and it will instantly flow into DMO JPS, jobs, and profile pages.
+              </p>
+            </div>
+            <div className="mt-2">
+              <a
+                href="/admin/jps-import"
+                className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
+              >
+                Open JPS Import Manager
+              </a>
+            </div>
+          </Panel>
+        </section>
+
+        <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
           <Panel title="Industry Management" path="/admin/industries">
             <p className="text-slate-300 mb-1">Create, activate, pause and assign franchise for each industry.</p>
             <div className="glass-panel rounded-lg p-2">
@@ -111,7 +137,7 @@ export default function AdminPage() {
         </section>
 
         <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
-          <Panel title="Franchise Management" path="/admin/franchise">
+          <Panel title="Franchise Management" path="/franchise">
             <p className="text-slate-300 mb-1">Multi-layer franchise network for global, country, corporate and sub franchises.</p>
             <div className="flex flex-wrap gap-1.5 mb-2">
               {franchiseLevels.map((lvl) => (
@@ -193,7 +219,7 @@ export default function AdminPage() {
               <ul className="space-y-1">
                 <li>• AI recommendation not connected to Marketplace.</li>
                 <li>• Wallet escrow missing for booking service.</li>
-                <li>• STL scoring rules incomplete.</li>
+                <li>• STL engine now supports user, service, and product trust recalculation.</li>
               </ul>
             </div>
           </Panel>
