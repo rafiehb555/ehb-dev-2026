@@ -1,276 +1,369 @@
 "use client";
-import Link from "next/link";
+
 import { useState } from "react";
+import Link from "next/link";
 
-const INDUSTRY_PLATFORMS = [
-  { name: "GoSellr", tag: "GSM", desc: "Global commerce & marketplace", icon: "🛒", color: "#3b82f6", href: "/gosellr" },
-  { name: "WMS", tag: "Healthcare", desc: "Doctors, hospitals, telemedicine", icon: "🏥", color: "#10b981", href: "/wms" },
-  { name: "HPS", tag: "Education", desc: "Schools, universities, skill learning", icon: "🎓", color: "#f59e0b", href: "/hps" },
-  { name: "OLS", tag: "Legal", desc: "Lawyers, legal consulting, docs", icon: "⚖️", color: "#8b5cf6", href: "/ols" },
-  { name: "AGTS", tag: "Travel", desc: "Flights, hotels, tour packages", icon: "✈️", color: "#06b6d4", href: "/agts" },
-  { name: "SOT", tag: "Technology", desc: "Software, IT consulting, AI dev", icon: "💻", color: "#00eaff", href: "/sot" },
-  { name: "HMS", tag: "Machinery", desc: "Equipment sales & maintenance", icon: "⚙️", color: "#f97316", href: "/gosellr" },
-  { name: "OBS", tag: "Books", desc: "Digital books, academic content", icon: "📚", color: "#a78bfa", href: "/gosellr" },
-  { name: "EHB Tube", tag: "Media", desc: "Video, audio, content publishing", icon: "🎥", color: "#ec4899", href: "/gosellr" },
+// ═══════════════════════════════════════════════════════
+//  EHB HOME PAGE — Central Hub
+//  World-Class UI/UX — Simple for Everyone
+// ═══════════════════════════════════════════════════════
+
+const QUICK_TILES = [
+  {
+    icon: "🏪",
+    label: "Franchise",
+    sub: "Business kholen",
+    href: "/franchise",
+    color: "from-orange-500 to-amber-600",
+    border: "border-orange-500/30",
+  },
+  {
+    icon: "⚙️",
+    label: "DMO",
+    sub: "Platform engine",
+    href: "/dmo",
+    color: "from-blue-500 to-blue-700",
+    border: "border-blue-500/30",
+  },
+  {
+    icon: "🤖",
+    label: "AI Tools",
+    sub: "Smart help",
+    href: "/ai-marketplace",
+    color: "from-purple-500 to-violet-700",
+    border: "border-purple-500/30",
+  },
+  {
+    icon: "💼",
+    label: "Jobs",
+    sub: "Naukri dhundein",
+    href: "/agts",
+    color: "from-green-500 to-emerald-600",
+    border: "border-green-500/30",
+  },
+  {
+    icon: "🏥",
+    label: "Health",
+    sub: "Sehat services",
+    href: "/industries",
+    color: "from-red-500 to-rose-600",
+    border: "border-red-500/30",
+  },
+  {
+    icon: "🛒",
+    label: "GoSellr",
+    sub: "Online dukan",
+    href: "/gosellr",
+    color: "from-cyan-500 to-teal-600",
+    border: "border-cyan-500/30",
+  },
+  {
+    icon: "📊",
+    label: "Dashboard",
+    sub: "Apna account",
+    href: "/dashboard",
+    color: "from-indigo-500 to-indigo-700",
+    border: "border-indigo-500/30",
+  },
+  {
+    icon: "🌍",
+    label: "Global",
+    sub: "Poori duniya",
+    href: "/global",
+    color: "from-teal-500 to-cyan-700",
+    border: "border-teal-500/30",
+  },
 ];
 
-const CORE_SYSTEMS = [
-  { name: "PSS", full: "Proof & Security System", desc: "KYC, biometric, fraud detection", status: "Active", icon: "🛡️", color: "#10b981" },
-  { name: "CRB", full: "Certification & Registry Board", desc: "Skill certification, licenses", status: "Active", icon: "🏛️", color: "#3b82f6" },
-  { name: "STL", full: "Service Trust Level", desc: "AI trust scoring (0-100)", status: "Active", icon: "⭐", color: "#f59e0b" },
-  { name: "DMO", full: "Decentralized Management Office", desc: "Platform governance & control", status: "Active", icon: "🌐", color: "#8b5cf6" },
-  { name: "JPS", full: "Job Profile & Skill", desc: "Professional identity system", status: "Active", icon: "👤", color: "#06b6d4" },
-  { name: "AI Engine", full: "AI Matching & Discovery", desc: "Smart routing & recommendations", status: "Active", icon: "🤖", color: "#00eaff" },
-  { name: "Blockchain", full: "Polkadot Ecosystem", desc: "Immutable records, EHBGC token", status: "Live", icon: "⛓️", color: "#f97316" },
-  { name: "Wallet", full: "EHB Wallet & Finance", desc: "Payments, escrow, affiliate", status: "Active", icon: "💰", color: "#22c55e" },
+const STATS = [
+  { icon: "🏭", val: "32", label: "Industries" },
+  { icon: "🌍", val: "50+", label: "Countries" },
+  { icon: "👥", val: "1M+", label: "Target Users" },
+  { icon: "🤖", val: "100+", label: "AI Modules" },
+  { icon: "💰", val: "$500M+", label: "Economy Goal" },
+  { icon: "⚡", val: "24/7", label: "Live Support" },
 ];
 
-const PLATFORM_STATS = [
-  { label: "Industries", value: "32", sub: "Active platforms", color: "#00eaff" },
-  { label: "Services", value: "700+", sub: "Across all sectors", color: "#22c55e" },
-  { label: "User Types", value: "6", sub: "Individual to Corporate", color: "#f59e0b" },
-  { label: "Franchise Levels", value: "3", sub: "Sub → Master → Corporate", color: "#8b5cf6" },
-  { label: "Core Systems", value: "8", sub: "AI, Blockchain, Finance...", color: "#3b82f6" },
-  { label: "Countries", value: "Global", sub: "Multi-region expansion", color: "#10b981" },
+const HOW_IT_WORKS = [
+  {
+    step: "1",
+    icon: "📝",
+    title: "Register Karein",
+    desc: "Free account banayein. Phone number ya email se — 2 minute mein.",
+    color: "from-blue-600 to-blue-800",
+  },
+  {
+    step: "2",
+    icon: "✅",
+    title: "Verify Karein",
+    desc: "Apni ID verify karein. JPS score milega — aapki reputation badge.",
+    color: "from-purple-600 to-purple-800",
+  },
+  {
+    step: "3",
+    icon: "🚀",
+    title: "Shuru Karein",
+    desc: "Franchise, job, ya service — jo chahein wo choose karein aur kamai shuru!",
+    color: "from-green-600 to-emerald-700",
+  },
 ];
 
-const ROADMAP_PHASES = [
-  { phase: "Phase 1", title: "Foundation", items: ["DMO", "PSS", "CRB", "STL", "Wallet"], done: true },
-  { phase: "Phase 2", title: "Marketplace", items: ["GoSellr", "Products", "Services"], done: true },
-  { phase: "Phase 3", title: "Professional Network", items: ["JPS", "Jobs", "Freelance"], done: false },
-  { phase: "Phase 4", title: "Service Platforms", items: ["WMS", "AGTS", "OLS", "SOT", "HPS"], done: false },
-  { phase: "Phase 5", title: "Digital Governance", items: ["Applications", "Licenses"], done: false },
-  { phase: "Phase 6", title: "Global Expansion", items: ["Multi-country", "Localization"], done: false },
-  { phase: "Phase 7", title: "AI Ecosystem", items: ["ML", "Fraud Detection", "NLP"], done: false },
-  { phase: "Phase 8", title: "Blockchain Governance", items: ["Trust Network", "Smart Contracts"], done: false },
+const INDUSTRIES = [
+  "🏥 Health", "🎓 Education", "💼 Business", "🏗️ Construction",
+  "🌾 Agriculture", "🚗 Auto", "✈️ Travel", "🍔 Food",
+  "🏦 Finance", "⚖️ Legal", "🏡 Real Estate", "🎭 Media",
 ];
 
 export default function HomePage() {
-  const [activeTab, setActiveTab] = useState<"platforms" | "systems" | "roadmap">("platforms");
+  const [showAll, setShowAll] = useState(false);
 
   return (
-    <main className="min-h-screen text-slate-100">
-      <div className="container-ehb py-8 space-y-8">
+    <main className="min-h-screen bg-[#05050f] text-white overflow-x-hidden">
 
-        {/* Header */}
-        <div className="relative rounded-3xl overflow-hidden glass-card border border-[#00eaff]/20 p-8 md:p-10">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(0,234,255,0.12),transparent_60%)]" />
-          <div className="relative">
-            <p className="text-[11px] uppercase tracking-[0.28em] text-[#00eaff] mb-3">EHB Global Platform Hub</p>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold gradient-text mb-3">
-              EHB – One Platform. 32 Industries. Global Scale.
-            </h1>
-            <p className="text-slate-300 text-sm md:text-base max-w-3xl mb-6">
-              EHB (Education · Health · Business) is a global AI-powered super ecosystem. It connects users, service providers, businesses, and franchise partners across 32 industries — verified, trusted, and governed by AI and blockchain.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link href="/dashboard" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00AEEF] to-[#22C55E] px-6 py-2.5 text-sm font-semibold text-white btn-glow">
-                My Dashboard
-              </Link>
-              <Link href="/ai-marketplace" className="inline-flex items-center gap-2 rounded-full border border-[#00eaff]/40 bg-[#00eaff]/10 px-6 py-2.5 text-sm font-semibold text-[#00eaff] hover:bg-[#00eaff]/20 transition-all">
-                AI Marketplace
-              </Link>
-              <Link href="/admin" className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/10 px-6 py-2.5 text-sm font-semibold text-violet-200 hover:bg-violet-500/20 transition-all">
-                Admin Panel
-              </Link>
-              <Link href="/development" className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-500/10 px-6 py-2.5 text-sm font-semibold text-amber-200 hover:bg-amber-500/20 transition-all">
-                Development Map
-              </Link>
-            </div>
+      {/* ── HERO ─────────────────────────────────────────── */}
+      <section className="relative py-16 px-4 text-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/60 via-purple-900/20 to-[#05050f]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-purple-600/10 rounded-full blur-3xl" />
+
+        <div className="relative z-10 max-w-5xl mx-auto">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/15 border border-purple-400/30 text-purple-300 text-sm font-medium mb-6">
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+            EHB Platform — Live & Growing 🌱
           </div>
-        </div>
 
-        {/* Platform Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          {PLATFORM_STATS.map((s) => (
-            <div key={s.label} className="glass-panel border border-white/10 rounded-2xl p-4 text-center">
-              <p className="text-xl md:text-2xl font-bold mb-1" style={{ color: s.color }}>{s.value}</p>
-              <p className="text-xs font-semibold text-white mb-0.5">{s.label}</p>
-              <p className="text-[11px] text-slate-400">{s.sub}</p>
-            </div>
-          ))}
-        </div>
+          <h1 className="text-4xl md:text-6xl font-black mb-4 leading-tight">
+            <span className="bg-gradient-to-r from-purple-400 via-pink-300 to-orange-400 bg-clip-text text-transparent">
+              Education • Health • Business
+            </span>
+            <br />
+            <span className="text-white text-3xl md:text-4xl">ek platform — poora ecosystem</span>
+          </h1>
 
-        {/* Tab Navigation */}
-        <div className="flex gap-2 flex-wrap">
-          {(["platforms", "systems", "roadmap"] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-5 py-2 rounded-full text-xs font-semibold transition-all ${
-                activeTab === tab
-                  ? "bg-gradient-to-r from-[#00AEEF] to-[#22C55E] text-white shadow-lg"
-                  : "glass-panel border border-white/15 text-slate-300 hover:text-white hover:border-[#00eaff]/40"
-              }`}
-            >
-              {tab === "platforms" ? "🌐 Industry Platforms" : tab === "systems" ? "⚙️ Core Systems" : "🗺️ Roadmap"}
-            </button>
-          ))}
-        </div>
+          <p className="text-xl text-white/60 max-w-2xl mx-auto mb-8">
+            EHB aik aisi duniya hai jahan aap kaam bhi kar sakte hain, seekh bhi sakte hain,
+            <br />
+            <span className="text-white/40 text-base">aur apna business bhi chala sakte hain — sab ek jagah.</span>
+          </p>
 
-        {/* Industry Platforms Tab */}
-        {activeTab === "platforms" && (
-          <div>
-            <div className="mb-4">
-              <h2 className="text-lg md:text-xl font-semibold text-white mb-1">9 Industry Platforms</h2>
-              <p className="text-xs text-slate-400">Each platform is a full ecosystem — AI-matched, verified, franchise-powered.</p>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {INDUSTRY_PLATFORMS.map((p) => (
-                <Link key={p.name} href={p.href} className="group glass-card border border-white/10 rounded-2xl p-5 hover:border-opacity-60 transition-all duration-300 card-hover" style={{ borderColor: p.color + "30" }}>
-                  <div className="flex items-start gap-3 mb-3">
-                    <span className="text-2xl">{p.icon}</span>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <p className="text-sm font-bold text-white">{p.name}</p>
-                        <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ background: p.color + "25", color: p.color }}>{p.tag}</span>
-                      </div>
-                      <p className="text-xs text-slate-400">{p.desc}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-slate-500">AI-powered · Verified</span>
-                    <span className="font-semibold transition-colors" style={{ color: p.color }}>Explore →</span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Core Systems Tab */}
-        {activeTab === "systems" && (
-          <div>
-            <div className="mb-4">
-              <h2 className="text-lg md:text-xl font-semibold text-white mb-1">8 Core Systems</h2>
-              <p className="text-xs text-slate-400">Every EHB transaction passes through these systems — verified, trusted, recorded.</p>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {CORE_SYSTEMS.map((s) => (
-                <div key={s.name} className="glass-card rounded-2xl p-5 border" style={{ borderColor: s.color + "35" }}>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xl">{s.icon}</span>
-                    <div>
-                      <p className="text-sm font-bold text-white">{s.name}</p>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ background: s.color + "25", color: s.color }}>
-                        {s.status}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-xs font-semibold text-slate-200 mb-1">{s.full}</p>
-                  <p className="text-xs text-slate-400">{s.desc}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* User Flow */}
-            <div className="mt-8 glass-panel border border-white/10 rounded-2xl p-6">
-              <h3 className="text-sm font-semibold text-white mb-4">Platform Flow — From Signup to Earning</h3>
-              <div className="flex flex-wrap items-center gap-2 text-xs">
-                {["Register", "JPS Profile", "STL Level", "PSS Verify", "CRB Certify", "DMO Approve", "Service Active", "Earn 💰"].map((step, i, arr) => (
-                  <div key={step} className="flex items-center gap-2">
-                    <div className="px-3 py-1.5 rounded-full font-semibold" style={{
-                      background: i < 3 ? "rgba(0,234,255,0.15)" : i < 6 ? "rgba(139,92,246,0.15)" : "rgba(34,197,94,0.2)",
-                      color: i < 3 ? "#00eaff" : i < 6 ? "#a78bfa" : "#22c55e",
-                      border: "1px solid " + (i < 3 ? "rgba(0,234,255,0.3)" : i < 6 ? "rgba(139,92,246,0.3)" : "rgba(34,197,94,0.3)")
-                    }}>
-                      {step}
-                    </div>
-                    {i < arr.length - 1 && <span className="text-slate-600">→</span>}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Trust Badge Reference */}
-            <div className="mt-4 glass-panel border border-white/10 rounded-2xl p-6">
-              <h3 className="text-sm font-semibold text-white mb-4">Trust Badge System</h3>
-              <div className="flex flex-wrap gap-3 text-xs">
-                {[
-                  { icon: "🛡️", label: "PSS Verified", color: "#10b981" },
-                  { icon: "🏛️", label: "CRB Certified", color: "#3b82f6" },
-                  { icon: "⭐", label: "STL Level", color: "#f59e0b" },
-                  { icon: "🌐", label: "DMO Registered", color: "#8b5cf6" },
-                  { icon: "🏢", label: "Franchise Verified", color: "#f97316" },
-                ].map((b) => (
-                  <div key={b.label} className="flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: b.color + "20", border: "1px solid " + b.color + "40" }}>
-                    <span>{b.icon}</span>
-                    <span className="font-medium" style={{ color: b.color }}>{b.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Roadmap Tab */}
-        {activeTab === "roadmap" && (
-          <div>
-            <div className="mb-4">
-              <h2 className="text-lg md:text-xl font-semibold text-white mb-1">8-Phase Development Roadmap</h2>
-              <p className="text-xs text-slate-400">From foundation systems to global blockchain governance.</p>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {ROADMAP_PHASES.map((rp, i) => (
-                <div key={rp.phase} className={`glass-card rounded-2xl p-5 border ${rp.done ? "border-emerald-400/40" : "border-white/10"}`}>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${rp.done ? "bg-emerald-400/20 text-emerald-300" : "bg-slate-700/60 text-slate-400"}`}>
-                      {rp.phase}
-                    </span>
-                    {rp.done && <span className="text-emerald-400 text-xs">✓ Done</span>}
-                  </div>
-                  <p className="text-sm font-semibold text-white mb-2">{rp.title}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {rp.items.map((item) => (
-                      <span key={item} className="text-[10px] px-2 py-0.5 rounded-full bg-slate-800/60 text-slate-300">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Franchise Levels */}
-            <div className="mt-8 glass-panel border border-white/10 rounded-2xl p-6">
-              <h3 className="text-sm font-semibold text-white mb-4">Franchise Network Structure</h3>
-              <div className="grid sm:grid-cols-3 gap-4">
-                {[
-                  { level: "Sub Franchise", desc: "City-level. Onboard local providers & earn from every order in your zone.", color: "#3b82f6", earn: "$500–$2000/mo" },
-                  { level: "Master Franchise", desc: "Regional. Manage multiple cities with higher scope and earning potential.", color: "#f59e0b", earn: "$2000–$8000/mo" },
-                  { level: "Corporate Franchise", desc: "National/country level. Maximum influence and ecosystem revenue.", color: "#f97316", earn: "$8000+/mo" },
-                ].map((fl) => (
-                  <div key={fl.level} className="rounded-2xl p-4 border" style={{ background: fl.color + "10", borderColor: fl.color + "40" }}>
-                    <p className="text-sm font-bold mb-1" style={{ color: fl.color }}>{fl.level}</p>
-                    <p className="text-xs text-slate-300 mb-2">{fl.desc}</p>
-                    <p className="text-xs font-semibold text-emerald-300">{fl.earn}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Quick Navigation Footer */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            { label: "Dashboard", href: "/dashboard", icon: "📊", color: "#00eaff" },
-            { label: "AI Marketplace", href: "/ai-marketplace", icon: "🤖", color: "#8b5cf6" },
-            { label: "Franchise", href: "/franchise", icon: "🏢", color: "#22c55e" },
-            { label: "DMO Admin", href: "/dmo", icon: "🌐", color: "#f59e0b" },
-            { label: "Development", href: "/development", icon: "🛠️", color: "#f97316" },
-            { label: "GoSellr", href: "/gosellr", icon: "🛒", color: "#3b82f6" },
-            { label: "Healthcare", href: "/wms", icon: "🏥", color: "#10b981" },
-            { label: "Education", href: "/hps", icon: "🎓", color: "#a78bfa" },
-          ].map((n) => (
-            <Link key={n.label} href={n.href} className="glass-panel card-hover border border-white/10 rounded-xl p-4 flex items-center gap-3 hover:border-opacity-60 transition-all" style={{ borderColor: n.color + "30" }}>
-              <span className="text-xl">{n.icon}</span>
-              <span className="text-xs font-semibold text-slate-200">{n.label}</span>
+          {/* Main CTAs */}
+          <div className="flex flex-wrap gap-4 justify-center mb-10">
+            <Link href="/franchise" className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 rounded-2xl text-white font-black text-lg transition-all hover:scale-105 shadow-lg shadow-orange-500/30">
+              🏪 Franchise Lein
             </Link>
-          ))}
-        </div>
+            <Link href="/agts" className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 rounded-2xl text-white font-black text-lg transition-all hover:scale-105 shadow-lg shadow-green-500/30">
+              💼 Job Dhundein
+            </Link>
+            <Link href="/dashboard" className="px-8 py-4 bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl text-white font-semibold text-lg transition-all">
+              📊 Dashboard →
+            </Link>
+          </div>
 
-      </div>
+          {/* Stats bar */}
+          <div className="flex flex-wrap justify-center gap-6">
+            {STATS.map((s) => (
+              <div key={s.label} className="text-center">
+                <div className="text-2xl mb-0.5">{s.icon}</div>
+                <div className="text-xl font-black text-white">{s.val}</div>
+                <div className="text-xs text-white/40 uppercase tracking-wider">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── QUICK NAVIGATION ─────────────────────────────── */}
+      <section className="py-10 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-black text-white mb-1">🧭 Kahan Jana Hai?</h2>
+            <p className="text-white/50 text-sm">Apna kaam choose karein — tap karo aur shuru ho jao</p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {QUICK_TILES.map((tile) => (
+              <Link
+                key={tile.href}
+                href={tile.href}
+                className={`group rounded-2xl border ${tile.border} overflow-hidden hover:scale-[1.03] transition-all`}
+              >
+                <div className={`bg-gradient-to-br ${tile.color} p-4 text-center`}>
+                  <div className="text-4xl mb-1">{tile.icon}</div>
+                </div>
+                <div className="bg-white/[0.04] p-3 text-center">
+                  <div className="font-black text-white text-sm">{tile.label}</div>
+                  <div className="text-xs text-white/50">{tile.sub}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── WHAT IS EHB ─────────────────────────────────── */}
+      <section className="py-10 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-3xl p-8 md:p-10">
+            <div className="text-center mb-8">
+              <div className="text-5xl mb-3">🌐</div>
+              <h2 className="text-3xl font-black text-white mb-2">EHB kya hai?</h2>
+              <p className="text-white/50">Asan alfazon mein — bilkul seedha</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: "🎓",
+                  title: "Education",
+                  desc: "Har field mein seekhne ke liye courses, certificates, aur training programs. Ghar baithe, mobile se.",
+                  color: "border-blue-500/30 bg-blue-950/20",
+                },
+                {
+                  icon: "🏥",
+                  title: "Health",
+                  desc: "Online doctors, medicines, aur health tracking. Appointment book karein — waiting line nahi.",
+                  color: "border-red-500/30 bg-red-950/20",
+                },
+                {
+                  icon: "💼",
+                  title: "Business",
+                  desc: "Franchise lein, online dukan chalayein, ya jobs dhundein. 32 industries — sab ek jagah.",
+                  color: "border-green-500/30 bg-green-950/20",
+                },
+              ].map((item) => (
+                <div key={item.title} className={`rounded-2xl border p-5 ${item.color}`}>
+                  <div className="text-4xl mb-3">{item.icon}</div>
+                  <h3 className="font-black text-white text-lg mb-2">{item.title}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS ─────────────────────────────────── */}
+      <section className="py-10 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-black text-white mb-2">🚀 Shuru Karna Boht Aasan Hai</h2>
+            <p className="text-white/50">3 steps — bas itna karna hai</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {HOW_IT_WORKS.map((step) => (
+              <div key={step.step} className="relative">
+                <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+                  <div className={`bg-gradient-to-br ${step.color} p-5`}>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-lg font-black text-white">
+                        {step.step}
+                      </div>
+                      <div className="text-4xl">{step.icon}</div>
+                    </div>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-black text-white text-lg mb-2">{step.title}</h3>
+                    <p className="text-white/60 text-sm leading-relaxed">{step.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 32 INDUSTRIES ─────────────────────────────────── */}
+      <section className="py-10 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-black text-white mb-2">🏭 32 Industries — Sab Cover</h2>
+            <p className="text-white/50 text-sm">Koi bhi field — EHB ke andar hai</p>
+          </div>
+
+          <div className="flex flex-wrap gap-3 justify-center">
+            {(showAll ? INDUSTRIES : INDUSTRIES.slice(0, 8)).map((ind) => (
+              <div
+                key={ind}
+                className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/70 hover:bg-white/10 hover:text-white transition-all"
+              >
+                {ind}
+              </div>
+            ))}
+            {!showAll && (
+              <button
+                onClick={() => setShowAll(true)}
+                className="px-4 py-2 rounded-full bg-purple-500/20 border border-purple-400/30 text-sm text-purple-300 hover:bg-purple-500/30 transition-all"
+              >
+                +20 more →
+              </button>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PLATFORM STATUS ──────────────────────────────── */}
+      <section className="py-10 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-green-950/30 to-emerald-950/20 border border-green-500/20 rounded-3xl p-6 md:p-8">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <div>
+                <h2 className="text-xl font-black text-white mb-1">📡 Platform Status</h2>
+                <p className="text-white/50 text-sm">Sab systems check karein</p>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 border border-green-400/30">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-green-300 font-semibold text-sm">All Systems Live</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { icon: "🪪", name: "Identity", status: "Live", ok: true },
+                { icon: "🛡️", name: "Security", status: "Live", ok: true },
+                { icon: "💳", name: "Wallet", status: "Live", ok: true },
+                { icon: "📦", name: "Logistics", status: "Live", ok: true },
+                { icon: "⛓️", name: "Blockchain", status: "Active", ok: true },
+                { icon: "🤖", name: "AI Engine", status: "Beta", ok: true },
+                { icon: "🌍", name: "Global Ops", status: "Phase 2", ok: false },
+                { icon: "🏭", name: "32 Industries", status: "Phase 3", ok: false },
+              ].map((sys) => (
+                <div key={sys.name} className="bg-black/20 rounded-xl p-3 flex items-center gap-3">
+                  <div className="text-2xl">{sys.icon}</div>
+                  <div>
+                    <div className="text-white text-xs font-bold">{sys.name}</div>
+                    <div className={`text-xs ${sys.ok ? "text-green-400" : "text-yellow-400"}`}>
+                      {sys.status}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FINAL CTA ─────────────────────────────────────── */}
+      <section className="py-16 px-4 text-center">
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-gradient-to-r from-purple-900/30 via-pink-900/20 to-orange-900/30 border border-purple-400/20 rounded-3xl p-10">
+            <div className="text-6xl mb-4">🌟</div>
+            <h2 className="text-3xl font-black text-white mb-3">Aaj Hi Join Karein</h2>
+            <p className="text-white/60 mb-8 text-lg">
+              Lakhon log EHB se kamai kar rahe hain — aap bhi shuru karein
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link href="/franchise" className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 rounded-2xl text-white font-black text-lg transition-all hover:scale-105">
+                🏪 Franchise Apply Karein
+              </Link>
+              <Link href="/dmo" className="px-6 py-4 bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl text-white font-semibold transition-all">
+                ⚙️ Platform Samjhein
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }
