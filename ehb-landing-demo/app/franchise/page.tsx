@@ -71,7 +71,7 @@ export default function FranchisePage() {
               <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">Franchise Control Center</p>
               <h1 className="mt-1 text-2xl font-semibold gradient-text">EHB Franchise Home</h1>
               <p className="mt-1 text-sm text-slate-300">
-                Local bookings, inspections, escalations, aur DMO coordination ka unified workspace.
+                A unified workspace for local bookings, inspections, escalations, and DMO coordination.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">

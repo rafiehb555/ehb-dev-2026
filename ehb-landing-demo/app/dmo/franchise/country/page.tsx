@@ -36,7 +36,7 @@ export default function CountryFranchisePage({
           <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">DMO · Country Franchise</p>
           <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">Country-level Operations</h1>
           <p className="text-slate-300 max-w-2xl">
-            Industry-aware franchise KPIs with queue link. (UI mock)
+            Review country-level franchise KPIs, trust health, and queue access for the selected location and industry.
           </p>
         </header>
 

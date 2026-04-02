@@ -259,7 +259,7 @@ export default function AdminPage() {
 
           <Panel title="Phase 82 — Business Analytics" path="/admin/ai-analytics">
             <p className="text-slate-300 mb-1">
-              Franchise/provider/platform ke liye auto reports (UI mock).
+              Auto reports for franchise, provider, and platform teams. (UI mock)
             </p>
             <ul className="space-y-1 text-slate-300">
               <li>• Industry / Franchise / Provider tabs</li>

@@ -106,7 +106,7 @@ export default function FranchiseBookingsPage() {
           <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">Franchise Booking Desk</p>
           <h1 className="mt-1 text-2xl font-semibold gradient-text">Service Booking Queue</h1>
           <p className="mt-1 text-sm text-slate-300">
-            Marketplace service orders ko yahan claim, schedule, review, aur resolve kiya ja sakta hai.
+            Claim, schedule, review, and resolve marketplace service orders from this queue.
           </p>
         </section>
 

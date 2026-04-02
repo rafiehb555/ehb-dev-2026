@@ -35,7 +35,7 @@ export default function MasterFranchisePage({
         <header className="space-y-1">
           <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">DMO · Master Franchise</p>
           <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">Master-region monitoring</h1>
-          <p className="text-slate-300 max-w-2xl">Same UI, different KPIs by industry + context. (UI mock)</p>
+          <p className="text-slate-300 max-w-2xl">Monitor master-region performance, inspections, and franchise execution quality by operating context.</p>
         </header>
 
         <DmoTopNav />

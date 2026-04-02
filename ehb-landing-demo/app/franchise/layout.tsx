@@ -17,7 +17,7 @@ export default function FranchiseLayout({ children }: { children: ReactNode }) {
             <div>
               <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">Franchise Workspace</p>
               <p className="text-sm text-slate-300">
-                Home, booking queue, inspections, aur DMO coordination ek hi flow me.
+                Home, booking queue, inspections, and DMO coordination in one workflow.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">

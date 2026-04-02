@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getJpsProfileByUsername } from "@/lib/jpsProfiles";
+import { getJpsProfileByUsername } from "@/lib/jps/profiles";
 import { ProfileCard } from "@/components/ProfileCard";
 
 export default function ProfilePage({ params }: { params: { username: string } }) {

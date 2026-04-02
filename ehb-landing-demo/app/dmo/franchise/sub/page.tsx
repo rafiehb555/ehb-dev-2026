@@ -35,7 +35,7 @@ export default function SubFranchisePage({
         <header className="space-y-1">
           <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">DMO · Sub Franchise</p>
           <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">Local onboarding & trust</h1>
-          <p className="text-slate-300 max-w-2xl">Same dashboard, smaller scope by level. (UI mock)</p>
+          <p className="text-slate-300 max-w-2xl">Handle local onboarding, trust checks, and task execution for the selected franchise context.</p>
         </header>
 
         <DmoTopNav />

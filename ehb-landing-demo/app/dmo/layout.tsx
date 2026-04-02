@@ -13,7 +13,7 @@ export default function DmoLayout({ children }: { children: React.ReactNode }) {
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">DMO Workspace</p>
-                <p className="text-sm text-slate-300">Sidebar ke sab modules me yeh top controls visible rahenge.</p>
+                <p className="text-sm text-slate-300">These top controls remain visible across all sidebar modules.</p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <Link href="/dmo" className="ehb-btn-primary ehb-press">

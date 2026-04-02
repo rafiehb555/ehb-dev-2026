@@ -11,7 +11,7 @@ export default function DmoSuperAdminPage() {
           <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">DMO · Super Admin</p>
           <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">Global DMO Operations</h1>
           <p className="text-slate-300 max-w-2xl">
-            EHB head office controls queue routing, STL policy and approval consistency. (UI mock)
+            EHB head office controls queue routing, STL policy, approval consistency, and cross-region governance operations.
           </p>
         </header>
 

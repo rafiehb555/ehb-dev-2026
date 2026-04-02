@@ -9,7 +9,7 @@ export default function DmoFranchiseMenuPage() {
           <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">DMO · Franchise Model</p>
           <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">Franchise Dashboards</h1>
           <p className="text-slate-300 max-w-2xl">
-            Same dashboard design across levels. Select an industry + open queue for this context. (UI mock)
+            Open the franchise control layer by operating level and review industry-aware queues, trust signals, and workload context.
           </p>
         </header>
 
@@ -30,7 +30,7 @@ export default function DmoFranchiseMenuPage() {
             >
               <div className="space-y-1">
                 <div className="text-sm font-semibold text-white">{c.title}</div>
-                <div className="text-[10px] text-slate-400">Industry-aware data tiles (mock)</div>
+                <div className="text-[10px] text-slate-400">Industry-aware KPIs, queue routing, and operational summaries</div>
               </div>
               <div className="text-[11px] text-slate-200 pt-3">↗ Open dashboard</div>
             </Link>

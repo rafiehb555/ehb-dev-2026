@@ -5,3 +5,5 @@ export const MemoryQuerySchema = z.object({
   traceId: z.string().trim().max(120).optional(),
 });
 
+export type MemoryQueryInput = z.infer<typeof MemoryQuerySchema>;
+

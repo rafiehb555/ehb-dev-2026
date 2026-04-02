@@ -1,3 +1,5 @@
+import type { MemoryBrainResult, OpenAIResponsePayload } from "@/lib/ai/types";
+
 const BLOCKED_KEYWORDS = [
   "code",
   "function",
@@ -68,16 +70,6 @@ export function checkMemoryQueryAllowed(message: string) {
   return { ok: true as const };
 }
 
-type OpenAIResponsePayload = {
-  model: string;
-  input: Array<{
-    role: "system" | "user";
-    content: Array<{ type: "input_text"; text: string }>;
-  }>;
-  max_output_tokens: number;
-  temperature: number;
-};
-
 function extractTextFromResponsesApi(json: any) {
   if (typeof json?.output_text === "string" && json.output_text.trim().length > 0) {
     return json.output_text.trim();
@@ -96,7 +88,7 @@ function extractTextFromResponsesApi(json: any) {
   return chunks.join("\n").trim();
 }
 
-export async function queryMemoryBrain(args: { message: string }) {
+export async function queryMemoryBrain(args: { message: string }): Promise<MemoryBrainResult> {
   const apiKey = process.env.EHB_MEMORY_OPENAI_KEY;
   if (!apiKey) {
     throw new Error("EHB_MEMORY_OPENAI_KEY is not configured.");

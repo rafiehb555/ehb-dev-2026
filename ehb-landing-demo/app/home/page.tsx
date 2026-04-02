@@ -12,7 +12,7 @@ const QUICK_TILES = [
   {
     icon: "🏪",
     label: "Franchise",
-    sub: "Business kholen",
+    sub: "Open a business",
     href: "/franchise",
     color: "from-orange-500 to-amber-600",
     border: "border-orange-500/30",
@@ -36,7 +36,7 @@ const QUICK_TILES = [
   {
     icon: "💼",
     label: "Jobs",
-    sub: "Naukri dhundein",
+    sub: "Find jobs",
     href: "/agts",
     color: "from-green-500 to-emerald-600",
     border: "border-green-500/30",
@@ -44,7 +44,7 @@ const QUICK_TILES = [
   {
     icon: "🏥",
     label: "Health",
-    sub: "Sehat services",
+    sub: "Health services",
     href: "/industries",
     color: "from-red-500 to-rose-600",
     border: "border-red-500/30",
@@ -52,7 +52,7 @@ const QUICK_TILES = [
   {
     icon: "🛒",
     label: "GoSellr",
-    sub: "Online dukan",
+    sub: "Online store",
     href: "/gosellr",
     color: "from-cyan-500 to-teal-600",
     border: "border-cyan-500/30",
@@ -60,7 +60,7 @@ const QUICK_TILES = [
   {
     icon: "📊",
     label: "Dashboard",
-    sub: "Apna account",
+    sub: "Your account",
     href: "/dashboard",
     color: "from-indigo-500 to-indigo-700",
     border: "border-indigo-500/30",
@@ -68,7 +68,7 @@ const QUICK_TILES = [
   {
     icon: "🌍",
     label: "Global",
-    sub: "Poori duniya",
+    sub: "Worldwide reach",
     href: "/global",
     color: "from-teal-500 to-cyan-700",
     border: "border-teal-500/30",
@@ -88,22 +88,22 @@ const HOW_IT_WORKS = [
   {
     step: "1",
     icon: "📝",
-    title: "Register Karein",
-    desc: "Free account banayein. Phone number ya email se — 2 minute mein.",
+    title: "Create an Account",
+    desc: "Create a free account using your phone number or email in about 2 minutes.",
     color: "from-blue-600 to-blue-800",
   },
   {
     step: "2",
     icon: "✅",
-    title: "Verify Karein",
-    desc: "Apni ID verify karein. JPS score milega — aapki reputation badge.",
+    title: "Verify Identity",
+    desc: "Complete ID verification to receive your JPS score and reputation badge.",
     color: "from-purple-600 to-purple-800",
   },
   {
     step: "3",
     icon: "🚀",
-    title: "Shuru Karein",
-    desc: "Franchise, job, ya service — jo chahein wo choose karein aur kamai shuru!",
+    title: "Start Growing",
+    desc: "Choose a franchise, job, or service path and begin growing right away.",
     color: "from-green-600 to-emerald-700",
   },
 ];
@@ -137,22 +137,22 @@ export default function HomePage() {
               Education • Health • Business
             </span>
             <br />
-            <span className="text-white text-3xl md:text-4xl">ek platform — poora ecosystem</span>
+            <span className="text-white text-3xl md:text-4xl">one platform for the full ecosystem</span>
           </h1>
 
           <p className="text-xl text-white/60 max-w-2xl mx-auto mb-8">
-            EHB aik aisi duniya hai jahan aap kaam bhi kar sakte hain, seekh bhi sakte hain,
+            EHB is a connected platform where you can work, learn, and build,
             <br />
-            <span className="text-white/40 text-base">aur apna business bhi chala sakte hain — sab ek jagah.</span>
+            <span className="text-white/40 text-base">while managing your business from one place.</span>
           </p>
 
           {/* Main CTAs */}
           <div className="flex flex-wrap gap-4 justify-center mb-10">
             <Link href="/franchise" className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 rounded-2xl text-white font-black text-lg transition-all hover:scale-105 shadow-lg shadow-orange-500/30">
-              🏪 Franchise Lein
+              🏪 Explore Franchise
             </Link>
             <Link href="/agts" className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 rounded-2xl text-white font-black text-lg transition-all hover:scale-105 shadow-lg shadow-green-500/30">
-              💼 Job Dhundein
+              💼 Find Jobs
             </Link>
             <Link href="/dashboard" className="px-8 py-4 bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl text-white font-semibold text-lg transition-all">
               📊 Dashboard →
@@ -176,8 +176,8 @@ export default function HomePage() {
       <section className="py-10 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-black text-white mb-1">🧭 Kahan Jana Hai?</h2>
-            <p className="text-white/50 text-sm">Apna kaam choose karein — tap karo aur shuru ho jao</p>
+            <h2 className="text-2xl font-black text-white mb-1">🧭 Where Do You Want to Go?</h2>
+            <p className="text-white/50 text-sm">Choose your destination, tap once, and get started</p>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -206,8 +206,8 @@ export default function HomePage() {
           <div className="bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-3xl p-8 md:p-10">
             <div className="text-center mb-8">
               <div className="text-5xl mb-3">🌐</div>
-              <h2 className="text-3xl font-black text-white mb-2">EHB kya hai?</h2>
-              <p className="text-white/50">Asan alfazon mein — bilkul seedha</p>
+              <h2 className="text-3xl font-black text-white mb-2">What Is EHB?</h2>
+              <p className="text-white/50">A simple explanation, without the complexity</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -215,19 +215,19 @@ export default function HomePage() {
                 {
                   icon: "🎓",
                   title: "Education",
-                  desc: "Har field mein seekhne ke liye courses, certificates, aur training programs. Ghar baithe, mobile se.",
+                  desc: "Courses, certificates, and training programs for every field, accessible from your phone.",
                   color: "border-blue-500/30 bg-blue-950/20",
                 },
                 {
                   icon: "🏥",
                   title: "Health",
-                  desc: "Online doctors, medicines, aur health tracking. Appointment book karein — waiting line nahi.",
+                  desc: "Access doctors, medicines, and health tracking online without waiting in line.",
                   color: "border-red-500/30 bg-red-950/20",
                 },
                 {
                   icon: "💼",
                   title: "Business",
-                  desc: "Franchise lein, online dukan chalayein, ya jobs dhundein. 32 industries — sab ek jagah.",
+                  desc: "Run a franchise, launch an online store, or find work across 32 industries in one place.",
                   color: "border-green-500/30 bg-green-950/20",
                 },
               ].map((item) => (
@@ -246,8 +246,8 @@ export default function HomePage() {
       <section className="py-10 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-black text-white mb-2">🚀 Shuru Karna Boht Aasan Hai</h2>
-            <p className="text-white/50">3 steps — bas itna karna hai</p>
+            <h2 className="text-3xl font-black text-white mb-2">🚀 Getting Started Is Easy</h2>
+            <p className="text-white/50">Just 3 simple steps</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -277,8 +277,8 @@ export default function HomePage() {
       <section className="py-10 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-black text-white mb-2">🏭 32 Industries — Sab Cover</h2>
-            <p className="text-white/50 text-sm">Koi bhi field — EHB ke andar hai</p>
+            <h2 className="text-2xl font-black text-white mb-2">🏭 32 Industries Covered</h2>
+            <p className="text-white/50 text-sm">Every major field can connect through EHB</p>
           </div>
 
           <div className="flex flex-wrap gap-3 justify-center">
@@ -309,7 +309,7 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
               <div>
                 <h2 className="text-xl font-black text-white mb-1">📡 Platform Status</h2>
-                <p className="text-white/50 text-sm">Sab systems check karein</p>
+                <p className="text-white/50 text-sm">Review the current system status</p>
               </div>
               <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 border border-green-400/30">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
@@ -348,16 +348,16 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto">
           <div className="bg-gradient-to-r from-purple-900/30 via-pink-900/20 to-orange-900/30 border border-purple-400/20 rounded-3xl p-10">
             <div className="text-6xl mb-4">🌟</div>
-            <h2 className="text-3xl font-black text-white mb-3">Aaj Hi Join Karein</h2>
+            <h2 className="text-3xl font-black text-white mb-3">Join Today</h2>
             <p className="text-white/60 mb-8 text-lg">
-              Lakhon log EHB se kamai kar rahe hain — aap bhi shuru karein
+              Millions of people are building with EHB. Start your journey today.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link href="/franchise" className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 rounded-2xl text-white font-black text-lg transition-all hover:scale-105">
-                🏪 Franchise Apply Karein
+                🏪 Apply for Franchise
               </Link>
               <Link href="/dmo" className="px-6 py-4 bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl text-white font-semibold transition-all">
-                ⚙️ Platform Samjhein
+                ⚙️ Explore the Platform
               </Link>
             </div>
           </div>

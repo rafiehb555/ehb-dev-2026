@@ -41,6 +41,12 @@ ai-system-backend/
   package.json
 ```
 
+Implementation note:
+
+- Keep backend AI models, memory logic, prompt builders, and agent orchestration inside `ai-system/`.
+- Keep HTTP controllers and route wiring inside `src/`.
+- When adding new AI capabilities, extend the relevant folder under `ai-system/` instead of creating a parallel top-level models folder.
+
 ## Setup Guide (Replit, step-by-step)
 
 1. Create a new **Node.js Repl**

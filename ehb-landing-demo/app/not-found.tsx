@@ -36,21 +36,21 @@ export default function NotFound() {
             Page not found
           </h1>
           <p className="text-ehbNew-muted text-sm sm:text-base max-w-sm mx-auto mb-6">
-            Yeh page maujood nahi ya URL galat hai. EHB Home se dubara shuru karein.
+            This page does not exist or the URL is incorrect. Start again from EHB Home.
           </p>
 
           {/* Helper – dev server tip */}
           <div className="rounded-xl p-4 mb-6 text-left border border-ehbNew-border/60 bg-ehbNew-surfaceSoft/80 backdrop-blur">
             <p className="text-xs text-ehbNew-muted leading-relaxed">
-              Agar aapko ye 404 dikh raha hai to dev server{" "}
+              If you are seeing this 404 page, run the dev server from the{" "}
               <code className="px-1.5 py-0.5 rounded bg-ehbNew-surface text-ehbNew-emerald font-mono text-[11px]">
                 ehb-landing-demo
               </code>{" "}
-              folder se chalao, aur browser mein terminal mein jo port likha ho (jaise{" "}
+              folder and open the exact port shown in the terminal, such as{" "}
               <code className="px-1.5 py-0.5 rounded bg-ehbNew-surface text-ehbNew-amber font-mono text-[11px]">
                 localhost:3007
               </code>
-              ) wohi URL open karein.
+              .
             </p>
           </div>
 
@@ -59,7 +59,7 @@ export default function NotFound() {
             href="/"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-ehbNew-emerald to-ehbNew-violet px-8 py-3.5 text-sm font-semibold text-ehbNew-bg btn-glow-new shadow-neon-emerald"
           >
-            <span>EHB Home par jao</span>
+            <span>Go to EHB Home</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
@@ -67,7 +67,7 @@ export default function NotFound() {
 
           {/* Quick links – new theme pills */}
           <div className="mt-8 pt-6 border-t border-ehbNew-border/50">
-            <p className="text-xs text-ehbNew-muted mb-3">Tez links</p>
+            <p className="text-xs text-ehbNew-muted mb-3">Quick links</p>
             <div className="flex flex-wrap justify-center gap-2">
               <Link href="/landing" className="px-3 py-1.5 rounded-full glass-panel-new text-xs text-ehbNew-muted hover:text-ehbNew-emerald hover:shadow-neon-emerald transition-all duration-200">
                 Landing

@@ -23,11 +23,11 @@ const ORBIT2 = [
 const ORBIT3 = [
   { emoji: "✈️", label: "Travel" },
   { emoji: "🎮", label: "Gaming" },
-  { emoji: "🏭", label: "Manufactur" },
+  { emoji: "🏭", label: "Manufacturing" },
   { emoji: "📣", label: "Marketing" },
   { emoji: "🔬", label: "Research" },
   { emoji: "⚡", label: "Energy" },
-  { emoji: "🌿", label: "Environ" },
+  { emoji: "🌿", label: "Environment" },
   { emoji: "💼", label: "Freelance" },
 ];
 const LIVE_FEED = [
@@ -38,7 +38,7 @@ const LIVE_FEED = [
   "🇸🇦 Riyadh — Omar started freelancing",
   "🇩🇪 Berlin — Klaus bought AI tools",
   "🇦🇺 Sydney — Priya enrolled in course",
-  "🇨🇦 Toronto — Mike opened a dukan",
+  "🇨🇦 Toronto — Mike opened a store",
 ];
 
 const GLOBE_STYLE = `
@@ -370,34 +370,34 @@ function GlobalEcosystem() {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 const FEATURES = [
-  { emoji: "🤝", title: "Franchise System", titleUr: "فرنچائز سسٹم", desc: "10 types of franchise plans — from Rs 10,000 to Rs 10 Crore. Earn passive income while we manage operations.", descUr: "گھر بیٹھے کمائیں — ہم سنبھالتے ہیں سب کچھ", color: "from-orange-500 to-amber-400", href: "/franchise", cta: "Franchise Lein →" },
-  { emoji: "🛒", title: "GoSellr E-Commerce", titleUr: "گو سیلر", desc: "Sell anything online — products, services, digital goods. AI-powered store with 100M+ potential buyers.", descUr: "ا���'نی دکان آنلائن کھولیں — کروڑوں خریدار آپ کے انتظار میں", color: "from-blue-500 to-cyan-400", href: "/gosellr", cta: "Shop Karein →" },
-  { emoji: "💼", title: "Jobs Portal", titleUr: "جابز پورٹل", desc: "AI matches your skills to perfect jobs. Employers find best talent. Pakistan's smartest job network.", descUr: "بہترین نوکری — AI آپ کا ساتھی", color: "from-green-500 to-emerald-400", href: "/jobs", cta: "Naukri Dhundein →" },
-  { emoji: "🏥", title: "Health Services", titleUr: "صحت سروسز", desc: "Book doctors, order medicines, manage health records. Quality healthcare at your fingertips.", descUr: "گھر سے ڈاکٹر — صحت آپ کے ہاتھ میں", color: "from-pink-500 to-rose-400", href: "/health", cta: "Doctor Book Karein →" },
-  { emoji: "🤖", title: "AI Marketplace", titleUr: "ای آئی مارکیٹ پلیس", desc: "100+ AI tools for writing, coding, design, and more. Pakistan's first AI superstore.", descUr: "AI کی طاقت آپ کے پاس — 100 سے زیادہ ٹولز", color: "from-violet-500 to-purple-400", href: "/ai-marketplace", cta: "AI Tools Dekhin →" },
-  { emoji: "🎓", title: "Education Platform", titleUr: "تعلیم پلیٹ فارم", desc: "Learn skills, earn certificates, build career. Courses in Urdu + English for every background.", descUr: "سیکھیں اردو میں — سرٹیفکیٹ پائیں — کریئر بنائیں", color: "from-yellow-500 to-orange-400", href: "/education", cta: "Seekhna Shuru Karein →" },
+  { emoji: "🤝", title: "Franchise System", titleUr: "Business Expansion", desc: "10 types of franchise plans — from Rs 10,000 to Rs 10 Crore. Earn passive income while we manage operations.", descUr: "Earn from anywhere while we handle the operations.", color: "from-orange-500 to-amber-400", href: "/franchise", cta: "Explore Franchise →" },
+  { emoji: "🛒", title: "GoSellr E-Commerce", titleUr: "Smart Online Selling", desc: "Sell anything online — products, services, digital goods. AI-powered store with 100M+ potential buyers.", descUr: "Launch your online store and reach millions of buyers.", color: "from-blue-500 to-cyan-400", href: "/gosellr", cta: "Start Selling →" },
+  { emoji: "💼", title: "Jobs Portal", titleUr: "Career Network", desc: "AI matches your skills to perfect jobs. Employers find best talent. Pakistan's smartest job network.", descUr: "Find better jobs faster with AI-powered matching.", color: "from-green-500 to-emerald-400", href: "/jobs", cta: "Find Jobs →" },
+  { emoji: "🏥", title: "Health Services", titleUr: "Digital Healthcare", desc: "Book doctors, order medicines, manage health records. Quality healthcare at your fingertips.", descUr: "Consult doctors from home and manage care online.", color: "from-pink-500 to-rose-400", href: "/health", cta: "Book a Doctor →" },
+  { emoji: "🤖", title: "AI Marketplace", titleUr: "AI Tools Hub", desc: "100+ AI tools for writing, coding, design, and more. Pakistan's first AI superstore.", descUr: "Access 100+ AI tools for work, growth, and creativity.", color: "from-violet-500 to-purple-400", href: "/ai-marketplace", cta: "Browse AI Tools →" },
+  { emoji: "🎓", title: "Education Platform", titleUr: "Learning Platform", desc: "Learn skills, earn certificates, build career. Courses in Urdu + English for every background.", descUr: "Build practical skills, earn certificates, and grow your career.", color: "from-yellow-500 to-orange-400", href: "/education", cta: "Start Learning →" },
 ];
 
 const STATS = [
-  { emoji: "🏭", val: "32+",  label: "Industries", labelUr: "صنعتیں"  },
-  { emoji: "🌍", val: "50+",  label: "Countries",  labelUr: "ممالک"   },
-  { emoji: "👥", val: "1M+",  label: "Users",      labelUr: "صارفین"  },
-  { emoji: "🤖", val: "100+", label: "AI Tools",   labelUr: "اے آئی" },
-  { emoji: "💰", val: "$500M+", label: "Ecosystem", labelUr: "قدر"    },
-  { emoji: "⏰", val: "24/7", label: "Support",    labelUr: "سپورٹ"   },
+  { emoji: "🏭", val: "32+", label: "Industries", labelUr: "Business Sectors" },
+  { emoji: "🌍", val: "50+", label: "Countries", labelUr: "Global Reach" },
+  { emoji: "👥", val: "1M+", label: "Users", labelUr: "Active Members" },
+  { emoji: "🤖", val: "100+", label: "AI Tools", labelUr: "Automation Stack" },
+  { emoji: "💰", val: "$500M+", label: "Ecosystem Value", labelUr: "Growth Value" },
+  { emoji: "⏰", val: "24/7", label: "Support", labelUr: "Always Available" },
 ];
 
 const TESTIMONIALS = [
-  { name: "Ali Hassan",   city: "Lahore",     emoji: "👨‍💼", text: "EHB franchise ne meri life badal di — pehle mahine mein Rs 85,000 ki kamai!", stars: 5 },
-  { name: "Fatima Malik", city: "Karachi",    emoji: "👩‍💻", text: "GoSellr par apni dukan khooli — ab 200+ orders roz aate hain. Amazing!", stars: 5 },
-  { name: "Usman Khan",   city: "Islamabad",  emoji: "👨‍🎓", text: "AI Marketplace ki wajah se mera coding project 3x fast complete hua!", stars: 5 },
-  { name: "Zara Ahmed",   city: "Peshawar",   emoji: "👩‍⚕️", text: "Health module se ghar baithe doctor se consultation liya — shukriya EHB!", stars: 5 },
+  { name: "Ali Hassan", city: "Lahore", emoji: "👨‍💼", text: "The EHB franchise changed my business journey. I earned Rs 85,000 in my first month.", stars: 5 },
+  { name: "Fatima Malik", city: "Karachi", emoji: "👩‍💻", text: "I launched my store on GoSellr and now receive 200+ orders every day. Amazing platform.", stars: 5 },
+  { name: "Usman Khan", city: "Islamabad", emoji: "👨‍🎓", text: "The AI Marketplace helped me finish my coding project three times faster.", stars: 5 },
+  { name: "Zara Ahmed", city: "Peshawar", emoji: "👩‍⚕️", text: "I booked a doctor consultation from home through the health module. Thank you, EHB.", stars: 5 },
 ];
 
 const STEPS = [
-  { step: "01", emoji: "📝", title: "Register Karein", titleEn: "Sign Up Free",      desc: "Apna naam, email, phone number dein — sirf 60 seconds",       color: "from-blue-600 to-indigo-500" },
-  { step: "02", emoji: "✅", title: "Verify Karein",   titleEn: "Verify Identity",    desc: "CNIC ya passport se apni identity verify karein — TQ0% secure", color: "from-purple-600 to-pink-500" },
-  { step: "03", emoji: "🚀", title: "Shuru Karein",   titleEn: "Start Earning",      desc: "Franchise, shop, ya jobs — apna raasta chunein aur shuru ho jayein!", color: "from-orange-600 to-amber-500" },
+  { step: "01", emoji: "📝", title: "Create Account", titleEn: "Sign Up Free", desc: "Enter your name, email, and phone number. It only takes 60 seconds.", color: "from-blue-600 to-indigo-500" },
+  { step: "02", emoji: "✅", title: "Verify Identity", titleEn: "Verify Identity", desc: "Complete identity verification with your CNIC or passport in a secure flow.", color: "from-purple-600 to-pink-500" },
+  { step: "03", emoji: "🚀", title: "Start Growing", titleEn: "Start Earning", desc: "Choose your path, whether franchise, commerce, or jobs, and start growing today.", color: "from-orange-600 to-amber-500" },
 ];
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -466,8 +466,8 @@ export default function LandingPage() {
               A powerful AI-based platform where you can find jobs, offer services, sell
               products, and build your own business across 32 industries.
             </p>
-            <p className="text-white/40 text-sm mb-8 max-w-md" dir="rtl">
-              اگر آپ کے پاس کوئی تجربہ نہیں ہے، تو بھی آپ EHB کے ساتھ شروع اور ترقی کر سکتے ہیں۔
+            <p className="text-white/40 text-sm mb-8 max-w-md">
+              Even if you are just getting started, EHB gives you a clear path to earn, learn, and grow.
             </p>
 
             {/* CTA buttons */}
@@ -522,10 +522,10 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-              Shuru Karna Bohat Aasaan Hai
+              Getting Started Is Easy
             </h2>
-            <p className="text-xl text-white/50" dir="rtl">
-              صرف ۳ آسان قدم — ابھی شروع کریں
+            <p className="text-2xl text-white/60">
+              Just 3 simple steps to begin
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -550,8 +550,8 @@ export default function LandingPage() {
       <section className="py-24 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">EHB Mein Kya Hai?</h2>
-            <p className="text-xl text-white/50" dir="rtl">ای ایچ بی میں کیا ہے؟</p>
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">What's Inside EHB?</h2>
+            <p className="text-2xl text-white/60">Explore the products and services available on the platform</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {FEATURES.map((f) => (
@@ -562,7 +562,7 @@ export default function LandingPage() {
                 <h3 className="text-xl font-black text-white mb-1">{f.title}</h3>
                 <p className="text-sm text-white/40 mb-3">{f.titleUr}</p>
                 <p className="text-white/60 text-sm leading-relaxed mb-4">{f.desc}</p>
-                <p className="text-xs text-white/30 mb-4" dir="rtl">{f.descUr}</p>
+                <p className="text-xs text-white/30 mb-4">{f.descUr}</p>
                 <span className={`text-sm font-bold bg-gradient-to-r ${f.color} bg-clip-text text-transparent group-hover:underline`}>
                   {f.cta}
                 </span>
@@ -578,8 +578,8 @@ export default function LandingPage() {
       <section className="py-24 px-4 bg-gradient-to-b from-white/3 to-transparent">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Hamare Users Kehte Hain</h2>
-            <p className="text-xl text-white/50" dir="rtl">ہمارے صارفین کیا کہتے ہیں</p>
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">What Our Users Say</h2>
+            <p className="text-2xl text-white/60">Real stories from people growing with EHB</p>
           </div>
           <div className="border border-white/10 rounded-3xl p-8 md:p-12 bg-white/3 text-center mb-8">
             <div className="text-6xl mb-4">{TESTIMONIALS[activeTestimonial].emoji}</div>
@@ -613,10 +613,10 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { emoji: "🔒", title: "100% Secure",      titleUr: "مکمل محفوظ"    },
-              { emoji: "🇵🇰", title: "Made in Pakistan", titleUr: "پاکستان میں بنا" },
-              { emoji: "📜", title: "Govt Registered",   titleUr: "حکومت رجسٹرڈ"  },
-              { emoji: "🌍", title: "50+ Countries",     titleUr: "۵۰+ ممالک"     },
+              { emoji: "🔒", title: "100% Secure", titleUr: "Protected by trusted security standards" },
+              { emoji: "🇵🇰", title: "Made in Pakistan", titleUr: "Built locally for regional and global growth" },
+              { emoji: "📜", title: "Govt Registered", titleUr: "Registered and aligned with compliance needs" },
+              { emoji: "🌍", title: "50+ Countries", titleUr: "Serving users across international markets" },
             ].map((t) => (
               <div key={t.title} className="flex flex-col items-center text-center border border-white/10 rounded-2xl p-6 bg-white/3">
                 <div className="text-4xl mb-3">{t.emoji}</div>
@@ -635,10 +635,10 @@ export default function LandingPage() {
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-cyan-600/12 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 max-w-3xl mx-auto">
           <div className="text-7xl mb-6 animate-bounce">🚀</div>
-          <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">Aaj Hi Join Karein</h2>
-          <p className="text-2xl font-bold mb-4" dir="rtl">
+          <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">Join Today</h2>
+          <p className="text-2xl font-bold mb-4">
             <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              آج ہی شامل ہوں
+              Start your journey with EHB today
             </span>
           </p>
           <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
@@ -646,14 +646,14 @@ export default function LandingPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a href="/home" className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:opacity-90 text-white font-black px-12 py-5 rounded-2xl text-xl transition-all hover:scale-105 shadow-2xl shadow-cyan-500/30">
-              🆓 Free Mein Register Karein
+              🆓 Register for Free
             </a>
             <a href="/franchise" className="bg-white/10 hover:bg-white/15 border-2 border-white/20 text-white font-bold px-10 py-5 rounded-2xl text-xl transition-all hover:scale-105">
-              💼 Franchise Info Lein
+              💼 View Franchise Info
             </a>
           </div>
           <p className="text-white/30 text-sm mt-8">
-            ✅ Free hai &nbsp;•&nbsp; 🔒 Secure hai &nbsp;•&nbsp; 🇵🇰 Pakistan ka apna platform
+            ✅ Free to join &nbsp;•&nbsp; 🔒 Secure to use &nbsp;•&nbsp; 🇵🇰 Built in Pakistan
           </p>
         </div>
       </section>

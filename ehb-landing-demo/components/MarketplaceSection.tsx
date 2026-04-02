@@ -2,25 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import {
+  homepageContent,
+  type MarketplaceProductItem,
+  type MarketplaceServiceItem,
+} from "@/lib/content/homepage";
 
-interface ServiceCardProps {
-  title: string;
-  seller: string;
-  price: string;
-  rating: number;
-  tag?: string;
-  badge?: string;
-  deptHint?: string;
-}
+type ServiceCardProps = MarketplaceServiceItem;
 
-interface ProductCardProps {
-  title: string;
-  price: string;
-  rating: number;
-  tag?: string;
-  badge?: string;
-  deptHint?: string;
-}
+type ProductCardProps = MarketplaceProductItem;
 
 function getThumbEmoji(title: string): string {
   const t = title.toLowerCase();
@@ -303,20 +293,7 @@ function TabsSwitch({ active, onChange }: { active: "services" | "products"; onC
 
 export function MarketplaceSection() {
   const [activeTab, setActiveTab] = useState<"services" | "products">("services");
-
-  const services: ServiceCardProps[] = [
-    { title: "Logo Design", seller: "Creative Studio", price: "$25", rating: 4.8, tag: "High demand", badge: "⭐ Top Rated", deptHint: "DMO quality checks + PSS verified" },
-    { title: "Website Development", seller: "Rafi Web Studio", price: "$200", rating: 4.9, tag: "Fast delivery", badge: "🔥 Trending", deptHint: "PSS + EHB‑STL protected" },
-    { title: "SEO Optimization", seller: "Growth Agency", price: "$50", rating: 4.7, tag: "Fast delivery", badge: "🆕 New", deptHint: "DMO monitoring + secure checkout" },
-    { title: "Social Media Management", seller: "Brand Boosters", price: "$80", rating: 4.6, tag: "High demand", badge: "⭐ Top Rated", deptHint: "Verified provider + safe payment" },
-  ];
-
-  const products: ProductCardProps[] = [
-    { title: "Laptop (GoSellr Store)", price: "$850", rating: 4.9, tag: "High demand", badge: "⭐ Top Rated", deptHint: "PSS sellers + EHB‑STL checkout" },
-    { title: "Medical Equipment Kit", price: "$320", rating: 4.7, tag: "Fast delivery", badge: "🔥 Trending", deptHint: "DMO quality checks + secure payment" },
-    { title: "Education Bundle: Books + Courses", price: "$99", rating: 4.8, tag: "Fast delivery", badge: "🆕 New", deptHint: "Verified content + protected purchase" },
-    { title: "Delivery Rider Gear Pack", price: "$60", rating: 4.5, tag: "High demand", badge: "⭐ Top Rated", deptHint: "Verified store + secure checkout" },
-  ];
+  const { filterChips, products, services } = homepageContent.marketplace;
 
   const grid =
     activeTab === "services"
@@ -337,9 +314,11 @@ export function MarketplaceSection() {
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <TabsSwitch active={activeTab} onChange={setActiveTab} />
         <div className="hidden sm:flex gap-2 text-[11px] text-slate-400">
-          <span className="px-2 py-1 rounded-full bg-white/5 border border-white/10">Top Rated</span>
-          <span className="px-2 py-1 rounded-full bg-white/5 border border-white/10">Trending</span>
-          <span className="px-2 py-1 rounded-full bg-white/5 border border-white/10">Fast Delivery</span>
+          {filterChips.map((chip) => (
+            <span key={chip} className="px-2 py-1 rounded-full bg-white/5 border border-white/10">
+              {chip}
+            </span>
+          ))}
         </div>
       </div>
 
@@ -349,8 +328,11 @@ export function MarketplaceSection() {
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-2 text-[11px] text-slate-400 sm:hidden">
-          <span className="px-2 py-1 rounded-full bg-white/5 border border-white/10">Top Rated</span>
-          <span className="px-2 py-1 rounded-full bg-white/5 border border-white/10">Trending</span>
+          {filterChips.slice(0, 2).map((chip) => (
+            <span key={chip} className="px-2 py-1 rounded-full bg-white/5 border border-white/10">
+              {chip}
+            </span>
+          ))}
         </div>
         <div className="text-center sm:text-right w-full sm:w-auto">
           <Link

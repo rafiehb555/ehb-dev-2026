@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { KpiCard } from "@/components/ui/KpiCard";
-import { getJpsOverview } from "@/lib/jpsData";
+import { getJpsOverview } from "@/lib/jps/data";
 
 type ImportStateResponse = {
   hasImportedData: boolean;
   payload: unknown | null;
+  storageMode?: "database" | "filesystem";
 };
 
 type BackupSummary = {
@@ -35,6 +36,7 @@ export default function AdminJpsImportPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [hasImportedData, setHasImportedData] = useState(false);
+  const [storageMode, setStorageMode] = useState<"database" | "filesystem">("filesystem");
   const [backups, setBackups] = useState<BackupSummary[]>([]);
 
   async function loadBackups() {
@@ -59,6 +61,7 @@ export default function AdminJpsImportPage() {
 
       const data = (json?.data ?? json) as ImportStateResponse;
       setHasImportedData(Boolean(data?.hasImportedData));
+      setStorageMode(data?.storageMode === "database" ? "database" : "filesystem");
       setJsonText(prettyJson(data?.payload ?? getJpsOverview()));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load JPS import state");
@@ -204,7 +207,7 @@ export default function AdminJpsImportPage() {
             <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Super Admin · JPS Import</p>
             <h1 className="text-xl font-semibold gradient-text">JPS Data Import Manager</h1>
             <p className="max-w-3xl text-sm text-slate-300">
-              Yahan se aap real `JPS` profiles, skills, designation ladders, aur notes ko validate karke save kar sakte hain.
+              Validate and save real `JPS` profiles, skills, designation ladders, and notes from this screen.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -223,12 +226,31 @@ export default function AdminJpsImportPage() {
           </div>
         </header>
 
-        <section className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-          <KpiCard label="Imported Source" value={hasImportedData ? "Active" : "Fallback"} detail="Override file status" />
+        <section className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+          <KpiCard
+            label="Imported Source"
+            value={hasImportedData ? "Active" : "Fallback"}
+            detail={storageMode === "database" ? "Shared override state" : "Local override state"}
+          />
+          <KpiCard
+            label="Storage Mode"
+            value={storageMode === "database" ? "Database" : "Local File"}
+            detail={storageMode === "database" ? "Durable shared storage" : "Non-durable fallback"}
+          />
           <KpiCard label="Profiles" value={String(parsedPreview.profiles)} detail="Preview count" />
           <KpiCard label="Skill Groups" value={String(parsedPreview.skillCategories)} detail="Preview count" />
-          <KpiCard label="Designation Ladders" value={String(parsedPreview.designationLadders)} detail={parsedPreview.valid ? "JSON valid" : "JSON invalid"} />
+          <KpiCard
+            label="Designation Ladders"
+            value={String(parsedPreview.designationLadders)}
+            detail={parsedPreview.valid ? "JSON valid" : "JSON invalid"}
+          />
         </section>
+
+        {storageMode === "filesystem" ? (
+          <section className="rounded-2xl border border-amber-400/30 bg-amber-500/10 px-4 py-3 text-xs text-amber-100">
+            Durable parity requires `DATABASE_URL` so local and deployed JPS data share the same Mongo-backed store.
+          </section>
+        ) : null}
 
         <section className="grid gap-4 xl:grid-cols-[2fr_1fr]">
           <div className="glass-panel border border-white/10 p-4 space-y-3">
@@ -236,7 +258,7 @@ export default function AdminJpsImportPage() {
               <div>
                 <h2 className="text-sm font-semibold text-white">Import Payload</h2>
                 <p className="text-xs text-slate-400">
-                  `POST /api/jps/import` ke liye same JSON yahan paste karein.
+                  Paste the same JSON payload here that you want to send to `POST /api/jps/import`.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2 text-xs">
@@ -322,7 +344,7 @@ export default function AdminJpsImportPage() {
               <div className="rounded-2xl border border-amber-400/30 bg-amber-500/10 p-3 text-xs text-amber-100">
                 <div className="font-semibold text-amber-200">Confirm clear imported JPS data?</div>
                 <p className="mt-1 text-amber-100/80">
-                  Is action ke baad fallback docs/demo data dobara active ho jayega.
+                  After this action, the fallback docs/demo data will become active again.
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <button

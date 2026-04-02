@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchJson } from "@/lib/fetchJson";
-import { getJpsOverview, type JpsOverview } from "@/lib/jpsData";
+import { getJpsOverview, type JpsOverview } from "@/lib/jps/data";
 
 export default function ProfilePage() {
   const [jpsData, setJpsData] = useState<JpsOverview>(getJpsOverview());

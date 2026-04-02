@@ -156,7 +156,7 @@ export default function DmoStlPage() {
                 </button>
               </div>
               <p className="text-[11px] text-slate-400">
-                STL engine ab `USER`, `SERVICE`, aur `PRODUCT` entities ko support karta hai.
+                The STL engine now supports `USER`, `SERVICE`, and `PRODUCT` entities.
               </p>
             </section>
 

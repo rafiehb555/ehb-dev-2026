@@ -90,9 +90,9 @@ export default function DevelopmentPage() {
         <section className="space-y-1 sm:space-y-2">
           <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">EHB Development Center – Real Platform Build</h1>
           <p className="text-slate-300 text-[10px] xs:text-[11px] max-w-2xl">
-            Real control panel for tracking EHB platform architecture, progress, shared tools and system flows. Ye page directly{" "}
-            <span className="font-semibold text-[#00eaff]">EHB_SUPER_ADMIN_CONTROL_PANEL</span> aur{" "}
-            <span className="font-semibold text-[#00eaff]">EHB_MICROSERVICES_ARCHITECTURE</span> docs se aligned hai.
+            Real control panel for tracking EHB platform architecture, progress, shared tools, and system flows. This page is directly aligned with{" "}
+            <span className="font-semibold text-[#00eaff]">EHB_SUPER_ADMIN_CONTROL_PANEL</span> and{" "}
+            <span className="font-semibold text-[#00eaff]">EHB_MICROSERVICES_ARCHITECTURE</span> source docs.
           </p>
           <div className="flex flex-wrap gap-2 pt-1.5">
             <a href="/" className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-3 py-1.5 text-[10px] xs:text-[11px] font-semibold text-white hover:shadow-neon-blue transition-all duration-200">← Back to Landing</a>

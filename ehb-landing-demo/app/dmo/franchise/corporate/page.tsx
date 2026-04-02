@@ -35,7 +35,7 @@ export default function CorporateFranchisePage({
         <header className="space-y-1">
           <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">DMO · Corporate Franchise</p>
           <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">Corporate batch control</h1>
-          <p className="text-slate-300 max-w-2xl">Same design, different KPIs by industry + context. (UI mock)</p>
+          <p className="text-slate-300 max-w-2xl">Track corporate-level franchise batches, operational load, and review focus by industry and region.</p>
         </header>
 
         <DmoTopNav />

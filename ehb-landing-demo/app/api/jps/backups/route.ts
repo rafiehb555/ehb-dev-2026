@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     const fileName = body?.fileName?.trim();
     if (!fileName) return fail(400, "VALIDATION_ERROR", "Backup fileName is required");
 
-    const restored = await restoreJpsBackup(fileName);
+    const restored = await restoreJpsBackup(fileName, auth.user.userId);
     await writeJpsBackupAudit({
       actorId: auth.user.userId,
       action: "JPS_BACKUP_RESTORED",

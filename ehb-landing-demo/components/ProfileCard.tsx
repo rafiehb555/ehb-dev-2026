@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { JpsProfile } from "@/lib/jpsProfiles";
+import type { JpsProfile } from "@/lib/jps/profiles";
 
 export function ProfileCard({ profile }: { profile: JpsProfile }) {
   return (

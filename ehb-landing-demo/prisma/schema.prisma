@@ -41,6 +41,8 @@ model User {
   assignedApplications Application[] @relation("ApplicationAssignee")
   approvalsGiven       Approval[]
   auditLogs            AuditLog[]
+  updatedAppDataRecords    AppDataRecord[]   @relation("AppDataRecordUpdatedBy")
+  createdAppDataRevisions  AppDataRevision[] @relation("AppDataRevisionCreatedBy")
 
   pssVerifications      PSSVerification[]
   reviewedPssDocuments  PSSDocument[]
@@ -498,6 +500,41 @@ enum AuditTargetType {
   AUTOMATION_EVENT
   USER
   OTHER
+}
+
+enum AppDataScope {
+  JPS
+  FRANCHISE
+  DMO
+  ADMIN
+  OTHER
+}
+
+model AppDataRecord {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  scope       AppDataScope @unique
+  payload     Json
+  version     Int          @default(1)
+  updatedById String?      @map("updated_by_id") @db.ObjectId
+  updatedBy   User?        @relation("AppDataRecordUpdatedBy", fields: [updatedById], references: [id])
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  @@map("app_data_records")
+}
+
+model AppDataRevision {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  scope       AppDataScope
+  revisionKey String       @unique @map("revision_key")
+  reason      String
+  payload     Json
+  createdById String?      @map("created_by_id") @db.ObjectId
+  createdBy   User?        @relation("AppDataRevisionCreatedBy", fields: [createdById], references: [id])
+  createdAt   DateTime     @default(now()) @map("created_at")
+
+  @@index([scope, createdAt])
+  @@map("app_data_revisions")
 }
 
 // ---------------------------------------------------------------------------

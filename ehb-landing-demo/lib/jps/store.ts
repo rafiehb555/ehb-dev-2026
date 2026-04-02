@@ -1,6 +1,16 @@
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { getJpsOverview, type JpsOverview } from "@/lib/jpsData";
+import { AppDataScope } from "@prisma/client";
+import {
+  clearPersistentAppData,
+  getAppDataStorageMode,
+  listPersistentAppDataRevisions,
+  readPersistentAppData,
+  restorePersistentAppDataRevision,
+  writePersistentAppData,
+  type AppDataStorageMode,
+} from "@/lib/appDataStore";
+import { getJpsOverview, type JpsOverview } from "@/lib/jps/data";
 import { JpsImportPayloadSchema, type JpsImportPayload } from "@/lib/jps/schemas";
 
 const JPS_OVERRIDE_PATH = path.join(process.cwd(), "data", "jps", "overview.json");
@@ -15,6 +25,10 @@ export type JpsBackupSummary = {
   designationLadders: number;
   systemNotes: number;
 };
+
+function parseJpsOverview(payload: unknown): JpsOverview {
+  return JpsImportPayloadSchema.parse(payload);
+}
 
 function backupFileName(reason: string) {
   const safeReason = reason.replace(/[^a-z0-9-]+/gi, "-").replace(/-+/g, "-").toLowerCase();
@@ -35,11 +49,23 @@ function createdAtFromFileName(fileName: string) {
   return `${prefix}:${minutes}:${seconds}.${millis}Z`;
 }
 
-export async function readJpsOverride(): Promise<JpsOverview | null> {
+function summaryFromPayload(fileName: string, createdAt: string, reason: string, payload: JpsImportPayload) {
+  return {
+    fileName,
+    createdAt,
+    reason,
+    profiles: payload.profiles.length,
+    skillCategories: payload.skillCategories.length,
+    designationLadders: Object.keys(payload.designationLadders).length,
+    systemNotes: payload.systemNotes.length,
+  } satisfies JpsBackupSummary;
+}
+
+async function readJpsOverrideFromFile(): Promise<JpsOverview | null> {
   try {
     const raw = await readFile(JPS_OVERRIDE_PATH, "utf8");
     const parsed = JSON.parse(raw);
-    return JpsImportPayloadSchema.parse(parsed);
+    return parseJpsOverview(parsed);
   } catch {
     return null;
   }
@@ -53,7 +79,7 @@ async function writeBackupFile(payload: JpsImportPayload, reason: string): Promi
   return fileName;
 }
 
-export async function writeJpsOverride(payload: JpsImportPayload): Promise<JpsOverview> {
+async function writeJpsOverrideToFile(payload: JpsImportPayload): Promise<JpsOverview> {
   const validated = JpsImportPayloadSchema.parse(payload);
   await mkdir(path.dirname(JPS_OVERRIDE_PATH), { recursive: true });
   await writeFile(JPS_OVERRIDE_PATH, JSON.stringify(validated, null, 2), "utf8");
@@ -61,19 +87,15 @@ export async function writeJpsOverride(payload: JpsImportPayload): Promise<JpsOv
   return validated;
 }
 
-export async function clearJpsOverride(): Promise<void> {
-  const current = await readJpsOverride();
+async function clearJpsOverrideFromFile(): Promise<void> {
+  const current = await readJpsOverrideFromFile();
   if (current) {
     await writeBackupFile(current, "clear");
   }
   await rm(JPS_OVERRIDE_PATH, { force: true });
 }
 
-export async function getEffectiveJpsOverview(): Promise<JpsOverview> {
-  return (await readJpsOverride()) ?? getJpsOverview();
-}
-
-export async function listJpsBackups(): Promise<JpsBackupSummary[]> {
+async function listJpsBackupsFromFile(): Promise<JpsBackupSummary[]> {
   try {
     const entries = await readdir(JPS_BACKUP_DIR, { withFileTypes: true });
     const fileNames = entries
@@ -85,16 +107,8 @@ export async function listJpsBackups(): Promise<JpsBackupSummary[]> {
       fileNames.map(async (fileName) => {
         try {
           const raw = await readFile(path.join(JPS_BACKUP_DIR, fileName), "utf8");
-          const parsed = JpsImportPayloadSchema.parse(JSON.parse(raw));
-          return {
-            fileName,
-            createdAt: createdAtFromFileName(fileName),
-            reason: reasonFromFileName(fileName),
-            profiles: parsed.profiles.length,
-            skillCategories: parsed.skillCategories.length,
-            designationLadders: Object.keys(parsed.designationLadders).length,
-            systemNotes: parsed.systemNotes.length,
-          } satisfies JpsBackupSummary;
+          const parsed = parseJpsOverview(JSON.parse(raw));
+          return summaryFromPayload(fileName, createdAtFromFileName(fileName), reasonFromFileName(fileName), parsed);
         } catch {
           return null;
         }
@@ -107,12 +121,92 @@ export async function listJpsBackups(): Promise<JpsBackupSummary[]> {
   }
 }
 
-export async function restoreJpsBackup(fileName: string): Promise<JpsOverview> {
+async function restoreJpsBackupFromFile(fileName: string): Promise<JpsOverview> {
   const safeFileName = path.basename(fileName);
   const raw = await readFile(path.join(JPS_BACKUP_DIR, safeFileName), "utf8");
-  const parsed = JpsImportPayloadSchema.parse(JSON.parse(raw));
+  const parsed = parseJpsOverview(JSON.parse(raw));
   await mkdir(path.dirname(JPS_OVERRIDE_PATH), { recursive: true });
   await writeFile(JPS_OVERRIDE_PATH, JSON.stringify(parsed, null, 2), "utf8");
   await writeBackupFile(parsed, "restore");
   return parsed;
+}
+
+export function getJpsStorageMode(): AppDataStorageMode {
+  return getAppDataStorageMode();
+}
+
+export async function readJpsOverride(): Promise<JpsOverview | null> {
+  if (getJpsStorageMode() === "database") {
+    const stored = await readPersistentAppData(AppDataScope.JPS, parseJpsOverview);
+    return stored?.payload ?? null;
+  }
+
+  return readJpsOverrideFromFile();
+}
+
+export async function writeJpsOverride(
+  payload: JpsImportPayload,
+  actorId?: string | null
+): Promise<JpsOverview> {
+  if (getJpsStorageMode() === "database") {
+    const stored = await writePersistentAppData({
+      scope: AppDataScope.JPS,
+      payload,
+      parse: parseJpsOverview,
+      reason: "save",
+      actorId,
+    });
+
+    return stored.payload;
+  }
+
+  return writeJpsOverrideToFile(payload);
+}
+
+export async function clearJpsOverride(actorId?: string | null): Promise<void> {
+  if (getJpsStorageMode() === "database") {
+    await clearPersistentAppData({
+      scope: AppDataScope.JPS,
+      parse: parseJpsOverview,
+      reason: "clear",
+      actorId,
+    });
+    return;
+  }
+
+  await clearJpsOverrideFromFile();
+}
+
+export async function getEffectiveJpsOverview(): Promise<JpsOverview> {
+  return (await readJpsOverride()) ?? getJpsOverview();
+}
+
+export async function listJpsBackups(): Promise<JpsBackupSummary[]> {
+  if (getJpsStorageMode() === "database") {
+    const revisions = await listPersistentAppDataRevisions(AppDataScope.JPS, parseJpsOverview);
+    return revisions.map((revision) =>
+      summaryFromPayload(revision.revisionKey, revision.createdAt, revision.reason, revision.payload)
+    );
+  }
+
+  return listJpsBackupsFromFile();
+}
+
+export async function restoreJpsBackup(
+  fileName: string,
+  actorId?: string | null
+): Promise<JpsOverview> {
+  if (getJpsStorageMode() === "database") {
+    const restored = await restorePersistentAppDataRevision({
+      scope: AppDataScope.JPS,
+      revisionKey: fileName,
+      parse: parseJpsOverview,
+      actorId,
+      reason: "restore",
+    });
+
+    return restored.payload;
+  }
+
+  return restoreJpsBackupFromFile(fileName);
 }

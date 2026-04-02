@@ -2,110 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-
-const onboardingCards = [
-  {
-    title: "Central Control System",
-    subtitle: "Manage approvals, alerts, applications, and live operations in one place.",
-    details: [
-      "DMO gives users, teams, and administrators one central place to understand what is happening across the platform at any moment.",
-      "Instead of checking separate systems for approvals, alerts, applications, and performance, everything is tracked through one clear control layer.",
-      "This makes the platform easier to trust, easier to manage, and easier to scale as more services and industries are added.",
-    ],
-    cta: "Explore DMO",
-    href: "/dmo/home",
-    image: "/images/cards/dmo-control-center.svg",
-    alt: "DMO control center with connected analytics cards and system flow",
-    tone: "from-cyan-500/20 to-sky-500/10 border-cyan-400/30",
-  },
-  {
-    title: "Identity & Security Verification",
-    subtitle: "Verify people and businesses with KYC, AML, and fraud protection.",
-    details: [
-      "PSS checks whether a user or business is real before they start offering services, products, or professional work inside the ecosystem.",
-      "It combines identity verification, AML review, and fraud signals so risky profiles can be filtered before they affect other users.",
-      "For first-time users, this means the platform feels safer because trust starts before the transaction begins.",
-    ],
-    cta: "See Security",
-    href: "/verification",
-    image: "/images/cards/pss-identity-security.svg",
-    alt: "PSS identity verification with shield, user profile, and secure checkmarks",
-    tone: "from-emerald-500/20 to-teal-500/10 border-emerald-400/30",
-  },
-  {
-    title: "Certification & Registry",
-    subtitle: "Certify skills, services, products, and companies with trusted records.",
-    details: [
-      "CRB helps users understand that important claims are not just words, they are supported by formal review, inspection, and registry records.",
-      "Skills, services, products, and companies can all be certified so buyers and partners can make better decisions with more confidence.",
-      "It also keeps approval history, certification status, and renewal information visible and organized.",
-    ],
-    cta: "View Certification",
-    href: "/certification",
-    image: "/images/cards/crb-certification.svg",
-    alt: "CRB certification card with certificate ribbon and verified compliance blocks",
-    tone: "from-violet-500/20 to-indigo-500/10 border-violet-400/30",
-  },
-  {
-    title: "Ground Verification Network",
-    subtitle: "Real-world inspections and franchise validation build real trust.",
-    details: [
-      "Franchise verification adds a physical layer to the digital system, so important checks can also be confirmed in the real world when required.",
-      "This is useful for business locations, service claims, local operations, and any case where on-ground inspection increases trust.",
-      "It helps new users feel that EHB is not only online verification, but a complete trust network backed by real action.",
-    ],
-    cta: "See Franchise Model",
-    href: "/franchise",
-    image: "/images/cards/franchise-field-network.svg",
-    alt: "Franchise field network with city nodes, inspections, and location markers",
-    tone: "from-amber-500/20 to-orange-500/10 border-amber-400/30",
-  },
-  {
-    title: "Trust Score Engine",
-    subtitle: "A smart trust level that improves visibility, ranking, and confidence.",
-    details: [
-      "STL turns verification, performance, and behavior into one trust score that helps users quickly understand who is more reliable on the platform.",
-      "A higher trust score can improve ranking, visibility, and buyer confidence, while weak trust signals can reduce exposure and credibility.",
-      "For first-time visitors, this makes the system easier to understand because trust is shown clearly instead of being hidden.",
-    ],
-    cta: "Understand STL",
-    href: "/dmo/stl",
-    image: "/images/cards/stl-trust-score.svg",
-    alt: "STL trust score dashboard with score meter and ranking signals",
-    tone: "from-rose-500/20 to-pink-500/10 border-rose-400/30",
-  },
-  {
-    title: "Multi-Industry Verification",
-    subtitle: "Add extra trust by verifying businesses across multiple industry sectors.",
-    details: [
-      "Industry verification shows whether a business or service can be trusted within one or more specific sectors such as health, technology, or manufacturing.",
-      "This adds a deeper layer of confidence because users can see that trust is not general only, it is connected to real industry standards.",
-      "It strengthens the entire ecosystem by helping businesses build credibility in the exact fields where they operate.",
-    ],
-    cta: "Explore Industries",
-    href: "/industries",
-    image: "/images/cards/industry-verification.svg",
-    alt: "Industry verification with connected sectors like health, tech, and manufacturing",
-    tone: "from-rose-500/20 to-pink-500/10 border-rose-400/30",
-  },
-];
-
-const flow = [
-  "Start with one EHB account for your profile or business.",
-  "PSS checks identity, risk, and compliance details.",
-  "CRB validates service quality, products, or company claims.",
-  "Franchise teams handle real-world inspection when needed.",
-  "DMO records the decision and controls approvals centrally.",
-  "STL updates trust score, visibility, and platform confidence.",
-];
-
-const quickBenefits = [
-  "Understand the platform in under one minute",
-  "See how trust is built before buying or selling",
-  "Know why verified users rank higher in the system",
-];
+import { homepageContent } from "@/lib/content/homepage";
 
 export function DmoLandingSection() {
+  const {
+    continuousVerificationBullets,
+    flow,
+    onboardingCards,
+    quickBenefits,
+    trustSystemBullets,
+    visionPills,
+  } = homepageContent.dmoLanding;
+
   return (
     <section className="container-ultra section-pad-ultra space-y-8">
       <div className="rounded-3xl border border-cyan-400/20 bg-gradient-to-b from-[#031222]/95 to-[#020b18]/95 p-6 md:p-10">
@@ -228,10 +136,9 @@ export function DmoLandingSection() {
           <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-100">Trust System</p>
           <h4 className="text-lg font-semibold text-white mt-1">Why verified users feel safer to work with</h4>
           <ul className="mt-3 space-y-2 text-sm text-slate-100">
-            <li>✔ Verified Identity</li>
-            <li>✔ Verified Business</li>
-            <li>✔ Verified Product</li>
-            <li>✔ Verified Performance</li>
+            {trustSystemBullets.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
           </ul>
           <div className="mt-4 rounded-xl border border-emerald-300/30 bg-[#021713]/60 p-3 text-xs text-emerald-100">
             STL trust score updates instantly as approvals, inspections, and refill events happen.
@@ -242,9 +149,9 @@ export function DmoLandingSection() {
           <p className="text-[11px] uppercase tracking-[0.2em] text-amber-100">Continuous Verification</p>
           <h4 className="text-lg font-semibold text-white mt-1">Refilling system keeps trust fresh</h4>
           <ul className="mt-3 space-y-2 text-sm text-slate-100">
-            <li>⏳ Six-month verification cycle</li>
-            <li>🔄 Mandatory renewal workflow</li>
-            <li>⚠ Expiry triggers trust downgrade</li>
+            {continuousVerificationBullets.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
           </ul>
           <div className="mt-4 rounded-xl border border-amber-300/30 bg-[#1a1303]/60 p-3 text-xs text-amber-100">
             DMO automatically flags renewals and routes them to review queues before trust expiration.
@@ -258,9 +165,11 @@ export function DmoLandingSection() {
           DMO is not just a dashboard, it is the operating layer behind the EHB ecosystem
         </h3>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-slate-200">Multi-country support</div>
-          <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-slate-200">Franchise-driven physical verification</div>
-          <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-slate-200">Blockchain-ready trust infrastructure</div>
+          {visionPills.map((item) => (
+            <div key={item} className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-slate-200">
+              {item}
+            </div>
+          ))}
         </div>
       </div>
 
