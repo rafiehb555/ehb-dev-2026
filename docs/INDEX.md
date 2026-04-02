@@ -2,7 +2,7 @@
 
 > Master index of all project documentation (Auto-Updated)
 
-**Last Updated:** March 14, 2026
+**Last Updated:** April 2, 2026
 
 ---
 
@@ -25,7 +25,7 @@ docs
 | [industries/](industries/) | [EHB_INDUSTRIES.md](industries/EHB_INDUSTRIES.md), [INDUSTRY_TEMPLATE.md](industries/INDUSTRY_TEMPLATE.md) |
 | [departments/](departments/) | [AI_DEPARTMENT.md](departments/AI_DEPARTMENT.md), [BLOCKCHAIN.md](departments/BLOCKCHAIN.md), [FINANCE.md](departments/FINANCE.md), [FRANCHISE_SYSTEM.md](departments/FRANCHISE_SYSTEM.md) |
 | [flows/](flows/) | [USER_FLOW.md](flows/USER_FLOW.md), [PROVIDER_FLOW.md](flows/PROVIDER_FLOW.md) |
-| [development/](development/) | [DEVELOPMENT_TRACKER.md](development/DEVELOPMENT_TRACKER.md), [DEMO_TO_PRODUCTION.md](development/DEMO_TO_PRODUCTION.md) |
+| [development/](development/) | [DEVELOPMENT_TRACKER.md](development/DEVELOPMENT_TRACKER.md), [DEMO_TO_PRODUCTION.md](development/DEMO_TO_PRODUCTION.md), [LOCAL_DEPLOY_PARITY_CHECKLIST.md](development/LOCAL_DEPLOY_PARITY_CHECKLIST.md), [VERCEL_LOCAL_ROUTE_MISMATCH_INVENTORY.md](development/VERCEL_LOCAL_ROUTE_MISMATCH_INVENTORY.md) |
 
 **Real folder architecture (single source of truth):** [FOLDER_ARCHITECTURE.md](FOLDER_ARCHITECTURE.md) — is structure ko agy bhi follow kiya jayega.  
 **Real code folders (ehb-landing-demo):** `app/`, `components/`, `lib/`, `modules/` (core, departments, industries, shared, flows) — real development isi par chalegi.
@@ -153,6 +153,8 @@ docs
 |------|-------------|---------|
 | [DEVELOPMENT_TRACKER.md](development/DEVELOPMENT_TRACKER.md) | Progress by core system and industry | Mar 14 |
 | [DEMO_TO_PRODUCTION.md](development/DEMO_TO_PRODUCTION.md) | 5-stage conversion: Demo UI → APIs → DB → Blockchain → Production | Mar 14 |
+| [LOCAL_DEPLOY_PARITY_CHECKLIST.md](development/LOCAL_DEPLOY_PARITY_CHECKLIST.md) | Pre-rollout checklist for local vs deployed parity across landing, franchise, DMO, and JPS flows | Apr 2 |
+| [VERCEL_LOCAL_ROUTE_MISMATCH_INVENTORY.md](development/VERCEL_LOCAL_ROUTE_MISMATCH_INVENTORY.md) | Route-by-route local vs Vercel mismatch inventory using the canonical deployed URL | Apr 2 |
 
 ---
 
