@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { KpiCard } from "@/components/ui/KpiCard";
-import { INDUSTRIES } from "@/lib/industries";
+import { INDUSTRIES } from "@/lib/industry/config";
 
 type CityCode = "rawalpindi" | "lahore" | "islamabad" | "karachi";
 type CityInfo = { code: CityCode; label: string; accent: string };

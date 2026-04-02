@@ -123,10 +123,10 @@ export const JPS_DESIGNATION_LADDERS: Record<string, JpsDesignationLevel[]> = {
 };
 
 export const JPS_SYSTEM_NOTES = [
-  "JPS professional identity EHB ke trust framework ke saath integrated hai.",
-  "Primary industry activation ke liye PSS verification, CRB certification, aur verified service listing required hoti hai.",
-  "Designation promotion STL, experience, certifications, aur service performance ke combined score par depend karti hai.",
-  "6-month refilling miss hone par STL drop aur designation freeze ho sakta hai.",
+  "JPS professional identity is integrated with the EHB trust framework.",
+  "Primary industry activation requires PSS verification, CRB certification, and a verified service listing.",
+  "Designation promotion depends on the combined score of STL, experience, certifications, and service performance.",
+  "Missing the 6-month refilling cycle can reduce STL and freeze designation growth.",
 ];
 
 export function getJpsOverview(): JpsOverview {

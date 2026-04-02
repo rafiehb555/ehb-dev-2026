@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { GosellrProduct } from "@/lib/gosellrProducts";
+import type { GosellrProduct } from "@/lib/marketplace/gosellrProducts";
 
 export function GoSellrProductCard({
   product,

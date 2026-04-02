@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { INDUSTRIES } from "@/lib/industries";
+import { INDUSTRIES } from "@/lib/industry/config";
 import { IndustryCard } from "@/components/IndustryCard";
 
 type FilterKey = "all" | "beginner" | "business" | "tech" | "local";

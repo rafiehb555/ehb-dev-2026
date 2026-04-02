@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { INDUSTRIES } from "@/lib/industries";
+import { INDUSTRIES } from "@/lib/industry/config";
 import { useEffect, useState } from "react";
 
 function getIndustryFromPath(pathname: string) {

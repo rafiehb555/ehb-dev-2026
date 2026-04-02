@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getIndustryBySlug } from "@/lib/industries";
+import { getIndustryBySlug } from "@/lib/industry/config";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 
 type AiTool = {

@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { INDUSTRIES, getIndustryBySlug } from "@/lib/industries";
-import { getIndustryServices } from "@/lib/industryServices";
+import { INDUSTRIES, getIndustryBySlug } from "@/lib/industry/config";
+import { getIndustryServices } from "@/lib/industry/services";
 import { LocationSelector } from "@/components/LocationSelector";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 

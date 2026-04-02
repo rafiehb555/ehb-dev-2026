@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getIndustryBySlug, getAllSlugs } from "@/lib/industries";
-import { getIndustryServices } from "@/lib/industryServices";
+import { getIndustryBySlug, getAllSlugs } from "@/lib/industry/config";
+import { getIndustryServices } from "@/lib/industry/services";
 import { IndustryIcon } from "@/components/IndustryIcon";
 import { SectionReveal } from "@/components/SectionReveal";
 import { TrustBadgeLegend } from "@/components/TrustBadgeLegend";

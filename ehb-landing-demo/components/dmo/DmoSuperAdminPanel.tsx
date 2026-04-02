@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { KpiCard } from "@/components/ui/KpiCard";
-import { INDUSTRIES } from "@/lib/industries";
+import { INDUSTRIES } from "@/lib/industry/config";
 
 type CountryRow = { id: string; name: string; activeFranchises: number; pendingApprovals: number; accent: string };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { Industry } from "@/lib/industries";
+import type { Industry } from "@/lib/industry/config";
 import { IndustryIcon } from "./IndustryIcon";
 
 interface IndustryCardProps {

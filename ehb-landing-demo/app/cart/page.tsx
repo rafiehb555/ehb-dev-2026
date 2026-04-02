@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { GOSELLR_PRODUCTS } from "@/lib/gosellrProducts";
+import { GOSELLR_PRODUCTS } from "@/lib/marketplace/gosellrProducts";
 import { useCart } from "@/components/gosellr/useCart";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 

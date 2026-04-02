@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getGosellrProductById } from "@/lib/gosellrProducts";
+import { getGosellrProductById } from "@/lib/marketplace/gosellrProducts";
 import { GoSellrCartActions } from "@/components/gosellr/GoSellrCartActions";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 

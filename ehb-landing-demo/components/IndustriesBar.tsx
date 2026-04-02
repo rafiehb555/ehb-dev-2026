@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { INDUSTRIES } from "@/lib/industries";
-import { INDUSTRY_SERVICES } from "@/lib/industryServices";
+import { INDUSTRIES } from "@/lib/industry/config";
+import { INDUSTRY_SERVICES } from "@/lib/industry/services";
 import { IndustryIcon } from "@/components/IndustryIcon";
 
 type SearchResult = {

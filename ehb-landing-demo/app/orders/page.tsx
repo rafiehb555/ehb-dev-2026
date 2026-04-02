@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { GOSELLR_PRODUCTS } from "@/lib/gosellrProducts";
+import { GOSELLR_PRODUCTS } from "@/lib/marketplace/gosellrProducts";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 
 type Order = {

@@ -52,7 +52,7 @@ export function BlockchainGovernanceLanding({
         title: "Trust Network",
         headline: "Verification stays consistent across time",
         detail:
-          "EHB trust network verification integrity ko continuously anchor karta hai, taake buyers, providers aur franchises ko same trusted signals milen.",
+          "EHB continuously anchors trust verification integrity so buyers, providers, and franchises all receive the same trusted signals.",
         bullets: [
           "Verification hashes track renewals",
           "Risk signals stay visible to DMO",

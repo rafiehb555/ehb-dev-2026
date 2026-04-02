@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { KpiCard } from "@/components/ui/KpiCard";
-import { INDUSTRIES, type Industry } from "@/lib/industries";
+import { INDUSTRIES, type Industry } from "@/lib/industry/config";
 
 type FranchiseLevel = "Country" | "Corporate" | "Master" | "Sub";
 

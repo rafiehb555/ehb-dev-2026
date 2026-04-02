@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { INDUSTRIES } from "@/lib/industries";
+import { INDUSTRIES } from "@/lib/industry/config";
 
 type ActionType = "activate_service" | "add_product" | "apply_to_job";
 

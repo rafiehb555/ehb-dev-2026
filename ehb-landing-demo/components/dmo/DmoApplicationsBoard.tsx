@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
-import { getIndustryBySlug } from "@/lib/industries";
+import { getIndustryBySlug } from "@/lib/industry/config";
 
 type ApplicationStatus = "New" | "In Review" | "Inspection" | "Approved" | "Rejected";
 

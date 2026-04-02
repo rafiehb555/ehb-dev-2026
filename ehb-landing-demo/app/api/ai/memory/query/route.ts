@@ -1,9 +1,14 @@
+import type { Prisma } from "@prisma/client";
 import { fail, ok } from "@/lib/apiResponse";
 import { handleRouteError } from "@/lib/apiErrors";
 import { requireSession } from "@/lib/rbac";
 import { writeAuditLog } from "@/lib/audit";
 import { MemoryQuerySchema } from "@/lib/ai/schemas";
 import { checkMemoryQueryAllowed, queryMemoryBrain } from "@/lib/ai/memory";
+
+function asJsonValue<T>(value: T): Prisma.InputJsonValue {
+  return value as Prisma.InputJsonValue;
+}
 
 export async function POST(req: Request) {
   const auth = await requireSession(["USER", "FRANCHISE", "ADMIN", "SUPER_ADMIN"]);
@@ -37,7 +42,7 @@ export async function POST(req: Request) {
       targetId: body.traceId ?? auth.user.userId,
       metadata: {
         model: result.model,
-        usage: result.usage,
+        usage: result.usage == null ? null : asJsonValue(result.usage),
       },
     }).catch(() => undefined);
 

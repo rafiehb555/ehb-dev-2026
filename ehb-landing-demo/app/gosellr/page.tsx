@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GOSELLR_PRODUCTS } from "@/lib/gosellrProducts";
+import { GOSELLR_PRODUCTS } from "@/lib/marketplace/gosellrProducts";
 import { GoSellrProductCard } from "@/components/gosellr/GoSellrProductCard";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 

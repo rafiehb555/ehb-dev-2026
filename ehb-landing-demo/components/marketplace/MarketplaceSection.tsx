@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { INDUSTRY_SERVICES } from "@/lib/industryServices";
-import { GOSELLR_PRODUCTS } from "@/lib/gosellrProducts";
+import { INDUSTRY_SERVICES } from "@/lib/industry/services";
+import { GOSELLR_PRODUCTS } from "@/lib/marketplace/gosellrProducts";
 import { GoSellrProductCard } from "@/components/gosellr/GoSellrProductCard";
 
 /** Flatten first N industries for Services tab – industry, category, service. */

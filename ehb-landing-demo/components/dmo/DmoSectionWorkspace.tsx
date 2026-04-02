@@ -879,7 +879,7 @@ function buildApplicationsPresentation(section: SectionDataMap["applications"], 
         formatDate(app.updatedAt),
       ],
     })),
-    notes: ["Risk aur SLA thresholds existing DMO dashboard logic ke mutabiq derive kiye gaye hain."],
+    notes: ["Risk and SLA thresholds are derived from the existing DMO dashboard logic."],
     emptyState: "No applications found for this view.",
   };
 }
@@ -900,7 +900,7 @@ function buildApprovalsPresentation(section: SectionDataMap["approvals"], view: 
         id: item.id,
         values: [item.id, item.applicationId, item.decision, item.approvedBy?.name ?? "System", formatDate(item.createdAt)],
       })),
-      notes: ["History view audit aur approval records ka combined trace use karta hai."],
+      notes: ["The history view combines audit and approval records into one trace."],
       emptyState: "No approval history found.",
     };
   }
@@ -926,7 +926,7 @@ function buildApprovalsPresentation(section: SectionDataMap["approvals"], view: 
       id: app.id,
       values: [app.id, app.applicant?.name ?? "Unknown", app.type, app.status, app.assignedTo?.name ?? "Unassigned", formatDate(app.updatedAt)],
     })),
-    notes: ["Pending approvals live application status se derive kiye gaye hain; final decision records history view me available hain."],
+    notes: ["Pending approvals are derived from live application status, while final decision records remain available in the history view."],
     emptyState: "No approval records found for this view.",
   };
 }
@@ -1044,7 +1044,7 @@ function buildPssPresentation(section: SectionDataMap["pss"], view: string): Tab
         formatDate(item.updatedAt),
       ],
     })),
-    notes: view === "refilling" ? ["Refilling view un cases ko show karta hai jahan refill alert warning ya expired state me ho."] : undefined,
+    notes: view === "refilling" ? ["The refilling view shows cases where the refill alert is in warning or expired state."] : undefined,
     emptyState: "No PSS cases found for this view.",
   };
 }
@@ -1119,7 +1119,7 @@ function buildFranchisePresentation(section: SectionDataMap["franchise"], view: 
         item.report ? `Score ${item.report.score ?? "—"}` : "Pending",
       ],
     })),
-    notes: ["Franchise pages real inspection task API use karti hain; missing report/escalation data fallback rows se cover hoti hai."],
+    notes: ["Franchise pages use the real inspection task API, while fallback rows cover missing report or escalation data."],
     emptyState: "No franchise tasks found for this view.",
   };
 }

@@ -2,7 +2,8 @@
 # Safe single-run uploader for manual use and auto-sync watcher.
 
 param(
-    [string]$CommitMessage
+    [string]$CommitMessage,
+    [switch]$SkipRebase
 )
 
 $ErrorActionPreference = "Stop"
@@ -24,10 +25,29 @@ function Invoke-Git {
 
     $output = & git @Args 2>&1
     $code = $LASTEXITCODE
-    return [pscustomobject]@{
-        Output = $output
+    [pscustomobject]@{
+        Output = @($output)
         ExitCode = $code
     }
+}
+
+function Join-Output {
+    param([object[]]$Lines)
+    return ($Lines | ForEach-Object { "$_" }) -join "`n"
+}
+
+function Fail-WithOutput {
+    param(
+        [string]$Message,
+        [object[]]$Output = @(),
+        [int]$Code = 1
+    )
+
+    Write-Host $Message -ForegroundColor Red
+    if ($Output.Count -gt 0) {
+        $Output | ForEach-Object { Write-Host $_ }
+    }
+    exit $Code
 }
 
 Set-Location $projectRoot
@@ -39,53 +59,37 @@ if (Test-GitOperationInProgress) {
     exit 3
 }
 
-$status = Invoke-Git -Args @("status", "--porcelain")
-if ($status.ExitCode -ne 0) {
-    Write-Host "Git status read nahi ho saka." -ForegroundColor Red
-    $status.Output | ForEach-Object { Write-Host $_ }
-    exit 1
+$branchResult = Invoke-Git -Args @("branch", "--show-current")
+if ($branchResult.ExitCode -ne 0) {
+    Fail-WithOutput -Message "Current branch detect nahi hui." -Output $branchResult.Output
 }
 
-if ([string]::IsNullOrWhiteSpace(($status.Output -join "`n"))) {
+$branch = (Join-Output $branchResult.Output).Trim()
+if ([string]::IsNullOrWhiteSpace($branch)) {
+    Fail-WithOutput -Message "Detached HEAD state mein auto upload allow nahi hai."
+}
+
+$status = Invoke-Git -Args @("status", "--porcelain")
+if ($status.ExitCode -ne 0) {
+    Fail-WithOutput -Message "Git status read nahi ho saka." -Output $status.Output
+}
+
+if ([string]::IsNullOrWhiteSpace((Join-Output $status.Output).Trim())) {
     Write-Host "Koi naya change nahi hai. Sab pehle se uploaded hai." -ForegroundColor Yellow
     exit 0
 }
 
-$branchResult = Invoke-Git -Args @("branch", "--show-current")
-if ($branchResult.ExitCode -ne 0 -or [string]::IsNullOrWhiteSpace(($branchResult.Output -join "").Trim())) {
-    Write-Host "Current branch detect nahi hui." -ForegroundColor Red
-    exit 1
-}
-
-$branch = ($branchResult.Output -join "").Trim()
-
-$fetch = Invoke-Git -Args @("fetch", "origin", $branch, "--quiet")
-if ($fetch.ExitCode -ne 0) {
-    Write-Host "Remote fetch fail hua. Push se pehle sync zaroori hai." -ForegroundColor Yellow
-}
-
-$behindResult = Invoke-Git -Args @("rev-list", "--count", "HEAD..origin/$branch")
-$aheadResult = Invoke-Git -Args @("rev-list", "--count", "origin/$branch..HEAD")
-
-if ($behindResult.ExitCode -eq 0 -and $aheadResult.ExitCode -eq 0) {
-    $behind = [int](($behindResult.Output -join "").Trim())
-    $ahead = [int](($aheadResult.Output -join "").Trim())
-
-    if ($behind -gt 0) {
-        Write-Host "Remote branch aapke local branch se aage hai. Pehle sync/rebase karein, phir push hoga." -ForegroundColor Yellow
-        Write-Host "Branch: $branch | Behind: $behind | Ahead: $ahead" -ForegroundColor Yellow
-        exit 2
-    }
-}
-
 $add = Invoke-Git -Args @("add", "-A")
 if ($add.ExitCode -ne 0) {
-    Write-Host "Files stage nahi ho sakin." -ForegroundColor Red
-    exit 1
+    Fail-WithOutput -Message "Files stage nahi ho sakin." -Output $add.Output
 }
 
 $cached = Invoke-Git -Args @("diff", "--cached", "--name-only")
-if ($cached.ExitCode -ne 0 -or [string]::IsNullOrWhiteSpace(($cached.Output -join "`n"))) {
+if ($cached.ExitCode -ne 0) {
+    Fail-WithOutput -Message "Staged diff read nahi ho saka." -Output $cached.Output
+}
+
+if ([string]::IsNullOrWhiteSpace((Join-Output $cached.Output).Trim())) {
     Write-Host "Stage karne ke baad commit karne layak change nahi mila." -ForegroundColor Yellow
     exit 0
 }
@@ -96,9 +100,28 @@ if ([string]::IsNullOrWhiteSpace($CommitMessage)) {
 
 $commit = Invoke-Git -Args @("commit", "-m", $CommitMessage)
 if ($commit.ExitCode -ne 0) {
-    Write-Host "Commit mein issue aya. Check karein." -ForegroundColor Red
-    $commit.Output | ForEach-Object { Write-Host $_ }
-    exit 1
+    Fail-WithOutput -Message "Commit mein issue aya. Check karein." -Output $commit.Output
+}
+
+$fetch = Invoke-Git -Args @("fetch", "origin", $branch, "--quiet")
+if ($fetch.ExitCode -ne 0) {
+    Fail-WithOutput -Message "Remote fetch fail hua. Push se pehle sync zaroori hai." -Output $fetch.Output
+}
+
+$behindResult = Invoke-Git -Args @("rev-list", "--count", "HEAD..origin/$branch")
+if ($behindResult.ExitCode -ne 0) {
+    Fail-WithOutput -Message "Remote comparison fail hua." -Output $behindResult.Output
+}
+
+$behind = [int]((Join-Output $behindResult.Output).Trim())
+if ($behind -gt 0 -and -not $SkipRebase) {
+    Write-Host "Remote branch aage hai. Auto rebase chal raha hai..." -ForegroundColor Yellow
+    $rebase = Invoke-Git -Args @("pull", "--rebase", "origin", $branch)
+    if ($rebase.ExitCode -ne 0) {
+        Write-Host "Auto rebase fail hua. Rebase abort ki koshish ki ja rahi hai..." -ForegroundColor Yellow
+        $null = Invoke-Git -Args @("rebase", "--abort")
+        Fail-WithOutput -Message "Auto sync conflict ki wajah se ruk gaya. Manual resolve zaroori hai." -Output $rebase.Output -Code 2
+    }
 }
 
 $push = Invoke-Git -Args @("push", "origin", $branch)
@@ -107,6 +130,24 @@ if ($push.ExitCode -eq 0) {
     exit 0
 }
 
-Write-Host "Push fail hua. Ho sakta hai remote par naye commits aa gaye hon ya login zaroori ho." -ForegroundColor Yellow
-$push.Output | ForEach-Object { Write-Host $_ }
-exit 1
+Write-Host "Initial push fail hua. Fetch + rebase + retry attempt ho raha hai..." -ForegroundColor Yellow
+$fetchRetry = Invoke-Git -Args @("fetch", "origin", $branch, "--quiet")
+if ($fetchRetry.ExitCode -ne 0) {
+    Fail-WithOutput -Message "Retry fetch fail hua." -Output $fetchRetry.Output
+}
+
+if (-not $SkipRebase) {
+    $rebaseRetry = Invoke-Git -Args @("pull", "--rebase", "origin", $branch)
+    if ($rebaseRetry.ExitCode -ne 0) {
+        $null = Invoke-Git -Args @("rebase", "--abort")
+        Fail-WithOutput -Message "Retry rebase fail hua. Manual resolve zaroori hai." -Output $rebaseRetry.Output -Code 2
+    }
+}
+
+$pushRetry = Invoke-Git -Args @("push", "origin", $branch)
+if ($pushRetry.ExitCode -eq 0) {
+    Write-Host "Retry success. GitHub par upload ho gaya." -ForegroundColor Green
+    exit 0
+}
+
+Fail-WithOutput -Message "Push fail hua. Ho sakta hai login ya permission issue ho." -Output $pushRetry.Output

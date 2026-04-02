@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { INDUSTRIES } from "@/lib/industries";
-import { INDUSTRY_SERVICES } from "@/lib/industryServices";
+import { INDUSTRIES } from "@/lib/industry/config";
+import { INDUSTRY_SERVICES } from "@/lib/industry/services";
 
 type SearchResult = {
   slug: string;
