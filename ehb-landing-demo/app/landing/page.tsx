@@ -171,7 +171,7 @@ function GlobalEcosystem() {
 
       {/* Live feed pill */}
       <div style={{
-        position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
+        position: "absolute", top: 0, left: "50%",
         background: "rgba(0,0,0,0.5)",
         border: "1px solid rgba(255,255,255,0.1)",
         borderRadius: 100, padding: "6px 16px",
