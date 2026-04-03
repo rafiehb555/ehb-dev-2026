@@ -4,6 +4,7 @@ import { handleRouteError } from "@/lib/apiErrors";
 import { prisma } from "@/lib/prisma";
 import { computeStlByEntity, recalcStlByEntity } from "@/lib/stl/engine";
 import { z } from "zod";
+import { isMongoObjectId } from "@/lib/mongoId";
 
 const BodySchema = z.object({
   entityId: z.string().min(1).max(120).optional(),
@@ -17,6 +18,48 @@ const QuerySchema = z.object({
   skip: z.coerce.number().int().min(0).max(5000).optional(),
   logsTake: z.coerce.number().int().min(1).max(200).optional(),
 });
+
+function demoScores() {
+  const now = Date.now();
+  return [
+    {
+      id: "stl-score-1",
+      entityId: "Ali Khan",
+      entityType: "USER",
+      score: 86,
+      level: 4,
+      breakdown: { pss: 30, crb: 16, performance: 18, behavior: 12, industries: 6, refilling: 4, total: 86, level: 4, label: "Highly Trusted" },
+      lastUpdated: new Date(now - 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: "stl-score-2",
+      entityId: "Sara Noor",
+      entityType: "USER",
+      score: 72,
+      level: 3,
+      breakdown: { pss: 28, crb: 10, performance: 16, behavior: 8, industries: 5, refilling: 5, total: 72, level: 3, label: "Trusted" },
+      lastUpdated: new Date(now - 3 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: "stl-score-3",
+      entityId: "Usman Raza",
+      entityType: "USER",
+      score: 48,
+      level: 2,
+      breakdown: { pss: 20, crb: 4, performance: 12, behavior: 4, industries: 3, refilling: 5, total: 48, level: 2, label: "Basic Verified" },
+      lastUpdated: new Date(now - 5 * 60 * 60 * 1000).toISOString(),
+    },
+  ];
+}
+
+function demoLogs() {
+  const now = Date.now();
+  return [
+    { id: "stl-log-1", entityId: "Ali Khan", entityType: "USER", change: 5, reason: "PSS_RENEWED", createdAt: new Date(now - 2 * 60 * 60 * 1000).toISOString() },
+    { id: "stl-log-2", entityId: "Sara Noor", entityType: "USER", change: -3, reason: "REFILL_WARNING", createdAt: new Date(now - 4 * 60 * 60 * 1000).toISOString() },
+    { id: "stl-log-3", entityId: "Usman Raza", entityType: "USER", change: 8, reason: "CRB_CERTIFIED", createdAt: new Date(now - 8 * 60 * 60 * 1000).toISOString() },
+  ];
+}
 
 export async function POST(req: Request) {
   const auth = await requireSession(["ADMIN", "SUPER_ADMIN", "FRANCHISE", "USER"]);
@@ -109,6 +152,16 @@ export async function GET(req: Request) {
       skip: url.searchParams.get("skip") ?? undefined,
       logsTake: url.searchParams.get("logsTake") ?? undefined,
     });
+
+    if (!process.env.DATABASE_URL || !isMongoObjectId(auth.user.userId)) {
+      const scores = demoScores().filter((item) => (q.entityType ? item.entityType === q.entityType : true));
+      const logs = demoLogs().filter((item) => (q.entityType ? item.entityType === q.entityType : true));
+      return ok({
+        scores: scores.slice(q.skip ?? 0, (q.skip ?? 0) + (q.take ?? 50)),
+        logs: logs.slice(0, q.logsTake ?? 50),
+        page: { take: q.take ?? 50, skip: q.skip ?? 0, logsTake: q.logsTake ?? 50 },
+      });
+    }
 
     const whereScore = {
       ...(q.entityType ? { entityType: q.entityType } : {}),

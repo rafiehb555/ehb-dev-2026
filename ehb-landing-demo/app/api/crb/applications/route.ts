@@ -4,6 +4,55 @@ import { handleRouteError } from "@/lib/apiErrors";
 import { requireSession, isAdmin } from "@/lib/rbac";
 import { CreateCRBApplicationSchema, ListCRBApplicationsQuerySchema } from "@/lib/crb/schemas";
 import { writeAuditLog } from "@/lib/audit";
+import { isMongoObjectId } from "@/lib/mongoId";
+
+function demoCrbApplications() {
+  const now = Date.now();
+  return [
+    {
+      id: "crb-demo-1",
+      type: "SERVICE",
+      industry: "Construction",
+      status: "REVIEW",
+      applicantId: "ehb-demo-user-1",
+      applicant: { id: "ehb-demo-user-1", name: "Ali Khan", email: "ali@test.com", role: "USER" },
+      documents: [{ id: "doc-1", type: "LICENSE", fileUrl: "https://example.com/license.pdf" }],
+      inspection: null,
+      certificate: null,
+      notes: "Initial review in progress",
+      createdAt: new Date(now - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: "crb-demo-2",
+      type: "COMPANY",
+      industry: "Healthcare",
+      status: "INSPECTION",
+      applicantId: "ehb-demo-user-2",
+      applicant: { id: "ehb-demo-user-2", name: "Sara Noor", email: "sara@test.com", role: "USER" },
+      documents: [
+        { id: "doc-2", type: "ID", fileUrl: "https://example.com/id.pdf" },
+        { id: "doc-3", type: "PORTFOLIO", fileUrl: "https://example.com/portfolio.pdf" },
+      ],
+      inspection: { id: "inspection-1", score: 88, status: "IN_PROGRESS" },
+      certificate: null,
+      notes: "Site visit booked",
+      createdAt: new Date(now - 4 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: "crb-demo-3",
+      type: "SKILL",
+      industry: "Education",
+      status: "APPROVED",
+      applicantId: "ehb-demo-user-3",
+      applicant: { id: "ehb-demo-user-3", name: "Usman Raza", email: "usman@test.com", role: "USER" },
+      documents: [{ id: "doc-4", type: "EXPERIENCE", fileUrl: "https://example.com/experience.pdf" }],
+      inspection: { id: "inspection-2", score: 93, status: "APPROVED" },
+      certificate: { id: "cert-1", status: "ACTIVE", expiryDate: new Date(now + 180 * 24 * 60 * 60 * 1000).toISOString() },
+      notes: "Certificate issued",
+      createdAt: new Date(now - 8 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+  ];
+}
 
 export async function POST(req: Request) {
   try {
@@ -92,6 +141,19 @@ export async function GET(req: Request) {
 
     const take = q.take ?? 50;
     const skip = q.skip ?? 0;
+
+    if (!process.env.DATABASE_URL || !isMongoObjectId(auth.user.userId)) {
+      const filtered = demoCrbApplications()
+        .filter((item) => (q.status ? item.status === q.status : true))
+        .filter((item) => (q.type ? item.type === q.type : true))
+        .filter((item) =>
+          q.query
+            ? [item.industry, item.applicant.name, item.applicant.email].some((value) => value.toLowerCase().includes(q.query!.toLowerCase()))
+            : true
+        )
+        .filter((item) => (isAdmin(auth.user.role) ? true : item.applicantId === auth.user.userId));
+      return ok({ items: filtered.slice(skip, skip + take), total: filtered.length, take, skip });
+    }
 
     const [items, total] = await prisma.$transaction([
       prisma.cRBApplication.findMany({

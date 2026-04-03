@@ -4,6 +4,7 @@ import { fail, ok } from "@/lib/apiResponse";
 import { handleRouteError } from "@/lib/apiErrors";
 import { ListPssCasesQuerySchema } from "@/lib/pss/schemas";
 import { refillAlertFromDueDate } from "@/lib/pss/intelligence";
+import { isMongoObjectId } from "@/lib/mongoId";
 
 function statusFrom(phaseCompleted: number, verificationStatus: "PENDING" | "VERIFIED" | "REJECTED") {
   if (verificationStatus === "REJECTED") return "REJECTED" as const;
@@ -21,6 +22,60 @@ function stageFrom(phaseCompleted: number) {
   return "COMPLETED";
 }
 
+function demoCases() {
+  const now = Date.now();
+  return [
+    {
+      id: "pss-demo-1",
+      userId: "ehb-demo-user-1",
+      user: { id: "ehb-demo-user-1", name: "Ali Khan", email: "ali@test.com", role: "USER" },
+      type: "KYC",
+      status: "UNDER_REVIEW" as const,
+      riskScore: 78,
+      risk: "high" as const,
+      stage: "AML_RISK",
+      phaseCompleted: 3,
+      updatedAt: new Date(now - 2 * 60 * 60 * 1000).toISOString(),
+      lastVerifiedAt: null,
+      nextRefill: { dueDate: new Date(now + 4 * 24 * 60 * 60 * 1000).toISOString(), status: "PENDING" },
+      refillAlert: "warning",
+      refillDaysRemaining: 4,
+    },
+    {
+      id: "pss-demo-2",
+      userId: "ehb-demo-user-2",
+      user: { id: "ehb-demo-user-2", name: "Sara Noor", email: "sara@test.com", role: "USER" },
+      type: "KYC",
+      status: "VERIFIED" as const,
+      riskScore: 24,
+      risk: "low" as const,
+      stage: "COMPLETED",
+      phaseCompleted: 6,
+      updatedAt: new Date(now - 10 * 60 * 60 * 1000).toISOString(),
+      lastVerifiedAt: new Date(now - 36 * 60 * 60 * 1000).toISOString(),
+      nextRefill: null,
+      refillAlert: "ok",
+      refillDaysRemaining: 32,
+    },
+    {
+      id: "pss-demo-3",
+      userId: "ehb-demo-user-3",
+      user: { id: "ehb-demo-user-3", name: "Usman Raza", email: "usman@test.com", role: "USER" },
+      type: "KYC",
+      status: "PENDING" as const,
+      riskScore: 46,
+      risk: "medium" as const,
+      stage: "DOCUMENTS",
+      phaseCompleted: 1,
+      updatedAt: new Date(now - 90 * 60 * 1000).toISOString(),
+      lastVerifiedAt: null,
+      nextRefill: { dueDate: new Date(now + 14 * 24 * 60 * 60 * 1000).toISOString(), status: "PENDING" },
+      refillAlert: "ok",
+      refillDaysRemaining: 14,
+    },
+  ];
+}
+
 export async function GET(req: Request) {
   const auth = await requireSession(["USER", "FRANCHISE", "ADMIN", "SUPER_ADMIN"]);
   if (!auth.ok) return fail(auth.status, "AUTH", auth.error);
@@ -34,6 +89,19 @@ export async function GET(req: Request) {
       take: url.searchParams.get("take") ?? undefined,
       skip: url.searchParams.get("skip") ?? undefined,
     });
+
+    if (!process.env.DATABASE_URL || !isMongoObjectId(auth.user.userId)) {
+      const allCases = demoCases()
+        .filter((item) => (query.risk ? item.risk === query.risk : true))
+        .filter((item) => (query.query ? [item.user.name, item.user.email].some((value) => value.toLowerCase().includes(query.query!.toLowerCase())) : true))
+        .filter((item) => (query.status ? item.status === query.status : true));
+      const take = query.take ?? 50;
+      const skip = query.skip ?? 0;
+      return ok({
+        cases: allCases.slice(skip, skip + take),
+        page: { take, skip, total: allCases.length, hasNext: skip + take < allCases.length },
+      });
+    }
 
     const whereUser = auth.user.role === "USER" ? { userId: auth.user.userId } : {};
     const verifications = await prisma.pSSVerification.findMany({

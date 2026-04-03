@@ -4,6 +4,43 @@ import { handleRouteError } from "@/lib/apiErrors";
 import { requireSession, isAdmin } from "@/lib/rbac";
 import { CreateInspectionTaskSchema, ListInspectionTasksQuerySchema } from "@/lib/franchise/schemas";
 import { writeAuditLog } from "@/lib/audit";
+import { isMongoObjectId } from "@/lib/mongoId";
+
+function demoInspectionTasks() {
+  const now = Date.now();
+  return [
+    {
+      id: "task-demo-1",
+      status: "ASSIGNED",
+      dueDate: new Date(now + 24 * 60 * 60 * 1000).toISOString(),
+      updatedAt: new Date(now - 60 * 60 * 1000).toISOString(),
+      franchise: { id: "fr-1", name: "Lahore East", city: "Lahore" },
+      report: null,
+      escalations: [],
+      crbApplication: { id: "crb-demo-2", industry: "Healthcare", documents: [{ id: "doc-1" }] },
+    },
+    {
+      id: "task-demo-2",
+      status: "IN_PROGRESS",
+      dueDate: new Date(now + 2 * 24 * 60 * 60 * 1000).toISOString(),
+      updatedAt: new Date(now - 2 * 60 * 60 * 1000).toISOString(),
+      franchise: { id: "fr-2", name: "Karachi Core", city: "Karachi" },
+      report: { id: "report-1", score: 84, fraudSuspected: false },
+      escalations: [],
+      crbApplication: { id: "crb-demo-1", industry: "Construction", documents: [{ id: "doc-2" }] },
+    },
+    {
+      id: "task-demo-3",
+      status: "ESCALATED",
+      dueDate: new Date(now - 12 * 60 * 60 * 1000).toISOString(),
+      updatedAt: new Date(now - 30 * 60 * 1000).toISOString(),
+      franchise: { id: "fr-3", name: "Islamabad Central", city: "Islamabad" },
+      report: { id: "report-2", score: 42, fraudSuspected: true },
+      escalations: [{ id: "esc-1", level: "CORPORATE" }],
+      crbApplication: { id: "crb-demo-3", industry: "Education", documents: [] },
+    },
+  ];
+}
 
 export async function POST(req: Request) {
   try {
@@ -69,6 +106,11 @@ export async function GET(req: Request) {
 
     const take = q.take ?? 50;
     const skip = q.skip ?? 0;
+
+    if (!process.env.DATABASE_URL || !isMongoObjectId(auth.user.userId)) {
+      const filtered = demoInspectionTasks().filter((item) => (q.status ? item.status === q.status : true));
+      return ok({ items: filtered.slice(skip, skip + take), total: filtered.length, take, skip });
+    }
 
     const where: any = {};
     if (q.status) where.status = q.status;
