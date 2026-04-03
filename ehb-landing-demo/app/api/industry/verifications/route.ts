@@ -4,6 +4,45 @@ import { handleRouteError } from "@/lib/apiErrors";
 import { requireSession, isAdmin } from "@/lib/rbac";
 import { CreateIndustryVerificationSchema } from "@/lib/industry/schemas";
 import { writeAuditLog } from "@/lib/audit";
+import { isMongoObjectId } from "@/lib/mongoId";
+
+function demoIndustryVerifications() {
+  return [
+    {
+      id: "verification-demo-1",
+      entityType: "COMPANY",
+      entityId: "Ali Khan",
+      industryId: "industry-demo-1",
+      status: "PENDING",
+      score: null,
+      weight: 1,
+      industry: { id: "industry-demo-1", name: "Construction" },
+      updatedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: "verification-demo-2",
+      entityType: "SERVICE",
+      entityId: "Sara Noor",
+      industryId: "industry-demo-2",
+      status: "VERIFIED",
+      score: 88,
+      weight: 1.5,
+      industry: { id: "industry-demo-2", name: "Healthcare" },
+      updatedAt: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: "verification-demo-3",
+      entityType: "PRODUCT",
+      entityId: "Usman Raza",
+      industryId: "industry-demo-3",
+      status: "VERIFIED",
+      score: 81,
+      weight: 1.2,
+      industry: { id: "industry-demo-3", name: "Education" },
+      updatedAt: new Date(Date.now() - 20 * 60 * 60 * 1000).toISOString(),
+    },
+  ];
+}
 
 export async function POST(req: Request) {
   try {
@@ -95,6 +134,14 @@ export async function GET(req: Request) {
     // v1: admins can list all; non-admin list their own by applicantId via DMO payload linkage isn't trivial here.
     // So we allow filtered listing; UI can pass entityId they own.
     if (!isAdmin(auth.user.role) && !entityId) return fail(400, "MISSING_FILTER", "Provide entityId");
+
+    if (!process.env.DATABASE_URL || !isMongoObjectId(auth.user.userId)) {
+      const filtered = demoIndustryVerifications()
+        .filter((item) => (entityType ? item.entityType === entityType : true))
+        .filter((item) => (entityId ? item.entityId === entityId : true))
+        .filter((item) => (status ? item.status === status : true));
+      return ok({ items: filtered.slice(skip, skip + take), total: filtered.length, take, skip });
+    }
 
     const [items, total] = await prisma.$transaction([
       prisma.industryVerification.findMany({
