@@ -2,7 +2,11 @@
 
 import { DmoSidebar } from "./DmoSidebar";
 
-export default function Sidebar() {
-  return <DmoSidebar className="h-[calc(100vh-3rem)]" />;
+type SidebarProps = {
+  selectedSectionKey?: string | null;
+};
+
+export default function Sidebar({ selectedSectionKey }: SidebarProps) {
+  return <DmoSidebar className="h-[calc(100vh-3rem)]" selectedSectionKey={selectedSectionKey} />;
 }
 
