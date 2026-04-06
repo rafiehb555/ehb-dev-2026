@@ -1,0 +1,142 @@
+[
+  {
+    "agentId": "ceo-orchestrator-agent",
+    "status": "working",
+    "queueSize": 3,
+    "healthScore": 91,
+    "lastTask": "Routing feature and deploy requests",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:39:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "product-roadmap-agent",
+    "status": "planning",
+    "queueSize": 2,
+    "healthScore": 88,
+    "lastTask": "Sequencing multi-phase EHB features",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:37:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "user-flow-agent",
+    "status": "verifying",
+    "queueSize": 1,
+    "healthScore": 90,
+    "lastTask": "Checking route and role impact",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:38:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "ui-design-system-agent",
+    "status": "idle",
+    "queueSize": 0,
+    "healthScore": 86,
+    "lastTask": "Waiting for reusable UI review",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:35:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "data-architecture-agent",
+    "status": "working",
+    "queueSize": 2,
+    "healthScore": 92,
+    "lastTask": "Reviewing source-of-truth decisions",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:39:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "deploy-sync-ops-agent",
+    "status": "verifying",
+    "queueSize": 1,
+    "healthScore": 94,
+    "lastTask": "Comparing local and deploy behavior",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:39:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "docs-knowledge-agent",
+    "status": "completed",
+    "queueSize": 0,
+    "healthScore": 89,
+    "lastTask": "Syncing docs with current agent system",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:33:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "admin-dmo-agent",
+    "status": "reading-context",
+    "queueSize": 1,
+    "healthScore": 84,
+    "lastTask": "Inspecting admin and DMO structure",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:36:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "franchise-agent",
+    "status": "idle",
+    "queueSize": 0,
+    "healthScore": 83,
+    "lastTask": "Waiting for franchise workflow request",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:34:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "trust-systems-agent",
+    "status": "blocked",
+    "queueSize": 1,
+    "healthScore": 72,
+    "lastTask": "Awaiting trust rule confirmation",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:32:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "agent-governance-risk-agent",
+    "status": "waiting-for-input",
+    "queueSize": 1,
+    "healthScore": 80,
+    "lastTask": "Waiting for approval-sensitive decision",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:37:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "agent-observability-metrics-agent",
+    "status": "planning",
+    "queueSize": 1,
+    "healthScore": 87,
+    "lastTask": "Designing useful status signals",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:37:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "integration-memory-agent",
+    "status": "working",
+    "queueSize": 1,
+    "healthScore": 85,
+    "lastTask": "Recording reuse and continuity links",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:38:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  },
+  {
+    "agentId": "agent-ui-dashboard-agent",
+    "status": "completed",
+    "queueSize": 0,
+    "healthScore": 90,
+    "lastTask": "Preparing control-center UX layer",
+    "mode": "live",
+    "lastUpdatedAt": "2026-04-06T14:36:44.619Z",
+    "lastUpdatedLabel": "Updated 2h ago"
+  }
+]

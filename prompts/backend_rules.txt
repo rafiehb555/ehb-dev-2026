@@ -1,0 +1,5 @@
+Use Node.js + Express
+Use MVC or modular architecture
+Use MongoDB (Mongoose)
+Follow clean code and scalability
+Create controllers, services, routes separately

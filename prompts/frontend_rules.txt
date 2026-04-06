@@ -1,0 +1,3 @@
+Use Next.js or React
+Clean UI structure
+Component-based architecture

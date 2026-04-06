@@ -118,6 +118,24 @@ docs
 
 ---
 
+## AGENT SYSTEM DOCUMENTS
+
+| File | Description | Updated |
+|------|-------------|---------|
+| [agents/AGENT_QUICKSTART.md](agents/AGENT_QUICKSTART.md) | Start here for the EHB development agent system | Apr 6 |
+| [agents/AGENT_CATALOG.md](agents/AGENT_CATALOG.md) | Development agent roster and ownership summary | Apr 6 |
+| [agents/AGENT_OWNERSHIP.md](agents/AGENT_OWNERSHIP.md) | Ownership boundaries for current development agents | Apr 6 |
+| [agents/AGENT_HANDOFFS.md](agents/AGENT_HANDOFFS.md) | Standard handoff order and required packet fields | Apr 6 |
+| [agents/AGENT_STATUS_MODEL.md](agents/AGENT_STATUS_MODEL.md) | Shared agent lifecycle statuses | Apr 6 |
+| [agents/PLAYBOOK_INDEX.md](agents/PLAYBOOK_INDEX.md) | Entry index for all 14 agent playbooks | Apr 6 |
+| [agents/EXAMPLE_PROMPTS.md](agents/EXAMPLE_PROMPTS.md) | Copy-paste prompts for the development agent system | Apr 6 |
+| [agents/AGENT_PLAYBOOK_TEMPLATE.md](agents/AGENT_PLAYBOOK_TEMPLATE.md) | Standard template for all future playbooks | Apr 6 |
+| [agents/AGENT_DASHBOARD_PLAN.md](agents/AGENT_DASHBOARD_PLAN.md) | First admin-facing dashboard direction for development agents | Apr 6 |
+| [agents/AGENT_WORKFLOW_CONTRACT.md](agents/AGENT_WORKFLOW_CONTRACT.md) | Handoff payload, statuses, and workflow rules | Apr 6 |
+| [agents/RELATION_TO_PLATFORM_AI.md](agents/RELATION_TO_PLATFORM_AI.md) | Difference between development agents and platform AI agents | Apr 6 |
+
+---
+
 ## DEPARTMENTS
 
 | File | Description | Updated |

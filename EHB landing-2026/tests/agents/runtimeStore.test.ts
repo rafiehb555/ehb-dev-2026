@@ -1,0 +1,45 @@
+import { describe, expect, it } from "vitest";
+import {
+  createAgentHandoff,
+  getAgentRuntimeSummary,
+  listAgentRuntimeHandoffs,
+  resetAgentRuntimeStore,
+  updateAgentRuntimeStatus,
+} from "@/lib/agents/runtimeStore";
+
+describe("agent runtime store", () => {
+  it("updates runtime status and keeps live mode", async () => {
+    await resetAgentRuntimeStore();
+
+    const status = await updateAgentRuntimeStatus({
+      agentId: "trust-systems-agent",
+      status: "working",
+      lastTask: "Reviewing trust wording",
+      historyTitle: "Work resumed",
+      historyDetail: "Trust review continued after clarification.",
+    });
+
+    expect(status.agentId).toBe("trust-systems-agent");
+    expect(status.status).toBe("working");
+    expect(status.mode).toBe("live");
+  });
+
+  it("creates handoffs and updates summary counters", async () => {
+    await resetAgentRuntimeStore();
+
+    await createAgentHandoff({
+      fromAgentId: "ceo-orchestrator-agent",
+      toAgentId: "product-roadmap-agent",
+      requestSummary: "Plan next release phase",
+      reason: "Need sequencing before implementation",
+      expectedOutput: "Phased roadmap recommendation",
+    });
+
+    const handoffs = await listAgentRuntimeHandoffs();
+    const summary = await getAgentRuntimeSummary();
+
+    expect(handoffs.length).toBeGreaterThan(0);
+    expect(summary.totalHandoffs).toBeGreaterThan(0);
+    expect(summary.liveModeAgents).toBeGreaterThan(0);
+  });
+});

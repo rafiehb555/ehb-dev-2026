@@ -1,0 +1,4 @@
+Always read docs before coding
+Follow architecture strictly
+Avoid hardcoding
+Write scalable and reusable code
