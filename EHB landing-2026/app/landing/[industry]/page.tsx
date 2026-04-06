@@ -14,6 +14,7 @@ import { FinanceIndustry3D } from "@/components/FinanceIndustry3D";
 import { GenericIndustry3DFallback } from "@/components/GenericIndustry3DFallback";
 import { IndustryHeroVisual } from "@/components/industry/IndustryHeroVisual";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
+import { lawLandingContent } from "@/lib/industry/law/olsContent";
 
 interface PageProps {
   params: Promise<{ industry: string }>;
@@ -55,6 +56,18 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
     return qs ? `?${qs}` : "";
   })();
 
+  /** Law uses a grey accent (#6B7280) — CTAs need higher contrast on dark bg */
+  const primaryCtaStyle =
+    industry.slug === "law"
+      ? {
+          background: "linear-gradient(135deg, #0ea5e9, #0284c7)",
+          boxShadow: "0 0 24px rgba(14, 165, 233, 0.45)",
+        }
+      : {
+          background: `linear-gradient(135deg, ${accent}, ${accent}dd)`,
+          boxShadow: `0 0 24px ${accent}40`,
+        };
+
   return (
     <main className="min-h-screen text-slate-100">
       {/* Hero — industry accent, icon, trust line */}
@@ -88,7 +101,7 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
                 {industry.heroTitle}
               </h1>
               <p className="text-slate-300 text-sm md:text-base max-w-2xl mb-8">
-                {industry.heroSubtitle ?? industry.overview}
+                {industry.slug === "law" ? lawLandingContent.heroLead : industry.heroSubtitle ?? industry.overview}
               </p>
               {locationLabel ? (
                 <div
@@ -104,19 +117,22 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
               <div className="flex flex-wrap gap-3 mb-6">
                 <Link
                   href={`/industry/${industry.slug}${locationQs}`}
-                  className="min-h-touch inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:opacity-95 hover:scale-[1.02]"
-                  style={{
-                    background: `linear-gradient(135deg, ${accent}, ${accent}dd)`,
-                    boxShadow: `0 0 24px ${accent}40`,
-                  }}
+                  className="min-h-touch inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:opacity-95 hover:scale-[1.02] shadow-lg"
+                  style={primaryCtaStyle}
                 >
                   {industry.heroPrimaryButton ?? `Explore ${industry.name}`}
-                  <span className="text-xs">→</span>
+                  <span className="text-xs" aria-hidden>
+                    →
+                  </span>
                 </Link>
                 <Link
                   href="/dashboard"
-                  className="min-h-touch inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-5 py-2.5 text-sm font-medium text-slate-200 hover:bg-white/10 transition-all duration-300"
-                  style={{ borderColor: `${accent}40` }}
+                  className={`min-h-touch inline-flex items-center gap-2 rounded-full border backdrop-blur-sm px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
+                    industry.slug === "law"
+                      ? "border-cyan-400/50 bg-slate-950/40 text-cyan-50 hover:bg-cyan-500/10"
+                      : "border-white/25 bg-white/5 text-slate-200 hover:bg-white/10"
+                  }`}
+                  style={industry.slug === "law" ? undefined : { borderColor: `${accent}40` }}
                 >
                   {industry.heroSecondaryButton ?? "Join as Provider"}
                 </Link>
@@ -125,6 +141,19 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
                 {categories.length > 0 ? `${categories.length}+ categories` : "Multiple services"} · Verified providers · AI
                 powered
               </p>
+              {industry.slug === "law" ? (
+                <div className="mt-6 grid w-full max-w-2xl grid-cols-2 sm:grid-cols-4 gap-3">
+                  {lawLandingContent.stats.map((s) => (
+                    <div
+                      key={s.label}
+                      className="rounded-xl border border-cyan-500/20 bg-slate-950/50 px-3 py-2.5 text-left shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"
+                    >
+                      <p className="text-[10px] text-slate-400 uppercase tracking-wide leading-tight">{s.label}</p>
+                      <p className="text-white font-semibold mt-1 text-sm tabular-nums whitespace-nowrap">{s.value}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
             </div>
             <IndustryHeroVisual industry={industry} />
           </div>
@@ -271,12 +300,15 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
           <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Why EHB</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-8">Why {industry.name} on EHB</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { title: "Verified", desc: "Providers verified via EHB PSS, CRB and STL for trust." },
-              { title: "Discover", desc: "Find services and providers by location, rating and need." },
-              { title: "Pay & Book", desc: "One wallet, secure payments, and easy scheduling." },
-              { title: "Grow", desc: "Providers get visibility; users get the right services." },
-            ].map((item) => (
+            {(industry.slug === "law"
+              ? lawLandingContent.whyEhb
+              : [
+                  { title: "Verified", desc: "Providers verified via EHB PSS, CRB and STL for trust." },
+                  { title: "Discover", desc: "Find services and providers by location, rating and need." },
+                  { title: "Pay & Book", desc: "One wallet, secure payments, and easy scheduling." },
+                  { title: "Grow", desc: "Providers get visibility; users get the right services." },
+                ]
+            ).map((item) => (
               <div
                 key={item.title}
                 className="rounded-2xl glass-panel p-6 border border-white/10 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01]"
@@ -306,7 +338,9 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">AI Insights</h2>
           <div className="rounded-2xl glass-card p-8 border" style={{ borderColor: `${accent}30` }}>
             <p className="text-slate-300 max-w-2xl">
-              AI will recommend demand, opportunities and suggested services for {industry.name} based on location and market trends. Providers get insights; users get better matches.
+              {industry.slug === "law"
+                ? lawLandingContent.aiInsights
+                : `AI will recommend demand, opportunities and suggested services for ${industry.name} based on location and market trends. Providers get insights; users get better matches.`}
             </p>
           </div>
         </section>

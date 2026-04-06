@@ -15,12 +15,12 @@ export default function IndustriesPage() {
           {INDUSTRIES.map((ind) => (
             <Link
               key={ind.slug}
-              href={`/industry/${ind.slug}`}
+              href={`/landing/${ind.slug}`}
               className="glass-panel card-hover p-4 block rounded-xl border border-white/10 hover:border-[#00eaff]/40 transition-colors"
             >
               <p className="text-sm font-semibold text-white">{ind.name}</p>
               <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2">{ind.shortName}</p>
-              <span className="text-xs text-[#00eaff] mt-2 inline-block">Industry home →</span>
+              <span className="text-xs text-[#00eaff] mt-2 inline-block">Industry landing →</span>
             </Link>
           ))}
         </div>

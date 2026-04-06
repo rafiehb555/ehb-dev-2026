@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 import type { Industry } from "@/lib/industry/config";
 import { getIndustryDesignAssets } from "@/lib/industry/designAssets";
@@ -22,6 +22,7 @@ export function IndustryCard({ industry }: IndustryCardProps) {
   const accent = industry.accentColor;
   const glowColor = hexToRgba(accent, 0.35);
   const assets = getIndustryDesignAssets(industry);
+  const [thumbFailed, setThumbFailed] = useState(false);
 
   const miniFlow = (() => {
     switch (industry.slug) {
@@ -56,7 +57,7 @@ export function IndustryCard({ industry }: IndustryCardProps) {
 
   return (
     <Link
-      href={`/industry/${industry.slug}`}
+      href={`/landing/${industry.slug}`}
       className="group block rounded-xl glass-panel p-4 border border-white/10 transition-all duration-300 ease-out hover:border-[var(--card-accent)] hover:shadow-[0_0_24px_var(--card-glow)] hover:-translate-y-1.5 hover:scale-[1.03] will-change-transform"
       style={
         {
@@ -64,17 +65,28 @@ export function IndustryCard({ industry }: IndustryCardProps) {
           "--card-glow": glowColor,
         } as React.CSSProperties
       }
-      aria-label={`View ${industry.name} services`}
+      aria-label={`Open ${industry.name} landing page`}
     >
-      <div className="relative -mx-4 -mt-4 mb-3 h-[88px] overflow-hidden rounded-t-xl border-b border-white/10 isolate">
-        <Image
-          src={assets.cardThumb}
-          alt={assets.alt}
-          fill
-          loading="lazy"
-          className="object-cover"
-          sizes="(max-width: 768px) 45vw, 280px"
-        />
+      <div className="relative -mx-4 -mt-4 mb-3 h-[88px] overflow-hidden rounded-t-xl border-b border-white/10 isolate bg-[#020c1b]">
+        {/* Native img: reliable for SVG; onError → gradient so broken icon never shows. */}
+        {assets.cardThumb && !thumbFailed ? (
+          <img
+            src={assets.cardThumb}
+            alt={assets.alt}
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+            onError={() => setThumbFailed(true)}
+          />
+        ) : (
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(135deg, ${accent}55 0%, #020c1b 50%, #0f172a 100%)`,
+            }}
+            aria-hidden
+          />
+        )}
         <div
           className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
           style={{ background: `linear-gradient(135deg, ${accent}88, transparent 60%)` }}

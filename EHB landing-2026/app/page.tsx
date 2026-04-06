@@ -296,13 +296,18 @@ export default function LandingPage() {
           </p>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {dmoOverviewCards.map((card) => (
-              <div key={card.title} className={`rounded-2xl glass-card border p-5 ${card.accentClass}`}>
+              <Link
+                key={card.title}
+                href={card.href ?? "/dmo"}
+                className={`block rounded-2xl glass-card border p-5 transition-transform duration-200 hover:-translate-y-0.5 hover:border-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/35 ${card.accentClass}`}
+              >
                 <p className={`text-xs font-semibold mb-1 uppercase tracking-[0.12em] ${card.toneClass}`}>
                   {card.title}
                 </p>
                 <p className="text-sm text-white mb-2">{card.subtitle}</p>
                 <p className="text-xs text-slate-400">{card.description}</p>
-              </div>
+                <p className="text-[10px] font-medium text-cyan-400/80 mt-3">Open in app →</p>
+              </Link>
             ))}
           </div>
         </section>
@@ -326,18 +331,27 @@ export default function LandingPage() {
           {/* Earning model */}
           <div className="grid gap-6 md:grid-cols-3 mb-8">
             {monetizationCards.map((card) => (
-              <div key={card.title} className={`rounded-2xl glass-card border p-6 ${card.accentClass}`}>
+              <Link
+                key={card.title}
+                href={card.href ?? "/home"}
+                className={`block rounded-2xl glass-card border p-6 transition-transform duration-200 hover:-translate-y-0.5 hover:border-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/35 ${card.accentClass}`}
+              >
                 <p className={`text-xs font-semibold mb-1 ${card.toneClass}`}>{card.title}</p>
                 <p className="text-sm text-white mb-2">{card.subtitle}</p>
                 <p className="text-xs text-slate-400">{card.description}</p>
-              </div>
+                <p className="text-[10px] font-medium text-cyan-400/80 mt-3">Explore →</p>
+              </Link>
             ))}
           </div>
 
           {/* Pricing & tiers */}
           <div className="grid gap-6 lg:grid-cols-3 items-start mb-10">
             {pricingTiers.map((tier) => (
-              <div key={tier.title} className={`rounded-2xl glass-card border p-6 ${tier.accentClass}`}>
+              <Link
+                key={tier.title}
+                href={tier.href}
+                className={`block rounded-2xl glass-card border p-6 transition-transform duration-200 hover:-translate-y-0.5 hover:border-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/35 ${tier.accentClass}`}
+              >
                 <p className={`text-xs font-semibold mb-1 ${tier.toneClass}`}>{tier.title}</p>
                 <p className="text-sm text-white mb-2">{tier.subtitle}</p>
                 <ul className="space-y-1.5 text-xs text-slate-400">
@@ -345,7 +359,8 @@ export default function LandingPage() {
                     <li key={item}>• {item}</li>
                   ))}
                 </ul>
-              </div>
+                <p className="text-[10px] font-medium text-cyan-400/80 mt-3">View related flow →</p>
+              </Link>
             ))}
           </div>
         </section>
@@ -493,10 +508,15 @@ export default function LandingPage() {
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {investorReasons.map((item) => (
-            <div key={item.title} className="rounded-2xl glass-panel p-6 border border-white/15">
+            <Link
+              key={item.title}
+              href={item.href}
+              className="block rounded-2xl glass-panel p-6 border border-white/15 transition-transform duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/35"
+            >
               <p className="text-xs font-semibold text-slate-200 mb-1">{item.title}</p>
               <p className="text-sm text-slate-300">{item.description}</p>
-            </div>
+              <p className="text-[10px] font-medium text-cyan-400/80 mt-3">Learn more →</p>
+            </Link>
           ))}
         </div>
         <div className="max-w-2xl rounded-2xl glass-card p-6 border border-[#8b5cf6]/30 mt-8">

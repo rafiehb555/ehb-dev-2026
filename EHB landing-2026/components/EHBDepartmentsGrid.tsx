@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function DeptCard({
@@ -6,16 +7,19 @@ function DeptCard({
   standFor,
   desc,
   accent,
+  href,
 }: {
   icon: string;
   title: string;
   standFor: string;
   desc: string;
   accent: string;
+  href: string;
 }) {
   return (
-    <div
-      className="rounded-2xl glass-panel border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_26px_rgba(0,234,255,0.18)] card-hover"
+    <Link
+      href={href}
+      className="block rounded-2xl glass-panel border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_26px_rgba(0,234,255,0.18)] card-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40"
       style={{
         borderColor: `${accent}40`,
         boxShadow: `0 0 0 1px rgba(255,255,255,0.02) inset`,
@@ -36,8 +40,9 @@ function DeptCard({
         <p className="mt-4 text-sm font-semibold text-white">{title}</p>
         <p className="text-[10px] text-slate-300 mt-1 leading-relaxed">{standFor}</p>
         <p className="text-xs text-slate-400 mt-1 leading-relaxed">{desc}</p>
+        <p className="text-[10px] font-medium text-cyan-400/80 mt-3">View module →</p>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -49,6 +54,7 @@ export function EHBDepartmentsGrid() {
       standFor: "Proof & Security System",
       desc: "Identity verification: KYC, document checks, and fraud protection.",
       accent: "#00AEEF",
+      href: "/dmo/pss",
     },
     {
       icon: "📊",
@@ -56,6 +62,7 @@ export function EHBDepartmentsGrid() {
       standFor: "Decentralized Management Office",
       desc: "Governance + verification coordination, and EAP affiliate engine control.",
       accent: "#8B5CF6",
+      href: "/dmo/home",
     },
     {
       icon: "🤝",
@@ -63,6 +70,7 @@ export function EHBDepartmentsGrid() {
       standFor: "Job Profile & Skill",
       desc: "Professional identity layer: skills, services, jobs, and listings.",
       accent: "#00AEEF",
+      href: "/jobs",
     },
     {
       icon: "🧾",
@@ -70,6 +78,7 @@ export function EHBDepartmentsGrid() {
       standFor: "Certification & Registry Board",
       desc: "Certifies skills/services/products and records them on the registry.",
       accent: "#8B5CF6",
+      href: "/dmo/crb",
     },
     {
       icon: "⭐",
@@ -77,6 +86,7 @@ export function EHBDepartmentsGrid() {
       standFor: "Service Trust Level",
       desc: "AI trust scoring that controls visibility, ranking, and verification strength.",
       accent: "#00AEEF",
+      href: "/dmo/stl",
     },
     {
       icon: "💳",
@@ -84,6 +94,7 @@ export function EHBDepartmentsGrid() {
       standFor: "EHB Wallet",
       desc: "Wallet + payments + earnings + affiliate payouts via trusted transactions.",
       accent: "#8B5CF6",
+      href: "/wallet",
     },
   ];
 
@@ -100,10 +111,10 @@ export function EHBDepartmentsGrid() {
             standFor={it.standFor}
             desc={it.desc}
             accent={it.accent}
+            href={it.href}
           />
         ))}
       </div>
     </section>
   );
 }
-

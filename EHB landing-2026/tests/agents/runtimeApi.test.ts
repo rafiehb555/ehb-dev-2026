@@ -107,4 +107,20 @@ describe("agent runtime api routes", () => {
     expect(json.success).toBe(true);
     expect(Array.isArray(json.data.snapshot.statuses)).toBe(true);
   });
+
+  it("POST sets all agents to working", async () => {
+    const response = await postRuntime(
+      new Request("http://localhost/api/agents/runtime", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "set-all-working", lastTask: "API bulk working test line here" }),
+      }),
+    );
+    const json = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(json.success).toBe(true);
+    const statuses = json.data.snapshot.statuses as { status: string }[];
+    expect(statuses.every((s) => s.status === "working")).toBe(true);
+  });
 });

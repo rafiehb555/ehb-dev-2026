@@ -11,6 +11,12 @@ import { RoadmapPhasesSection } from "@/components/RoadmapPhasesSection";
 import { IndustryAiPanel } from "@/components/industry/IndustryAiPanel";
 import { IndustryHomeBanner } from "@/components/industry/IndustryHomeBanner";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
+import {
+  lawIndustryHomeIntro,
+  lawJobOpenings,
+  lawTopProviders,
+  lawTrendingServices,
+} from "@/lib/industry/law/olsContent";
 
 interface PageProps {
   params: Promise<{ industry: string }>;
@@ -61,7 +67,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
   const hasProducts = ["retail", "health", "it", "education"].includes(industry.slug);
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <div className="min-h-screen text-slate-100">
       <div className="container-ehb py-8 md:py-10 space-y-10">
         {/* 1. Industry Header */}
         <SectionReveal as="div">
@@ -79,7 +85,9 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                 </h1>
               </div>
               <p className="text-slate-400 text-sm mt-1 max-w-xl">
-                Live marketplace for services, jobs, products, and providers in {industry.name}.
+                {industry.slug === "law"
+                  ? lawIndustryHomeIntro
+                  : `Live marketplace for services, jobs, products, and providers in ${industry.name}.`}
               </p>
 
               {locationLabel ? (
@@ -154,50 +162,79 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
             <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Trending</p>
             <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Trending Services</h2>
             <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-              {(flatServices.length > 0 ? flatServices.map((s) => s.name) : industry.services).slice(0, 12).map(
-                (name) => (
-                  <div
-                    key={name}
-                    className="rounded-2xl glass-card card-hover p-4 flex flex-col gap-2 border transition-all duration-300"
-                    style={{ borderColor: `${accent}30` }}
-                  >
-                    <p className="text-xs font-medium text-white line-clamp-2">{name}</p>
-                    <span className="text-[10px] text-slate-400">View details →</span>
-                  </div>
-                )
-              )}
+              {(industry.slug === "law"
+                ? lawTrendingServices
+                : (flatServices.length > 0 ? flatServices.map((s) => ({ name: s.name, blurb: "" })) : industry.services.map((n) => ({ name: n, blurb: "" }))).slice(0, 12)
+              ).map((row) => (
+                <div
+                  key={row.name}
+                  className="rounded-2xl glass-card card-hover p-4 flex flex-col gap-2 border transition-all duration-300"
+                  style={{ borderColor: `${accent}30` }}
+                >
+                  <p className="text-xs font-medium text-white line-clamp-2">{row.name}</p>
+                  {industry.slug === "law" && "blurb" in row && row.blurb ? (
+                    <p className="text-[10px] text-slate-500 line-clamp-3">{row.blurb}</p>
+                  ) : null}
+                  <span className="text-[10px] text-slate-400">View details →</span>
+                </div>
+              ))}
             </div>
           </section>
         </SectionReveal>
 
-        {/* 4. Top Providers (placeholder cards) */}
+        {/* 4. Top Providers */}
         <SectionReveal as="div">
           <section>
             <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Top Providers</p>
             <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Top Providers</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="rounded-2xl glass-panel card-hover p-5 border border-white/10 flex flex-col gap-2"
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="h-9 w-9 rounded-full flex items-center justify-center text-[11px] font-semibold text-white"
-                      style={{ backgroundColor: `${accent}33` }}
-                    >
-                      P{i}
+              {(industry.slug === "law" ? lawTopProviders : [1, 2, 3].map((i) => ({ i }))).map((item, idx) =>
+                industry.slug === "law" && "headline" in item ? (
+                  <div
+                    key={item.initials}
+                    className="rounded-2xl glass-panel card-hover p-5 border border-white/10 flex flex-col gap-2"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="h-9 w-9 rounded-full flex items-center justify-center text-[11px] font-semibold text-white shrink-0"
+                        style={{ backgroundColor: `${accent}33` }}
+                      >
+                        {item.initials}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-white leading-snug">{item.headline}</p>
+                        <p className="text-[11px] text-slate-400">{item.city}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-sm font-semibold text-white">Provider {i}</p>
-                      <p className="text-[11px] text-slate-400">Specialist in {industry.name}</p>
-                    </div>
+                    <p className="text-[11px] text-slate-300 mt-1">{item.focus}</p>
+                    <p className="text-[11px] text-slate-400 mt-2">
+                      ★ {item.rating} · {item.reviews} · {item.badge}
+                    </p>
                   </div>
-                  <p className="text-[11px] text-slate-400 mt-2">
-                    Rating: 4.{9 - i} · Location: — · Verified badge will appear here.
-                  </p>
-                </div>
-              ))}
+                ) : (
+                  <div
+                    key={typeof item === "object" && "i" in item ? item.i : idx}
+                    className="rounded-2xl glass-panel card-hover p-5 border border-white/10 flex flex-col gap-2"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="h-9 w-9 rounded-full flex items-center justify-center text-[11px] font-semibold text-white"
+                        style={{ backgroundColor: `${accent}33` }}
+                      >
+                        P{"i" in item ? item.i : idx + 1}
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-white">Provider {"i" in item ? item.i : idx + 1}</p>
+                        <p className="text-[11px] text-slate-400">Specialist in {industry.name}</p>
+                      </div>
+                    </div>
+                    <p className="text-[11px] text-slate-400 mt-2">
+                      Rating: 4.{9 - (typeof item === "object" && "i" in item ? item.i : idx + 1)} · Location: — · Demo
+                      placeholder.
+                    </p>
+                  </div>
+                )
+              )}
             </div>
           </section>
         </SectionReveal>
@@ -209,16 +246,26 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
             <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Latest Jobs & Opportunities</h2>
             <div className="rounded-2xl glass-panel p-5 border border-white/10">
               <p className="text-slate-400 text-sm mb-4">
-                Jobs and gigs in {industry.name} will appear here. Same UI for all industries – data from JPS and
-                marketplace.
+                {industry.slug === "law"
+                  ? "Sample legal roles aligned with OLS franchise + remote hiring (demo — live feed from JPS later)."
+                  : `Jobs and gigs in ${industry.name} will appear here. Same UI for all industries – data from JPS and marketplace.`}
               </p>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 text-[11px]">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="rounded-xl bg-white/5 px-3 py-2">
-                    <p className="font-semibold text-slate-100">Role {i} · {industry.shortName}</p>
-                    <p className="text-slate-400 mt-0.5">Salary: — · Location: Remote / On-site</p>
-                  </div>
-                ))}
+                {(industry.slug === "law" ? lawJobOpenings : [1, 2, 3].map((i) => ({ i }))).map((row) =>
+                  "title" in row ? (
+                    <div key={row.title} className="rounded-xl bg-white/5 px-3 py-2 border border-white/5">
+                      <p className="font-semibold text-slate-100 leading-snug">{row.title}</p>
+                      <p className="text-slate-400 mt-1 leading-relaxed">{row.detail}</p>
+                    </div>
+                  ) : (
+                    <div key={row.i} className="rounded-xl bg-white/5 px-3 py-2">
+                      <p className="font-semibold text-slate-100">
+                        Role {row.i} · {industry.shortName}
+                      </p>
+                      <p className="text-slate-400 mt-0.5">Salary: — · Location: Remote / On-site</p>
+                    </div>
+                  )
+                )}
               </div>
               <Link
                 href="/dashboard"
@@ -361,6 +408,6 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
           </Link>
         </section>
       </div>
-    </main>
+    </div>
   );
 }

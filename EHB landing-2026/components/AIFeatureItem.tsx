@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 interface AIFeatureItemProps {
@@ -8,6 +9,7 @@ interface AIFeatureItemProps {
   description: string;
   badge?: string;
   accentColor?: string;
+  href?: string;
 }
 
 export function AIFeatureItem({
@@ -16,17 +18,18 @@ export function AIFeatureItem({
   description,
   badge,
   accentColor = "#8b5cf6",
+  href,
 }: AIFeatureItemProps) {
-  return (
+  const body = (
     <div
-      className="rounded-2xl glass-panel border px-4 py-3 flex items-start gap-3 transition-all duration-300"
+      className="rounded-2xl glass-panel border px-4 py-3 flex items-start gap-3 transition-all duration-300 group-hover:border-white/20"
       style={{
         borderColor: `${accentColor}2a`,
         boxShadow: `0 0 0 1px rgba(255,255,255,0.04) inset`,
       }}
     >
       <div
-        className="mt-0.5 text-base h-9 w-9 rounded-xl flex items-center justify-center border"
+        className="mt-0.5 text-base h-9 w-9 rounded-xl flex items-center justify-center border shrink-0"
         style={{
           backgroundColor: `${accentColor}18`,
           borderColor: `${accentColor}33`,
@@ -36,7 +39,7 @@ export function AIFeatureItem({
       >
         {icon}
       </div>
-      <div>
+      <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2 flex-wrap">
           <p className="text-sm font-semibold text-white mb-0.5">{title}</p>
           {badge && (
@@ -53,8 +56,23 @@ export function AIFeatureItem({
           )}
         </div>
         <p className="text-xs text-slate-400">{description}</p>
+        {href ? (
+          <p className="text-[10px] font-medium text-cyan-400/80 mt-2 group-hover:text-cyan-300">Tap to explore →</p>
+        ) : null}
       </div>
     </div>
   );
-}
 
+  if (href?.startsWith("/")) {
+    return (
+      <Link
+        href={href}
+        className="group block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40"
+      >
+        {body}
+      </Link>
+    );
+  }
+
+  return body;
+}

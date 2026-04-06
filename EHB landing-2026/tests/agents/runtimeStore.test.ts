@@ -1,9 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { flatAgentDefinitions } from "@/lib/agents/catalog";
 import {
   createAgentHandoff,
   getAgentRuntimeSummary,
   listAgentRuntimeHandoffs,
+  listAgentRuntimeStatuses,
   resetAgentRuntimeStore,
+  setAllAgentsToWorking,
   updateAgentRuntimeStatus,
 } from "@/lib/agents/runtimeStore";
 
@@ -41,5 +44,18 @@ describe("agent runtime store", () => {
     expect(handoffs.length).toBeGreaterThan(0);
     expect(summary.totalHandoffs).toBeGreaterThan(0);
     expect(summary.liveModeAgents).toBeGreaterThan(0);
+  });
+
+  it("sets all catalog agents to working", async () => {
+    await resetAgentRuntimeStore();
+
+    await setAllAgentsToWorking({ lastTask: "Bulk demo — all agents working" });
+
+    const statuses = await listAgentRuntimeStatuses();
+    expect(statuses.length).toBe(flatAgentDefinitions.length);
+    for (const s of statuses) {
+      expect(s.status).toBe("working");
+      expect(s.lastTask).toContain("Bulk demo");
+    }
   });
 });

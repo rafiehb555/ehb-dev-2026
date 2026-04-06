@@ -41,6 +41,8 @@ export interface HighlightCard {
   description: string;
   icon: string;
   accentColor: string;
+  /** Internal route (e.g. /dashboard) — makes FeatureCard clickable */
+  href: string;
 }
 
 export interface InfoCard {
@@ -49,6 +51,22 @@ export interface InfoCard {
   description: string;
   accentClass: string;
   toneClass?: string;
+  href?: string;
+}
+
+export interface InvestorReasonCard {
+  title: string;
+  description: string;
+  href: string;
+}
+
+export interface PricingTierCard {
+  title: string;
+  subtitle: string;
+  description: string[];
+  accentClass: string;
+  toneClass: string;
+  href: string;
 }
 
 export interface LinkItem {
@@ -350,24 +368,28 @@ export const homepageContent = {
         description: "Offer your skills, complete jobs, and earn from local and global clients.",
         icon: "🧑‍💼",
         accentColor: "#22c55e",
+        href: "/dashboard",
       },
       {
         title: "Freelance Globally",
         description: "Work online in IT, design, marketing, and more from anywhere.",
         icon: "💻",
         accentColor: "#f59e0b",
+        href: "/jobs",
       },
       {
         title: "Sell Products",
         description: "List your products and sell to customers worldwide.",
         icon: "🛒",
         accentColor: "#3b82f6",
+        href: "/gosellr",
       },
       {
         title: "Become a Franchise Partner",
         description: "Manage your area and earn from every order in your region.",
         icon: "🏢",
         accentColor: "#e11d48",
+        href: "/franchise",
       },
     ] satisfies HighlightCard[],
     platformComparison: {
@@ -393,6 +415,7 @@ export const homepageContent = {
         description: "People from different countries can buy and sell services and products with one simple, verified EHB account.",
         badge: "Verified identity (PSS)",
         accentColor: "#00AEEF",
+        href: "/global",
       },
       {
         icon: "🧩",
@@ -400,6 +423,7 @@ export const homepageContent = {
         description: "From education and health to IT and logistics, EHB connects 32 industries so you don't need separate platforms.",
         badge: "700+ services",
         accentColor: "#22C55E",
+        href: "/industries",
       },
       {
         icon: "🛡️",
@@ -407,6 +431,7 @@ export const homepageContent = {
         description: "Strong verification checks help remove fake listings so users can trust that services and products are real.",
         badge: "DMO + PSS checks",
         accentColor: "#F59E0B",
+        href: "/verification",
       },
       {
         icon: "⛓️",
@@ -414,6 +439,7 @@ export const homepageContent = {
         description: "Franchise layers work like a secure network, so city, regional, and country partners can grow together with clear rules.",
         badge: "EHB-STL protected",
         accentColor: "#E53935",
+        href: "/blockchain-governance",
       },
     ],
     dmoOverviewCards: [
@@ -423,6 +449,7 @@ export const homepageContent = {
         description: "Handles live platform status, incidents, and quality checks so that services, jobs, and payments stay stable 24/7.",
         accentClass: "border-[#3b82f6]/40",
         toneClass: "text-[#3b82f6]",
+        href: "/dmo/home",
       },
       {
         title: "Data & Reporting",
@@ -430,6 +457,7 @@ export const homepageContent = {
         description: "Builds internal dashboards for users, orders, and franchise performance so leadership can take fast, data-backed decisions.",
         accentClass: "border-emerald-400/40",
         toneClass: "text-emerald-300",
+        href: "/dmo/analytics",
       },
       {
         title: "Content & Communication",
@@ -437,6 +465,7 @@ export const homepageContent = {
         description: "Manages platform text, announcements, and internal documentation so that every department follows the same clear language and rules.",
         accentClass: "border-amber-400/40",
         toneClass: "text-amber-300",
+        href: "/dmo/notifications",
       },
       {
         title: "Process Automation",
@@ -444,6 +473,7 @@ export const homepageContent = {
         description: "Designs digital workflows for onboarding, verification, ticketing, and approvals so work moves in a clean, trackable way.",
         accentClass: "border-violet-400/40",
         toneClass: "text-violet-200",
+        href: "/dmo/automation",
       },
       {
         title: "Training & Support",
@@ -451,6 +481,7 @@ export const homepageContent = {
         description: "Prepares training material, SOPs, and digital help centers for EHB teams, franchises, and support staff.",
         accentClass: "border-rose-400/40",
         toneClass: "text-rose-200",
+        href: "/dmo/queue",
       },
       {
         title: "Coordination with Other Departments",
@@ -458,6 +489,7 @@ export const homepageContent = {
         description: "Works together with Development, Admin, AI, Franchise, and Marketing departments so that every new feature is launched in an organized way.",
         accentClass: "border-sky-400/40",
         toneClass: "text-sky-200",
+        href: "/dmo",
       },
     ] satisfies InfoCard[],
     monetizationCards: [
@@ -467,6 +499,7 @@ export const homepageContent = {
         description: "Individuals and teams make money by completing jobs, selling services, and offering products in 32 industries.",
         accentClass: "border-[#3b82f6]/40",
         toneClass: "text-[#3b82f6]",
+        href: "/home",
       },
       {
         title: "Franchise earning",
@@ -474,6 +507,7 @@ export const homepageContent = {
         description: "City, regional, and country partners earn a share of all verified orders that pass through their zone.",
         accentClass: "border-[#22c55e]/40",
         toneClass: "text-[#22c55e]",
+        href: "/franchise",
       },
       {
         title: "Platform earning",
@@ -481,6 +515,7 @@ export const homepageContent = {
         description: "A low, transparent service fee is charged on successful orders, creating a scalable revenue engine.",
         accentClass: "border-amber-400/40",
         toneClass: "text-amber-300",
+        href: "/wallet",
       },
     ] satisfies InfoCard[],
     pricingTiers: [
@@ -494,6 +529,7 @@ export const homepageContent = {
         ],
         accentClass: "border-white/15",
         toneClass: "text-slate-200",
+        href: "/cart",
       },
       {
         title: "Free vs Premium (future-ready)",
@@ -506,6 +542,7 @@ export const homepageContent = {
         ],
         accentClass: "border-[#3b82f6]/40",
         toneClass: "text-[#3b82f6]",
+        href: "/dashboard",
       },
       {
         title: "EHBGC token vision",
@@ -518,8 +555,9 @@ export const homepageContent = {
         ],
         accentClass: "border-violet-400/40",
         toneClass: "text-violet-200",
+        href: "/blockchain-governance",
       },
-    ],
+    ] satisfies PricingTierCard[],
     earningsPotential: {
       userPoints: [
         "Earn $100 to $1000 per month by offering services or doing jobs.",
@@ -540,17 +578,20 @@ export const homepageContent = {
           title: "Sub Franchise",
           description: "Manage local city-level operations, onboard providers, and earn from every order in your zone.",
           color: "#3b82f6",
+          href: "/dmo/franchise/sub",
         },
         {
           title: "Master Franchise",
           description: "Control multiple cities or regions with higher earning potential and operational scope.",
           color: "#f59e0b",
           highlighted: true,
+          href: "/dmo/franchise/master",
         },
         {
           title: "Corporate Franchise",
           description: "National or country-level franchise with maximum earning power and ecosystem influence.",
           color: "#f97316",
+          href: "/dmo/franchise/corporate",
         },
       ],
     },
@@ -558,20 +599,24 @@ export const homepageContent = {
       {
         title: "Multi-industry platform",
         description: "32 industries under one roof reduce fragmentation and increase cross-selling potential.",
+        href: "/industries",
       },
       {
         title: "AI-driven ecosystem",
         description: "Matching, recommendations, and risk controls improve as more users and transactions flow through the system.",
+        href: "/ai-ecosystem",
       },
       {
         title: "Scalable franchise model",
         description: "City, regional, and country layers allow rapid geographic expansion with aligned incentives.",
+        href: "/dmo/franchise",
       },
       {
         title: "Global expansion potential",
         description: "The same core engine can serve multiple countries with localized providers and franchises.",
+        href: "/global",
       },
-    ],
+    ] satisfies InvestorReasonCard[],
     footer: {
       groups: [
         {

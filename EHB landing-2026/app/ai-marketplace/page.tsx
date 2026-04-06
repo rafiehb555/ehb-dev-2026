@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { getIndustryBySlug, INDUSTRIES } from "@/lib/industry/config";
 import { IndustryIcon } from "@/components/IndustryIcon";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
@@ -19,20 +18,23 @@ const TOOL_INFO: AiTool[] = [
   { title: "AI Travel Planner", arrowLine: "→ Smart trip planning", accent: "#0EA5E9", emoji: "✈️" },
 ];
 
+/** Shared asset until real product PNGs exist under public/images/ai-market/ */
+const PRODUCT_IMG_PLACEHOLDER = "/images/industries/shared/card.svg";
+
 const trendingProducts = [
-  { name: "CleanMaster AI", price: "$0.99", badge: "VIC", tier: "VIP", stars: 5, image: "/images/ai-market/cleanmaster-ai.png" },
-  { name: "SpeakEase Pro", price: "$5.59", badge: "COM", tier: "PRO", stars: 5, image: "/images/ai-market/speakease-pro.png" },
-  { name: "eGuard Home Security", price: "$5.99", badge: "HOME", tier: "Secure", stars: 4, image: "/images/ai-market/eguard-home-security.png" },
-  { name: "SmartFit Tracker HR", price: "$199", badge: "HEALTH", tier: "Wearable", stars: 5, image: "/images/ai-market/smartfit-tracker-hr.png" },
-  { name: "QuantumForge Laptop", price: "$899", badge: "VIE", tier: "Creator", stars: 5, image: "/images/ai-market/quantumforge-laptop.png" },
-  { name: "BrightSync Smart Light", price: "Free", badge: "IOT", tier: "Starter", stars: 4, image: "/images/ai-market/brightsync-smart-light.png" },
+  { name: "CleanMaster AI", price: "$0.99", badge: "VIC", tier: "VIP", stars: 5, image: PRODUCT_IMG_PLACEHOLDER },
+  { name: "SpeakEase Pro", price: "$5.59", badge: "COM", tier: "PRO", stars: 5, image: PRODUCT_IMG_PLACEHOLDER },
+  { name: "eGuard Home Security", price: "$5.99", badge: "HOME", tier: "Secure", stars: 4, image: PRODUCT_IMG_PLACEHOLDER },
+  { name: "SmartFit Tracker HR", price: "$199", badge: "HEALTH", tier: "Wearable", stars: 5, image: PRODUCT_IMG_PLACEHOLDER },
+  { name: "QuantumForge Laptop", price: "$899", badge: "VIE", tier: "Creator", stars: 5, image: PRODUCT_IMG_PLACEHOLDER },
+  { name: "BrightSync Smart Light", price: "Free", badge: "IOT", tier: "Starter", stars: 4, image: PRODUCT_IMG_PLACEHOLDER },
 ];
 
 const freeTools = [
-  { name: "AIChatBot Pro", tag: "Support", stars: 5, image: "/images/ai-market/aichatbot-pro.png" },
-  { name: "QuickNote AI", tag: "Workspace", stars: 5, image: "/images/ai-market/quicknote-ai.png" },
-  { name: "SecureTrans VPN", tag: "Security", stars: 4, image: "/images/ai-market/securetrans-vpn.png" },
-  { name: "DocVerify AI", tag: "Verification", stars: 5, image: "/images/ai-market/docverify-ai.png" },
+  { name: "AIChatBot Pro", tag: "Support", stars: 5, image: PRODUCT_IMG_PLACEHOLDER },
+  { name: "QuickNote AI", tag: "Workspace", stars: 5, image: PRODUCT_IMG_PLACEHOLDER },
+  { name: "SecureTrans VPN", tag: "Security", stars: 4, image: PRODUCT_IMG_PLACEHOLDER },
+  { name: "DocVerify AI", tag: "Verification", stars: 5, image: PRODUCT_IMG_PLACEHOLDER },
 ];
 
 export default function AIMarketplacePage({
@@ -299,7 +301,7 @@ export default function AIMarketplacePage({
                 <div className="relative aspect-square rounded-xl bg-[#020c1b]/80 border border-white/10 flex items-center justify-center overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.36),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(139,92,246,0.36),transparent_60%)] opacity-70 group-hover:opacity-90 transition-opacity" />
                   <div className="relative z-10 w-full h-full flex items-center justify-center p-3">
-                    <Image src={p.image} alt={p.name} width={120} height={120} className="object-contain w-full h-full" />
+                    <img src={p.image} alt="" width={120} height={120} className="object-contain w-full h-full max-h-[120px] opacity-90" />
                   </div>
                   <div className="absolute top-1.5 left-1.5 inline-flex items-center gap-1 rounded-full bg-[#020c1b]/90 border border-white/25 px-1.5 py-0.5 text-[9px] text-slate-100">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -359,7 +361,7 @@ export default function AIMarketplacePage({
                 <div className="relative aspect-square rounded-xl bg-[#020c1b]/80 border border-emerald-400/30 flex items-center justify-center overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(16,185,129,0.3),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(45,212,191,0.28),transparent_60%)] opacity-80 group-hover:opacity-95 transition-opacity" />
                   <div className="relative z-10 w-full h-full flex items-center justify-center p-3">
-                    <Image src={p.image} alt={p.name} width={120} height={120} className="object-contain w-full h-full" />
+                    <img src={p.image} alt="" width={120} height={120} className="object-contain w-full h-full max-h-[120px] opacity-90" />
                   </div>
                   <div className="absolute top-1.5 left-1.5 rounded-full bg-[#020c1b]/90 border border-white/25 px-1.5 py-0.5 text-[9px] text-emerald-100">
                     {p.tag}

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 interface FeatureCardProps {
@@ -34,14 +35,30 @@ export function FeatureCard({ title, description, icon, accentColor = "#00eaff",
         <h3 className="text-base md:text-lg font-semibold text-white">{title}</h3>
       </div>
       <p className="text-sm text-slate-400 flex-1">{description}</p>
+      {href ? (
+        <p className="mt-3 text-[11px] font-medium text-cyan-400/90 group-hover:text-cyan-300">Open →</p>
+      ) : null}
     </div>
   );
+
+  if (href?.startsWith("/")) {
+    return (
+      <Link
+        href={href}
+        className="group block will-change-transform hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(0,234,255,0.3)] rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#020c1b]"
+      >
+        {content}
+      </Link>
+    );
+  }
 
   if (href) {
     return (
       <a
         href={href}
-        className="block will-change-transform hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(0,234,255,0.3)]"
+        className="group block will-change-transform hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(0,234,255,0.3)] rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50"
+        rel="noopener noreferrer"
+        target="_blank"
       >
         {content}
       </a>
@@ -49,9 +66,8 @@ export function FeatureCard({ title, description, icon, accentColor = "#00eaff",
   }
 
   return (
-    <div className="will-change-transform hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(0,234,255,0.3)]">
+    <div className="will-change-transform hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(0,234,255,0.3)] rounded-2xl">
       {content}
     </div>
   );
 }
-

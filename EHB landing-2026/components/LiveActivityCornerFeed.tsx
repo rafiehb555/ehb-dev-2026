@@ -38,8 +38,8 @@ export function LiveActivityCornerFeed() {
         </span>
       </div>
 
-      <div className="relative px-4 pb-3">
-        <div key={index} className="absolute inset-0 flex items-center ticker-slide px-0">
+      <div className="relative px-4 pb-3 min-h-[44px]">
+        <div key={index} className="flex items-center ticker-slide px-0 py-0.5">
           <p className="text-[11px] text-slate-300 leading-relaxed">{EVENTS[index]}</p>
         </div>
       </div>

@@ -4,139 +4,139 @@
     "status": "working",
     "queueSize": 3,
     "healthScore": 91,
-    "lastTask": "Routing feature and deploy requests",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:39:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "product-roadmap-agent",
-    "status": "planning",
+    "status": "working",
     "queueSize": 2,
     "healthScore": 88,
-    "lastTask": "Sequencing multi-phase EHB features",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:37:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "user-flow-agent",
-    "status": "verifying",
+    "status": "working",
     "queueSize": 1,
     "healthScore": 90,
-    "lastTask": "Checking route and role impact",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:38:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "ui-design-system-agent",
-    "status": "idle",
-    "queueSize": 0,
+    "status": "working",
+    "queueSize": 1,
     "healthScore": 86,
-    "lastTask": "Waiting for reusable UI review",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:35:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "data-architecture-agent",
     "status": "working",
     "queueSize": 2,
     "healthScore": 92,
-    "lastTask": "Reviewing source-of-truth decisions",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:39:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "deploy-sync-ops-agent",
-    "status": "verifying",
+    "status": "working",
     "queueSize": 1,
     "healthScore": 94,
-    "lastTask": "Comparing local and deploy behavior",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:39:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "docs-knowledge-agent",
-    "status": "completed",
-    "queueSize": 0,
+    "status": "working",
+    "queueSize": 1,
     "healthScore": 89,
-    "lastTask": "Syncing docs with current agent system",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:33:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "admin-dmo-agent",
-    "status": "reading-context",
+    "status": "working",
     "queueSize": 1,
     "healthScore": 84,
-    "lastTask": "Inspecting admin and DMO structure",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:36:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "franchise-agent",
-    "status": "idle",
-    "queueSize": 0,
+    "status": "working",
+    "queueSize": 1,
     "healthScore": 83,
-    "lastTask": "Waiting for franchise workflow request",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:34:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "trust-systems-agent",
-    "status": "blocked",
+    "status": "working",
     "queueSize": 1,
     "healthScore": 72,
-    "lastTask": "Awaiting trust rule confirmation",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:32:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "agent-governance-risk-agent",
-    "status": "waiting-for-input",
+    "status": "working",
     "queueSize": 1,
     "healthScore": 80,
-    "lastTask": "Waiting for approval-sensitive decision",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:37:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "agent-observability-metrics-agent",
-    "status": "planning",
+    "status": "working",
     "queueSize": 1,
     "healthScore": 87,
-    "lastTask": "Designing useful status signals",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:37:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "integration-memory-agent",
     "status": "working",
     "queueSize": 1,
     "healthScore": 85,
-    "lastTask": "Recording reuse and continuity links",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:38:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   },
   {
     "agentId": "agent-ui-dashboard-agent",
-    "status": "completed",
-    "queueSize": 0,
+    "status": "working",
+    "queueSize": 1,
     "healthScore": 90,
-    "lastTask": "Preparing control-center UX layer",
+    "lastTask": "API bulk working test line here",
     "mode": "live",
-    "lastUpdatedAt": "2026-04-06T14:36:44.619Z",
-    "lastUpdatedLabel": "Updated 3h ago"
+    "lastUpdatedAt": "2026-04-06T18:44:58.111Z",
+    "lastUpdatedLabel": "Updated just now"
   }
 ]

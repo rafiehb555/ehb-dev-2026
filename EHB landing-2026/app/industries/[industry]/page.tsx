@@ -23,12 +23,12 @@ export default async function LegacyIndustryRoute({
   const asSlug = decoded.toLowerCase().replace(/\s+/g, "-");
 
   const direct = getIndustryBySlug(asSlug) ?? getIndustryBySlug(decoded);
-  if (direct) redirect(`/industry/${direct.slug}`);
+  if (direct) redirect(`/landing/${direct.slug}`);
 
   const legacy = LEGACY_TITLE_TO_SLUG[decoded.toLowerCase()];
   if (legacy) {
     const ind = getIndustryBySlug(legacy);
-    if (ind) redirect(`/industry/${ind.slug}`);
+    if (ind) redirect(`/landing/${ind.slug}`);
   }
 
   return (
@@ -42,7 +42,7 @@ export default async function LegacyIndustryRoute({
         <div className="glass-panel card-hover p-6 rounded-xl border border-white/10">
           <h1 className="text-xl font-semibold text-white">Industry not found</h1>
           <p className="text-slate-400 mt-2">
-            Use a URL like <code className="text-slate-300">/industry/health</code> or choose from the full list.
+            Use a URL like <code className="text-slate-300">/landing/health</code> or choose from the full list.
           </p>
           <Link href="/industries" className="inline-flex mt-4 text-sm font-medium text-[#00eaff] hover:underline">
             Browse all 32 industries →

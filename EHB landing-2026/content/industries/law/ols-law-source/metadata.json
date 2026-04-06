@@ -1,0 +1,5 @@
+{
+  "name": "Remix: Remix: EHB Law Services",
+  "description": "A modern AI-powered Legal Services Marketplace inspired by Microsoft Store design.",
+  "requestFramePermissions": ["geolocation", "microphone"]
+}

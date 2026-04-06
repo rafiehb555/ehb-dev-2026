@@ -1,22 +1,36 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
 import type { Industry } from "@/lib/industry/config";
 import { getIndustryDesignAssets } from "@/lib/industry/designAssets";
 
-/** Compact banner for Industry Home — shared or per-slug hero from designAssets. */
+/** Compact banner for Industry Home — image optional; gradient fallback if asset fails to load. */
 export function IndustryHomeBanner({ industry }: { industry: Industry }) {
   const accent = industry.accentColor;
   const assets = getIndustryDesignAssets(industry);
+  const [imgFailed, setImgFailed] = useState(false);
+  const showImg = assets.heroImage && !imgFailed;
 
   return (
-    <div className="relative w-full h-[120px] md:h-[140px] overflow-hidden rounded-2xl border border-white/10">
-      <Image
-        src={assets.heroImage}
-        alt={assets.alt}
-        fill
-        loading="lazy"
-        className="object-cover object-center opacity-95"
-        sizes="(max-width: 768px) 100vw, 896px"
-      />
+    <div className="relative w-full h-[120px] md:h-[140px] overflow-hidden rounded-2xl border border-white/10 bg-[#020c1b]">
+      {showImg ? (
+        <img
+          src={assets.heroImage}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-95"
+          loading="lazy"
+          decoding="async"
+          onError={() => setImgFailed(true)}
+        />
+      ) : (
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(110deg, ${accent}44 0%, #020c1b 55%, #0f172a 100%)`,
+          }}
+          aria-hidden
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-r from-[#020c1b]/95 via-[#020c1b]/65 to-transparent" />
       <div
         className="pointer-events-none absolute inset-0 opacity-25"
@@ -25,9 +39,9 @@ export function IndustryHomeBanner({ industry }: { industry: Industry }) {
       />
       <div className="relative z-10 px-4 py-4 md:px-6 md:py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
         <div>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-1">EHB marketplace</p>
-          <p className="text-sm md:text-base font-semibold text-white">{industry.heroTitle}</p>
-          <p className="text-[11px] text-slate-400 mt-1 max-w-2xl line-clamp-2">{industry.overview}</p>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-slate-300 mb-1">EHB marketplace</p>
+          <p className="text-sm md:text-base font-semibold text-white drop-shadow-sm">{industry.heroTitle}</p>
+          <p className="text-[11px] text-slate-300 mt-1 max-w-2xl line-clamp-2">{industry.overview}</p>
         </div>
       </div>
     </div>

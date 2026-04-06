@@ -692,6 +692,41 @@ export default function AgentControlClient(props: {
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
+              <Tooltip content="Sets every roster agent to Working + shared task (local runtime only)">
+                <span>
+                  <button
+                    type="button"
+                    disabled={actionBusy || runtimeRefreshing}
+                    className="min-h-touch inline-flex items-center justify-center gap-1.5 rounded-xl border border-emerald-400/35 bg-emerald-500/15 px-4 py-2 text-[11px] font-semibold text-emerald-100 hover:bg-emerald-500/25 disabled:opacity-50"
+                    onClick={() => {
+                      if (!window.confirm("Set ALL agents to Working on the dashboard? (Updates local runtime files.)")) return;
+                      const custom = window.prompt(
+                        "Optional: same Last task for every agent (3–200 chars). Leave empty for default text.",
+                        "",
+                      );
+                      const trimmed = custom?.trim() ?? "";
+                      setRuntimeToast(null);
+                      setActionBusy(true);
+                      void (async () => {
+                        try {
+                          await postAgentRuntime({
+                            action: "set-all-working",
+                            ...(trimmed.length >= 3 ? { lastTask: trimmed.slice(0, 200) } : {}),
+                          });
+                          setRuntimeToast({ type: "ok", text: "All agents set to Working." });
+                          await loadRuntime();
+                        } catch (e) {
+                          setRuntimeToast({ type: "err", text: e instanceof Error ? e.message : "Bulk update failed." });
+                        } finally {
+                          setActionBusy(false);
+                        }
+                      })();
+                    }}
+                  >
+                    Set all to Working
+                  </button>
+                </span>
+              </Tooltip>
               <Tooltip content="Restores seed data from the catalog (confirmation required)">
                 <span>
                   <button

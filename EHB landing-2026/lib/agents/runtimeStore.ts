@@ -457,3 +457,33 @@ export async function resetAgentRuntimeStore() {
   await writeSnapshot(snapshot);
   return readAgentRuntimeSnapshot();
 }
+
+/** Sets every catalog agent to `working` with a shared last-task line (dashboard / demo). */
+export async function setAllAgentsToWorking(args?: { lastTask?: string }) {
+  const snapshot = await readAgentRuntimeSnapshot();
+  const now = new Date().toISOString();
+  const task =
+    args?.lastTask && args.lastTask.trim().length >= 3
+      ? args.lastTask.trim().slice(0, 200)
+      : "Working — EHB development coordination (all agents)";
+  const byId = new Map(snapshot.statuses.map((s) => [s.agentId, s]));
+  const nextStatuses: AgentRuntimeStatus[] = flatAgentDefinitions.map((def) => {
+    const cur = byId.get(def.id);
+    return {
+      agentId: def.id,
+      status: "working" as const,
+      queueSize: cur ? Math.max(1, cur.queueSize) : 1,
+      healthScore: cur ? Math.min(100, Math.max(70, cur.healthScore)) : 85,
+      lastTask: task,
+      mode: "live" as const,
+      lastUpdatedAt: now,
+      lastUpdatedLabel: "Updated just now",
+    };
+  });
+  await writeSnapshot({
+    statuses: normalizeStatuses(nextStatuses),
+    history: snapshot.history,
+    handoffs: snapshot.handoffs,
+  });
+  return readAgentRuntimeSnapshot();
+}

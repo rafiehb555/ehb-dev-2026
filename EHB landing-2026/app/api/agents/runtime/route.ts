@@ -10,6 +10,7 @@ import {
   listAgentRuntimeHandoffs,
   listAgentRuntimeStatuses,
   resetAgentRuntimeStore,
+  setAllAgentsToWorking,
   updateAgentRuntimeStatus,
 } from "@/lib/agents/runtimeStore";
 import { requireSession } from "@/lib/rbac";
@@ -53,12 +54,18 @@ const ResetRuntimeSchema = z.object({
   action: z.literal("reset-runtime"),
 });
 
+const SetAllWorkingSchema = z.object({
+  action: z.literal("set-all-working"),
+  lastTask: z.string().min(3).max(200).optional(),
+});
+
 const RuntimeMutationSchema = z.discriminatedUnion("action", [
   UpdateStatusSchema,
   AppendHistorySchema,
   CreateHandoffSchema,
   CompleteHandoffSchema,
   ResetRuntimeSchema,
+  SetAllWorkingSchema,
 ]);
 
 export async function GET() {
@@ -119,6 +126,12 @@ export async function POST(req: Request) {
       case "reset-runtime": {
         const snapshot = await resetAgentRuntimeStore();
         return ok({ snapshot, message: "Agent runtime store reset to defaults." });
+      }
+      case "set-all-working": {
+        const snapshot = await setAllAgentsToWorking({
+          lastTask: payload.lastTask,
+        });
+        return ok({ snapshot, message: "All catalog agents set to working." });
       }
     }
   } catch (err) {

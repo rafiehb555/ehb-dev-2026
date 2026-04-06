@@ -126,8 +126,9 @@ function TrustBadgesCompact({ deptHint }: TrustBadgesCompactProps) {
 function ServiceCard({ title, seller, price, rating, tag, badge, deptHint }: ServiceCardProps) {
   const accent = getIndustryAccent(title);
   return (
-    <div
-      className="rounded-2xl glass-card card-hover border p-4 flex flex-col gap-2 transition-all duration-300"
+    <Link
+      href="/services"
+      className="block rounded-2xl glass-card card-hover border p-4 flex flex-col gap-2 transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/35"
       style={{
         borderColor: `${accent.color}2a`,
         boxShadow: "0 0 0 1px rgba(255,255,255,0.04) inset",
@@ -190,15 +191,17 @@ function ServiceCard({ title, seller, price, rating, tag, badge, deptHint }: Ser
           {deptHint ?? "PSS + EHB‑STL protected"}
         </p>
       </div>
-    </div>
+      <p className="text-[10px] font-medium text-cyan-400/80 mt-1">Browse services →</p>
+    </Link>
   );
 }
 
 function ProductCard({ title, price, rating, tag, badge, deptHint }: ProductCardProps) {
   const accent = getIndustryAccent(title);
   return (
-    <div
-      className="rounded-2xl glass-card card-hover border p-4 flex flex-col gap-2 transition-all duration-300"
+    <Link
+      href="/gosellr"
+      className="block rounded-2xl glass-card card-hover border p-4 flex flex-col gap-2 transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/35"
       style={{
         borderColor: `${accent.color}2a`,
         boxShadow: "0 0 0 1px rgba(255,255,255,0.04) inset",
@@ -260,7 +263,8 @@ function ProductCard({ title, price, rating, tag, badge, deptHint }: ProductCard
           {deptHint ?? "PSS + EHB‑STL protected"}
         </p>
       </div>
-    </div>
+      <p className="text-[10px] font-medium text-cyan-400/80 mt-1">Open GoSellr →</p>
+    </Link>
   );
 }
 

@@ -110,7 +110,7 @@ const HOW_IT_WORKS = [
   },
 ];
 
-/** Featured row — matches common marketing labels; links to real `/industry/:slug` routes. */
+/** Featured row — matches common marketing labels; links to `/landing/:slug` industry landings. */
 const HOME_INDUSTRY_CHIPS: { emoji: string; slug: string }[] = [
   { emoji: "🏥", slug: "health" },
   { emoji: "🎓", slug: "education" },
@@ -317,7 +317,7 @@ export default function HomePage() {
               return (
                 <Link
                   key={chip.slug}
-                  href={`/industry/${chip.slug}`}
+                  href={`/landing/${chip.slug}`}
                   className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/70 hover:bg-white/10 hover:text-white hover:border-[#00eaff]/40 transition-all"
                 >
                   {label}

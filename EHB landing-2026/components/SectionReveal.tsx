@@ -28,13 +28,18 @@ export function SectionReveal({ children, className = "", as: Tag = "section" }:
     return () => observer.disconnect();
   }, []);
 
+  /* Inline opacity/transform so sections stay usable if Tailwind CSS chunks fail to load (dev cache / blocked _next). */
   return (
     <Tag
       ref={ref as React.RefObject<HTMLDivElement>}
-      className={`transition-all duration-500 ease-out ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-      } ${className}`}
-      style={{ willChange: visible ? "auto" : "transform, opacity" }}
+      data-ehb-section-reveal=""
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(1.5rem)",
+        transition: "opacity 500ms ease, transform 500ms ease",
+        willChange: visible ? "auto" : "transform, opacity",
+      }}
     >
       {children}
     </Tag>

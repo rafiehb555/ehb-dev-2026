@@ -7,6 +7,10 @@ const nextConfig = {
     // In production, prefer a CDN + explicit remotePatterns before enabling optimization.
     unoptimized: true,
   },
+  experimental: {
+    // Tree-shake lucide-react per icon file — avoids missing ./vendor-chunks/lucide-react.js in dev/SSR.
+    optimizePackageImports: ["lucide-react"],
+  },
 };
 
 export default nextConfig;

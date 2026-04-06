@@ -1,11 +1,17 @@
 import "./globals.css";
 import type { ReactNode } from "react";
-import Image from "next/image";
 import { Sora } from "next/font/google";
 import { IndustriesBar } from "@/components/IndustriesBar";
 import { TopNavTabs } from "@/components/TopNavTabs";
 import { HeaderSearch } from "@/components/HeaderSearch";
 import { NotificationsBell } from "@/components/NotificationsBell";
+
+/** Ships with HTML so base theme applies even if `/_next/static/css/*.css` fails to load. */
+const EHB_CRITICAL_CSS = `
+html{-webkit-text-size-adjust:100%;background-color:#0a1929!important}
+body{margin:0;min-height:100vh;background-color:#0a1929!important;color:#e5e7eb;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+main{background:transparent!important}
+`;
 
 const sora = Sora({
   subsets: ["latin"],
@@ -28,6 +34,9 @@ export const viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`scroll-smooth ${sora.variable}`}>
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: EHB_CRITICAL_CSS }} />
+      </head>
       <body className="min-h-screen font-sans text-slate-100 antialiased text-readability">
         <div className="min-h-[100dvh] flex flex-col page-mesh relative">
           {/* Center shine – hero jaisi lighting beech mein */}
@@ -39,12 +48,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <div className="container-ehb py-3 flex items-center justify-between gap-3 flex-wrap">
               <a href="/" className="flex items-center gap-2 min-h-touch flex-shrink-0">
                 <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-slate-950/10 flex items-center justify-center flex-shrink-0 shadow-neon-electric ring-1 ring-white/20 overflow-hidden">
-                  <Image
+                  <img
                     src="/ehb-logo.png"
                     alt="EHB logo"
                     width={40}
                     height={40}
-                    className="object-contain"
+                    fetchPriority="high"
+                    className="object-contain h-full w-full"
                   />
                 </div>
                 <div className="hidden xs:block leading-tight">
