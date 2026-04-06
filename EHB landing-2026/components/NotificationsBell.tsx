@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type NotificationItem = {
@@ -7,6 +8,7 @@ type NotificationItem = {
   text: string;
   createdAt: number;
   read: boolean;
+  href?: string;
 };
 
 const RANDOM_NOTIFICATIONS: { text: string; readDefault?: boolean }[] = [
@@ -44,23 +46,31 @@ export function NotificationsBell() {
         const res = await fetch("/api/notifications", { cache: "no-store" });
         const json = await res.json();
         if (!cancelled && json.success) {
-          const next = (json.data as Array<{ id: string; title: string; message: string; time: string }>).map((item) => ({
+          const next = (
+            json.data as Array<{ id: string; title: string; message: string; time: string; href?: string }>
+          ).map((item) => ({
             id: item.id,
             text: `${item.title}: ${item.message}`,
             createdAt: new Date(item.time).getTime(),
             read: false,
+            href:
+              typeof item.href === "string" && item.href.startsWith("/") && !item.href.startsWith("//")
+                ? item.href
+                : undefined,
           }));
           setItems(next.slice(0, 10));
         }
       } catch {
-        if (!cancelled && items.length === 0) {
-          const pick = RANDOM_NOTIFICATIONS.slice(0, 3).map((item, index) => ({
-            id: `fallback-${index}`,
-            text: item.text,
-            createdAt: Date.now() - index * 1000 * 60 * 15,
-            read: false,
-          }));
-          setItems(pick);
+        if (!cancelled) {
+          setItems((prev) => {
+            if (prev.length > 0) return prev;
+            return RANDOM_NOTIFICATIONS.slice(0, 3).map((item, index) => ({
+              id: `fallback-${index}`,
+              text: item.text,
+              createdAt: Date.now() - index * 1000 * 60 * 15,
+              read: false,
+            }));
+          });
         }
       }
     }
@@ -74,7 +84,7 @@ export function NotificationsBell() {
       cancelled = true;
       window.clearInterval(id);
     };
-  }, [items.length]);
+  }, []);
 
   const markAllRead = () => {
     setItems((prev) => prev.map((i) => ({ ...i, read: true })));
@@ -128,19 +138,14 @@ export function NotificationsBell() {
               {items.length === 0 ? (
                 <p className="text-[12px] text-slate-400">No notifications.</p>
               ) : (
-                items.map((n) => (
-                  <button
-                    key={n.id}
-                    type="button"
-                    onClick={() => {
-                      setItems((prev) => prev.map((i) => (i.id === n.id ? { ...i, read: true } : i)));
-                    }}
-                    className="w-full text-left rounded-xl border border-white/5 bg-white/0 hover:bg-white/5 transition-colors px-3 py-2"
-                    aria-label={n.text}
-                  >
+                items.map((n) => {
+                  const markRead = () => {
+                    setItems((prev) => prev.map((i) => (i.id === n.id ? { ...i, read: true } : i)));
+                  };
+                  const inner = (
                     <div className="flex items-start gap-2">
                       <span
-                        className="mt-[2px] h-2 w-2 rounded-full"
+                        className="mt-[2px] h-2 w-2 rounded-full shrink-0"
                         style={{ backgroundColor: n.read ? "rgba(148,163,184,0.55)" : "rgba(244,63,94,0.95)" }}
                         aria-hidden
                       />
@@ -149,10 +154,42 @@ export function NotificationsBell() {
                           {n.text}
                         </p>
                         <p className="text-[10px] text-slate-500 mt-0.5">{timeAgo(n.createdAt)}</p>
+                        {n.href && (
+                          <p className="text-[10px] text-cyan-400/90 mt-1 font-medium">Open →</p>
+                        )}
                       </div>
                     </div>
-                  </button>
-                ))
+                  );
+                  const rowClass =
+                    "block w-full text-left rounded-xl border border-white/5 bg-white/0 hover:bg-white/5 transition-colors px-3 py-2";
+                  if (n.href) {
+                    return (
+                      <Link
+                        key={n.id}
+                        href={n.href}
+                        className={rowClass}
+                        aria-label={n.text}
+                        onClick={() => {
+                          markRead();
+                          setOpen(false);
+                        }}
+                      >
+                        {inner}
+                      </Link>
+                    );
+                  }
+                  return (
+                    <button
+                      key={n.id}
+                      type="button"
+                      onClick={markRead}
+                      className={rowClass}
+                      aria-label={n.text}
+                    >
+                      {inner}
+                    </button>
+                  );
+                })
               )}
             </div>
           </div>

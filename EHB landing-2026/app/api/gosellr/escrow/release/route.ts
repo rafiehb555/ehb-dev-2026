@@ -24,15 +24,14 @@ export async function POST(req: Request) {
 
     const updated = await db.order.update({
       where: { id: body.orderId },
-      data:  {
-        status:   "COMPLETED",
+      data: {
         metadata: {
-          ...(order.metadata as object ?? {}),
-          escrowHeld:     false,
+          ...((order.metadata as object) ?? {}),
+          escrowHeld: false,
           escrowReleasedAt: new Date().toISOString(),
           escrowReleaseReason: body.reason ?? "Manual release",
           releasedBy: auth.user.userId,
-        } as any,
+        } as object,
       },
     });
 

@@ -1,16 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { ok } from "@/lib/apiResponse";
 import { handleRouteError } from "@/lib/apiErrors";
+import { demoIndustriesFromConfig } from "@/lib/industry/demoIndustries";
 import { ListIndustriesQuerySchema } from "@/lib/industry/schemas";
-
-function demoIndustries() {
-  return [
-    { id: "industry-demo-1", name: "Construction", description: "Infrastructure, civil works, and field services.", sortOrder: 1 },
-    { id: "industry-demo-2", name: "Healthcare", description: "Medical, clinic, diagnostics, and care services.", sortOrder: 2 },
-    { id: "industry-demo-3", name: "Education", description: "Training, learning, and institutional services.", sortOrder: 3 },
-    { id: "industry-demo-4", name: "Technology", description: "Software, AI, cloud, and digital operations.", sortOrder: 4 },
-  ];
-}
 
 export async function GET(req: Request) {
   try {
@@ -24,9 +16,10 @@ export async function GET(req: Request) {
     const skip = q.skip ?? 0;
 
     if (!process.env.DATABASE_URL || process.env.NODE_ENV !== "production") {
-      const items = demoIndustries().slice(skip, skip + take);
+      const allDemo = demoIndustriesFromConfig();
+      const items = allDemo.slice(skip, skip + take);
       if (!process.env.DATABASE_URL) {
-        return ok({ items, total: demoIndustries().length, take, skip });
+        return ok({ items, total: allDemo.length, take, skip });
       }
     }
 
@@ -38,7 +31,7 @@ export async function GET(req: Request) {
     return ok({ items, total, take, skip });
   } catch (err) {
     if (process.env.NODE_ENV !== "production") {
-      const items = demoIndustries();
+      const items = demoIndustriesFromConfig();
       return ok({ items, total: items.length, take: items.length, skip: 0 });
     }
     return handleRouteError(err);

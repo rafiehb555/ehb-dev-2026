@@ -21,7 +21,7 @@ type OrderPayload = {
   viewer: {
     canExtendEscrow: boolean;
     canUpdateStatus: boolean;
-    actions: { markShipped: boolean; markDelivered: boolean; cancel: boolean };
+    actions: { pay: boolean; markShipped: boolean; markDelivered: boolean; cancel: boolean };
   };
   escrowTimeline: EscrowTimelineItem[];
 };
@@ -41,6 +41,8 @@ export default function OrderDetailPage() {
 
   const [statusBusy, setStatusBusy] = useState(false);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
+  const [payBusy, setPayBusy] = useState(false);
+  const [trackingInput, setTrackingInput] = useState("");
 
   const loadOrder = useCallback(async () => {
     if (!orderId) return;
@@ -91,14 +93,41 @@ export default function OrderDetailPage() {
     }
   };
 
+  const payNow = async () => {
+    setStatusMsg(null);
+    setPayBusy(true);
+    try {
+      const res = await fetch(`/api/marketplace/order/${orderId}/pay`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        setStatusMsg(json.error?.message ?? "Payment failed");
+        setPayBusy(false);
+        return;
+      }
+      setData(json.data);
+    } catch {
+      setStatusMsg("Network error");
+    } finally {
+      setPayBusy(false);
+    }
+  };
+
   const patchStatus = async (status: "SHIPPED" | "DELIVERED" | "CANCELLED") => {
     setStatusMsg(null);
     setStatusBusy(true);
     try {
+      const body: Record<string, unknown> = { status };
+      if (status === "SHIPPED" && trackingInput.trim()) {
+        body.trackingNumber = trackingInput.trim();
+      }
       const res = await fetch(`/api/marketplace/order/${orderId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify(body),
       });
       const json = await res.json();
       if (!res.ok || !json.success) {
@@ -190,15 +219,44 @@ export default function OrderDetailPage() {
               )}
             </div>
 
+            {data.viewer.actions.pay ? (
+              <div className="rounded-3xl border border-sky-500/25 bg-sky-500/5 p-5 space-y-3">
+                <p className="text-sm font-semibold text-sky-100">Payment</p>
+                <p className="text-[12px] text-slate-400">
+                  Demo wallet capture — moves order to <span className="text-white">PAID</span> so the seller can ship.
+                </p>
+                <button
+                  type="button"
+                  disabled={payBusy}
+                  onClick={payNow}
+                  className="rounded-full bg-sky-500/25 border border-sky-400/40 px-4 py-2 text-sm font-semibold text-sky-100 hover:bg-sky-500/35 disabled:opacity-50"
+                >
+                  {payBusy ? "Processing…" : "Pay with demo wallet"}
+                </button>
+              </div>
+            ) : null}
+
             {(data.viewer.actions.markShipped ||
               data.viewer.actions.markDelivered ||
               data.viewer.actions.cancel) && (
               <div className="rounded-3xl border border-emerald-500/25 bg-emerald-500/5 p-5 space-y-3">
                 <p className="text-sm font-semibold text-emerald-100">Fulfillment</p>
                 <p className="text-[12px] text-slate-400">
-                  Sellers update shipping; buyers can cancel while pending. Uses{" "}
+                  After payment, seller ships then delivers. Buyers can cancel while pending or paid. Uses{" "}
                   <code className="text-cyan-200/90">PATCH /api/marketplace/order/[id]</code>.
                 </p>
+                {data.viewer.actions.markShipped ? (
+                  <label className="block text-[12px] text-slate-400">
+                    Tracking (optional when marking shipped)
+                    <input
+                      value={trackingInput}
+                      onChange={(e) => setTrackingInput(e.target.value)}
+                      className="mt-1 block w-full rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-white text-sm"
+                      placeholder="Carrier / tracking ID"
+                      maxLength={120}
+                    />
+                  </label>
+                ) : null}
                 <div className="flex flex-wrap gap-2">
                   {data.viewer.actions.markShipped ? (
                     <button

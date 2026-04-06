@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-type Industry = { id: string; name: string; description: string | null };
+type Industry = { id: string; name: string; description: string | null; slug?: string };
 type Verification = {
   id: string;
   entityType: "SERVICE" | "PRODUCT" | "COMPANY";
@@ -188,10 +188,34 @@ export default function DmoIndustryPage() {
                 </select>
                 <input value={entityId} onChange={(e) => setEntityId(e.target.value)} placeholder="Entity ID (cuid)" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs" />
                 <select value={industryId} onChange={(e) => setIndustryId(e.target.value)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs">
-                  {industries.map((i) => <option key={i.id} value={i.id}>{i.name}</option>)}
+                  {industries.map((i) => (
+                    <option key={i.id} value={i.id}>
+                      {i.slug ? `${i.name} (${i.slug})` : i.name}
+                    </option>
+                  ))}
                 </select>
                 <input value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="Weight (0.1 - 5)" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs" />
               </div>
+              {(() => {
+                const sel = industries.find((i) => i.id === industryId);
+                if (!sel?.slug) return null;
+                return (
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-cyan-200/90">
+                    <span className="text-slate-500">EHB surfaces:</span>
+                    <Link className="hover:underline" href={`/landing/${sel.slug}`}>
+                      Landing
+                    </Link>
+                    <span className="text-slate-600">·</span>
+                    <Link className="hover:underline" href={`/industry/${sel.slug}`}>
+                      Industry home
+                    </Link>
+                    <span className="text-slate-600">·</span>
+                    <Link className="hover:underline" href={`/ai-marketplace?industry=${sel.slug}`}>
+                      AI marketplace
+                    </Link>
+                  </div>
+                );
+              })()}
               <div className="flex gap-2">
                 <button className="ehb-btn-primary ehb-press" onClick={() => void requestVerification()}>Request Verification</button>
               </div>

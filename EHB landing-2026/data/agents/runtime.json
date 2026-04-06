@@ -7,7 +7,7 @@
     "lastTask": "Routing feature and deploy requests",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:39:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "product-roadmap-agent",
@@ -17,7 +17,7 @@
     "lastTask": "Sequencing multi-phase EHB features",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:37:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "user-flow-agent",
@@ -27,7 +27,7 @@
     "lastTask": "Checking route and role impact",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:38:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "ui-design-system-agent",
@@ -37,7 +37,7 @@
     "lastTask": "Waiting for reusable UI review",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:35:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "data-architecture-agent",
@@ -47,7 +47,7 @@
     "lastTask": "Reviewing source-of-truth decisions",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:39:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "deploy-sync-ops-agent",
@@ -57,7 +57,7 @@
     "lastTask": "Comparing local and deploy behavior",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:39:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "docs-knowledge-agent",
@@ -67,7 +67,7 @@
     "lastTask": "Syncing docs with current agent system",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:33:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "admin-dmo-agent",
@@ -77,7 +77,7 @@
     "lastTask": "Inspecting admin and DMO structure",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:36:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "franchise-agent",
@@ -87,7 +87,7 @@
     "lastTask": "Waiting for franchise workflow request",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:34:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "trust-systems-agent",
@@ -97,7 +97,7 @@
     "lastTask": "Awaiting trust rule confirmation",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:32:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "agent-governance-risk-agent",
@@ -107,7 +107,7 @@
     "lastTask": "Waiting for approval-sensitive decision",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:37:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "agent-observability-metrics-agent",
@@ -117,7 +117,7 @@
     "lastTask": "Designing useful status signals",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:37:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "integration-memory-agent",
@@ -127,7 +127,7 @@
     "lastTask": "Recording reuse and continuity links",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:38:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   },
   {
     "agentId": "agent-ui-dashboard-agent",
@@ -137,6 +137,6 @@
     "lastTask": "Preparing control-center UX layer",
     "mode": "live",
     "lastUpdatedAt": "2026-04-06T14:36:44.619Z",
-    "lastUpdatedLabel": "Updated 2h ago"
+    "lastUpdatedLabel": "Updated 3h ago"
   }
 ]

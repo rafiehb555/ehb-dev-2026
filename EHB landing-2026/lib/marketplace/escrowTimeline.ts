@@ -30,6 +30,38 @@ export function buildEscrowTimeline(
     });
   }
 
+  if (typeof m.paymentCapturedAt === "string") {
+    const d = new Date(m.paymentCapturedAt);
+    if (!Number.isNaN(d.getTime())) {
+      items.push({
+        title: "Payment captured (demo wallet)",
+        at: iso(d),
+        note: typeof m.paymentMethod === "string" ? `Method: ${m.paymentMethod}` : undefined,
+      });
+    }
+  }
+
+  if (typeof m.shippedAt === "string") {
+    const d = new Date(m.shippedAt);
+    if (!Number.isNaN(d.getTime())) {
+      items.push({
+        title: "Marked shipped",
+        at: iso(d),
+        note: typeof m.trackingNumber === "string" ? `Tracking: ${m.trackingNumber}` : undefined,
+      });
+    }
+  }
+
+  if (typeof m.escrowReleasedAt === "string") {
+    const d = new Date(m.escrowReleasedAt);
+    if (!Number.isNaN(d.getTime())) {
+      items.push({
+        title: m.escrowAutoReleased === true ? "Escrow auto-released" : "Escrow released",
+        at: iso(d),
+      });
+    }
+  }
+
   if (typeof m.escrowRelease === "string") {
     const d = new Date(m.escrowRelease);
     if (!Number.isNaN(d.getTime())) {

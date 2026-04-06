@@ -9,6 +9,7 @@ import { STLLevelsAndSecurity } from "@/components/STLLevelsAndSecurity";
 import { AIToolsSection } from "@/components/AIToolsSection";
 import { RoadmapPhasesSection } from "@/components/RoadmapPhasesSection";
 import { IndustryAiPanel } from "@/components/industry/IndustryAiPanel";
+import { IndustryHomeBanner } from "@/components/industry/IndustryHomeBanner";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 
 interface PageProps {
@@ -112,6 +113,10 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
               </Link>
             </div>
           </section>
+        </SectionReveal>
+
+        <SectionReveal as="div">
+          <IndustryHomeBanner industry={industry} />
         </SectionReveal>
 
         {/* 2. Search + Filters */}

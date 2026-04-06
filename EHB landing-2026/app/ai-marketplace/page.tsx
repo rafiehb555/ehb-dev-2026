@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getIndustryBySlug } from "@/lib/industry/config";
+import { getIndustryBySlug, INDUSTRIES } from "@/lib/industry/config";
+import { IndustryIcon } from "@/components/IndustryIcon";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 
 type AiTool = {
@@ -387,37 +388,64 @@ export default function AIMarketplacePage({
           </div>
         </div>
 
-        {/* Essential Marketplace Items */}
+        {/* Industries — aligned with global config */}
         <div className="space-y-4 pb-6 md:pb-10">
-          <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
               <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
-                Everyday Ecosystem · 32+ Industries
+                Everyday Ecosystem · {INDUSTRIES.length} Industries
               </p>
-              <h2 className="text-lg md:text-xl font-semibold text-white">Essential Marketplace Items</h2>
+              <h2 className="text-lg md:text-xl font-semibold text-white">Browse by industry</h2>
+              <p className="text-[12px] text-slate-400 mt-1">
+                Open AI marketplace context for any vertical — same trust and wallet rules.
+              </p>
             </div>
+            <Link
+              href="/#industries"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-[11px] text-slate-200 hover:bg-white/5 shrink-0"
+            >
+              All industries on home
+              <span className="text-xs">↗</span>
+            </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
-            {["Daily Goods", "Electronics", "VR & Gaming", "Food & Beverage", "Health", "Education"].map(
-              (name) => (
-                <div
-                  key={name}
-                  className="group rounded-2xl glass-card card-interactive p-3.5 flex flex-col gap-2"
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            {INDUSTRIES.map((ind) => {
+              const params = new URLSearchParams();
+              params.set("industry", ind.slug);
+              if (selectedToolTitle) params.set("tool", selectedToolTitle);
+              if (selectedCountryCode) params.set("country", selectedCountryCode);
+              if (selectedStateCode) params.set("state", selectedStateCode);
+              if (selectedCityCode) params.set("city", selectedCityCode);
+              const qs = params.toString();
+              const href = qs ? `/ai-marketplace?${qs}#products` : `/ai-marketplace?industry=${ind.slug}#products`;
+              return (
+                <Link
+                  key={ind.slug}
+                  href={href}
+                  className="group rounded-2xl glass-card card-interactive p-3 flex flex-col gap-2 border transition-all duration-300 hover:-translate-y-0.5"
+                  style={{
+                    borderColor: `${ind.accentColor}35`,
+                    boxShadow: `0 0 20px ${ind.accentColor}12`,
+                  }}
                 >
-                  <div className="relative aspect-square rounded-xl bg-[#020c1b]/80 border border-white/12 flex items-center justify-center text-xl overflow-hidden">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(56,189,248,0.28),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(59,130,246,0.3),transparent_60%)] opacity-70 group-hover:opacity-90 transition-opacity" />
-                    <span className="relative z-10">📦</span>
+                  <div className="relative aspect-square rounded-xl bg-[#020c1b]/80 border border-white/10 flex items-center justify-center overflow-hidden">
+                    <div
+                      className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-opacity"
+                      style={{
+                        background: `radial-gradient(circle at 20% 0%, ${ind.accentColor}44, transparent 55%), radial-gradient(circle at 100% 100%, ${ind.accentColor}22, transparent 60%)`,
+                      }}
+                    />
+                    <span className="relative z-10">
+                      <IndustryIcon name={ind.icon} accentColor={ind.accentColor} size={28} />
+                    </span>
                   </div>
-                  <p className="text-xs font-medium text-white truncate">{name}</p>
-                  <button
-                    type="button"
-                    className="mt-1 inline-flex items-center justify-center rounded-xl border border-cyan-400/40 bg-cyan-500/10 text-cyan-200 text-[10px] font-medium py-1.5 hover:bg-cyan-500/20 transition-colors"
-                  >
-                    Browse category
-                  </button>
-                </div>
-              )
-            )}
+                  <p className="text-xs font-medium text-white line-clamp-2 leading-snug">{ind.shortName}</p>
+                  <span className="text-[10px] font-medium text-cyan-200/90 group-hover:underline">
+                    Shop with context →
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -5,7 +5,7 @@ import { fail, ok } from "@/lib/apiResponse";
 import { handleRouteError } from "@/lib/apiErrors";
 import { writeAuditLog } from "@/lib/audit";
 import { buildEscrowTimeline } from "@/lib/marketplace/escrowTimeline";
-import { buildOrderViewerPayload } from "@/lib/marketplace/orderViewer";
+import { buildOrderActions } from "@/lib/marketplace/orderPolicy";
 
 const PaySchema = z.object({
   idempotencyKey: z.string().max(120).optional(),
@@ -19,7 +19,13 @@ export async function POST(req: Request, ctx: { params: { orderId: string } }) {
   if (!auth.ok) return fail(auth.status, "AUTH", auth.error);
 
   try {
-    PaySchema.parse(await req.json().catch(() => ({})));
+    let raw: unknown = {};
+    try {
+      raw = await req.json();
+    } catch {
+      /* empty body */
+    }
+    PaySchema.parse(raw);
     const orderId = ctx.params.orderId;
     if (!orderId?.trim()) return fail(400, "VALIDATION", "orderId required");
 
@@ -70,9 +76,9 @@ export async function POST(req: Request, ctx: { params: { orderId: string } }) {
 
     const meta = (updated.metadata ?? null) as Record<string, unknown> | null;
     const escrowTimeline = buildEscrowTimeline(meta, updated.createdAt);
-    const payload = buildOrderViewerPayload(updated, uid, auth.user.role);
+    const viewer = buildOrderActions(uid, auth.user.role, updated);
 
-    return ok({ ...payload, escrowTimeline }, { status: 200 });
+    return ok({ order: updated, viewer, escrowTimeline }, { status: 200 });
   } catch (err) {
     return handleRouteError(err);
   }

@@ -4,6 +4,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import AIInsightCard from "@/components/AIInsightCard";
+import { IndustriesBrowseSection } from "@/components/dashboard/IndustriesBrowseSection";
 
 const LEVELS = [
   { name: "Beginner", minPoints: 0, maxPoints: 99 },
@@ -195,6 +196,8 @@ export default function DashboardPage() {
             </p>
           </div>
         </div>
+
+        <IndustriesBrowseSection />
 
         {/* Daily reward + notifications teaser */}
         <div className="grid gap-4 md:grid-cols-3">

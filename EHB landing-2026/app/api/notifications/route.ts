@@ -11,6 +11,8 @@ type NotificationItem = {
   type: NotificationType;
   time: string;
   nextAction?: string;
+  /** In-app path for deep-link (e.g. /orders/[id]) */
+  href?: string;
 };
 
 function fallbackNotifications(): NotificationItem[] {
@@ -47,7 +49,7 @@ export async function GET() {
   if (!process.env.DATABASE_URL) return ok(fallbackNotifications());
 
   try {
-    const [applications, logs, refills, fraudApps] = await Promise.all([
+    const [applications, logs, refills, fraudApps, marketplaceOrders] = await Promise.all([
       prisma.application.findMany({
         where: { applicantId: auth.user.userId },
         orderBy: { updatedAt: "desc" },
@@ -76,6 +78,21 @@ export async function GET() {
         take: 20,
         select: { id: true, type: true, riskScore: true, updatedAt: true, status: true },
       }),
+      prisma.order.findMany({
+        where: {
+          OR: [{ buyerId: auth.user.userId }, { sellerId: auth.user.userId }],
+        },
+        orderBy: { updatedAt: "desc" },
+        take: 25,
+        select: {
+          id: true,
+          status: true,
+          updatedAt: true,
+          buyerId: true,
+          sellerId: true,
+          product: { select: { name: true } },
+        },
+      }),
     ]);
 
     const items: NotificationItem[] = [];
@@ -90,6 +107,7 @@ export async function GET() {
         type,
         time: app.updatedAt.toISOString(),
         nextAction: actionFromType(type),
+        href: "/dmo/applications",
       });
     }
 
@@ -103,6 +121,7 @@ export async function GET() {
         type,
         time: log.createdAt.toISOString(),
         nextAction: change < 0 ? "Review latest verification and refill actions" : "Keep trust performance stable",
+        href: "/verification",
       });
     }
 
@@ -117,6 +136,7 @@ export async function GET() {
           type: "INFO",
           time: refill.dueDate.toISOString(),
           nextAction: "No action required",
+          href: "/dmo/refilling",
         });
         continue;
       }
@@ -131,6 +151,7 @@ export async function GET() {
         type,
         time: refill.dueDate.toISOString(),
         nextAction: type === "CRITICAL" ? "Complete refill now to avoid marketplace impact" : "Schedule refill completion",
+        href: "/dmo/refilling",
       });
     }
 
@@ -142,6 +163,54 @@ export async function GET() {
         type: "FRAUD_ALERT",
         time: app.updatedAt.toISOString(),
         nextAction: "Open DMO fraud queue or review your latest verification details",
+        href: "/dmo/fraud",
+      });
+    }
+
+    for (const ord of marketplaceOrders) {
+      const productName = ord.product?.name ?? "Product";
+      const roleSide = ord.buyerId === auth.user.userId ? "buyer" : "seller";
+      let title = "Marketplace order";
+      let message = `${productName} — ${ord.status}`;
+      let type: NotificationType = "INFO";
+      if (ord.status === "PENDING") {
+        title = roleSide === "buyer" ? "Payment pending" : "New order to fulfill";
+        message =
+          roleSide === "buyer"
+            ? `Complete payment for ${productName}.`
+            : `Buyer has not paid yet for ${productName}.`;
+        type = "WARNING";
+      } else if (ord.status === "PAID") {
+        title = roleSide === "buyer" ? "Payment received" : "Order paid — ready to ship";
+        message =
+          roleSide === "buyer"
+            ? `Payment captured for ${productName}.`
+            : `${productName} is paid — mark shipped when dispatched.`;
+        type = roleSide === "seller" ? "WARNING" : "INFO";
+      } else if (ord.status === "SHIPPED") {
+        title = "Order shipped";
+        message =
+          roleSide === "buyer"
+            ? `${productName} is on the way.`
+            : `You marked ${productName} as shipped.`;
+        type = "INFO";
+      } else if (ord.status === "DELIVERED") {
+        title = "Order delivered";
+        message = `${productName} — delivery completed.`;
+        type = "INFO";
+      } else if (ord.status === "CANCELLED") {
+        title = "Order cancelled";
+        message = `${productName} was cancelled.`;
+        type = "WARNING";
+      }
+      items.push({
+        id: `order-${ord.id}-${ord.status}`,
+        title,
+        message,
+        type,
+        time: ord.updatedAt.toISOString(),
+        nextAction: "View order details",
+        href: `/orders/${ord.id}`,
       });
     }
 

@@ -2,6 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
+import {
+  Activity,
+  Bot,
+  Briefcase,
+  HeartPulse,
+  Layers,
+  LayoutGrid,
+  PauseCircle,
+  Sparkles,
+} from "lucide-react";
 import { KpiCard } from "@/components/ui/KpiCard";
 import { RuntimeToast, type RuntimeToastPayload } from "@/components/ui/RuntimeToast";
 
@@ -87,6 +97,63 @@ function getAgentGroupMeta(group: AgentGroupKey) {
   } as const;
 
   return meta[group];
+}
+
+/** Distinct dashboard visuals per layer (routing / domain / advanced). */
+function getGroupVisual(group: AgentGroupKey) {
+  const meta = getAgentGroupMeta(group);
+  const map = {
+    core: {
+      ...meta,
+      panelWrap:
+        "border-cyan-500/30 bg-gradient-to-br from-cyan-950/35 via-slate-950/90 to-slate-950 shadow-[inset_0_1px_0_0_rgba(34,211,238,0.12)]",
+      cardShell:
+        "border-cyan-500/25 bg-gradient-to-br from-cyan-950/35 to-slate-950/90 hover:border-cyan-400/50 hover:shadow-[0_0_24px_-4px_rgba(34,211,238,0.35)]",
+      accentBar: "from-cyan-400 via-teal-400 to-emerald-500",
+      iconBg: "from-cyan-500/50 to-teal-600/30 border border-cyan-400/30",
+      Icon: Layers,
+    },
+    domain: {
+      ...meta,
+      panelWrap:
+        "border-violet-500/30 bg-gradient-to-br from-violet-950/40 via-slate-950/90 to-slate-950 shadow-[inset_0_1px_0_0_rgba(167,139,250,0.12)]",
+      cardShell:
+        "border-violet-500/25 bg-gradient-to-br from-violet-950/35 to-slate-950/90 hover:border-violet-400/50 hover:shadow-[0_0_24px_-4px_rgba(167,139,250,0.35)]",
+      accentBar: "from-violet-400 via-fuchsia-500 to-pink-500",
+      iconBg: "from-violet-500/50 to-fuchsia-600/30 border border-violet-400/30",
+      Icon: Briefcase,
+    },
+    advanced: {
+      ...meta,
+      panelWrap:
+        "border-amber-500/30 bg-gradient-to-br from-amber-950/35 via-slate-950/90 to-slate-950 shadow-[inset_0_1px_0_0_rgba(251,191,36,0.1)]",
+      cardShell:
+        "border-amber-500/25 bg-gradient-to-br from-amber-950/30 to-slate-950/90 hover:border-amber-400/50 hover:shadow-[0_0_24px_-4px_rgba(251,191,36,0.3)]",
+      accentBar: "from-amber-400 via-orange-500 to-rose-500",
+      iconBg: "from-amber-500/45 to-orange-600/30 border border-amber-400/30",
+      Icon: Sparkles,
+    },
+  } as const;
+  return map[group];
+}
+
+const BUSY_RUNTIME_STATUSES: ReadonlySet<AgentStatus> = new Set([
+  "working",
+  "planning",
+  "verifying",
+  "reading-context",
+]);
+
+function MiniProgressBar(props: { value: number; max: number; barClassName: string }) {
+  const pct = props.max > 0 ? Math.min(100, Math.round((props.value / props.max) * 100)) : 0;
+  return (
+    <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-800/90">
+      <div
+        className={`h-full rounded-full transition-all duration-500 ${props.barClassName}`}
+        style={{ width: `${pct}%` }}
+      />
+    </div>
+  );
 }
 
 const RUNTIME_STATUS_OPTIONS: AgentStatus[] = [
@@ -278,6 +345,17 @@ export default function AgentControlClient(props: {
 
   const latestHandoffs = useMemo(() => runtimeHandoffs.slice(0, 4), [runtimeHandoffs]);
 
+  const busyAgentsNow = useMemo(
+    () => runtimeStatuses.filter((s) => BUSY_RUNTIME_STATUSES.has(s.status)),
+    [runtimeStatuses],
+  );
+
+  const rosterTotal = props.dashboardSummary.totalAgents;
+  const busySharePct = useMemo(
+    () => (rosterTotal > 0 ? Math.min(100, Math.round((busyAgentsNow.length / rosterTotal) * 100)) : 0),
+    [busyAgentsNow.length, rosterTotal],
+  );
+
   const loadRuntime = useCallback(async () => {
     setRuntimeRefreshing(true);
     try {
@@ -316,63 +394,266 @@ export default function AgentControlClient(props: {
     <main className="min-h-screen text-slate-100" aria-busy={runtimeRefreshing || actionBusy}>
       <RuntimeToast toast={runtimeToast} onDismiss={dismissToast} />
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
-        <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Admin · Development Agents</p>
-            <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">EHB Agent Control Center</h1>
-            <p className="text-slate-300 max-w-3xl">
-              Runtime-backed dashboard for the current EHB development agent system with persistent local status, history, and handoff visibility.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Link href="/admin" className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-3 py-1.5 font-semibold text-white hover:shadow-neon-blue transition-all duration-200">
-              ← Back to Super Admin
-            </Link>
-            <Link href="/admin/development" className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow">
-              Open Release Center
-            </Link>
+        <header className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900/95 via-slate-950 to-slate-900 p-5 sm:p-6">
+          <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-cyan-500/15 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-10 left-1/4 h-32 w-32 rounded-full bg-violet-500/10 blur-3xl" />
+          <div className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            <div className="flex gap-4">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/40 to-blue-600/25 border border-cyan-400/20 shadow-lg">
+                <LayoutGrid className="h-7 w-7 text-cyan-100" aria-hidden />
+              </div>
+              <div className="space-y-1.5">
+                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-cyan-300/90">Admin · Agent roster</p>
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">Agent Control Center</h1>
+                <p className="max-w-2xl text-[12px] sm:text-[13px] leading-relaxed text-slate-400">
+                  Dashboard view: live runtime status, per-agent task, and health — stored locally for development (not production telemetry).
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href="/admin"
+                className="min-h-touch inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-[12px] font-semibold text-slate-100 hover:border-cyan-400/30 hover:bg-slate-800/80"
+              >
+                ← Super Admin
+              </Link>
+              <Link
+                href="/admin/development"
+                className="min-h-touch inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-[12px] font-semibold text-slate-950 shadow-md shadow-cyan-500/20"
+              >
+                Release center
+              </Link>
+            </div>
           </div>
         </header>
 
         <section className="grid gap-3 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
-          <KpiCard label="Development Agents" value={props.dashboardSummary.totalAgents} detail="Current documented roster" />
           <KpiCard
-            label="Runtime Active / Blocked"
-            value={runtimeSummary ? `${runtimeSummary.activeAgents} / ${runtimeSummary.blockedAgents}` : "Loading"}
-            detail={runtimeSummary ? `Waiting: ${runtimeSummary.waitingAgents} · Completed: ${runtimeSummary.completedAgents}` : "Reading persistent runtime store"}
+            label="Total agents"
+            value={props.dashboardSummary.totalAgents}
+            detail="Roster in catalog"
+            icon={<Bot className="text-slate-300" aria-hidden />}
           />
           <KpiCard
-            label="Core / Domain / Advanced"
+            label="Active / blocked"
+            value={runtimeSummary ? `${runtimeSummary.activeAgents} / ${runtimeSummary.blockedAgents}` : "—"}
+            detail={
+              runtimeSummary
+                ? `Waiting: ${runtimeSummary.waitingAgents} · Done: ${runtimeSummary.completedAgents}`
+                : "Loading runtime…"
+            }
+            icon={<Activity className="text-emerald-400/90" aria-hidden />}
+          />
+          <KpiCard
+            label="Layers · Core / Domain / Adv"
             value={`${props.dashboardSummary.coreAgents} / ${props.dashboardSummary.domainAgents} / ${props.dashboardSummary.advancedAgents}`}
-            detail="Structured operating layers"
+            detail="Different color sections below"
+            icon={<Layers className="text-cyan-400/80" aria-hidden />}
           />
           <KpiCard
-            label="Runtime Feed"
-            value={runtimeSummary ? `${runtimeSummary.liveModeAgents} live` : "Loading"}
+            label="Runtime feed"
+            value={runtimeSummary ? `${runtimeSummary.liveModeAgents} live` : "—"}
             detail={
               runtimeRefreshing && runtimeSummary
                 ? `Refreshing… · ${runtimeSummary.totalHandoffs} handoffs · ${runtimeSummary.totalHistoryEvents} events`
                 : runtimeSummary
                   ? `${runtimeSummary.totalHandoffs} handoffs · ${runtimeSummary.totalHistoryEvents} events`
-                  : `${props.dashboardSummary.sharedStatuses} shared statuses`
+                  : `${props.dashboardSummary.sharedStatuses} status labels`
             }
+            icon={<HeartPulse className="text-violet-400/80" aria-hidden />}
           />
         </section>
 
-        <section className="rounded-2xl glass-panel border border-cyan-500/20 p-4 sm:p-5">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
-            <div className="space-y-1">
-              <div className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">Guardrail</div>
-              <h2 className="text-sm sm:text-base font-semibold text-slate-100">Version 1 now uses a persistent local runtime store</h2>
-              <p className="text-slate-300 max-w-3xl">
-                The current dashboard reads from local agent runtime files and supports real status, history, and handoff actions for development use. It is still not external production telemetry.
-              </p>
+        <section className="rounded-2xl border border-emerald-500/25 bg-gradient-to-br from-emerald-950/30 via-slate-950/80 to-slate-950 p-4 sm:p-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start gap-3">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/40 to-cyan-600/30 border border-emerald-400/25">
+                <Activity className="h-5 w-5 text-emerald-200" aria-hidden />
+              </div>
+              <div>
+                <h2 className="text-sm font-semibold text-white">Who is busy right now</h2>
+                <p className="mt-0.5 text-[11px] text-slate-400">
+                  Agents in <span className="text-emerald-300/90">working / planning / verifying / reading</span> — with current task text from runtime.
+                </p>
+              </div>
             </div>
-            <div className="rounded-xl border border-white/10 bg-slate-950/40 px-3 py-2 text-[11px] text-slate-300">
-              Source: local runtime store + agent catalog
+            <div className="text-right text-[11px] tabular-nums text-slate-400">
+              <span className="text-lg font-semibold text-emerald-300">{busyAgentsNow.length}</span>
+              <span className="text-slate-500"> / {rosterTotal}</span>
+              <span className="block text-[10px] text-slate-500">share of roster “in motion”</span>
             </div>
           </div>
+          <div className="mt-4 space-y-1.5">
+            <div className="flex justify-between text-[10px] uppercase tracking-wide text-slate-500">
+              <span>Occupancy</span>
+              <span>{busySharePct}%</span>
+            </div>
+            <div className="h-2 w-full overflow-hidden rounded-full bg-slate-800/90">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500 transition-all duration-500"
+                style={{ width: `${busySharePct}%` }}
+              />
+            </div>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {busyAgentsNow.length === 0 ? (
+              <div className="flex items-center gap-2 rounded-xl border border-amber-400/25 bg-amber-500/10 px-3 py-2 text-[11px] text-amber-100">
+                <PauseCircle className="h-4 w-4 shrink-0 text-amber-300" aria-hidden />
+                <span>No agent is in an active working state right now (check runtime or update status below).</span>
+              </div>
+            ) : (
+              busyAgentsNow.map((s) => {
+                const sm = getAgentStatusMeta(s.status);
+                return (
+                  <Link
+                    key={s.agentId}
+                    href={`/admin/agents/${s.agentId}`}
+                    className="group flex max-w-full min-w-0 flex-col gap-1 rounded-xl border border-emerald-500/30 bg-slate-950/60 px-3 py-2 text-left transition-all hover:border-emerald-400/50 hover:bg-slate-900/80"
+                  >
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="relative flex h-2 w-2 shrink-0">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-40" />
+                        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                      </span>
+                      <span className="truncate font-mono text-[11px] font-semibold text-emerald-100 group-hover:text-white">
+                        {s.agentId}
+                      </span>
+                      <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium ${sm.className}`}>
+                        {sm.label}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-400 line-clamp-2">
+                      <span className="text-slate-500">Task: </span>
+                      {s.lastTask}
+                    </p>
+                  </Link>
+                );
+              })
+            )}
+          </div>
         </section>
+
+        <section className={`space-y-3 transition-opacity duration-200 ${runtimeRefreshing ? "opacity-60" : ""}`}>
+          {props.groups.map((group) => {
+            const firstAgent = group.agents[0];
+            const gv = getGroupVisual(firstAgent ? firstAgent.group : "core");
+            const GroupIcon = gv.Icon;
+            return (
+              <section
+                key={group.title}
+                className={`rounded-2xl border p-4 sm:p-5 ${gv.panelWrap}`}
+              >
+                <div className="mb-4 flex flex-wrap items-center gap-3">
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${gv.iconBg}`}>
+                    <GroupIcon className="h-5 w-5 text-white" aria-hidden />
+                  </div>
+                  <div>
+                    <h2 className="text-sm sm:text-base font-semibold text-slate-50">{group.title}</h2>
+                    <p className="text-[11px] text-slate-400">{group.detail}</p>
+                  </div>
+                </div>
+                <div className="grid gap-3 grid-cols-1 xl:grid-cols-2">
+                  {group.agents.map((agent) => {
+                    const runtime = runtimeStatusMap.get(agent.id);
+                    const statusMeta = runtime ? getAgentStatusMeta(runtime.status) : null;
+                    const gvis = getGroupVisual(agent.group);
+                    const busy = runtime ? BUSY_RUNTIME_STATUSES.has(runtime.status) : false;
+                    const CardIcon = gvis.Icon;
+
+                    return (
+                      <Link
+                        key={agent.id}
+                        href={`/admin/agents/${agent.id}`}
+                        className={`relative block overflow-hidden rounded-2xl border p-4 text-left transition-all duration-200 ${gvis.cardShell}`}
+                      >
+                        <div
+                          className={`absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b ${gvis.accentBar}`}
+                          aria-hidden
+                        />
+                        <div className="relative flex gap-3 pl-2">
+                          <div
+                            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gvis.iconBg}`}
+                          >
+                            <CardIcon className="h-6 w-6 text-white/95" aria-hidden />
+                          </div>
+                          <div className="min-w-0 flex-1 space-y-2">
+                            <div className="flex flex-wrap items-start justify-between gap-2">
+                              <div className="min-w-0">
+                                <h3 className="truncate font-mono text-[12px] sm:text-[13px] font-semibold text-slate-50">
+                                  {agent.id}
+                                </h3>
+                                <p className="text-[11px] text-slate-400">{agent.owner}</p>
+                              </div>
+                              <div className="flex flex-wrap items-center justify-end gap-1">
+                                {busy ? (
+                                  <span className="relative flex h-2 w-2">
+                                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50" />
+                                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                                  </span>
+                                ) : null}
+                                {statusMeta ? (
+                                  <span
+                                    className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium ${statusMeta.className}`}
+                                  >
+                                    {statusMeta.label}
+                                  </span>
+                                ) : null}
+                                {runtime ? (
+                                  <span className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-2 py-0.5 text-[10px] text-slate-300">
+                                    {runtime.mode}
+                                  </span>
+                                ) : null}
+                              </div>
+                            </div>
+                            <p className="line-clamp-2 text-[11px] leading-snug text-slate-300">{agent.summary}</p>
+                            {runtime ? (
+                              <div className="space-y-1.5">
+                                <div className="flex items-center justify-between text-[10px] text-slate-500">
+                                  <span className="flex items-center gap-1">
+                                    <HeartPulse className="h-3 w-3" aria-hidden />
+                                    Health
+                                  </span>
+                                  <span className="tabular-nums text-slate-300">{runtime.healthScore}%</span>
+                                </div>
+                                <MiniProgressBar
+                                  value={runtime.healthScore}
+                                  max={100}
+                                  barClassName="bg-gradient-to-r from-emerald-500 to-cyan-400"
+                                />
+                                <div className="grid grid-cols-2 gap-2 text-[10px] sm:grid-cols-3">
+                                  <div className="rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-slate-400">
+                                    Queue <span className="font-medium text-slate-100">{runtime.queueSize}</span>
+                                  </div>
+                                  <div className="rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-slate-400">
+                                    Updated <span className="font-medium text-slate-100">{runtime.lastUpdatedLabel}</span>
+                                  </div>
+                                  <div className="col-span-2 rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-slate-400 sm:col-span-1">
+                                    <span className="block text-[9px] uppercase tracking-wide text-slate-500">Current task</span>
+                                    <span className="line-clamp-2 text-[11px] text-slate-200">{runtime.lastTask}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            ) : (
+                              <p className="text-[11px] text-slate-500">No runtime row yet — open detail or use quick control.</p>
+                            )}
+                            <div className="flex items-center justify-between pt-1 text-[11px] text-cyan-300/90">
+                              <span className="text-slate-500">Open playbook →</span>
+                              <span className="font-medium">View</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </section>
+            );
+          })}
+        </section>
+
+        <p className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-[11px] text-slate-400">
+          <span className="font-medium text-slate-300">Note:</span> Status is stored in local runtime files for development; it reflects manual updates and seeds, not automatic AI execution.
+        </p>
 
         {runtimeError ? <section className="rounded-2xl border border-rose-400/20 bg-rose-500/10 p-4 text-rose-100">{runtimeError}</section> : null}
 
@@ -628,52 +909,6 @@ export default function AgentControlClient(props: {
               </div>
             ) : null}
           </Panel>
-        </section>
-
-        <section className={`space-y-3 transition-opacity duration-200 ${runtimeRefreshing ? "opacity-60" : ""}`}>
-          {props.groups.map((group) => (
-            <Panel key={group.title} title={group.title} subtitle={group.detail}>
-              <div className="grid gap-3 grid-cols-1 xl:grid-cols-2">
-                {group.agents.map((agent) => {
-                  const runtime = runtimeStatusMap.get(agent.id);
-                  const statusMeta = runtime ? getAgentStatusMeta(runtime.status) : null;
-                  const groupMeta = getAgentGroupMeta(agent.group);
-
-                  return (
-                    <Link
-                      key={agent.id}
-                      href={`/admin/agents/${agent.id}`}
-                      className={`block rounded-2xl border border-white/10 bg-slate-950/30 p-3 space-y-3 transition-all duration-200 ${groupMeta.borderClassName} hover:shadow-neon-blue`}
-                    >
-                      <div className="flex flex-wrap items-start justify-between gap-2">
-                        <div className="space-y-1">
-                          <h3 className="text-[12px] sm:text-[13px] font-semibold text-slate-100">{agent.id}</h3>
-                          <p className="text-[11px] text-slate-400">{agent.owner}</p>
-                        </div>
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium ${groupMeta.badgeClassName}`}>{groupMeta.badgeLabel}</span>
-                          {statusMeta ? <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium ${statusMeta.className}`}>{statusMeta.label}</span> : null}
-                          {runtime ? <span className="inline-flex items-center rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-200">{runtime.mode.toUpperCase()}</span> : null}
-                        </div>
-                      </div>
-                      <p className="text-slate-300">{agent.summary}</p>
-                      {runtime ? (
-                        <div className="grid gap-2 sm:grid-cols-3 text-[11px]">
-                          <div className="rounded-xl border border-white/10 bg-slate-950/30 p-2 text-slate-300">Queue: <span className="font-medium text-slate-100">{runtime.queueSize}</span></div>
-                          <div className="rounded-xl border border-white/10 bg-slate-950/30 p-2 text-slate-300">Health: <span className="font-medium text-slate-100">{runtime.healthScore}%</span></div>
-                          <div className="rounded-xl border border-white/10 bg-slate-950/30 p-2 text-slate-300">Update: <span className="font-medium text-slate-100">{runtime.lastUpdatedLabel}</span></div>
-                        </div>
-                      ) : null}
-                      <div className="flex flex-wrap items-center justify-between gap-2 text-[11px]">
-                        <span className="text-slate-400">{runtime ? runtime.lastTask : "Default flow starts with orchestration and verification."}</span>
-                        <span className="font-medium text-cyan-300">Open detail view →</span>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            </Panel>
-          ))}
         </section>
 
         <section className="grid gap-3 grid-cols-1 xl:grid-cols-2">

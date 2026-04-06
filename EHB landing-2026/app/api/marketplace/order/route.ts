@@ -6,6 +6,7 @@ import { MarketplaceOrderSchema } from "@/lib/marketplace/schemas";
 import { writeAuditLog } from "@/lib/audit";
 import { syncApplicationRisk } from "@/lib/fraud/orchestration";
 import { resolveGosellrProduct } from "@/lib/marketplace/gosellrProductSync";
+import { DEFAULT_ESCROW_DAYS } from "@/lib/marketplace/escrowConstants";
 
 export async function POST(req: Request) {
   const auth = await requireSession(["USER", "FRANCHISE", "ADMIN", "SUPER_ADMIN"]);
@@ -20,6 +21,9 @@ export async function POST(req: Request) {
       const qty = body.quantity ?? 1;
       if (product.stock < qty) return fail(409, "OUT_OF_STOCK", "Insufficient stock");
 
+      const escrowRelease = new Date(
+        Date.now() + DEFAULT_ESCROW_DAYS * 24 * 60 * 60 * 1000
+      ).toISOString();
       const order = await prisma.order.create({
         data: {
           buyerId: auth.user.userId,
@@ -28,6 +32,11 @@ export async function POST(req: Request) {
           quantity: qty,
           price: product.price,
           status: "PENDING",
+          metadata: {
+            escrowHeld: true,
+            escrowRelease,
+            escrowPolicyDays: DEFAULT_ESCROW_DAYS,
+          },
         },
       });
 

@@ -25,7 +25,6 @@ export const ZIP_SOURCES_BY_SLUG: Record<string, string[]> = {
   freelancing: ["jps (1).zip"],
   consulting: ["emo---easy-management-office-engine.zip"],
   blockchain: ["EHB Blockchain.drawio", "ehbgc-validator-portal.zip"],
-  government: ["dmo-foundation---phase-1 (1).zip"],
 };
 
 export const DRIVE_UI_UX_PATHS = [
