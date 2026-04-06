@@ -373,9 +373,9 @@ const FEATURES = [
   { emoji: "🤝", title: "Franchise System", titleUr: "Business Expansion", desc: "10 types of franchise plans — from Rs 10,000 to Rs 10 Crore. Earn passive income while we manage operations.", descUr: "Earn from anywhere while we handle the operations.", color: "from-orange-500 to-amber-400", href: "/franchise", cta: "Explore Franchise →" },
   { emoji: "🛒", title: "GoSellr E-Commerce", titleUr: "Smart Online Selling", desc: "Sell anything online — products, services, digital goods. AI-powered store with 100M+ potential buyers.", descUr: "Launch your online store and reach millions of buyers.", color: "from-blue-500 to-cyan-400", href: "/gosellr", cta: "Start Selling →" },
   { emoji: "💼", title: "Jobs Portal", titleUr: "Career Network", desc: "AI matches your skills to perfect jobs. Employers find best talent. Pakistan's smartest job network.", descUr: "Find better jobs faster with AI-powered matching.", color: "from-green-500 to-emerald-400", href: "/jobs", cta: "Find Jobs →" },
-  { emoji: "🏥", title: "Health Services", titleUr: "Digital Healthcare", desc: "Book doctors, order medicines, manage health records. Quality healthcare at your fingertips.", descUr: "Consult doctors from home and manage care online.", color: "from-pink-500 to-rose-400", href: "/health", cta: "Book a Doctor →" },
+  { emoji: "🏥", title: "Health Services", titleUr: "Digital Healthcare", desc: "Book doctors, order medicines, manage health records. Quality healthcare at your fingertips.", descUr: "Consult doctors from home and manage care online.", color: "from-pink-500 to-rose-400", href: "/industry/health", cta: "Book a Doctor →" },
   { emoji: "🤖", title: "AI Marketplace", titleUr: "AI Tools Hub", desc: "100+ AI tools for writing, coding, design, and more. Pakistan's first AI superstore.", descUr: "Access 100+ AI tools for work, growth, and creativity.", color: "from-violet-500 to-purple-400", href: "/ai-marketplace", cta: "Browse AI Tools →" },
-  { emoji: "🎓", title: "Education Platform", titleUr: "Learning Platform", desc: "Learn skills, earn certificates, build career. Courses in Urdu + English for every background.", descUr: "Build practical skills, earn certificates, and grow your career.", color: "from-yellow-500 to-orange-400", href: "/education", cta: "Start Learning →" },
+  { emoji: "🎓", title: "Education Platform", titleUr: "Learning Platform", desc: "Learn skills, earn certificates, build career. Courses in Urdu + English for every background.", descUr: "Build practical skills, earn certificates, and grow your career.", color: "from-yellow-500 to-orange-400", href: "/industry/education", cta: "Start Learning →" },
 ];
 
 const STATS = [
@@ -473,13 +473,13 @@ export default function LandingPage() {
             {/* CTA buttons */}
             <div className="flex flex-wrap gap-4 mb-10">
               <a
-                href="/home"
+                href="/#industries"
                 className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black px-8 py-4 rounded-2xl text-base transition-all hover:scale-105 shadow-2xl shadow-cyan-500/25"
               >
                 🚀 Explore Industries
               </a>
               <a
-                href="/home"
+                href="/dashboard"
                 className="bg-white/8 hover:bg-white/14 border border-white/20 text-white font-bold px-8 py-4 rounded-2xl text-base transition-all hover:scale-105"
               >
                 👤 Create Profile
@@ -645,7 +645,7 @@ export default function LandingPage() {
             Free registration — no credit card needed. Join 1M+ users already growing with EHB.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="/home" className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:opacity-90 text-white font-black px-12 py-5 rounded-2xl text-xl transition-all hover:scale-105 shadow-2xl shadow-cyan-500/30">
+            <a href="/dashboard" className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:opacity-90 text-white font-black px-12 py-5 rounded-2xl text-xl transition-all hover:scale-105 shadow-2xl shadow-cyan-500/30">
               🆓 Register for Free
             </a>
             <a href="/franchise" className="bg-white/10 hover:bg-white/15 border-2 border-white/20 text-white font-bold px-10 py-5 rounded-2xl text-xl transition-all hover:scale-105">

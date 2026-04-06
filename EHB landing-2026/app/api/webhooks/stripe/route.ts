@@ -1,10 +1,19 @@
 import { NextResponse } from "next/server";
-import type Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { getStripe } from "@/lib/stripe";
 import { writeAuditLog } from "@/lib/audit";
 
 export const runtime = "nodejs";
+
+/** Narrow shape from Stripe `checkout.session.completed` payload (avoids brittle namespace imports). */
+type StripeCheckoutSessionPayload = {
+  id: string;
+  client_reference_id?: string | null;
+  metadata?: Record<string, string | undefined> | null;
+  payment_status?: string | null;
+  amount_total?: number | null;
+  payment_intent?: string | { id?: string } | null;
+};
 
 /**
  * Stripe webhook: verify signature, idempotent by event id, mark order PAID on checkout.session.completed.
@@ -19,10 +28,10 @@ export async function POST(req: Request) {
   const sig = req.headers.get("stripe-signature");
   if (!sig) return NextResponse.json({ error: "Missing stripe-signature" }, { status: 400 });
 
-  let event: Stripe.Event;
+  let event: { id: string; type: string; data: { object: StripeCheckoutSessionPayload } };
   try {
     const raw = await req.text();
-    event = stripe.webhooks.constructEvent(raw, sig, whSecret);
+    event = stripe.webhooks.constructEvent(raw, sig, whSecret) as typeof event;
   } catch {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
@@ -41,7 +50,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ received: true, ignored: true });
   }
 
-  const session = event.data.object as Stripe.Checkout.Session;
+  const session = event.data.object;
   const orderId = session.client_reference_id ?? session.metadata?.orderId;
   if (!orderId || typeof orderId !== "string") {
     await prisma.processedStripeEvent.create({

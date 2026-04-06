@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Bell } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { broadcastNotificationReadUpdate, subscribeNotificationReadUpdate } from "@/lib/notificationsReadBroadcast";
 import {
@@ -29,6 +30,7 @@ const RANDOM_NOTIFICATIONS: { text: string; readDefault?: boolean }[] = [
 export function NotificationsBell() {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<NotificationItem[]>([]);
+  const [notifLoading, setNotifLoading] = useState(true);
   const readIdsRef = useRef<Set<string>>(new Set());
 
   const unreadCount = useMemo(() => items.filter((n) => !n.read).length, [items]);
@@ -43,6 +45,15 @@ export function NotificationsBell() {
     };
     document.addEventListener("mousedown", onDown);
     return () => document.removeEventListener("mousedown", onDown);
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
   useEffect(() => {
@@ -82,6 +93,8 @@ export function NotificationsBell() {
             }));
           });
         }
+      } finally {
+        if (!cancelled) setNotifLoading(false);
       }
     }
 
@@ -147,10 +160,12 @@ export function NotificationsBell() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="relative inline-flex items-center justify-center rounded-full h-7 w-7 text-xs text-slate-200 hover:bg-white/5 transition-colors"
+        className="relative inline-flex items-center justify-center rounded-full h-7 w-7 text-xs text-slate-200 hover:bg-white/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+        aria-expanded={open}
+        aria-haspopup="dialog"
         aria-label={bellAria}
       >
-        <span aria-hidden>🔔</span>
+        <Bell className="h-3.5 w-3.5 text-slate-200" strokeWidth={2} aria-hidden />
         {unreadCount > 0 && (
           <span className="absolute -top-0.5 -right-0.5 h-3.5 min-w-[14px] px-[3px] rounded-full bg-rose-500 text-[9px] font-semibold text-white flex items-center justify-center">
             {Math.min(99, unreadCount)}
@@ -159,7 +174,11 @@ export function NotificationsBell() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-9 w-[320px] max-w-[calc(100vw-24px)] z-[70]">
+        <div
+          className="absolute right-0 top-9 w-[320px] max-w-[calc(100vw-24px)] z-[70]"
+          role="dialog"
+          aria-label="Notifications"
+        >
           <div className="rounded-2xl glass-panel border border-white/10 bg-slate-950/85 backdrop-blur p-3 shadow-[0_0_42px_rgba(0,234,255,0.12)]">
             <div className="flex items-start justify-between gap-3 mb-2">
               <div>
@@ -176,8 +195,14 @@ export function NotificationsBell() {
             </div>
 
             <div className="max-h-[260px] overflow-auto pr-1 space-y-2">
-              {items.length === 0 ? (
-                <p className="text-[12px] text-slate-400">No notifications.</p>
+              {notifLoading ? (
+                <div className="space-y-2 animate-pulse" aria-hidden>
+                  {[0, 1, 2].map((i) => (
+                    <div key={i} className="h-14 rounded-xl bg-white/[0.06] border border-white/5" />
+                  ))}
+                </div>
+              ) : items.length === 0 ? (
+                <p className="text-[12px] text-slate-400 py-2">You&apos;re all caught up.</p>
               ) : (
                 items.map((n) => {
                   const inner = (

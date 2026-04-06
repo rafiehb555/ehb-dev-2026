@@ -101,8 +101,8 @@ export async function POST(req: Request, ctx: { params: { orderId: string } }) {
           success_url: `${base}/orders/${order.id}?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${base}/orders/${order.id}?cancelled=1`,
           metadata: {
-            orderId: order.id,
-            buyerId: order.buyerId,
+            orderId: String(order.id),
+            buyerId: String(order.buyerId),
           },
           line_items: [
             {

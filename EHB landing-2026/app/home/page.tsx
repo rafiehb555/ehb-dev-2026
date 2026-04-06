@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import AIInsightCard from "@/components/AIInsightCard";
+import { INDUSTRIES } from "@/lib/industry/config";
 
 // ═══════════════════════════════════════════════════════
 //  EHB HOME PAGE — Central Hub
@@ -109,10 +110,20 @@ const HOW_IT_WORKS = [
   },
 ];
 
-const INDUSTRIES = [
-  "🏥 Health", "🎓 Education", "💼 Business", "🏗️ Construction",
-  "🌾 Agriculture", "🚗 Auto", "✈️ Travel", "🍔 Food",
-  "🏦 Finance", "⚖️ Legal", "🏡 Real Estate", "🎭 Media",
+/** Featured row — matches common marketing labels; links to real `/industry/:slug` routes. */
+const HOME_INDUSTRY_CHIPS: { emoji: string; slug: string }[] = [
+  { emoji: "🏥", slug: "health" },
+  { emoji: "🎓", slug: "education" },
+  { emoji: "💼", slug: "consulting" },
+  { emoji: "🏗️", slug: "construction" },
+  { emoji: "🌾", slug: "agriculture" },
+  { emoji: "🚗", slug: "automotive" },
+  { emoji: "✈️", slug: "travel" },
+  { emoji: "🍔", slug: "hospitality" },
+  { emoji: "🏦", slug: "finance" },
+  { emoji: "⚖️", slug: "law" },
+  { emoji: "🏡", slug: "real-estate" },
+  { emoji: "🎭", slug: "entertainment" },
 ];
 
 export default function HomePage() {
@@ -295,16 +306,27 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-wrap gap-3 justify-center">
-            {(showAll ? INDUSTRIES : INDUSTRIES.slice(0, 8)).map((ind) => (
-              <div
-                key={ind}
-                className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/70 hover:bg-white/10 hover:text-white transition-all"
-              >
-                {ind}
-              </div>
-            ))}
+            {(showAll ? HOME_INDUSTRY_CHIPS.concat(
+              INDUSTRIES.filter((i) => !HOME_INDUSTRY_CHIPS.some((c) => c.slug === i.slug)).map((i) => ({
+                emoji: "🏭",
+                slug: i.slug,
+              })),
+            ) : HOME_INDUSTRY_CHIPS.slice(0, 8)).map((chip) => {
+              const meta = INDUSTRIES.find((i) => i.slug === chip.slug);
+              const label = meta ? `${chip.emoji} ${meta.shortName}` : chip.slug;
+              return (
+                <Link
+                  key={chip.slug}
+                  href={`/industry/${chip.slug}`}
+                  className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/70 hover:bg-white/10 hover:text-white hover:border-[#00eaff]/40 transition-all"
+                >
+                  {label}
+                </Link>
+              );
+            })}
             {!showAll && (
               <button
+                type="button"
                 onClick={() => setShowAll(true)}
                 className="px-4 py-2 rounded-full bg-purple-500/20 border border-purple-400/30 text-sm text-purple-300 hover:bg-purple-500/30 transition-all"
               >
@@ -312,6 +334,11 @@ export default function HomePage() {
               </button>
             )}
           </div>
+          <p className="text-center mt-4">
+            <Link href="/industries" className="text-xs text-[#00eaff] hover:underline font-medium">
+              Open full industries directory →
+            </Link>
+          </p>
         </div>
       </section>
 

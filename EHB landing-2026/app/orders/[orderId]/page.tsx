@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 type EscrowTimelineItem = { title: string; at: string; note?: string };
 
@@ -26,6 +27,44 @@ type OrderPayload = {
   escrowTimeline: EscrowTimelineItem[];
 };
 
+function orderStatusBadgeClass(status: string): string {
+  switch (status) {
+    case "PENDING":
+      return "bg-amber-500/20 text-amber-100 border-amber-400/35";
+    case "PAID":
+      return "bg-sky-500/20 text-sky-100 border-sky-400/35";
+    case "SHIPPED":
+      return "bg-indigo-500/20 text-indigo-100 border-indigo-400/35";
+    case "DELIVERED":
+      return "bg-emerald-500/20 text-emerald-100 border-emerald-400/35";
+    case "CANCELLED":
+      return "bg-rose-500/15 text-rose-100 border-rose-400/35";
+    default:
+      return "bg-white/10 text-slate-200 border-white/15";
+  }
+}
+
+function OrderDetailSkeleton() {
+  return (
+    <div className="space-y-6 animate-pulse" aria-hidden>
+      <div className="space-y-2">
+        <div className="h-3 w-24 rounded bg-white/10" />
+        <div className="h-8 w-3/4 max-w-md rounded bg-white/15" />
+        <div className="h-3 w-full max-w-sm rounded bg-white/10" />
+      </div>
+      <div className="glass-card rounded-3xl border border-white/10 p-5 space-y-4">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="flex justify-between gap-3">
+            <div className="h-4 w-20 rounded bg-white/10" />
+            <div className="h-4 w-24 rounded bg-white/15" />
+          </div>
+        ))}
+      </div>
+      <div className="h-32 rounded-3xl bg-white/5 border border-white/10" />
+    </div>
+  );
+}
+
 export default function OrderDetailPage() {
   const params = useParams();
   const orderId = typeof params?.orderId === "string" ? params.orderId : "";
@@ -33,6 +72,7 @@ export default function OrderDetailPage() {
   const [data, setData] = useState<OrderPayload | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const [extraDays, setExtraDays] = useState(3);
   const [reason, setReason] = useState("Dispute review");
@@ -44,12 +84,14 @@ export default function OrderDetailPage() {
   const [payBusy, setPayBusy] = useState(false);
   const [stripeCheckout, setStripeCheckout] = useState(false);
   const [stripeReturnPending, setStripeReturnPending] = useState(false);
-  const stripePollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [checkoutCancelledBanner, setCheckoutCancelledBanner] = useState(false);
+  const stripePollRef = useRef<number | null>(null);
   const [trackingInput, setTrackingInput] = useState("");
 
-  const loadOrder = useCallback(async () => {
+  const loadOrder = useCallback(async (opts?: { silent?: boolean }) => {
     if (!orderId) return;
-    setLoading(true);
+    if (opts?.silent) setRefreshing(true);
+    else setLoading(true);
     try {
       const res = await fetch(`/api/marketplace/order/${orderId}`, { cache: "no-store" });
       const json = await res.json();
@@ -64,7 +106,8 @@ export default function OrderDetailPage() {
       setErr("Network error");
       setData(null);
     } finally {
-      setLoading(false);
+      if (opts?.silent) setRefreshing(false);
+      else setLoading(false);
     }
   }, [orderId]);
 
@@ -83,13 +126,20 @@ export default function OrderDetailPage() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const sid = new URLSearchParams(window.location.search).get("session_id");
-    setStripeReturnPending(Boolean(sid));
+    const params = new URLSearchParams(window.location.search);
+    setStripeReturnPending(Boolean(params.get("session_id")));
+    if (params.get("cancelled") === "1") setCheckoutCancelledBanner(true);
   }, []);
 
   useEffect(() => {
-    if (!stripeReturnPending) return;
-    if (data?.order.status !== "PENDING") {
+    if (!stripeReturnPending) {
+      if (stripePollRef.current) {
+        clearInterval(stripePollRef.current);
+        stripePollRef.current = null;
+      }
+      return;
+    }
+    if (data?.order.status && data.order.status !== "PENDING") {
       if (stripePollRef.current) {
         clearInterval(stripePollRef.current);
         stripePollRef.current = null;
@@ -99,7 +149,7 @@ export default function OrderDetailPage() {
     let n = 0;
     stripePollRef.current = window.setInterval(() => {
       n += 1;
-      void loadOrder();
+      void loadOrder({ silent: true });
       if (n >= 25 && stripePollRef.current) {
         clearInterval(stripePollRef.current);
         stripePollRef.current = null;
@@ -112,6 +162,26 @@ export default function OrderDetailPage() {
       }
     };
   }, [stripeReturnPending, data?.order.status, loadOrder]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!data || data.order.status !== "PAID") return;
+    const url = new URL(window.location.href);
+    if (!url.searchParams.has("session_id")) return;
+    url.searchParams.delete("session_id");
+    const next = url.pathname + (url.searchParams.toString() ? `?${url.searchParams.toString()}` : "");
+    window.history.replaceState({}, "", next);
+    setStripeReturnPending(false);
+  }, [data?.order.status, data?.order.id]);
+
+  const dismissCancelBanner = () => {
+    setCheckoutCancelledBanner(false);
+    if (typeof window === "undefined") return;
+    const url = new URL(window.location.href);
+    url.searchParams.delete("cancelled");
+    const next = url.pathname + (url.searchParams.toString() ? `?${url.searchParams.toString()}` : "");
+    window.history.replaceState({}, "", next);
+  };
 
   const extendEscrow = async () => {
     setExtendMsg(null);
@@ -129,7 +199,7 @@ export default function OrderDetailPage() {
         return;
       }
       setExtendMsg(`Extended. Next release: ${new Date(json.data.nextRelease).toLocaleString()}`);
-      await loadOrder();
+      await loadOrder({ silent: true });
     } catch {
       setExtendMsg("Network error");
     } finally {
@@ -230,28 +300,60 @@ export default function OrderDetailPage() {
         </div>
 
         {loading ? (
-          <p className="text-slate-400">Loading order…</p>
+          <OrderDetailSkeleton />
         ) : err ? (
           <div className="glass-panel rounded-2xl border border-rose-500/30 p-5 text-rose-200">{err}</div>
         ) : data ? (
           <div className="space-y-6">
+            {refreshing ? (
+              <p className="text-[11px] text-cyan-400/90 flex items-center gap-1.5" role="status">
+                <Loader2 className="h-3.5 w-3.5 animate-spin shrink-0" aria-hidden />
+                Updating…
+              </p>
+            ) : null}
+
             <header>
               <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Marketplace order</p>
               <h1 className="text-2xl font-semibold text-white mt-1">{data.order.product.name}</h1>
               <p className="text-xs font-mono text-slate-500 mt-2 break-all">{data.order.id}</p>
             </header>
 
+            {checkoutCancelledBanner ? (
+              <div className="rounded-2xl border border-slate-500/35 bg-slate-800/50 px-4 py-3 flex flex-wrap items-start justify-between gap-3">
+                <p className="text-[13px] text-slate-200">
+                  Checkout was cancelled — you can pay again when ready.
+                </p>
+                <button
+                  type="button"
+                  onClick={dismissCancelBanner}
+                  className="text-[11px] font-semibold text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline shrink-0"
+                >
+                  Dismiss
+                </button>
+              </div>
+            ) : null}
+
             {stripeReturnPending && data.order.status === "PENDING" ? (
-              <div className="rounded-2xl border border-amber-400/35 bg-amber-500/10 px-4 py-3 text-[13px] text-amber-100">
-                Confirming Stripe payment… this page refreshes every few seconds until the order shows PAID (webhook
-                received).
+              <div
+                className="rounded-2xl border border-amber-400/35 bg-amber-500/10 px-4 py-3 text-[13px] text-amber-100 flex gap-3 items-start"
+                role="status"
+              >
+                <Loader2 className="h-4 w-4 animate-spin shrink-0 mt-0.5 text-amber-300" aria-hidden />
+                <p>
+                  Confirming Stripe payment… this page refreshes in the background until the order shows{" "}
+                  <span className="font-semibold text-white">PAID</span> (webhook received).
+                </p>
               </div>
             ) : null}
 
             <div className="glass-card rounded-3xl border border-white/10 p-5 space-y-3 text-sm">
-              <div className="flex justify-between gap-3">
+              <div className="flex justify-between gap-3 items-center">
                 <span className="text-slate-400">Status</span>
-                <span className="text-white font-semibold">{data.order.status}</span>
+                <span
+                  className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold tracking-wide ${orderStatusBadgeClass(data.order.status)}`}
+                >
+                  {data.order.status}
+                </span>
               </div>
               <div className="flex justify-between gap-3">
                 <span className="text-slate-400">Qty × unit</span>
@@ -311,13 +413,18 @@ export default function OrderDetailPage() {
                   type="button"
                   disabled={payBusy}
                   onClick={payNow}
-                  className="rounded-full bg-sky-500/25 border border-sky-400/40 px-4 py-2 text-sm font-semibold text-sky-100 hover:bg-sky-500/35 disabled:opacity-50"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-sky-500/25 border border-sky-400/40 px-4 py-2 text-sm font-semibold text-sky-100 hover:bg-sky-500/35 disabled:opacity-50 min-w-[10rem]"
                 >
-                  {payBusy
-                    ? "Processing…"
-                    : stripeCheckout
-                      ? "Pay with Stripe"
-                      : "Pay with demo wallet"}
+                  {payBusy ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+                      Processing…
+                    </>
+                  ) : stripeCheckout ? (
+                    "Pay with Stripe"
+                  ) : (
+                    "Pay with demo wallet"
+                  )}
                 </button>
               </div>
             ) : null}
@@ -326,7 +433,12 @@ export default function OrderDetailPage() {
               data.viewer.actions.markDelivered ||
               data.viewer.actions.cancel) && (
               <div className="rounded-3xl border border-emerald-500/25 bg-emerald-500/5 p-5 space-y-3">
-                <p className="text-sm font-semibold text-emerald-100">Fulfillment</p>
+                <p className="text-sm font-semibold text-emerald-100 flex items-center gap-2">
+                  Fulfillment
+                  {statusBusy ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin text-emerald-300/80" aria-hidden />
+                  ) : null}
+                </p>
                 <p className="text-[12px] text-slate-400">
                   After payment, seller ships then delivers. Buyers can cancel while pending or paid. Uses{" "}
                   <code className="text-cyan-200/90">PATCH /api/marketplace/order/[id]</code>.

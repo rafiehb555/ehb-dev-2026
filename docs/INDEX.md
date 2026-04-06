@@ -2,7 +2,26 @@
 
 > Master index of all project documentation (Auto-Updated)
 
-**Last Updated:** April 2, 2026
+**Last Updated:** April 6, 2026
+
+---
+
+## EHB landing-2026 — implementation notes (code + ops)
+
+### Notifications: client vs server state
+
+| Layer | What it is | Where |
+|--------|------------|--------|
+| **Client (browser)** | “Read” state for the bell is stored in `localStorage` (`ehb-notif-read-ids-v1`), with **`storage`** events and optional **`BroadcastChannel`** so tabs stay aligned without a full reload. | `lib/notificationsReadStorage.ts`, `lib/notificationsReadBroadcast.ts`, `components/NotificationsBell.tsx` |
+| **Server** | Notification **rows** are still derived from DB (orders, applications, STL, refills, etc.) in `GET /api/notifications`. There is **no** persisted “read inbox” on the server yet. | `app/api/notifications/route.ts` |
+
+**When to add server state:** cross-device read sync, compliance retention, or email/SMS digests — then add a small Prisma model (e.g. per-user `lastNotificationsReadAt` or per-id dismissals) and reconcile with the client.
+
+### Marketplace payments (Stripe + demo)
+
+- **`STRIPE_SECRET_KEY`** set → `POST /api/marketplace/order/[id]/pay` creates a **Stripe Checkout** session; **`POST /api/webhooks/stripe`** confirms **`checkout.session.completed`**, checks amount, marks order **PAID**, stores **`ProcessedStripeEvent`** for idempotency (`evt_…` once).
+- If Stripe is **not** configured → same route uses **demo wallet** (immediate PAID). Optional **`idempotencyKey`** in the body avoids duplicate demo writes on retries.
+- **Env:** `STRIPE_WEBHOOK_SECRET`, `NEXT_PUBLIC_APP_URL` (or Vercel URL), optional `STRIPE_CHECKOUT_CURRENCY` (default `usd`).
 
 ---
 
