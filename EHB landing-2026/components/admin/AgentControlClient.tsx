@@ -1,19 +1,38 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   Activity,
+  AlertTriangle,
   Bot,
   Briefcase,
+  CheckCircle2,
+  GitBranch,
   HeartPulse,
+  Info,
   Layers,
   LayoutGrid,
+  ListTree,
+  MessageSquareQuote,
   PauseCircle,
+  Rocket,
+  ShieldCheck,
   Sparkles,
+  Wrench,
 } from "lucide-react";
+import { Accordion } from "@/components/ui/accordion";
+import { Alert } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardIcon, CardTitle } from "@/components/ui/card";
 import { KpiCard } from "@/components/ui/KpiCard";
+import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import { RuntimeToast, type RuntimeToastPayload } from "@/components/ui/RuntimeToast";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tooltip } from "@/components/ui/tooltip";
+import { getChooserCategoryTheme } from "@/lib/agents/chooserStyles";
 
 type RuntimeSummary = {
   activeAgents: number;
@@ -64,18 +83,6 @@ type AgentHandoffRecord = {
   updatedAt: string;
   createdAtLabel: string;
 };
-
-function Panel(props: { title: string; subtitle?: string; children: ReactNode }) {
-  return (
-    <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
-      <div className="space-y-1">
-        <h2 className="text-sm sm:text-base font-semibold text-slate-100">{props.title}</h2>
-        {props.subtitle ? <p className="text-[11px] text-slate-400">{props.subtitle}</p> : null}
-      </div>
-      {props.children}
-    </section>
-  );
-}
 
 function getAgentGroupMeta(group: AgentGroupKey) {
   const meta = {
@@ -337,6 +344,12 @@ export default function AgentControlClient(props: {
     () => recommendAgentsForQuery(recommendationQuery, recommendationRules, props.chooserRecommendations),
     [recommendationQuery, recommendationRules, props.chooserRecommendations],
   );
+
+  const routingMatchScore = useMemo(() => {
+    const q = recommendationQuery.toLowerCase();
+    const hit = recommendationRules.some((rule) => rule.keywords.some((kw) => q.includes(kw)));
+    return hit ? 92 : 68;
+  }, [recommendationQuery, recommendationRules]);
 
   const runtimeStatusMap = useMemo(
     () => new Map(runtimeStatuses.map((status) => [status.agentId, status])),
@@ -651,356 +664,535 @@ export default function AgentControlClient(props: {
           })}
         </section>
 
-        <p className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-[11px] text-slate-400">
-          <span className="font-medium text-slate-300">Note:</span> Status is stored in local runtime files for development; it reflects manual updates and seeds, not automatic AI execution.
-        </p>
-
-        {runtimeError ? <section className="rounded-2xl border border-rose-400/20 bg-rose-500/10 p-4 text-rose-100">{runtimeError}</section> : null}
-
-        <section className="rounded-2xl glass-panel border border-white/10 p-4 sm:p-5 space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
-            <div className="space-y-1">
-              <div className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">Super Admin</div>
-              <h2 className="text-sm sm:text-base font-semibold text-slate-100">Quick runtime control</h2>
-              <p className="text-[11px] text-slate-400 max-w-3xl">
-                Push status updates and reset the local store. Production requires an authenticated Super Admin session.
-              </p>
-            </div>
-            <button
-              type="button"
-              disabled={actionBusy || runtimeRefreshing}
-              className="min-h-touch shrink-0 rounded-full border border-rose-400/30 bg-rose-500/10 px-3 py-1.5 text-[11px] font-semibold text-rose-100 hover:border-rose-400/50 disabled:opacity-50"
-              onClick={() => {
-                if (!window.confirm("Reset agent runtime files to catalog defaults?")) return;
-                setRuntimeToast(null);
-                setActionBusy(true);
-                void (async () => {
-                  try {
-                    await postAgentRuntime({ action: "reset-runtime" });
-                    setRuntimeToast({ type: "ok", text: "Runtime reset to defaults." });
-                    await loadRuntime();
-                  } catch (e) {
-                    setRuntimeToast({ type: "err", text: e instanceof Error ? e.message : "Reset failed." });
-                  } finally {
-                    setActionBusy(false);
-                  }
-                })();
-              }}
-            >
-              Reset to defaults
-            </button>
-          </div>
-          <div className="grid gap-3 grid-cols-1 lg:grid-cols-[1fr_auto] lg:items-end">
-            <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3 text-[11px]">
-              <label className="grid gap-1">
-                <span className="text-slate-500">Agent</span>
-                <select
-                  className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
-                  value={quickAgentId}
-                  disabled={actionBusy || runtimeRefreshing || allAgentIds.length === 0}
-                  onChange={(e) => setQuickAgentId(e.target.value)}
-                >
-                  {allAgentIds.map((id) => (
-                    <option key={id} value={id}>
-                      {id}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="grid gap-1">
-                <span className="text-slate-500">Status</span>
-                <select
-                  className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
-                  value={quickStatus}
-                  disabled={actionBusy || runtimeRefreshing}
-                  onChange={(e) => setQuickStatus(e.target.value as AgentStatus)}
-                >
-                  {RUNTIME_STATUS_OPTIONS.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="grid gap-1 sm:col-span-2 xl:col-span-1">
-                <span className="text-slate-500">Last task</span>
-                <input
-                  className="w-full rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
-                  value={quickLastTask}
-                  disabled={actionBusy || runtimeRefreshing}
-                  onChange={(e) => setQuickLastTask(e.target.value)}
-                />
-              </label>
-              <label className="grid gap-1">
-                <span className="text-slate-500">Queue</span>
-                <input
-                  type="number"
-                  min={0}
-                  max={999}
-                  className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
-                  value={quickQueue}
-                  disabled={actionBusy || runtimeRefreshing}
-                  onChange={(e) => setQuickQueue(Number(e.target.value))}
-                />
-              </label>
-              <label className="grid gap-1">
-                <span className="text-slate-500">Health %</span>
-                <input
-                  type="number"
-                  min={0}
-                  max={100}
-                  className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
-                  value={quickHealth}
-                  disabled={actionBusy || runtimeRefreshing}
-                  onChange={(e) => setQuickHealth(Number(e.target.value))}
-                />
-              </label>
-              <label className="grid gap-1">
-                <span className="text-slate-500">Hist. title (opt.)</span>
-                <input
-                  className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
-                  placeholder="Optional"
-                  value={quickHistTitle}
-                  disabled={actionBusy || runtimeRefreshing}
-                  onChange={(e) => setQuickHistTitle(e.target.value)}
-                />
-              </label>
-              <label className="grid gap-1 sm:col-span-2">
-                <span className="text-slate-500">Hist. detail (opt.)</span>
-                <input
-                  className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
-                  placeholder="Optional; use with title"
-                  value={quickHistDetail}
-                  disabled={actionBusy || runtimeRefreshing}
-                  onChange={(e) => setQuickHistDetail(e.target.value)}
-                />
-              </label>
-            </div>
-            <button
-              type="button"
-              disabled={actionBusy || runtimeRefreshing || !quickAgentId}
-              className="min-h-touch rounded-full border border-cyan-400/30 bg-cyan-500/15 px-4 py-2 text-[11px] font-semibold text-cyan-100 hover:border-cyan-400/50 disabled:opacity-50"
-              onClick={() => {
-                setRuntimeToast(null);
-                setActionBusy(true);
-                void (async () => {
-                  try {
-                    const hasPair = quickHistTitle.trim().length >= 3 && quickHistDetail.trim().length >= 3;
-                    const partial = quickHistTitle.trim().length > 0 || quickHistDetail.trim().length > 0;
-                    if (partial && !hasPair) {
-                      throw new Error("Provide both history title and detail (3+ chars), or leave both empty.");
-                    }
-                    await postAgentRuntime({
-                      action: "update-status",
-                      agentId: quickAgentId,
-                      status: quickStatus,
-                      lastTask: quickLastTask.trim(),
-                      queueSize: quickQueue,
-                      healthScore: quickHealth,
-                      ...(hasPair
-                        ? { historyTitle: quickHistTitle.trim(), historyDetail: quickHistDetail.trim() }
-                        : {}),
-                    });
-                    setRuntimeToast({ type: "ok", text: "Status updated." });
-                    await loadRuntime();
-                  } catch (e) {
-                    setRuntimeToast({ type: "err", text: e instanceof Error ? e.message : "Update failed." });
-                  } finally {
-                    setActionBusy(false);
-                  }
-                })();
-              }}
-            >
-              Apply update
-            </button>
-          </div>
+        <section className="space-y-3">
+          <Alert variant="default" icon={<Info className="h-4 w-4" aria-hidden />} title="Runtime data source">
+            Status and tasks are stored in local <Badge variant="outline">data/agents/</Badge> files for development. This is not live production telemetry or autonomous AI execution.
+          </Alert>
+          {runtimeError ? (
+            <Alert variant="destructive" icon={<AlertTriangle className="h-4 w-4" aria-hidden />} title="Could not load runtime">
+              {runtimeError}
+            </Alert>
+          ) : null}
         </section>
 
-        <section className="grid gap-3 grid-cols-1 lg:grid-cols-3">
-          {props.guidanceCards.map((card) => (
-            <Panel key={card.title} title={card.title}>
-              <p className="text-slate-300">{card.body}</p>
-            </Panel>
-          ))}
+        <Card className="border-cyan-500/20 bg-gradient-to-br from-slate-950/90 via-slate-900/80 to-slate-950 shadow-[0_0_40px_-12px_rgba(34,211,238,0.25)]">
+          <CardHeader className="flex flex-row flex-wrap items-start justify-between gap-3 sm:pb-2">
+            <div className="flex gap-3">
+              <CardIcon className="from-violet-500/30 to-blue-600/20 border-violet-400/25">
+                <Wrench className="h-5 w-5" aria-hidden />
+              </CardIcon>
+              <div>
+                <Badge variant="cyan" className="mb-1.5">
+                  Super Admin
+                </Badge>
+                <CardTitle>Quick runtime control</CardTitle>
+                <CardDescription className="mt-1 max-w-xl">
+                  Update agent status, queue, and health. Production requires a real Super Admin session.
+                </CardDescription>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Tooltip content="Restores seed data from the catalog (confirmation required)">
+                <span>
+                  <button
+                    type="button"
+                    disabled={actionBusy || runtimeRefreshing}
+                    className="min-h-touch inline-flex items-center justify-center rounded-xl border border-rose-400/35 bg-rose-500/10 px-4 py-2 text-[11px] font-semibold text-rose-100 hover:bg-rose-500/20 disabled:opacity-50"
+                    onClick={() => {
+                      if (!window.confirm("Reset agent runtime files to catalog defaults?")) return;
+                      setRuntimeToast(null);
+                      setActionBusy(true);
+                      void (async () => {
+                        try {
+                          await postAgentRuntime({ action: "reset-runtime" });
+                          setRuntimeToast({ type: "ok", text: "Runtime reset to defaults." });
+                          await loadRuntime();
+                        } catch (e) {
+                          setRuntimeToast({ type: "err", text: e instanceof Error ? e.message : "Reset failed." });
+                        } finally {
+                          setActionBusy(false);
+                        }
+                      })();
+                    }}
+                  >
+                    Reset to defaults
+                  </button>
+                </span>
+              </Tooltip>
+            </div>
+          </CardHeader>
+          <Separator className="mx-4 sm:mx-5" />
+          <CardContent>
+            <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="qc-agent">Agent</Label>
+                  <select
+                    id="qc-agent"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100 outline-none focus:border-cyan-400/40 focus:ring-1 focus:ring-cyan-400/30"
+                    value={quickAgentId}
+                    disabled={actionBusy || runtimeRefreshing || allAgentIds.length === 0}
+                    onChange={(e) => setQuickAgentId(e.target.value)}
+                  >
+                    {allAgentIds.map((id) => (
+                      <option key={id} value={id}>
+                        {id}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="qc-status">Status</Label>
+                  <select
+                    id="qc-status"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100 outline-none focus:border-cyan-400/40"
+                    value={quickStatus}
+                    disabled={actionBusy || runtimeRefreshing}
+                    onChange={(e) => setQuickStatus(e.target.value as AgentStatus)}
+                  >
+                    {RUNTIME_STATUS_OPTIONS.map((s) => (
+                      <option key={s} value={s}>
+                        {s}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="space-y-1.5 sm:col-span-2 xl:col-span-1">
+                  <Label htmlFor="qc-task">Last task</Label>
+                  <input
+                    id="qc-task"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100 outline-none focus:border-cyan-400/40"
+                    value={quickLastTask}
+                    disabled={actionBusy || runtimeRefreshing}
+                    onChange={(e) => setQuickLastTask(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="qc-queue">Queue</Label>
+                  <input
+                    id="qc-queue"
+                    type="number"
+                    min={0}
+                    max={999}
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100"
+                    value={quickQueue}
+                    disabled={actionBusy || runtimeRefreshing}
+                    onChange={(e) => setQuickQueue(Number(e.target.value))}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="qc-health">Health %</Label>
+                  <input
+                    id="qc-health"
+                    type="number"
+                    min={0}
+                    max={100}
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100"
+                    value={quickHealth}
+                    disabled={actionBusy || runtimeRefreshing}
+                    onChange={(e) => setQuickHealth(Number(e.target.value))}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="qc-ht">Hist. title (opt.)</Label>
+                  <input
+                    id="qc-ht"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100"
+                    placeholder="Optional"
+                    value={quickHistTitle}
+                    disabled={actionBusy || runtimeRefreshing}
+                    onChange={(e) => setQuickHistTitle(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-1.5 sm:col-span-2">
+                  <Label htmlFor="qc-hd">Hist. detail (opt.)</Label>
+                  <input
+                    id="qc-hd"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100"
+                    placeholder="Use with title (3+ chars each)"
+                    value={quickHistDetail}
+                    disabled={actionBusy || runtimeRefreshing}
+                    onChange={(e) => setQuickHistDetail(e.target.value)}
+                  />
+                </div>
+              </div>
+              <Tooltip content="Writes to runtime.json + optional history row">
+                <span className="inline-flex lg:pb-0.5">
+                  <button
+                    type="button"
+                    disabled={actionBusy || runtimeRefreshing || !quickAgentId}
+                    className="min-h-touch inline-flex items-center justify-center rounded-xl border border-cyan-400/35 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 px-5 py-2.5 text-[12px] font-semibold text-cyan-50 shadow-lg shadow-cyan-500/10 hover:from-cyan-500/30 hover:to-blue-600/30 disabled:opacity-50"
+                    onClick={() => {
+                      setRuntimeToast(null);
+                      setActionBusy(true);
+                      void (async () => {
+                        try {
+                          const hasPair = quickHistTitle.trim().length >= 3 && quickHistDetail.trim().length >= 3;
+                          const partial = quickHistTitle.trim().length > 0 || quickHistDetail.trim().length > 0;
+                          if (partial && !hasPair) {
+                            throw new Error("Provide both history title and detail (3+ chars), or leave both empty.");
+                          }
+                          await postAgentRuntime({
+                            action: "update-status",
+                            agentId: quickAgentId,
+                            status: quickStatus,
+                            lastTask: quickLastTask.trim(),
+                            queueSize: quickQueue,
+                            healthScore: quickHealth,
+                            ...(hasPair
+                              ? { historyTitle: quickHistTitle.trim(), historyDetail: quickHistDetail.trim() }
+                              : {}),
+                          });
+                          setRuntimeToast({ type: "ok", text: "Status updated." });
+                          await loadRuntime();
+                        } catch (e) {
+                          setRuntimeToast({ type: "err", text: e instanceof Error ? e.message : "Update failed." });
+                        } finally {
+                          setActionBusy(false);
+                        }
+                      })();
+                    }}
+                  >
+                    Apply update
+                  </button>
+                </span>
+              </Tooltip>
+            </div>
+          </CardContent>
+        </Card>
+
+        <section className="space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="secondary" className="normal-case tracking-normal">
+              Guidance
+            </Badge>
+            <h2 className="text-sm font-semibold text-slate-100">Quick routing rules</h2>
+          </div>
+          <Accordion
+            defaultOpenId="g0"
+            items={props.guidanceCards.map((card, i) => ({
+              id: `g${i}`,
+              title: card.title,
+              icon:
+                i === 0 ? (
+                  <Rocket className="h-4 w-4 text-cyan-300" />
+                ) : i === 1 ? (
+                  <ShieldCheck className="h-4 w-4 text-violet-300" />
+                ) : (
+                  <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+                ),
+              content: <p className="text-slate-300">{card.body}</p>,
+            }))}
+          />
         </section>
 
-        <section className="grid gap-3 grid-cols-1">
-          <Panel title="Ask what you want to do" subtitle="Simple owner-style request to recommended development-agent routing">
-            <div className="grid gap-3 xl:grid-cols-[1.3fr_1fr]">
-              <div className="space-y-3">
+        <Card className="border-violet-500/20 bg-gradient-to-br from-violet-950/20 via-slate-950 to-slate-900/90">
+          <CardHeader className="flex flex-row flex-wrap items-start gap-3">
+            <CardIcon className="from-fuchsia-500/25 to-violet-600/20 border-fuchsia-400/20">
+              <MessageSquareQuote className="h-5 w-5" aria-hidden />
+            </CardIcon>
+            <div className="min-w-0 flex-1">
+              <CardTitle>Ask what you want to do</CardTitle>
+              <CardDescription>Plain-language request → suggested primary & supporting agents (keyword routing).</CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 xl:grid-cols-[1.15fr_1fr]">
+              <div className="space-y-2">
+                <Label htmlFor="owner-query">Your request</Label>
                 <textarea
+                  id="owner-query"
                   value={recommendationQuery}
                   onChange={(event) => setRecommendationQuery(event.target.value)}
-                  className="min-h-[110px] w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-sm text-slate-100 outline-none transition-all duration-200 focus:border-cyan-400/30"
+                  className="min-h-[120px] w-full resize-y rounded-xl border border-white/12 bg-slate-950/70 px-4 py-3 text-[13px] leading-relaxed text-slate-100 outline-none transition-all focus:border-violet-400/40 focus:ring-1 focus:ring-violet-400/25"
                   placeholder="Example: I want to change trust verification and make sure deployment is safe."
                 />
-                <p className="text-[11px] text-slate-400">Write your need in simple language. The system will suggest the primary and supporting agents.</p>
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[10px] uppercase tracking-wide text-slate-500">
+                    <Tooltip content="Heuristic match strength for this text">
+                      <span className="cursor-help border-b border-dotted border-slate-500">Routing match</span>
+                    </Tooltip>
+                    <span>{routingMatchScore}%</span>
+                  </div>
+                  <Progress value={routingMatchScore} barClassName="bg-gradient-to-r from-violet-500 to-fuchsia-500" />
+                </div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-slate-950/30 p-4 space-y-3">
+              <div className="space-y-3 rounded-xl border border-white/10 bg-slate-950/50 p-4">
                 <div>
-                  <div className="text-[10px] uppercase tracking-wide text-slate-500">Primary agent</div>
-                  <Link href={`/admin/agents/${recommendationResult.primaryAgentId}`} className="mt-1 inline-flex items-center rounded-full border border-cyan-400/20 bg-cyan-500/10 px-3 py-1 text-sm font-medium text-cyan-200 hover:border-cyan-400/40">
+                  <div className="text-[10px] font-medium uppercase tracking-wide text-slate-500">Primary agent</div>
+                  <Link
+                    href={`/admin/agents/${recommendationResult.primaryAgentId}`}
+                    className="mt-1 inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-500/15 px-3 py-1.5 text-[12px] font-medium text-cyan-100 hover:border-cyan-400/50"
+                  >
                     {recommendationResult.primaryAgentId}
                   </Link>
                 </div>
+                <Separator />
                 <div>
-                  <div className="text-[10px] uppercase tracking-wide text-slate-500">Supporting agents</div>
-                  <div className="mt-1 flex flex-wrap gap-2">
+                  <div className="text-[10px] font-medium uppercase tracking-wide text-slate-500">Supporting</div>
+                  <div className="mt-2 flex flex-wrap gap-2">
                     {recommendationResult.supportingAgentIds.map((agentId) => (
-                      <Link key={agentId} href={`/admin/agents/${agentId}`} className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-3 py-1 text-[11px] text-slate-200 hover:border-cyan-400/30">
+                      <Link
+                        key={agentId}
+                        href={`/admin/agents/${agentId}`}
+                        className="inline-flex items-center rounded-full border border-white/12 bg-slate-900/70 px-2.5 py-1 text-[11px] text-slate-200 hover:border-violet-400/35"
+                      >
                         {agentId}
                       </Link>
                     ))}
                   </div>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-slate-300">{recommendationResult.reason}</div>
+                <div className="rounded-lg border border-violet-500/20 bg-violet-950/25 p-3 text-[12px] leading-snug text-slate-300">{recommendationResult.reason}</div>
               </div>
             </div>
-          </Panel>
-        </section>
+          </CardContent>
+        </Card>
 
-        <section className="grid gap-3 grid-cols-1">
-          <Panel title="Which agent should I use?" subtitle="Owner-friendly starting scenarios with recommended primary and supporting agents">
-            <div className="flex flex-wrap gap-2">
-              {props.chooserCategories.map((category) => (
-                <button
-                  key={category.id}
-                  type="button"
-                  onClick={() => setActiveChooserCategory(category.id)}
-                  className={`min-h-touch rounded-full border px-3 py-1.5 text-[11px] font-medium transition-all duration-200 ${activeChooserCategory === category.id ? "border-cyan-400/30 bg-cyan-500/10 text-cyan-200" : "border-white/10 bg-slate-950/30 text-slate-300 hover:border-cyan-400/20"}`}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Which agent should I use?</CardTitle>
+            <CardDescription>Pick a category tab, then open a scenario card. Colors match scenario type.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Tabs
+              defaultValue={props.chooserCategories[0]?.id ?? "all"}
+              value={activeChooserCategory}
+              onValueChange={setActiveChooserCategory}
+            >
+              <TabsList className="w-full justify-start overflow-x-auto pb-0.5">
+                {props.chooserCategories.map((category) => (
+                  <TabsTrigger key={category.id} value={category.id} className="shrink-0">
+                    {category.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
             <div className="grid gap-3 grid-cols-1 xl:grid-cols-2">
-              {filteredChooserRecommendations.map((item) => (
-                <div key={item.id} className="rounded-2xl border border-white/10 bg-slate-950/30 p-3 space-y-3">
-                  <div className="space-y-1">
-                    <h3 className="text-[12px] sm:text-[13px] font-semibold text-slate-100">{item.title}</h3>
-                    <p className="text-slate-300">{item.ownerNeed}</p>
+              {filteredChooserRecommendations.map((item) => {
+                const theme = getChooserCategoryTheme(item.category);
+                return (
+                  <div
+                    key={item.id}
+                    className={`group relative overflow-hidden rounded-2xl border p-4 transition-shadow hover:shadow-lg ${theme.card}`}
+                  >
+                    <div className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b ${theme.bar}`} aria-hidden />
+                    <div className="space-y-3 pl-2">
+                      <div className="flex flex-wrap items-start justify-between gap-2">
+                        <h3 className="text-[13px] font-semibold text-slate-50">{item.title}</h3>
+                        <Badge variant={theme.badge}>{props.chooserCategories.find((c) => c.id === item.category)?.label ?? item.category}</Badge>
+                      </div>
+                      <p className="text-[12px] leading-relaxed text-slate-300">{item.ownerNeed}</p>
+                      <div className="flex flex-wrap items-center gap-2 text-[11px]">
+                        <span className="text-slate-500">Primary</span>
+                        <Link
+                          href={`/admin/agents/${item.primaryAgentId}`}
+                          className="inline-flex items-center rounded-full border border-cyan-400/25 bg-cyan-500/10 px-2 py-0.5 font-medium text-cyan-100 hover:border-cyan-400/45"
+                        >
+                          {item.primaryAgentId}
+                        </Link>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+                        <span className="text-slate-500">Supporting</span>
+                        {item.supportingAgentIds.map((agentId) => (
+                          <Link
+                            key={agentId}
+                            href={`/admin/agents/${agentId}`}
+                            className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/70 px-2 py-0.5 text-slate-200 hover:border-white/25"
+                          >
+                            {agentId}
+                          </Link>
+                        ))}
+                      </div>
+                      <div className="rounded-lg border border-white/10 bg-slate-950/40 p-3 text-[12px] text-slate-300">{item.reason}</div>
+                    </div>
                   </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-2 py-0.5 text-[10px] font-medium text-slate-200">
-                      {props.chooserCategories.find((category) => category.id === item.category)?.label ?? item.category}
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2 text-[11px]">
-                    <span className="text-slate-400">Primary:</span>
-                    <Link href={`/admin/agents/${item.primaryAgentId}`} className="inline-flex items-center rounded-full border border-cyan-400/20 bg-cyan-500/10 px-2 py-0.5 font-medium text-cyan-200 hover:border-cyan-400/40">
-                      {item.primaryAgentId}
-                    </Link>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
-                    <span className="text-slate-400">Supporting:</span>
-                    {item.supportingAgentIds.map((agentId) => (
-                      <Link key={agentId} href={`/admin/agents/${agentId}`} className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-2 py-0.5 text-slate-200 hover:border-cyan-400/30">
-                        {agentId}
-                      </Link>
-                    ))}
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-slate-300">{item.reason}</div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             {filteredChooserRecommendations.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-white/10 bg-slate-950/20 p-4 text-slate-400">
-                No owner scenarios are defined for this chooser category yet.
+              <div className="rounded-xl border border-dashed border-amber-400/25 bg-amber-950/20 p-4 text-center text-[12px] text-amber-100/90">
+                No scenarios for this filter — try <strong>All scenarios</strong>.
               </div>
             ) : null}
-          </Panel>
-        </section>
+          </CardContent>
+        </Card>
 
-        <section className="grid gap-3 grid-cols-1 xl:grid-cols-2">
-          <Panel title="Recent Runtime Handoffs" subtitle="Latest accepted or completed agent-to-agent work">
-            <div className="grid gap-2">
-              {latestHandoffs.length > 0 ? latestHandoffs.map((handoff) => (
-                <div key={handoff.id} className="rounded-xl border border-white/10 bg-slate-950/30 p-3">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div className="font-medium text-slate-100">{handoff.fromAgentId} → {handoff.toAgentId}</div>
-                    <span className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-2 py-0.5 text-[10px] text-slate-300">{handoff.status}</span>
-                  </div>
-                  <div className="mt-1 text-slate-300">{handoff.requestSummary}</div>
-                  <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
-                    <span>Expected: {handoff.expectedOutput} · {handoff.createdAtLabel}</span>
-                    {handoff.status === "accepted" ? (
-                      <button
-                        type="button"
-                        disabled={actionBusy || runtimeRefreshing}
-                        className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold text-emerald-100 hover:border-emerald-400/50 disabled:opacity-50"
-                        onClick={() => {
-                          setRuntimeToast(null);
-                          setActionBusy(true);
-                          void (async () => {
-                            try {
-                              await postAgentRuntime({ action: "complete-handoff", handoffId: handoff.id });
-                              setRuntimeToast({ type: "ok", text: "Handoff completed." });
-                              await loadRuntime();
-                            } catch (e) {
-                              setRuntimeToast({ type: "err", text: e instanceof Error ? e.message : "Complete failed." });
-                            } finally {
-                              setActionBusy(false);
-                            }
-                          })();
-                        }}
+        <Card className="border-slate-600/25 bg-gradient-to-b from-slate-900/80 to-slate-950">
+          <CardHeader className="flex flex-row flex-wrap items-center gap-3">
+            <CardIcon className="from-slate-600/40 to-slate-800/30 border-slate-500/30">
+              <GitBranch className="h-5 w-5" aria-hidden />
+            </CardIcon>
+            <div>
+              <CardTitle>Handoffs, legend & flow order</CardTitle>
+              <CardDescription>Switch tabs — same data, clearer layout.</CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <Tabs defaultValue="handoffs">
+              <TabsList className="mb-4 w-full flex-wrap justify-start gap-1">
+                <TabsTrigger value="handoffs">Recent handoffs</TabsTrigger>
+                <TabsTrigger value="legend">Status legend</TabsTrigger>
+                <TabsTrigger value="order">Default order</TabsTrigger>
+              </TabsList>
+              <TabsContent value="handoffs" className="mt-0">
+                <div className="grid gap-2">
+                  {latestHandoffs.length > 0 ? (
+                    latestHandoffs.map((handoff) => (
+                      <div
+                        key={handoff.id}
+                        className="rounded-xl border border-white/10 bg-slate-950/50 p-3 transition-colors hover:border-cyan-400/20"
                       >
-                        Mark complete
-                      </button>
-                    ) : null}
-                  </div>
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <div className="font-mono text-[11px] font-medium text-cyan-100">
+                            {handoff.fromAgentId} → {handoff.toAgentId}
+                          </div>
+                          <Badge
+                            variant={
+                              handoff.status === "completed" ? "emerald" : handoff.status === "cancelled" ? "rose" : "amber"
+                            }
+                          >
+                            {handoff.status}
+                          </Badge>
+                        </div>
+                        <p className="mt-2 text-[12px] text-slate-300">{handoff.requestSummary}</p>
+                        <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+                          <span>
+                            Expected: <span className="text-slate-400">{handoff.expectedOutput}</span> · {handoff.createdAtLabel}
+                          </span>
+                          {handoff.status === "accepted" ? (
+                            <button
+                              type="button"
+                              disabled={actionBusy || runtimeRefreshing}
+                              className="rounded-full border border-emerald-400/35 bg-emerald-500/15 px-3 py-1 text-[10px] font-semibold text-emerald-100 hover:bg-emerald-500/25 disabled:opacity-50"
+                              onClick={() => {
+                                setRuntimeToast(null);
+                                setActionBusy(true);
+                                void (async () => {
+                                  try {
+                                    await postAgentRuntime({ action: "complete-handoff", handoffId: handoff.id });
+                                    setRuntimeToast({ type: "ok", text: "Handoff completed." });
+                                    await loadRuntime();
+                                  } catch (e) {
+                                    setRuntimeToast({ type: "err", text: e instanceof Error ? e.message : "Complete failed." });
+                                  } finally {
+                                    setActionBusy(false);
+                                  }
+                                })();
+                              }}
+                            >
+                              Mark complete
+                            </button>
+                          ) : null}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <Alert variant="warning" icon={<ListTree className="h-4 w-4" />} title="No handoffs yet">
+                      Create one from an agent detail page or API, or use seed data after reset.
+                    </Alert>
+                  )}
                 </div>
-              )) : <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-slate-500">No runtime handoffs have been created yet.</div>}
-            </div>
-          </Panel>
-
-          <Panel title="Shared Status Legend" subtitle="Use the same lifecycle language across all agent work">
-            <div className="grid gap-2 sm:grid-cols-2">
-              {props.statuses.map((status) => (
-                <div key={status.name} className="rounded-xl border border-white/10 bg-slate-950/30 p-3">
-                  <div className="text-[11px] font-semibold uppercase tracking-wide text-cyan-300">{status.name}</div>
-                  <p className="mt-1 text-slate-300">{status.meaning}</p>
+              </TabsContent>
+              <TabsContent value="legend" className="mt-0">
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {props.statuses.map((status) => (
+                    <div
+                      key={status.name}
+                      className="rounded-xl border border-cyan-500/15 bg-gradient-to-br from-slate-950/80 to-cyan-950/20 p-3"
+                    >
+                      <Badge variant="cyan" className="mb-2 normal-case">
+                        {status.name}
+                      </Badge>
+                      <p className="text-[12px] leading-snug text-slate-300">{status.meaning}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </Panel>
+              </TabsContent>
+              <TabsContent value="order" className="mt-0">
+                <ol className="grid gap-2 sm:grid-cols-2">
+                  {props.handoffOrder.map((agent, index) => (
+                    <li
+                      key={agent}
+                      className="flex gap-3 rounded-xl border border-violet-500/20 bg-violet-950/20 p-3"
+                    >
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-violet-500/20 text-[11px] font-bold text-violet-200">
+                        {index + 1}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="text-[10px] uppercase tracking-wide text-violet-300/80">Step</div>
+                        <div className="font-mono text-[12px] font-medium text-slate-100">{agent}</div>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
 
-          <Panel title="Default Handoff Order" subtitle="Normal flow for development-agent coordination">
-            <ol className="grid gap-2 sm:grid-cols-2">
-              {props.handoffOrder.map((agent, index) => (
-                <li key={agent} className="rounded-xl border border-white/10 bg-slate-950/30 p-3">
-                  <div className="text-[10px] uppercase tracking-wide text-slate-500">Step {index + 1}</div>
-                  <div className="mt-1 text-slate-100 font-medium">{agent}</div>
+        <div className="grid gap-3 grid-cols-1 xl:grid-cols-2">
+          <Card className="border-emerald-500/20 bg-emerald-950/10">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-emerald-400" aria-hidden />
+                Ownership highlights
+              </CardTitle>
+              <CardDescription>Sensitive routing rules at a glance.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2.5 text-[12px] text-slate-300">
+                {props.ownershipHighlights.map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400/80" aria-hidden />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="border-blue-500/20 bg-blue-950/10">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-blue-400" aria-hidden />
+                Workflow contract
+              </CardTitle>
+              <CardDescription>Default orchestration limits.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2 text-[12px] text-slate-300">
+                <li>
+                  <span className="text-slate-500">Start: </span>
+                  <code className="rounded bg-slate-900/80 px-1.5 py-0.5 text-[11px] text-cyan-200">{props.workflowContract.defaultStartingAgent}</code>
                 </li>
-              ))}
-            </ol>
-          </Panel>
-        </section>
+                <li>
+                  <span className="text-slate-500">Max specialists: </span>
+                  {props.workflowContract.maxSpecialistsPerRequest}
+                </li>
+                <li>
+                  <span className="text-slate-500">Risk: </span>
+                  <code className="text-[11px] text-slate-200">{props.workflowContract.routeRiskThrough}</code>
+                </li>
+                <li>
+                  <span className="text-slate-500">Memory: </span>
+                  <code className="text-[11px] text-slate-200">{props.workflowContract.routeMemoryThrough}</code>
+                </li>
+                <li>
+                  <span className="text-slate-500">Release: </span>
+                  <code className="text-[11px] text-slate-200">{props.workflowContract.releaseVerificationThrough}</code>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
 
-        <section className="grid gap-3 grid-cols-1 xl:grid-cols-2">
-          <Panel title="Ownership Highlights" subtitle="Fast rules for routing sensitive or cross-domain work">
-            <ul className="space-y-2 text-slate-300">
-              {props.ownershipHighlights.map((item) => <li key={item}>• {item}</li>)}
-            </ul>
-          </Panel>
-
-          <Panel title="Workflow Contract Snapshot" subtitle="Minimum app-level behavior for development-agent coordination">
-            <ul className="space-y-2 text-slate-300">
-              <li>• Default start: `{props.workflowContract.defaultStartingAgent}`</li>
-              <li>• Specialists per request: up to {props.workflowContract.maxSpecialistsPerRequest}</li>
-              <li>• Risk review route: `{props.workflowContract.routeRiskThrough}`</li>
-              <li>• Memory route: `{props.workflowContract.routeMemoryThrough}`</li>
-              <li>• Release verification route: `{props.workflowContract.releaseVerificationThrough}`</li>
-            </ul>
-          </Panel>
-        </section>
-
-        <section className="grid gap-3 grid-cols-1">
-          <Panel title="What this dashboard is for" subtitle="Keep the system understandable for a non-technical owner">
-            <ul className="space-y-2 text-slate-300">
-              {props.dashboardPurpose.map((item) => <li key={item}>• {item}</li>)}
-            </ul>
-          </Panel>
-        </section>
+        <Alert variant="success" icon={<CheckCircle2 className="h-4 w-4" />} title="What this screen is for">
+          <ul className="mt-2 list-inside list-disc space-y-1 text-[12px] text-emerald-50/95">
+            {props.dashboardPurpose.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </Alert>
       </div>
     </main>
   );

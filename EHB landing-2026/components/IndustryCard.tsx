@@ -67,22 +67,19 @@ export function IndustryCard({ industry }: IndustryCardProps) {
       aria-label={`View ${industry.name} services`}
     >
       <div className="relative -mx-4 -mt-4 mb-3 h-[88px] overflow-hidden rounded-t-xl border-b border-white/10 isolate">
-        {assets.cardThumb ? (
-          <Image
-            src={assets.cardThumb}
-            alt={assets.alt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 45vw, 280px"
-          />
-        ) : (
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `linear-gradient(145deg, ${accent}66 0%, rgba(2,12,27,0.85) 50%, rgba(15,23,42,0.95) 100%)`,
-            }}
-          />
-        )}
+        <Image
+          src={assets.cardThumb}
+          alt={assets.alt}
+          fill
+          loading="lazy"
+          className="object-cover"
+          sizes="(max-width: 768px) 45vw, 280px"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
+          style={{ background: `linear-gradient(135deg, ${accent}88, transparent 60%)` }}
+          aria-hidden
+        />
       </div>
       <div className="mb-3">
         <IndustryIcon name={industry.icon} accentColor={accent} size={28} />

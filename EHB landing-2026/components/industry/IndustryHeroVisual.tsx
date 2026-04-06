@@ -8,26 +8,27 @@ export function IndustryHeroVisual({ industry }: { industry: Industry }) {
 
   return (
     <div className="relative w-full max-w-md mx-auto lg:mx-0 aspect-square rounded-3xl border border-white/10 overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.35)]">
-      {assets.heroImage ? (
-        <Image
-          src={assets.heroImage}
-          alt={assets.alt}
-          fill
-          className="object-cover"
-          sizes="(max-width: 1024px) 100vw, 28rem"
-          priority
-        />
-      ) : (
-        <div
-          className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6"
-          style={{
-            background: `radial-gradient(circle at 30% 20%, ${accent}55, transparent 50%), radial-gradient(circle at 80% 80%, ${accent}33, #020c1b 70%)`,
-          }}
-        >
-          <p className="text-[10px] uppercase tracking-[0.28em] text-white/70 text-center">{industry.shortName}</p>
-          <p className="text-lg font-semibold text-white text-center leading-snug">{industry.heroTitle}</p>
-        </div>
-      )}
+      <Image
+        src={assets.heroImage}
+        alt={assets.alt}
+        fill
+        className="object-cover"
+        sizes="(max-width: 1024px) 100vw, 28rem"
+        priority
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#020c1b]/90 via-[#020c1b]/20 to-transparent"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-30 mix-blend-overlay"
+        style={{ background: `radial-gradient(circle at 70% 30%, ${accent}, transparent 55%)` }}
+        aria-hidden
+      />
+      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-white/75">{industry.shortName}</p>
+        <p className="text-sm font-semibold text-white leading-snug line-clamp-2">{industry.heroTitle}</p>
+      </div>
       <div
         className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10"
         aria-hidden

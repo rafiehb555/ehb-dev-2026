@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="400" y2="240" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#020c1b"/>
+      <stop offset="0.5" stop-color="#0a1628"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="a" x1="80" y1="40" x2="340" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00eaff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#3b82f6" stop-opacity="0.12"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="240" fill="url(#g)"/>
+  <path d="M0 180h400M0 120h400M0 60h400M80 0v240M160 0v240M240 0v240M320 0v240" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="24" y="24" width="352" height="192" rx="16" stroke="url(#a)" stroke-width="1.5" fill="rgba(0,234,255,0.04)"/>
+  <text x="200" y="128" text-anchor="middle" fill="rgba(226,232,240,0.85)" font-family="system-ui,sans-serif" font-size="13" font-weight="600" letter-spacing="0.2em">EHB · INDUSTRY</text>
+</svg>

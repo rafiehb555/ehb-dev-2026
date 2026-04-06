@@ -1,9 +1,15 @@
-Industry visuals (optional)
----------------------------
-Add web-ready files per slug under this folder, then register paths in lib/industry/designAssets.ts (PATH_OVERRIDES).
+Industry visuals
+----------------
+Default branded placeholders (shared for all slugs until you override per industry):
 
-Suggested names:
-  <slug>/card.webp   — Industry explorer cards (approx 3:2 or 16:9)
-  <slug>/hero.webp   — Landing hero companion image
+  shared/card.svg
+  shared/hero.svg
 
-Prototype ZIPs from local UI/UX work (D:\ehb ui ux) are listed in lib/industry/zipSourceInventory.ts.
+Per-industry files (optional): add under <slug>/ and register in lib/industry/designAssets.ts (PATH_OVERRIDES), e.g.:
+
+  health/card.webp
+  health/hero.webp
+
+Prototype ZIPs on D:\ehb ui ux are listed in lib/industry/zipSourceInventory.ts.
+
+Database: run `npx prisma db seed` when DATABASE_URL is set so DMO verification uses real Industry rows.

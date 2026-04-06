@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#020c1b"/>
+      <stop offset="0.45" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 120) rotate(55) scale(520 420)">
+      <stop stop-color="#00eaff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#020c1b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(980 520) rotate(-35) scale(480 380)">
+      <stop stop-color="#6366f1" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#020c1b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+  <rect width="1200" height="675" fill="url(#glow2)"/>
+  <path d="M0 540h1200M0 405h1200M0 270h1200M0 135h1200M150 0v675M300 0v675M450 0v675M600 0v675M750 0v675M900 0v675M1050 0v675" stroke="rgba(255,255,255,0.045)" stroke-width="1"/>
+  <rect x="48" y="48" width="1104" height="579" rx="28" stroke="rgba(0,234,255,0.2)" stroke-width="1" fill="rgba(2,12,27,0.35)"/>
+  <text x="600" y="340" text-anchor="middle" fill="rgba(241,245,249,0.9)" font-family="system-ui,sans-serif" font-size="22" font-weight="600" letter-spacing="0.12em">EHB SUPER APP ù INDUSTRY</text>
+  <text x="600" y="382" text-anchor="middle" fill="rgba(148,163,184,0.95)" font-family="system-ui,sans-serif" font-size="14">Add per-slug hero.webp ó see public/images/industries/README.txt</text>
+</svg>

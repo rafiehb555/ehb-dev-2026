@@ -204,7 +204,7 @@ export async function GET() {
         type = "WARNING";
       }
       items.push({
-        id: `order-${ord.id}-${ord.status}`,
+        id: `order-${ord.id}`,
         title,
         message,
         type,

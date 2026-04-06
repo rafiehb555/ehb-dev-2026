@@ -33,10 +33,17 @@ export function buildEscrowTimeline(
   if (typeof m.paymentCapturedAt === "string") {
     const d = new Date(m.paymentCapturedAt);
     if (!Number.isNaN(d.getTime())) {
+      const method = typeof m.paymentMethod === "string" ? m.paymentMethod : "";
+      const title =
+        method === "STRIPE"
+          ? "Payment captured (Stripe)"
+          : method === "DEMO_WALLET"
+            ? "Payment captured (demo wallet)"
+            : "Payment captured";
       items.push({
-        title: "Payment captured (demo wallet)",
+        title,
         at: iso(d),
-        note: typeof m.paymentMethod === "string" ? `Method: ${m.paymentMethod}` : undefined,
+        note: method ? `Method: ${method}` : undefined,
       });
     }
   }

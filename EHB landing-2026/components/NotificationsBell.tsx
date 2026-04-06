@@ -2,6 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { broadcastNotificationReadUpdate, subscribeNotificationReadUpdate } from "@/lib/notificationsReadBroadcast";
+import {
+  loadReadNotificationIds,
+  mergePersistReadNotificationIds,
+  NOTIFICATION_READ_IDS_STORAGE_KEY,
+} from "@/lib/notificationsReadStorage";
 
 type NotificationItem = {
   id: string;
@@ -23,6 +29,7 @@ const RANDOM_NOTIFICATIONS: { text: string; readDefault?: boolean }[] = [
 export function NotificationsBell() {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<NotificationItem[]>([]);
+  const readIdsRef = useRef<Set<string>>(new Set());
 
   const unreadCount = useMemo(() => items.filter((n) => !n.read).length, [items]);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -39,6 +46,7 @@ export function NotificationsBell() {
   }, [open]);
 
   useEffect(() => {
+    readIdsRef.current = loadReadNotificationIds();
     let cancelled = false;
 
     async function loadNotifications() {
@@ -46,13 +54,14 @@ export function NotificationsBell() {
         const res = await fetch("/api/notifications", { cache: "no-store" });
         const json = await res.json();
         if (!cancelled && json.success) {
+          const readIds = readIdsRef.current;
           const next = (
             json.data as Array<{ id: string; title: string; message: string; time: string; href?: string }>
           ).map((item) => ({
             id: item.id,
             text: `${item.title}: ${item.message}`,
             createdAt: new Date(item.time).getTime(),
-            read: false,
+            read: readIds.has(item.id),
             href:
               typeof item.href === "string" && item.href.startsWith("/") && !item.href.startsWith("//")
                 ? item.href
@@ -64,11 +73,12 @@ export function NotificationsBell() {
         if (!cancelled) {
           setItems((prev) => {
             if (prev.length > 0) return prev;
+            const readIds = readIdsRef.current;
             return RANDOM_NOTIFICATIONS.slice(0, 3).map((item, index) => ({
               id: `fallback-${index}`,
               text: item.text,
               createdAt: Date.now() - index * 1000 * 60 * 15,
-              read: false,
+              read: readIds.has(`fallback-${index}`),
             }));
           });
         }
@@ -86,8 +96,39 @@ export function NotificationsBell() {
     };
   }, []);
 
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== NOTIFICATION_READ_IDS_STORAGE_KEY) return;
+      readIdsRef.current = loadReadNotificationIds();
+      setItems((prev) => prev.map((i) => ({ ...i, read: readIdsRef.current.has(i.id) })));
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  useEffect(() => {
+    const syncFromStore = () => {
+      readIdsRef.current = loadReadNotificationIds();
+      setItems((prev) => prev.map((i) => ({ ...i, read: readIdsRef.current.has(i.id) })));
+    };
+    return subscribeNotificationReadUpdate(syncFromStore);
+  }, []);
+
   const markAllRead = () => {
-    setItems((prev) => prev.map((i) => ({ ...i, read: true })));
+    setItems((prev) => {
+      readIdsRef.current = mergePersistReadNotificationIds(
+        readIdsRef.current,
+        prev.map((i) => i.id)
+      );
+      broadcastNotificationReadUpdate();
+      return prev.map((i) => ({ ...i, read: true }));
+    });
+  };
+
+  const markOneRead = (id: string) => {
+    readIdsRef.current = mergePersistReadNotificationIds(readIdsRef.current, [id]);
+    broadcastNotificationReadUpdate();
+    setItems((prev) => prev.map((i) => (i.id === id ? { ...i, read: true } : i)));
   };
 
   const timeAgo = (ts: number) => {
@@ -139,9 +180,6 @@ export function NotificationsBell() {
                 <p className="text-[12px] text-slate-400">No notifications.</p>
               ) : (
                 items.map((n) => {
-                  const markRead = () => {
-                    setItems((prev) => prev.map((i) => (i.id === n.id ? { ...i, read: true } : i)));
-                  };
                   const inner = (
                     <div className="flex items-start gap-2">
                       <span
@@ -170,7 +208,7 @@ export function NotificationsBell() {
                         className={rowClass}
                         aria-label={n.text}
                         onClick={() => {
-                          markRead();
+                          markOneRead(n.id);
                           setOpen(false);
                         }}
                       >
@@ -182,7 +220,7 @@ export function NotificationsBell() {
                     <button
                       key={n.id}
                       type="button"
-                      onClick={markRead}
+                      onClick={() => markOneRead(n.id)}
                       className={rowClass}
                       aria-label={n.text}
                     >

@@ -5,24 +5,25 @@ import type { Industry } from "@/lib/industry/config";
  * When absent, UI uses accent-based gradients (IndustryCard, hero, banners).
  */
 export type IndustryDesignAssets = {
-  /** Small card thumbnail (e.g. card.webp) */
-  cardThumb?: string;
-  /** Wide hero image (e.g. hero.webp) */
-  heroImage?: string;
+  /** Small card thumbnail — defaults to shared SVG until PATH_OVERRIDES / per-slug files */
+  cardThumb: string;
+  /** Wide hero image — defaults to shared SVG */
+  heroImage: string;
   alt: string;
 };
 
-/** Manual overrides when files exist in public/ */
-const PATH_OVERRIDES: Partial<Record<string, { cardThumb?: string; heroImage?: string }>> = {
-  // Example — uncomment when assets are added:
-  // health: { cardThumb: "/images/industries/health/card.webp", heroImage: "/images/industries/health/hero.webp" },
-};
+/** Shared branded placeholders — replace per slug via PATH_OVERRIDES when you add real webp/png. */
+const DEFAULT_CARD = "/images/industries/shared/card.svg";
+const DEFAULT_HERO = "/images/industries/shared/hero.svg";
+
+/** Manual overrides when files exist in public/images/industries/<slug>/ */
+const PATH_OVERRIDES: Partial<Record<string, { cardThumb?: string; heroImage?: string }>> = {};
 
 export function getIndustryDesignAssets(industry: Pick<Industry, "slug" | "name" | "shortName">): IndustryDesignAssets {
   const o = PATH_OVERRIDES[industry.slug];
   return {
-    cardThumb: o?.cardThumb,
-    heroImage: o?.heroImage,
+    cardThumb: o?.cardThumb ?? DEFAULT_CARD,
+    heroImage: o?.heroImage ?? DEFAULT_HERO,
     alt: `${industry.name} — EHB industry`,
   };
 }

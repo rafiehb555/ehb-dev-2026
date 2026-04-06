@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -42,6 +42,9 @@ export default function OrderDetailPage() {
   const [statusBusy, setStatusBusy] = useState(false);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
   const [payBusy, setPayBusy] = useState(false);
+  const [stripeCheckout, setStripeCheckout] = useState(false);
+  const [stripeReturnPending, setStripeReturnPending] = useState(false);
+  const stripePollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [trackingInput, setTrackingInput] = useState("");
 
   const loadOrder = useCallback(async () => {
@@ -68,6 +71,47 @@ export default function OrderDetailPage() {
   useEffect(() => {
     loadOrder();
   }, [loadOrder]);
+
+  useEffect(() => {
+    void fetch("/api/config/payments", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((j: { success?: boolean; data?: { stripeCheckout?: boolean } }) => {
+        if (j.success && j.data?.stripeCheckout) setStripeCheckout(true);
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const sid = new URLSearchParams(window.location.search).get("session_id");
+    setStripeReturnPending(Boolean(sid));
+  }, []);
+
+  useEffect(() => {
+    if (!stripeReturnPending) return;
+    if (data?.order.status !== "PENDING") {
+      if (stripePollRef.current) {
+        clearInterval(stripePollRef.current);
+        stripePollRef.current = null;
+      }
+      return;
+    }
+    let n = 0;
+    stripePollRef.current = window.setInterval(() => {
+      n += 1;
+      void loadOrder();
+      if (n >= 25 && stripePollRef.current) {
+        clearInterval(stripePollRef.current);
+        stripePollRef.current = null;
+      }
+    }, 2000);
+    return () => {
+      if (stripePollRef.current) {
+        clearInterval(stripePollRef.current);
+        stripePollRef.current = null;
+      }
+    };
+  }, [stripeReturnPending, data?.order.status, loadOrder]);
 
   const extendEscrow = async () => {
     setExtendMsg(null);
@@ -97,10 +141,14 @@ export default function OrderDetailPage() {
     setStatusMsg(null);
     setPayBusy(true);
     try {
+      const idempotencyKey =
+        typeof crypto !== "undefined" && "randomUUID" in crypto
+          ? crypto.randomUUID()
+          : `pay-${Date.now()}-${Math.random().toString(36).slice(2)}`;
       const res = await fetch(`/api/marketplace/order/${orderId}/pay`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
+        body: JSON.stringify({ idempotencyKey }),
       });
       const json = await res.json();
       if (!res.ok || !json.success) {
@@ -108,7 +156,24 @@ export default function OrderDetailPage() {
         setPayBusy(false);
         return;
       }
-      setData(json.data);
+      const d = json.data as {
+        paymentMode?: string;
+        checkoutUrl?: string;
+        order?: OrderPayload["order"];
+        viewer?: OrderPayload["viewer"];
+        escrowTimeline?: OrderPayload["escrowTimeline"];
+      };
+      if (d.paymentMode === "stripe" && d.checkoutUrl) {
+        window.location.assign(d.checkoutUrl);
+        return;
+      }
+      if (d.paymentMode === "demo" && d.order && d.viewer && d.escrowTimeline) {
+        setData({
+          order: d.order,
+          viewer: d.viewer,
+          escrowTimeline: d.escrowTimeline,
+        });
+      }
     } catch {
       setStatusMsg("Network error");
     } finally {
@@ -176,6 +241,13 @@ export default function OrderDetailPage() {
               <p className="text-xs font-mono text-slate-500 mt-2 break-all">{data.order.id}</p>
             </header>
 
+            {stripeReturnPending && data.order.status === "PENDING" ? (
+              <div className="rounded-2xl border border-amber-400/35 bg-amber-500/10 px-4 py-3 text-[13px] text-amber-100">
+                Confirming Stripe payment… this page refreshes every few seconds until the order shows PAID (webhook
+                received).
+              </div>
+            ) : null}
+
             <div className="glass-card rounded-3xl border border-white/10 p-5 space-y-3 text-sm">
               <div className="flex justify-between gap-3">
                 <span className="text-slate-400">Status</span>
@@ -223,7 +295,17 @@ export default function OrderDetailPage() {
               <div className="rounded-3xl border border-sky-500/25 bg-sky-500/5 p-5 space-y-3">
                 <p className="text-sm font-semibold text-sky-100">Payment</p>
                 <p className="text-[12px] text-slate-400">
-                  Demo wallet capture — moves order to <span className="text-white">PAID</span> so the seller can ship.
+                  {stripeCheckout ? (
+                    <>
+                      Opens <span className="text-white">Stripe Checkout</span> when configured server-side; otherwise
+                      instant <span className="text-white">demo wallet</span> capture to PAID.
+                    </>
+                  ) : (
+                    <>
+                      Demo wallet capture — moves order to <span className="text-white">PAID</span> so the seller can
+                      ship. Set <code className="text-cyan-200/90">STRIPE_SECRET_KEY</code> for real Checkout.
+                    </>
+                  )}
                 </p>
                 <button
                   type="button"
@@ -231,7 +313,11 @@ export default function OrderDetailPage() {
                   onClick={payNow}
                   className="rounded-full bg-sky-500/25 border border-sky-400/40 px-4 py-2 text-sm font-semibold text-sky-100 hover:bg-sky-500/35 disabled:opacity-50"
                 >
-                  {payBusy ? "Processing…" : "Pay with demo wallet"}
+                  {payBusy
+                    ? "Processing…"
+                    : stripeCheckout
+                      ? "Pay with Stripe"
+                      : "Pay with demo wallet"}
                 </button>
               </div>
             ) : null}

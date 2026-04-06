@@ -824,6 +824,16 @@ model Order {
   @@index([status])
 }
 
+/// Idempotency for Stripe webhooks (evt_… processed once).
+model ProcessedStripeEvent {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  stripeEventId String   @unique @map("stripe_event_id")
+  eventType     String   @map("event_type")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("processed_stripe_events")
+}
+
 enum OrderStatus {
   PENDING
   PAID
