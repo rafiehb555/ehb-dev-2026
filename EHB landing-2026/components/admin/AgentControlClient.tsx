@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { KpiCard } from "@/components/ui/KpiCard";
+import { RuntimeToast, type RuntimeToastPayload } from "@/components/ui/RuntimeToast";
 
 type RuntimeSummary = {
   activeAgents: number;
@@ -196,8 +197,11 @@ export default function AgentControlClient(props: {
   const [runtimeStatuses, setRuntimeStatuses] = useState<AgentRuntimeStatus[]>([]);
   const [runtimeHandoffs, setRuntimeHandoffs] = useState<AgentHandoffRecord[]>([]);
   const [runtimeError, setRuntimeError] = useState<string | null>(null);
+  const [runtimeRefreshing, setRuntimeRefreshing] = useState(false);
   const [actionBusy, setActionBusy] = useState(false);
-  const [actionNotice, setActionNotice] = useState<{ type: "ok" | "err"; text: string } | null>(null);
+  const [runtimeToast, setRuntimeToast] = useState<RuntimeToastPayload>(null);
+
+  const dismissToast = useCallback(() => setRuntimeToast(null), []);
 
   const allAgentIds = useMemo(
     () => props.groups.flatMap((group) => group.agents.map((agent) => agent.id)),
@@ -275,6 +279,7 @@ export default function AgentControlClient(props: {
   const latestHandoffs = useMemo(() => runtimeHandoffs.slice(0, 4), [runtimeHandoffs]);
 
   const loadRuntime = useCallback(async () => {
+    setRuntimeRefreshing(true);
     try {
       setRuntimeError(null);
       const res = await fetch("/api/agents/status", { cache: "no-store" });
@@ -292,6 +297,8 @@ export default function AgentControlClient(props: {
       setRuntimeHandoffs(data.handoffs ?? []);
     } catch (error) {
       setRuntimeError(error instanceof Error ? error.message : "Failed to load agent runtime.");
+    } finally {
+      setRuntimeRefreshing(false);
     }
   }, []);
 
@@ -306,7 +313,8 @@ export default function AgentControlClient(props: {
   }, [allAgentIds, quickAgentId]);
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-slate-100" aria-busy={runtimeRefreshing || actionBusy}>
+      <RuntimeToast toast={runtimeToast} onDismiss={dismissToast} />
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
@@ -341,7 +349,13 @@ export default function AgentControlClient(props: {
           <KpiCard
             label="Runtime Feed"
             value={runtimeSummary ? `${runtimeSummary.liveModeAgents} live` : "Loading"}
-            detail={runtimeSummary ? `${runtimeSummary.totalHandoffs} handoffs · ${runtimeSummary.totalHistoryEvents} events` : `${props.dashboardSummary.sharedStatuses} shared statuses`}
+            detail={
+              runtimeRefreshing && runtimeSummary
+                ? `Refreshing… · ${runtimeSummary.totalHandoffs} handoffs · ${runtimeSummary.totalHistoryEvents} events`
+                : runtimeSummary
+                  ? `${runtimeSummary.totalHandoffs} handoffs · ${runtimeSummary.totalHistoryEvents} events`
+                  : `${props.dashboardSummary.sharedStatuses} shared statuses`
+            }
           />
         </section>
 
@@ -373,19 +387,19 @@ export default function AgentControlClient(props: {
             </div>
             <button
               type="button"
-              disabled={actionBusy}
+              disabled={actionBusy || runtimeRefreshing}
               className="min-h-touch shrink-0 rounded-full border border-rose-400/30 bg-rose-500/10 px-3 py-1.5 text-[11px] font-semibold text-rose-100 hover:border-rose-400/50 disabled:opacity-50"
               onClick={() => {
                 if (!window.confirm("Reset agent runtime files to catalog defaults?")) return;
-                setActionNotice(null);
+                setRuntimeToast(null);
                 setActionBusy(true);
                 void (async () => {
                   try {
                     await postAgentRuntime({ action: "reset-runtime" });
-                    setActionNotice({ type: "ok", text: "Runtime reset to defaults." });
+                    setRuntimeToast({ type: "ok", text: "Runtime reset to defaults." });
                     await loadRuntime();
                   } catch (e) {
-                    setActionNotice({ type: "err", text: e instanceof Error ? e.message : "Reset failed." });
+                    setRuntimeToast({ type: "err", text: e instanceof Error ? e.message : "Reset failed." });
                   } finally {
                     setActionBusy(false);
                   }
@@ -395,17 +409,6 @@ export default function AgentControlClient(props: {
               Reset to defaults
             </button>
           </div>
-          {actionNotice ? (
-            <div
-              className={`rounded-xl border px-3 py-2 text-[11px] ${
-                actionNotice.type === "ok"
-                  ? "border-emerald-400/25 bg-emerald-500/10 text-emerald-100"
-                  : "border-rose-400/25 bg-rose-500/10 text-rose-100"
-              }`}
-            >
-              {actionNotice.text}
-            </div>
-          ) : null}
           <div className="grid gap-3 grid-cols-1 lg:grid-cols-[1fr_auto] lg:items-end">
             <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3 text-[11px]">
               <label className="grid gap-1">
@@ -413,7 +416,7 @@ export default function AgentControlClient(props: {
                 <select
                   className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
                   value={quickAgentId}
-                  disabled={actionBusy || allAgentIds.length === 0}
+                  disabled={actionBusy || runtimeRefreshing || allAgentIds.length === 0}
                   onChange={(e) => setQuickAgentId(e.target.value)}
                 >
                   {allAgentIds.map((id) => (
@@ -428,7 +431,7 @@ export default function AgentControlClient(props: {
                 <select
                   className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
                   value={quickStatus}
-                  disabled={actionBusy}
+                  disabled={actionBusy || runtimeRefreshing}
                   onChange={(e) => setQuickStatus(e.target.value as AgentStatus)}
                 >
                   {RUNTIME_STATUS_OPTIONS.map((s) => (
@@ -443,7 +446,7 @@ export default function AgentControlClient(props: {
                 <input
                   className="w-full rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
                   value={quickLastTask}
-                  disabled={actionBusy}
+                  disabled={actionBusy || runtimeRefreshing}
                   onChange={(e) => setQuickLastTask(e.target.value)}
                 />
               </label>
@@ -455,7 +458,7 @@ export default function AgentControlClient(props: {
                   max={999}
                   className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
                   value={quickQueue}
-                  disabled={actionBusy}
+                  disabled={actionBusy || runtimeRefreshing}
                   onChange={(e) => setQuickQueue(Number(e.target.value))}
                 />
               </label>
@@ -467,7 +470,7 @@ export default function AgentControlClient(props: {
                   max={100}
                   className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
                   value={quickHealth}
-                  disabled={actionBusy}
+                  disabled={actionBusy || runtimeRefreshing}
                   onChange={(e) => setQuickHealth(Number(e.target.value))}
                 />
               </label>
@@ -477,7 +480,7 @@ export default function AgentControlClient(props: {
                   className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
                   placeholder="Optional"
                   value={quickHistTitle}
-                  disabled={actionBusy}
+                  disabled={actionBusy || runtimeRefreshing}
                   onChange={(e) => setQuickHistTitle(e.target.value)}
                 />
               </label>
@@ -487,17 +490,17 @@ export default function AgentControlClient(props: {
                   className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
                   placeholder="Optional; use with title"
                   value={quickHistDetail}
-                  disabled={actionBusy}
+                  disabled={actionBusy || runtimeRefreshing}
                   onChange={(e) => setQuickHistDetail(e.target.value)}
                 />
               </label>
             </div>
             <button
               type="button"
-              disabled={actionBusy || !quickAgentId}
+              disabled={actionBusy || runtimeRefreshing || !quickAgentId}
               className="min-h-touch rounded-full border border-cyan-400/30 bg-cyan-500/15 px-4 py-2 text-[11px] font-semibold text-cyan-100 hover:border-cyan-400/50 disabled:opacity-50"
               onClick={() => {
-                setActionNotice(null);
+                setRuntimeToast(null);
                 setActionBusy(true);
                 void (async () => {
                   try {
@@ -517,10 +520,10 @@ export default function AgentControlClient(props: {
                         ? { historyTitle: quickHistTitle.trim(), historyDetail: quickHistDetail.trim() }
                         : {}),
                     });
-                    setActionNotice({ type: "ok", text: "Status updated." });
+                    setRuntimeToast({ type: "ok", text: "Status updated." });
                     await loadRuntime();
                   } catch (e) {
-                    setActionNotice({ type: "err", text: e instanceof Error ? e.message : "Update failed." });
+                    setRuntimeToast({ type: "err", text: e instanceof Error ? e.message : "Update failed." });
                   } finally {
                     setActionBusy(false);
                   }
@@ -627,7 +630,7 @@ export default function AgentControlClient(props: {
           </Panel>
         </section>
 
-        <section className="space-y-3">
+        <section className={`space-y-3 transition-opacity duration-200 ${runtimeRefreshing ? "opacity-60" : ""}`}>
           {props.groups.map((group) => (
             <Panel key={group.title} title={group.title} subtitle={group.detail}>
               <div className="grid gap-3 grid-cols-1 xl:grid-cols-2">
@@ -688,18 +691,18 @@ export default function AgentControlClient(props: {
                     {handoff.status === "accepted" ? (
                       <button
                         type="button"
-                        disabled={actionBusy}
+                        disabled={actionBusy || runtimeRefreshing}
                         className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold text-emerald-100 hover:border-emerald-400/50 disabled:opacity-50"
                         onClick={() => {
-                          setActionNotice(null);
+                          setRuntimeToast(null);
                           setActionBusy(true);
                           void (async () => {
                             try {
                               await postAgentRuntime({ action: "complete-handoff", handoffId: handoff.id });
-                              setActionNotice({ type: "ok", text: "Handoff completed." });
+                              setRuntimeToast({ type: "ok", text: "Handoff completed." });
                               await loadRuntime();
                             } catch (e) {
-                              setActionNotice({ type: "err", text: e instanceof Error ? e.message : "Complete failed." });
+                              setRuntimeToast({ type: "err", text: e instanceof Error ? e.message : "Complete failed." });
                             } finally {
                               setActionBusy(false);
                             }

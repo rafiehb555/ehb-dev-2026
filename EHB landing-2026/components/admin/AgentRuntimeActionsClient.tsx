@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState, type ReactNode } from "react";
+import { RuntimeToast, type RuntimeToastPayload } from "@/components/ui/RuntimeToast";
 
 type AgentStatus =
   | "idle"
@@ -64,7 +65,9 @@ export default function AgentRuntimeActionsClient(props: {
   );
 
   const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState<{ type: "ok" | "err"; text: string } | null>(null);
+  const [runtimeToast, setRuntimeToast] = useState<RuntimeToastPayload>(null);
+
+  const dismissToast = useCallback(() => setRuntimeToast(null), []);
 
   const [statusForm, setStatusForm] = useState({
     status: "working" as AgentStatus,
@@ -95,14 +98,14 @@ export default function AgentRuntimeActionsClient(props: {
 
   const run = useCallback(
     async (fn: () => Promise<void>) => {
-      setNotice(null);
+      setRuntimeToast(null);
       setBusy(true);
       try {
         await fn();
-        setNotice({ type: "ok", text: "Saved." });
+        setRuntimeToast({ type: "ok", text: "Saved." });
         refresh();
       } catch (e) {
-        setNotice({ type: "err", text: e instanceof Error ? e.message : "Action failed." });
+        setRuntimeToast({ type: "err", text: e instanceof Error ? e.message : "Action failed." });
       } finally {
         setBusy(false);
       }
@@ -111,23 +114,14 @@ export default function AgentRuntimeActionsClient(props: {
   );
 
   return (
-    <section className="glass-panel card-hover p-4 space-y-3 border border-cyan-500/15">
+    <section className="glass-panel card-hover p-4 space-y-3 border border-cyan-500/15" aria-busy={busy}>
+      <RuntimeToast toast={runtimeToast} onDismiss={dismissToast} />
       <div className="space-y-1">
         <h2 className="text-sm sm:text-base font-semibold text-slate-100">Runtime actions</h2>
         <p className="text-[11px] text-slate-400">
-          Updates persist to the local agent runtime store. In development, Super Admin actions are allowed without a separate login.
+          Updates persist to the local agent runtime store. Set <code className="text-slate-300">EHB_DEV_AUTH_BYPASS=false</code> locally to require a real login.
         </p>
       </div>
-
-      {notice ? (
-        <div
-          className={`rounded-xl border px-3 py-2 text-[11px] ${
-            notice.type === "ok" ? "border-emerald-400/25 bg-emerald-500/10 text-emerald-100" : "border-rose-400/25 bg-rose-500/10 text-rose-100"
-          }`}
-        >
-          {notice.text}
-        </div>
-      ) : null}
 
       <div className="grid gap-3 grid-cols-1 xl:grid-cols-3">
         <SubPanel title="Update status">
