@@ -12,6 +12,7 @@ import { EducationIndustry3D } from "@/components/EducationIndustry3D";
 import { LawIndustry3D } from "@/components/LawIndustry3D";
 import { FinanceIndustry3D } from "@/components/FinanceIndustry3D";
 import { GenericIndustry3DFallback } from "@/components/GenericIndustry3DFallback";
+import { IndustryHeroVisual } from "@/components/industry/IndustryHeroVisual";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 
 interface PageProps {
@@ -67,60 +68,66 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
           }}
         />
         <div className="container-ultra py-12 md:py-16 relative z-10">
-          <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-            <div
-              className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-slate-200"
-              style={{ borderColor: `${accent}50`, boxShadow: `0 0 20px ${accent}20` }}
-            >
-              <IndustryIcon name={industry.icon} accentColor={accent} size={14} />
-              <span className="uppercase tracking-[0.16em] text-[10px] sm:text-[11px]">
-                {industry.shortName} Landing Page
-              </span>
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10 lg:gap-14">
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+                <div
+                  className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-slate-200"
+                  style={{ borderColor: `${accent}50`, boxShadow: `0 0 20px ${accent}20` }}
+                >
+                  <IndustryIcon name={industry.icon} accentColor={accent} size={14} />
+                  <span className="uppercase tracking-[0.16em] text-[10px] sm:text-[11px]">
+                    {industry.shortName} Landing Page
+                  </span>
+                </div>
+                <span className="text-[10px] sm:text-[11px] text-slate-400">
+                  {industry.name} · Verified by EHB
+                </span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight max-w-2xl mb-4 text-white">
+                {industry.heroTitle}
+              </h1>
+              <p className="text-slate-300 text-sm md:text-base max-w-2xl mb-8">
+                {industry.heroSubtitle ?? industry.overview}
+              </p>
+              {locationLabel ? (
+                <div
+                  className="inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border mb-6"
+                  style={{ borderColor: `${locationAccent}55`, boxShadow: `0 0 28px ${locationAccent}22` }}
+                >
+                  <span aria-hidden>📍</span>
+                  <span>
+                    Near you: <span className="text-white font-semibold">{locationLabel}</span>
+                  </span>
+                </div>
+              ) : null}
+              <div className="flex flex-wrap gap-3 mb-6">
+                <Link
+                  href={`/industry/${industry.slug}${locationQs}`}
+                  className="min-h-touch inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:opacity-95 hover:scale-[1.02]"
+                  style={{
+                    background: `linear-gradient(135deg, ${accent}, ${accent}dd)`,
+                    boxShadow: `0 0 24px ${accent}40`,
+                  }}
+                >
+                  {industry.heroPrimaryButton ?? `Explore ${industry.name}`}
+                  <span className="text-xs">→</span>
+                </Link>
+                <Link
+                  href="/dashboard"
+                  className="min-h-touch inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-5 py-2.5 text-sm font-medium text-slate-200 hover:bg-white/10 transition-all duration-300"
+                  style={{ borderColor: `${accent}40` }}
+                >
+                  {industry.heroSecondaryButton ?? "Join as Provider"}
+                </Link>
+              </div>
+              <p className="text-slate-500 text-xs font-medium">
+                {categories.length > 0 ? `${categories.length}+ categories` : "Multiple services"} · Verified providers · AI
+                powered
+              </p>
             </div>
-            <span className="text-[10px] sm:text-[11px] text-slate-400">
-              {industry.name} · Verified by EHB
-            </span>
+            <IndustryHeroVisual industry={industry} />
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight max-w-2xl mb-4 text-white">
-            {industry.heroTitle}
-          </h1>
-          <p className="text-slate-300 text-sm md:text-base max-w-2xl mb-8">
-            {industry.heroSubtitle ?? industry.overview}
-          </p>
-          {locationLabel ? (
-            <div
-              className="inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border mb-6"
-              style={{ borderColor: `${locationAccent}55`, boxShadow: `0 0 28px ${locationAccent}22` }}
-            >
-              <span aria-hidden>📍</span>
-              <span>
-                Near you: <span className="text-white font-semibold">{locationLabel}</span>
-              </span>
-            </div>
-          ) : null}
-          <div className="flex flex-wrap gap-3 mb-6">
-            <Link
-              href={`/industry/${industry.slug}${locationQs}`}
-              className="min-h-touch inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:opacity-95 hover:scale-[1.02]"
-              style={{
-                background: `linear-gradient(135deg, ${accent}, ${accent}dd)`,
-                boxShadow: `0 0 24px ${accent}40`,
-              }}
-            >
-              {industry.heroPrimaryButton ?? `Explore ${industry.name}`}
-              <span className="text-xs">→</span>
-            </Link>
-            <Link
-              href="/dashboard"
-              className="min-h-touch inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-5 py-2.5 text-sm font-medium text-slate-200 hover:bg-white/10 transition-all duration-300"
-              style={{ borderColor: `${accent}40` }}
-            >
-              {industry.heroSecondaryButton ?? "Join as Provider"}
-            </Link>
-          </div>
-          <p className="text-slate-500 text-xs font-medium">
-            {categories.length > 0 ? `${categories.length}+ categories` : "Multiple services"} · Verified providers · AI powered
-          </p>
         </div>
       </section>
 

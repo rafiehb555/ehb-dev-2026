@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { Industry } from "@/lib/industry/config";
+import { getIndustryDesignAssets } from "@/lib/industry/designAssets";
 import { IndustryIcon } from "./IndustryIcon";
 
 interface IndustryCardProps {
@@ -19,6 +21,7 @@ function hexToRgba(hex: string, alpha: number): string {
 export function IndustryCard({ industry }: IndustryCardProps) {
   const accent = industry.accentColor;
   const glowColor = hexToRgba(accent, 0.35);
+  const assets = getIndustryDesignAssets(industry);
 
   const miniFlow = (() => {
     switch (industry.slug) {
@@ -63,6 +66,24 @@ export function IndustryCard({ industry }: IndustryCardProps) {
       }
       aria-label={`View ${industry.name} services`}
     >
+      <div className="relative -mx-4 -mt-4 mb-3 h-[88px] overflow-hidden rounded-t-xl border-b border-white/10 isolate">
+        {assets.cardThumb ? (
+          <Image
+            src={assets.cardThumb}
+            alt={assets.alt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 45vw, 280px"
+          />
+        ) : (
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(145deg, ${accent}66 0%, rgba(2,12,27,0.85) 50%, rgba(15,23,42,0.95) 100%)`,
+            }}
+          />
+        )}
+      </div>
       <div className="mb-3">
         <IndustryIcon name={industry.icon} accentColor={accent} size={28} />
       </div>

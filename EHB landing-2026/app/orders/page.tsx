@@ -178,6 +178,14 @@ export default function OrdersPage({
                       </Link>
                     </p>
                   ) : null}
+                  {o.dbOrderIds?.[0] ? (
+                    <Link
+                      href={`/orders/${o.dbOrderIds[0]}${locationQs}`}
+                      className="inline-block mt-2 text-[12px] font-semibold text-cyan-300 hover:text-white"
+                    >
+                      View DB order / escrow →
+                    </Link>
+                  ) : null}
                 </div>
               </div>
             ))}

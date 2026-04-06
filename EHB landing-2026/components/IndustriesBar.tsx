@@ -167,6 +167,7 @@ export function IndustriesBar() {
                     : {
                         background: `${baseColor}19`,
                         borderColor: `${baseColor}33`,
+                        boxShadow: `inset 0 -2px 0 0 ${baseColor}44`,
                       }
                 }
               >
