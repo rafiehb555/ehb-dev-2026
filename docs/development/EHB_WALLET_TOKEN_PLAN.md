@@ -1,22 +1,126 @@
 # EHB-Wallet + EHBGC Token — Complete System Plan
-> Trusty Wallet + EHBGC Coin + Blockchain Payment Layer
-> Version: 1.0 | April 2026 | Status: PLANNING
+> Trusty Wallet + EHBGC Coin + EHBSC Stablecoin + Blockchain Payment Layer
+> Version: 2.0 | April 2026 | Status: PLANNING
 
 ---
 
-## PART 1: WHAT IS EHBGC
+## PART 0: EHB WALLET SYSTEM OVERVIEW
 
-**EHBGC = EHB Global Coin**
+### 5 Sub-Wallets Inside EHB Wallet:
 
-- Native platform cryptocurrency for the entire EHB ecosystem
-- All transactions settle in EHBGC
-- Local currencies auto-convert to EHBGC on deposit
-- Withdraw back to local currency anytime
-- Also tradeable as a real crypto asset
+| Wallet Type | Code | Purpose |
+|-------------|------|---------|
+| Main Wallet | MAIN | Normal spendable balance |
+| EHBGC Wallet | COIN | EHBGC coin storage + transfers |
+| Trusty Wallet | TRUSTY | Locked staking → STL + power |
+| Earnings Wallet | EARN | Income from sales/jobs/affiliate |
+| Settlement Wallet | SETTLE | Franchise area payouts |
+
+### Sub-Wallet Flow:
+```
+User receives money / earns →
+Auto-routed to correct sub-wallet →
+  Seller income → Earnings Wallet
+  Staking → Trusty Wallet
+  Franchise payout → Settlement Wallet
+  Normal spending → Main Wallet / EHBGC Wallet
+```
+
+### Where Wallets Display:
+- Dashboard (Top card — combined balance)
+- Wallet page (full breakdown per sub-wallet)
+- Transaction history (per sub-wallet filter)
+- Order page (EHBGC Wallet shown at checkout)
 
 ---
 
-## PART 2: TRUSTY WALLET
+## PART 1: WHAT IS EHBGC + EHBSC
+
+### EHBGC — EHB Global Coin (Main Coin):
+- Native platform utility + investment + reward coin
+- Used for: payments, staking, franchise fees, governance
+- Tradeable on external exchanges
+- Price grows with demand + supply lock + burn
+
+### EHBSC — EHB Stable Coin (New):
+- Pegged: 1 EHBSC = 1 USD (stable, no price fluctuation)
+- Used for: salaries, daily payments, stable transactions
+- Backed by: USDT reserves (or platform collateral)
+- User chooses: pay in EHBGC (investment mode) OR EHBSC (stable mode)
+
+### Two-Token Strategy:
+```
+EHBGC → Investment + Staking + Governance + Growth
+EHBSC → Salary + Daily Payments + Stable Transactions
+```
+
+---
+
+## PART 2: TRUSTY WALLET (MOST CRITICAL SYSTEM)
+
+### What is Trusty Wallet?
+Trusty Wallet = Locked EHBGC system that controls Trust, STL Level, Ranking, and Power on EHB.
+> "More you lock → more you earn → more you grow → more you're trusted"
+
+### Who MUST / CAN Lock EHBGC:
+
+| User Type | Lock Requirement | Why |
+|-----------|-----------------|-----|
+| Sellers | Optional (but boosts ranking) | More orders + visibility |
+| Riders | Optional | Priority delivery allocation |
+| Franchise Operators | MANDATORY | Area control power |
+| Inspectors | MANDATORY | CRB credibility + authority |
+| JPS Employees (L4+) | Required | Job eligibility + promotion |
+| Buyers | Optional | Better deals + cashback |
+
+### Lock Periods + Monthly Rewards:
+
+| Lock Period | Monthly Reward | Notes |
+|------------|---------------|-------|
+| 1 Year | 0.5% / month | Entry level |
+| 2 Years | 1.0% / month | Standard |
+| 3 Years | 1.1% / month | VIP level |
+
+**Reward Conditions (ALL must be true):**
+- ✔ Validator system must be active on chain
+- ✔ User account must be active
+- ✔ STL score must be maintained (no drop below L2)
+- ✔ No active complaint lock on account
+
+### Trusty Wallet Benefits:
+
+| Benefit | How |
+|---------|-----|
+| STL Boost | More locked = higher trust = STL ↑ |
+| Order Priority | Sellers/Riders get priority in AI matching |
+| Income Boost | Higher commission share + bonus earnings |
+| Fraud Protection | Low-risk account = better ranking |
+| Validator Access | Min stake = eligible for validator node |
+
+### Access Level by Lock Amount:
+
+| Lock Amount | Access Level |
+|-------------|-------------|
+| 0 EHBGC | Basic |
+| 100–999 EHBGC | Standard |
+| 1,000–4,999 EHBGC | Premium |
+| 5,000+ EHBGC | VIP |
+| 10,000+ EHBGC | Validator eligible |
+
+### Penalty Integration:
+```
+User violates rule / fraud confirmed →
+Complaint raised →
+Penalty issued →
+Deducted from Trusty Wallet →
+Lock freeze possible →
+Reward stopped during freeze →
+STL dropped
+```
+
+---
+
+## PART 2B: TRUSTY WALLET (ORIGINAL DISPLAY)
 
 ### Wallet Display Structure:
 ```
@@ -145,19 +249,77 @@ All splits credited in real-time
 
 ---
 
-## PART 7: EHBGC TOKEN — TOKENOMICS
+## PART 7: EHBGC TOKEN — TOKENOMICS (ADVANCED)
+
+### Blockchain Standard (Dual-Chain Strategy):
+| Chain | Standard | Purpose |
+|-------|----------|---------|
+| Moonbeam (Polkadot) | ERC-20 compatible | Core system, validators, governance |
+| BNB Chain | BEP-20 | Low-fee daily transactions |
+
+**Why dual-chain:** Scalability + low cost. User wallet auto-selects best chain per transaction type.
 
 ### Token Distribution:
 ```
 Total Supply: 1,000,000,000 EHBGC
 
-Platform Operations:     30%  → User rewards, bonuses, staking
-Founder / Team:          15%  → 3-year vesting
-Investor Pool:           20%  → Seed, Series A, B
-Franchise Reserve:       10%  → Franchise fee discounts, rewards
-Development Fund:        10%  → Tech infrastructure
-Community Ecosystem:      8%  → Grants, partnerships
-Liquidity Pool:           7%  → Exchange liquidity
+Public Ecosystem:        40%  → Users, platform activity, adoption
+Rewards & Staking:       20%  → Trusty Wallet, validator rewards
+Company Reserve:         15%  → Operations, partnerships, legal
+Franchise System:        10%  → Franchise fees, activation, rewards
+Team & Development:      10%  → 3-year vesting (no early dump)
+Emergency Fund:           5%  → Market stabilization, bugs
+```
+
+### EHBGC Price Growth Model (4 Drivers):
+```
+Driver 1 — DEMAND INCREASE
+  More users → more transactions → more EHBGC needed → price ↑
+
+Driver 2 — LOCKING (MOST POWERFUL)
+  More Trusty Wallet locks → less circulating supply → price ↑
+
+Driver 3 — UTILITY
+  Franchise purchase + STL upgrades + Verification fees
+  = Constant demand for EHBGC at platform level
+
+Driver 4 — BURN MECHANISM
+  Transactions burn small % → supply shrinks over time → price ↑
+```
+
+### Burn Mechanism:
+| Trigger | Burn % |
+|---------|--------|
+| Product sale (GoSellr) | 0.1% of order value |
+| Verification fee (PSS/CRB) | 5% of fee |
+| Penalty charge | 100% burned |
+| Course enrollment (JPS) | 2% of fee |
+| Franchise renewal fee | 3% of fee |
+
+```
+Transaction happens →
+Small % of EHBGC burned (permanently removed) →
+Circulating supply decreases →
+Scarcity increases →
+Price pressure upward
+```
+
+### Anti-Inflation Control System:
+| Rule | Effect |
+|------|--------|
+| Fixed maximum minting (hard cap at 1B) | No surprise supply increase |
+| Controlled reward release (vesting schedule) | No dump |
+| Active burn on every transaction | Supply steadily shrinks |
+| AI monitoring of supply metrics | Early warning if inflation risk |
+| DMO override: reduce rewards if supply grows too fast | Emergency brake |
+
+### EHBSC Stable Coin Tokenomics:
+```
+Total Supply: Unlimited (algorithmic, demand-based)
+Peg: 1 EHBSC = 1 USD
+Collateral: USDT reserves held in treasury
+Minting: Only when user deposits USDT/USD
+Burning: When user withdraws / converts back
 ```
 
 ### Token Use Cases:

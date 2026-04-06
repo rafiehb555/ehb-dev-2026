@@ -16,8 +16,10 @@
 | `EHB_JPS_PLAN.md` | JPS — Jobs, Designations, Skills, Education |
 | `EHB_FRANCHISE_PLAN.md` | Franchise Hierarchy + Control |
 | `EHB_DMO_PLAN.md` | DMO — Governance, Dashboards, Communication |
-| `EHB_WALLET_TOKEN_PLAN.md` | Wallet + EHBGC Token + Blockchain |
+| `EHB_WALLET_TOKEN_PLAN.md` | Wallet + EHBGC + EHBSC + Trusty Wallet v2 |
 | `EHB_COMPLAINT_PENALTY_PLAN.md` | Complaint, Escalation, Penalty |
+| `EHB_AFFILIATE_PLAN.md` | Affiliate Network, Multi-Level Earning |
+| **`EHB_BLOCKCHAIN_PLAN.md`** | **Own Blockchain — Mosaic Galaxy, Parachain, Validators, Relay** |
 | `EHB_AFFILIATE_PLAN.md` | Affiliate + Network Earning |
 
 ---
