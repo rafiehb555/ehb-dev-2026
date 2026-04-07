@@ -25,7 +25,7 @@ export function Toast({ toast, onClose }: { toast: ToastState; onClose: () => vo
       ? "border-emerald-400/40 text-emerald-100"
       : toast.kind === "error"
         ? "border-rose-400/40 text-rose-100"
-        : "border-white/15 text-slate-100";
+        : "border-white/15 text-white";
 
   return (
     <div className="fixed bottom-4 right-4 z-[80] w-[calc(100%-32px)] sm:w-[420px] pointer-events-none">
@@ -43,12 +43,12 @@ export function Toast({ toast, onClose }: { toast: ToastState; onClose: () => vo
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-1">
                 <div className="font-semibold text-white">{toast.title}</div>
-                {toast.message ? <div className="text-[11px] text-slate-200">{toast.message}</div> : null}
+                {toast.message ? <div className="text-[11px] text-ehb-textBody">{toast.message}</div> : null}
               </div>
               <button
                 type="button"
                 onClick={onClose}
-                className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-slate-200 hover:bg-white/5"
+                className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-ehb-textBody hover:bg-white/5"
               >
                 Close
               </button>

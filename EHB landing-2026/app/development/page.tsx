@@ -24,7 +24,7 @@ const industries = [
 function Section(props: { title: string; children: React.ReactNode }) {
   return (
     <section className="space-y-2">
-      <h2 className="text-[11px] uppercase tracking-[0.18em] text-slate-500">{props.title}</h2>
+      <h2 className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted">{props.title}</h2>
       {props.children}
     </section>
   );
@@ -41,12 +41,12 @@ function ProgressBar({ value }: { value: number }) {
 function ProgressBlock(props: { title: string; items: { label: string; value: number }[] }) {
   return (
     <div className="glass-panel card-hover p-3">
-      <div className="font-semibold text-slate-100 mb-1.5 text-[10px] xs:text-[11px]">{props.title}</div>
+      <div className="font-semibold text-white mb-1.5 text-[10px] xs:text-[11px]">{props.title}</div>
       <div className="space-y-2">
         {props.items.map((item) => (
           <div key={item.label}>
             <div className="flex justify-between">
-              <span className="text-slate-200">{item.label}</span>
+              <span className="text-ehb-textBody">{item.label}</span>
               <span className="text-ehb-textMuted">{item.value}%</span>
             </div>
             <ProgressBar value={item.value} />
@@ -60,10 +60,10 @@ function ProgressBlock(props: { title: string; items: { label: string; value: nu
 function FlowCard(props: { title: string; steps: string[] }) {
   return (
     <div className="glass-panel card-hover p-3">
-      <div className="font-semibold text-slate-100 mb-1.5 text-[10px] xs:text-[11px]">{props.title}</div>
+      <div className="font-semibold text-white mb-1.5 text-[10px] xs:text-[11px]">{props.title}</div>
       <ol className="space-y-1 text-ehb-textBody">
         {props.steps.map((s, i) => (
-          <li key={s}><span className="text-slate-500 mr-1">{i + 1}.</span>{s}</li>
+          <li key={s}><span className="text-ehb-textMuted mr-1">{i + 1}.</span>{s}</li>
         ))}
       </ol>
     </div>
@@ -73,7 +73,7 @@ function FlowCard(props: { title: string; steps: string[] }) {
 function MapCard(props: { title: string; items: string[] }) {
   return (
     <div className="glass-panel card-hover p-3">
-      <div className="font-semibold text-slate-100 mb-1.5 text-[10px] xs:text-[11px]">{props.title}</div>
+      <div className="font-semibold text-white mb-1.5 text-[10px] xs:text-[11px]">{props.title}</div>
       <ul className="space-y-1 text-ehb-textBody">
         {props.items.map((item) => (
           <li key={item}>• {item}</li>
@@ -85,7 +85,7 @@ function MapCard(props: { title: string; items: string[] }) {
 
 export default function DevelopmentPage() {
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-6 sm:py-8 space-y-6 sm:space-y-8 text-[10px] xs:text-[11px]">
         <section className="space-y-1 sm:space-y-2">
           <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">EHB Development Center – Real Platform Build</h1>
@@ -121,7 +121,7 @@ export default function DevelopmentPage() {
               </ul>
             </div>
             <div className="glass-panel card-hover p-3">
-              <div className="font-semibold text-slate-100 mb-1.5">Industries (Phase‑1)</div>
+              <div className="font-semibold text-white mb-1.5">Industries (Phase‑1)</div>
               <ul className="space-y-1 text-ehb-textBody">
                 <li>• E‑commerce (GoSellr GSM)</li>
                 <li>• Legal Services (EHB OLS)</li>
@@ -148,12 +148,12 @@ export default function DevelopmentPage() {
               ]}
             />
             <div className="glass-panel card-hover p-3">
-              <div className="font-semibold text-slate-100 mb-1.5 text-[10px] xs:text-[11px]">Industries – Phase‑1 Readiness</div>
+              <div className="font-semibold text-white mb-1.5 text-[10px] xs:text-[11px]">Industries – Phase‑1 Readiness</div>
               <div className="space-y-2">
                 {industries.map((ind) => (
                   <div key={ind.name}>
                     <div className="flex justify-between">
-                      <span className="text-slate-200">{ind.name}</span>
+                      <span className="text-ehb-textBody">{ind.name}</span>
                       <span className="text-ehb-textMuted">{ind.progress}%</span>
                     </div>
                     <ProgressBar value={ind.progress} />
@@ -204,7 +204,7 @@ export default function DevelopmentPage() {
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {industries.map((ind) => (
               <div key={ind.name} className="glass-panel card-hover p-3">
-                <div className="font-semibold text-slate-100 mb-1.5 text-[10px] xs:text-[11px]">{ind.name}</div>
+                <div className="font-semibold text-white mb-1.5 text-[10px] xs:text-[11px]">{ind.name}</div>
                 <ProgressBar value={ind.progress} />
                 <p className="mt-1 text-ehb-textMuted">Build readiness: <span className="font-semibold">{ind.progress}%</span></p>
               </div>

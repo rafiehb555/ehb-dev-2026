@@ -57,6 +57,8 @@ Classes: `text-ehb-textBody`, `text-ehb-textMuted` (see `colors.ehb` in `tailwin
 
 **Deploy check:** `GET /api/health` → `{ ok, service, gitSha? }` ([`app/api/health/route.ts`](../../EHB%20landing-2026/app/api/health/route.ts)); covered by [`tests/health.test.ts`](../../EHB%20landing-2026/tests/health.test.ts).
 
+**Docs index:** [`docs/INDEX.md`](../INDEX.md) includes a **Static assets** pointer to [`EHB landing-2026/README.md` — Static assets](../../EHB%20landing-2026/README.md#static-assets) (`public/images/`, `designAssets.ts`, `gosellrProducts.ts`, `next/image`).
+
 ## STL badge → color (UIUX Part 1)
 
 | Level | Mapping |
