@@ -36,11 +36,15 @@ test.describe("Auth login 429 UI", () => {
     await page.getByTestId("auth-email").fill("ui-e2e@example.com");
     await page.getByTestId("auth-password").fill("wrong-password-e2e");
     await expect(page.getByTestId("auth-email")).toHaveValue("ui-e2e@example.com");
+    await expect(page.getByTestId("auth-password")).toHaveValue("wrong-password-e2e");
 
     const loginPost = page.waitForResponse(
       (r) => r.url().includes("/api/auth/login") && r.request().method() === "POST"
     );
-    await page.getByTestId("auth-password").press("Enter");
+    await page.getByTestId("auth-email").evaluate((el) => {
+      const form = el.closest("form");
+      if (form instanceof HTMLFormElement) form.requestSubmit();
+    });
     await loginPost;
 
     await expect(page.getByTestId("auth-submit")).toHaveText(/Retry in 60s/, { timeout: 15_000 });
