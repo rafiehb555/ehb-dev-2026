@@ -5,6 +5,8 @@
 
 export type StlDashboardDemo = {
   displayName: string;
+  /** Shown next to name, e.g. Seller / Franchise */
+  roleLabel: string;
   stlLevel: 1 | 2 | 3 | 4 | 5;
   trustScore: number;
   nextLevelLabel: string;
@@ -32,6 +34,8 @@ export type StlDashboardDemo = {
     refills: { current: number; target: number };
     statusLabel: string;
     nextRequirement: string;
+    /** Last refill amount label for dashboard */
+    lastRefillAmount: string;
   };
   franchise: {
     verifications: { city: string; done: boolean }[];
@@ -39,7 +43,9 @@ export type StlDashboardDemo = {
   };
   publicProfile: {
     badge: string;
+    /** Structured lines for public card */
     summaryLines: string[];
+    stlLine: string;
   };
   ai: {
     headline: string;
@@ -53,6 +59,7 @@ export type StlDashboardDemo = {
 
 export const STL_DASHBOARD_DEMO: StlDashboardDemo = {
   displayName: "Muhammad Rafi",
+  roleLabel: "Seller / Franchise",
   stlLevel: 4,
   trustScore: 78,
   nextLevelLabel: "STL-5 (VIP)",
@@ -68,7 +75,7 @@ export const STL_DASHBOARD_DEMO: StlDashboardDemo = {
     phaseLabel: "Advanced",
     complaintsOpen: 2,
     complaintsMax: 8,
-    warning: "2 more complaints before upgrade path may be blocked",
+    warning: "2 more complaints will block upgrade",
   },
   crb: {
     verifications: { current: 2, target: 4 },
@@ -77,12 +84,14 @@ export const STL_DASHBOARD_DEMO: StlDashboardDemo = {
       { label: "Visit #1 — PASS", ok: true },
       { label: "Visit #2 — PASS", ok: true },
       { label: "Exam #1 — FAIL", ok: false },
+      { label: "Exam #2 — PASS", ok: true },
     ],
   },
   dmo: {
     refills: { current: 4, target: 6 },
     statusLabel: "In progress",
-    nextRequirement: "2 more refills needed for next tier review",
+    nextRequirement: "2 more refills needed",
+    lastRefillAmount: "$100",
   },
   franchise: {
     verifications: [
@@ -93,10 +102,17 @@ export const STL_DASHBOARD_DEMO: StlDashboardDemo = {
   },
   publicProfile: {
     badge: "HIGH VERIFIED USER",
-    summaryLines: ["PSS: Verified", "CRB: 2/4", "DMO: Active", "Complaints: 2 open"],
+    stlLine: "STL LEVEL: 4 (HIGH)",
+    summaryLines: [
+      "PSS: Verified",
+      "CRB: 2/4 Verified",
+      "Exams: 1/4 Passed",
+      "DMO: Active",
+      "Complaints: 2",
+    ],
   },
   ai: {
-    headline: "You are ~80% ready for VIP",
+    headline: "You're 80% ready for VIP",
     bullets: [
       "Complete 2 CRB verifications",
       "Pass 3 exams",
