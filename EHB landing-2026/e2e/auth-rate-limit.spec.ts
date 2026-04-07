@@ -25,11 +25,16 @@ test.describe("Auth login rate limit", () => {
 
     await expect(page.getByTestId("auth-submit")).toBeVisible();
 
+    const triggerSubmit = () =>
+      page.getByTestId("auth-submit").evaluate((el) => {
+        (el as HTMLButtonElement).click();
+      });
+
     for (let i = 0; i < 8; i++) {
       const loginResPromise = page.waitForResponse(
         (r) => r.url().includes("/api/auth/login") && r.request().method() === "POST"
       );
-      await page.getByTestId("auth-submit").click();
+      await triggerSubmit();
       const loginRes = await loginResPromise;
       expect(loginRes.status()).toBe(401);
       const body = (await loginRes.json()) as { error?: { message?: string } };
@@ -43,7 +48,7 @@ test.describe("Auth login rate limit", () => {
     const ninth = page.waitForResponse(
       (r) => r.url().includes("/api/auth/login") && r.request().method() === "POST"
     );
-    await page.getByTestId("auth-submit").click();
+    await triggerSubmit();
     const res429 = await ninth;
     expect(res429.status()).toBe(429);
 
