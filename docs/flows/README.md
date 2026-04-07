@@ -18,7 +18,8 @@ The Next.js app lives in [`EHB landing-2026/`](../../EHB%20landing-2026/).
 
 | What | Where / command |
 |------|------------------|
-| **CI** | [`.github/workflows/ehb-landing-ci.yml`](../../.github/workflows/ehb-landing-ci.yml) — `npm ci` → `tsc --noEmit` → `npm test` → `npm run lint` → `npm run build` |
+| **CI** | [`.github/workflows/ehb-landing-ci.yml`](../../.github/workflows/ehb-landing-ci.yml) — `npm ci` → informational `npm audit --audit-level=high` → `tsc --noEmit` → `npm test` → `npm run lint` → `npm run build` |
+| **Pre-push (local)** | **`npm run ci:local`** then **`npm run audit:info`** — [FLOW-P11 — Pre-push gate](FLOW-P11-integration-readiness.md#pre-push-gate-ehb-landing-2026); also [docs/INDEX.md](../INDEX.md) (**CI**), [LOCAL_DEPLOY_PARITY_CHECKLIST.md](../development/LOCAL_DEPLOY_PARITY_CHECKLIST.md) |
 | **Stale `.next` / missing chunk** | From `EHB landing-2026/`: **`npm run build:clean`** (`clean` + `build`) |
 | **Implementation index** | [docs/INDEX.md](../INDEX.md) — health smoke, Stripe, OLS law reference, Tailwind `content` globs |
 

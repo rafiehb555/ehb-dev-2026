@@ -9,7 +9,7 @@ const NODE_DETAILS: Record<NodeKey, { title: string; standFor: string; desc: str
     title: "PSS",
     standFor: "Proof & Security System",
     desc: "Verifies identity and prevents fake users.",
-    accent: "#00AEEF",
+    accent: "#29ABE2",
   },
   DMO: {
     title: "DMO",
@@ -21,7 +21,7 @@ const NODE_DETAILS: Record<NodeKey, { title: string; standFor: string; desc: str
     title: "JPS",
     standFor: "Job Profile & Skill",
     desc: "Connects users with jobs, opportunities, and buyers.",
-    accent: "#00AEEF",
+    accent: "#29ABE2",
   },
   CRB: {
     title: "CRB",
@@ -39,7 +39,7 @@ const NODE_DETAILS: Record<NodeKey, { title: string; standFor: string; desc: str
     title: "EHW",
     standFor: "EHB Wallet",
     desc: "EHB Wallet: payments, earnings, and affiliate payouts for trusted transactions.",
-    accent: "#00AEEF",
+    accent: "#29ABE2",
   },
 };
 
@@ -148,9 +148,9 @@ export function EHBHowItWorks3DInteractive() {
                 <div
                   className="h-10 w-10 rounded-xl flex items-center justify-center text-lg border"
                   style={{
-                    backgroundColor: "rgba(0,174,239,0.12)",
-                    borderColor: "rgba(0,174,239,0.30)",
-                    boxShadow: "0 0 18px rgba(0,174,239,0.22)",
+                    backgroundColor: "rgba(41, 171, 226,0.12)",
+                    borderColor: "rgba(41, 171, 226,0.30)",
+                    boxShadow: "0 0 18px rgba(41, 171, 226,0.22)",
                   }}
                   aria-hidden
                 >
@@ -176,9 +176,9 @@ export function EHBHowItWorks3DInteractive() {
           >
             <defs>
               <linearGradient id="ehbLineCyan" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#00AEEF" stopOpacity="0.95" />
+                <stop offset="0%" stopColor="#29ABE2" stopOpacity="0.95" />
                 <stop offset="60%" stopColor="#8B5CF6" stopOpacity="0.55" />
-                <stop offset="100%" stopColor="#00AEEF" stopOpacity="0.35" />
+                <stop offset="100%" stopColor="#29ABE2" stopOpacity="0.35" />
               </linearGradient>
             </defs>
 
@@ -244,9 +244,9 @@ export function EHBHowItWorks3DInteractive() {
               width: 160,
               height: 160,
               background:
-                "radial-gradient(circle at 50% 25%, rgba(248,250,252,0.95), transparent 55%), radial-gradient(circle at 50% 70%, rgba(0,174,239,0.85), transparent 68%)",
+                "radial-gradient(circle at 50% 25%, rgba(248,250,252,0.95), transparent 55%), radial-gradient(circle at 50% 70%, rgba(41, 171, 226,0.85), transparent 68%)",
               boxShadow:
-                "0 0 52px rgba(0,174,239,0.52), 0 0 110px rgba(139,92,246,0.28)",
+                "0 0 52px rgba(41, 171, 226,0.52), 0 0 110px rgba(139,92,246,0.28)",
               animation: "ehbCorePulse 2.6s ease-in-out infinite",
             }}
           >
@@ -346,9 +346,9 @@ export function EHBHowItWorks3DInteractive() {
                 style={{
                   left: `${20 + i * 7}%`,
                   top: `${35 + (i % 3) * 14}%`,
-                  background: i % 2 === 0 ? "rgba(0,174,239,0.95)" : "rgba(139,92,246,0.9)",
+                  background: i % 2 === 0 ? "rgba(41, 171, 226,0.95)" : "rgba(139,92,246,0.9)",
                   boxShadow: `0 0 14px ${
-                    i % 2 === 0 ? "rgba(0,174,239,0.35)" : "rgba(139,92,246,0.30)"
+                    i % 2 === 0 ? "rgba(41, 171, 226,0.35)" : "rgba(139,92,246,0.30)"
                   }`,
                   opacity: 0.55,
                   animation: "ehbDataParticle 1.8s ease-in-out infinite",
@@ -362,9 +362,9 @@ export function EHBHowItWorks3DInteractive() {
           <div className="absolute top-1/2 right-2 -translate-y-1/2 w-[190px] pointer-events-none">
             <div className="space-y-2">
               {[
-                { title: "Verified Services", desc: "Only trusted listings", icon: "✅", accent: "#00AEEF" },
+                { title: "Verified Services", desc: "Only trusted listings", icon: "✅", accent: "#29ABE2" },
                 { title: "Jobs & Opportunities", desc: "Matched next steps", icon: "📌", accent: "#8B5CF6" },
-                { title: "Products", desc: "Monitored availability", icon: "🛒", accent: "#00AEEF" },
+                { title: "Products", desc: "Monitored availability", icon: "🛒", accent: "#29ABE2" },
               ].map((o) => (
                 <div
                   key={o.title}
@@ -399,7 +399,7 @@ export function EHBHowItWorks3DInteractive() {
                 className="absolute inset-0"
                 style={{
                   backgroundImage:
-                    "radial-gradient(circle at 15% 0%, rgba(139,92,246,0.22), transparent 55%), radial-gradient(circle at 100% 70%, rgba(0,174,239,0.16), transparent 50%)",
+                    "radial-gradient(circle at 15% 0%, rgba(139,92,246,0.22), transparent 55%), radial-gradient(circle at 100% 70%, rgba(41, 171, 226,0.16), transparent 50%)",
                 }}
               />
             </div>
@@ -416,9 +416,9 @@ export function EHBHowItWorks3DInteractive() {
                     className="rounded-full px-3 py-1 text-[10px] font-medium border"
                     style={{
                       borderColor: "rgba(0,234,239,0.35)",
-                      backgroundColor: "rgba(0,174,239,0.10)",
+                      backgroundColor: "rgba(41, 171, 226,0.10)",
                       color: "rgba(226,232,240,0.92)",
-                      boxShadow: "0 0 18px rgba(0,174,239,0.12)",
+                      boxShadow: "0 0 18px rgba(41, 171, 226,0.12)",
                     }}
                   >
                     {c}

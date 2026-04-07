@@ -33,7 +33,7 @@ function Section(props: { title: string; children: React.ReactNode }) {
 function ProgressBar({ value }: { value: number }) {
   return (
     <div className="mt-1 h-1.5 w-full rounded-full bg-[#020c1b] overflow-hidden">
-      <div className="h-full rounded-full bg-[#00eaff]" style={{ width: `${value}%` }} />
+      <div className="h-full rounded-full bg-[#33C3FF]" style={{ width: `${value}%` }} />
     </div>
   );
 }
@@ -91,12 +91,12 @@ export default function DevelopmentPage() {
           <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">EHB Development Center – Real Platform Build</h1>
           <p className="text-ehb-textBody text-[10px] xs:text-[11px] max-w-2xl">
             Real control panel for tracking EHB platform architecture, progress, shared tools, and system flows. This page is directly aligned with{" "}
-            <span className="font-semibold text-[#00eaff]">EHB_SUPER_ADMIN_CONTROL_PANEL</span> and{" "}
-            <span className="font-semibold text-[#00eaff]">EHB_MICROSERVICES_ARCHITECTURE</span> source docs.
+            <span className="font-semibold text-[#33C3FF]">EHB_SUPER_ADMIN_CONTROL_PANEL</span> and{" "}
+            <span className="font-semibold text-[#33C3FF]">EHB_MICROSERVICES_ARCHITECTURE</span> source docs.
           </p>
           <div className="flex flex-wrap gap-2 pt-1.5">
             <a href="/" className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-3 py-1.5 text-[10px] xs:text-[11px] font-semibold text-white hover:shadow-neon-blue transition-all duration-200">← Back to Landing</a>
-            <a href="/admin" className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-3 py-1.5 text-[10px] xs:text-[11px] font-semibold text-slate-950 btn-glow">View Super Admin Concept</a>
+            <a href="/admin" className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-3 py-1.5 text-[10px] xs:text-[11px] font-semibold text-slate-950 btn-glow">View Super Admin Concept</a>
           </div>
         </section>
 

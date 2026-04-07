@@ -7,7 +7,7 @@ export function DmoTopNav() {
         <div className="flex flex-wrap gap-2 items-center">
           <Link
             href="/dmo/super-admin"
-            className="min-h-touch inline-flex items-center justify-center rounded-full bg-[#00eaff]/10 border border-[#00eaff]/30 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-[#00eaff]/15 transition-all"
+            className="min-h-touch inline-flex items-center justify-center rounded-full bg-[#33C3FF]/10 border border-[#33C3FF]/30 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-[#33C3FF]/15 transition-all"
           >
             Super Admin Panel
           </Link>

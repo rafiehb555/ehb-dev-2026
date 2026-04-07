@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { ReactNode } from "react";
 import Image from "next/image";
-import { Sora } from "next/font/google";
+import { Inter } from "next/font/google";
 import { IndustriesBar } from "@/components/IndustriesBar";
 import { TopNavTabs } from "@/components/TopNavTabs";
 import { HeaderSearch } from "@/components/HeaderSearch";
@@ -9,14 +9,15 @@ import { NotificationsBell } from "@/components/NotificationsBell";
 
 /** Ships with HTML so base theme applies even if `/_next/static/css/*.css` fails to load. */
 const EHB_CRITICAL_CSS = `
-html{-webkit-text-size-adjust:100%;background-color:#0a1929!important}
-body{margin:0;min-height:100vh;background-color:#0a1929!important;color:#e5e7eb;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+html{-webkit-text-size-adjust:100%;background-color:#0d1017!important}
+body{margin:0;min-height:100vh;background-color:#0d1017!important;color:#e5e7eb;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 main{background:transparent!important}
 `;
 
-const sora = Sora({
+/** EHB_UIUX_DESIGN_PLAN.md — primary UI font Inter */
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sora",
+  variable: "--font-inter",
   display: "swap"
 });
 
@@ -34,7 +35,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`scroll-smooth ${sora.variable}`}>
+    <html lang="en" className={`scroll-smooth ${inter.variable}`}>
       <head>
         <style dangerouslySetInnerHTML={{ __html: EHB_CRITICAL_CSS }} />
       </head>
@@ -42,7 +43,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <div className="min-h-[100dvh] flex flex-col page-mesh relative">
           {/* Center shine – hero jaisi lighting beech mein */}
           <div className="fixed inset-0 pointer-events-none z-0" aria-hidden style={{
-            background: 'radial-gradient(ellipse 90% 70% at 50% 45%, rgba(0, 234, 255, 0.06) 0%, rgba(0, 174, 239, 0.03) 35%, transparent 60%)',
+            background:
+              'radial-gradient(ellipse 90% 70% at 50% 45%, rgba(41, 171, 226, 0.07) 0%, rgba(51, 195, 255, 0.04) 35%, transparent 60%)',
           }} />
           <div className="relative z-10 flex flex-col min-h-[100dvh]">
           <header className="nav-glass sticky top-0 z-50 pt-safe-t">
@@ -72,7 +74,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 <TopNavTabs />
                 <NotificationsBell />
-                <span className="text-xs sm:text-sm font-semibold text-[#00eaff] whitespace-nowrap">850.00 EHBGC</span>
+                <span className="text-xs sm:text-sm font-semibold text-[#33C3FF] whitespace-nowrap">850.00 EHBGC</span>
               </div>
             </div>
           </header>

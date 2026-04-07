@@ -318,7 +318,7 @@ export default function HomePage() {
                 <Link
                   key={chip.slug}
                   href={`/landing/${chip.slug}`}
-                  className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/70 hover:bg-white/10 hover:text-white hover:border-[#00eaff]/40 transition-all"
+                  className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/70 hover:bg-white/10 hover:text-white hover:border-[#33C3FF]/40 transition-all"
                 >
                   {label}
                 </Link>
@@ -335,7 +335,7 @@ export default function HomePage() {
             )}
           </div>
           <p className="text-center mt-4">
-            <Link href="/industries" className="text-xs text-[#00eaff] hover:underline font-medium">
+            <Link href="/industries" className="text-xs text-[#33C3FF] hover:underline font-medium">
               Open full industries directory →
             </Link>
           </p>

@@ -22,7 +22,7 @@ export default function AdminAiEcosystemPage() {
             </Link>
             <Link
               href="/ai-ecosystem"
-              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#6366f1] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
+              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#6366f1] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
             >
               Open AI Ecosystem
             </Link>

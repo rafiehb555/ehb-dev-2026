@@ -26,7 +26,7 @@ export default function GosellrProductPage({
     countryCode && stateCode && cityCode ? getCityByCode(countryCode, stateCode, cityCode) : undefined;
 
   const locationLabel = selectedCity?.name || selectedState?.name || selectedCountry?.name || "";
-  const locationAccent = selectedCountry?.accent ?? "#00AEEF";
+  const locationAccent = selectedCountry?.accent ?? "#29ABE2";
 
   const locationQs = (() => {
     const sp = new URLSearchParams();
@@ -82,7 +82,7 @@ export default function GosellrProductPage({
             <div className="rounded-3xl glass-card border p-5 overflow-hidden">
               <div
                 className="relative h-[280px] rounded-2xl border bg-white/5 overflow-hidden"
-                style={{ borderColor: "rgba(0,234,255,0.25)" }}
+                style={{ borderColor: "rgba(51, 195, 255,0.25)" }}
               >
                 <Image
                   src={product.image}

@@ -104,7 +104,7 @@ export function IndustriesBar() {
           href="/"
           className={`shrink-0 min-h-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-[11px] font-medium transition-all duration-200 whitespace-nowrap border ${
             pathname === "/" || pathname.startsWith("/landing/")
-              ? "bg-[#00eaff]/20 text-[#00eaff] border-[#00eaff]/60 shadow-neon-blue"
+              ? "bg-[#33C3FF]/20 text-[#33C3FF] border-[#33C3FF]/60 shadow-neon-blue"
               : "text-ehb-textBody hover:text-white hover:bg-white/5 border-transparent"
           }`}
         >
@@ -155,7 +155,7 @@ export function IndustriesBar() {
                 className={[
                   "shrink-0 min-h-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-[11px] font-medium transition-all duration-200 whitespace-nowrap border gap-1.5",
                   isActive
-                    ? "text-slate-950 shadow-[0_0_18px_rgba(0,234,255,0.55)]"
+                    ? "text-slate-950 shadow-[0_0_18px_rgba(51, 195, 255,0.55)]"
                     : "text-ehb-textBody hover:text-white hover:bg-white/5 border-transparent",
                 ].join(" ")}
                 style={

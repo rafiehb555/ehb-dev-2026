@@ -32,7 +32,7 @@ function Badge(props: { tone?: "cyan" | "emerald" | "amber" | "rose" | "slate" |
   const tone = props.tone ?? "slate";
   const styles =
     tone === "cyan"
-      ? "border-[#00eaff]/40 text-[#00eaff]"
+      ? "border-[#33C3FF]/40 text-[#33C3FF]"
       : tone === "emerald"
         ? "border-emerald-400/40 text-emerald-300"
         : tone === "rose"
@@ -332,7 +332,7 @@ export default function SearchPage() {
             </div>
             <div className="lg:col-span-2 flex items-end">
               <button
-                className="w-full rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-4 py-2 text-sm font-semibold text-slate-950 btn-glow"
+                className="w-full rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-sm font-semibold text-slate-950 btn-glow"
                 onClick={search}
                 disabled={loading}
               >

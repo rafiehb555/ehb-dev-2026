@@ -69,7 +69,7 @@ export default function CartPage({
   const locationAccent = useMemo(() => {
     const countryCode = searchParams?.country?.trim() || "";
     const selectedCountry = countryCode ? getCountryByCode(countryCode) : undefined;
-    return selectedCountry?.accent ?? "#00AEEF";
+    return selectedCountry?.accent ?? "#29ABE2";
   }, [searchParams?.country]);
 
   const productMap = useMemo(() => {
@@ -292,7 +292,7 @@ export default function CartPage({
                 type="button"
                 onClick={placeOrder}
                 disabled={lines.length === 0 || busy}
-                className="min-h-touch w-full inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#22c55e] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                className="min-h-touch w-full inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#22b14c] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {busy ? "Placing..." : "Place order →"}
               </button>

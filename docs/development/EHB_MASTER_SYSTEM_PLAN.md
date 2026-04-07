@@ -1,6 +1,6 @@
 # EHB Technologies Limited — MASTER SYSTEM PLAN
 > EHB (Education • Health • Business) — Global AI-Powered Ecosystem
-> Version: 7.0 | April 2026 | Status: LIVING DOCUMENT
+> Version: 8.0 | April 2026 | Status: LIVING DOCUMENT
 
 ---
 
@@ -60,6 +60,7 @@ WRONG:
 | `EHB_BLOCKCHAIN_PLAN.md` | Blockchain architecture |
 | `EHB_UIUX_DESIGN_PLAN.md` | Ultra-level UI/UX full design system |
 | `EHB_COLOR_SCHEME_PLAN.md` | ⭐ Complete color system — logo-extracted |
+| `EHB_ALL_FILES_INDEX.md` | Complete index of all 551 files in project |
 
 ---
 
@@ -1046,6 +1047,219 @@ Applies to: Sellers, Riders, Franchise Operators, Inspectors, JPS Employees
 
 ---
 
+## SECTION 25: PROBLEM STATEMENT + EHB SOLUTION
+
+### Global Problem EHB is Solving:
+```
+❌ Fake services — Unverified providers, scams, low-quality work
+❌ Fake products — Counterfeit, health risks, misleading claims
+❌ Unverified professionals — No standard way to verify skills/experience
+❌ Trust gaps — Users cannot distinguish who to trust
+❌ No global trust standard — Every platform uses its own broken rating system
+
+RESULT: World is missing a GLOBAL DIGITAL TRUST INFRASTRUCTURE
+```
+
+### EHB Solution (One-Line):
+> **EHB Technologies Limited** is building an **AI + Blockchain powered Verified Services & Products Ecosystem.**
+
+### How EHB Solves It (5 Core Systems):
+| System | Role |
+|--------|------|
+| EHB-DMO (Decentralized Management Office) | Central governance, data registry, orchestration |
+| EHB-JPS (Job Profile & Skill) | Verified professional identity and skills |
+| EHB-PSS (Proof & Security System) | Identity, security, risk management |
+| EHB-CRB (Certification & Registry Board) | Certification issuance, registry, renewal |
+| EHB-STL-LEVEL (Service Trust Level) | AI-driven trust score and ranking |
+
+### Competitive Positioning:
+| Platform | What It Does |
+|----------|-------------|
+| Amazon | Products only |
+| LinkedIn | Professional profiles only |
+| Uber | Local services only |
+| Government | Certification/compliance only |
+| **EHB** | **ALL OF THE ABOVE + AI Trust Scoring + Blockchain Registry + Franchise Network** |
+
+---
+
+## SECTION 26: 9 INDUSTRY PLATFORMS (NAMED SERVICES)
+
+EHB mein 9 named industry platforms hain:
+
+| # | Platform | Short Name | Industry | Services |
+|---|---------|-----------|----------|---------|
+| 1 | GoSellr | GSM (Global Shopping Management) | E-Commerce | Products, services, local marketplace, delivery |
+| 2 | World Medical Services | WMS | Health | Doctors, hospitals, telemedicine, pharmacy |
+| 3 | Human Performance Solution | HPS | Education | Schools, universities, courses, tutoring, certifications |
+| 4 | Online Book Store | OBS | Education Content | Books, syllabus, digital learning |
+| 5 | Online Law Services | OLS | Legal | Legal consultation, cases, documentation |
+| 6 | Advanced Global Travel Services | AGTS | Travel | Flights, hotels, tours, car rentals |
+| 7 | Homan Machinery Solutions | HMS | Machinery | Sales, repair, industrial equipment |
+| 8 | Services of Technology | SOT | Technology | Software, IT services, AI dev, tech consulting |
+| 9 | EHB Tube | — | Media | Video/audio hosting, content publishing |
+
+Plus **26 more industry categories** (see Section 3 — 35 total active industries).
+
+---
+
+## SECTION 27: BUSINESS MODEL + REVENUE STREAMS
+
+### 7 Primary Revenue Streams:
+| # | Revenue Source | Description |
+|---|---------------|-------------|
+| 1 | Verification Fees | PSS identity, business, service, product verification |
+| 2 | Certification Fees | CRB sector-specific + industry certifications |
+| 3 | Marketplace Commissions | % on all bookings and product sales |
+| 4 | Franchise Licensing | Upfront + ongoing Sub/Master/Corporate fees |
+| 5 | Renewal Fees | 6-month re-verification + certification renewal |
+| 6 | Training Programs | Professional courses with EHB-backed certificates |
+| 7 | Advertising | Sponsored placements + featured providers |
+
+### 6 Economic Layers:
+```
+EHB ECONOMY
+├─ Marketplace Economy  (GoSellr, services, bookings)
+├─ Affiliate Economy    (referral + matrix commissions)
+├─ Franchise Economy    (licensing + inspection fees)
+├─ Certification Economy (CRB + industry certifications)
+├─ Subscription Economy (premium memberships)
+└─ Blockchain Economy   (EHBGC + EHBSC + staking)
+```
+
+### Commission Example (Product Sale):
+| Recipient | Share |
+|-----------|-------|
+| Seller | 70% |
+| Head Office (HO) | 10% |
+| Rider (delivery) | 5% |
+| Affiliate (EAP) | 7% |
+| Sub Franchise | 3% |
+| Master Franchise | 2% |
+| Corporate Franchise | 2% |
+| Country Franchise | 1% |
+
+---
+
+## SECTION 28: GLOBAL EXPANSION STRATEGY
+
+### 5-Phase Geographic Expansion:
+```
+Phase 1 → Pakistan (Launch — Months 1-12)
+          Target: 100K users, 10K providers, 50 franchises
+          ↓
+Phase 2 → UAE, Saudi Arabia, Turkey (Regional — Months 13-24)
+          Target: 500K users, 4 countries, $10M/month GMV
+          ↓
+Phase 3 → India, Indonesia, Malaysia (Asia — Months 25-36)
+          Target: 5M users, 7 countries, $50M/month GMV
+          ↓
+Phase 4 → Germany, UK, France (Europe — Months 37-48)
+          Target: 20M users, 10 countries
+          ↓
+Phase 5 → USA, Canada, Australia (Global — Months 49-60)
+          Target: 100M+ users, 20+ countries
+```
+
+### Expansion Model:
+- NOT centralized expansion — uses Franchise Network for local ops
+- Each country gets a Corporate Franchise (EHB-ECF)
+- Local laws, language, payment methods integrated per region
+- Data sovereignty maintained (local data centers per region)
+
+---
+
+## SECTION 29: DEVELOPMENT ROADMAP (8 PHASES)
+
+| Phase | Name | What Gets Built | Status |
+|-------|------|----------------|--------|
+| 1 | FOUNDATION | DMO, PSS, CRB, STL, EHB Wallet — Trust Infrastructure | ⏳ Next |
+| 2 | MARKETPLACE | GoSellr, Products, Services, Order System | ⏳ Pending |
+| 3 | PROFESSIONAL | JPS, Jobs, Freelance, Skill Matching | ⏳ Pending |
+| 4 | SERVICES | WMS, AGTS, OLS, SOT, HPS platforms | ⏳ Pending |
+| 5 | GOVERNANCE | Applications, Licenses, Digital Gov | ⏳ Pending |
+| 6 | GLOBAL | Multi-region, Multi-language, Multi-currency | ⏳ Pending |
+| 7 | AI | ML models, Fraud Detection, NLP, Recommendations | ⏳ Pending |
+| 8 | BLOCKCHAIN | Trust Network, Smart Contracts, Decentralization | ⏳ Pending |
+
+### Key Dependency Rule:
+```
+Phase 1 (Foundation) → REQUIRED for ALL other phases
+All other phases depend on: DMO + PSS + CRB + STL + Wallet
+```
+
+### Current Planning Status:
+- Planning & Design: ██████████ 100% COMPLETE
+- Phase 1 Development: starts when user says "ab development shuru karo"
+
+---
+
+## SECTION 30: INVESTOR PITCH (KEY POINTS)
+
+### Problem → Solution → Market (3 Slides):
+
+**Problem:**
+> "The world is missing a global digital trust infrastructure for services, products, professionals, and companies."
+
+**Solution:**
+> "EHB = AI + Blockchain + Franchise Network + Multi-Industry Verification — all in one Super App."
+
+**Market:**
+> Combined addressable market = **Trillions of dollars** across:
+> - Online services + freelancing
+> - Product marketplaces
+> - Compliance & certification
+
+### 4 Core Competitive Moats (Investor Angle):
+1. **AI Trust Engine (STL)** — No other platform has this
+2. **Multi-Industry Verification (32+ industries)** — Industry-specific trust
+3. **Franchise Inspection Network** — Physical + digital verification
+4. **Blockchain Trust Registry** — Tamper-proof, globally readable
+
+---
+
+## SECTION 31: TOKEN STAKING BENEFITS (EHBGC)
+
+### Staking Tiers:
+| Stake Amount | STL Boost | Search Ranking Boost | Withdrawal Limit |
+|-------------|-----------|---------------------|-----------------|
+| 100 EHBGC | +5% | +10% | $5,000/day |
+| 500 EHBGC | +15% | +25% | $25,000/day |
+| 2,000 EHBGC | +30% | +50% | Unlimited |
+
+### Reward Program (Earn EHBGC):
+| Activity | Reward |
+|----------|--------|
+| Referral (user signs up) | 10 EHBGC |
+| Referral (user completes KYC) | 25 EHBGC |
+| Complete service transaction | 2% of value |
+| Verified review submitted | 5 EHBGC |
+| Report confirmed fraud | 50 EHBGC |
+
+---
+
+## SECTION 32: COMPLETE FILE INDEX
+
+> Full list: `EHB_ALL_FILES_INDEX.md`
+
+### Files by Category:
+| Category | Files | Location |
+|---------|-------|---------|
+| Our Planning Docs | 17 files | `/docs/development/` |
+| Cursor Rules | 50 files | `/.cursor/rules/` |
+| Architecture Docs | 50 files | `/ehb-dev-2026/docs/architecture/` |
+| Strategy Docs | 15 files | `/ehb-dev-2026/docs/strategy/` |
+| Roadmap Docs | 5 files | `/ehb-dev-2026/docs/roadmap/` |
+| Landing Page Docs | 32 files | `/EHB landing-2026/docs/` |
+| UI/UX Docs | 13 files | `/ehb-dev-2026/docs/ui-ux/` |
+| Database Docs | 5 files | `/ehb-dev-2026/docs/database/` |
+| Agent/AI Docs | 10 files | `/docs/agents/` |
+| Department Docs | 4 files | `/ehb-dev-2026/docs/departments/` |
+| Prompt/Rules | 3 files | `/prompts/` |
+| **Total** | **204+ key files** | across project |
+
+---
+
 ## ⭐ FUTURE PLANNING ADDITION RULE
 
 ```
@@ -1065,6 +1279,6 @@ Example:
 
 ---
 
-*EHB_MASTER_SYSTEM_PLAN.md | Version 7.0 | April 2026*
+*EHB_MASTER_SYSTEM_PLAN.md | Version 8.0 | April 2026*
 *This is the LIVING MASTER DOCUMENT — updated with every new plan*
 *Development starts only when user says: "ab development shuru karo"*

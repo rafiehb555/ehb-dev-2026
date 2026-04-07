@@ -24,7 +24,7 @@ export function DigitalGovernanceLanding() {
 
         <section
           className="rounded-3xl glass-panel border border-white/10 p-5 md:p-6 overflow-hidden relative"
-          style={{ boxShadow: "0 0 30px rgba(0,234,255,0.10)" }}
+          style={{ boxShadow: "0 0 30px rgba(51, 195, 255,0.10)" }}
         >
           <div className="absolute inset-0 pointer-events-none opacity-[0.06]" aria-hidden
             style={{
@@ -42,10 +42,10 @@ export function DigitalGovernanceLanding() {
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {[
-                    { title: "New", accent: "rgba(0,234,255,0.35)", desc: "Submitted documents and requests." },
+                    { title: "New", accent: "rgba(51, 195, 255,0.35)", desc: "Submitted documents and requests." },
                     { title: "In Review", accent: "rgba(59,130,246,0.35)", desc: "Officer checks and verification tasks." },
                     { title: "Inspection", accent: "rgba(245,158,11,0.35)", desc: "On-site / CRB inspection steps." },
-                    { title: "Approved", accent: "rgba(34,197,94,0.35)", desc: "License issued + registry updated." },
+                    { title: "Approved", accent: "rgba(34, 177, 76,0.35)", desc: "License issued + registry updated." },
                     { title: "Rejected", accent: "rgba(239,68,68,0.35)", desc: "Feedback + re-application guidance." },
                   ].map((col) => (
                     <div
@@ -86,7 +86,7 @@ export function DigitalGovernanceLanding() {
                 <div className="flex flex-wrap gap-3 pt-3">
                   <Link
                     href="/admin/development"
-                    className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-5 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+                    className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-5 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
                   >
                     Open approvals board
                     <span className="text-xs ml-2" aria-hidden>
@@ -104,7 +104,7 @@ export function DigitalGovernanceLanding() {
             </div>
 
             <div className="lg:col-span-5 space-y-4">
-              <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(0,174,239,0.35)" }}>
+              <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(41, 171, 226,0.35)" }}>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
                   Trust stack meaning (always visible)
                 </p>
@@ -122,7 +122,7 @@ export function DigitalGovernanceLanding() {
                 </div>
               </div>
 
-              <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(34,197,94,0.25)" }}>
+              <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(34, 177, 76,0.25)" }}>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
                   Compliance notifications (demo)
                 </p>

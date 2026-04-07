@@ -71,7 +71,7 @@ function FlowConnector({ accent }: { accent: string }) {
 }
 
 export function EHBVerificationSystemFlow() {
-  const accent = "#00AEEF";
+  const accent = "#29ABE2";
   const accent2 = "#8B5CF6";
 
   const steps = [
@@ -90,7 +90,7 @@ export function EHBVerificationSystemFlow() {
       </p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-6">How 700+ Services Are 100% Verified</h2>
 
-      <div className="rounded-3xl glass-card border px-4 sm:px-6 py-8 md:py-10 border-[#00eaff]/20 overflow-hidden">
+      <div className="rounded-3xl glass-card border px-4 sm:px-6 py-8 md:py-10 border-[#33C3FF]/20 overflow-hidden">
         <div className="space-y-4">
           {steps.map((s, idx) => (
             <React.Fragment key={s.title}>

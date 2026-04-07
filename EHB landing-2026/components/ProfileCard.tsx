@@ -62,7 +62,7 @@ export function ProfileCard({ profile }: { profile: JpsProfile }) {
       <div className="flex flex-wrap gap-3">
         <Link
           href="/dashboard"
-          className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#22c55e] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+          className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#22b14c] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
         >
           Open dashboard
           <span className="text-xs ml-2" aria-hidden>

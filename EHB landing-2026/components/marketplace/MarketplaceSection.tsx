@@ -39,7 +39,7 @@ export function MarketplaceSection({ locationQs = "" }: { locationQs?: string })
             onClick={() => setActiveTab("services")}
             className={`min-h-touch rounded-full px-3 py-1.5 text-[11px] font-medium transition-all ${
               activeTab === "services"
-                ? "bg-gradient-to-r from-[#00eaff]/30 to-[#3b82f6]/30 text-white shadow-sm"
+                ? "bg-gradient-to-r from-[#33C3FF]/30 to-[#3b82f6]/30 text-white shadow-sm"
                 : "text-ehb-textMuted hover:text-ehb-textBody"
             }`}
           >
@@ -50,7 +50,7 @@ export function MarketplaceSection({ locationQs = "" }: { locationQs?: string })
             onClick={() => setActiveTab("products")}
             className={`min-h-touch rounded-full px-3 py-1.5 text-[11px] font-medium transition-all ${
               activeTab === "products"
-                ? "bg-gradient-to-r from-[#00eaff]/30 to-[#3b82f6]/30 text-white shadow-sm"
+                ? "bg-gradient-to-r from-[#33C3FF]/30 to-[#3b82f6]/30 text-white shadow-sm"
                 : "text-ehb-textMuted hover:text-ehb-textBody"
             }`}
           >
@@ -59,13 +59,13 @@ export function MarketplaceSection({ locationQs = "" }: { locationQs?: string })
         </div>
         <Link
           href={`/ai-marketplace${locationQs}`}
-          className="text-[10px] text-ehb-textMuted hover:text-[#00eaff] transition-colors"
+          className="text-[10px] text-ehb-textMuted hover:text-[#33C3FF] transition-colors"
         >
           AI Marketplace →
         </Link>
         <Link
           href={`/gosellr${locationQs}`}
-          className="text-[10px] text-ehb-textMuted hover:text-[#00eaff] transition-colors"
+          className="text-[10px] text-ehb-textMuted hover:text-[#33C3FF] transition-colors"
         >
           GoSellr →
         </Link>

@@ -206,7 +206,7 @@ export default function CertificationPage() {
 
             <button
               disabled={submitting || !canSubmit}
-              className="w-full rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-4 py-2 text-sm font-semibold text-slate-950 btn-glow disabled:opacity-40"
+              className="w-full rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-sm font-semibold text-slate-950 btn-glow disabled:opacity-40"
               onClick={submit}
             >
               {submitting ? "Submitting..." : "Submit to CRB"}

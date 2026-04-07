@@ -28,13 +28,13 @@ const MOCK_REPORTS: Record<Tab, Record<Period, { kpis: { a: any; b: any; c: any 
           title: "Demand Change Snapshot",
           subtitle: "Industry-level growth vs previous window",
           bullets: ["IT demand increased 18.4%", "Health appointment demand up 9.1%", "Retail services stabilized after surge"],
-          accent: "#00eaff",
+          accent: "#33C3FF",
         },
         {
           title: "Top Services Ranking",
           subtitle: "Services with highest verified conversion",
           bullets: ["Website Development (Tier-1)", "Doctor Consultation (Tier-2)", "Tutor Packages (Tier-2)"],
-          accent: "#22c55e",
+          accent: "#22b14c",
         },
       ],
     },
@@ -75,7 +75,7 @@ const MOCK_REPORTS: Record<Tab, Record<Period, { kpis: { a: any; b: any; c: any 
           title: "Provider Revenue Mix",
           subtitle: "Which provider segments drive earnings",
           bullets: ["STL High providers: 61%", "STL Medium providers: 28%", "STL Basic: 11%"],
-          accent: "#00eaff",
+          accent: "#33C3FF",
         },
       ],
     },
@@ -86,7 +86,7 @@ const MOCK_REPORTS: Record<Tab, Record<Period, { kpis: { a: any; b: any; c: any 
           title: "Month Summary",
           subtitle: "Actionable highlights for owners",
           bullets: ["AI tool adoption rising in tech cities", "Fraud flags reduced by -14% with better filters", "Demand prediction accuracy improved"],
-          accent: "#22c55e",
+          accent: "#22b14c",
         },
       ],
     },
@@ -146,9 +146,9 @@ export function BusinessAnalyticsAdminPanel() {
   const report = MOCK_REPORTS[tab][period];
 
   const accent = useMemo(() => {
-    if (tab === "Industry") return "#00eaff";
+    if (tab === "Industry") return "#33C3FF";
     if (tab === "Franchise") return "#3b82f6";
-    return "#22c55e";
+    return "#22b14c";
   }, [tab]);
 
   return (
@@ -170,7 +170,7 @@ export function BusinessAnalyticsAdminPanel() {
                 onClick={() => setTab(t)}
                 className={`min-h-touch rounded-full px-3 py-1.5 text-[11px] font-medium transition-all border ${
                   tab === t
-                    ? "bg-gradient-to-r from-[#00eaff]/25 to-[#3b82f6]/25 text-white border-white/15 shadow-sm"
+                    ? "bg-gradient-to-r from-[#33C3FF]/25 to-[#3b82f6]/25 text-white border-white/15 shadow-sm"
                     : "bg-white/0 text-ehb-textMuted hover:text-ehb-textBody border-white/10"
                 }`}
               >

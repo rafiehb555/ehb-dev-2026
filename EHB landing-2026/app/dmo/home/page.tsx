@@ -98,7 +98,7 @@ export default function DmoHomePage() {
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Link href="/dmo" className="rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-4 py-2 text-xs font-semibold text-slate-950 btn-glow">
+              <Link href="/dmo" className="rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-xs font-semibold text-slate-950 btn-glow">
                 Open Dashboard
               </Link>
               <Link href="/home" className="rounded-full glass-panel border border-white/15 px-4 py-2 text-xs font-semibold text-ehb-textBody hover:bg-white/5">
@@ -193,7 +193,7 @@ export default function DmoHomePage() {
                   className={[
                     "rounded-full px-4 py-2 text-xs font-semibold text-center transition-all",
                     a.tone === "primary"
-                      ? "bg-gradient-to-r from-[#00eaff] to-[#3b82f6] text-slate-950 btn-glow"
+                      ? "bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] text-slate-950 btn-glow"
                       : a.tone === "danger"
                         ? "bg-gradient-to-r from-rose-400 to-rose-500 text-slate-950"
                         : "glass-panel border border-white/15 text-ehb-textBody hover:bg-white/5",

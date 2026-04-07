@@ -17,9 +17,9 @@ export default function DmoFranchiseMenuPage() {
 
         <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { href: "/dmo/franchise/country", title: "Country Franchise", accent: "#00eaff" },
+            { href: "/dmo/franchise/country", title: "Country Franchise", accent: "#33C3FF" },
             { href: "/dmo/franchise/corporate", title: "Corporate Franchise", accent: "#3b82f6" },
-            { href: "/dmo/franchise/master", title: "Master Franchise", accent: "#22c55e" },
+            { href: "/dmo/franchise/master", title: "Master Franchise", accent: "#22b14c" },
             { href: "/dmo/franchise/sub", title: "Sub Franchise", accent: "#f59e0b" },
           ].map((c) => (
             <Link

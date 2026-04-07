@@ -36,7 +36,7 @@ function Panel(props: { title: string; path?: string; children: React.ReactNode 
       <div className="flex items-center justify-between gap-2">
         <h2 className="text-[10px] xs:text-[11px] font-semibold text-white">{props.title}</h2>
         {props.path ? (
-          <span className="text-[10px] text-[#00eaff]/80">Path: {props.path}</span>
+          <span className="text-[10px] text-[#33C3FF]/80">Path: {props.path}</span>
         ) : null}
       </div>
       {props.children}
@@ -75,7 +75,7 @@ export default function AdminPage() {
             <a href="/admin/agents" className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-3 py-1.5 font-semibold text-white hover:shadow-neon-blue transition-all duration-200">
               View Agent Center
             </a>
-            <a href="/development" className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow">
+            <a href="/development" className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow">
               View Development Center
             </a>
           </div>
@@ -117,7 +117,7 @@ export default function AdminPage() {
             <div className="mt-2">
               <a
                 href="/admin/jps-import"
-                className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
+                className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
               >
                 Open JPS Import Manager
               </a>
@@ -134,7 +134,7 @@ export default function AdminPage() {
                 Status: <span className="text-emerald-400 font-semibold">Active</span> Â· Categories: 12 Â· Services: 64 Â· Providers: 1,245
               </p>
               <p className="mt-1 text-ehb-textMuted">
-                Flow: Create Industry â†’ Add Categories â†’ Add Services â†’ Assign Franchise â†’ <span className="font-semibold text-[#00eaff]">Industry Live</span>
+                Flow: Create Industry â†’ Add Categories â†’ Add Services â†’ Assign Franchise â†’ <span className="font-semibold text-[#33C3FF]">Industry Live</span>
               </p>
             </div>
           </Panel>
@@ -248,7 +248,7 @@ export default function AdminPage() {
             <div className="mt-2">
               <a
                 href="/admin/agents"
-                className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
+                className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
               >
                 Open Agent Control Center
               </a>

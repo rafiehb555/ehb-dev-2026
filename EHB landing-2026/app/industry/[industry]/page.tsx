@@ -269,7 +269,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
               </div>
               <Link
                 href="/dashboard"
-                className="mt-4 inline-flex rounded-full border px-4 py-2 text-[11px] font-medium text-cyan-200 hover:bg-[#00eaff]/10 transition-colors"
+                className="mt-4 inline-flex rounded-full border px-4 py-2 text-[11px] font-medium text-cyan-200 hover:bg-[#33C3FF]/10 transition-colors"
                 style={{ borderColor: `${accent}60` }}
               >
                 Go to Dashboard
@@ -399,11 +399,11 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
         <section className="flex flex-wrap gap-3 pt-4 text-xs">
           <Link
             href={`/ai-marketplace${locationQs}`}
-            className="text-ehb-textMuted hover:text-[#00eaff] transition-colors"
+            className="text-ehb-textMuted hover:text-[#33C3FF] transition-colors"
           >
             AI Marketplace →
           </Link>
-          <Link href="/" className="text-ehb-textMuted hover:text-[#00eaff] transition-colors">
+          <Link href="/" className="text-ehb-textMuted hover:text-[#33C3FF] transition-colors">
             EHB Home →
           </Link>
         </section>

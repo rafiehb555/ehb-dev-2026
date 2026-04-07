@@ -36,8 +36,8 @@ export function LandingStats() {
         </p>
         <p className="text-xs sm:text-sm text-ehb-textMuted mt-1">Users</p>
       </div>
-      <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#22c55e]/30">
-        <p className="text-2xl md:text-3xl font-bold text-[#22c55e]">
+      <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#22b14c]/30">
+        <p className="text-2xl md:text-3xl font-bold text-[#22b14c]">
           <AnimatedNumber end={700} suffix="+" />
         </p>
         <p className="text-xs sm:text-sm text-ehb-textMuted mt-1">Services</p>

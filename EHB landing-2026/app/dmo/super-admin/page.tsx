@@ -26,7 +26,7 @@ export default function DmoSuperAdminPage() {
         <div className="pt-6 flex flex-wrap gap-2">
           <Link
             href="/dmo/applications"
-            className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+            className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
           >
             Open Applications Board
           </Link>

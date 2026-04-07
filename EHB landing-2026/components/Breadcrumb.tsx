@@ -24,7 +24,7 @@ export function Breadcrumb() {
 
   const segments = pathname.split("/").filter(Boolean);
   const industry = getIndustryFromPath(pathname);
-  const accent = industry?.accentColor ?? "#00eaff";
+  const accent = industry?.accentColor ?? "#33C3FF";
 
   const items: { label: string; href?: string }[] = [];
 

@@ -12,7 +12,7 @@ const BADGES: TrustBadge[] = [
     emoji: "🛡️",
     title: "PSS Verified",
     meaning: "Identity & document verified",
-    accent: "#22c55e",
+    accent: "#22b14c",
   },
   {
     emoji: "🏛️",

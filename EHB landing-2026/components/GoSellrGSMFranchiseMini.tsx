@@ -13,7 +13,7 @@ export function GoSellrGSMFranchiseMini() {
           />
           <div
             className="absolute -right-24 -bottom-24 h-64 w-64 rounded-full blur-3xl"
-            style={{ background: "radial-gradient(circle at 30% 30%, rgba(34,197,94,0.25), transparent 55%)" }}
+            style={{ background: "radial-gradient(circle at 30% 30%, rgba(34, 177, 76,0.25), transparent 55%)" }}
           />
         </div>
 
@@ -51,7 +51,7 @@ export function GoSellrGSMFranchiseMini() {
             <div className="flex flex-wrap gap-3 pt-1">
               <Link
                 href="/franchise#booking"
-                className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00AEEF] to-[#22C55E] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+                className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#29ABE2] to-[#22B14C] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
               >
                 Book GoSellr GSM franchise
               </Link>
@@ -89,7 +89,7 @@ export function GoSellrGSMFranchiseMini() {
                     <linearGradient id="gsGsmRing" x1="0%" y1="0%" x2="100%" y2="100%">
                       <stop offset="0%" stopColor="rgba(0,234,239,0.9)" />
                       <stop offset="55%" stopColor="rgba(59,130,246,0.6)" />
-                      <stop offset="100%" stopColor="rgba(34,197,94,0.5)" />
+                      <stop offset="100%" stopColor="rgba(34, 177, 76,0.5)" />
                     </linearGradient>
                   </defs>
                   <circle
@@ -113,7 +113,7 @@ export function GoSellrGSMFranchiseMini() {
                     transform: "translate(-50%, -50%)",
                     background:
                       "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.20), transparent 40%), radial-gradient(circle at 55% 65%, rgba(0,234,239,0.22), transparent 55%), radial-gradient(circle at 50% 50%, rgba(2,12,27,0.6), rgba(2,12,27,0.95))",
-                    boxShadow: "0 0 36px rgba(0,234,255,0.22), 0 0 90px rgba(0,174,239,0.12)",
+                    boxShadow: "0 0 36px rgba(51, 195, 255,0.22), 0 0 90px rgba(41, 171, 226,0.12)",
                     border: "1px solid rgba(0,234,239,0.25)",
                     animation: "gsGsmGlobePulse 2.8s ease-in-out infinite",
                   }}
@@ -149,7 +149,7 @@ export function GoSellrGSMFranchiseMini() {
                   {[
                     { icon: "🛒", color: "rgba(0,234,239,0.9)" },
                     { icon: "🏷️", color: "rgba(59,130,246,0.9)" },
-                    { icon: "🏪", color: "rgba(34,197,94,0.9)" },
+                    { icon: "🏪", color: "rgba(34, 177, 76,0.9)" },
                     { icon: "📦", color: "rgba(245,158,11,0.9)" },
                     { icon: "🌐", color: "rgba(139,92,246,0.9)" },
                   ].map((it, idx) => {
@@ -185,7 +185,7 @@ export function GoSellrGSMFranchiseMini() {
               <div className="grid gap-3 sm:grid-cols-2">
                 {[
                   { label: "Country", icon: "🌍", color: "rgba(0,234,239,0.20)" },
-                  { label: "Corporate", icon: "🏢", color: "rgba(34,197,94,0.18)" },
+                  { label: "Corporate", icon: "🏢", color: "rgba(34, 177, 76,0.18)" },
                   { label: "Master", icon: "🏆", color: "rgba(139,92,246,0.18)" },
                   { label: "Sub (1–10)", icon: "📦", color: "rgba(245,158,11,0.18)" },
                 ].map((x) => (
@@ -195,7 +195,7 @@ export function GoSellrGSMFranchiseMini() {
                     style={{
                       borderColor: "rgba(148, 163, 184, 0.22)",
                       backgroundColor: x.color,
-                      boxShadow: "0 0 22px rgba(0,234,255,0.08)",
+                      boxShadow: "0 0 22px rgba(51, 195, 255,0.08)",
                     }}
                   >
                     <div className="flex items-center gap-2">

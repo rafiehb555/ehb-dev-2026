@@ -27,12 +27,12 @@ function getThumbEmoji(title: string): string {
 
 function getIndustryAccent(title: string): { color: string; label: string } {
   const t = title.toLowerCase();
-  if (t.includes("medical") || t.includes("health") || t.includes("doctor")) return { color: "#00AEEF", label: "Health" };
+  if (t.includes("medical") || t.includes("health") || t.includes("doctor")) return { color: "#29ABE2", label: "Health" };
   if (t.includes("education") || t.includes("course") || t.includes("books") || t.includes("tutor")) return { color: "#E53935", label: "Education" };
   if (t.includes("website") || t.includes("web") || t.includes("seo") || t.includes("software") || t.includes("app")) return { color: "#3B82F6", label: "IT" };
   if (t.includes("delivery") || t.includes("rider") || t.includes("logistics")) return { color: "#FB923C", label: "Delivery" };
   if (t.includes("laptop") || t.includes("store") || t.includes("product")) return { color: "#F59E0B", label: "E‑commerce" };
-  return { color: "#22C55E", label: "Business" };
+  return { color: "#22B14C", label: "Business" };
 }
 
 function VerifiedBadge() {
@@ -54,7 +54,7 @@ function TrustBadgesCompact({ deptHint }: TrustBadgesCompactProps) {
       key: "pss",
       icon: "🛡️",
       label: "PSS Verified",
-      accent: "rgba(34,197,94,0.55)",
+      accent: "rgba(34, 177, 76,0.55)",
       keywords: ["pss"],
     },
     {
@@ -212,7 +212,7 @@ function ProductCard({ title, price, rating, tag, badge, deptHint }: ProductCard
         className="h-24 rounded-xl mb-2 flex items-center justify-center border"
         style={{
           borderColor: `${accent.color}30`,
-          background: `radial-gradient(circle at 30% 20%, ${accent.color}40, transparent 55%), radial-gradient(circle at 80% 90%, rgba(34,197,94,0.18), transparent 55%), linear-gradient(135deg, rgba(2,12,27,0.85), rgba(2,12,27,0.95))`,
+          background: `radial-gradient(circle at 30% 20%, ${accent.color}40, transparent 55%), radial-gradient(circle at 80% 90%, rgba(34, 177, 76,0.18), transparent 55%), linear-gradient(135deg, rgba(2,12,27,0.85), rgba(2,12,27,0.95))`,
         }}
       >
         <div className="text-center">
@@ -283,7 +283,7 @@ function TabsSwitch({ active, onChange }: { active: "services" | "products"; onC
             onClick={() => onChange(tab.key as "services" | "products")}
             className={`px-4 py-1.5 rounded-full transition-all duration-200 ${
               isActive
-                ? "bg-gradient-to-r from-[#00eaff] to-[#22c55e] text-slate-950 shadow-[0_0_18px_rgba(34,197,94,0.5)]"
+                ? "bg-gradient-to-r from-[#33C3FF] to-[#22b14c] text-slate-950 shadow-[0_0_18px_rgba(34, 177, 76,0.5)]"
                 : "text-ehb-textBody hover:text-white"
             }`}
           >
@@ -341,7 +341,7 @@ export function MarketplaceSection() {
         <div className="text-center sm:text-right w-full sm:w-auto">
           <Link
             href="/ai-marketplace"
-            className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-6 py-2.5 text-xs md:text-sm font-semibold text-slate-950 btn-glow"
+            className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-6 py-2.5 text-xs md:text-sm font-semibold text-slate-950 btn-glow"
           >
             Explore Marketplace
           </Link>

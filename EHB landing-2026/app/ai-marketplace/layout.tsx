@@ -21,7 +21,7 @@ export default function AIMarketplaceLayout({ children }: { children: ReactNode 
       <aside className="w-56 shrink-0 border-r border-white/10 flex flex-col bg-[#020c1b]/90 backdrop-blur-xl">
         <div className="p-4 border-b border-white/10">
           <Link href="/" className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#00eaff] to-[#3b82f6] flex items-center justify-center text-sm font-bold shadow-neon-electric">
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#33C3FF] to-[#3b82f6] flex items-center justify-center text-sm font-bold shadow-neon-electric">
               EHB
             </div>
             <span className="font-semibold text-sm">EHB</span>
@@ -34,7 +34,7 @@ export default function AIMarketplaceLayout({ children }: { children: ReactNode 
               href={item.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
                 item.active
-                  ? "bg-[#00eaff]/20 text-[#00eaff] border border-[#00eaff]/30"
+                  ? "bg-[#33C3FF]/20 text-[#33C3FF] border border-[#33C3FF]/30"
                   : "text-ehb-textMuted hover:text-white hover:bg-white/5"
               }`}
             >

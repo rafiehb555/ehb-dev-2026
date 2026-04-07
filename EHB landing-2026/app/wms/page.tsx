@@ -11,7 +11,7 @@ export default function WmsPage({
       title="WMS — Medical & Health Service Platform"
       subtitle="Medical services with trusted verification: identity checks, certification and secure payments."
       industrySlugForAi="health"
-      accentColor="#00AEEF"
+      accentColor="#29ABE2"
       locationQuery={searchParams}
       bullets={[
         "Patient intake and provider matching via AI",

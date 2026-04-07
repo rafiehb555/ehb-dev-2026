@@ -10,9 +10,9 @@ function Connector({ index }: { index: number }) {
     >
       <defs>
         <linearGradient id={`ehbFlowGrad-${index}`} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#00AEEF" stopOpacity="0.95" />
+          <stop offset="0%" stopColor="#29ABE2" stopOpacity="0.95" />
           <stop offset="60%" stopColor="#8B5CF6" stopOpacity="0.7" />
-          <stop offset="100%" stopColor="#00AEEF" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="#29ABE2" stopOpacity="0.4" />
         </linearGradient>
       </defs>
       <path
@@ -76,7 +76,7 @@ function Node({
 }
 
 export function EHBHowItWorksSystem() {
-  const neonA = "#00AEEF";
+  const neonA = "#29ABE2";
   const neonB = "#8B5CF6";
 
   const steps = [

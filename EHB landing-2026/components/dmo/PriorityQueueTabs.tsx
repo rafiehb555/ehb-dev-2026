@@ -26,7 +26,7 @@ export function PriorityQueueTabs(props: {
             className={[
               "inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold transition-all",
               active
-                ? "bg-gradient-to-r from-[#00eaff] to-[#3b82f6] text-slate-950 btn-glow"
+                ? "bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] text-slate-950 btn-glow"
                 : "glass-panel border border-white/15 text-ehb-textBody hover:bg-white/5",
             ].join(" ")}
           >

@@ -10,8 +10,8 @@ type AiToolTile = {
 
 const TILES: AiToolTile[] = [
   { emoji: "⚖️", title: "AI Lawyer", arrowLine: "→ Legal advice, compliance, contracts", accent: "#6B7280" },
-  { emoji: "🩺", title: "AI Doctor", arrowLine: "→ Medical guidance & health support", accent: "#00AEEF" },
-  { emoji: "💼", title: "AI Resume Builder", arrowLine: "→ Professional CV generation", accent: "#22C55E" },
+  { emoji: "🩺", title: "AI Doctor", arrowLine: "→ Medical guidance & health support", accent: "#29ABE2" },
+  { emoji: "💼", title: "AI Resume Builder", arrowLine: "→ Professional CV generation", accent: "#22B14C" },
   { emoji: "🧾", title: "AI Contract Generator", arrowLine: "→ Automated legal agreements", accent: "#8B5CF6" },
   { emoji: "✈️", title: "AI Travel Planner", arrowLine: "→ Smart trip planning", accent: "#0EA5E9" },
 ];

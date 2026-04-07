@@ -13,8 +13,8 @@ type AiTool = {
 
 const TOOL_INFO: AiTool[] = [
   { title: "AI Lawyer", arrowLine: "→ Legal advice, compliance, contracts", accent: "#6B7280", emoji: "⚖️" },
-  { title: "AI Doctor", arrowLine: "→ Medical guidance & health support", accent: "#00AEEF", emoji: "🩺" },
-  { title: "AI Resume Builder", arrowLine: "→ Professional CV generation", accent: "#22C55E", emoji: "💼" },
+  { title: "AI Doctor", arrowLine: "→ Medical guidance & health support", accent: "#29ABE2", emoji: "🩺" },
+  { title: "AI Resume Builder", arrowLine: "→ Professional CV generation", accent: "#22B14C", emoji: "💼" },
   { title: "AI Contract Generator", arrowLine: "→ Automated legal agreements", accent: "#8B5CF6", emoji: "🧾" },
   { title: "AI Travel Planner", arrowLine: "→ Smart trip planning", accent: "#0EA5E9", emoji: "✈️" },
 ];
@@ -60,7 +60,7 @@ export default function AIMarketplacePage({
       ? getCityByCode(selectedCountryCode, selectedStateCode, selectedCityCode)
       : undefined;
 
-  const locationAccent = selectedCountry?.accent ?? "#00AEEF";
+  const locationAccent = selectedCountry?.accent ?? "#29ABE2";
   const locationLabel = selectedCity?.name || selectedState?.name || selectedCountry?.name || "";
 
   const makeHref = (toolTitle: string) => {
@@ -88,11 +88,11 @@ export default function AIMarketplacePage({
     <main className="flex-1 overflow-auto">
       {/* Hero – full-width, premium */}
       <section className="relative border-b border-white/5">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(0,234,255,0.12),transparent_55%),radial-gradient(circle_at_90%_10%,rgba(59,130,246,0.12),transparent_60%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(51, 195, 255,0.12),transparent_55%),radial-gradient(circle_at_90%_10%,rgba(59,130,246,0.12),transparent_60%)] pointer-events-none" />
         <div className="container-ehb py-10 md:py-14 lg:py-16 relative flex flex-col lg:flex-row gap-10 lg:gap-14 items-start">
           <div className="max-w-xl space-y-5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#00eaff]/40 glass-panel px-3 py-1 text-[11px] text-cyan-200 shadow-neon-blue">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00eaff]" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#33C3FF]/40 glass-panel px-3 py-1 text-[11px] text-cyan-200 shadow-neon-blue">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#33C3FF]" />
               AI Marketplace · Verified by EHB
             </div>
             <div>
@@ -114,7 +114,7 @@ export default function AIMarketplacePage({
             <div className="flex flex-wrap items-center gap-3">
               <Link
                 href="/ai-marketplace#products"
-                className="min-h-touch inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow"
+                className="min-h-touch inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow"
               >
                 Shop Now
                 <span className="text-xs">→</span>
@@ -314,7 +314,7 @@ export default function AIMarketplacePage({
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                     {p.tier}
                   </div>
-                  <div className="absolute top-1.5 right-1.5 rounded-full bg-[#00eaff] text-[9px] font-semibold px-1.5 py-0.5 text-slate-950 shadow-neon-blue">
+                  <div className="absolute top-1.5 right-1.5 rounded-full bg-[#33C3FF] text-[9px] font-semibold px-1.5 py-0.5 text-slate-950 shadow-neon-blue">
                     {p.badge}
                   </div>
                 </div>

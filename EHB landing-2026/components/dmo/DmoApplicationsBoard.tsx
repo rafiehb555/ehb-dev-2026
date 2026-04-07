@@ -92,7 +92,7 @@ export function DmoApplicationsBoard({
 
   const accent = useMemo(() => {
     const c = getCountryByCode(defaultCountry);
-    return c?.accent ?? "#00AEEF";
+    return c?.accent ?? "#29ABE2";
   }, [defaultCountry]);
 
   const baseApplications: DmoApplication[] = useMemo(
@@ -442,7 +442,7 @@ export function DmoApplicationsBoard({
         </div>
 
         <div className="pt-3 text-[10px] text-ehb-textMuted">
-          Tip: To test full flow, go to <Link href="/dashboard/services/new" className="text-[#00eaff] hover:underline">Create new service</Link> and submit; it will open the queue with your draft marked as <span className="text-ehb-textBody font-semibold">New</span>.
+          Tip: To test full flow, go to <Link href="/dashboard/services/new" className="text-[#33C3FF] hover:underline">Create new service</Link> and submit; it will open the queue with your draft marked as <span className="text-ehb-textBody font-semibold">New</span>.
         </div>
       </section>
 

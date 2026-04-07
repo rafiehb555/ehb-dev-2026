@@ -46,7 +46,7 @@ export function ActivityFeed(props: {
   return (
     <div className="glass-panel card-hover p-3 border border-white/10">
       <div className="flex items-center justify-between gap-2">
-        <h2 className="text-xs font-semibold text-[#00eaff]">Live Activity</h2>
+        <h2 className="text-xs font-semibold text-[#33C3FF]">Live Activity</h2>
         <Pill>{props.logs.length} events</Pill>
       </div>
 

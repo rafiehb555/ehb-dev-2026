@@ -232,7 +232,7 @@ function GlobalEcosystem() {
           }}>
             <span style={{
               width: 6, height: 6, borderRadius: "50%",
-              background: "#00AEEF", flexShrink: 0,
+              background: "#29ABE2", flexShrink: 0,
               animation: "twinkle 1.5s ease-in-out infinite",
             }} />
             {t.flag} {t.name}
@@ -245,12 +245,12 @@ function GlobalEcosystem() {
           width: "100%", height: "100%",
           pointerEvents: "none", opacity: 0.22,
         }} viewBox="0 0 480 480">
-          <line x1="240" y1="240" x2="60"  y2="30"  stroke="#00AEEF" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite" }} />
-          <line x1="240" y1="240" x2="420" y2="50"  stroke="#00AEEF" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite 0.4s" }} />
-          <line x1="240" y1="240" x2="30"  y2="420" stroke="#00AEEF" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite 0.8s" }} />
-          <line x1="240" y1="240" x2="450" y2="410" stroke="#00AEEF" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite 1.2s" }} />
-          <line x1="240" y1="240" x2="10"  y2="220" stroke="#00AEEF" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite 1.6s" }} />
-          <line x1="240" y1="240" x2="470" y2="200" stroke="#00AEEF" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite 2s" }} />
+          <line x1="240" y1="240" x2="60"  y2="30"  stroke="#29ABE2" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite" }} />
+          <line x1="240" y1="240" x2="420" y2="50"  stroke="#29ABE2" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite 0.4s" }} />
+          <line x1="240" y1="240" x2="30"  y2="420" stroke="#29ABE2" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite 0.8s" }} />
+          <line x1="240" y1="240" x2="450" y2="410" stroke="#29ABE2" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite 1.2s" }} />
+          <line x1="240" y1="240" x2="10"  y2="220" stroke="#29ABE2" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite 1.6s" }} />
+          <line x1="240" y1="240" x2="470" y2="200" stroke="#29ABE2" strokeWidth="0.7" strokeDasharray="6,4" style={{ animation: "connectionPulse 2.5s ease-in-out infinite 2s" }} />
         </svg>
 
         {/* 3 Orbit rings */}
@@ -271,7 +271,7 @@ function GlobalEcosystem() {
             <div key={d} style={{
               position: "absolute", top: "50%", left: "50%",
               width: 140, height: 140, borderRadius: "50%",
-              border: "1px solid rgba(0,174,239,0.28)",
+              border: "1px solid rgba(41, 171, 226,0.28)",
               animation: "pulseRing 3s ease-out infinite",
               animationDelay: `${d}s`,
               pointerEvents: "none",
@@ -283,8 +283,8 @@ function GlobalEcosystem() {
             width: "100%", height: "100%", borderRadius: "50%",
             background: "radial-gradient(circle at 32% 32%, #1a1a5e, #05050f 70%)",
             boxShadow:
-              "0 0 50px rgba(0,174,239,0.35), 0 0 100px rgba(139,92,246,0.2), inset 0 0 40px rgba(0,174,239,0.12)",
-            border: "1.5px solid rgba(0,174,239,0.5)",
+              "0 0 50px rgba(41, 171, 226,0.35), 0 0 100px rgba(139,92,246,0.2), inset 0 0 40px rgba(41, 171, 226,0.12)",
+            border: "1.5px solid rgba(41, 171, 226,0.5)",
             position: "relative", overflow: "hidden",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
@@ -295,29 +295,29 @@ function GlobalEcosystem() {
               animation: "globeSpin 24s linear infinite",
               opacity: 0.32,
             }} viewBox="0 0 200 200">
-              <ellipse cx="100" cy="100" rx="90" ry="12"  fill="none" stroke="#00AEEF" strokeWidth="0.8" opacity="0.85" />
-              <ellipse cx="100" cy="68"  rx="70" ry="9"   fill="none" stroke="#00AEEF" strokeWidth="0.5" opacity="0.4"  />
-              <ellipse cx="100" cy="132" rx="70" ry="9"   fill="none" stroke="#00AEEF" strokeWidth="0.5" opacity="0.4"  />
-              <ellipse cx="100" cy="40"  rx="35" ry="6"   fill="none" stroke="#00AEEF" strokeWidth="0.4" opacity="0.28" />
-              <ellipse cx="100" cy="160" rx="35" ry="6"   fill="none" stroke="#00AEEF" strokeWidth="0.4" opacity="0.28" />
-              <ellipse cx="100" cy="100" rx="90" ry="90"  fill="none" stroke="#00AEEF" strokeWidth="0.6" opacity="0.5"  />
-              <ellipse cx="100" cy="100" rx="50" ry="90"  fill="none" stroke="#00AEEF" strokeWidth="0.5" opacity="0.3"  />
-              <ellipse cx="100" cy="100" rx="15" ry="90"  fill="none" stroke="#00AEEF" strokeWidth="0.4" opacity="0.18" />
-              <ellipse cx="100" cy="100" rx="75" ry="90"  fill="none" stroke="#00AEEF" strokeWidth="0.4" opacity="0.22" />
-              <circle cx="120" cy="75"  r="3" fill="#00AEEF" opacity="0.9" />
-              <circle cx="120" cy="75"  r="7" fill="none" stroke="#00AEEF" strokeWidth="0.5" opacity="0.4" />
+              <ellipse cx="100" cy="100" rx="90" ry="12"  fill="none" stroke="#29ABE2" strokeWidth="0.8" opacity="0.85" />
+              <ellipse cx="100" cy="68"  rx="70" ry="9"   fill="none" stroke="#29ABE2" strokeWidth="0.5" opacity="0.4"  />
+              <ellipse cx="100" cy="132" rx="70" ry="9"   fill="none" stroke="#29ABE2" strokeWidth="0.5" opacity="0.4"  />
+              <ellipse cx="100" cy="40"  rx="35" ry="6"   fill="none" stroke="#29ABE2" strokeWidth="0.4" opacity="0.28" />
+              <ellipse cx="100" cy="160" rx="35" ry="6"   fill="none" stroke="#29ABE2" strokeWidth="0.4" opacity="0.28" />
+              <ellipse cx="100" cy="100" rx="90" ry="90"  fill="none" stroke="#29ABE2" strokeWidth="0.6" opacity="0.5"  />
+              <ellipse cx="100" cy="100" rx="50" ry="90"  fill="none" stroke="#29ABE2" strokeWidth="0.5" opacity="0.3"  />
+              <ellipse cx="100" cy="100" rx="15" ry="90"  fill="none" stroke="#29ABE2" strokeWidth="0.4" opacity="0.18" />
+              <ellipse cx="100" cy="100" rx="75" ry="90"  fill="none" stroke="#29ABE2" strokeWidth="0.4" opacity="0.22" />
+              <circle cx="120" cy="75"  r="3" fill="#29ABE2" opacity="0.9" />
+              <circle cx="120" cy="75"  r="7" fill="none" stroke="#29ABE2" strokeWidth="0.5" opacity="0.4" />
               <circle cx="75"  cy="88"  r="3" fill="#8B5CF6" opacity="0.9" />
-              <circle cx="150" cy="100" r="3" fill="#00AEEF" opacity="0.9" />
+              <circle cx="150" cy="100" r="3" fill="#29ABE2" opacity="0.9" />
               <circle cx="55"  cy="85"  r="3" fill="#F59E0B" opacity="0.9" />
               <circle cx="160" cy="125" r="3" fill="#10B981" opacity="0.9" />
-              <line x1="120" y1="75"  x2="75"  y2="88"  stroke="#00AEEF" strokeWidth="0.4" strokeDasharray="3,3" opacity="0.5" />
-              <line x1="120" y1="75"  x2="150" y2="100" stroke="#00AEEF" strokeWidth="0.4" strokeDasharray="3,3" opacity="0.5" />
+              <line x1="120" y1="75"  x2="75"  y2="88"  stroke="#29ABE2" strokeWidth="0.4" strokeDasharray="3,3" opacity="0.5" />
+              <line x1="120" y1="75"  x2="150" y2="100" stroke="#29ABE2" strokeWidth="0.4" strokeDasharray="3,3" opacity="0.5" />
               <line x1="150" y1="100" x2="160" y2="125" stroke="#10B981" strokeWidth="0.4" strokeDasharray="3,3" opacity="0.5" />
             </svg>
 
             {/* Center text */}
             <div style={{ position: "relative", zIndex: 5, textAlign: "center" }}>
-              <span style={{ fontSize: 8, color: "rgba(0,174,239,0.9)", letterSpacing: "0.25em", fontWeight: 700, display: "block" }}>
+              <span style={{ fontSize: 8, color: "rgba(41, 171, 226,0.9)", letterSpacing: "0.25em", fontWeight: 700, display: "block" }}>
                 GLOBAL
               </span>
               <span style={{ fontSize: 24, fontWeight: 900, color: "white", lineHeight: 1, display: "block" }}>

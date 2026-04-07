@@ -19,7 +19,7 @@ function DeptCard({
   return (
     <Link
       href={href}
-      className="block rounded-2xl glass-panel border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_26px_rgba(0,234,255,0.18)] card-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40"
+      className="block rounded-2xl glass-panel border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_26px_rgba(51, 195, 255,0.18)] card-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/40"
       style={{
         borderColor: `${accent}40`,
         boxShadow: `0 0 0 1px rgba(255,255,255,0.02) inset`,
@@ -53,7 +53,7 @@ export function EHBDepartmentsGrid() {
       title: "PSS",
       standFor: "Proof & Security System",
       desc: "Identity verification: KYC, document checks, and fraud protection.",
-      accent: "#00AEEF",
+      accent: "#29ABE2",
       href: "/dmo/pss",
     },
     {
@@ -69,7 +69,7 @@ export function EHBDepartmentsGrid() {
       title: "JPS",
       standFor: "Job Profile & Skill",
       desc: "Professional identity layer: skills, services, jobs, and listings.",
-      accent: "#00AEEF",
+      accent: "#29ABE2",
       href: "/jobs",
     },
     {
@@ -85,7 +85,7 @@ export function EHBDepartmentsGrid() {
       title: "STL",
       standFor: "Service Trust Level",
       desc: "AI trust scoring that controls visibility, ranking, and verification strength.",
-      accent: "#00AEEF",
+      accent: "#29ABE2",
       href: "/dmo/stl",
     },
     {

@@ -115,7 +115,7 @@ export function ServiceCreationForm() {
                 className="h-full rounded-full"
                 style={{
                   width: `${(step / 4) * 100}%`,
-                  background: `linear-gradient(90deg, ${accentColor}, rgba(34,197,94,0.9))`,
+                  background: `linear-gradient(90deg, ${accentColor}, rgba(34, 177, 76,0.9))`,
                 }}
               />
             </div>
@@ -240,7 +240,7 @@ export function ServiceCreationForm() {
               type="button"
               onClick={() => setStep(4)}
               disabled={!serviceSlug}
-              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#22c55e] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow disabled:opacity-60 disabled:cursor-not-allowed"
+              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#22b14c] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow disabled:opacity-60 disabled:cursor-not-allowed"
             >
               Continue to details →
             </button>
@@ -311,7 +311,7 @@ export function ServiceCreationForm() {
               type="button"
               onClick={submit}
               disabled={!canContinueFromStep() || busy}
-              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#22c55e] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow disabled:opacity-60 disabled:cursor-not-allowed"
+              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#22b14c] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {busy ? "Submitting..." : "Create service listing →"}
             </button>

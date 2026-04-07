@@ -37,7 +37,7 @@ export function HealthIndustry3D() {
             className="absolute inset-0"
             style={{
               backgroundImage:
-                "radial-gradient(circle at 50% 0%, rgba(56,189,248,0.2), transparent 55%), radial-gradient(circle at 0% 80%, rgba(59,130,246,0.18), transparent 55%), radial-gradient(circle at 100% 80%, rgba(34,197,94,0.14), transparent 55%)",
+                "radial-gradient(circle at 50% 0%, rgba(56,189,248,0.2), transparent 55%), radial-gradient(circle at 0% 80%, rgba(59,130,246,0.18), transparent 55%), radial-gradient(circle at 100% 80%, rgba(34, 177, 76,0.14), transparent 55%)",
             }}
           />
           <div

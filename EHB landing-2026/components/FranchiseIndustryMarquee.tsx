@@ -6,11 +6,11 @@ type Props = {
 
 const INDUSTRIES = [
   { name: "Education", icon: "📚", accent: "#E53935" },
-  { name: "Health", icon: "🩺", accent: "#00AEEF" },
+  { name: "Health", icon: "🩺", accent: "#29ABE2" },
   { name: "IT", icon: "💻", accent: "#3B82F6" },
   { name: "Finance", icon: "💰", accent: "#F59E0B" },
   { name: "Delivery", icon: "🚚", accent: "#FB923C" },
-  { name: "Business", icon: "🏢", accent: "#22C55E" },
+  { name: "Business", icon: "🏢", accent: "#22B14C" },
 ];
 
 export function FranchiseIndustryMarquee({ selectedAccent }: Props) {

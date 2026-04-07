@@ -96,9 +96,9 @@ export function AIEcosystemLanding() {
                       onClick={() => setActive(t.key)}
                       className="min-h-touch inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition-all duration-200"
                       style={{
-                        borderColor: isActive ? "rgba(0,174,239,0.65)" : "rgba(255,255,255,0.12)",
-                        background: isActive ? "rgba(0,174,239,0.10)" : "rgba(255,255,255,0.03)",
-                        boxShadow: isActive ? "0 0 26px rgba(0,174,239,0.18)" : "none",
+                        borderColor: isActive ? "rgba(41, 171, 226,0.65)" : "rgba(255,255,255,0.12)",
+                        background: isActive ? "rgba(41, 171, 226,0.10)" : "rgba(255,255,255,0.03)",
+                        boxShadow: isActive ? "0 0 26px rgba(41, 171, 226,0.18)" : "none",
                         color: isActive ? "rgba(226,232,240,0.98)" : "rgba(226,232,240,0.85)",
                       }}
                       aria-pressed={isActive}
@@ -135,7 +135,7 @@ export function AIEcosystemLanding() {
                 <div className="mt-5 flex flex-wrap gap-3">
                   <Link
                     href="/ai-marketplace"
-                    className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#6366f1] px-5 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+                    className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#6366f1] px-5 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
                   >
                     Use AI tools
                     <span className="text-xs ml-2" aria-hidden>
@@ -168,7 +168,7 @@ export function AIEcosystemLanding() {
                 </div>
               </div>
 
-              <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(34,197,94,0.25)" }}>
+              <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(34, 177, 76,0.25)" }}>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">AI status (demo)</p>
                 <p className="text-ehb-textBody text-[12px] leading-relaxed">
                   AI is analyzing opportunities for you... Best match found... Optimizing your growth... (simulated)

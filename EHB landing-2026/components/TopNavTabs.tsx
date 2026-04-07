@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const TABS = [
-  { label: "Landing", href: "/", color: "from-[#00eaff] to-[#3b82f6]" },
-  { label: "Home", href: "/home", color: "from-[#22c55e] to-[#16a34a]" },
+  { label: "Landing", href: "/", color: "from-[#33C3FF] to-[#3b82f6]" },
+  { label: "Home", href: "/home", color: "from-[#22b14c] to-[#16a34a]" },
   { label: "AI Market", href: "/ai-marketplace", color: "from-[#8b5cf6] to-[#6366f1]" },
   { label: "Development", href: "/development", color: "from-[#f59e0b] to-[#f97316]" },
   { label: "Admin", href: "/admin", color: "from-[#38bdf8] to-[#0ea5e9]" },

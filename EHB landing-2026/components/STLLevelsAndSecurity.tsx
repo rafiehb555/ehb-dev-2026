@@ -22,7 +22,7 @@ const STL_LEVELS: StlLevel[] = [
   {
     label: "MEDIUM : 51–70",
     industryRequirement: "Industry Requirement: 1–2 Industries",
-    accent: "#22c55e",
+    accent: "#22b14c",
   },
   {
     label: "HIGH : 71–85",

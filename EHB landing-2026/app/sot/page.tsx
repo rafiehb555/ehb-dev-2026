@@ -11,7 +11,7 @@ export default function SotPage({
       title="SOT — Service Operations & Training Platform"
       subtitle="Operational workflows and training that keep services consistent and verified."
       industrySlugForAi="hr"
-      accentColor="#22C55E"
+      accentColor="#22B14C"
       locationQuery={searchParams}
       bullets={[
         "Training tasks and operations support for providers",

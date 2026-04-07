@@ -21,7 +21,7 @@ export function DmoFranchiseDashboard({
   const [industrySlug, setIndustrySlug] = useState(initialIndustrySlug);
 
   const industry: Industry | undefined = useMemo(() => INDUSTRIES.find((i) => i.slug === industrySlug), [industrySlug]);
-  const accent = industry?.accentColor ?? "#00eaff";
+  const accent = industry?.accentColor ?? "#33C3FF";
 
   const mock = useMemo(() => {
     const t = industrySlug.trim().length;
@@ -34,9 +34,9 @@ export function DmoFranchiseDashboard({
   }, [industrySlug, level]);
 
   const levelMeta = useMemo(() => {
-    if (level === "Country") return { title: "Country Franchise Dashboard", accent: "#00eaff", action: "Route approvals" };
+    if (level === "Country") return { title: "Country Franchise Dashboard", accent: "#33C3FF", action: "Route approvals" };
     if (level === "Corporate") return { title: "Corporate Franchise Dashboard", accent: "#3b82f6", action: "Manage corporate batch" };
-    if (level === "Master") return { title: "Master Franchise Dashboard", accent: "#22c55e", action: "Monitor master-region" };
+    if (level === "Master") return { title: "Master Franchise Dashboard", accent: "#22b14c", action: "Monitor master-region" };
     return { title: "Sub Franchise Dashboard", accent: "#f59e0b", action: "Handle local onboarding" };
   }, [level]);
 
@@ -67,7 +67,7 @@ export function DmoFranchiseDashboard({
 
             <Link
               href={`/dmo/applications${locationQs}${locationQs.includes("?") ? "&" : "?"}industry=${encodeURIComponent(industrySlug)}`}
-              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
             >
               Open Queue
             </Link>

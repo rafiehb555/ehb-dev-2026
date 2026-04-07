@@ -38,7 +38,7 @@ export const INDUSTRY_SERVICES: IndustryServicesConfig[] = [
   },
   {
     industrySlug: "health",
-    accentColor: "#00AEEF",
+    accentColor: "#29ABE2",
     categories: [
       { slug: "doctors", name: "Doctors", services: [{ slug: "doctor-consultation", name: "Doctor Consultation" }, { slug: "online-doctor-appointment", name: "Online Doctor Appointment" }, { slug: "general-physician", name: "General Physician" }, { slug: "specialist", name: "Specialist Consultation" }] },
       { slug: "hospitals", name: "Hospitals", services: [{ slug: "inpatient", name: "Inpatient Care" }, { slug: "outpatient", name: "Outpatient" }, { slug: "emergency", name: "Emergency" }] },
@@ -147,7 +147,7 @@ export const INDUSTRY_SERVICES: IndustryServicesConfig[] = [
   },
   {
     industrySlug: "agriculture",
-    accentColor: "#22C55E",
+    accentColor: "#22B14C",
     categories: [
       { slug: "farming", name: "Farming", services: [{ slug: "crop-advisory", name: "Crop Advisory" }, { slug: "organic-farming", name: "Organic Farming" }] },
       { slug: "supply-chain", name: "Supply Chain", services: [{ slug: "procurement", name: "Procurement" }, { slug: "cold-chain", name: "Cold Chain" }] },
@@ -256,7 +256,7 @@ export const INDUSTRY_SERVICES: IndustryServicesConfig[] = [
   },
   {
     industrySlug: "hr",
-    accentColor: "#22C55E",
+    accentColor: "#22B14C",
     categories: [
       { slug: "recruitment", name: "Recruitment", services: [{ slug: "hiring", name: "Hiring" }, { slug: "headhunting", name: "Headhunting" }] },
       { slug: "payroll", name: "Payroll", services: [{ slug: "payroll-processing", name: "Payroll Processing" }, { slug: "compliance", name: "Compliance" }] },
@@ -335,7 +335,7 @@ export const INDUSTRY_SERVICES: IndustryServicesConfig[] = [
   },
   {
     industrySlug: "ngo",
-    accentColor: "#22C55E",
+    accentColor: "#22B14C",
     categories: [
       { slug: "ngos", name: "NGOs", services: [{ slug: "donations", name: "Donations" }, { slug: "volunteers", name: "Volunteers" }] },
       { slug: "impact", name: "Impact", services: [{ slug: "impact-assessment", name: "Impact Assessment" }, { slug: "grants", name: "Grants" }] },

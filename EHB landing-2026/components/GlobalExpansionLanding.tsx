@@ -20,7 +20,7 @@ const COUNTRIES: Country[] = [
   {
     code: "UAE",
     name: "United Arab Emirates",
-    accent: "#00AEEF",
+    accent: "#29ABE2",
     cities: ["Dubai"],
     readinessPct: 82,
     franchiseStage: "GoSellr GSM live onboarding",
@@ -28,7 +28,7 @@ const COUNTRIES: Country[] = [
   {
     code: "PK",
     name: "Pakistan",
-    accent: "#22C55E",
+    accent: "#22B14C",
     cities: ["Lahore", "Karachi", "Islamabad"],
     readinessPct: 76,
     franchiseStage: "Verification + city expansion running",
@@ -180,7 +180,7 @@ export function GlobalExpansionLanding({
                     className="h-full rounded-full"
                     style={{
                       width: `${selected.readinessPct}%`,
-                      background: `linear-gradient(90deg, ${selected.accent}, rgba(34,197,94,0.9))`,
+                      background: `linear-gradient(90deg, ${selected.accent}, rgba(34, 177, 76,0.9))`,
                     }}
                   />
                 </div>
@@ -234,7 +234,7 @@ export function GlobalExpansionLanding({
                 <div className="mt-3 grid gap-2">
                   <Link
                     href={`/franchise${locationQs}#booking`}
-                    className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00AEEF] to-[#22C55E] px-5 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+                    className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#29ABE2] to-[#22B14C] px-5 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
                   >
                     Book area franchise
                     <span className="text-xs ml-2" aria-hidden>

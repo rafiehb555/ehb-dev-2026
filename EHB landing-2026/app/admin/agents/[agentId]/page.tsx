@@ -97,7 +97,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
             </Link>
             <Link
               href="/admin"
-              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
+              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
             >
               Open Super Admin
             </Link>

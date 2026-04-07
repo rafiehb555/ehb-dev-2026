@@ -24,7 +24,7 @@ export function LiveActivityCornerFeed() {
     <div
       className="fixed right-4 bottom-4 z-50 w-[290px] max-w-[calc(100vw-32px)] rounded-2xl glass-panel border border-white/10 overflow-hidden"
       style={{
-        boxShadow: "0 0 26px rgba(0,234,255,0.14)",
+        boxShadow: "0 0 26px rgba(51, 195, 255,0.14)",
         backgroundColor: "rgba(2,12,27,0.78)",
       }}
     >

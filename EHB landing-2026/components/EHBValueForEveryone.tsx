@@ -56,14 +56,14 @@ export function EHBValueForEveryone() {
           icon="🧑‍💼"
           title="User"
           desc="Earn from services, jobs, and products"
-          accent="#22C55E"
+          accent="#22B14C"
           href="/home"
         />
         <ValueCard
           icon="🏢"
           title="Company"
           desc="Access verified users and global customers"
-          accent="#00AEEF"
+          accent="#29ABE2"
           href="/services"
         />
         <ValueCard

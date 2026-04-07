@@ -17,11 +17,11 @@ import {
 
 const ORBIT_ICONS: { Icon: LucideIcon; label: string; angle: number; color: string }[] = [
   { Icon: GraduationCap, label: "Education", angle: 0, color: "#E53935" },
-  { Icon: HeartPulse, label: "Health", angle: 60, color: "#00AEEF" },
+  { Icon: HeartPulse, label: "Health", angle: 60, color: "#29ABE2" },
   { Icon: Code2, label: "IT", angle: 120, color: "#3B82F6" },
   { Icon: TrendingUp, label: "Finance", angle: 180, color: "#F59E0B" },
   { Icon: Truck, label: "Delivery", angle: 240, color: "#FB923C" },
-  { Icon: ShoppingCart, label: "Retail", angle: 300, color: "#22C55E" },
+  { Icon: ShoppingCart, label: "Retail", angle: 300, color: "#22B14C" },
 ];
 
 const FLOATING_CARDS = [
@@ -45,7 +45,7 @@ export function HeroVisual() {
       {FLOATING_CARDS.map((card, i) => (
         <div
           key={i}
-          className="absolute z-10 rounded-xl glass-panel border border-white/15 px-3 py-2 backdrop-blur-md animate-float will-change-transform transition-all duration-300 hover:border-[#00AEEF]/30 hover:shadow-[0_0_16px_rgba(0,174,239,0.15)]"
+          className="absolute z-10 rounded-xl glass-panel border border-white/15 px-3 py-2 backdrop-blur-md animate-float will-change-transform transition-all duration-300 hover:border-[#29ABE2]/30 hover:shadow-[0_0_16px_rgba(41, 171, 226,0.15)]"
           style={{
             left: card.x,
             top: card.y,
@@ -64,8 +64,8 @@ export function HeroVisual() {
         <svg className="absolute inset-0 w-full h-full" aria-hidden>
           <defs>
             <linearGradient id="heroLineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#00AEEF" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#22C55E" stopOpacity="0.25" />
+              <stop offset="0%" stopColor="#29ABE2" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#22B14C" stopOpacity="0.25" />
             </linearGradient>
           </defs>
           {ORBIT_ICONS.map((_, i) => {
@@ -110,14 +110,14 @@ export function HeroVisual() {
 
         {/* Central glowing globe */}
         <div
-          className="absolute inset-0 rounded-full border border-[#00AEEF]/30 will-change-transform"
+          className="absolute inset-0 rounded-full border border-[#29ABE2]/30 will-change-transform"
           style={{
             background: `
-              radial-gradient(ellipse 70% 70% at 30% 30%, rgba(0,174,239,0.25), transparent 50%),
-              radial-gradient(ellipse 100% 100% at 50% 50%, rgba(34,197,94,0.08), transparent 60%),
+              radial-gradient(ellipse 70% 70% at 30% 30%, rgba(41, 171, 226,0.25), transparent 50%),
+              radial-gradient(ellipse 100% 100% at 50% 50%, rgba(34, 177, 76,0.08), transparent 60%),
               radial-gradient(circle at 50% 50%, #001B2E 0%, #020617 70%)
             `,
-            boxShadow: "0 0 60px rgba(0,174,239,0.2), inset 0 0 40px rgba(0,174,239,0.06)",
+            boxShadow: "0 0 60px rgba(41, 171, 226,0.2), inset 0 0 40px rgba(41, 171, 226,0.06)",
           }}
         >
           {/* Globe grid overlay */}
@@ -125,8 +125,8 @@ export function HeroVisual() {
             className="absolute inset-0 rounded-full opacity-[0.08]"
             style={{
               backgroundImage: `
-                linear-gradient(rgba(0,234,255,0.6) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,234,255,0.6) 1px, transparent 1px)
+                linear-gradient(rgba(51, 195, 255,0.6) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(51, 195, 255,0.6) 1px, transparent 1px)
               `,
               backgroundSize: "20px 20px",
             }}

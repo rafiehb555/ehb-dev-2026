@@ -34,7 +34,7 @@ export function GenericIndustry3DFallback({
         <div
           className="absolute inset-0 opacity-70 pointer-events-none"
           style={{
-            backgroundImage: `radial-gradient(circle at 50% 0%, ${accentColor}2e, transparent 55%), radial-gradient(circle at 0% 80%, rgba(0,174,239,0.18), transparent 55%), radial-gradient(circle at 100% 80%, rgba(139,92,246,0.12), transparent 55%)`,
+            backgroundImage: `radial-gradient(circle at 50% 0%, ${accentColor}2e, transparent 55%), radial-gradient(circle at 0% 80%, rgba(41, 171, 226,0.18), transparent 55%), radial-gradient(circle at 100% 80%, rgba(139,92,246,0.12), transparent 55%)`,
           }}
         />
 

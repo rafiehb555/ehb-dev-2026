@@ -63,7 +63,7 @@ export default function LandingPage() {
           }}
         />
         {/* Layer 3: glow lights */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(0,174,239,0.18),transparent_50%),radial-gradient(ellipse_60%_40%_at_100%_15%,rgba(34,197,94,0.1),transparent_50%),radial-gradient(ellipse_50%_30%_at_0%_70%,rgba(139,92,246,0.08),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(41, 171, 226,0.18),transparent_50%),radial-gradient(ellipse_60%_40%_at_100%_15%,rgba(34, 177, 76,0.1),transparent_50%),radial-gradient(ellipse_50%_30%_at_0%_70%,rgba(139,92,246,0.08),transparent_50%)]" />
         <HeroParticles />
         <div className="container-ultra relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-6 lg:py-8">
           <div className="lg:col-span-6 text-center lg:text-left">
@@ -82,13 +82,13 @@ export default function LandingPage() {
             <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-6">
               <Link
                 href="#industries"
-                className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00AEEF] to-[#22C55E] px-8 py-3.5 text-sm font-semibold text-white btn-glow transition-all duration-300 hover:opacity-95 hover:scale-[1.02]"
+                className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#29ABE2] to-[#22B14C] px-8 py-3.5 text-sm font-semibold text-white btn-glow transition-all duration-300 hover:opacity-95 hover:scale-[1.02]"
               >
                 Explore Industries
               </Link>
               <Link
                 href="/dashboard"
-                className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-8 py-3.5 text-sm font-semibold text-white hover:bg-white/10 hover:border-[#00AEEF]/50 hover:shadow-[0_0_20px_rgba(0,174,239,0.2)] transition-all duration-300"
+                className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-8 py-3.5 text-sm font-semibold text-white hover:bg-white/10 hover:border-[#29ABE2]/50 hover:shadow-[0_0_20px_rgba(41, 171, 226,0.2)] transition-all duration-300"
               >
                 Create Profile
               </Link>
@@ -391,8 +391,8 @@ export default function LandingPage() {
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl glass-card border border-[#22c55e]/40 p-6 md:p-7 relative overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(34,197,94,0.25),transparent_55%),radial-gradient(circle_at_90%_100%,rgba(56,189,248,0.18),transparent_55%)]" />
+            <div className="rounded-2xl glass-card border border-[#22b14c]/40 p-6 md:p-7 relative overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(34, 177, 76,0.25),transparent_55%),radial-gradient(circle_at_90%_100%,rgba(56,189,248,0.18),transparent_55%)]" />
               <div className="relative">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textBody mb-2">Franchise Partner</p>
                 <p className="text-xl md:text-2xl font-semibold text-emerald-300 mb-4">Franchise</p>
@@ -438,8 +438,8 @@ export default function LandingPage() {
               Limited franchise slots per region to protect partner earnings. Once a city is taken, it may not open again.
             </p>
           </div>
-          <div className="rounded-3xl glass-card border border-[#22c55e]/40 p-6 md:p-7 min-h-[220px] relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(34,197,94,0.25),transparent_55%),radial-gradient(circle_at_90%_100%,rgba(56,189,248,0.18),transparent_55%)]" />
+          <div className="rounded-3xl glass-card border border-[#22b14c]/40 p-6 md:p-7 min-h-[220px] relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(34, 177, 76,0.25),transparent_55%),radial-gradient(circle_at_90%_100%,rgba(56,189,248,0.18),transparent_55%)]" />
             <div className="relative">
               <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textBody mb-2">Simple Snapshot</p>
               <p className="text-2xl md:text-3xl font-semibold text-emerald-300 mb-1">Growing Monthly Volume</p>
@@ -470,7 +470,7 @@ export default function LandingPage() {
           </p>
           <Link
             href="/franchise"
-            className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#22c55e] to-[#16a34a] px-8 py-3 text-xs md:text-sm font-semibold text-slate-950 btn-glow"
+            className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#22b14c] to-[#16a34a] px-8 py-3 text-xs md:text-sm font-semibold text-slate-950 btn-glow"
           >
             Become a Franchise Partner
           </Link>
@@ -533,7 +533,7 @@ export default function LandingPage() {
       {/* Section 11 — CTA (glow gradient) */}
       <SectionReveal as="div">
       <section className="container-ultra section-pad-ultra">
-        <div className="rounded-2xl glass-card p-10 md:p-14 text-center border border-[#00eaff]/20 bg-gradient-to-b from-[#00eaff]/[0.06] via-transparent to-[#8b5cf6]/[0.04]">
+        <div className="rounded-2xl glass-card p-10 md:p-14 text-center border border-[#33C3FF]/20 bg-gradient-to-b from-[#33C3FF]/[0.06] via-transparent to-[#8b5cf6]/[0.04]">
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">Start Your Journey with EHB Today</h2>
           <p className="text-ehb-textMuted max-w-lg mx-auto mb-8">
             Join thousands of users building their future with EHB.
@@ -541,7 +541,7 @@ export default function LandingPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/dashboard"
-              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-8 py-3.5 text-sm font-semibold text-slate-950 btn-glow"
+              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-8 py-3.5 text-sm font-semibold text-slate-950 btn-glow"
             >
               Create Profile
             </Link>
@@ -573,7 +573,7 @@ export default function LandingPage() {
                   <Link
                     key={`${group.title}-${item.label}`}
                     href={item.href}
-                    className="block text-ehb-textMuted hover:text-[#00eaff] py-1"
+                    className="block text-ehb-textMuted hover:text-[#33C3FF] py-1"
                   >
                     {item.label}
                   </Link>

@@ -9,7 +9,7 @@ export const COUNTRIES: LocationCountry[] = [
   {
     code: "PK",
     name: "Pakistan",
-    accent: "#22C55E",
+    accent: "#22B14C",
     states: [
       {
         code: "punjab",
@@ -34,7 +34,7 @@ export const COUNTRIES: LocationCountry[] = [
   {
     code: "UAE",
     name: "United Arab Emirates",
-    accent: "#00AEEF",
+    accent: "#29ABE2",
     states: [
       {
         code: "dubai",

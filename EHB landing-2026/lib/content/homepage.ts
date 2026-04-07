@@ -367,7 +367,7 @@ export const homepageContent = {
         title: "Work as a User",
         description: "Offer your skills, complete jobs, and earn from local and global clients.",
         icon: "🧑‍💼",
-        accentColor: "#22c55e",
+        accentColor: "#22b14c",
         href: "/dashboard",
       },
       {
@@ -414,7 +414,7 @@ export const homepageContent = {
         title: "Global buyers and sellers",
         description: "People from different countries can buy and sell services and products with one simple, verified EHB account.",
         badge: "Verified identity (PSS)",
-        accentColor: "#00AEEF",
+        accentColor: "#29ABE2",
         href: "/global",
       },
       {
@@ -422,7 +422,7 @@ export const homepageContent = {
         title: "All services in one place",
         description: "From education and health to IT and logistics, EHB connects 32 industries so you don't need separate platforms.",
         badge: "700+ services",
-        accentColor: "#22C55E",
+        accentColor: "#22B14C",
         href: "/industries",
       },
       {
@@ -505,8 +505,8 @@ export const homepageContent = {
         title: "Franchise earning",
         subtitle: "Earn from every order in your area.",
         description: "City, regional, and country partners earn a share of all verified orders that pass through their zone.",
-        accentClass: "border-[#22c55e]/40",
-        toneClass: "text-[#22c55e]",
+        accentClass: "border-[#22b14c]/40",
+        toneClass: "text-[#22b14c]",
         href: "/franchise",
       },
       {

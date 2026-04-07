@@ -46,7 +46,7 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
     countryCode && stateCode && cityCode ? getCityByCode(countryCode, stateCode, cityCode) : undefined;
 
   const locationLabel = selectedCity?.name || selectedState?.name || selectedCountry?.name || "";
-  const locationAccent = selectedCountry?.accent ?? "#00AEEF";
+  const locationAccent = selectedCountry?.accent ?? "#29ABE2";
   const locationQs = (() => {
     const sp = new URLSearchParams();
     if (countryCode) sp.set("country", countryCode);

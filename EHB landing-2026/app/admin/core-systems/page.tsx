@@ -46,10 +46,10 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             {[
-              { href: "/wms", code: "WMS", name: "Medical & Health", accent: "#00AEEF" },
+              { href: "/wms", code: "WMS", name: "Medical & Health", accent: "#29ABE2" },
               { href: "/agts", code: "AGTS", name: "Travel & Tourism", accent: "#0EA5E9" },
               { href: "/ols", code: "OLS", name: "Legal Services", accent: "#6B7280" },
-              { href: "/sot", code: "SOT", name: "Operations & Training", accent: "#22C55E" },
+              { href: "/sot", code: "SOT", name: "Operations & Training", accent: "#22B14C" },
               { href: "/hps", code: "HPS", name: "Education & Learning", accent: "#E53935" },
             ].map((p) => (
               <Link
@@ -77,7 +77,7 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/governance", code: "Gov", name: "Applications & Licenses", accent: "#00EAFF" },
+              { href: "/governance", code: "Gov", name: "Applications & Licenses", accent: "#33C3FF" },
               { href: "/admin/development", code: "DMO", name: "Workflow engine (demo)", accent: "#3B82F6" },
               { href: "/ai-marketplace", code: "AI", name: "Governance matching", accent: "#8B5CF6" },
             ].map((p) => (
@@ -106,7 +106,7 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/global", code: "ðŸŒ", name: "Country readiness & onboarding", accent: "#00EAFF" },
+              { href: "/global", code: "ðŸŒ", name: "Country readiness & onboarding", accent: "#33C3FF" },
               { href: "/admin/global", code: "ðŸ›¡ï¸", name: "Super admin governance", accent: "#3B82F6" },
               { href: "/franchise", code: "ðŸ¢", name: "Book areas in batches", accent: "#F59E0B" },
             ].map((p) => (
@@ -135,9 +135,9 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/ai-ecosystem", code: "AI", name: "Opportunity scoring + trust checks", accent: "rgba(0,174,239,0.35)" },
+              { href: "/ai-ecosystem", code: "AI", name: "Opportunity scoring + trust checks", accent: "rgba(41, 171, 226,0.35)" },
               { href: "/admin/ai-ecosystem", code: "CTRL", name: "Super admin monitoring rules", accent: "rgba(139,92,246,0.35)" },
-              { href: "/ai-marketplace", code: "MATCH", name: "AI-connected marketplace matching", accent: "rgba(34,197,94,0.35)" },
+              { href: "/ai-marketplace", code: "MATCH", name: "AI-connected marketplace matching", accent: "rgba(34, 177, 76,0.35)" },
             ].map((p) => (
               <Link
                 key={p.href}
@@ -164,7 +164,7 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/blockchain-governance", code: "â›“ï¸", name: "Trust network anchors (demo)", accent: "rgba(0,174,239,0.35)" },
+              { href: "/blockchain-governance", code: "â›“ï¸", name: "Trust network anchors (demo)", accent: "rgba(41, 171, 226,0.35)" },
               { href: "/admin/blockchain-governance", code: "CTRL", name: "Smart contract monitoring", accent: "rgba(139,92,246,0.35)" },
               { href: "/admin/blockchain", code: "NET", name: "Network status snapshot", accent: "rgba(245,158,11,0.35)" },
             ].map((p) => (
@@ -193,8 +193,8 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/profile/rafi", code: "@", name: "Sample profile (demo)", accent: "rgba(34,197,94,0.35)" },
-              { href: "/admin/jps-profiles", code: "CTRL", name: "JPS trust + skills controls", accent: "rgba(0,174,239,0.35)" },
+              { href: "/profile/rafi", code: "@", name: "Sample profile (demo)", accent: "rgba(34, 177, 76,0.35)" },
+              { href: "/admin/jps-profiles", code: "CTRL", name: "JPS trust + skills controls", accent: "rgba(41, 171, 226,0.35)" },
               { href: "/dashboard", code: "AI", name: "Dashboard matching usage", accent: "rgba(245,158,11,0.35)" },
             ].map((p) => (
               <Link
@@ -222,8 +222,8 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/dashboard/services/new", code: "CREATE", name: "Provider service creation flow (demo)", accent: "rgba(0,174,239,0.35)" },
-              { href: "/dashboard/my-services/create", code: "MINE", name: "My services route (demo)", accent: "rgba(34,197,94,0.35)" },
+              { href: "/dashboard/services/new", code: "CREATE", name: "Provider service creation flow (demo)", accent: "rgba(41, 171, 226,0.35)" },
+              { href: "/dashboard/my-services/create", code: "MINE", name: "My services route (demo)", accent: "rgba(34, 177, 76,0.35)" },
               { href: "/admin/service-creation", code: "ADMIN", name: "Onboarding + workflow rules (demo)", accent: "rgba(139,92,246,0.35)" },
             ].map((p) => (
               <Link
@@ -249,8 +249,8 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: `/gosellr${locationQs}`, code: "PROD", name: "Verified product list", accent: "rgba(0,174,239,0.35)" },
-              { href: `/cart${locationQs}`, code: "CART", name: "Checkout (demo)", accent: "rgba(34,197,94,0.35)" },
+              { href: `/gosellr${locationQs}`, code: "PROD", name: "Verified product list", accent: "rgba(41, 171, 226,0.35)" },
+              { href: `/cart${locationQs}`, code: "CART", name: "Checkout (demo)", accent: "rgba(34, 177, 76,0.35)" },
               { href: `/orders${locationQs}`, code: "ORD", name: "Orders + settlement (demo)", accent: "rgba(139,92,246,0.35)" },
             ].map((p) => (
               <Link
@@ -278,9 +278,9 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/locations", code: "UI", name: "Location filters demo", accent: "rgba(0,174,239,0.35)" },
+              { href: "/locations", code: "UI", name: "Location filters demo", accent: "rgba(41, 171, 226,0.35)" },
               { href: "/admin/locations", code: "CTRL", name: "Hierarchy configuration (demo)", accent: "rgba(139,92,246,0.35)" },
-              { href: "/dashboard/services/new", code: "USE", name: "Service creation uses city context", accent: "rgba(34,197,94,0.35)" },
+              { href: "/dashboard/services/new", code: "USE", name: "Service creation uses city context", accent: "rgba(34, 177, 76,0.35)" },
             ].map((p) => (
               <Link
                 key={p.href}
@@ -305,8 +305,8 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/ai-marketplace?country=PK&state=punjab&city=rawalpindi", code: "AI", name: "Location-aware tool links (demo)", accent: "rgba(0,174,239,0.35)" },
-              { href: "/industry/it?country=PK&state=punjab&city=rawalpindi", code: "IND", name: "Near you pill + nearby text (demo)", accent: "rgba(34,197,94,0.35)" },
+              { href: "/ai-marketplace?country=PK&state=punjab&city=rawalpindi", code: "AI", name: "Location-aware tool links (demo)", accent: "rgba(41, 171, 226,0.35)" },
+              { href: "/industry/it?country=PK&state=punjab&city=rawalpindi", code: "IND", name: "Near you pill + nearby text (demo)", accent: "rgba(34, 177, 76,0.35)" },
               { href: "/locations", code: "PICK", name: "Pick hierarchy (demo)", accent: "rgba(139,92,246,0.35)" },
             ].map((p) => (
               <Link
@@ -332,8 +332,8 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/franchise?country=PK&state=punjab&city=rawalpindi", code: "PICK", name: "Auto-pick Rawalpindi area", accent: "rgba(0,174,239,0.35)" },
-              { href: "/global?country=PK&state=punjab&city=rawalpindi", code: "GLBL", name: "Global dashboard context", accent: "rgba(34,197,94,0.35)" },
+              { href: "/franchise?country=PK&state=punjab&city=rawalpindi", code: "PICK", name: "Auto-pick Rawalpindi area", accent: "rgba(41, 171, 226,0.35)" },
+              { href: "/global?country=PK&state=punjab&city=rawalpindi", code: "GLBL", name: "Global dashboard context", accent: "rgba(34, 177, 76,0.35)" },
               { href: "/admin/locations", code: "CTRL", name: "Admin location hierarchy control", accent: "rgba(139,92,246,0.35)" },
             ].map((p) => (
               <Link
@@ -359,9 +359,9 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/global?country=PK&state=punjab&city=rawalpindi", code: "GLBL", name: "Near you pill on global expansion (demo)", accent: "rgba(0,174,239,0.35)" },
+              { href: "/global?country=PK&state=punjab&city=rawalpindi", code: "GLBL", name: "Near you pill on global expansion (demo)", accent: "rgba(41, 171, 226,0.35)" },
               { href: "/blockchain-governance?country=PK&state=punjab&city=rawalpindi", code: "â›“ï¸", name: "Near you pill on blockchain governance (demo)", accent: "rgba(139,92,246,0.35)" },
-              { href: "/ai-marketplace?country=PK&state=punjab&city=rawalpindi", code: "AI", name: "AI links preserve context (demo)", accent: "rgba(34,197,94,0.35)" },
+              { href: "/ai-marketplace?country=PK&state=punjab&city=rawalpindi", code: "AI", name: "AI links preserve context (demo)", accent: "rgba(34, 177, 76,0.35)" },
             ].map((p) => (
               <Link
                 key={p.href}
@@ -386,8 +386,8 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/gosellr?country=PK&state=punjab&city=rawalpindi", code: "PROD", name: "Near you + view links keep context", accent: "rgba(0,174,239,0.35)" },
-              { href: "/gosellr/product/cleanmaster-ai?country=PK&state=punjab&city=rawalpindi", code: "VIEW", name: "Product page preserves location", accent: "rgba(34,197,94,0.35)" },
+              { href: "/gosellr?country=PK&state=punjab&city=rawalpindi", code: "PROD", name: "Near you + view links keep context", accent: "rgba(41, 171, 226,0.35)" },
+              { href: "/gosellr/product/cleanmaster-ai?country=PK&state=punjab&city=rawalpindi", code: "VIEW", name: "Product page preserves location", accent: "rgba(34, 177, 76,0.35)" },
               { href: "/orders?country=PK&state=punjab&city=rawalpindi", code: "ORDS", name: "Orders links keep location (demo)", accent: "rgba(139,92,246,0.35)" },
             ].map((p) => (
               <Link
@@ -413,8 +413,8 @@ export default function AdminCoreSystemsPage({
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: "/industry/it?country=PK&state=punjab&city=rawalpindi", code: "IND", name: "CTA buttons preserve location (demo)", accent: "rgba(0,174,239,0.35)" },
-              { href: "/wms?country=PK&state=punjab&city=rawalpindi", code: "WMS", name: "Service platform preserves context (demo)", accent: "rgba(34,197,94,0.35)" },
+              { href: "/industry/it?country=PK&state=punjab&city=rawalpindi", code: "IND", name: "CTA buttons preserve location (demo)", accent: "rgba(41, 171, 226,0.35)" },
+              { href: "/wms?country=PK&state=punjab&city=rawalpindi", code: "WMS", name: "Service platform preserves context (demo)", accent: "rgba(34, 177, 76,0.35)" },
               { href: "/dmo?country=PK&state=punjab&city=rawalpindi", code: "DMO", name: "DMO monitoring keeps context (demo)", accent: "rgba(139,92,246,0.35)" },
             ].map((p) => (
               <Link

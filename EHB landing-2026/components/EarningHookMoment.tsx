@@ -53,7 +53,7 @@ export function EarningHookMoment() {
           <div className="flex flex-col sm:flex-row gap-3 md:flex-shrink-0">
             <Link
               href="/dashboard"
-              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00AEEF] to-[#22C55E] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#29ABE2] to-[#22B14C] px-6 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
             >
               Go to dashboard
             </Link>

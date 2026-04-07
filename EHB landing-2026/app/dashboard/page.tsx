@@ -355,7 +355,7 @@ export default function DashboardPage() {
               <Link
                 key={c.title}
                 href={c.href}
-                className={`rounded-2xl glass-card border p-5 transition-all duration-300 hover:shadow-[0_0_28px_rgba(0,234,255,0.16)] ${c.accent}`}
+                className={`rounded-2xl glass-card border p-5 transition-all duration-300 hover:shadow-[0_0_28px_rgba(51, 195, 255,0.16)] ${c.accent}`}
               >
                 <p className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted mb-2">{c.title}</p>
                 <p className="text-sm font-semibold text-white mb-2">{c.headline}</p>
@@ -493,7 +493,7 @@ export default function DashboardPage() {
       {toast && (
         <div
           className="fixed right-4 bottom-4 z-[80] rounded-2xl glass-panel border border-emerald-400/30 bg-slate-950/70 px-4 py-3"
-          style={{ boxShadow: "0 0 40px rgba(0,234,255,0.14)" }}
+          style={{ boxShadow: "0 0 40px rgba(51, 195, 255,0.14)" }}
           role="status"
           aria-live="polite"
         >

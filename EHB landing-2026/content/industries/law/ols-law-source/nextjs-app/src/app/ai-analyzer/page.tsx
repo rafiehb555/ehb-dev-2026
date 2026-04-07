@@ -364,7 +364,7 @@ export default function AIAnalyzerPage() {
                       <defs>
                         <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                           <stop offset="0%" stopColor="#10B981" />
-                          <stop offset="100%" stopColor="#22C55E" />
+                          <stop offset="100%" stopColor="#22B14C" />
                         </linearGradient>
                       </defs>
                     </svg>

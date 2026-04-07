@@ -16,16 +16,16 @@ export default function IndustriesPage() {
             <Link
               key={ind.slug}
               href={`/landing/${ind.slug}`}
-              className="glass-panel card-hover p-4 block rounded-xl border border-white/10 hover:border-[#00eaff]/40 transition-colors"
+              className="glass-panel card-hover p-4 block rounded-xl border border-white/10 hover:border-[#33C3FF]/40 transition-colors"
             >
               <p className="text-sm font-semibold text-white">{ind.name}</p>
               <p className="text-[11px] text-ehb-textMuted mt-0.5 line-clamp-2">{ind.shortName}</p>
-              <span className="text-xs text-[#00eaff] mt-2 inline-block">Industry landing →</span>
+              <span className="text-xs text-[#33C3FF] mt-2 inline-block">Industry landing →</span>
             </Link>
           ))}
         </div>
         <p className="text-[11px] text-ehb-textMuted">
-          <Link href="/" className="text-ehb-textMuted hover:text-[#00eaff] underline-offset-2">
+          <Link href="/" className="text-ehb-textMuted hover:text-[#33C3FF] underline-offset-2">
             Back to main landing
           </Link>
         </p>

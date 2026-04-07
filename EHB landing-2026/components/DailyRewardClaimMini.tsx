@@ -17,12 +17,12 @@ export function DailyRewardClaimMini({
 }) {
   const industryIcons = [
     { icon: "📚", accent: "#E53935" }, // Education
-    { icon: "🩺", accent: "#00AEEF" }, // Health
+    { icon: "🩺", accent: "#29ABE2" }, // Health
     { icon: "💻", accent: "#3B82F6" }, // IT
     { icon: "⚖️", accent: "#6B7280" }, // Law
     { icon: "💰", accent: "#F59E0B" }, // Finance
     { icon: "🚚", accent: "#FB923C" }, // Delivery
-    { icon: "🏢", accent: "#22C55E" }, // Business
+    { icon: "🏢", accent: "#22B14C" }, // Business
     { icon: "🌐", accent: "#8B5CF6" }, // Blockchain-ish connection
   ];
 
@@ -98,8 +98,8 @@ export function DailyRewardClaimMini({
           100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         @keyframes ehbToastGlow {
-          0%,100% { box-shadow: 0 0 0 rgba(0,234,255,0); }
-          50% { box-shadow: 0 0 26px rgba(0,234,255,0.22); }
+          0%,100% { box-shadow: 0 0 0 rgba(51, 195, 255,0); }
+          50% { box-shadow: 0 0 26px rgba(51, 195, 255,0.22); }
         }
 
         @keyframes ehbGlobePulse {
@@ -136,9 +136,9 @@ export function DailyRewardClaimMini({
               height: 82,
               transform: "translate(-50%,-50%)",
               background:
-                "radial-gradient(circle at 35% 30%, rgba(255,255,255,0.14), transparent 52%), radial-gradient(circle at 65% 70%, rgba(0,234,255,0.22), transparent 55%), radial-gradient(circle at 50% 50%, rgba(0,0,0,0.35), rgba(0,0,0,0.65))",
-              border: "1px solid rgba(0,234,255,0.35)",
-              boxShadow: "0 0 34px rgba(0,234,255,0.20), inset 0 0 0 1px rgba(255,255,255,0.05)",
+                "radial-gradient(circle at 35% 30%, rgba(255,255,255,0.14), transparent 52%), radial-gradient(circle at 65% 70%, rgba(51, 195, 255,0.22), transparent 55%), radial-gradient(circle at 50% 50%, rgba(0,0,0,0.35), rgba(0,0,0,0.65))",
+              border: "1px solid rgba(51, 195, 255,0.35)",
+              boxShadow: "0 0 34px rgba(51, 195, 255,0.20), inset 0 0 0 1px rgba(255,255,255,0.05)",
               animation: "ehbGlobePulse 2.6s ease-in-out infinite",
             }}
           />
@@ -150,8 +150,8 @@ export function DailyRewardClaimMini({
             style={{
               width: 96,
               height: 96,
-              border: "1px dashed rgba(0,234,255,0.25)",
-              boxShadow: "0 0 26px rgba(0,234,255,0.10)",
+              border: "1px dashed rgba(51, 195, 255,0.25)",
+              boxShadow: "0 0 26px rgba(51, 195, 255,0.10)",
               opacity: 0.9,
             }}
           />

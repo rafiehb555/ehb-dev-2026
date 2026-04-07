@@ -208,7 +208,7 @@ export default function CasePredictionComponent({ caseType, caseDetails, languag
                     cx="64"
                     cy="64"
                     r="56"
-                    stroke={prediction.successProbability >= 70 ? '#22C55E' : prediction.successProbability >= 50 ? '#EAB308' : '#EF4444'}
+                    stroke={prediction.successProbability >= 70 ? '#22B14C' : prediction.successProbability >= 50 ? '#EAB308' : '#EF4444'}
                     strokeWidth="8"
                     fill="none"
                     strokeLinecap="round"

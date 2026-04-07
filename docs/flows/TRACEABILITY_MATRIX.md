@@ -24,7 +24,7 @@
 
 **Related (non-INDEX legacy flows):** [USER_FLOW.md](USER_FLOW.md), [PROVIDER_FLOW.md](PROVIDER_FLOW.md)
 
-**Integration & handoff:** [FLOW-P11-integration-readiness.md](FLOW-P11-integration-readiness.md) — epics, decisions log, implementation checklist.
+**Integration & handoff:** [FLOW-P11-integration-readiness.md](FLOW-P11-integration-readiness.md) — epics, decisions log, implementation checklist; **pre-push (landing):** [Pre-push gate](FLOW-P11-integration-readiness.md#pre-push-gate-ehb-landing-2026) (`npm run ci:local`, `npm run audit:info`).
 
 **Ops smoke:** `GET /api/health` in the Next app ([`app/api/health/route.ts`](../../EHB%20landing-2026/app/api/health/route.ts)) — deploy/uptime checks; optional `gitSha` when `VERCEL_GIT_COMMIT_SHA` is set.
 

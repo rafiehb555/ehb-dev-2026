@@ -8,9 +8,9 @@ type CityCode = "rawalpindi" | "lahore" | "islamabad" | "karachi";
 type CityInfo = { code: CityCode; label: string; accent: string };
 
 const CITIES: CityInfo[] = [
-  { code: "rawalpindi", label: "Rawalpindi", accent: "#00eaff" },
+  { code: "rawalpindi", label: "Rawalpindi", accent: "#33C3FF" },
   { code: "lahore", label: "Lahore", accent: "#3b82f6" },
-  { code: "islamabad", label: "Islamabad", accent: "#22c55e" },
+  { code: "islamabad", label: "Islamabad", accent: "#22b14c" },
   { code: "karachi", label: "Karachi", accent: "#f59e0b" },
 ];
 
@@ -28,13 +28,13 @@ const MOCK_INSIGHTS: Record<CityCode, Record<string, Insight[]>> = {
         title: "Web services demand rising",
         deltaText: "+17% verified requests",
         bullets: ["Website Development top signal", "High-STL providers converting faster", "Fraud flags improved after stricter checks"],
-        accent: "#00eaff",
+        accent: "#33C3FF",
       },
       {
         title: "Gap: mobile onboarding",
         deltaText: "Low supply vs demand",
         bullets: ["Mobile Development has weaker provider count", "Automation suggestions recommended to boost listings"],
-        accent: "#22c55e",
+        accent: "#22b14c",
       },
     ],
     health: [
@@ -42,7 +42,7 @@ const MOCK_INSIGHTS: Record<CityCode, Record<string, Insight[]>> = {
         title: "Appointment demand stable",
         deltaText: "+9% month over month",
         bullets: ["Doctor Consultation consistently trending", "Lab Reports trust score improved", "Location mismatch risk is low"],
-        accent: "#00eaff",
+        accent: "#33C3FF",
       },
     ],
   },
@@ -60,7 +60,7 @@ const MOCK_INSIGHTS: Record<CityCode, Record<string, Insight[]>> = {
         title: "Admissions pipeline strong",
         deltaText: "+11% growth",
         bullets: ["IELTS Preparation demand up", "Tors/Teachers listings gaining trust", "Recommend AI action: promote top tutors"],
-        accent: "#22c55e",
+        accent: "#22b14c",
       },
     ],
   },
@@ -70,7 +70,7 @@ const MOCK_INSIGHTS: Record<CityCode, Record<string, Insight[]>> = {
         title: "Trust-adjusted finance demand",
         deltaText: "+7% verified conversions",
         bullets: ["Account & Cards segment steady", "Wallet escrow health strong", "Fraud detection risk: medium"],
-        accent: "#22c55e",
+        accent: "#22b14c",
       },
     ],
   },

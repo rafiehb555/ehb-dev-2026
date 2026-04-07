@@ -11,7 +11,7 @@ interface FeatureCardProps {
   href?: string;
 }
 
-export function FeatureCard({ title, description, icon, accentColor = "#00eaff", href }: FeatureCardProps) {
+export function FeatureCard({ title, description, icon, accentColor = "#33C3FF", href }: FeatureCardProps) {
   const content = (
     <div
       className="h-full rounded-2xl glass-card card-hover p-6 border transition-all duration-300 flex flex-col"
@@ -45,7 +45,7 @@ export function FeatureCard({ title, description, icon, accentColor = "#00eaff",
     return (
       <Link
         href={href}
-        className="group block will-change-transform hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(0,234,255,0.3)] rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#020c1b]"
+        className="group block will-change-transform hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(51, 195, 255,0.3)] rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#020c1b]"
       >
         {content}
       </Link>
@@ -56,7 +56,7 @@ export function FeatureCard({ title, description, icon, accentColor = "#00eaff",
     return (
       <a
         href={href}
-        className="group block will-change-transform hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(0,234,255,0.3)] rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50"
+        className="group block will-change-transform hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(51, 195, 255,0.3)] rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50"
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -66,7 +66,7 @@ export function FeatureCard({ title, description, icon, accentColor = "#00eaff",
   }
 
   return (
-    <div className="will-change-transform hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(0,234,255,0.3)] rounded-2xl">
+    <div className="will-change-transform hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(51, 195, 255,0.3)] rounded-2xl">
       {content}
     </div>
   );

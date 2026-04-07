@@ -12,7 +12,7 @@ export function QuickActionsStrip() {
         <div className="flex flex-wrap gap-2 text-[11px] sm:text-xs">
           <Link
             href="/dashboard"
-            className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#22c55e] to-[#16a34a] px-4 py-2 font-semibold text-slate-950 btn-glow"
+            className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#22b14c] to-[#16a34a] px-4 py-2 font-semibold text-slate-950 btn-glow"
           >
             Create Service
           </Link>

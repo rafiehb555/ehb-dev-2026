@@ -24,7 +24,7 @@ export default function AdminBlockchainGovernancePage() {
             </Link>
             <Link
               href="/blockchain-governance"
-              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#8b5cf6] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
+              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#8b5cf6] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
             >
               Open Blockchain Page
             </Link>

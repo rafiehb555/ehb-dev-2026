@@ -119,7 +119,7 @@ export function IndustriesExplorer() {
                 onClick={() => setFilter(f.key)}
                 className={`rounded-full px-3 py-1 border transition-all ${
                   active
-                    ? "bg-gradient-to-r from-[#00eaff] to-[#22c55e] text-slate-950 border-transparent shadow-[0_0_18px_rgba(34,197,94,0.5)]"
+                    ? "bg-gradient-to-r from-[#33C3FF] to-[#22b14c] text-slate-950 border-transparent shadow-[0_0_18px_rgba(34, 177, 76,0.5)]"
                     : "bg-white/5 border-white/15 text-ehb-textBody hover:text-white hover:bg-white/10"
                 }`}
               >

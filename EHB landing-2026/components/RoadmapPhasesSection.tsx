@@ -23,9 +23,9 @@ function PhaseRow({ p }: { p: Phase }) {
       <div
         className="h-10 w-10 rounded-2xl flex items-center justify-center text-xs sm:text-sm font-semibold border"
         style={{
-          backgroundColor: "rgba(0,174,239,0.10)",
-          borderColor: "rgba(0,174,239,0.35)",
-          boxShadow: "0 0 26px rgba(0,174,239,0.14)",
+          backgroundColor: "rgba(41, 171, 226,0.10)",
+          borderColor: "rgba(41, 171, 226,0.35)",
+          boxShadow: "0 0 26px rgba(41, 171, 226,0.14)",
         }}
         aria-hidden
       >

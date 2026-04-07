@@ -7,7 +7,7 @@
  */
 
 export function FinanceIndustry3D({ accentColor = "#F59E0B" }: { accentColor?: string }) {
-  const accent2 = "#22C55E";
+  const accent2 = "#22B14C";
   const accent3 = "#3B82F6";
 
   const orbitItems = [
@@ -55,7 +55,7 @@ export function FinanceIndustry3D({ accentColor = "#F59E0B" }: { accentColor?: s
             className="absolute inset-0"
             style={{
               backgroundImage:
-                "radial-gradient(circle at 50% 0%, rgba(245,158,11,0.18), transparent 55%), radial-gradient(circle at 0% 80%, rgba(34,197,94,0.14), transparent 55%), radial-gradient(circle at 100% 80%, rgba(59,130,246,0.12), transparent 55%)",
+                "radial-gradient(circle at 50% 0%, rgba(245,158,11,0.18), transparent 55%), radial-gradient(circle at 0% 80%, rgba(34, 177, 76,0.14), transparent 55%), radial-gradient(circle at 100% 80%, rgba(59,130,246,0.12), transparent 55%)",
             }}
           />
           <div
@@ -147,7 +147,7 @@ export function FinanceIndustry3D({ accentColor = "#F59E0B" }: { accentColor?: s
                 style={{
                   background:
                     "radial-gradient(circle at 50% 15%, rgba(248,250,252,0.95), transparent 55%), radial-gradient(circle at 50% 70%, rgba(245,158,11,0.95), transparent 65%)",
-                  boxShadow: `0 0 40px ${accentColor}cc, 0 0 80px rgba(34,197,94,0.35)`,
+                  boxShadow: `0 0 40px ${accentColor}cc, 0 0 80px rgba(34, 177, 76,0.35)`,
                 }}
               />
 

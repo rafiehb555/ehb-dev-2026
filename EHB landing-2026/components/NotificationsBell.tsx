@@ -179,7 +179,7 @@ export function NotificationsBell() {
           role="dialog"
           aria-label="Notifications"
         >
-          <div className="rounded-2xl glass-panel border border-white/10 bg-slate-950/85 backdrop-blur p-3 shadow-[0_0_42px_rgba(0,234,255,0.12)]">
+          <div className="rounded-2xl glass-panel border border-white/10 bg-slate-950/85 backdrop-blur p-3 shadow-[0_0_42px_rgba(51, 195, 255,0.12)]">
             <div className="flex items-start justify-between gap-3 mb-2">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Notifications</p>

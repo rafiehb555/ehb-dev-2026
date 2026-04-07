@@ -22,7 +22,7 @@ export function HeroParticles() {
       {dots.map((d, i) => (
         <div
           key={i}
-          className="absolute w-1 h-1 rounded-full bg-[#00eaff]/30 animate-float"
+          className="absolute w-1 h-1 rounded-full bg-[#33C3FF]/30 animate-float"
           style={{
             left: d.left,
             top: d.top,
@@ -33,7 +33,7 @@ export function HeroParticles() {
       ))}
       {/* Subtle horizontal line accents */}
       <div
-        className="absolute left-0 right-0 h-px top-1/3 bg-gradient-to-r from-transparent via-[#00eaff]/20 to-transparent"
+        className="absolute left-0 right-0 h-px top-1/3 bg-gradient-to-r from-transparent via-[#33C3FF]/20 to-transparent"
         style={{ transform: "translateY(-50%)" }}
       />
       <div

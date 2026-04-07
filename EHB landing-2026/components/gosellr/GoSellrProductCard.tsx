@@ -32,9 +32,9 @@ export function GoSellrProductCard({
       <div
         className="relative h-28 rounded-xl border overflow-hidden"
         style={{
-          borderColor: "rgba(0,234,255,0.25)",
+          borderColor: "rgba(51, 195, 255,0.25)",
           background:
-            "radial-gradient(circle at 30% 20%, rgba(0,234,255,0.25), transparent 55%), radial-gradient(circle at 80% 90%, rgba(139,92,246,0.20), transparent 55%), linear-gradient(135deg, rgba(2,12,27,0.85), rgba(2,12,27,0.95))",
+            "radial-gradient(circle at 30% 20%, rgba(51, 195, 255,0.25), transparent 55%), radial-gradient(circle at 80% 90%, rgba(139,92,246,0.20), transparent 55%), linear-gradient(135deg, rgba(2,12,27,0.85), rgba(2,12,27,0.95))",
         }}
       >
         <Image
@@ -78,7 +78,7 @@ export function GoSellrProductCard({
         <span className="text-[10px] text-ehb-textMuted">{trust ? trust.badge.level : product.tier}</span>
         <Link
           href={`/gosellr/product/${product.id}${locationQs ?? ""}`}
-          className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#22c55e] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+          className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#22b14c] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
         >
           View
         </Link>

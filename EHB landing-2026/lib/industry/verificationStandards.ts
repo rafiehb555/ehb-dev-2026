@@ -191,7 +191,7 @@ export const HEALTH_STANDARD: IndustryVerificationStandard = {
   industrySlug:  "health",
   industryName:  "Health",
   icon:          "🏥",
-  accentColor:   "#00AEEF",
+  accentColor:   "#29ABE2",
   description:   "Verification for doctors, clinics, hospitals, pharmacies, and healthcare providers.",
   expiryMonths:  6,   // Medical licenses need more frequent re-check
   fastTrackEligible: false,  // Health = always human review

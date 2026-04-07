@@ -3,7 +3,7 @@ import { KpiCard } from "./KpiCard";
 export function EhbHomeCard() {
   return (
     <div className="glass-panel card-hover p-3 sm:p-4">
-      <div className="text-[10px] xs:text-[11px] font-semibold text-[#00eaff] mb-0.5">
+      <div className="text-[10px] xs:text-[11px] font-semibold text-[#33C3FF] mb-0.5">
         EHB Home · Control Center
       </div>
       <div className="text-xs sm:text-sm font-semibold text-white mb-1">

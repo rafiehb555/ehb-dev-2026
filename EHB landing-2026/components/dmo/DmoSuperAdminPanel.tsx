@@ -8,9 +8,9 @@ import { INDUSTRIES } from "@/lib/industry/config";
 type CountryRow = { id: string; name: string; activeFranchises: number; pendingApprovals: number; accent: string };
 
 const COUNTRIES: CountryRow[] = [
-  { id: "PK-PUNJAB", name: "Pakistan · Punjab", activeFranchises: 18, pendingApprovals: 9, accent: "#00eaff" },
+  { id: "PK-PUNJAB", name: "Pakistan · Punjab", activeFranchises: 18, pendingApprovals: 9, accent: "#33C3FF" },
   { id: "PK-SINDH", name: "Pakistan · Sindh", activeFranchises: 12, pendingApprovals: 6, accent: "#3b82f6" },
-  { id: "PK-ISLAM", name: "Pakistan · Islamabad", activeFranchises: 9, pendingApprovals: 4, accent: "#22c55e" },
+  { id: "PK-ISLAM", name: "Pakistan · Islamabad", activeFranchises: 9, pendingApprovals: 4, accent: "#22b14c" },
   { id: "UAE-DXB", name: "UAE · Dubai", activeFranchises: 7, pendingApprovals: 3, accent: "#f59e0b" },
 ];
 
@@ -19,7 +19,7 @@ export function DmoSuperAdminPanel() {
 
   const industry = useMemo(() => INDUSTRIES.find((i) => i.slug === industrySlug), [industrySlug]);
 
-  const accent = industry?.accentColor ?? "#00eaff";
+  const accent = industry?.accentColor ?? "#33C3FF";
 
   const summary = useMemo(() => {
     // Mock: simple deterministic-ish numbers based on industrySlug length.
@@ -59,7 +59,7 @@ export function DmoSuperAdminPanel() {
 
             <Link
               href={`/dmo/applications${industrySlug ? `?industry=${encodeURIComponent(industrySlug)}` : ""}`}
-              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
             >
               Open Workflow Queue
             </Link>

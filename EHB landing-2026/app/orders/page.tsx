@@ -62,7 +62,7 @@ export default function OrdersPage({
   const locationAccent = useMemo(() => {
     const countryCode = searchParams?.country?.trim() || "";
     const selectedCountry = countryCode ? getCountryByCode(countryCode) : undefined;
-    return selectedCountry?.accent ?? "#00AEEF";
+    return selectedCountry?.accent ?? "#29ABE2";
   }, [searchParams?.country]);
 
   useEffect(() => {

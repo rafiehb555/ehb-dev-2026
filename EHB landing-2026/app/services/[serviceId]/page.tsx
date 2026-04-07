@@ -10,7 +10,7 @@ export default async function ServicePage({
     <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <div className="flex items-center gap-3">
-          <Link href="/services" className="text-xs text-ehb-textMuted hover:text-[#00eaff] transition-colors">← Services</Link>
+          <Link href="/services" className="text-xs text-ehb-textMuted hover:text-[#33C3FF] transition-colors">← Services</Link>
         </div>
         <div className="glass-panel card-hover p-6">
           <h1 className="text-xl font-semibold text-white">Service: {serviceId}</h1>

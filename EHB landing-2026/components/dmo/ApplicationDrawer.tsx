@@ -15,7 +15,7 @@ function Badge({
 }) {
   const styles =
     tone === "cyan"
-      ? "border-[#00eaff]/40 text-[#00eaff]"
+      ? "border-[#33C3FF]/40 text-[#33C3FF]"
       : tone === "emerald"
         ? "border-emerald-400/40 text-emerald-300"
         : tone === "rose"

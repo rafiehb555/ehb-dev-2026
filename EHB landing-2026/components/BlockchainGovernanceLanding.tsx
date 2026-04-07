@@ -34,7 +34,7 @@ export function BlockchainGovernanceLanding({
     return c && s && city ? getCityByCode(c, s, city) : undefined;
   }, [locationQuery?.country, locationQuery?.state, locationQuery?.city]);
 
-  const locationAccent = selectedCountry?.accent ?? "rgba(0,174,239,0.35)";
+  const locationAccent = selectedCountry?.accent ?? "rgba(41, 171, 226,0.35)";
   const locationLabel = selectedCity?.name || selectedState?.name || selectedCountry?.name || "";
 
   const locationQs = useMemo(() => {
@@ -58,7 +58,7 @@ export function BlockchainGovernanceLanding({
           "Risk signals stay visible to DMO",
           "STL trust strength stays aligned",
         ],
-        accent: "rgba(0,174,239,0.35)",
+        accent: "rgba(41, 171, 226,0.35)",
       },
       contracts: {
         title: "Smart Contracts",
@@ -143,10 +143,10 @@ export function BlockchainGovernanceLanding({
                       onClick={() => setTab(t.key)}
                       className="min-h-touch inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition-all duration-200"
                       style={{
-                        borderColor: isActive ? "rgba(0,174,239,0.55)" : "rgba(255,255,255,0.12)",
-                        background: isActive ? "rgba(0,234,255,0.08)" : "rgba(255,255,255,0.03)",
+                        borderColor: isActive ? "rgba(41, 171, 226,0.55)" : "rgba(255,255,255,0.12)",
+                        background: isActive ? "rgba(51, 195, 255,0.08)" : "rgba(255,255,255,0.03)",
                         color: isActive ? "rgba(226,232,240,0.98)" : "rgba(226,232,240,0.85)",
-                        boxShadow: isActive ? "0 0 26px rgba(0,174,239,0.18)" : "none",
+                        boxShadow: isActive ? "0 0 26px rgba(41, 171, 226,0.18)" : "none",
                       }}
                       aria-pressed={isActive}
                     >
@@ -174,7 +174,7 @@ export function BlockchainGovernanceLanding({
                 <div className="mt-5 flex flex-wrap gap-3">
                   <Link
                     href={`/admin/blockchain${locationQs}`}
-                    className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#8b5cf6] px-5 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+                    className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#8b5cf6] px-5 py-2.5 text-sm font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
                   >
                     Open monitoring
                     <span className="text-xs ml-2" aria-hidden>
@@ -192,7 +192,7 @@ export function BlockchainGovernanceLanding({
             </div>
 
             <div className="lg:col-span-5 space-y-4">
-              <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(0,174,239,0.25)" }}>
+              <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(41, 171, 226,0.25)" }}>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">On-chain status (demo)</p>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
