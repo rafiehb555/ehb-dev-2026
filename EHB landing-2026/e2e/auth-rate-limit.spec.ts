@@ -17,9 +17,11 @@ test.describe("Auth login rate limit", () => {
     const email = `e2e-rate-${Date.now()}@example.com`;
     const password = "wrong-password-e2e";
 
+    const loginBody = JSON.stringify({ email, password });
     for (let i = 0; i < 8; i++) {
       const res = await request.post("/api/auth/login", {
-        json: { email, password },
+        headers: { "content-type": "application/json" },
+        data: loginBody,
       });
       if (res.status() !== 401) {
         throw new Error(`login POST ${i + 1}: expected 401, got ${res.status()}: ${await res.text()}`);
