@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { GOSELLR_PRODUCTS } from "@/lib/marketplace/gosellrProducts";
@@ -209,8 +210,14 @@ export default function CartPage({
             ) : (
               lines.map((l) => (
                 <div key={l.product.id} className="glass-card rounded-3xl border p-5 flex gap-4 items-start">
-                  <div className="h-24 w-24 rounded-2xl border bg-white/5 flex items-center justify-center overflow-hidden">
-                    <img src={l.product.image} alt="" className="h-full w-full object-contain" />
+                  <div className="relative h-24 w-24 shrink-0 rounded-2xl border bg-white/5 overflow-hidden">
+                    <Image
+                      src={l.product.image}
+                      alt={l.product.name}
+                      fill
+                      className="object-contain p-1"
+                      sizes="96px"
+                    />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-start justify-between gap-3">

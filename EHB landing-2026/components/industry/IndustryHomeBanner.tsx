@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import type { Industry } from "@/lib/industry/config";
 import { getIndustryDesignAssets } from "@/lib/industry/designAssets";
@@ -14,12 +15,12 @@ export function IndustryHomeBanner({ industry }: { industry: Industry }) {
   return (
     <div className="relative w-full h-[120px] md:h-[140px] overflow-hidden rounded-2xl border border-white/10 bg-[#020c1b]">
       {showImg ? (
-        <img
+        <Image
           src={assets.heroImage}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-95"
-          loading="lazy"
-          decoding="async"
+          alt={assets.alt}
+          fill
+          className="object-cover object-center opacity-95"
+          sizes="(max-width: 768px) 100vw, min(896px, 100vw)"
           onError={() => setImgFailed(true)}
         />
       ) : (

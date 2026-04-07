@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { homepageContent } from "@/lib/content/homepage";
 
@@ -87,12 +88,12 @@ export function DmoLandingSection() {
               className={`group overflow-hidden rounded-3xl border bg-gradient-to-b ${card.tone} transition-transform duration-300 hover:-translate-y-1`}
             >
               <div className="relative aspect-[16/7] overflow-hidden border-b border-white/10 bg-[#020c1b]/90">
-                <img
+                <Image
                   src={card.image}
                   alt={card.alt}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  decoding="async"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 20vw"
                 />
               </div>
               <div className="p-3.5">

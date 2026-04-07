@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 type Industry = { id: string; name: string; description: string | null; slug?: string };
@@ -49,16 +49,16 @@ export default function DmoIndustryPage() {
     return { total, verified, pending, avgScore };
   }, [verifications]);
 
-  async function loadIndustries() {
+  const loadIndustries = useCallback(async () => {
     const res = await fetch("/api/industries?take=64&skip=0", { cache: "no-store" });
     const json = await res.json();
     if (!res.ok || json?.success === false) throw new Error(json?.error?.message ?? "Industries load failed");
     const items = (json?.data?.items ?? []) as Industry[];
     setIndustries(items);
-    if (!industryId && items[0]) setIndustryId(items[0].id);
-  }
+    setIndustryId((prev) => prev || (items[0]?.id ?? ""));
+  }, []);
 
-  async function loadVerifications() {
+  const loadVerifications = useCallback(async () => {
     const qs = new URLSearchParams();
     qs.set("take", "100");
     if (status !== "ALL") qs.set("status", status);
@@ -66,9 +66,9 @@ export default function DmoIndustryPage() {
     const json = await res.json();
     if (!res.ok || json?.success === false) throw new Error(json?.error?.message ?? "Verifications load failed");
     setVerifications((json?.data?.items ?? []) as Verification[]);
-  }
+  }, [status]);
 
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -78,11 +78,11 @@ export default function DmoIndustryPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [loadIndustries, loadVerifications]);
 
   useEffect(() => {
     void load();
-  }, [status]);
+  }, [load]);
 
   async function requestVerification() {
     if (!entityId.trim() || !industryId) return;

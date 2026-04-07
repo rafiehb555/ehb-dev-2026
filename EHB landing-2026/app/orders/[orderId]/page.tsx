@@ -172,7 +172,7 @@ export default function OrderDetailPage() {
     const next = url.pathname + (url.searchParams.toString() ? `?${url.searchParams.toString()}` : "");
     window.history.replaceState({}, "", next);
     setStripeReturnPending(false);
-  }, [data?.order.status, data?.order.id]);
+  }, [data]);
 
   const dismissCancelBanner = () => {
     setCheckoutCancelledBanner(false);

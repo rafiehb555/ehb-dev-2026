@@ -91,7 +91,7 @@ export default function DashboardPage() {
     if (!toast) return;
     const id = window.setTimeout(() => setToast(null), 2600);
     return () => window.clearTimeout(id);
-  }, [toast?.id]);
+  }, [toast]);
 
   const claimDailyReward = () => {
     if (claimedToday) return;

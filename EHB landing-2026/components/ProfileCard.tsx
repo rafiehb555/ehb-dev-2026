@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { JpsProfile } from "@/lib/jps/profiles";
 
@@ -6,10 +7,16 @@ export function ProfileCard({ profile }: { profile: JpsProfile }) {
     <div className="glass-panel card-hover rounded-2xl p-6 space-y-4 border border-white/10">
       <div className="flex items-start gap-4">
         <div
-          className="h-14 w-14 rounded-2xl bg-slate-900/40 border border-white/10 flex items-center justify-center overflow-hidden"
+          className="relative h-14 w-14 shrink-0 rounded-2xl bg-slate-900/40 border border-white/10 overflow-hidden"
           aria-hidden
         >
-          <img src={profile.photo} alt="" className="h-full w-full object-cover" />
+          <Image
+            src={profile.photo}
+            alt=""
+            fill
+            className="object-cover"
+            sizes="56px"
+          />
         </div>
         <div className="min-w-0 flex-1">
           <h1 className="text-xl font-semibold text-white leading-tight">{profile.name}</h1>

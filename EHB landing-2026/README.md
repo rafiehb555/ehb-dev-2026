@@ -19,3 +19,7 @@ Repository workflow: [`.github/workflows/ehb-landing-ci.yml`](../.github/workflo
 
 - [docs/INDEX.md](../docs/INDEX.md) — health checks, payments, OLS reference, CI notes  
 - [docs/flows/INDEX.md](../docs/flows/INDEX.md) — design flows P1–P11  
+
+## Static assets
+
+- **`public/images/`** — Industry cards/heroes (`public/images/industries/…`), GoSellr / AI marketplace product art (`public/images/ai-market/…`), profile avatars (`public/images/profiles/…`), DMO explainer SVGs (`public/images/cards/…`). Referenced from `lib/industry/designAssets.ts`, `lib/marketplace/gosellrProducts.ts`, and related components using `next/image`.

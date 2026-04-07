@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 type BookingStatus = "NEW" | "IN_REVIEW" | "UNDER_INSPECTION" | "APPROVED" | "REJECTED";
 
@@ -32,7 +32,7 @@ export default function FranchiseBookingsPage() {
   const [notes, setNotes] = useState("");
   const [scheduledFor, setScheduledFor] = useState("");
 
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -50,11 +50,11 @@ export default function FranchiseBookingsPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [status]);
 
   useEffect(() => {
     void load();
-  }, [status]);
+  }, [load]);
 
   const stats = useMemo(() => {
     return {

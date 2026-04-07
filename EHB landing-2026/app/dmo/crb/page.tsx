@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 type CrbType = "SKILL" | "SERVICE" | "PRODUCT" | "COMPANY";
@@ -48,7 +48,7 @@ export default function DmoCrbPage() {
     return { total, inInspection, approved, rejected };
   }, [rows]);
 
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -73,11 +73,11 @@ export default function DmoCrbPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [status, type, query, selected]);
 
   useEffect(() => {
     void load();
-  }, [status, type, query]);
+  }, [load]);
 
   async function assignInspection() {
     if (!selected || !assignInspectorId.trim()) return;

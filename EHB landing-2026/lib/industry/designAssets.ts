@@ -3,6 +3,7 @@ import type { Industry } from "@/lib/industry/config";
 /**
  * Optional static files under public/images/industries/<slug>/.
  * When absent, UI uses accent-based gradients (IndustryCard, hero, banners).
+ * Card/hero URLs are rendered with `next/image` in IndustryCard and IndustryHomeBanner (`next.config` may use `images.unoptimized`).
  */
 export type IndustryDesignAssets = {
   /** Small card thumbnail — defaults to shared SVG until PATH_OVERRIDES / per-slug files */

@@ -83,6 +83,8 @@ export default function MarketplacePage() {
   useEffect(() => {
     void loadIndustries();
     void load();
+    // Intentional mount bootstrap; filters apply when user clicks Search (load uses latest `qs` from closure on click).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function placeOrder(item: Item) {

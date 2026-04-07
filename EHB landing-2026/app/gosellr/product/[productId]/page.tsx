@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getGosellrProductById } from "@/lib/marketplace/gosellrProducts";
@@ -80,10 +81,17 @@ export default function GosellrProductPage({
           <div className="lg:col-span-6">
             <div className="rounded-3xl glass-card border p-5 overflow-hidden">
               <div
-                className="h-[280px] rounded-2xl border bg-white/5 flex items-center justify-center overflow-hidden"
+                className="relative h-[280px] rounded-2xl border bg-white/5 overflow-hidden"
                 style={{ borderColor: "rgba(0,234,255,0.25)" }}
               >
-                <img src={product.image} alt="" className="h-full w-full object-contain" />
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="object-contain p-4"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                />
               </div>
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-slate-200">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import type { GosellrProduct } from "@/lib/marketplace/gosellrProducts";
 
@@ -29,15 +30,20 @@ export function GoSellrProductCard({
   return (
     <div className="rounded-2xl glass-card card-hover border p-5 space-y-3">
       <div
-        className="h-28 rounded-xl flex items-center justify-center border overflow-hidden"
+        className="relative h-28 rounded-xl border overflow-hidden"
         style={{
           borderColor: "rgba(0,234,255,0.25)",
           background:
             "radial-gradient(circle at 30% 20%, rgba(0,234,255,0.25), transparent 55%), radial-gradient(circle at 80% 90%, rgba(139,92,246,0.20), transparent 55%), linear-gradient(135deg, rgba(2,12,27,0.85), rgba(2,12,27,0.95))",
         }}
       >
-        {/* Using plain img to avoid next/image config dependencies here */}
-        <img src={product.image} alt="" className="h-full w-full object-contain" />
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="object-contain p-1"
+          sizes="(max-width: 640px) 100vw, 320px"
+        />
       </div>
 
       <div className="flex items-start justify-between gap-3">

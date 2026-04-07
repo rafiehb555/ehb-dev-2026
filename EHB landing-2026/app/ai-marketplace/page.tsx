@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getIndustryBySlug, INDUSTRIES } from "@/lib/industry/config";
 import { IndustryIcon } from "@/components/IndustryIcon";
@@ -301,7 +302,13 @@ export default function AIMarketplacePage({
                 <div className="relative aspect-square rounded-xl bg-[#020c1b]/80 border border-white/10 flex items-center justify-center overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.36),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(139,92,246,0.36),transparent_60%)] opacity-70 group-hover:opacity-90 transition-opacity" />
                   <div className="relative z-10 w-full h-full flex items-center justify-center p-3">
-                    <img src={p.image} alt="" width={120} height={120} className="object-contain w-full h-full max-h-[120px] opacity-90" />
+                    <Image
+                      src={p.image}
+                      alt={p.name}
+                      width={120}
+                      height={120}
+                      className="object-contain w-full h-full max-h-[120px] opacity-90"
+                    />
                   </div>
                   <div className="absolute top-1.5 left-1.5 inline-flex items-center gap-1 rounded-full bg-[#020c1b]/90 border border-white/25 px-1.5 py-0.5 text-[9px] text-slate-100">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -361,7 +368,13 @@ export default function AIMarketplacePage({
                 <div className="relative aspect-square rounded-xl bg-[#020c1b]/80 border border-emerald-400/30 flex items-center justify-center overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(16,185,129,0.3),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(45,212,191,0.28),transparent_60%)] opacity-80 group-hover:opacity-95 transition-opacity" />
                   <div className="relative z-10 w-full h-full flex items-center justify-center p-3">
-                    <img src={p.image} alt="" width={120} height={120} className="object-contain w-full h-full max-h-[120px] opacity-90" />
+                    <Image
+                      src={p.image}
+                      alt={p.name}
+                      width={120}
+                      height={120}
+                      className="object-contain w-full h-full max-h-[120px] opacity-90"
+                    />
                   </div>
                   <div className="absolute top-1.5 left-1.5 rounded-full bg-[#020c1b]/90 border border-white/25 px-1.5 py-0.5 text-[9px] text-emerald-100">
                     {p.tag}
