@@ -30,12 +30,12 @@ export default function PSSDrawer({
 
   return (
     <div className="fixed inset-y-0 right-0 z-[90] w-full max-w-[520px] border-l border-white/10 bg-[#0F141B]/95 p-6 backdrop-blur">
-      <button onClick={onClose} className="mb-4 rounded-lg border border-white/10 px-3 py-1 text-xs text-slate-300 hover:bg-white/5">
+      <button onClick={onClose} className="mb-4 rounded-lg border border-white/10 px-3 py-1 text-xs text-ehb-textBody hover:bg-white/5">
         Close
       </button>
 
       <h3 className="text-xl font-semibold">{data.user.name}</h3>
-      <p className="text-xs text-slate-400">{data.user.email ?? "No email available"}</p>
+      <p className="text-xs text-ehb-textMuted">{data.user.email ?? "No email available"}</p>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {STEPS.map((s, i) => (
@@ -44,7 +44,7 @@ export default function PSSDrawer({
             type="button"
             className={[
               "rounded-full px-3 py-1 text-[11px] transition-colors",
-              i === step ? "bg-blue-500 text-white" : "bg-white/10 text-slate-300 hover:bg-white/15",
+              i === step ? "bg-blue-500 text-white" : "bg-white/10 text-ehb-textBody hover:bg-white/15",
             ].join(" ")}
             onClick={() => setStep(i)}
           >
@@ -54,7 +54,7 @@ export default function PSSDrawer({
       </div>
 
       <div className="mt-6 space-y-4">
-        <p className="text-sm text-slate-300">Step: {activeStep}</p>
+        <p className="text-sm text-ehb-textBody">Step: {activeStep}</p>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}

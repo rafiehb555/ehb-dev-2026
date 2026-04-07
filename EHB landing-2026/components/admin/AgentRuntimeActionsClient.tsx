@@ -118,8 +118,8 @@ export default function AgentRuntimeActionsClient(props: {
       <RuntimeToast toast={runtimeToast} onDismiss={dismissToast} />
       <div className="space-y-1">
         <h2 className="text-sm sm:text-base font-semibold text-slate-100">Runtime actions</h2>
-        <p className="text-[11px] text-slate-400">
-          Updates persist to the local agent runtime store. Set <code className="text-slate-300">EHB_DEV_AUTH_BYPASS=false</code> locally to require a real login.
+        <p className="text-[11px] text-ehb-textMuted">
+          Updates persist to the local agent runtime store. Set <code className="text-ehb-textBody">EHB_DEV_AUTH_BYPASS=false</code> locally to require a real login.
         </p>
       </div>
 
@@ -374,7 +374,7 @@ export default function AgentRuntimeActionsClient(props: {
 
       {props.completableHandoffs && props.completableHandoffs.filter((h) => h.status === "accepted").length > 0 ? (
         <SubPanel title="Complete open handoff">
-          <p className="text-[11px] text-slate-400 mb-2">Accepted handoffs waiting for closure.</p>
+          <p className="text-[11px] text-ehb-textMuted mb-2">Accepted handoffs waiting for closure.</p>
           <div className="flex flex-col gap-2">
             {props.completableHandoffs
               .filter((h) => h.status === "accepted")

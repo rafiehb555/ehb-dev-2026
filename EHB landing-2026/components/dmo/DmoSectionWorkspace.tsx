@@ -1532,7 +1532,7 @@ export function DmoSectionWorkspace({
                 {section.icon} {section.label}
               </p>
               <h1 className="mt-1 text-2xl font-semibold gradient-text">{viewMeta.title}</h1>
-              <p className="mt-1 max-w-3xl text-sm text-slate-300">{viewMeta.description}</p>
+              <p className="mt-1 max-w-3xl text-sm text-ehb-textBody">{viewMeta.description}</p>
             </div>
             <div className="flex flex-wrap gap-2">
               <Link href="/dmo" className="ehb-btn-secondary ehb-press">
@@ -1569,7 +1569,7 @@ export function DmoSectionWorkspace({
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <div className="text-sm font-semibold text-white">{presentation?.title ?? "Loading..."}</div>
-                <div className="text-xs text-slate-400">{presentation?.description ?? "Preparing section data..."}</div>
+                <div className="text-xs text-ehb-textMuted">{presentation?.description ?? "Preparing section data..."}</div>
               </div>
             </div>
 
@@ -1581,7 +1581,7 @@ export function DmoSectionWorkspace({
 
             <div className="overflow-auto rounded-xl border border-white/10">
               <table className="min-w-full text-xs">
-                <thead className="bg-white/5 text-slate-300">
+                <thead className="bg-white/5 text-ehb-textBody">
                   <tr>
                     {(presentation?.columns ?? []).map((column) => (
                       <th key={column} className="px-3 py-2 text-left font-medium">
@@ -1593,13 +1593,13 @@ export function DmoSectionWorkspace({
                 <tbody>
                   {loading || !presentation ? (
                     <tr>
-                      <td colSpan={6} className="px-3 py-8 text-center text-slate-400">
+                      <td colSpan={6} className="px-3 py-8 text-center text-ehb-textMuted">
                         Loading section workspace...
                       </td>
                     </tr>
                   ) : presentation.rows.length === 0 ? (
                     <tr>
-                      <td colSpan={presentation.columns.length} className="px-3 py-8 text-center text-slate-400">
+                      <td colSpan={presentation.columns.length} className="px-3 py-8 text-center text-ehb-textMuted">
                         {presentation.emptyState}
                       </td>
                     </tr>
@@ -1634,11 +1634,11 @@ export function DmoSectionWorkspace({
                         "rounded-xl border px-3 py-2 text-xs transition-colors",
                         isActive
                           ? "border-cyan-400/40 bg-cyan-500/15 text-cyan-100"
-                          : "border-white/10 bg-white/5 text-slate-300 hover:bg-white/10",
+                          : "border-white/10 bg-white/5 text-ehb-textBody hover:bg-white/10",
                       ].join(" ")}
                     >
                       <div className="font-medium">{item.label}</div>
-                      <div className="mt-1 text-[11px] text-slate-400">{item.description}</div>
+                      <div className="mt-1 text-[11px] text-ehb-textMuted">{item.description}</div>
                     </Link>
                   );
                 })}
@@ -1649,7 +1649,7 @@ export function DmoSectionWorkspace({
               <div className="ehb-card-elevated space-y-2">
                 <div className="text-sm font-semibold text-white">Working Notes</div>
                 {presentation.notes.map((note) => (
-                  <div key={note} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300">
+                  <div key={note} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-ehb-textBody">
                     {note}
                   </div>
                 ))}

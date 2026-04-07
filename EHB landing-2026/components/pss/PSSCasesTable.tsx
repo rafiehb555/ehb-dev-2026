@@ -106,12 +106,12 @@ export function PSSCasesTable(props: {
         </button>
       </div>
 
-      {props.loading ? <div className="text-xs text-slate-400">Loading PSS cases...</div> : null}
+      {props.loading ? <div className="text-xs text-ehb-textMuted">Loading PSS cases...</div> : null}
       {props.error ? <div className="rounded-xl border border-rose-400/40 bg-rose-500/10 p-3 text-xs text-rose-100">{props.error}</div> : null}
 
       <div className="overflow-auto rounded-xl border border-white/10">
         <table className="min-w-full text-xs">
-          <thead className="bg-white/5 text-slate-300">
+          <thead className="bg-white/5 text-ehb-textBody">
             <tr>
               <th className="px-3 py-2 text-left">User</th>
               <th className="px-3 py-2 text-left">Type</th>
@@ -129,7 +129,7 @@ export function PSSCasesTable(props: {
                   <tr key={r.id} className="border-t border-white/10 hover:bg-white/5 cursor-pointer" onClick={() => props.onSelectCase(r.id)}>
                     <td className="px-3 py-2">
                       <div className="font-semibold">{r.user.name}</div>
-                      <div className="text-[11px] text-slate-400">{r.user.email}</div>
+                      <div className="text-[11px] text-ehb-textMuted">{r.user.email}</div>
                     </td>
                     <td className="px-3 py-2">{r.type}</td>
                     <td className="px-3 py-2">
@@ -148,17 +148,17 @@ export function PSSCasesTable(props: {
                           {typeof r.refillDaysRemaining === "number" ? `${r.refillDaysRemaining}d left` : "Warning"}
                         </span>
                       ) : (
-                        <span className="text-slate-400">Normal</span>
+                        <span className="text-ehb-textMuted">Normal</span>
                       )}
                     </td>
                     <td className="px-3 py-2">{r.stage}</td>
-                    <td className="px-3 py-2 text-slate-400">{fmt(r.updatedAt)}</td>
+                    <td className="px-3 py-2 text-ehb-textMuted">{fmt(r.updatedAt)}</td>
                   </tr>
                 ))
               : null}
             {props.rows.length === 0 && !props.loading ? (
               <tr>
-                <td className="px-3 py-8 text-center text-slate-400" colSpan={7}>
+                <td className="px-3 py-8 text-center text-ehb-textMuted" colSpan={7}>
                   No PSS cases found.
                 </td>
               </tr>

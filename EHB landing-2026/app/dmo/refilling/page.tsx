@@ -105,7 +105,7 @@ export default function RefillingPage() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td className="p-4 text-slate-300" colSpan={6}>
+                  <td className="p-4 text-ehb-textBody" colSpan={6}>
                     Loading refilling records...
                   </td>
                 </tr>
@@ -113,7 +113,7 @@ export default function RefillingPage() {
 
               {!loading && data.length === 0 ? (
                 <tr>
-                  <td className="p-4 text-slate-300" colSpan={6}>
+                  <td className="p-4 text-ehb-textBody" colSpan={6}>
                     No refilling records found.
                   </td>
                 </tr>
@@ -129,7 +129,7 @@ export default function RefillingPage() {
                       <StatusBadge status={item.status} />
                     </td>
                     <td>{item.stlImpact}</td>
-                    <td className="text-xs text-slate-300">{dueCountdown(item.dueDate)}</td>
+                    <td className="text-xs text-ehb-textBody">{dueCountdown(item.dueDate)}</td>
                   </tr>
                 ))}
             </tbody>

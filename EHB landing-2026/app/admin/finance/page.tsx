@@ -7,11 +7,11 @@ export default function AdminFinancePage() {
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Admin · Finance</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Admin · Finance</p>
             <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">
               Wallet & Payments Monitoring
             </h1>
-            <p className="text-slate-300 max-w-2xl">
+            <p className="text-ehb-textBody max-w-2xl">
               Connect wallet flows with STL trust strength and verification renewals.
             </p>
           </div>

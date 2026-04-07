@@ -418,7 +418,7 @@ export default function AgentControlClient(props: {
               <div className="space-y-1.5">
                 <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-cyan-300/90">Admin · Agent roster</p>
                 <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">Agent Control Center</h1>
-                <p className="max-w-2xl text-[12px] sm:text-[13px] leading-relaxed text-slate-400">
+                <p className="max-w-2xl text-[12px] sm:text-[13px] leading-relaxed text-ehb-textMuted">
                   Dashboard view: live runtime status, per-agent task, and health — stored locally for development (not production telemetry).
                 </p>
               </div>
@@ -445,7 +445,7 @@ export default function AgentControlClient(props: {
             label="Total agents"
             value={props.dashboardSummary.totalAgents}
             detail="Roster in catalog"
-            icon={<Bot className="text-slate-300" aria-hidden />}
+            icon={<Bot className="text-ehb-textBody" aria-hidden />}
           />
           <KpiCard
             label="Active / blocked"
@@ -485,12 +485,12 @@ export default function AgentControlClient(props: {
               </div>
               <div>
                 <h2 className="text-sm font-semibold text-white">Who is busy right now</h2>
-                <p className="mt-0.5 text-[11px] text-slate-400">
+                <p className="mt-0.5 text-[11px] text-ehb-textMuted">
                   Agents in <span className="text-emerald-300/90">working / planning / verifying / reading</span> — with current task text from runtime.
                 </p>
               </div>
             </div>
-            <div className="text-right text-[11px] tabular-nums text-slate-400">
+            <div className="text-right text-[11px] tabular-nums text-ehb-textMuted">
               <span className="text-lg font-semibold text-emerald-300">{busyAgentsNow.length}</span>
               <span className="text-slate-500"> / {rosterTotal}</span>
               <span className="block text-[10px] text-slate-500">share of roster “in motion”</span>
@@ -535,7 +535,7 @@ export default function AgentControlClient(props: {
                         {sm.label}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-400 line-clamp-2">
+                    <p className="text-[11px] text-ehb-textMuted line-clamp-2">
                       <span className="text-slate-500">Task: </span>
                       {s.lastTask}
                     </p>
@@ -562,7 +562,7 @@ export default function AgentControlClient(props: {
                   </div>
                   <div>
                     <h2 className="text-sm sm:text-base font-semibold text-slate-50">{group.title}</h2>
-                    <p className="text-[11px] text-slate-400">{group.detail}</p>
+                    <p className="text-[11px] text-ehb-textMuted">{group.detail}</p>
                   </div>
                 </div>
                 <div className="grid gap-3 grid-cols-1 xl:grid-cols-2">
@@ -595,7 +595,7 @@ export default function AgentControlClient(props: {
                                 <h3 className="truncate font-mono text-[12px] sm:text-[13px] font-semibold text-slate-50">
                                   {agent.id}
                                 </h3>
-                                <p className="text-[11px] text-slate-400">{agent.owner}</p>
+                                <p className="text-[11px] text-ehb-textMuted">{agent.owner}</p>
                               </div>
                               <div className="flex flex-wrap items-center justify-end gap-1">
                                 {busy ? (
@@ -612,13 +612,13 @@ export default function AgentControlClient(props: {
                                   </span>
                                 ) : null}
                                 {runtime ? (
-                                  <span className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-2 py-0.5 text-[10px] text-slate-300">
+                                  <span className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-2 py-0.5 text-[10px] text-ehb-textBody">
                                     {runtime.mode}
                                   </span>
                                 ) : null}
                               </div>
                             </div>
-                            <p className="line-clamp-2 text-[11px] leading-snug text-slate-300">{agent.summary}</p>
+                            <p className="line-clamp-2 text-[11px] leading-snug text-ehb-textBody">{agent.summary}</p>
                             {runtime ? (
                               <div className="space-y-1.5">
                                 <div className="flex items-center justify-between text-[10px] text-slate-500">
@@ -626,7 +626,7 @@ export default function AgentControlClient(props: {
                                     <HeartPulse className="h-3 w-3" aria-hidden />
                                     Health
                                   </span>
-                                  <span className="tabular-nums text-slate-300">{runtime.healthScore}%</span>
+                                  <span className="tabular-nums text-ehb-textBody">{runtime.healthScore}%</span>
                                 </div>
                                 <MiniProgressBar
                                   value={runtime.healthScore}
@@ -634,13 +634,13 @@ export default function AgentControlClient(props: {
                                   barClassName="bg-gradient-to-r from-emerald-500 to-cyan-400"
                                 />
                                 <div className="grid grid-cols-2 gap-2 text-[10px] sm:grid-cols-3">
-                                  <div className="rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-slate-400">
+                                  <div className="rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-ehb-textMuted">
                                     Queue <span className="font-medium text-slate-100">{runtime.queueSize}</span>
                                   </div>
-                                  <div className="rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-slate-400">
+                                  <div className="rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-ehb-textMuted">
                                     Updated <span className="font-medium text-slate-100">{runtime.lastUpdatedLabel}</span>
                                   </div>
-                                  <div className="col-span-2 rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-slate-400 sm:col-span-1">
+                                  <div className="col-span-2 rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-ehb-textMuted sm:col-span-1">
                                     <span className="block text-[9px] uppercase tracking-wide text-slate-500">Current task</span>
                                     <span className="line-clamp-2 text-[11px] text-slate-200">{runtime.lastTask}</span>
                                   </div>
@@ -916,7 +916,7 @@ export default function AgentControlClient(props: {
                 ) : (
                   <CheckCircle2 className="h-4 w-4 text-emerald-300" />
                 ),
-              content: <p className="text-slate-300">{card.body}</p>,
+              content: <p className="text-ehb-textBody">{card.body}</p>,
             }))}
           />
         </section>
@@ -977,7 +977,7 @@ export default function AgentControlClient(props: {
                     ))}
                   </div>
                 </div>
-                <div className="rounded-lg border border-violet-500/20 bg-violet-950/25 p-3 text-[12px] leading-snug text-slate-300">{recommendationResult.reason}</div>
+                <div className="rounded-lg border border-violet-500/20 bg-violet-950/25 p-3 text-[12px] leading-snug text-ehb-textBody">{recommendationResult.reason}</div>
               </div>
             </div>
           </CardContent>
@@ -1016,7 +1016,7 @@ export default function AgentControlClient(props: {
                         <h3 className="text-[13px] font-semibold text-slate-50">{item.title}</h3>
                         <Badge variant={theme.badge}>{props.chooserCategories.find((c) => c.id === item.category)?.label ?? item.category}</Badge>
                       </div>
-                      <p className="text-[12px] leading-relaxed text-slate-300">{item.ownerNeed}</p>
+                      <p className="text-[12px] leading-relaxed text-ehb-textBody">{item.ownerNeed}</p>
                       <div className="flex flex-wrap items-center gap-2 text-[11px]">
                         <span className="text-slate-500">Primary</span>
                         <Link
@@ -1038,7 +1038,7 @@ export default function AgentControlClient(props: {
                           </Link>
                         ))}
                       </div>
-                      <div className="rounded-lg border border-white/10 bg-slate-950/40 p-3 text-[12px] text-slate-300">{item.reason}</div>
+                      <div className="rounded-lg border border-white/10 bg-slate-950/40 p-3 text-[12px] text-ehb-textBody">{item.reason}</div>
                     </div>
                   </div>
                 );
@@ -1089,10 +1089,10 @@ export default function AgentControlClient(props: {
                             {handoff.status}
                           </Badge>
                         </div>
-                        <p className="mt-2 text-[12px] text-slate-300">{handoff.requestSummary}</p>
+                        <p className="mt-2 text-[12px] text-ehb-textBody">{handoff.requestSummary}</p>
                         <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
                           <span>
-                            Expected: <span className="text-slate-400">{handoff.expectedOutput}</span> · {handoff.createdAtLabel}
+                            Expected: <span className="text-ehb-textMuted">{handoff.expectedOutput}</span> · {handoff.createdAtLabel}
                           </span>
                           {handoff.status === "accepted" ? (
                             <button
@@ -1138,7 +1138,7 @@ export default function AgentControlClient(props: {
                       <Badge variant="cyan" className="mb-2 normal-case">
                         {status.name}
                       </Badge>
-                      <p className="text-[12px] leading-snug text-slate-300">{status.meaning}</p>
+                      <p className="text-[12px] leading-snug text-ehb-textBody">{status.meaning}</p>
                     </div>
                   ))}
                 </div>
@@ -1175,7 +1175,7 @@ export default function AgentControlClient(props: {
               <CardDescription>Sensitive routing rules at a glance.</CardDescription>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-2.5 text-[12px] text-slate-300">
+              <ul className="space-y-2.5 text-[12px] text-ehb-textBody">
                 {props.ownershipHighlights.map((item) => (
                   <li key={item} className="flex gap-2">
                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400/80" aria-hidden />
@@ -1195,7 +1195,7 @@ export default function AgentControlClient(props: {
               <CardDescription>Default orchestration limits.</CardDescription>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-2 text-[12px] text-slate-300">
+              <ul className="space-y-2 text-[12px] text-ehb-textBody">
                 <li>
                   <span className="text-slate-500">Start: </span>
                   <code className="rounded bg-slate-900/80 px-1.5 py-0.5 text-[11px] text-cyan-200">{props.workflowContract.defaultStartingAgent}</code>

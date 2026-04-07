@@ -79,12 +79,12 @@ export function AutomationAdminPanel() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
             <h2 className="text-sm font-semibold text-white">AI Automation System</h2>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-ehb-textMuted">
               AI action suggestions without full automation — user confirmation required. (UI mock)
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <label className="text-[10px] text-slate-400">City</label>
+            <label className="text-[10px] text-ehb-textMuted">City</label>
             <select
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -97,7 +97,7 @@ export function AutomationAdminPanel() {
               ))}
             </select>
 
-            <label className="text-[10px] text-slate-400">Industry</label>
+            <label className="text-[10px] text-ehb-textMuted">Industry</label>
             <select
               value={industrySlug}
               onChange={(e) => setIndustrySlug(e.target.value)}
@@ -119,7 +119,7 @@ export function AutomationAdminPanel() {
         ) : null}
 
         {message ? (
-          <div className="rounded-xl glass-panel border border-white/10 p-3 text-[10px] text-slate-300">
+          <div className="rounded-xl glass-panel border border-white/10 p-3 text-[10px] text-ehb-textBody">
             {message}
           </div>
         ) : null}
@@ -133,14 +133,14 @@ export function AutomationAdminPanel() {
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-white">{a.title}</p>
-                  <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">{typeToLabel(a.type)}</p>
+                  <p className="text-[11px] text-ehb-textMuted mt-1 leading-relaxed">{typeToLabel(a.type)}</p>
                 </div>
                 <span className={`inline-flex items-center rounded-full px-2 py-1 text-[10px] border ${pill.className}`}>
                   {pill.label}
                 </span>
               </div>
 
-              <div className="mt-4 space-y-2 text-[11px] text-slate-300">
+              <div className="mt-4 space-y-2 text-[11px] text-ehb-textBody">
                 <div>
                   <span className="text-slate-100 font-semibold">Reason:</span> {a.reason}
                 </div>
@@ -175,7 +175,7 @@ export function AutomationAdminPanel() {
         })}
 
         {suggestions.length === 0 ? (
-          <div className="rounded-2xl glass-card border p-6 text-center text-[11px] text-slate-400 lg:col-span-2">
+          <div className="rounded-2xl glass-card border p-6 text-center text-[11px] text-ehb-textMuted lg:col-span-2">
             No suggested actions for this city + industry (mock dataset). Try another selection.
           </div>
         ) : null}

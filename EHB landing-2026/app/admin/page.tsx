@@ -47,7 +47,7 @@ function Panel(props: { title: string; path?: string; children: React.ReactNode 
 function Metric(props: { label: string; value: string }) {
   return (
     <div className="flex flex-col gap-0.5 glass-panel p-1.5 rounded-lg">
-      <span className="text-[10px] xs:text-[11px] text-slate-300">{props.label}</span>
+      <span className="text-[10px] xs:text-[11px] text-ehb-textBody">{props.label}</span>
       <span className="text-xs font-semibold text-white">{props.value}</span>
     </div>
   );
@@ -59,11 +59,11 @@ export default function AdminPage() {
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Super Admin · Control Panel</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Super Admin · Control Panel</p>
             <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">
               EHB Global Super Admin
             </h1>
-            <p className="text-slate-300 max-w-2xl">
+            <p className="text-ehb-textBody max-w-2xl">
               Command center for managing industries, core systems, franchise network, AI marketplace,
               finance, blockchain and platform health.
             </p>
@@ -101,16 +101,16 @@ export default function AdminPage() {
             </div>
           </Panel>
           <Panel title="JPS Import Management" path="/admin/jps-import">
-            <p className="text-slate-300 mb-1">
+            <p className="text-ehb-textBody mb-1">
               Manage real JPS profile imports with validation, preview counts, and fallback restore.
             </p>
             <div className="glass-panel rounded-lg p-2 space-y-1.5">
               <div className="font-semibold text-slate-100">Connected Sources</div>
-              <p className="text-slate-300">
+              <p className="text-ehb-textBody">
                 API: <span className="text-cyan-300">/api/jps</span> · Import:{" "}
                 <span className="text-cyan-300">/api/jps/import</span>
               </p>
-              <p className="text-slate-400">
+              <p className="text-ehb-textMuted">
                 Save imported data and it will instantly flow into DMO JPS, jobs, and profile pages.
               </p>
             </div>
@@ -127,13 +127,13 @@ export default function AdminPage() {
 
         <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
           <Panel title="Industry Management" path="/admin/industries">
-            <p className="text-slate-300 mb-1">Create, activate, pause and assign franchise for each industry.</p>
+            <p className="text-ehb-textBody mb-1">Create, activate, pause and assign franchise for each industry.</p>
             <div className="glass-panel rounded-lg p-2">
               <div className="font-semibold text-slate-100 mb-0.5">Legal Services (EHB OLS)</div>
-              <p className="text-slate-300">
+              <p className="text-ehb-textBody">
                 Status: <span className="text-emerald-400 font-semibold">Active</span> · Categories: 12 · Services: 64 · Providers: 1,245
               </p>
-              <p className="mt-1 text-slate-400">
+              <p className="mt-1 text-ehb-textMuted">
                 Flow: Create Industry → Add Categories → Add Services → Assign Franchise → <span className="font-semibold text-[#00eaff]">Industry Live</span>
               </p>
             </div>
@@ -142,7 +142,7 @@ export default function AdminPage() {
 
         <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
           <Panel title="Franchise Management" path="/franchise">
-            <p className="text-slate-300 mb-1">Multi-layer franchise network for global, country, corporate and sub franchises.</p>
+            <p className="text-ehb-textBody mb-1">Multi-layer franchise network for global, country, corporate and sub franchises.</p>
             <div className="flex flex-wrap gap-1.5 mb-2">
               {franchiseLevels.map((lvl) => (
                 <span key={lvl} className="inline-flex items-center rounded-full glass-panel px-2 py-0.5 text-[10px] text-slate-100">
@@ -150,17 +150,17 @@ export default function AdminPage() {
                 </span>
               ))}
             </div>
-            <ul className="space-y-1 text-slate-300">
+            <ul className="space-y-1 text-ehb-textBody">
               <li>• Countries Active: 4</li>
               <li>• Corporate Franchises: 12</li>
               <li>• Sub Franchises: 120</li>
             </ul>
-            <div className="mt-2 text-slate-300">
+            <div className="mt-2 text-ehb-textBody">
               Actions: <span className="text-slate-100">approve · suspend · assign industry rights · view revenue</span>
             </div>
           </Panel>
           <Panel title="AI Marketplace Management" path="/admin/ai-tools">
-            <p className="text-slate-300 mb-1">Configure AI tools, pricing and which industries can use each tool.</p>
+            <p className="text-ehb-textBody mb-1">Configure AI tools, pricing and which industries can use each tool.</p>
             <div className="grid grid-cols-2 gap-1.5 mb-2">
               {["AI Lawyer", "AI Doctor", "AI Resume Builder", "AI Contract Generator", "AI Marketing Assistant", "AI Code Generator"].map((tool) => (
                 <span key={tool} className="inline-flex items-center rounded-lg glass-panel px-2 py-1 text-[10px] text-slate-200">
@@ -168,7 +168,7 @@ export default function AdminPage() {
                 </span>
               ))}
             </div>
-            <div className="grid grid-cols-2 gap-1 text-slate-300">
+            <div className="grid grid-cols-2 gap-1 text-ehb-textBody">
               <Metric label="Total AI Tools" value="—" />
               <Metric label="Industries Using AI" value="—" />
               <Metric label="API Usage" value="—" />
@@ -179,38 +179,38 @@ export default function AdminPage() {
 
         <section className="grid gap-3 grid-cols-1 md:grid-cols-3">
           <Panel title="Finance & Wallet Monitoring" path="/admin/finance">
-            <ul className="space-y-1 text-slate-300">
+            <ul className="space-y-1 text-ehb-textBody">
               <li>• Total Wallet Balance</li>
               <li>• Transactions Today</li>
               <li>• Escrow Active</li>
               <li>• Affiliate Payouts</li>
               <li>• Franchise Revenue</li>
             </ul>
-            <p className="mt-1 text-slate-400">Wallets: User · Provider · Franchise · System.</p>
+            <p className="mt-1 text-ehb-textMuted">Wallets: User · Provider · Franchise · System.</p>
           </Panel>
           <Panel title="Blockchain Monitoring" path="/admin/blockchain">
-            <ul className="space-y-1 text-slate-300">
+            <ul className="space-y-1 text-ehb-textBody">
               <li>• Active Validators</li>
               <li>• Total Transactions</li>
               <li>• Smart Contracts Active</li>
               <li>• Network Status</li>
             </ul>
-            <p className="mt-1 text-slate-400">Validator snapshot: Validator ID · Country · Stake Amount · Status.</p>
+            <p className="mt-1 text-ehb-textMuted">Validator snapshot: Validator ID · Country · Stake Amount · Status.</p>
           </Panel>
           <Panel title="Affiliate System Management" path="/admin/affiliate">
-            <ul className="space-y-1 text-slate-300">
+            <ul className="space-y-1 text-ehb-textBody">
               <li>• Total Affiliates</li>
               <li>• Total Referrals</li>
               <li>• Commission Paid</li>
               <li>• Top Affiliates</li>
             </ul>
-            <p className="mt-1 text-slate-400">Actions: approve affiliate · set commission rates · track referrals.</p>
+            <p className="mt-1 text-ehb-textMuted">Actions: approve affiliate · set commission rates · track referrals.</p>
           </Panel>
         </section>
 
         <section className="grid gap-3 grid-cols-1 lg:grid-cols-2">
           <Panel title="Development Monitoring" path="/admin/development">
-            <ul className="space-y-1 text-slate-300">
+            <ul className="space-y-1 text-ehb-textBody">
               <li>• AI Department – 40%</li>
               <li>• Blockchain – 10%</li>
               <li>• Finance – 35%</li>
@@ -228,11 +228,11 @@ export default function AdminPage() {
             </div>
           </Panel>
           <Panel title="Development Agent System" path="/admin/agents">
-            <p className="text-slate-300 mb-1">
+            <p className="text-ehb-textBody mb-1">
               Read-only control center for the 14 EHB development agents, their ownership model,
               status language, and normal handoff order.
             </p>
-            <div className="grid grid-cols-2 gap-1.5 text-slate-300">
+            <div className="grid grid-cols-2 gap-1.5 text-ehb-textBody">
               <Metric label="Total Agents" value={`${agentDashboardSummary.totalAgents}`} />
               <Metric label="Shared Statuses" value={`${agentDashboardSummary.sharedStatuses}`} />
               <Metric
@@ -256,7 +256,7 @@ export default function AdminPage() {
           </Panel>
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
             <Panel title="Platform Health" path="/admin/platform-health">
-              <ul className="space-y-1 text-slate-300">
+              <ul className="space-y-1 text-ehb-textBody">
                 <li>• API response time</li>
                 <li>• Server load</li>
                 <li>• Database health</li>
@@ -265,8 +265,8 @@ export default function AdminPage() {
               </ul>
             </Panel>
             <Panel title="Search, Content & Permissions" path="/admin/search">
-              <p className="text-slate-300 mb-1">Controls for global search, content and role-based access.</p>
-              <ul className="space-y-1 text-slate-300">
+              <p className="text-ehb-textBody mb-1">Controls for global search, content and role-based access.</p>
+              <ul className="space-y-1 text-ehb-textBody">
                 <li>• Boost providers, services and industries.</li>
                 <li>• Control recommendation AI.</li>
                 <li>• Manage landing / industry pages and marketplace content.</li>
@@ -278,10 +278,10 @@ export default function AdminPage() {
 
         <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
           <Panel title="Phase 81 — Fraud Detection" path="/admin/fraud">
-            <p className="text-slate-300 mb-1">
+            <p className="text-ehb-textBody mb-1">
               Fake providers/orders/listings detect + admin risk flags. (UI mock)
             </p>
-            <ul className="space-y-1 text-slate-300">
+            <ul className="space-y-1 text-ehb-textBody">
               <li>• Duplicate listing patterns</li>
               <li>• Location mismatch signals</li>
               <li>• Risk score + severity workflow</li>
@@ -289,10 +289,10 @@ export default function AdminPage() {
           </Panel>
 
           <Panel title="Phase 82 — Business Analytics" path="/admin/ai-analytics">
-            <p className="text-slate-300 mb-1">
+            <p className="text-ehb-textBody mb-1">
               Auto reports for franchise, provider, and platform teams. (UI mock)
             </p>
-            <ul className="space-y-1 text-slate-300">
+            <ul className="space-y-1 text-ehb-textBody">
               <li>• Industry / Franchise / Provider tabs</li>
               <li>• Period: 30d / This month / This quarter</li>
               <li>• Template + later AI NLG</li>
@@ -300,8 +300,8 @@ export default function AdminPage() {
           </Panel>
 
           <Panel title="Phase 83 — Location Intelligence" path="/admin/location-insights">
-            <p className="text-slate-300 mb-1">City/region demand insights + STL-adjusted gaps. (UI mock)</p>
-            <ul className="space-y-1 text-slate-300">
+            <p className="text-ehb-textBody mb-1">City/region demand insights + STL-adjusted gaps. (UI mock)</p>
+            <ul className="space-y-1 text-ehb-textBody">
               <li>• City dropdown</li>
               <li>• Industry dropdown</li>
               <li>• Insight cards</li>
@@ -309,16 +309,16 @@ export default function AdminPage() {
           </Panel>
 
           <Panel title="Phase 84 — AI Automation" path="/admin/ai-automation">
-            <p className="text-slate-300 mb-1">AI action suggestions (activate service/add product/apply). (UI mock)</p>
-            <ul className="space-y-1 text-slate-300">
+            <p className="text-ehb-textBody mb-1">AI action suggestions (activate service/add product/apply). (UI mock)</p>
+            <ul className="space-y-1 text-ehb-textBody">
               <li>• City + industry context</li>
               <li>• Confirm action flow (mock)</li>
             </ul>
           </Panel>
 
           <Panel title="Phase 85 — Data Pipeline" path="/admin/ai-data-pipeline">
-            <p className="text-slate-300 mb-1">Ingestion → storage → scoring → publish (UI mock).</p>
-            <ul className="space-y-1 text-slate-300">
+            <p className="text-ehb-textBody mb-1">Ingestion → storage → scoring → publish (UI mock).</p>
+            <ul className="space-y-1 text-ehb-textBody">
               <li>• Run pipeline now (mock)</li>
               <li>• Stage status cards</li>
             </ul>

@@ -36,7 +36,7 @@ function Badge({
 function TableSkeleton() {
   return (
     <div className="rounded-xl border border-white/10 overflow-hidden">
-      <div className="bg-white/5 px-3 py-2 text-slate-300 font-semibold">Loading queue…</div>
+      <div className="bg-white/5 px-3 py-2 text-ehb-textBody font-semibold">Loading queue…</div>
       <div className="p-3 space-y-2">
         {Array.from({ length: 8 }).map((_, i) => (
           <div key={i} className="rounded-xl bg-white/5 border border-white/10 p-3">
@@ -94,7 +94,7 @@ export function ApplicationsTable(props: {
 
         <div className="grid w-full gap-2 sm:flex sm:w-auto sm:flex-wrap sm:items-center">
           <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-slate-200 min-h-touch">
-            <span className="text-slate-400 mr-1">Status</span>
+            <span className="text-ehb-textMuted mr-1">Status</span>
             <select
               className="ehb-select"
               value={props.filterStatus}
@@ -110,7 +110,7 @@ export function ApplicationsTable(props: {
           </div>
 
           <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-slate-200 min-h-touch">
-            <span className="text-slate-400 mr-1">Type</span>
+            <span className="text-ehb-textMuted mr-1">Type</span>
             <select
               className="ehb-select"
               value={props.filterType}
@@ -132,7 +132,7 @@ export function ApplicationsTable(props: {
             </select>
           </div>
           <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-slate-200 min-h-touch">
-            <span className="text-slate-400 mr-1">Risk</span>
+            <span className="text-ehb-textMuted mr-1">Risk</span>
             <select
               className="ehb-select"
               value={props.filterRisk}
@@ -146,7 +146,7 @@ export function ApplicationsTable(props: {
           </div>
 
           <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-slate-200 min-h-touch">
-            <span className="text-slate-400 mr-1">Search</span>
+            <span className="text-ehb-textMuted mr-1">Search</span>
             <input
               value={props.search}
               onChange={(e) => props.onChangeSearch(e.target.value)}
@@ -190,7 +190,7 @@ export function ApplicationsTable(props: {
       <div className="mt-3 overflow-auto rounded-xl border border-white/10">
         <table className="min-w-[860px] sm:min-w-full text-[10px] xs:text-[11px]">
           <thead className="bg-white/5">
-            <tr className="text-left text-slate-300">
+            <tr className="text-left text-ehb-textBody">
               <th className="px-3 py-2 font-semibold">
                 <input
                   type="checkbox"
@@ -257,17 +257,17 @@ export function ApplicationsTable(props: {
                     <Badge tone="rose">{props.getSla(a).label}</Badge>
                   )}
                 </td>
-                <td className="px-3 py-2 text-slate-300">
+                <td className="px-3 py-2 text-ehb-textBody">
                   {a.assignedTo ? a.assignedTo.name : <span className="text-slate-500">Unassigned</span>}
                 </td>
-                <td className="px-3 py-2 text-slate-400 whitespace-nowrap">{fmtDateTime(a.updatedAt)}</td>
+                <td className="px-3 py-2 text-ehb-textMuted whitespace-nowrap">{fmtDateTime(a.updatedAt)}</td>
               </motion.tr>
             ))}
             {props.rows.length === 0 ? (
               <tr>
-                <td colSpan={9} className="px-3 py-10 text-center text-slate-300">
+                <td colSpan={9} className="px-3 py-10 text-center text-ehb-textBody">
                   <div className="font-semibold text-slate-100">No applications found</div>
-                  <div className="text-xs text-slate-400 mt-1">Try refresh or clear filters to load queue data.</div>
+                  <div className="text-xs text-ehb-textMuted mt-1">Try refresh or clear filters to load queue data.</div>
                   <div className="mt-3 flex items-center justify-center gap-2">
                     <button
                       type="button"

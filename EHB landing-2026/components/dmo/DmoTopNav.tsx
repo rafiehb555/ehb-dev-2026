@@ -25,7 +25,7 @@ export function DmoTopNav() {
           </Link>
         </div>
 
-        <div className="hidden sm:flex items-center gap-2 text-[10px] text-slate-400">
+        <div className="hidden sm:flex items-center gap-2 text-[10px] text-ehb-textMuted">
           <span className="inline-flex items-center rounded-full glass-panel px-2 py-0.5 border border-white/10">Top navigation</span>
           <span>All DMO routes</span>
         </div>

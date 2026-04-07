@@ -30,7 +30,7 @@ export function DmoKpiCard(props: {
       ? "text-emerald-300"
       : props.trend === "down"
         ? "text-rose-200"
-        : "text-slate-300";
+        : "text-ehb-textBody";
 
   const numeric = typeof props.value === "number" ? props.value : Number(props.value);
   const isNumeric = Number.isFinite(numeric);

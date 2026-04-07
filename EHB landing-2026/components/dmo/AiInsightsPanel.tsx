@@ -9,7 +9,7 @@ export function AiInsightsPanel(props: {
     <div className="rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-[#041427]/90 to-[#03101f]/90 p-4 space-y-4 shadow-[0_16px_40px_rgba(2,8,23,0.55)]">
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-semibold text-[#00eaff]">AI Insights</h2>
-        <span className="text-[11px] text-slate-400">Realtime</span>
+        <span className="text-[11px] text-ehb-textMuted">Realtime</span>
       </div>
 
       <section className="rounded-xl border border-rose-400/25 bg-rose-500/10 p-3">

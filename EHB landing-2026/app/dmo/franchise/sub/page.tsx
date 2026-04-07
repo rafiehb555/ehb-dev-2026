@@ -33,9 +33,9 @@ export default function SubFranchisePage({
     <main className="min-h-screen text-slate-100">
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="space-y-1">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">DMO · Sub Franchise</p>
+          <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">DMO · Sub Franchise</p>
           <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">Local onboarding & trust</h1>
-          <p className="text-slate-300 max-w-2xl">Handle local onboarding, trust checks, and task execution for the selected franchise context.</p>
+          <p className="text-ehb-textBody max-w-2xl">Handle local onboarding, trust checks, and task execution for the selected franchise context.</p>
         </header>
 
         <DmoTopNav />

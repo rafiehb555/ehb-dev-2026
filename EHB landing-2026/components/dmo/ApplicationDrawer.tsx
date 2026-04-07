@@ -107,7 +107,7 @@ export function ApplicationDrawer(props: {
             </div>
 
             {props.loading || !props.application ? (
-              <div className="rounded-2xl glass-panel border border-white/10 p-4 text-slate-300">
+              <div className="rounded-2xl glass-panel border border-white/10 p-4 text-ehb-textBody">
                 Loading details…
               </div>
             ) : (
@@ -122,7 +122,7 @@ export function ApplicationDrawer(props: {
                       <Badge tone="amber">Unassigned</Badge>
                     )}
                   </div>
-                  <div className="text-[11px] text-slate-300">
+                  <div className="text-[11px] text-ehb-textBody">
                     Applicant: <span className="font-semibold text-white">{props.application.applicant.name}</span>{" "}
                     <span className="text-slate-500">({props.application.applicant.email})</span>
                   </div>
@@ -183,10 +183,10 @@ export function ApplicationDrawer(props: {
                           <Badge tone={approval.decision === "APPROVED" ? "emerald" : "rose"}>{approval.decision}</Badge>
                         </div>
                         <div className="text-[10px] text-slate-500 mt-1">{fmtDateTime(approval.createdAt)}</div>
-                        {approval.notes ? <div className="text-[11px] text-slate-300 mt-1">{approval.notes}</div> : null}
+                        {approval.notes ? <div className="text-[11px] text-ehb-textBody mt-1">{approval.notes}</div> : null}
                       </div>
                     ))}
-                    {props.approvals.length === 0 ? <div className="text-[11px] text-slate-400">No approvals yet.</div> : null}
+                    {props.approvals.length === 0 ? <div className="text-[11px] text-ehb-textMuted">No approvals yet.</div> : null}
                   </div>
                 </div>
 
@@ -204,7 +204,7 @@ export function ApplicationDrawer(props: {
                         </div>
                       </div>
                     ))}
-                    {props.auditLogs.length === 0 ? <div className="text-[11px] text-slate-400">No audit logs found.</div> : null}
+                    {props.auditLogs.length === 0 ? <div className="text-[11px] text-ehb-textMuted">No audit logs found.</div> : null}
                   </div>
                 </div>
 
@@ -212,19 +212,19 @@ export function ApplicationDrawer(props: {
                   <h3 className="text-xs font-semibold text-slate-100">Overview</h3>
                   <div className="grid grid-cols-1 xs:grid-cols-2 gap-2 text-[11px]">
                     <div className="rounded-xl border border-white/10 bg-white/5 p-2">
-                      <div className="text-slate-400">Applicant</div>
+                      <div className="text-ehb-textMuted">Applicant</div>
                       <div className="text-white font-semibold">{props.application.applicant.name}</div>
                     </div>
                     <div className="rounded-xl border border-white/10 bg-white/5 p-2">
-                      <div className="text-slate-400">Type</div>
+                      <div className="text-ehb-textMuted">Type</div>
                       <div className="text-white font-semibold">{props.application.type}</div>
                     </div>
                     <div className="rounded-xl border border-white/10 bg-white/5 p-2">
-                      <div className="text-slate-400">Status</div>
+                      <div className="text-ehb-textMuted">Status</div>
                       <div className="text-white font-semibold">{props.application.status}</div>
                     </div>
                     <div className="rounded-xl border border-white/10 bg-white/5 p-2">
-                      <div className="text-slate-400">Assigned</div>
+                      <div className="text-ehb-textMuted">Assigned</div>
                       <div className="text-white font-semibold">{props.application.assignedTo?.name ?? "Unassigned"}</div>
                     </div>
                   </div>
@@ -232,7 +232,7 @@ export function ApplicationDrawer(props: {
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
                   <h3 className="text-xs font-semibold text-slate-100">PSS Data</h3>
-                  <div className="text-[11px] text-slate-300">
+                  <div className="text-[11px] text-ehb-textBody">
                     {(props.application.payload as any)?.pss
                       ? `Verification phase: ${(props.application.payload as any).pss.phaseCompleted ?? "n/a"}`
                       : "No PSS payload attached for this application yet."}
@@ -241,7 +241,7 @@ export function ApplicationDrawer(props: {
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
                   <h3 className="text-xs font-semibold text-slate-100">CRB Data</h3>
-                  <div className="text-[11px] text-slate-300">
+                  <div className="text-[11px] text-ehb-textBody">
                     {(props.application.payload as any)?.crbApplicationId
                       ? `CRB Application: ${(props.application.payload as any).crbApplicationId}`
                       : "No CRB data attached for this application yet."}
@@ -250,7 +250,7 @@ export function ApplicationDrawer(props: {
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
                   <h3 className="text-xs font-semibold text-slate-100">Industry Verification</h3>
-                  <div className="text-[11px] text-slate-300">
+                  <div className="text-[11px] text-ehb-textBody">
                     {(props.application.payload as any)?.industryVerificationId
                       ? `Industry Verification: ${(props.application.payload as any).industryVerificationId}`
                       : "No industry verification data attached for this application yet."}
@@ -259,7 +259,7 @@ export function ApplicationDrawer(props: {
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
                   <h3 className="text-xs font-semibold text-slate-100">Raw Payload</h3>
-                  <pre className="text-[10px] text-slate-300 whitespace-pre-wrap break-words rounded-2xl bg-black/30 border border-white/10 p-3 overflow-auto max-h-[240px]">
+                  <pre className="text-[10px] text-ehb-textBody whitespace-pre-wrap break-words rounded-2xl bg-black/30 border border-white/10 p-3 overflow-auto max-h-[240px]">
                     {prettyJson(props.application.payload ?? {})}
                   </pre>
                 </div>

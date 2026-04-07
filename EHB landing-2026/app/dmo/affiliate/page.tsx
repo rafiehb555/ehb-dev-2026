@@ -121,7 +121,7 @@ export default function AffiliatePage() {
               ))}
               {data.users.length === 0 ? (
                 <tr>
-                  <td className="p-4 text-slate-300" colSpan={4}>
+                  <td className="p-4 text-ehb-textBody" colSpan={4}>
                     No referral users yet.
                   </td>
                 </tr>

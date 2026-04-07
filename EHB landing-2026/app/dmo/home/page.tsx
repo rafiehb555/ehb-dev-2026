@@ -93,7 +93,7 @@ export default function DmoHomePage() {
             <div>
               <p className="text-[11px] uppercase tracking-[0.22em] text-cyan-300">DMO Entry Layer</p>
               <h1 className="text-2xl md:text-3xl font-semibold leading-tight gradient-text mt-1">DMO System Hub</h1>
-              <p className="text-slate-300 text-sm mt-2 max-w-2xl">
+              <p className="text-ehb-textBody text-sm mt-2 max-w-2xl">
                 Manage verification, certification, trust, and global operations from one place.
               </p>
             </div>
@@ -108,7 +108,7 @@ export default function DmoHomePage() {
           </div>
 
           <div className="mt-4 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
-            <div className="flex items-center gap-2 text-sm text-slate-400">
+            <div className="flex items-center gap-2 text-sm text-ehb-textMuted">
               <span aria-hidden>🔎</span>
               <span>Search systems, departments, actions...</span>
             </div>
@@ -116,7 +116,7 @@ export default function DmoHomePage() {
         </motion.section>
 
         <section className="space-y-3">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Core Departments</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Core Departments</p>
           <h2 className="text-xl md:text-2xl font-semibold text-white">Main DMO operational systems</h2>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {coreDepartments.map((d, idx) => (
@@ -130,7 +130,7 @@ export default function DmoHomePage() {
                 <Card tone={d.tone}>
                   <div className="text-lg">{d.icon}</div>
                   <h3 className="text-sm font-semibold text-white mt-2">{d.title}</h3>
-                  <p className="text-xs text-slate-300 mt-1">{d.desc}</p>
+                  <p className="text-xs text-ehb-textBody mt-1">{d.desc}</p>
                   <Link
                     href={d.href}
                     className="mt-3 inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-100 hover:bg-white/10 transition-colors"
@@ -144,14 +144,14 @@ export default function DmoHomePage() {
         </section>
 
         <section className="space-y-3">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Support Systems</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Support Systems</p>
           <h2 className="text-xl md:text-2xl font-semibold text-white">Operational backbone modules</h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             {supportSystems.map((s) => (
               <Card key={s.title}>
                 <div className="text-lg">{s.icon}</div>
                 <h3 className="text-sm font-semibold text-white mt-2">{s.title}</h3>
-                <p className="text-xs text-slate-300 mt-1">{s.desc}</p>
+                <p className="text-xs text-ehb-textBody mt-1">{s.desc}</p>
                 <Link href={s.href} className="mt-3 inline-flex text-xs font-semibold text-cyan-200 hover:text-cyan-100">
                   Open →
                 </Link>
@@ -162,7 +162,7 @@ export default function DmoHomePage() {
 
         <div className="grid gap-4 lg:grid-cols-3">
           <Card>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Live System Status</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Live System Status</p>
             <div className="mt-3 space-y-2">
               <div className="rounded-xl border border-cyan-400/30 bg-cyan-500/10 p-3">
                 <div className="text-[11px] text-cyan-100">Active Verifications</div>
@@ -184,7 +184,7 @@ export default function DmoHomePage() {
           </Card>
 
           <Card>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Quick Actions</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Quick Actions</p>
             <div className="mt-3 grid gap-2">
               {quickActions.map((a) => (
                 <Link
@@ -206,7 +206,7 @@ export default function DmoHomePage() {
           </Card>
 
           <Card>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">AI Insights</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">AI Insights</p>
             <div className="mt-3 space-y-2">
               <div className="rounded-xl border border-cyan-400/25 bg-cyan-500/10 p-3 text-xs text-cyan-100">
                 • 5 approvals pending in core queue

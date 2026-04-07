@@ -56,7 +56,7 @@ export function ActivityFeed(props: {
         </div>
         <div className="p-2 space-y-2">
           {approvals.length === 0 ? (
-            <div className="text-slate-400 px-1 text-[11px]">No approvals yet.</div>
+            <div className="text-ehb-textMuted px-1 text-[11px]">No approvals yet.</div>
           ) : (
             approvals.map((l) => (
               <button
@@ -69,7 +69,7 @@ export function ActivityFeed(props: {
                   <span className="font-semibold text-white text-[11px]">{l.action}</span>
                   <span className="text-[10px] text-slate-500">{new Date(l.createdAt).toLocaleTimeString()}</span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-0.5">
+                <div className="text-[10px] text-ehb-textMuted mt-0.5">
                   App <span className="font-mono text-slate-200">{l.targetId.slice(0, 10)}…</span> ·{" "}
                   {l.actor ? `${l.actor.name} (${l.actor.role})` : "System"}
                 </div>
@@ -85,7 +85,7 @@ export function ActivityFeed(props: {
         </div>
         <div className="p-2">
           {alerts.length === 0 ? (
-            <div className="text-slate-400 text-[11px]">No alerts detected.</div>
+            <div className="text-ehb-textMuted text-[11px]">No alerts detected.</div>
           ) : (
             <div className="space-y-2">
               {alerts.map((l) => (
@@ -118,11 +118,11 @@ export function ActivityFeed(props: {
                   <span className="font-semibold text-slate-100 text-[11px]">{l.action}</span>
                   <span className="text-[10px] text-slate-500">{new Date(l.createdAt).toLocaleTimeString()}</span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-0.5">
+                <div className="text-[10px] text-ehb-textMuted mt-0.5">
                   {l.targetType} · <span className="font-mono text-slate-200">{l.targetId.slice(0, 10)}…</span>
                 </div>
                 <div className="text-[10px] text-slate-500 mt-0.5">
-                  Actor: <span className="text-slate-300">{l.actor ? l.actor.name : "System"}</span>
+                  Actor: <span className="text-ehb-textBody">{l.actor ? l.actor.name : "System"}</span>
                 </div>
               </motion.div>
             ))}

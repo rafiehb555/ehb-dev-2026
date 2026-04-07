@@ -46,13 +46,13 @@ export function DmoFranchiseDashboard({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
             <h2 className="text-sm font-semibold text-white">{levelMeta.title}</h2>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-ehb-textMuted">
               Same design for all franchise levels. Data changes with selected industry and location context. (UI mock)
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <label className="text-[10px] text-slate-400">Industry</label>
+            <label className="text-[10px] text-ehb-textMuted">Industry</label>
             <select
               value={industrySlug}
               onChange={(e) => setIndustrySlug(e.target.value)}
@@ -98,7 +98,7 @@ export function DmoFranchiseDashboard({
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">
             <h3 className="text-sm font-semibold text-white">Actions</h3>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-ehb-textMuted">
               Later backend will connect to DMO workflow and wallet escrow.
             </p>
           </div>
@@ -121,7 +121,7 @@ export function DmoFranchiseDashboard({
           ].map((a) => (
             <div key={a.title} className="rounded-2xl glass-card border p-5 card-hover">
               <p className="text-sm font-semibold text-white">{a.title}</p>
-              <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">{a.desc}</p>
+              <p className="text-[11px] text-ehb-textBody mt-1 leading-relaxed">{a.desc}</p>
             </div>
           ))}
         </div>

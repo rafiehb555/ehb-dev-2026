@@ -10,11 +10,11 @@ export default function AdminLocationsPage() {
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Admin · Locations</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Admin · Locations</p>
             <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">
               Country → State → City control
             </h1>
-            <p className="text-slate-300 max-w-2xl">
+            <p className="text-ehb-textBody max-w-2xl">
               Configure location hierarchy for provider search, franchise onboarding and marketplace filtering (demo).
             </p>
           </div>
@@ -35,7 +35,7 @@ export default function AdminLocationsPage() {
         </header>
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Demo countries</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Demo countries</p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {countries.map((c) => (
               <div
@@ -49,7 +49,7 @@ export default function AdminLocationsPage() {
                     ↗
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{c.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{c.name}</div>
               </div>
             ))}
           </div>

@@ -102,7 +102,7 @@ export default function PenaltyPage() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td className="p-4 text-slate-300" colSpan={6}>
+                  <td className="p-4 text-ehb-textBody" colSpan={6}>
                     Loading penalties...
                   </td>
                 </tr>
@@ -110,7 +110,7 @@ export default function PenaltyPage() {
 
               {!loading && data.length === 0 ? (
                 <tr>
-                  <td className="p-4 text-slate-300" colSpan={6}>
+                  <td className="p-4 text-ehb-textBody" colSpan={6}>
                     No penalties found.
                   </td>
                 </tr>

@@ -7,9 +7,9 @@ export default function AdminAiEcosystemPage() {
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Admin · AI Ecosystem</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Admin · AI Ecosystem</p>
             <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">ML, Fraud & NLP Controls</h1>
-            <p className="text-slate-300 max-w-2xl">
+            <p className="text-ehb-textBody max-w-2xl">
               Configure AI rules for verified outcomes. Keep fraud checks and compliance summaries consistent with STL trust layers.
             </p>
           </div>
@@ -34,9 +34,9 @@ export default function AdminAiEcosystemPage() {
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-1">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">AI Admin Links</p>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">AI Admin Links</p>
               <h2 className="text-lg font-semibold text-white">Phases 81–85</h2>
-              <p className="text-slate-300 text-[10px]">
+              <p className="text-ehb-textBody text-[10px]">
                 Fraud detection, analytics, location insights, automation and data pipeline. (UI links)
               </p>
             </div>
@@ -61,7 +61,7 @@ export default function AdminAiEcosystemPage() {
                     ↗
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.subtitle}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.subtitle}</div>
               </Link>
             ))}
           </div>

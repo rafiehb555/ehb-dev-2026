@@ -204,9 +204,9 @@ export default function AdminJpsImportPage() {
       <div className="container-ehb py-6 space-y-5">
         <header className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Super Admin · JPS Import</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Super Admin · JPS Import</p>
             <h1 className="text-xl font-semibold gradient-text">JPS Data Import Manager</h1>
-            <p className="max-w-3xl text-sm text-slate-300">
+            <p className="max-w-3xl text-sm text-ehb-textBody">
               Validate and save real `JPS` profiles, skills, designation ladders, and notes from this screen.
             </p>
           </div>
@@ -257,7 +257,7 @@ export default function AdminJpsImportPage() {
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-sm font-semibold text-white">Import Payload</h2>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-ehb-textMuted">
                   Paste the same JSON payload here that you want to send to `POST /api/jps/import`.
                 </p>
               </div>
@@ -371,7 +371,7 @@ export default function AdminJpsImportPage() {
           <div className="space-y-4">
             <section className="glass-panel border border-white/10 p-4 space-y-3">
               <h2 className="text-sm font-semibold text-white">Validation Preview</h2>
-              <div className="space-y-2 text-xs text-slate-300">
+              <div className="space-y-2 text-xs text-ehb-textBody">
                 <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
                   JSON status:{" "}
                   <span className={parsedPreview.valid ? "text-emerald-300" : "text-rose-300"}>
@@ -391,7 +391,7 @@ export default function AdminJpsImportPage() {
 
             <section className="glass-panel border border-white/10 p-4 space-y-3">
               <h2 className="text-sm font-semibold text-white">Import Rules</h2>
-              <ul className="space-y-2 text-xs text-slate-300">
+              <ul className="space-y-2 text-xs text-ehb-textBody">
                 <li>Each profile must include `id`, `name`, `designation`, `industry`, `city`, and `status`.</li>
                 <li>`skills`, `services`, and `jobs` arrays must each contain at least one item.</li>
                 <li>`designationLadders` should be grouped by industry name.</li>
@@ -403,7 +403,7 @@ export default function AdminJpsImportPage() {
 
             <section className="glass-panel border border-white/10 p-4 space-y-3">
               <h2 className="text-sm font-semibold text-white">Suggested Flow</h2>
-              <ol className="space-y-2 text-xs text-slate-300">
+              <ol className="space-y-2 text-xs text-ehb-textBody">
                 <li>1. Load template and replace demo values with your real JPS data.</li>
                 <li>2. Save import data from this screen.</li>
                 <li>3. Open DMO JPS and public JPS pages to verify rendering.</li>
@@ -420,7 +420,7 @@ export default function AdminJpsImportPage() {
               </div>
               <div className="space-y-2 text-xs">
                 {backups.length === 0 ? (
-                  <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-slate-400">
+                  <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-ehb-textMuted">
                     No JPS backups found yet.
                   </div>
                 ) : (
@@ -429,10 +429,10 @@ export default function AdminJpsImportPage() {
                       <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
                         <div className="space-y-1">
                           <div className="font-medium text-white">{backup.fileName}</div>
-                          <div className="text-slate-400">
+                          <div className="text-ehb-textMuted">
                             {backup.createdAt} · reason: {backup.reason}
                           </div>
-                          <div className="text-slate-400">
+                          <div className="text-ehb-textMuted">
                             profiles: {backup.profiles} · skills: {backup.skillCategories} · ladders: {backup.designationLadders}
                           </div>
                         </div>

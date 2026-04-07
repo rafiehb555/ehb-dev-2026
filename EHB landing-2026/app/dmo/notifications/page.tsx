@@ -70,8 +70,8 @@ export default function NotificationsPage() {
         ) : null}
 
         <div className="space-y-3">
-          {loading ? <div className="text-sm text-slate-300">Loading notifications...</div> : null}
-          {!loading && filtered.length === 0 ? <div className="text-sm text-slate-300">No notifications found.</div> : null}
+          {loading ? <div className="text-sm text-ehb-textBody">Loading notifications...</div> : null}
+          {!loading && filtered.length === 0 ? <div className="text-sm text-ehb-textBody">No notifications found.</div> : null}
 
           {!loading &&
             filtered.map((n) => (

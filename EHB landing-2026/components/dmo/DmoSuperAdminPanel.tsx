@@ -38,13 +38,13 @@ export function DmoSuperAdminPanel() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
             <h2 className="text-sm font-semibold text-white">Super Admin · Global DMO Operations</h2>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-ehb-textMuted">
               EHB head office controls: queue routing, STL thresholds, approval consistency. (UI mock)
             </p>
           </div>
 
           <div className="flex flex-wrap gap-2 items-center">
-            <label className="text-[10px] text-slate-400">Industry</label>
+            <label className="text-[10px] text-ehb-textMuted">Industry</label>
             <select
               value={industrySlug}
               onChange={(e) => setIndustrySlug(e.target.value)}
@@ -78,7 +78,7 @@ export function DmoSuperAdminPanel() {
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">
             <h3 className="text-sm font-semibold text-white">Country-wise DMO Activity</h3>
-            <p className="text-[10px] text-slate-400">To be connected with Phase 72–85 data pipeline later.</p>
+            <p className="text-[10px] text-ehb-textMuted">To be connected with Phase 72–85 data pipeline later.</p>
           </div>
           <span
             className="inline-flex items-center rounded-full px-3 py-1 border border-white/10 bg-white/5 text-[10px] text-slate-200"
@@ -90,7 +90,7 @@ export function DmoSuperAdminPanel() {
 
         <div className="overflow-x-auto">
           <div className="min-w-[760px] space-y-2">
-            <div className="grid grid-cols-12 text-[10px] text-slate-400 px-2">
+            <div className="grid grid-cols-12 text-[10px] text-ehb-textMuted px-2">
               <div className="col-span-4">Region</div>
               <div className="col-span-3">Active Franchises</div>
               <div className="col-span-2">Pending Approvals</div>

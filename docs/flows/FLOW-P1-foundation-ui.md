@@ -53,7 +53,7 @@ Deepest → surface: `#080A10` → `#0D1017` → `#111622` → `#181E2E` (card) 
 
 ### Tailwind (implemented)
 
-Classes: `text-ehb-textBody`, `text-ehb-textMuted` (see `colors.ehb` in `tailwind.config.ts`). Rolled out on landing home (`app/page.tsx`), industries explorer, global AI status, breadcrumbs, AI feature cards, GoSellr/earning/trust sections, DMO landing section, STL widget, stats strip, and shared `CardDescription`.
+Classes: `text-ehb-textBody`, `text-ehb-textMuted` (see `colors.ehb` in `tailwind.config.ts`). Rolled out on landing home (`app/page.tsx`), industries explorer, global AI status, breadcrumbs, AI feature cards, GoSellr/earning/trust sections, DMO landing section, **all primary `app/dmo/**` pages**, DMO workspace (`DmoSectionWorkspace`, `ApplicationsTable`, drawers/panels, `ActivityFeed`, KPI cards, queue tabs), **`app/admin/**` + `components/admin/*`**, `AutomationAdminPanel`, `PSSCasesTable`, STL widget, stats strip, and shared `CardDescription`.
 
 **Deploy check:** `GET /api/health` → `{ ok, service, gitSha? }` ([`app/api/health/route.ts`](../../EHB%20landing-2026/app/api/health/route.ts)); covered by [`tests/health.test.ts`](../../EHB%20landing-2026/tests/health.test.ts).
 

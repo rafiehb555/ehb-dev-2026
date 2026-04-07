@@ -32,7 +32,7 @@ function Panel(props: { title: string; subtitle?: string; children: ReactNode })
     <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
       <div className="space-y-1">
         <h2 className="text-sm sm:text-base font-semibold text-slate-100">{props.title}</h2>
-        {props.subtitle ? <p className="text-[11px] text-slate-400">{props.subtitle}</p> : null}
+        {props.subtitle ? <p className="text-[11px] text-ehb-textMuted">{props.subtitle}</p> : null}
       </div>
       {props.children}
     </section>
@@ -61,13 +61,13 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">
               Admin · Development Agents · Detail
             </p>
             <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">
               {agent.id}
             </h1>
-            <p className="text-slate-300 max-w-3xl">{agent.purpose}</p>
+            <p className="text-ehb-textBody max-w-3xl">{agent.purpose}</p>
             <div className="flex flex-wrap gap-1.5 pt-1">
               <span
                 className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium ${groupMeta.badgeClassName}`}
@@ -130,16 +130,16 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
           <section className="grid gap-3 grid-cols-1 xl:grid-cols-2">
             <Panel title="Current Runtime Snapshot" subtitle="Live snapshot from the local persistent runtime store">
               <div className="grid gap-2 sm:grid-cols-2">
-                <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-slate-300">
+                <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
                   Last task: <span className="font-medium text-slate-100">{runtime.lastTask}</span>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-slate-300">
+                <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
                   Last update: <span className="font-medium text-slate-100">{runtime.lastUpdatedLabel}</span>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-slate-300">
+                <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
                   Queue size: <span className="font-medium text-slate-100">{runtime.queueSize}</span>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-slate-300">
+                <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
                   Health score: <span className="font-medium text-slate-100">{runtime.healthScore}%</span>
                 </div>
               </div>
@@ -150,7 +150,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                 files for development operations. It should not be treated as external production
                 telemetry.
               </div>
-              <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-slate-300">
+              <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
                 Release-sensitive verification still routes through
                 {" "}
                 <span className="font-medium text-slate-100">
@@ -182,12 +182,12 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                           >
                             {eventStatus.label}
                           </span>
-                          <span className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-2 py-0.5 text-[10px] text-slate-300">
+                          <span className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-2 py-0.5 text-[10px] text-ehb-textBody">
                             {event.occurredAtLabel}
                           </span>
                         </div>
                       </div>
-                      <p className="text-slate-300">{event.detail}</p>
+                      <p className="text-ehb-textBody">{event.detail}</p>
                     </div>
                   );
                 })
@@ -207,12 +207,12 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                       <div className="font-medium text-slate-100">
                         {handoff.fromAgentId} → {handoff.toAgentId}
                       </div>
-                      <span className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-2 py-0.5 text-[10px] text-slate-300">
+                      <span className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-2 py-0.5 text-[10px] text-ehb-textBody">
                         {handoff.status}
                       </span>
                     </div>
-                    <div className="mt-1 text-slate-300">{handoff.requestSummary}</div>
-                    <div className="mt-2 text-[11px] text-slate-400">
+                    <div className="mt-1 text-ehb-textBody">{handoff.requestSummary}</div>
+                    <div className="mt-2 text-[11px] text-ehb-textMuted">
                       Expected: {handoff.expectedOutput} · {handoff.createdAtLabel}
                     </div>
                   </div>
@@ -228,12 +228,12 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
 
         <section className="grid gap-3 grid-cols-1">
           <Panel title="Scenario Fit" subtitle="How this agent is usually selected in owner-facing routing">
-            <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-slate-300">
+            <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
               {relatedRecommendations.length > 0
                 ? "This agent already appears in guided owner scenarios, so it can be selected both by playbook recommendations and by free-text routing."
                 : "This agent currently relies more on manual exploration and neighboring workflow context than on guided chooser scenarios."}
             </div>
-            <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-slate-300">
+            <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
               Recommended pairing still depends on request type, risk level, and verification needs.
             </div>
           </Panel>
@@ -249,7 +249,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                 >
                   <div className="text-[10px] uppercase tracking-wide text-slate-500">Previous agent</div>
                   <div className="mt-1 font-medium text-slate-100">{previous.id}</div>
-                  <div className="mt-1 text-slate-400">{previous.owner}</div>
+                  <div className="mt-1 text-ehb-textMuted">{previous.owner}</div>
                 </Link>
               ) : (
                 <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-slate-500">
@@ -263,7 +263,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                 >
                   <div className="text-[10px] uppercase tracking-wide text-slate-500">Next agent</div>
                   <div className="mt-1 font-medium text-slate-100">{next.id}</div>
-                  <div className="mt-1 text-slate-400">{next.owner}</div>
+                  <div className="mt-1 text-ehb-textMuted">{next.owner}</div>
                 </Link>
               ) : (
                 <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-slate-500">
@@ -295,7 +295,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                     className="rounded-xl border border-white/10 bg-slate-950/30 p-3 transition-all duration-200 hover:border-cyan-400/30"
                   >
                     <div className="font-medium text-slate-100">{relatedAgent.id}</div>
-                    <div className="mt-1 text-slate-400">{relatedAgent.owner}</div>
+                    <div className="mt-1 text-ehb-textMuted">{relatedAgent.owner}</div>
                   </Link>
                 ))
               ) : (
@@ -314,7 +314,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                     className="rounded-xl border border-white/10 bg-slate-950/30 p-3"
                   >
                     <div className="font-medium text-slate-100">{recommendation.title}</div>
-                    <div className="mt-1 text-slate-300">{recommendation.reason}</div>
+                    <div className="mt-1 text-ehb-textBody">{recommendation.reason}</div>
                   </div>
                 ))
               ) : (
@@ -328,10 +328,10 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
 
         <section className="grid gap-3 grid-cols-1 xl:grid-cols-2">
           <Panel title="Summary">
-            <p className="text-slate-300">{agent.summary}</p>
+            <p className="text-ehb-textBody">{agent.summary}</p>
           </Panel>
           <Panel title="When to use">
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-ehb-textBody">
               {agent.whenToUse.map((item) => (
                 <li key={item}>• {item}</li>
               ))}
@@ -341,14 +341,14 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
 
         <section className="grid gap-3 grid-cols-1 xl:grid-cols-2">
           <Panel title="When not to use">
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-ehb-textBody">
               {agent.whenNotToUse.map((item) => (
                 <li key={item}>• {item}</li>
               ))}
             </ul>
           </Panel>
           <Panel title="Expected outputs">
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-ehb-textBody">
               {agent.outputs.map((item) => (
                 <li key={item}>• {item}</li>
               ))}
@@ -358,14 +358,14 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
 
         <section className="grid gap-3 grid-cols-1 xl:grid-cols-2">
           <Panel title="Verification expectations">
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-ehb-textBody">
               {agent.verification.map((item) => (
                 <li key={item}>• {item}</li>
               ))}
             </ul>
           </Panel>
           <Panel title="Risks and escalation">
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-2 text-ehb-textBody">
               {agent.risks.map((item) => (
                 <li key={item}>• {item}</li>
               ))}
@@ -382,7 +382,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                   className="rounded-xl border border-white/10 bg-slate-950/30 p-3"
                 >
                   <div className="text-[11px] font-semibold text-cyan-300">{reference.label}</div>
-                  <div className="mt-1 text-slate-300">{reference.path}</div>
+                  <div className="mt-1 text-ehb-textBody">{reference.path}</div>
                 </div>
               ))}
             </div>
@@ -390,7 +390,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
           <Panel title="Copy-paste prompts">
             <div className="grid gap-2">
               {agent.samplePrompts.map((prompt) => (
-                <div key={prompt} className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-slate-300">
+                <div key={prompt} className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
                   {prompt}
                 </div>
               ))}
@@ -414,7 +414,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                 >
                   <div className="text-[10px] uppercase tracking-wide text-slate-500">Step {item.step}</div>
                   <div className="mt-1 font-medium text-slate-100">{item.id}</div>
-                  <div className="mt-1 text-[11px] text-slate-400">
+                  <div className="mt-1 text-[11px] text-ehb-textMuted">
                     {item.isCurrent ? "Current detail agent" : item.isPast ? "Earlier in the default flow" : "Later in the default flow"}
                   </div>
                 </div>

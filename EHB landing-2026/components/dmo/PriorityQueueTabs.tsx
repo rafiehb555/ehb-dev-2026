@@ -31,7 +31,7 @@ export function PriorityQueueTabs(props: {
             ].join(" ")}
           >
             <span>{tab.label}</span>
-            <span className={active ? "text-slate-900/80" : "text-slate-400"}>{props.counts[tab.id]}</span>
+            <span className={active ? "text-slate-900/80" : "text-ehb-textMuted"}>{props.counts[tab.id]}</span>
           </button>
         );
       })}

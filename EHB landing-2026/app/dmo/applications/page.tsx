@@ -13,11 +13,11 @@ export default function DmoApplicationsPage({
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">DMO · Applications</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">DMO · Applications</p>
             <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">
               Applications & Approvals (Workflow Engine)
             </h1>
-            <p className="text-slate-300 max-w-2xl">
+            <p className="text-ehb-textBody max-w-2xl">
               Demo queue: New → In Review → Inspection → Approved/Rejected. Use location query for “near you” view.
             </p>
           </div>

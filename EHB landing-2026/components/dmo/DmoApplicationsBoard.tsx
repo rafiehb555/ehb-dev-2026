@@ -228,7 +228,7 @@ export function DmoApplicationsBoard({
         .toLowerCase();
       return statusOk && haystack.includes(q);
     });
-  }, [apps, defaultCity, defaultCountry, defaultIndustry, defaultState, query, statusFilter]);
+  }, [apps, defaultCity, defaultCountry, defaultState, query, statusFilter]);
 
   const counts = useMemo(() => {
     const c: Record<ApplicationStatus, number> = {

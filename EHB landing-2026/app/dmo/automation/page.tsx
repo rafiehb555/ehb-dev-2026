@@ -105,7 +105,7 @@ export default function AutomationPage() {
               ))}
               {data.rules.length === 0 ? (
                 <tr>
-                  <td className="p-4 text-slate-300" colSpan={3}>
+                  <td className="p-4 text-ehb-textBody" colSpan={3}>
                     No automation rules found.
                   </td>
                 </tr>

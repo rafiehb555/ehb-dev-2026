@@ -23,9 +23,9 @@ export default function AdminCoreSystemsPage({
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Admin · Core Systems</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Admin · Core Systems</p>
             <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">Core Layers Control</h1>
-            <p className="text-slate-300 max-w-2xl">
+            <p className="text-ehb-textBody max-w-2xl">
               PSS, CRB, STL, Wallet and governance monitoring — structured trust for every verified workflow.
             </p>
           </div>
@@ -41,7 +41,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 4 — Service Platforms</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 4 — Service Platforms</p>
             <h2 className="text-sm font-semibold text-white mt-2">Connected operating modules</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -64,7 +64,7 @@ export default function AdminCoreSystemsPage({
                     ↗
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -72,7 +72,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 5 — Digital Governance</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 5 — Digital Governance</p>
             <h2 className="text-sm font-semibold text-white mt-2">Applications and licenses control</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -93,7 +93,7 @@ export default function AdminCoreSystemsPage({
                     ↗
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -101,7 +101,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 6 — Global Expansion</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 6 — Global Expansion</p>
             <h2 className="text-sm font-semibold text-white mt-2">Multi-country franchise control</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -122,7 +122,7 @@ export default function AdminCoreSystemsPage({
                     ↗
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -130,7 +130,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 7 — AI Ecosystem</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 7 — AI Ecosystem</p>
             <h2 className="text-sm font-semibold text-white mt-2">ML + Fraud + NLP controls</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -151,7 +151,7 @@ export default function AdminCoreSystemsPage({
                     ↗
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -159,7 +159,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 8 — Blockchain Governance</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 8 — Blockchain Governance</p>
             <h2 className="text-sm font-semibold text-white mt-2">Trust anchors + smart contracts</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -180,7 +180,7 @@ export default function AdminCoreSystemsPage({
                     ↗
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -188,7 +188,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 9 — JPS Profile System</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 9 — JPS Profile System</p>
             <h2 className="text-sm font-semibold text-white mt-2">Job Profile & Skill controls</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -209,7 +209,7 @@ export default function AdminCoreSystemsPage({
                     ↗
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -217,7 +217,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 10 — Service Creation</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 10 — Service Creation</p>
             <h2 className="text-sm font-semibold text-white mt-2">Guided listing onboarding</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -236,7 +236,7 @@ export default function AdminCoreSystemsPage({
                   <span className="text-[11px] font-semibold text-white">{p.code}</span>
                   <span aria-hidden className="text-[13px]">↗</span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -244,7 +244,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 11 — GoSellr Marketplace</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 11 — GoSellr Marketplace</p>
             <h2 className="text-sm font-semibold text-white mt-2">Products + cart + orders</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -265,7 +265,7 @@ export default function AdminCoreSystemsPage({
                     ↗
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -273,7 +273,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 72 — Location-Based System</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 72 — Location-Based System</p>
             <h2 className="text-sm font-semibold text-white mt-2">Country → State → City controls</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -292,7 +292,7 @@ export default function AdminCoreSystemsPage({
                   <span className="text-[11px] font-semibold text-white">{p.code}</span>
                   <span aria-hidden className="text-[13px]">↗</span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -300,7 +300,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 73 — Location Context Propagation</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 73 — Location Context Propagation</p>
             <h2 className="text-sm font-semibold text-white mt-2">Marketplace + industry keep context</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -319,7 +319,7 @@ export default function AdminCoreSystemsPage({
                   <span className="text-[11px] font-semibold text-white">{p.code}</span>
                   <span aria-hidden className="text-[13px]">↗</span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -327,7 +327,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 75 — Franchise Location Context</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 75 — Franchise Location Context</p>
             <h2 className="text-sm font-semibold text-white mt-2">Auto-pick area + preserve links</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -346,7 +346,7 @@ export default function AdminCoreSystemsPage({
                   <span className="text-[11px] font-semibold text-white">{p.code}</span>
                   <span aria-hidden className="text-[13px]">↗</span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -354,7 +354,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 76 — Global + Blockchain Context</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 76 — Global + Blockchain Context</p>
             <h2 className="text-sm font-semibold text-white mt-2">Keep your country/state/city across pages</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -373,7 +373,7 @@ export default function AdminCoreSystemsPage({
                   <span className="text-[11px] font-semibold text-white">{p.code}</span>
                   <span aria-hidden className="text-[13px]">↗</span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -381,7 +381,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 77 — GoSellr Location Context</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 77 — GoSellr Location Context</p>
             <h2 className="text-sm font-semibold text-white mt-2">Preserve location across ecommerce flow</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -400,7 +400,7 @@ export default function AdminCoreSystemsPage({
                   <span className="text-[11px] font-semibold text-white">{p.code}</span>
                   <span aria-hidden className="text-[13px]">↗</span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>
@@ -408,7 +408,7 @@ export default function AdminCoreSystemsPage({
 
         <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Phase 79 — Location-Aware Navigation</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Phase 79 — Location-Aware Navigation</p>
             <h2 className="text-sm font-semibold text-white mt-2">Industry + platforms preserve context</h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -427,7 +427,7 @@ export default function AdminCoreSystemsPage({
                   <span className="text-[11px] font-semibold text-white">{p.code}</span>
                   <span aria-hidden className="text-[13px]">↗</span>
                 </div>
-                <div className="text-[10px] text-slate-400 mt-2 leading-relaxed">{p.name}</div>
+                <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.name}</div>
               </Link>
             ))}
           </div>

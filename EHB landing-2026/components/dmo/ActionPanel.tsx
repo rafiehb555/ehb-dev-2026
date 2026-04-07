@@ -26,19 +26,19 @@ export function ActionPanel(props: {
     <div className="rounded-2xl border border-violet-400/20 bg-gradient-to-b from-[#06172d]/90 to-[#03101f]/90 p-4 space-y-4 shadow-[0_16px_40px_rgba(2,8,23,0.55)]">
       <div>
         <h2 className="text-sm font-semibold text-white">Action Panel</h2>
-        <p className="text-xs text-slate-400">Fast decision workspace for selected application.</p>
+        <p className="text-xs text-ehb-textMuted">Fast decision workspace for selected application.</p>
       </div>
 
       {!props.selected ? (
-        <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-xs text-slate-300">
+        <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-xs text-ehb-textBody">
           Select an application from queue to review and take action.
         </div>
       ) : (
         <div className="space-y-3">
           <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-            <div className="text-xs text-slate-400">Selected</div>
+            <div className="text-xs text-ehb-textMuted">Selected</div>
             <div className="mt-1 text-sm font-semibold text-white">{props.selected.applicant.name}</div>
-            <div className="text-xs text-slate-300">{props.selected.type} · {props.selected.status}</div>
+            <div className="text-xs text-ehb-textBody">{props.selected.type} · {props.selected.status}</div>
             <div className="text-[11px] text-slate-500 mt-1">Updated: {fmtDateTime(props.selected.updatedAt)}</div>
           </div>
 
@@ -83,7 +83,7 @@ export function ActionPanel(props: {
               Assign
             </button>
             <div className="rounded-xl border border-white/10 bg-white/5 p-2.5">
-              <label className="block text-[10px] text-slate-400 mb-1">Assign To</label>
+              <label className="block text-[10px] text-ehb-textMuted mb-1">Assign To</label>
               {props.assignees && props.assignees.length > 0 ? (
                 <select
                   value={assigneeId}

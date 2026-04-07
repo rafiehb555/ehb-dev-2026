@@ -94,7 +94,7 @@ export default function DmoModulePage() {
             {!moduleDef ? (
               <div className="ehb-card-elevated">
                 <div className="text-sm font-semibold text-rose-200">Module not found</div>
-                <div className="text-xs text-slate-400 mt-1">The selected module is not configured in DMO shell.</div>
+                <div className="text-xs text-ehb-textMuted mt-1">The selected module is not configured in DMO shell.</div>
               </div>
             ) : (
               <>
@@ -103,7 +103,7 @@ export default function DmoModulePage() {
                     <div>
                       <div className="text-[11px] uppercase tracking-[0.18em] text-cyan-300">DMO Module View</div>
                       <h1 className="text-lg font-semibold text-white">{moduleDef.title}</h1>
-                      <p className="text-xs text-slate-300 mt-1">{moduleDef.description}</p>
+                      <p className="text-xs text-ehb-textBody mt-1">{moduleDef.description}</p>
                     </div>
                     <Link href={moduleDef.targetPath} className="ehb-btn-secondary ehb-press">
                       Open Full Page
