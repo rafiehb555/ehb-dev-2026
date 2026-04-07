@@ -48,13 +48,22 @@ function clearAttempts(key: string) {
   loginAttempts.delete(key);
 }
 
+function retryAfterSeconds(key: string, now: number): number {
+  const slot = loginAttempts.get(key);
+  if (!slot || now >= slot.resetAt) return Math.ceil(LOGIN_WINDOW_MS / 1000);
+  return Math.max(1, Math.ceil((slot.resetAt - now) / 1000));
+}
+
 export async function POST(req: Request) {
   try {
     const body = LoginSchema.parse(await req.json());
     const now = Date.now();
     const key = rateLimitKey(req, body.email);
     if (isRateLimited(key, now)) {
-      return fail(429, "RATE_LIMITED", "Too many login attempts. Try again in a few minutes.");
+      const ra = retryAfterSeconds(key, now);
+      return fail(429, "RATE_LIMITED", "Too many login attempts. Try again in a few minutes.", undefined, {
+        headers: { "Retry-After": String(ra) },
+      });
     }
 
     const user = await prisma.user.findUnique({

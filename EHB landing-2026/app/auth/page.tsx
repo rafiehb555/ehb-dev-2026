@@ -16,14 +16,20 @@ export default function AuthPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+  const [meLoading, setMeLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [me, setMe] = useState<MeUser>(null);
 
   const loadMe = useCallback(async () => {
-    const res = await fetch("/api/auth/me", { cache: "no-store" });
-    const json = await res.json();
-    setMe((json?.data?.user ?? null) as MeUser);
+    setMeLoading(true);
+    try {
+      const res = await fetch("/api/auth/me", { cache: "no-store" });
+      const json = await res.json();
+      setMe((json?.data?.user ?? null) as MeUser);
+    } finally {
+      setMeLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -209,10 +215,10 @@ export default function AuthPage() {
               <button
                 type="button"
                 onClick={() => void loadMe()}
-                disabled={loading}
+                disabled={loading || meLoading}
                 className="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm text-ehb-textBody"
               >
-                Check Session
+                {meLoading ? "Checking..." : "Check Session"}
               </button>
               <button
                 type="button"
@@ -231,7 +237,13 @@ export default function AuthPage() {
 
         <section className="lg:col-span-5 rounded-3xl border border-white/10 bg-white/[0.03] p-6 space-y-4">
           <h2 className="text-sm font-semibold text-white">Current Session</h2>
-          {me ? (
+          {meLoading ? (
+            <div className="space-y-2 animate-pulse">
+              <div className="h-4 w-40 rounded bg-white/10" />
+              <div className="h-4 w-52 rounded bg-white/10" />
+              <div className="h-4 w-28 rounded bg-white/10" />
+            </div>
+          ) : me ? (
             <div className="space-y-2 text-sm text-ehb-textBody">
               <div><span className="text-white">Name:</span> {me.name}</div>
               <div><span className="text-white">Email:</span> {me.email}</div>
