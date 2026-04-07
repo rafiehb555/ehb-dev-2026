@@ -1,7 +1,35 @@
+import type { STLEntityType } from "@prisma/client";
 import { ok, fail } from "@/lib/apiResponse";
 import { handleRouteError } from "@/lib/apiErrors";
 import { prisma } from "@/lib/prisma";
 import { calculateRiskScore } from "@/lib/fraud/riskEngine";
+import { levelForScore } from "@/lib/stl/engine";
+
+async function resolveStlForEntity(params: {
+  trustScore: number;
+  entityId: string;
+  stlEntityType: STLEntityType;
+}) {
+  const row = await prisma.sTLScore
+    .findUnique({
+      where: {
+        entityType_entityId: { entityType: params.stlEntityType, entityId: params.entityId },
+      },
+    })
+    .catch(() => null);
+  if (row) {
+    const s = Number(row.score);
+    const lv = levelForScore(s);
+    return { score: s, level: row.level, label: lv.label, source: "db" as const };
+  }
+  const lv = levelForScore(params.trustScore);
+  return {
+    score: params.trustScore,
+    level: lv.level,
+    label: lv.label,
+    source: "synthetic" as const,
+  };
+}
 
 // Trust score tiers
 function getTrustBadge(score: number): { badge: string; level: string; color: string } {
@@ -48,11 +76,19 @@ export async function GET(req: Request) {
     const badge = getTrustBadge(trustScore);
     const flaggedForReview = trustScore < 30;
 
+    const stlEntityType: STLEntityType = productId ? "PRODUCT" : "USER";
+    const stl = await resolveStlForEntity({
+      trustScore,
+      entityId,
+      stlEntityType,
+    });
+
     return ok({
       entityId,
       entityType,
       trustScore,
       badge,
+      stl,
       fraudRisk:       { score: risk.score, tier: risk.tier },
       flaggedForReview,
     });

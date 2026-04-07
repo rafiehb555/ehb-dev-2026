@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { stlLevelChipClasses } from "@/lib/stl/chipTone";
 
 type StlBreakdown = {
   pss: number;
@@ -17,14 +18,6 @@ type StlBreakdown = {
 type ApiResp =
   | { success: true; data: { breakdown: StlBreakdown } }
   | { success: false; error: { message: string } };
-
-function toneForLevel(level: number) {
-  if (level >= 5) return "border-emerald-400/40 text-emerald-100";
-  if (level === 4) return "border-sky-400/40 text-sky-100";
-  if (level === 3) return "border-violet-400/40 text-violet-100";
-  if (level === 2) return "border-amber-400/40 text-amber-100";
-  return "border-rose-400/40 text-rose-100";
-}
 
 function Bar({
   label,
@@ -84,17 +77,15 @@ export function StlWidget() {
     };
   }, []);
 
-  const tone = useMemo(() => toneForLevel(data?.level ?? 1), [data?.level]);
-
   return (
     <section className="glass-panel border border-white/10 rounded-2xl p-5 md:p-6">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-1">Trust</p>
-          <h2 className="text-lg md:text-xl font-semibold text-white">STL Score</h2>
-          <p className="text-[11px] text-ehb-textMuted mt-1">Your live trust ranking across the marketplace.</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-cyan-300/90 mb-1">EHB-STL-LEVEL</p>
+          <h2 className="text-lg md:text-xl font-semibold text-white">Service Trust Level</h2>
+          <p className="text-[11px] text-ehb-textMuted mt-1">Your live score (0–100) across the marketplace.</p>
         </div>
-        <div className={`rounded-2xl glass-panel border px-4 py-3 ${tone}`}>
+        <div className={`rounded-2xl glass-panel border px-4 py-3 ${stlLevelChipClasses(data?.level ?? 1)}`}>
           <div className="text-[11px] uppercase tracking-[0.22em] text-ehb-textBody">Level</div>
           <div className="text-lg font-semibold text-white">L{data?.level ?? "—"}</div>
           <div className="text-[11px] text-ehb-textBody">{data?.label ?? "—"}</div>

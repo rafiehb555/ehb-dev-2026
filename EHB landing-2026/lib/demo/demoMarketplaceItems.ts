@@ -1,0 +1,55 @@
+import type { MarketplaceItem } from "@/lib/marketplace/engine";
+
+const indTech = { id: "demo-ind-tech", name: "Technology", slug: "technology" };
+const indHealth = { id: "demo-ind-health", name: "Health", slug: "health" };
+
+export const DEMO_MARKETPLACE_ITEMS: MarketplaceItem[] = [
+  {
+    kind: "SERVICE_PROVIDER",
+    id: "demo-ps-1",
+    name: "Ali Khan",
+    category: "Electrical",
+    subtitle: "Certified electrician — home & solar",
+    industry: indTech,
+    stlScore: 78.4,
+    stlLevel: 4,
+    rating: 4.7,
+    availability: true,
+    location: "Lahore",
+    distanceKm: 3.8,
+    industryBadges: [{ id: indTech.id, name: indTech.name, slug: indTech.slug }],
+    rankScore: 91.2,
+  },
+  {
+    kind: "SERVICE_PROVIDER",
+    id: "demo-ps-2",
+    name: "Sara Malik",
+    category: "Healthcare",
+    subtitle: "Telehealth — general practice",
+    industry: indHealth,
+    stlScore: 85.0,
+    stlLevel: 4,
+    rating: 4.9,
+    availability: true,
+    location: "Karachi",
+    distanceKm: null,
+    industryBadges: [{ id: indHealth.id, name: indHealth.name, slug: indHealth.slug }],
+    rankScore: 89.5,
+  },
+  {
+    kind: "PRODUCT",
+    id: "demo-pr-1",
+    name: "CleanMaster AI Toolkit",
+    category: "Software",
+    subtitle: "Seller: Demo Electronics",
+    industry: indTech,
+    stlScore: 82.0,
+    stlLevel: 4,
+    rating: 4.8,
+    availability: true,
+    location: null,
+    distanceKm: null,
+    industryBadges: [{ id: indTech.id, name: indTech.name, slug: indTech.slug }],
+    rankScore: 87.0,
+  },
+];

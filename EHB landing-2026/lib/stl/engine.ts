@@ -35,6 +35,17 @@ export function levelForScore(score: number) {
   return { level: 1, label: "Low Trust" };
 }
 
+/** Prefer DB level when set; if score exists but level is missing (legacy rows), derive from score. */
+export function resolveStlLevelFromScoreAndDb(
+  score: number | null | undefined,
+  level: number | null | undefined
+): number | null {
+  if (score == null || !Number.isFinite(Number(score))) return null;
+  const s = Number(score);
+  if (level != null && Number.isFinite(level) && level >= 1 && level <= 5) return Math.floor(level);
+  return levelForScore(s).level;
+}
+
 function pssScoreFromPhase(phaseCompleted: number) {
   // Map 0..6 → 0..40
   const phase = clamp(Math.floor(phaseCompleted), 0, 6);

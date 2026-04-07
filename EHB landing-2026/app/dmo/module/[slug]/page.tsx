@@ -25,9 +25,9 @@ const moduleMap: Record<string, { title: string; targetPath: string; description
     description: "Ground inspection tasks and reports with persistent sidebar.",
   },
   stl: {
-    title: "STL Engine",
+    title: "EHB-STL-LEVEL",
     targetPath: "/dmo/stl",
-    description: "Trust score engine view embedded under DMO shell.",
+    description: "Service Trust Level engine (scores & history) under DMO shell.",
   },
   insights: {
     title: "AI Insights",

@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Inter } from "next/font/google";
 import { IndustriesBar } from "@/components/IndustriesBar";
 import { TopNavTabs } from "@/components/TopNavTabs";
@@ -47,6 +48,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               'radial-gradient(ellipse 90% 70% at 50% 45%, rgba(41, 171, 226, 0.07) 0%, rgba(51, 195, 255, 0.04) 35%, transparent 60%)',
           }} />
           <div className="relative z-10 flex flex-col min-h-[100dvh]">
+          {process.env.NODE_ENV === "development" ? (
+            <div className="bg-amber-950/50 border-b border-amber-500/25 px-3 py-2 text-center text-[11px] sm:text-xs text-amber-50/95 leading-snug">
+              <span className="text-amber-200/90">Dev:</span>{" "}
+              <Link href="/local-demo" className="font-semibold text-cyan-200 underline underline-offset-2 hover:text-cyan-100">
+                Local demo guide
+              </Link>
+              {" · "}
+              <code className="text-amber-100/90">/api/…</code> routes return JSON — open UI pages from the guide, not raw API URLs.
+            </div>
+          ) : null}
           <header className="nav-glass sticky top-0 z-50 pt-safe-t">
             <div className="container-ehb py-3 flex items-center justify-between gap-3 flex-wrap">
               <a href="/" className="flex items-center gap-2 min-h-touch flex-shrink-0">

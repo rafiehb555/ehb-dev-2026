@@ -1,4 +1,7 @@
 import { prisma } from "@/lib/prisma";
+import { resolveStlLevelFromScoreAndDb } from "@/lib/stl/engine";
+import { isDevDemoDatasetEnabled } from "@/lib/demo/demoFallback";
+import { DEMO_MARKETPLACE_ITEMS } from "@/lib/demo/demoMarketplaceItems";
 import type { MarketplaceListQuerySchema } from "./schemas";
 import type { z } from "zod";
 
@@ -110,8 +113,20 @@ export async function listMarketplaceItems(query: Query) {
       }),
     ]);
 
-    const userStlMap = new Map(userStlRows.map((x) => [x.entityId, { score: Number(x.score), level: x.level }]));
-    const serviceStlMap = new Map(serviceStlRows.map((x) => [x.entityId, { score: Number(x.score), level: x.level }]));
+    const userStlMap = new Map(
+      userStlRows.map((x) => {
+        const score = Number(x.score);
+        const level = resolveStlLevelFromScoreAndDb(score, x.level) ?? 1;
+        return [x.entityId, { score, level }] as const;
+      })
+    );
+    const serviceStlMap = new Map(
+      serviceStlRows.map((x) => {
+        const score = Number(x.score);
+        const level = resolveStlLevelFromScoreAndDb(score, x.level) ?? 1;
+        return [x.entityId, { score, level }] as const;
+      })
+    );
     const companyMap = new Map<string, Array<{ id: string; name: string; slug: string }>>();
     for (const row of companyIndustryRows) {
       const arr = companyMap.get(row.entityId) ?? [];
@@ -221,8 +236,20 @@ export async function listMarketplaceItems(query: Query) {
       }),
     ]);
 
-    const userStlMap = new Map(userStlRows.map((x) => [x.entityId, { score: Number(x.score), level: x.level }]));
-    const productStlMap = new Map(productStlRows.map((x) => [x.entityId, { score: Number(x.score), level: x.level }]));
+    const userStlMap = new Map(
+      userStlRows.map((x) => {
+        const score = Number(x.score);
+        const level = resolveStlLevelFromScoreAndDb(score, x.level) ?? 1;
+        return [x.entityId, { score, level }] as const;
+      })
+    );
+    const productStlMap = new Map(
+      productStlRows.map((x) => {
+        const score = Number(x.score);
+        const level = resolveStlLevelFromScoreAndDb(score, x.level) ?? 1;
+        return [x.entityId, { score, level }] as const;
+      })
+    );
     const companyMap = new Map<string, Array<{ id: string; name: string; slug: string }>>();
     for (const row of companyIndustryRows) {
       const arr = companyMap.get(row.entityId) ?? [];
@@ -274,12 +301,19 @@ export async function listMarketplaceItems(query: Query) {
     }
   }
 
-  results.sort((a, b) => b.rankScore - a.rankScore);
-  const total = results.length;
+  let list = results;
+  let demoFallback = false;
+  if (results.length === 0 && isDevDemoDatasetEnabled()) {
+    list = [...DEMO_MARKETPLACE_ITEMS];
+    demoFallback = true;
+  }
+
+  list.sort((a, b) => b.rankScore - a.rankScore);
+  const total = list.length;
   const take = query.take ?? 24;
   const skip = query.skip ?? 0;
-  const items = results.slice(skip, skip + take);
-  return { items, total, take, skip };
+  const items = list.slice(skip, skip + take);
+  return { items, total, take, skip, demoFallback };
 }
 
 export function buildSuggestions(input: { items: MarketplaceItem[]; q?: string }) {

@@ -41,7 +41,7 @@ export default function ProfilePage({ params }: { params: { username: string } }
           <div className="grid gap-4 sm:grid-cols-3">
             {[
               { t: "Matching", d: "AI matches you with verified jobs and services that fit your skills." },
-              { t: "Trust", d: "PSS + CRB + STL signals stay consistent across marketplace actions." },
+              { t: "Trust", d: "PSS + CRB + EHB-STL-LEVEL signals stay consistent across marketplace actions." },
               { t: "Earnings", d: "Once you complete tasks, the system can reward points and progress." },
             ].map((x) => (
               <div key={x.t} className="rounded-2xl bg-white/5 border border-white/10 p-4">

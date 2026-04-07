@@ -6,7 +6,7 @@
     "title": "Local route checks running",
     "detail": "Compared agent routes and APIs against the local app environment.",
     "occurredAt": "2026-04-06T14:39:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -16,7 +16,7 @@
     "title": "Route impact verified",
     "detail": "Confirmed route and role impact for the current admin agent work.",
     "occurredAt": "2026-04-06T14:38:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -26,7 +26,7 @@
     "title": "Decision memory recorded",
     "detail": "Stored reuse relationships between chooser, detail pages, and runtime feed.",
     "occurredAt": "2026-04-06T14:38:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -36,7 +36,7 @@
     "title": "Specialists routed",
     "detail": "Assigned roadmap, flow, and data review to supporting agents.",
     "occurredAt": "2026-04-06T14:37:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -46,7 +46,7 @@
     "title": "Approval gate waiting",
     "detail": "Risk review is waiting for the final owner decision on rollout sensitivity.",
     "occurredAt": "2026-04-06T14:37:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -56,7 +56,7 @@
     "title": "Metrics plan drafted",
     "detail": "Defining practical runtime and dashboard signals for the agent system.",
     "occurredAt": "2026-04-06T14:37:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {

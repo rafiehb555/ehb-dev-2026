@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { StlMetaJsonPanel } from "@/components/dmo/StlMetaJsonPanel";
 import {
   crbCertBoost,
   dmoStlPanelTools,
@@ -314,6 +315,8 @@ export default function EhbStlLevelPage() {
             ))}
           </div>
         </section>
+
+        <StlMetaJsonPanel />
 
         <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
           <h2 className="text-sm font-semibold text-white">System flow (trust stack)</h2>

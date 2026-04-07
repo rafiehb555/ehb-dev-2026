@@ -10,6 +10,7 @@ const TABS = [
   { label: "Development", href: "/development", color: "from-[#f59e0b] to-[#f97316]" },
   { label: "Admin", href: "/admin", color: "from-[#38bdf8] to-[#0ea5e9]" },
   { label: "DMO", href: "/dmo", color: "from-[#ec4899] to-[#f97316]" },
+  { label: "Auth", href: "/auth", color: "from-[#34d399] to-[#10b981]" },
 ];
 
 export function TopNavTabs() {

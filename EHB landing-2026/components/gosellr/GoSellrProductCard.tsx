@@ -4,6 +4,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { GosellrProduct } from "@/lib/marketplace/gosellrProducts";
+import { stlLevelChipClasses } from "@/lib/stl/chipTone";
+
+type TrustPayload = {
+  trustScore: number;
+  badge: { badge: string; level: string };
+  stl: { score: number; level: number; label: string; source: "db" | "synthetic" };
+};
 
 export function GoSellrProductCard({
   product,
@@ -12,14 +19,14 @@ export function GoSellrProductCard({
   product: GosellrProduct;
   locationQs?: string;
 }) {
-  const [trust, setTrust] = useState<{ trustScore: number; badge: { badge: string; level: string } } | null>(null);
+  const [trust, setTrust] = useState<TrustPayload | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`/api/gosellr/trust?productId=${product.id}`, { cache: "no-store" })
+    fetch(`/api/gosellr/trust?productId=${encodeURIComponent(product.id)}`, { cache: "no-store" })
       .then((res) => res.json())
       .then((json) => {
-        if (!cancelled && json.success) setTrust(json.data);
+        if (!cancelled && json.success) setTrust(json.data as TrustPayload);
       })
       .catch(() => {});
     return () => {
@@ -67,6 +74,18 @@ export function GoSellrProductCard({
           <span>{product.rating.toFixed(1)}</span>
         </span>
       </div>
+
+      {trust?.stl ? (
+        <div className="flex items-center justify-between gap-2 pt-0.5">
+          <span className="text-[10px] text-ehb-textMuted">Seller · EHB-STL-LEVEL</span>
+          <span
+            className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold ${stlLevelChipClasses(trust.stl.level)}`}
+            title={`${trust.stl.label}${trust.stl.source === "synthetic" ? " (demo blend)" : ""}`}
+          >
+            L{trust.stl.level} · {trust.stl.score.toFixed(0)}
+          </span>
+        </div>
+      ) : null}
 
       {trust && (
         <div className="rounded-xl border border-cyan-500/20 bg-cyan-500/10 px-3 py-2 text-[11px] text-cyan-100">

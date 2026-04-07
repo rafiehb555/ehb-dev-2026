@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import AIInsightCard from "@/components/AIInsightCard";
 import { IndustriesBrowseSection } from "@/components/dashboard/IndustriesBrowseSection";
+import { ProfileStlBadge } from "@/components/stl/ProfileStlBadge";
 
 const LEVELS = [
   { name: "Beginner", minPoints: 0, maxPoints: 99 },
@@ -181,6 +182,9 @@ export default function DashboardPage() {
             <p className="text-ehb-textMuted mt-2 text-sm md:text-base">
               This is your personal control center for earnings, jobs, services, and progress on EHB.
             </p>
+            <div className="mt-3">
+              <ProfileStlBadge />
+            </div>
           </div>
           <div className="glass-panel border border-emerald-400/40 rounded-2xl px-4 py-3 text-xs md:text-sm flex flex-col gap-1 min-w-[210px]">
             <div className="flex items-center justify-between">

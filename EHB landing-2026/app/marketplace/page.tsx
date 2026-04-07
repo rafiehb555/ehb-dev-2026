@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { stlLevelChipClasses } from "@/lib/stl/chipTone";
 
 type Item = {
   kind: "SERVICE_PROVIDER" | "PRODUCT";
@@ -21,12 +23,28 @@ type Item = {
 
 type Industry = { id: string; name: string; slug: string };
 
-function tone(level: number) {
-  if (level >= 5) return "border-emerald-400/40 text-emerald-100";
-  if (level === 4) return "border-cyan-400/40 text-cyan-100";
-  if (level === 3) return "border-violet-400/40 text-violet-100";
-  if (level === 2) return "border-amber-400/40 text-amber-100";
-  return "border-rose-400/40 text-rose-100";
+function MarketplaceCardSkeleton() {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 space-y-3 animate-pulse">
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex-1 space-y-2">
+          <div className="h-4 w-2/3 rounded bg-white/10" />
+          <div className="h-3 w-1/2 rounded bg-white/10" />
+        </div>
+        <div className="w-12 space-y-2">
+          <div className="h-3 w-10 rounded bg-white/10" />
+          <div className="h-6 w-12 rounded bg-white/10" />
+        </div>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <div className="h-5 w-24 rounded-full bg-white/10" />
+        <div className="h-5 w-16 rounded-full bg-white/10" />
+        <div className="h-5 w-20 rounded-full bg-white/10" />
+      </div>
+      <div className="h-8 rounded bg-white/10" />
+      <div className="h-8 w-36 rounded bg-white/10" />
+    </div>
+  );
 }
 
 export default function MarketplacePage() {
@@ -43,6 +61,7 @@ export default function MarketplacePage() {
   const [reviewRating, setReviewRating] = useState("5");
   const [reviewComment, setReviewComment] = useState("");
   const [toast, setToast] = useState<{ open: boolean; kind: "ok" | "err"; text: string }>({ open: false, kind: "ok", text: "" });
+  const [demoFallback, setDemoFallback] = useState(false);
 
   const qs = useMemo(() => {
     const p = new URLSearchParams();
@@ -73,6 +92,7 @@ export default function MarketplacePage() {
       if (!res.ok || json?.success === false) throw new Error(json?.error?.message ?? "Marketplace load failed");
       setItems((json?.data?.items ?? []) as Item[]);
       setSuggestions((json?.data?.suggestions ?? []) as string[]);
+      setDemoFallback(Boolean(json?.data?.demoFallback));
     } catch (e) {
       setError(e instanceof Error ? e.message : "Marketplace load failed");
     } finally {
@@ -132,13 +152,41 @@ export default function MarketplacePage() {
   return (
     <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
-        <section className="rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-[#031222]/95 to-[#020b18]/95 p-5">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">AI Marketplace</p>
-          <h1 className="mt-1 text-2xl font-semibold gradient-text">Trust-based Smart Marketplace</h1>
-          <p className="mt-1 text-xs text-ehb-textBody">Ranking = STL + Industry + Reviews + Distance + Availability</p>
+        <section className="relative overflow-hidden rounded-3xl border border-cyan-500/25 bg-gradient-to-br from-[#0a1628] via-[#0d1017] to-[#051a24] p-6 md:p-8 shadow-[0_0_60px_-12px_rgba(51,195,255,0.2)]">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_100%_0%,rgba(34,197,94,0.08),transparent_50%)]" aria-hidden />
+          <div className="relative z-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-cyan-300/90">AI Marketplace</p>
+              <h1 className="mt-2 text-2xl md:text-3xl font-semibold gradient-text">Trust-based Smart Marketplace</h1>
+              <p className="mt-2 text-sm text-ehb-textBody max-w-2xl leading-relaxed">
+                Ranking blends EHB-STL-LEVEL with industry badges, reviews, distance, and availability — order &amp; review
+                flows work end-to-end in demo mode.
+              </p>
+            </div>
+            <Link
+              href="/local-demo"
+              className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-medium text-cyan-100 hover:bg-white/10 transition-colors"
+            >
+              Local demo guide
+            </Link>
+          </div>
         </section>
 
-        <section className="ehb-card-elevated space-y-3">
+        {demoFallback ? (
+          <div
+            role="status"
+            className="flex flex-wrap items-start gap-3 rounded-2xl border border-amber-400/35 bg-gradient-to-r from-amber-500/15 to-transparent px-4 py-3 text-sm text-amber-50/95"
+          >
+            <span className="shrink-0 rounded-full bg-amber-400/20 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-amber-200">
+              Demo data
+            </span>
+            <p className="min-w-0 flex-1 text-amber-100/90 leading-relaxed">
+              No rows in your database — showing sample listings. Connect MongoDB + seed for production-like data.
+            </p>
+          </div>
+        ) : null}
+
+        <section className="ehb-card-elevated space-y-3 rounded-2xl border border-white/10">
           {error ? <div className="rounded-xl border border-rose-400/40 bg-rose-500/10 p-3 text-xs text-rose-100">{error}</div> : null}
           <div className="grid gap-2 lg:grid-cols-12">
             <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search providers/products..." className="lg:col-span-4 rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs" />
@@ -152,7 +200,7 @@ export default function MarketplacePage() {
               {industries.map((i) => <option key={i.id} value={i.slug}>{i.name}</option>)}
             </select>
             <select value={String(minStlLevel)} onChange={(e) => setMinStlLevel(Number(e.target.value))} className="lg:col-span-2 rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs">
-              <option value="0">Any STL</option>
+              <option value="0">Any EHB-STL</option>
               <option value="2">L2+</option>
               <option value="3">L3+</option>
               <option value="4">L4+</option>
@@ -172,8 +220,19 @@ export default function MarketplacePage() {
         </section>
 
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => (
-            <div key={`${item.kind}-${item.id}`} className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-3">
+          {loading
+            ? Array.from({ length: 6 }).map((_, idx) => <MarketplaceCardSkeleton key={`mkt-sk-${idx}`} />)
+            : null}
+          {!loading
+            ? items.map((item) => (
+            <div
+              key={`${item.kind}-${item.id}`}
+              className={`rounded-2xl border p-4 space-y-3 transition-shadow ${
+                demoFallback
+                  ? "border-cyan-400/25 bg-gradient-to-b from-white/[0.07] to-white/[0.02] shadow-[0_0_40px_-16px_rgba(51,195,255,0.35)]"
+                  : "border-white/10 bg-white/5"
+              }`}
+            >
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <div className="text-sm font-semibold">{item.name}</div>
@@ -185,7 +244,17 @@ export default function MarketplacePage() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 text-[10px]">
-                <span className={`rounded-full border px-2 py-0.5 ${tone(item.stlLevel)}`}>STL L{item.stlLevel} ({item.stlScore.toFixed(1)})</span>
+                {demoFallback ? (
+                  <span className="rounded-full border border-amber-400/40 bg-amber-500/15 px-2 py-0.5 font-medium text-amber-100">
+                    Demo
+                  </span>
+                ) : null}
+                <span
+                  className={`rounded-full border px-2 py-0.5 font-medium ${stlLevelChipClasses(item.stlLevel)}`}
+                  title="EHB-STL-LEVEL (Service Trust Level)"
+                >
+                  EHB-STL L{item.stlLevel} ({item.stlScore.toFixed(1)})
+                </span>
                 <span className="rounded-full border border-white/20 px-2 py-0.5">{item.kind === "PRODUCT" ? "Product" : "Service"}</span>
                 <span className="rounded-full border border-white/20 px-2 py-0.5">{item.rating !== null ? `★ ${item.rating.toFixed(1)}` : "No ratings"}</span>
               </div>
@@ -207,7 +276,8 @@ export default function MarketplacePage() {
                 <button onClick={() => void submitReview(item)} className="ehb-btn-secondary ehb-press">Review</button>
               </div>
             </div>
-          ))}
+              ))
+            : null}
           {!loading && items.length === 0 ? (
             <div className="sm:col-span-2 lg:col-span-3 rounded-xl border border-white/10 bg-white/5 p-6 text-sm text-ehb-textBody">
               No marketplace results found.

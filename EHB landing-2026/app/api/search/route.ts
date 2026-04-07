@@ -1,6 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { ok, fail } from "@/lib/apiResponse";
 import { handleRouteError } from "@/lib/apiErrors";
+import { resolveStlLevelFromScoreAndDb } from "@/lib/stl/engine";
+import { isDevDemoDatasetEnabled } from "@/lib/demo/demoFallback";
+import { DEMO_SEARCH_RESULTS, type DemoSearchRow } from "@/lib/demo/demoSearchResults";
 
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
@@ -30,6 +33,8 @@ type SearchResult = {
   sellerUserId: string | null;
   stlScore: number | null;
   stlLevel: number | null;
+  /** Where the displayed STL came from: product listing vs seller/provider account. */
+  stlSource: "USER" | "PRODUCT" | null;
   rating: number | null; // 0..5
   availability: boolean;
   location: { label: string | null; lat: number | null; lng: number | null };
@@ -145,7 +150,13 @@ export async function GET(req: Request) {
         }),
       ]);
 
-      const stlMap = new Map(stlRows.map((r) => [r.entityId, { score: Number(r.score), level: r.level }]));
+      const stlMap = new Map(
+        stlRows.map((r) => {
+          const score = Number(r.score);
+          const level = resolveStlLevelFromScoreAndDb(score, r.level);
+          return [r.entityId, { score, level }] as const;
+        })
+      );
       const companyIndustryMap = new Map<string, Array<{ industryId: string; slug: string; name: string }>>();
       for (const v of verifiedCompanyIndustries) {
         const arr = companyIndustryMap.get(v.entityId) ?? [];
@@ -163,7 +174,7 @@ export async function GET(req: Request) {
         const stl = stlMap.get(p.userId);
         const rating = p.profile?.rating ? Number(p.profile.rating) : null;
         if (rating !== null && rating < minRating) continue;
-        if (stl?.level && stl.level < minStlLevel) continue;
+        if (stl?.level != null && stl.level < minStlLevel) continue;
 
         const provLat = p.locationLat ? Number(p.locationLat) : null;
         const provLng = p.locationLng ? Number(p.locationLng) : null;
@@ -215,6 +226,7 @@ export async function GET(req: Request) {
           sellerUserId: p.userId,
           stlScore: stl?.score ?? null,
           stlLevel: stl?.level ?? null,
+          stlSource: stl ? "USER" : null,
           rating,
           availability: avail,
           location: { label: p.location ?? null, lat: provLat, lng: provLng },
@@ -249,9 +261,15 @@ export async function GET(req: Request) {
       });
 
       const sellerIds = Array.from(new Set(products.map((p) => p.sellerId)));
-      const [stlRows, verifiedCompanyIndustries, verifiedProductIndustries] = await Promise.all([
+      const productIds = Array.from(new Set(products.map((p) => p.id)));
+      const [userStlRows, productStlRows, verifiedCompanyIndustries, verifiedProductIndustries] =
+        await Promise.all([
         prisma.sTLScore.findMany({
           where: { entityType: "USER", entityId: { in: sellerIds } },
+          select: { entityId: true, score: true, level: true },
+        }),
+        prisma.sTLScore.findMany({
+          where: { entityType: "PRODUCT", entityId: { in: productIds } },
           select: { entityId: true, score: true, level: true },
         }),
         prisma.industryVerification.findMany({
@@ -278,7 +296,20 @@ export async function GET(req: Request) {
         }),
       ]);
 
-      const stlMap = new Map(stlRows.map((r) => [r.entityId, { score: Number(r.score), level: r.level }]));
+      const userStlMap = new Map(
+        userStlRows.map((r) => {
+          const score = Number(r.score);
+          const level = resolveStlLevelFromScoreAndDb(score, r.level);
+          return [r.entityId, { score, level }] as const;
+        })
+      );
+      const productStlMap = new Map(
+        productStlRows.map((r) => {
+          const score = Number(r.score);
+          const level = resolveStlLevelFromScoreAndDb(score, r.level);
+          return [r.entityId, { score, level }] as const;
+        })
+      );
       const companyIndustryMap = new Map<string, Array<{ industryId: string; slug: string; name: string }>>();
       for (const v of verifiedCompanyIndustries) {
         const arr = companyIndustryMap.get(v.entityId) ?? [];
@@ -293,10 +324,17 @@ export async function GET(req: Request) {
       }
 
       for (const p of products) {
-        const stl = stlMap.get(p.sellerId);
+        const productStl = productStlMap.get(p.id);
+        const userStl = userStlMap.get(p.sellerId);
+        const stl = productStl ?? userStl;
+        const stlSource: "USER" | "PRODUCT" | null = productStl
+          ? "PRODUCT"
+          : userStl
+            ? "USER"
+            : null;
         const rating = p.rating ? Number(p.rating) : null;
         if (rating !== null && rating < minRating) continue;
-        if (stl?.level && stl.level < minStlLevel) continue;
+        if (stl?.level != null && stl.level < minStlLevel) continue;
 
         const stlN = clamp((stl?.score ?? 0) / 100, 0, 1);
         const distN = 0.5; // product distance requires shipping address/warehouse (future)
@@ -334,6 +372,7 @@ export async function GET(req: Request) {
           sellerUserId: p.sellerId,
           stlScore: stl?.score ?? null,
           stlLevel: stl?.level ?? null,
+          stlSource,
           rating,
           availability: avail,
           location: { label: null, lat: null, lng: null },
@@ -346,10 +385,22 @@ export async function GET(req: Request) {
       }
     }
 
+    let demoFallback = false;
+    if (results.length === 0 && isDevDemoDatasetEnabled()) {
+      let demoRows: DemoSearchRow[] = [...DEMO_SEARCH_RESULTS];
+      if (wantsServices && !wantsProducts) demoRows = demoRows.filter((r) => r.kind === "SERVICE_PROVIDER");
+      else if (wantsProducts && !wantsServices) demoRows = demoRows.filter((r) => r.kind === "PRODUCT");
+      if (minRating > 0) demoRows = demoRows.filter((r) => (r.rating ?? 0) >= minRating);
+      if (minStlLevel > 0) demoRows = demoRows.filter((r) => (r.stlLevel ?? 0) >= minStlLevel);
+      if (demoRows.length === 0) demoRows = [...DEMO_SEARCH_RESULTS];
+      results.push(...(demoRows as unknown as SearchResult[]));
+      demoFallback = true;
+    }
+
     // Final sort + pagination
     results.sort((a, b) => b.rankScore - a.rankScore);
     const paged = results.slice(skip, skip + take);
-    return ok({ items: paged, total: results.length, take, skip });
+    return ok({ items: paged, total: results.length, take, skip, demoFallback });
   } catch (err) {
     return handleRouteError(err);
   }

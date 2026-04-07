@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getGosellrProductById } from "@/lib/marketplace/gosellrProducts";
 import { GoSellrCartActions } from "@/components/gosellr/GoSellrCartActions";
+import { GoSellrProductStlLine } from "@/components/gosellr/GoSellrProductStlLine";
 import AIInsightCard from "@/components/AIInsightCard";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 
@@ -13,6 +14,10 @@ export default function GosellrProductPage({
   params: { productId: string };
   searchParams?: { country?: string; state?: string; city?: string };
 }) {
+  const raw = decodeURIComponent(params.productId);
+  if (raw === "[productId]" || raw.includes("[productId]")) {
+    redirect("/gosellr");
+  }
   const product = getGosellrProductById(params.productId);
   if (!product) notFound();
 
@@ -119,6 +124,8 @@ export default function GosellrProductPage({
                 </div>
               </div>
 
+              <GoSellrProductStlLine productId={product.id} />
+
               <div className="flex items-center justify-between text-[11px] text-ehb-textMuted">
                 <span className="flex items-center gap-2">
                   <span aria-hidden>⭐</span> Rating
@@ -130,7 +137,7 @@ export default function GosellrProductPage({
                 <div className="space-y-1">
                   <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Verified trust</p>
                   <p className="text-sm text-ehb-textBody">
-                    PSS verified • CRB certified • STL level trust (demo)
+                    PSS verified • CRB certified • EHB-STL-LEVEL trust (demo)
                   </p>
                 </div>
               </div>

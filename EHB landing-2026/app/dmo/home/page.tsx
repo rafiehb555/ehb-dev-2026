@@ -22,10 +22,10 @@ const coreDepartments = [
   },
   {
     icon: "📊",
-    title: "STL – Trust Engine",
-    desc: "Trust score intelligence, ranking logic, and score-impact visibility.",
+    title: "EHB-STL-LEVEL · Trust Engine",
+    desc: "Service Trust Level — score intelligence, ranking, and impact visibility.",
     href: "/dmo/stl",
-    cta: "Open STL View",
+    cta: "Open EHB-STL view",
     tone: "from-emerald-500/20 to-teal-500/10 border-emerald-400/30",
   },
   {
