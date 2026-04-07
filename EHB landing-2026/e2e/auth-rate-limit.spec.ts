@@ -35,7 +35,12 @@ test.describe("Auth login 429 UI", () => {
     await page.getByTestId("auth-password").fill("wrong-password-e2e");
     await expect(page.getByTestId("auth-email")).toHaveValue("ui-e2e@example.com");
 
+    const loginPost = page.waitForRequest(
+      (r) => r.url().includes("/api/auth/login") && r.method() === "POST",
+      { timeout: 10_000 }
+    );
     await page.getByTestId("auth-submit").click();
+    await loginPost;
 
     await expect(page.getByTestId("auth-submit")).toHaveText(/Retry in 60s/, { timeout: 15_000 });
     await expect(page.getByText(/Too many attempts/i)).toBeVisible();
