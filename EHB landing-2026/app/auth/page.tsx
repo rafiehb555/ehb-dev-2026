@@ -181,6 +181,7 @@ export default function AuthPage() {
             ) : null}
             <div>
               <input
+                data-testid="auth-email"
                 className={`w-full rounded-xl border bg-white/5 px-3 py-2 text-sm ${fieldErrors.email ? "border-rose-400/50" : "border-white/15"}`}
                 placeholder="Email"
                 type="email"
@@ -200,6 +201,7 @@ export default function AuthPage() {
             <div>
               <div className="relative">
                 <input
+                  data-testid="auth-password"
                   className={`w-full rounded-xl border bg-white/5 py-2 pl-3 pr-11 text-sm ${fieldErrors.password ? "border-rose-400/50" : "border-white/15"}`}
                   placeholder="Password"
                   type={showPassword ? "text" : "password"}
