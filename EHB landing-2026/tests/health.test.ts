@@ -131,4 +131,27 @@ describe("GET /api/health", () => {
     expect(json.db.ok).toBe(false);
     expect(json.db.error).toContain("User");
   });
+
+  it("returns 503 when $connect fails before user.count (PostgreSQL path)", async () => {
+    vi.resetModules();
+    const connect = vi.fn(async () => {
+      throw new Error("connection refused");
+    });
+    const count = vi.fn(async () => 0);
+    vi.doMock("@/lib/prisma", () => ({
+      prisma: { $connect: connect, user: { count } },
+    }));
+    const { GET } = await import("@/app/api/health/route");
+
+    const res = await GET(new Request("http://localhost/api/health"));
+    expect(res.status).toBe(503);
+    const json = (await res.json()) as {
+      ok: boolean;
+      db: { ok: boolean; error?: string };
+    };
+    expect(json.ok).toBe(false);
+    expect(json.db.ok).toBe(false);
+    expect(json.db.error).toContain("connection refused");
+    expect(count).not.toHaveBeenCalled();
+  });
 });
