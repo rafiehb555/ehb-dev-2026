@@ -18,14 +18,14 @@ export function LocationSelector({
   onChange: (next: LocationValue) => void;
 }) {
   const country = useMemo(() => getCountryByCode(value.countryCode) ?? COUNTRIES[0], [value.countryCode]);
-  const states = country?.states ?? [];
+  const states = useMemo(() => country?.states ?? [], [country]);
 
   const state = useMemo(() => getStateByCode(value.countryCode, String(value.stateCode)) ?? states[0], [
     value.countryCode,
     value.stateCode,
     states,
   ]);
-  const cities = state?.cities ?? [];
+  const cities = useMemo(() => state?.cities ?? [], [state]);
 
   const city = useMemo(
     () => getCityByCode(value.countryCode, String(value.stateCode), String(value.cityCode)) ?? cities[0],

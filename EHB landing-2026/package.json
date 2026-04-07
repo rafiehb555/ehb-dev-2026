@@ -13,7 +13,7 @@
     "dev:open": "start http://localhost:3000 && next dev -p 3000",
     "build": "next build",
     "build:clean": "npm run clean && npm run build",
-    "lint": "next lint",
+    "lint": "next lint --max-warnings 0",
     "test": "vitest run",
     "start": "next start",
     "prisma:generate": "prisma generate",

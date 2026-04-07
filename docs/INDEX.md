@@ -10,6 +10,8 @@
 
 **Developer entry:** [`EHB landing-2026/README.md`](../EHB%20landing-2026/README.md) — npm scripts (`dev`, `build`, `build:clean`, `lint`, `test`), CI workflow link, pointers to this index and design flows.
 
+**Static assets:** [README — Static assets](../EHB%20landing-2026/README.md#static-assets) — `public/images/` (industries, ai-market, profiles, cards), referenced from `lib/industry/designAssets.ts`, `lib/marketplace/gosellrProducts.ts`, and components using `next/image`.
+
 ### Health (deploy / uptime smoke)
 
 - **`GET /api/health`** — [`EHB landing-2026/app/api/health/route.ts`](../EHB%20landing-2026/app/api/health/route.ts) returns `{ ok: true, service, gitSha? }` (short SHA when `VERCEL_GIT_COMMIT_SHA` is set). Use for monitors and post-deploy checks alongside [`/dmo/stl`](../EHB%20landing-2026/app/dmo/stl/page.tsx) (static STL DMO page).
