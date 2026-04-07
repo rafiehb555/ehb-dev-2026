@@ -95,3 +95,21 @@ export const ecosystemLinks: { href: string; label: string; short: string; note:
   { href: "/dmo/affiliate", label: "EHB-EAP", short: "Affiliate Program", note: "Network trust & attribution" },
   { href: "/dmo/penalty", label: "Penalties", short: "Complaints", note: "Violations can reduce STL" },
 ];
+
+/** Bundled reference for `GET /api/stl/meta` and external consumers. */
+export function getEhbStlMetaPayload() {
+  return {
+    documentVersion: EHB_STL_DOC_VERSION,
+    sourceRefs: ["docs/development/EHB_MASTER_SYSTEM_PLAN.md §7", "docs/development/EHB_STL_FULL_PLAN.md"],
+    formula: stlFormulaLines,
+    levels: stlLevels,
+    accessControl: stlAccessRows,
+    pssImpact: pssStlImpact,
+    crbCertBoost,
+    jpsSalaryMultiplier: jpsStlMultiplier,
+    gosellrSellerTiers,
+    dmoPanelTools: dmoStlPanelTools,
+    cardDisplayRules: stlCardDisplayRules,
+    ecosystemLinks,
+  };
+}

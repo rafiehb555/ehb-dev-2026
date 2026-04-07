@@ -29,13 +29,31 @@ export default function EhbStlLevelPage() {
               <p className="text-sm text-ehb-textBody leading-relaxed">
                 AI-driven reputation engine: har <strong className="text-cyan-100/90">USER</strong>,{" "}
                 <strong className="text-cyan-100/90">SERVICE</strong>, aur <strong className="text-cyan-100/90">PRODUCT</strong> ko{" "}
-                <strong className="text-white">0–100</strong> trust score milta hai. Yeh page master plan ke mutabiq full reference hai — operational
+                <strong className="text-white">0–100</strong> trust score milta hai. Yeh page master plan ke mutabiq full reference hai —                 operational
                 engine <Link href="/dmo/stl" className="text-cyan-300 underline-offset-2 hover:underline">STL operations</Link> par.
               </p>
+              <div className="flex flex-wrap gap-2 pt-1" aria-label="STL levels L1 to L5">
+                {stlLevels.map((row) => (
+                  <span
+                    key={row.level}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 text-[11px] shadow-sm"
+                    style={{ borderColor: `${row.color}55` }}
+                    title={row.label}
+                  >
+                    <span className="h-2 w-2 shrink-0 rounded-full ring-1 ring-white/20" style={{ backgroundColor: row.color }} />
+                    <span className="font-semibold text-white">{row.level}</span>
+                    <span className="text-ehb-textMuted">{row.score}</span>
+                    <span className="hidden sm:inline text-ehb-textMuted" aria-hidden="true">
+                      {row.icon}
+                    </span>
+                  </span>
+                ))}
+              </div>
               <p className="text-[11px] text-ehb-textMuted">
                 Source alignment: <code className="rounded bg-white/10 px-1.5 py-0.5 text-ehb-textBody">EHB_MASTER_SYSTEM_PLAN.md</code> §7 · Document
                 v{EHB_STL_DOC_VERSION} (living doc). Pehle &quot;v7.0&quot; naam se files refer ho sakti thin; repo mein ab{" "}
-                <strong className="text-ehb-textBody">v{EHB_STL_DOC_VERSION}</strong> active hai.
+                <strong className="text-ehb-textBody">v{EHB_STL_DOC_VERSION}</strong> active hai. JSON:{" "}
+                <code className="rounded bg-white/10 px-1.5 py-0.5 text-ehb-textBody">GET /api/stl/meta</code>
               </p>
             </div>
             <div className="flex flex-wrap gap-2 shrink-0">
