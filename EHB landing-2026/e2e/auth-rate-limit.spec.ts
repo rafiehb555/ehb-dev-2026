@@ -31,6 +31,8 @@ test.describe("Auth login 429 UI", () => {
     });
 
     await page.goto("/auth", { waitUntil: "domcontentloaded" });
+    await page.getByRole("heading", { name: "Auth Control Center" }).locator("..").getByRole("button", { name: "Login" }).click();
+    await expect(page.getByTestId("auth-submit")).toHaveText(/Sign In/);
     await page.getByTestId("auth-email").fill("ui-e2e@example.com");
     await page.getByTestId("auth-password").fill("wrong-password-e2e");
     await expect(page.getByTestId("auth-email")).toHaveValue("ui-e2e@example.com");
