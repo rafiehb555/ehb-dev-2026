@@ -89,9 +89,11 @@ export default function AuthPage() {
       });
       const json = await res.json().catch(() => null);
       if (res.status === 429) {
-        const ra = Number(res.headers.get("Retry-After") ?? "0");
+        const cooldownFromBody = Number(json?.error?.details?.cooldownSeconds ?? "0");
+        const cooldownFromHeader = Number(res.headers.get("Retry-After") ?? "0");
+        const ra = Number.isFinite(cooldownFromBody) && cooldownFromBody > 0 ? cooldownFromBody : cooldownFromHeader;
         if (Number.isFinite(ra) && ra > 0) {
-          const limited = Math.min(ra, 3600);
+          const limited = Math.min(Math.max(1, Math.floor(ra)), 3600);
           setCooldownSec(limited);
           setCooldownTotalSec(limited);
         }
