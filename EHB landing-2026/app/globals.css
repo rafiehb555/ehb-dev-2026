@@ -397,4 +397,24 @@ main {
     box-shadow: 0 0 32px rgba(16, 185, 129, 0.5), 0 0 48px rgba(245, 158, 11, 0.25);
     transform: scale(1.03);
   }
+
+  /* EHB_UIUX_DESIGN_PLAN Part 10 — glow utilities */
+  @keyframes pulse-glow-live {
+    0%,
+    100% {
+      box-shadow: 0 0 12px rgba(34, 177, 76, 0.35);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(34, 177, 76, 0.55);
+    }
+  }
+  .live-glow {
+    animation: pulse-glow-live 2s ease-in-out infinite;
+  }
+  .vip-glow {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
+  }
+  .stl-l4-glow {
+    box-shadow: 0 0 16px rgba(124, 58, 237, 0.4);
+  }
 }
