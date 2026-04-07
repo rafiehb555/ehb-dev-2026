@@ -14,6 +14,7 @@
     "build": "next build",
     "build:clean": "npm run clean && npm run build",
     "lint": "next lint --max-warnings 0",
+    "audit:info": "npm audit --audit-level=high",
     "test": "vitest run",
     "start": "next start",
     "prisma:generate": "prisma generate",

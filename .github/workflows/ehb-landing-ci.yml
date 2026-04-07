@@ -30,6 +30,11 @@ jobs:
       - name: Install
         run: npm ci
 
+      # Exits non-zero while Next 14 + eslint-config-next carry known highs; does not fail the job.
+      - name: npm audit (informational)
+        continue-on-error: true
+        run: npm audit --audit-level=high
+
       - name: Typecheck
         run: npx tsc --noEmit
 

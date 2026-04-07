@@ -24,11 +24,12 @@
 
 - **Folder:** [`EHB landing-2026/content/industries/law/ols-law-source/nextjs-app/src/`](../EHB%20landing-2026/content/industries/law/ols-law-source/nextjs-app/src) — legacy/next reference UI for law (multi-agent, investor demo, etc.). Body/muted text uses the same Tailwind tokens as the main app (`text-ehb-textBody`, `text-ehb-textMuted`; see [FLOW-P1-foundation-ui.md](flows/FLOW-P1-foundation-ui.md)).
 - **Tailwind:** [`tailwind.config.ts`](../EHB%20landing-2026/tailwind.config.ts) `content` includes `app/`, `components/`, `lib/`, and this tree so JIT emits utilities used in code and string-based class maps.
-- **Local build / monorepo:** Optional checklist — [LOCAL_DEPLOY_PARITY_CHECKLIST.md — Optional — Law OLS reference app](development/LOCAL_DEPLOY_PARITY_CHECKLIST.md#optional--law-ols-reference-app-separate-package) (`next.config.ts`: `outputFileTracingRoot`, `eslint.ignoreDuringBuilds`).
+- **Local build / monorepo:** Optional checklist — [LOCAL_DEPLOY_PARITY_CHECKLIST.md](development/LOCAL_DEPLOY_PARITY_CHECKLIST.md) (section **Optional — Law OLS reference app**; `next.config.ts`: `outputFileTracingRoot`, `eslint.ignoreDuringBuilds`).
 
 ### CI (landing app)
 
-- **Workflow:** [`.github/workflows/ehb-landing-ci.yml`](../.github/workflows/ehb-landing-ci.yml) — on changes under `EHB landing-2026/`: `npm ci` → `tsc --noEmit` → `npm test` → **`npm run lint`** → **`npm run build`**.
+- **Workflow:** [`.github/workflows/ehb-landing-ci.yml`](../.github/workflows/ehb-landing-ci.yml) — on changes under `EHB landing-2026/`: `npm ci` → **`npm audit --audit-level=high`** (informational, `continue-on-error`) → `tsc --noEmit` → `npm test` → **`npm run lint`** → **`npm run build`**.
+- **Local audit (same flags as CI):** from `EHB landing-2026/`, run **`npm run audit:info`**. May exit non-zero while known transitive highs remain (see lockfile / Next upgrade path).
 - **Local build issues:** if `next build` fails with missing chunk / `ENOENT` for a route, run **`npm run build:clean`** from `EHB landing-2026/` (removes `.next` then builds; script is `clean` + `build`).
 
 ### Notifications: client vs server state
