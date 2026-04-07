@@ -13,6 +13,10 @@ test.describe("Auth login rate limit", () => {
   });
 
   test("shows cooldown after repeated failed logins", async ({ page, request }) => {
+    page.on("pageerror", (err) => {
+      throw err;
+    });
+
     const email = `e2e-rate-${Date.now()}@example.com`;
     await page.goto("/auth", { waitUntil: "domcontentloaded" });
     await expect(page.getByPlaceholder("Email")).toBeVisible();
