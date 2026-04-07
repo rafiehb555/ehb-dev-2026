@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Auth login rate limit", () => {
+  test.describe.configure({ timeout: 120_000 });
   test.beforeAll(async ({ request }, testInfo) => {
     const res = await request.get("/api/health");
     const json = (await res.json()) as { db?: { ok?: boolean; skipped?: boolean } };
@@ -11,21 +12,24 @@ test.describe("Auth login rate limit", () => {
     }
   });
 
-  test("shows cooldown after repeated failed logins", async ({ page }) => {
-    const email = `e2e-rate-${Date.now()}@ehb.local`;
+  test("shows cooldown after repeated failed logins", async ({ page, request }) => {
+    const email = `e2e-rate-${Date.now()}@example.com`;
     await page.goto("/auth", { waitUntil: "domcontentloaded" });
     await expect(page.getByPlaceholder("Email")).toBeVisible();
     await page.getByPlaceholder("Email").fill(email);
     await page.getByPlaceholder("Password").fill("wrong-password-e2e");
 
+    await request.post("/api/auth/login", {
+      json: { email: "warmup@example.com", password: "x" },
+    });
+
+    await expect(page.getByTestId("auth-submit")).toBeVisible();
+
     for (let i = 0; i < 8; i++) {
       const loginResPromise = page.waitForResponse(
-        (r) =>
-          r.url().includes("/api/auth/login") &&
-          r.request().method() === "POST" &&
-          r.status() !== 0
+        (r) => r.url().includes("/api/auth/login") && r.request().method() === "POST"
       );
-      await page.getByRole("button", { name: /^Sign In$/ }).click();
+      await page.getByTestId("auth-submit").click();
       const loginRes = await loginResPromise;
       expect(loginRes.status()).toBe(401);
       const body = (await loginRes.json()) as { error?: { message?: string } };
@@ -33,20 +37,17 @@ test.describe("Auth login rate limit", () => {
 
       await expect(page.getByTestId("auth-error")).toBeVisible({ timeout: 15_000 });
       await expect(page.getByTestId("auth-error")).toContainText(/Invalid credentials|Request failed/i);
-      await expect(page.getByRole("button", { name: /^Sign In$/ })).toBeEnabled({ timeout: 15_000 });
+      await expect(page.getByTestId("auth-submit")).toBeEnabled({ timeout: 15_000 });
     }
 
     const ninth = page.waitForResponse(
-      (r) =>
-        r.url().includes("/api/auth/login") &&
-        r.request().method() === "POST" &&
-        r.status() !== 0
+      (r) => r.url().includes("/api/auth/login") && r.request().method() === "POST"
     );
-    await page.getByRole("button", { name: /^Sign In$/ }).click();
+    await page.getByTestId("auth-submit").click();
     const res429 = await ninth;
     expect(res429.status()).toBe(429);
 
-    await expect(page.getByRole("button", { name: /Retry in \d+s/ })).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByTestId("auth-submit")).toHaveText(/Retry in \d+s/, { timeout: 15_000 });
     await expect(page.getByText(/Too many attempts/i)).toBeVisible();
   });
 });

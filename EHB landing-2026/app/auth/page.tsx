@@ -228,6 +228,7 @@ export default function AuthPage() {
             <div className="flex flex-wrap gap-2">
               <button
                 type="button"
+                data-testid="auth-submit"
                 onClick={submit}
                 disabled={loading || cooldownSec > 0}
                 className="rounded-full bg-gradient-to-r from-cyan-300 to-blue-500 px-5 py-2 text-sm font-semibold text-slate-950"
