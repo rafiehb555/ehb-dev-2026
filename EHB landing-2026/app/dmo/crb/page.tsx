@@ -151,7 +151,7 @@ export default function DmoCrbPage() {
                 <div>
                   <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">CRB Module</p>
                   <h1 className="mt-1 text-2xl font-semibold gradient-text">Certification & Registry Board</h1>
-                  <p className="mt-1 text-xs text-slate-300">Real workflow: apply -&gt; document review -&gt; inspection -&gt; decision -&gt; certificate + DMO integration.</p>
+                  <p className="mt-1 text-xs text-ehb-textBody">Real workflow: apply -&gt; document review -&gt; inspection -&gt; decision -&gt; certificate + DMO integration.</p>
                 </div>
                 <div className="flex gap-2">
                   <Link href="/dmo" className="ehb-btn-secondary ehb-press">Back to DMO</Link>
@@ -169,7 +169,7 @@ export default function DmoCrbPage() {
 
             <section className="ehb-card-elevated space-y-3">
               <div className="flex flex-wrap items-center gap-2">
-                <select value={status} onChange={(e) => setStatus(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs">
+                <select value={status} onChange={(e) => setStatus(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody">
                   <option value="ALL">All status</option>
                   <option value="SUBMITTED">SUBMITTED</option>
                   <option value="REVIEW">REVIEW</option>
@@ -177,22 +177,22 @@ export default function DmoCrbPage() {
                   <option value="APPROVED">APPROVED</option>
                   <option value="REJECTED">REJECTED</option>
                 </select>
-                <select value={type} onChange={(e) => setType(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs">
+                <select value={type} onChange={(e) => setType(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody">
                   <option value="ALL">All type</option>
                   <option value="SKILL">SKILL</option>
                   <option value="SERVICE">SERVICE</option>
                   <option value="PRODUCT">PRODUCT</option>
                   <option value="COMPANY">COMPANY</option>
                 </select>
-                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search name/email/industry" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs min-w-[220px]" />
+                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search name/email/industry" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs min-w-[220px] text-ehb-textBody placeholder:text-ehb-textMuted" />
               </div>
 
-              {loading ? <div className="text-xs text-slate-400">Loading applications...</div> : null}
+              {loading ? <div className="text-xs text-ehb-textMuted">Loading applications...</div> : null}
               {error ? <div className="rounded-xl border border-rose-400/40 bg-rose-500/10 p-3 text-xs text-rose-100">{error}</div> : null}
 
               <div className="overflow-auto rounded-xl border border-white/10">
                 <table className="min-w-full text-xs">
-                  <thead className="bg-white/5 text-slate-300">
+                  <thead className="bg-white/5 text-ehb-textBody">
                     <tr>
                       <th className="px-3 py-2 text-left">Applicant</th>
                       <th className="px-3 py-2 text-left">Type</th>
@@ -207,17 +207,17 @@ export default function DmoCrbPage() {
                           <tr key={r.id} className="border-t border-white/10 hover:bg-white/5 cursor-pointer" onClick={() => setSelected(r)}>
                             <td className="px-3 py-2">
                               <div className="font-semibold">{r.applicant?.name ?? "Unknown"}</div>
-                              <div className="text-[11px] text-slate-400">{r.applicant?.email ?? "-"}</div>
+                              <div className="text-[11px] text-ehb-textMuted">{r.applicant?.email ?? "-"}</div>
                             </td>
                             <td className="px-3 py-2">{r.type}</td>
                             <td className="px-3 py-2">{r.industry}</td>
                             <td className="px-3 py-2">{r.status}</td>
-                            <td className="px-3 py-2 text-slate-400">{fmt(r.createdAt)}</td>
+                            <td className="px-3 py-2 text-ehb-textMuted">{fmt(r.createdAt)}</td>
                           </tr>
                         ))
                       : null}
                     {!loading && rows.length === 0 ? (
-                      <tr><td colSpan={5} className="px-3 py-8 text-center text-slate-400">No CRB applications found.</td></tr>
+                      <tr><td colSpan={5} className="px-3 py-8 text-center text-ehb-textMuted">No CRB applications found.</td></tr>
                     ) : null}
                   </tbody>
                 </table>
@@ -237,17 +237,17 @@ export default function DmoCrbPage() {
                 </div>
 
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-xs space-y-1">
-                  <div><span className="text-slate-400">Applicant:</span> {selected.applicant?.name} ({selected.applicant?.email})</div>
-                  <div><span className="text-slate-400">Type:</span> {selected.type}</div>
-                  <div><span className="text-slate-400">Industry:</span> {selected.industry}</div>
-                  <div><span className="text-slate-400">Status:</span> {selected.status}</div>
-                  <div><span className="text-slate-400">DMO Task:</span> {selected.dmoTaskId ?? "Not linked yet"}</div>
+                  <div><span className="text-ehb-textMuted">Applicant:</span> {selected.applicant?.name} ({selected.applicant?.email})</div>
+                  <div><span className="text-ehb-textMuted">Type:</span> {selected.type}</div>
+                  <div><span className="text-ehb-textMuted">Industry:</span> {selected.industry}</div>
+                  <div><span className="text-ehb-textMuted">Status:</span> {selected.status}</div>
+                  <div><span className="text-ehb-textMuted">DMO Task:</span> {selected.dmoTaskId ?? "Not linked yet"}</div>
                 </div>
 
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-2">
                   <div className="text-xs font-semibold">Documents</div>
                   {selected.documents.length === 0 ? (
-                    <div className="text-[11px] text-slate-400">No documents.</div>
+                    <div className="text-[11px] text-ehb-textMuted">No documents.</div>
                   ) : (
                     selected.documents.map((d) => (
                       <div key={d.id} className="rounded-lg border border-white/10 bg-black/20 p-2 text-[11px]">
@@ -260,22 +260,22 @@ export default function DmoCrbPage() {
 
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-2">
                   <div className="text-xs font-semibold">Inspection Assignment</div>
-                  <div className="text-[11px] text-slate-300">Inspector ID</div>
-                  <input value={assignInspectorId} onChange={(e) => setAssignInspectorId(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs" placeholder="Enter franchise inspector userId (cuid)" />
+                  <div className="text-[11px] text-ehb-textBody">Inspector ID</div>
+                  <input value={assignInspectorId} onChange={(e) => setAssignInspectorId(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" placeholder="Enter franchise inspector userId (cuid)" />
                   <button className="ehb-btn-primary ehb-press" onClick={() => void assignInspection()}>Assign Inspection</button>
                 </div>
 
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-2">
                   <div className="text-xs font-semibold">Inspection Report</div>
-                  <div className="text-[11px] text-slate-300">Current inspection: {selected.inspection?.id ?? "Not assigned"}</div>
-                  <input value={reportScore} onChange={(e) => setReportScore(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs" placeholder="Score (0-100)" />
-                  <textarea value={reportText} onChange={(e) => setReportText(e.target.value)} className="w-full h-24 rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs" placeholder="Inspection report..." />
+                  <div className="text-[11px] text-ehb-textBody">Current inspection: {selected.inspection?.id ?? "Not assigned"}</div>
+                  <input value={reportScore} onChange={(e) => setReportScore(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" placeholder="Score (0-100)" />
+                  <textarea value={reportText} onChange={(e) => setReportText(e.target.value)} className="w-full h-24 rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" placeholder="Inspection report..." />
                   <button className="ehb-btn-secondary ehb-press" onClick={() => void submitReport()} disabled={!selected.inspection}>Submit Report</button>
                 </div>
 
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-2">
                   <div className="text-xs font-semibold">Final Decision</div>
-                  <textarea value={decisionNotes} onChange={(e) => setDecisionNotes(e.target.value)} className="w-full h-20 rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs" placeholder="Decision notes..." />
+                  <textarea value={decisionNotes} onChange={(e) => setDecisionNotes(e.target.value)} className="w-full h-20 rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" placeholder="Decision notes..." />
                   <div className="flex gap-2">
                     <button className="ehb-btn-primary ehb-press" onClick={() => void finalDecision("APPROVED")}>Approve + Issue Certificate</button>
                     <button className="ehb-btn-danger ehb-press" onClick={() => void finalDecision("REJECTED")}>Reject</button>

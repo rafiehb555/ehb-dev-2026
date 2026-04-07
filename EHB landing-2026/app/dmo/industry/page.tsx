@@ -162,7 +162,7 @@ export default function DmoIndustryPage() {
                 <div>
                   <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">Industry Module</p>
                   <h1 className="mt-1 text-2xl font-semibold gradient-text">Multi-Industry Verification</h1>
-                  <p className="mt-1 text-xs text-slate-300">Global trust layer: verify entity across multiple sectors with weighted score impact.</p>
+                  <p className="mt-1 text-xs text-ehb-textBody">Global trust layer: verify entity across multiple sectors with weighted score impact.</p>
                 </div>
                 <div className="flex gap-2">
                   <Link href="/dmo" className="ehb-btn-secondary ehb-press">Back to DMO</Link>
@@ -181,27 +181,27 @@ export default function DmoIndustryPage() {
             <section className="ehb-card-elevated space-y-3">
               <div className="text-xs font-semibold">Request Industry Verification</div>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
-                <select value={entityType} onChange={(e) => setEntityType(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs">
+                <select value={entityType} onChange={(e) => setEntityType(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody">
                   <option value="COMPANY">COMPANY</option>
                   <option value="SERVICE">SERVICE</option>
                   <option value="PRODUCT">PRODUCT</option>
                 </select>
-                <input value={entityId} onChange={(e) => setEntityId(e.target.value)} placeholder="Entity ID (cuid)" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs" />
-                <select value={industryId} onChange={(e) => setIndustryId(e.target.value)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs">
+                <input value={entityId} onChange={(e) => setEntityId(e.target.value)} placeholder="Entity ID (cuid)" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" />
+                <select value={industryId} onChange={(e) => setIndustryId(e.target.value)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody">
                   {industries.map((i) => (
                     <option key={i.id} value={i.id}>
                       {i.slug ? `${i.name} (${i.slug})` : i.name}
                     </option>
                   ))}
                 </select>
-                <input value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="Weight (0.1 - 5)" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs" />
+                <input value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="Weight (0.1 - 5)" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" />
               </div>
               {(() => {
                 const sel = industries.find((i) => i.id === industryId);
                 if (!sel?.slug) return null;
                 return (
                   <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-cyan-200/90">
-                    <span className="text-slate-500">EHB surfaces:</span>
+                    <span className="text-ehb-textMuted">EHB surfaces:</span>
                     <Link className="hover:underline" href={`/landing/${sel.slug}`}>
                       Landing
                     </Link>
@@ -224,8 +224,8 @@ export default function DmoIndustryPage() {
             <section className="ehb-card-elevated space-y-3">
               <div className="text-xs font-semibold">Entity Mapping (Multi-Industry)</div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                <input value={entityId} onChange={(e) => setEntityId(e.target.value)} placeholder="Entity ID (cuid)" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs" />
-                <input value={attachIds} onChange={(e) => setAttachIds(e.target.value)} placeholder="Industry IDs comma-separated" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs" />
+                <input value={entityId} onChange={(e) => setEntityId(e.target.value)} placeholder="Entity ID (cuid)" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" />
+                <input value={attachIds} onChange={(e) => setAttachIds(e.target.value)} placeholder="Industry IDs comma-separated" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" />
               </div>
               <button className="ehb-btn-secondary ehb-press" onClick={() => void attachIndustries()}>Update Mapping</button>
             </section>
@@ -233,7 +233,7 @@ export default function DmoIndustryPage() {
             <section className="ehb-card-elevated space-y-3">
               <div className="flex items-center gap-2">
                 <div className="text-xs font-semibold">Verification Queue</div>
-                <select value={status} onChange={(e) => setStatus(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-2 py-1 text-[11px]">
+                <select value={status} onChange={(e) => setStatus(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-2 py-1 text-[11px] text-ehb-textBody">
                   <option value="ALL">All</option>
                   <option value="PENDING">PENDING</option>
                   <option value="VERIFIED">VERIFIED</option>
@@ -241,11 +241,11 @@ export default function DmoIndustryPage() {
                   <option value="EXPIRED">EXPIRED</option>
                 </select>
               </div>
-              {loading ? <div className="text-xs text-slate-400">Loading queue...</div> : null}
+              {loading ? <div className="text-xs text-ehb-textMuted">Loading queue...</div> : null}
               {error ? <div className="rounded-xl border border-rose-400/40 bg-rose-500/10 p-3 text-xs text-rose-100">{error}</div> : null}
               <div className="overflow-auto rounded-xl border border-white/10">
                 <table className="min-w-full text-xs">
-                  <thead className="bg-white/5 text-slate-300">
+                  <thead className="bg-white/5 text-ehb-textBody">
                     <tr>
                       <th className="px-3 py-2 text-left">Industry</th>
                       <th className="px-3 py-2 text-left">Entity</th>
@@ -259,14 +259,14 @@ export default function DmoIndustryPage() {
                     {!loading ? verifications.map((v) => (
                       <tr key={v.id} className="border-t border-white/10 hover:bg-white/5 cursor-pointer" onClick={() => setSelected(v)}>
                         <td className="px-3 py-2">{v.industry?.name ?? v.industryId}</td>
-                        <td className="px-3 py-2"><div>{v.entityType}</div><div className="text-[11px] text-slate-400">{v.entityId}</div></td>
+                        <td className="px-3 py-2"><div>{v.entityType}</div><div className="text-[11px] text-ehb-textMuted">{v.entityId}</div></td>
                         <td className="px-3 py-2">{v.status}</td>
                         <td className="px-3 py-2">{v.score ?? "—"}</td>
                         <td className="px-3 py-2">{Number(v.weight).toFixed(2)}</td>
-                        <td className="px-3 py-2 text-slate-400">{fmt(v.updatedAt)}</td>
+                        <td className="px-3 py-2 text-ehb-textMuted">{fmt(v.updatedAt)}</td>
                       </tr>
                     )) : null}
-                    {!loading && verifications.length === 0 ? <tr><td colSpan={6} className="px-3 py-8 text-center text-slate-400">No industry verifications found.</td></tr> : null}
+                    {!loading && verifications.length === 0 ? <tr><td colSpan={6} className="px-3 py-8 text-center text-ehb-textMuted">No industry verifications found.</td></tr> : null}
                   </tbody>
                 </table>
               </div>
@@ -284,14 +284,14 @@ export default function DmoIndustryPage() {
                   <button className="ehb-btn-secondary ehb-press" onClick={() => setSelected(null)}>Close</button>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-xs space-y-1">
-                  <div><span className="text-slate-400">Industry:</span> {selected.industry?.name ?? selected.industryId}</div>
-                  <div><span className="text-slate-400">Entity:</span> {selected.entityType} / {selected.entityId}</div>
-                  <div><span className="text-slate-400">Current Status:</span> {selected.status}</div>
-                  <div><span className="text-slate-400">DMO Task:</span> {selected.dmoTaskId ?? "—"}</div>
+                  <div><span className="text-ehb-textMuted">Industry:</span> {selected.industry?.name ?? selected.industryId}</div>
+                  <div><span className="text-ehb-textMuted">Entity:</span> {selected.entityType} / {selected.entityId}</div>
+                  <div><span className="text-ehb-textMuted">Current Status:</span> {selected.status}</div>
+                  <div><span className="text-ehb-textMuted">DMO Task:</span> {selected.dmoTaskId ?? "—"}</div>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-2">
                   <div className="text-xs font-semibold">Decision Score</div>
-                  <input value={decisionScore} onChange={(e) => setDecisionScore(e.target.value)} placeholder="0 - 100 (optional)" className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs" />
+                  <input value={decisionScore} onChange={(e) => setDecisionScore(e.target.value)} placeholder="0 - 100 (optional)" className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" />
                   <div className="flex gap-2">
                     <button className="ehb-btn-primary ehb-press" onClick={() => void decide("VERIFIED")}>Approve (Verified)</button>
                     <button className="ehb-btn-danger ehb-press" onClick={() => void decide("REJECTED")}>Reject</button>

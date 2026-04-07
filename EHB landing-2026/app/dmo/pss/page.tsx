@@ -55,7 +55,7 @@ export default function PSSPage() {
 
         <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
           <table className="w-full text-sm">
-            <thead className="border-b border-white/10 text-gray-400">
+            <thead className="border-b border-white/10 text-ehb-textMuted">
               <tr>
                 <th className="p-3 text-left">User</th>
                 <th className="text-left">Status</th>
@@ -68,7 +68,7 @@ export default function PSSPage() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td className="p-4 text-slate-300" colSpan={5}>
+                  <td className="p-4 text-ehb-textBody" colSpan={5}>
                     Loading cases...
                   </td>
                 </tr>
@@ -76,7 +76,7 @@ export default function PSSPage() {
 
               {!loading && cases.length === 0 ? (
                 <tr>
-                  <td className="p-4 text-slate-300" colSpan={5}>
+                  <td className="p-4 text-ehb-textBody" colSpan={5}>
                     No cases found.
                   </td>
                 </tr>

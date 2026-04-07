@@ -44,7 +44,7 @@ export function DmoSidebar(props: DmoSidebarProps) {
         <div className="flex items-center justify-between gap-2">
           {!collapsed ? (
             <div>
-              <div className="text-[11px] uppercase tracking-[0.18em] text-slate-400">DMO Panel</div>
+              <div className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted">DMO Panel</div>
               <div className="text-sm font-semibold text-white">Module Navigation</div>
             </div>
           ) : (
@@ -52,7 +52,7 @@ export function DmoSidebar(props: DmoSidebarProps) {
           )}
           <button
             type="button"
-            className="rounded-lg border border-white/15 bg-white/5 px-2 py-1 text-[11px] text-slate-200 hover:bg-white/10"
+            className="rounded-lg border border-white/15 bg-white/5 px-2 py-1 text-[11px] text-ehb-textBody hover:bg-white/10"
             onClick={() => setCollapsed((v) => !v)}
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
@@ -75,14 +75,14 @@ export function DmoSidebar(props: DmoSidebarProps) {
                     </span>
                   ) : null}
                 </div>
-                <p className="mt-1 text-[11px] leading-5 text-slate-300">
+                <p className="mt-1 text-[11px] leading-5 text-ehb-textBody">
                   Main module upar card se select hota hai. Yahan us module ke andar ke options milenge.
                 </p>
               </div>
             </div>
             <Link
               href={activeSection.href}
-              className="mt-3 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-[11px] text-slate-200 transition-colors hover:bg-white/10"
+              className="mt-3 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-[11px] text-ehb-textBody transition-colors hover:bg-white/10"
             >
               <span>Open {activeSection.label}</span>
               <span aria-hidden="true">→</span>
@@ -102,7 +102,7 @@ export function DmoSidebar(props: DmoSidebarProps) {
                   "flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs transition-colors border",
                   itemActive
                     ? "border-cyan-400/30 bg-cyan-500/15 text-cyan-100"
-                    : "border-transparent text-slate-300 hover:bg-white/5",
+                    : "border-transparent text-ehb-textBody hover:bg-white/5",
                 ].join(" ")}
               >
                 <span className="h-2 w-2 rounded-full bg-slate-500/70" />

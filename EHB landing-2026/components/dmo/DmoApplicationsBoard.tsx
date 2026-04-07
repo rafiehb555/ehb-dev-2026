@@ -274,24 +274,24 @@ export function DmoApplicationsBoard({
 
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div className="glass-panel card-hover p-3 sm:p-3.5">
-            <div className="text-[10px] xs:text-[11px] uppercase tracking-wider text-slate-400 mb-0.5">Queue</div>
+            <div className="text-[10px] xs:text-[11px] uppercase tracking-wider text-ehb-textMuted mb-0.5">Queue</div>
             <div className="text-base sm:text-lg font-semibold text-white">{filtered.length}</div>
-            <div className="mt-0.5 text-[10px] xs:text-[11px] text-slate-400">Filtered by location + query</div>
+            <div className="mt-0.5 text-[10px] xs:text-[11px] text-ehb-textMuted">Filtered by location + query</div>
           </div>
           <div className="glass-panel card-hover p-3 sm:p-3.5">
-            <div className="text-[10px] xs:text-[11px] uppercase tracking-wider text-slate-400 mb-0.5">New</div>
+            <div className="text-[10px] xs:text-[11px] uppercase tracking-wider text-ehb-textMuted mb-0.5">New</div>
             <div className="text-base sm:text-lg font-semibold text-white">{counts.New}</div>
-            <div className="mt-0.5 text-[10px] xs:text-[11px] text-slate-400">Awaiting first review</div>
+            <div className="mt-0.5 text-[10px] xs:text-[11px] text-ehb-textMuted">Awaiting first review</div>
           </div>
           <div className="glass-panel card-hover p-3 sm:p-3.5">
-            <div className="text-[10px] xs:text-[11px] uppercase tracking-wider text-slate-400 mb-0.5">In Review</div>
+            <div className="text-[10px] xs:text-[11px] uppercase tracking-wider text-ehb-textMuted mb-0.5">In Review</div>
             <div className="text-base sm:text-lg font-semibold text-white">{counts["In Review"]}</div>
-            <div className="mt-0.5 text-[10px] xs:text-[11px] text-slate-400">Officer verification</div>
+            <div className="mt-0.5 text-[10px] xs:text-[11px] text-ehb-textMuted">Officer verification</div>
           </div>
           <div className="glass-panel card-hover p-3 sm:p-3.5">
-            <div className="text-[10px] xs:text-[11px] uppercase tracking-wider text-slate-400 mb-0.5">Inspection</div>
+            <div className="text-[10px] xs:text-[11px] uppercase tracking-wider text-ehb-textMuted mb-0.5">Inspection</div>
             <div className="text-base sm:text-lg font-semibold text-white">{counts.Inspection}</div>
-            <div className="mt-0.5 text-[10px] xs:text-[11px] text-slate-400">On-site / CRB demo</div>
+            <div className="mt-0.5 text-[10px] xs:text-[11px] text-ehb-textMuted">On-site / CRB demo</div>
           </div>
         </div>
       </section>
@@ -300,13 +300,13 @@ export function DmoApplicationsBoard({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
             <h2 className="text-sm font-semibold text-white">Applications & Approvals (Workflow Queue)</h2>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-ehb-textMuted">
               New → In Review → Inspection → Approved/Rejected. (Mock UI; transitions are local-only)
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <label className="text-[10px] text-slate-400">Status</label>
+            <label className="text-[10px] text-ehb-textMuted">Status</label>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as any)}
@@ -330,14 +330,14 @@ export function DmoApplicationsBoard({
         </div>
 
         {lastAction ? (
-          <div className="rounded-xl glass-panel border border-white/10 p-3 text-[10px] text-slate-300">
+          <div className="rounded-xl glass-panel border border-white/10 p-3 text-[10px] text-ehb-textBody">
             {lastAction}
           </div>
         ) : null}
 
         <div className="overflow-x-auto">
           <div className="min-w-[920px] space-y-2">
-            <div className="grid grid-cols-12 text-[10px] text-slate-400 px-2">
+            <div className="grid grid-cols-12 text-[10px] text-ehb-textMuted px-2">
               <div className="col-span-2">App</div>
               <div className="col-span-3">Entity</div>
               <div className="col-span-2">Service</div>
@@ -347,7 +347,7 @@ export function DmoApplicationsBoard({
             </div>
 
             {filtered.length === 0 ? (
-              <div className="rounded-2xl glass-card border p-5 text-[11px] text-slate-400 text-center">
+              <div className="rounded-2xl glass-card border p-5 text-[11px] text-ehb-textMuted text-center">
                 No applications match your filter for this location.
               </div>
             ) : null}
@@ -366,7 +366,7 @@ export function DmoApplicationsBoard({
                   <div className="col-span-3 min-w-0">
                     <div className="text-[11px] font-semibold text-white truncate">{a.entityName}</div>
                     <div className="text-[10px] text-slate-500 truncate">{a.entityType} · {a.entityCode}</div>
-                    <div className="text-[10px] text-slate-400 truncate mt-0.5">{a.signals[0] ?? "—"}</div>
+                    <div className="text-[10px] text-ehb-textMuted truncate mt-0.5">{a.signals[0] ?? "—"}</div>
                   </div>
 
                   <div className="col-span-2 min-w-0">
@@ -441,7 +441,7 @@ export function DmoApplicationsBoard({
           </div>
         </div>
 
-        <div className="pt-3 text-[10px] text-slate-400">
+        <div className="pt-3 text-[10px] text-ehb-textMuted">
           Tip: To test full flow, go to <Link href="/dashboard/services/new" className="text-[#00eaff] hover:underline">Create new service</Link> and submit; it will open the queue with your draft marked as <span className="text-slate-200 font-semibold">New</span>.
         </div>
       </section>
@@ -451,7 +451,7 @@ export function DmoApplicationsBoard({
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-1">
               <h3 className="text-sm font-semibold text-white">DMO STL + Workflow Context</h3>
-              <p className="text-[10px] text-slate-400">
+              <p className="text-[10px] text-ehb-textMuted">
                 Industry context: <span className="text-slate-200 font-semibold">{industry.name}</span>. Approved items will later reflect STL trust badges and registry updates.
               </p>
             </div>
