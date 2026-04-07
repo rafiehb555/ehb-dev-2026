@@ -3,7 +3,7 @@ import StripeImport from "stripe";
 /** Stripe SDK instance (typed loosely for compatibility with stripe-node’s export shape). */
 export type StripeService = InstanceType<typeof StripeCtor>;
 
-const StripeCtor = StripeImport as unknown as typeof StripeImport;
+const StripeCtor = StripeImport as any;
 
 let stripeSingleton: StripeService | null = null;
 
@@ -11,7 +11,7 @@ export function getStripe(): StripeService | null {
   const key = process.env.STRIPE_SECRET_KEY?.trim();
   if (!key) return null;
   if (!stripeSingleton) {
-    stripeSingleton = new StripeCtor(key);
+    stripeSingleton = new StripeCtor(key) as StripeService;
   }
   return stripeSingleton;
 }

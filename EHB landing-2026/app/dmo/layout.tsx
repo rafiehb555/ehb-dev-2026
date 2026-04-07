@@ -36,7 +36,7 @@ export default function DmoLayout({ children }: { children: React.ReactNode }) {
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">DMO Workspace</p>
-                <p className="text-sm text-slate-300">Top card se main module choose karein, aur left sidebar us module ke andar ke options dikhayegi.</p>
+                <p className="text-sm text-ehb-textBody">Top card se main module choose karein, aur left sidebar us module ke andar ke options dikhayegi.</p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <Link href="/dmo" className="ehb-btn-primary ehb-press">
@@ -57,9 +57,9 @@ export default function DmoLayout({ children }: { children: React.ReactNode }) {
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                 <div className="max-w-2xl">
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">Module Switcher</p>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted">Module Switcher</p>
                   <h2 className="mt-1 text-base font-semibold text-white">Main sidebar options</h2>
-                  <p className="mt-1 text-sm text-slate-300">
+                  <p className="mt-1 text-sm text-ehb-textBody">
                     <span className="font-medium text-cyan-100">{selectedSection.label}</span> selected hai. Kisi bhi main module par click karein, us ke andar ke options left sidebar mein khul jayenge.
                   </p>
                 </div>

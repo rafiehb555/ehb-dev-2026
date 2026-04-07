@@ -8,6 +8,10 @@
 
 ## EHB landing-2026 — implementation notes (code + ops)
 
+### Health (deploy / uptime smoke)
+
+- **`GET /api/health`** — [`EHB landing-2026/app/api/health/route.ts`](../EHB%20landing-2026/app/api/health/route.ts) returns `{ ok: true, service, gitSha? }` (short SHA when `VERCEL_GIT_COMMIT_SHA` is set). Use for monitors and post-deploy checks alongside [`/dmo/stl`](../EHB%20landing-2026/app/dmo/stl/page.tsx) (static STL DMO page).
+
 ### Notifications: client vs server state
 
 | Layer | What it is | Where |

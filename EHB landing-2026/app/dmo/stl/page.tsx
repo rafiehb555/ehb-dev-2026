@@ -107,7 +107,7 @@ export default function DmoStlPage() {
                 <div>
                   <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">STL Engine</p>
                   <h1 className="mt-1 text-2xl font-semibold gradient-text">Service Trust Level</h1>
-                  <p className="mt-1 text-xs text-slate-300">Trust scoring and ranking across PSS, CRB, performance, behavior, and refill lifecycle.</p>
+                  <p className="mt-1 text-xs text-ehb-textBody">Trust scoring and ranking across PSS, CRB, performance, behavior, and refill lifecycle.</p>
                 </div>
                 <div className="flex gap-2">
                   <Link href="/dmo" className="ehb-btn-secondary ehb-press">Back to DMO</Link>
@@ -131,7 +131,7 @@ export default function DmoStlPage() {
                 <select
                   value={calcEntityType}
                   onChange={(e) => setCalcEntityType(e.target.value as "USER" | "SERVICE" | "PRODUCT")}
-                  className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs"
+                  className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody"
                 >
                   <option value="USER">USER</option>
                   <option value="SERVICE">SERVICE</option>
@@ -140,7 +140,7 @@ export default function DmoStlPage() {
                 <input
                   value={calcEntityId}
                   onChange={(e) => setCalcEntityId(e.target.value)}
-                  className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs min-w-[280px]"
+                  className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs min-w-[280px] text-ehb-textBody placeholder:text-ehb-textMuted"
                   placeholder={
                     calcEntityType === "USER"
                       ? "Optional userId (leave blank = current user)"
@@ -155,18 +155,18 @@ export default function DmoStlPage() {
                   {calcRunning ? "Calculating..." : "Calculate STL"}
                 </button>
               </div>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-ehb-textMuted">
                 The STL engine now supports `USER`, `SERVICE`, and `PRODUCT` entities.
               </p>
             </section>
 
             <section className="ehb-card-elevated space-y-3">
               <div className="text-xs font-semibold">STL Ranking Table</div>
-              {loading ? <div className="text-xs text-slate-400">Loading STL scores...</div> : null}
+              {loading ? <div className="text-xs text-ehb-textMuted">Loading STL scores...</div> : null}
               {error ? <div className="rounded-xl border border-rose-400/40 bg-rose-500/10 p-3 text-xs text-rose-100">{error}</div> : null}
               <div className="overflow-auto rounded-xl border border-white/10">
                 <table className="min-w-full text-xs">
-                  <thead className="bg-white/5 text-slate-300">
+                  <thead className="bg-white/5 text-ehb-textBody">
                     <tr>
                       <th className="px-3 py-2 text-left">Entity</th>
                       <th className="px-3 py-2 text-left">Score</th>
@@ -179,17 +179,17 @@ export default function DmoStlPage() {
                       <tr key={s.id} className="border-t border-white/10">
                         <td className="px-3 py-2">
                           <div className="font-semibold">{s.entityId}</div>
-                          <div className="text-[11px] text-slate-400">{s.entityType}</div>
+                          <div className="text-[11px] text-ehb-textMuted">{s.entityType}</div>
                         </td>
                         <td className="px-3 py-2">{Number(s.score).toFixed(2)}</td>
                         <td className="px-3 py-2">
                           <span className={`inline-flex rounded-full border px-2 py-0.5 ${levelTone(s.level)}`}>L{s.level}</span>
                         </td>
-                        <td className="px-3 py-2 text-slate-400">{fmt(s.lastUpdated)}</td>
+                        <td className="px-3 py-2 text-ehb-textMuted">{fmt(s.lastUpdated)}</td>
                       </tr>
                     ))}
                     {!loading && scores.length === 0 ? (
-                      <tr><td className="px-3 py-8 text-center text-slate-400" colSpan={4}>No STL scores found.</td></tr>
+                      <tr><td className="px-3 py-8 text-center text-ehb-textMuted" colSpan={4}>No STL scores found.</td></tr>
                     ) : null}
                   </tbody>
                 </table>
@@ -200,7 +200,7 @@ export default function DmoStlPage() {
               <div className="text-xs font-semibold">STL History</div>
               <div className="overflow-auto rounded-xl border border-white/10">
                 <table className="min-w-full text-xs">
-                  <thead className="bg-white/5 text-slate-300">
+                  <thead className="bg-white/5 text-ehb-textBody">
                     <tr>
                       <th className="px-3 py-2 text-left">Entity</th>
                       <th className="px-3 py-2 text-left">Change</th>
@@ -213,18 +213,18 @@ export default function DmoStlPage() {
                       <tr key={l.id} className="border-t border-white/10">
                         <td className="px-3 py-2">
                           <div className="font-semibold">{l.entityId}</div>
-                          <div className="text-[11px] text-slate-400">{l.entityType}</div>
+                          <div className="text-[11px] text-ehb-textMuted">{l.entityType}</div>
                         </td>
                         <td className={`px-3 py-2 ${Number(l.change) >= 0 ? "text-emerald-200" : "text-rose-200"}`}>
                           {Number(l.change) >= 0 ? "+" : ""}
                           {Number(l.change).toFixed(2)}
                         </td>
                         <td className="px-3 py-2">{l.reason}</td>
-                        <td className="px-3 py-2 text-slate-400">{fmt(l.createdAt)}</td>
+                        <td className="px-3 py-2 text-ehb-textMuted">{fmt(l.createdAt)}</td>
                       </tr>
                     ))}
                     {!loading && logs.length === 0 ? (
-                      <tr><td className="px-3 py-8 text-center text-slate-400" colSpan={4}>No STL history entries.</td></tr>
+                      <tr><td className="px-3 py-8 text-center text-ehb-textMuted" colSpan={4}>No STL history entries.</td></tr>
                     ) : null}
                   </tbody>
                 </table>
