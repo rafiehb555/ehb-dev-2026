@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Sparkles, LayoutDashboard, Braces, Database, ArrowRight } from "lucide-react";
+import { LocalDemoHealthBadge } from "@/components/local-demo/LocalDemoHealthBadge";
 
 export const metadata = {
   title: "Local demo guide – EHB",
@@ -83,6 +84,7 @@ export default function LocalDemoGuidePage() {
         <section className="rounded-2xl border border-white/10 bg-slate-950/40 p-6 space-y-3">
           <h2 className="text-sm font-semibold text-white">API examples (JSON)</h2>
           <ul className="font-mono text-[12px] text-ehb-textBody space-y-1.5">
+            <li>/api/health — app + DB ping · <code className="text-cyan-200/90">?liveness=1</code> skips DB (fast probe)</li>
             <li>/api/stl/meta — public meta</li>
             <li>/api/stl/me — session + DB (see auth note below)</li>
             <li>/api/search?type=ALL&amp;take=10</li>
@@ -94,6 +96,7 @@ export default function LocalDemoGuidePage() {
             <Database className="h-4 w-4 shrink-0" aria-hidden />
             Database &amp; auth
           </h2>
+          <LocalDemoHealthBadge />
           <p className="text-sm text-ehb-textBody leading-relaxed">
             If <code className="text-amber-100/90">/api/stl/me</code> or DMO STL shows an auth/seed message, run{" "}
             <code className="rounded bg-black/30 px-1.5 py-0.5 text-amber-100">npx prisma db seed</code> from the project
