@@ -137,6 +137,7 @@ export default function AuthPage() {
           <div className="mt-5 inline-flex rounded-full border border-white/10 bg-white/5 p-1">
             <button
               type="button"
+              data-testid="auth-mode-login"
               onClick={() => {
                 setMode("login");
                 setFieldErrors({});
@@ -148,6 +149,7 @@ export default function AuthPage() {
             </button>
             <button
               type="button"
+              data-testid="auth-mode-register"
               onClick={() => {
                 setMode("register");
                 setFieldErrors({});

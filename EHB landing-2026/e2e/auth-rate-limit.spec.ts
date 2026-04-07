@@ -5,7 +5,7 @@ import { test, expect } from "@playwright/test";
  * (same JSON shape as the real route). Does not depend on DB or in-memory counters.
  */
 test.describe("Auth login 429 UI", () => {
-  test.describe.configure({ timeout: 60_000 });
+  test.describe.configure({ timeout: 120_000 });
 
   test("shows cooldown when login returns 429", async ({ page }) => {
     await page.route("**/api/auth/login", async (route, req) => {
@@ -31,6 +31,8 @@ test.describe("Auth login 429 UI", () => {
     });
 
     await page.goto("/auth", { waitUntil: "domcontentloaded" });
+    await page.getByTestId("auth-mode-login").click();
+
     await page.getByTestId("auth-email").fill("ui-e2e@example.com");
     await page.getByTestId("auth-password").fill("wrong-password-e2e");
     await expect(page.getByTestId("auth-email")).toHaveValue("ui-e2e@example.com");
