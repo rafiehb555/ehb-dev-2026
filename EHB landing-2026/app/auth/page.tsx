@@ -260,7 +260,14 @@ export default function AuthPage() {
           </div>
 
           {msg ? <div className="mt-4 rounded-xl border border-emerald-400/40 bg-emerald-500/10 p-3 text-sm text-emerald-100">{msg}</div> : null}
-          {err ? <div className="mt-4 rounded-xl border border-rose-400/40 bg-rose-500/10 p-3 text-sm text-rose-100">{err}</div> : null}
+          {err ? (
+            <div
+              data-testid="auth-error"
+              className="mt-4 rounded-xl border border-rose-400/40 bg-rose-500/10 p-3 text-sm text-rose-100"
+            >
+              {err}
+            </div>
+          ) : null}
           {cooldownSec > 0 ? (
             <div className="mt-3 rounded-xl border border-amber-400/40 bg-amber-500/10 p-3 text-xs text-amber-100">
               Too many attempts. Please wait {cooldownSec}s before trying again.
