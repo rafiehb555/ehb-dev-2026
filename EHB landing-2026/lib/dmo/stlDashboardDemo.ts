@@ -84,7 +84,6 @@ export const STL_DASHBOARD_DEMO: StlDashboardDemo = {
       { label: "Visit #1 — PASS", ok: true },
       { label: "Visit #2 — PASS", ok: true },
       { label: "Exam #1 — FAIL", ok: false },
-      { label: "Exam #2 — PASS", ok: true },
     ],
   },
   dmo: {
