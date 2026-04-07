@@ -4,12 +4,12 @@ import { agentDashboardSummary } from "@/lib/agents/catalog";
 const dashboardStats = {
   industriesTotal: 32,
   industriesActive: 6,
-  usersTotal: "â€”",
-  providersTotal: "â€”",
-  franchisesTotal: "â€”",
-  aiToolsActive: "â€”",
-  validators: "â€”",
-  walletTx: "â€”"
+  usersTotal: "—",
+  providersTotal: "—",
+  franchisesTotal: "—",
+  aiToolsActive: "—",
+  validators: "—",
+  walletTx: "—"
 };
 
 const coreSystems = [
@@ -18,9 +18,9 @@ const coreSystems = [
   "Finance Department",
   "Affiliate System",
   "Franchise System",
-  "JPS â€“ Job Profile & Skill",
+  "JPS – Job Profile & Skill",
   "Verification Systems (PSS, CRB, STL)",
-  "DMO â€“ Decentralized Management Office"
+  "DMO – Decentralized Management Office"
 ];
 
 const franchiseLevels = [
@@ -92,7 +92,7 @@ export default function AdminPage() {
           <Panel title="Core Systems Monitoring" path="/admin/core-systems">
             <ul className="space-y-1 text-slate-200">
               {coreSystems.map((s) => (
-                <li key={s}>â€¢ {s}</li>
+                <li key={s}>• {s}</li>
               ))}
             </ul>
             <div className="mt-2 rounded-lg glass-panel border border-emerald-500/30 p-2 text-emerald-100">
@@ -169,10 +169,10 @@ export default function AdminPage() {
               ))}
             </div>
             <div className="grid grid-cols-2 gap-1 text-ehb-textBody">
-              <Metric label="Total AI Tools" value="â€”" />
-              <Metric label="Industries Using AI" value="â€”" />
-              <Metric label="API Usage" value="â€”" />
-              <Metric label="AI Revenue" value="â€”" />
+              <Metric label="Total AI Tools" value="—" />
+              <Metric label="Industries Using AI" value="—" />
+              <Metric label="API Usage" value="—" />
+              <Metric label="AI Revenue" value="—" />
             </div>
           </Panel>
         </section>
@@ -180,29 +180,29 @@ export default function AdminPage() {
         <section className="grid gap-3 grid-cols-1 md:grid-cols-3">
           <Panel title="Finance & Wallet Monitoring" path="/admin/finance">
             <ul className="space-y-1 text-ehb-textBody">
-              <li>â€¢ Total Wallet Balance</li>
-              <li>â€¢ Transactions Today</li>
-              <li>â€¢ Escrow Active</li>
-              <li>â€¢ Affiliate Payouts</li>
-              <li>â€¢ Franchise Revenue</li>
+              <li>• Total Wallet Balance</li>
+              <li>• Transactions Today</li>
+              <li>• Escrow Active</li>
+              <li>• Affiliate Payouts</li>
+              <li>• Franchise Revenue</li>
             </ul>
             <p className="mt-1 text-ehb-textMuted">Wallets: User Â· Provider Â· Franchise Â· System.</p>
           </Panel>
           <Panel title="Blockchain Monitoring" path="/admin/blockchain">
             <ul className="space-y-1 text-ehb-textBody">
-              <li>â€¢ Active Validators</li>
-              <li>â€¢ Total Transactions</li>
-              <li>â€¢ Smart Contracts Active</li>
-              <li>â€¢ Network Status</li>
+              <li>• Active Validators</li>
+              <li>• Total Transactions</li>
+              <li>• Smart Contracts Active</li>
+              <li>• Network Status</li>
             </ul>
             <p className="mt-1 text-ehb-textMuted">Validator snapshot: Validator ID Â· Country Â· Stake Amount Â· Status.</p>
           </Panel>
           <Panel title="Affiliate System Management" path="/admin/affiliate">
             <ul className="space-y-1 text-ehb-textBody">
-              <li>â€¢ Total Affiliates</li>
-              <li>â€¢ Total Referrals</li>
-              <li>â€¢ Commission Paid</li>
-              <li>â€¢ Top Affiliates</li>
+              <li>• Total Affiliates</li>
+              <li>• Total Referrals</li>
+              <li>• Commission Paid</li>
+              <li>• Top Affiliates</li>
             </ul>
             <p className="mt-1 text-ehb-textMuted">Actions: approve affiliate Â· set commission rates Â· track referrals.</p>
           </Panel>
@@ -211,19 +211,19 @@ export default function AdminPage() {
         <section className="grid gap-3 grid-cols-1 lg:grid-cols-2">
           <Panel title="Development Monitoring" path="/admin/development">
             <ul className="space-y-1 text-ehb-textBody">
-              <li>â€¢ AI Department â€“ 40%</li>
-              <li>â€¢ Blockchain â€“ 10%</li>
-              <li>â€¢ Finance â€“ 35%</li>
-              <li>â€¢ Affiliate System â€“ 20%</li>
-              <li>â€¢ Franchise System â€“ 15%</li>
-              <li>â€¢ Industries â€“ 5%</li>
+              <li>• AI Department – 40%</li>
+              <li>• Blockchain – 10%</li>
+              <li>• Finance – 35%</li>
+              <li>• Affiliate System – 20%</li>
+              <li>• Franchise System – 15%</li>
+              <li>• Industries – 5%</li>
             </ul>
             <div className="mt-2 rounded-lg glass-panel border border-amber-500/30 p-2 text-amber-100">
               <div className="font-semibold mb-0.5 text-[10px] xs:text-[11px]">Example Alerts</div>
               <ul className="space-y-1">
-                <li>â€¢ AI recommendation not connected to Marketplace.</li>
-                <li>â€¢ Wallet escrow missing for booking service.</li>
-                <li>â€¢ STL engine now supports user, service, and product trust recalculation.</li>
+                <li>• AI recommendation not connected to Marketplace.</li>
+                <li>• Wallet escrow missing for booking service.</li>
+                <li>• STL engine now supports user, service, and product trust recalculation.</li>
               </ul>
             </div>
           </Panel>
@@ -257,70 +257,70 @@ export default function AdminPage() {
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
             <Panel title="Platform Health" path="/admin/platform-health">
               <ul className="space-y-1 text-ehb-textBody">
-                <li>â€¢ API response time</li>
-                <li>â€¢ Server load</li>
-                <li>â€¢ Database health</li>
-                <li>â€¢ AI system performance</li>
-                <li>â€¢ Blockchain status</li>
+                <li>• API response time</li>
+                <li>• Server load</li>
+                <li>• Database health</li>
+                <li>• AI system performance</li>
+                <li>• Blockchain status</li>
               </ul>
             </Panel>
             <Panel title="Search, Content & Permissions" path="/admin/search">
               <p className="text-ehb-textBody mb-1">Controls for global search, content and role-based access.</p>
               <ul className="space-y-1 text-ehb-textBody">
-                <li>â€¢ Boost providers, services and industries.</li>
-                <li>â€¢ Control recommendation AI.</li>
-                <li>â€¢ Manage landing / industry pages and marketplace content.</li>
-                <li>â€¢ Roles: Super Admin, System Admin, Industry Admin, Franchise Admin, Moderator.</li>
+                <li>• Boost providers, services and industries.</li>
+                <li>• Control recommendation AI.</li>
+                <li>• Manage landing / industry pages and marketplace content.</li>
+                <li>• Roles: Super Admin, System Admin, Industry Admin, Franchise Admin, Moderator.</li>
               </ul>
             </Panel>
           </div>
         </section>
 
         <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
-          <Panel title="Phase 81 â€” Fraud Detection" path="/admin/fraud">
+          <Panel title="Phase 81 — Fraud Detection" path="/admin/fraud">
             <p className="text-ehb-textBody mb-1">
               Fake providers/orders/listings detect + admin risk flags. (UI mock)
             </p>
             <ul className="space-y-1 text-ehb-textBody">
-              <li>â€¢ Duplicate listing patterns</li>
-              <li>â€¢ Location mismatch signals</li>
-              <li>â€¢ Risk score + severity workflow</li>
+              <li>• Duplicate listing patterns</li>
+              <li>• Location mismatch signals</li>
+              <li>• Risk score + severity workflow</li>
             </ul>
           </Panel>
 
-          <Panel title="Phase 82 â€” Business Analytics" path="/admin/ai-analytics">
+          <Panel title="Phase 82 — Business Analytics" path="/admin/ai-analytics">
             <p className="text-ehb-textBody mb-1">
               Auto reports for franchise, provider, and platform teams. (UI mock)
             </p>
             <ul className="space-y-1 text-ehb-textBody">
-              <li>â€¢ Industry / Franchise / Provider tabs</li>
-              <li>â€¢ Period: 30d / This month / This quarter</li>
-              <li>â€¢ Template + later AI NLG</li>
+              <li>• Industry / Franchise / Provider tabs</li>
+              <li>• Period: 30d / This month / This quarter</li>
+              <li>• Template + later AI NLG</li>
             </ul>
           </Panel>
 
-          <Panel title="Phase 83 â€” Location Intelligence" path="/admin/location-insights">
+          <Panel title="Phase 83 — Location Intelligence" path="/admin/location-insights">
             <p className="text-ehb-textBody mb-1">City/region demand insights + STL-adjusted gaps. (UI mock)</p>
             <ul className="space-y-1 text-ehb-textBody">
-              <li>â€¢ City dropdown</li>
-              <li>â€¢ Industry dropdown</li>
-              <li>â€¢ Insight cards</li>
+              <li>• City dropdown</li>
+              <li>• Industry dropdown</li>
+              <li>• Insight cards</li>
             </ul>
           </Panel>
 
-          <Panel title="Phase 84 â€” AI Automation" path="/admin/ai-automation">
+          <Panel title="Phase 84 — AI Automation" path="/admin/ai-automation">
             <p className="text-ehb-textBody mb-1">AI action suggestions (activate service/add product/apply). (UI mock)</p>
             <ul className="space-y-1 text-ehb-textBody">
-              <li>â€¢ City + industry context</li>
-              <li>â€¢ Confirm action flow (mock)</li>
+              <li>• City + industry context</li>
+              <li>• Confirm action flow (mock)</li>
             </ul>
           </Panel>
 
-          <Panel title="Phase 85 â€” Data Pipeline" path="/admin/ai-data-pipeline">
+          <Panel title="Phase 85 — Data Pipeline" path="/admin/ai-data-pipeline">
             <p className="text-ehb-textBody mb-1">Ingestion â†’ storage â†’ scoring â†’ publish (UI mock).</p>
             <ul className="space-y-1 text-ehb-textBody">
-              <li>â€¢ Run pipeline now (mock)</li>
-              <li>â€¢ Stage status cards</li>
+              <li>• Run pipeline now (mock)</li>
+              <li>• Stage status cards</li>
             </ul>
           </Panel>
         </section>
