@@ -3,7 +3,9 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}"
+    "./components/**/*.{js,ts,jsx,tsx}",
+    // Law OLS reference tree (copy-paste / future promotion); keeps text-ehb-* in the CSS bundle if used
+    "./content/industries/law/ols-law-source/nextjs-app/src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     screens: {

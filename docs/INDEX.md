@@ -12,6 +12,11 @@
 
 - **`GET /api/health`** — [`EHB landing-2026/app/api/health/route.ts`](../EHB%20landing-2026/app/api/health/route.ts) returns `{ ok: true, service, gitSha? }` (short SHA when `VERCEL_GIT_COMMIT_SHA` is set). Use for monitors and post-deploy checks alongside [`/dmo/stl`](../EHB%20landing-2026/app/dmo/stl/page.tsx) (static STL DMO page).
 
+### Law industry — OLS reference source (not a separate deploy)
+
+- **Folder:** [`EHB landing-2026/content/industries/law/ols-law-source/nextjs-app/src/`](../EHB%20landing-2026/content/industries/law/ols-law-source/nextjs-app/src) — legacy/next reference UI for law (multi-agent, investor demo, etc.). Body/muted text uses the same Tailwind tokens as the main app (`text-ehb-textBody`, `text-ehb-textMuted`; see [FLOW-P1-foundation-ui.md](flows/FLOW-P1-foundation-ui.md)).
+- **Tailwind:** [`tailwind.config.ts`](../EHB%20landing-2026/tailwind.config.ts) `content` includes this tree so class names in those files are scanned by JIT (safe if you import or promote components into `app/`).
+
 ### Notifications: client vs server state
 
 | Layer | What it is | Where |
