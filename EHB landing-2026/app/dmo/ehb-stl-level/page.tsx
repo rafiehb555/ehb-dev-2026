@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { StlDashboardExperience } from "@/components/dmo/StlDashboardExperience";
 import { StlMetaJsonPanel } from "@/components/dmo/StlMetaJsonPanel";
 import {
   crbCertBoost,
@@ -20,17 +21,19 @@ export default function EhbStlLevelPage() {
   return (
     <main className="min-h-screen text-white">
       <div className="container-ehb py-6 space-y-6">
-        <section className="rounded-2xl border border-cyan-400/25 bg-gradient-to-b from-[#031222]/95 to-[#020b18]/95 p-6 shadow-[0_0_40px_rgba(34,211,238,0.08)]">
+        <StlDashboardExperience />
+
+        <section className="rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-[#031222]/90 to-[#020b18]/90 p-5 shadow-[0_0_32px_rgba(34,211,238,0.06)]">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="space-y-2 max-w-3xl">
               <p className="text-[11px] uppercase tracking-[0.22em] text-cyan-300">EHB-DMO · Trust infrastructure</p>
-              <h1 className="text-2xl font-semibold gradient-text md:text-3xl">
+              <h1 className="text-xl font-semibold gradient-text md:text-2xl">
                 EHB-STL-LEVEL <span className="text-ehb-textBody font-normal">(Service Trust Level)</span>
               </h1>
               <p className="text-sm text-ehb-textBody leading-relaxed">
                 AI-driven reputation engine: har <strong className="text-cyan-100/90">USER</strong>,{" "}
                 <strong className="text-cyan-100/90">SERVICE</strong>, aur <strong className="text-cyan-100/90">PRODUCT</strong> ko{" "}
-                <strong className="text-white">0–100</strong> trust score milta hai. Yeh page master plan ke mutabiq full reference hai —                 operational
+                <strong className="text-white">0–100</strong> trust score milta hai. Neeche master plan reference (formulas, tables) — operational
                 engine <Link href="/dmo/stl" className="text-cyan-300 underline-offset-2 hover:underline">STL operations</Link> par.
               </p>
               <div className="flex flex-wrap gap-2 pt-1" aria-label="STL levels L1 to L5">
@@ -67,6 +70,12 @@ export default function EhbStlLevelPage() {
             </div>
           </div>
         </section>
+
+        <div className="flex items-center gap-3 py-1">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Technical reference</p>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        </div>
 
         <section className="ehb-card-elevated space-y-4">
           <h2 className="text-sm font-semibold text-white">Score formula (0–100)</h2>
