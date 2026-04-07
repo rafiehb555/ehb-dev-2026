@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { Sora } from "next/font/google";
 import { IndustriesBar } from "@/components/IndustriesBar";
 import { TopNavTabs } from "@/components/TopNavTabs";
@@ -48,12 +49,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <div className="container-ehb py-3 flex items-center justify-between gap-3 flex-wrap">
               <a href="/" className="flex items-center gap-2 min-h-touch flex-shrink-0">
                 <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-slate-950/10 flex items-center justify-center flex-shrink-0 shadow-neon-electric ring-1 ring-white/20 overflow-hidden">
-                  <img
+                  <Image
                     src="/ehb-logo.png"
                     alt="EHB logo"
                     width={40}
                     height={40}
-                    fetchPriority="high"
+                    priority
                     className="object-contain h-full w-full"
                   />
                 </div>

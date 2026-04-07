@@ -8,6 +8,8 @@
 
 ## EHB landing-2026 — implementation notes (code + ops)
 
+**Developer entry:** [`EHB landing-2026/README.md`](../EHB%20landing-2026/README.md) — npm scripts (`dev`, `build`, `build:clean`, `lint`, `test`), CI workflow link, pointers to this index and design flows.
+
 ### Health (deploy / uptime smoke)
 
 - **`GET /api/health`** — [`EHB landing-2026/app/api/health/route.ts`](../EHB%20landing-2026/app/api/health/route.ts) returns `{ ok: true, service, gitSha? }` (short SHA when `VERCEL_GIT_COMMIT_SHA` is set). Use for monitors and post-deploy checks alongside [`/dmo/stl`](../EHB%20landing-2026/app/dmo/stl/page.tsx) (static STL DMO page).
@@ -61,7 +63,7 @@ docs
 | [development/](development/) | [DEVELOPMENT_TRACKER.md](development/DEVELOPMENT_TRACKER.md), [DEMO_TO_PRODUCTION.md](development/DEMO_TO_PRODUCTION.md), [LOCAL_DEPLOY_PARITY_CHECKLIST.md](development/LOCAL_DEPLOY_PARITY_CHECKLIST.md), [VERCEL_LOCAL_ROUTE_MISMATCH_INVENTORY.md](development/VERCEL_LOCAL_ROUTE_MISMATCH_INVENTORY.md) |
 
 **Real folder architecture (single source of truth):** [FOLDER_ARCHITECTURE.md](FOLDER_ARCHITECTURE.md) — is structure ko agy bhi follow kiya jayega.  
-**Real code folders (ehb-landing-demo):** `app/`, `components/`, `lib/`, `modules/` (core, departments, industries, shared, flows) — real development isi par chalegi.
+**Real code folders (ehb-landing-demo):** [`README`](../EHB%20landing-2026/README.md) · `app/`, `components/`, `lib/`, `modules/` (core, departments, industries, shared, flows) — real development isi par chalegi.
 
 ---
 

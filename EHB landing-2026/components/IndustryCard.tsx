@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import type { Industry } from "@/lib/industry/config";
 import { getIndustryDesignAssets } from "@/lib/industry/designAssets";
@@ -68,14 +69,14 @@ export function IndustryCard({ industry }: IndustryCardProps) {
       aria-label={`Open ${industry.name} landing page`}
     >
       <div className="relative -mx-4 -mt-4 mb-3 h-[88px] overflow-hidden rounded-t-xl border-b border-white/10 isolate bg-[#020c1b]">
-        {/* Native img: reliable for SVG; onError → gradient so broken icon never shows. */}
+        {/* next/image: public/ paths + SVG; onError → gradient. Optimizer off in next.config.mjs. */}
         {assets.cardThumb && !thumbFailed ? (
-          <img
+          <Image
             src={assets.cardThumb}
             alt={assets.alt}
-            className="absolute inset-0 h-full w-full object-cover"
-            loading="lazy"
-            decoding="async"
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 50vw, 220px"
             onError={() => setThumbFailed(true)}
           />
         ) : (

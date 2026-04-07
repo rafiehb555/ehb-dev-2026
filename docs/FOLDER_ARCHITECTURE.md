@@ -68,6 +68,8 @@ Ye 5 folders **platform blueprint** ke liye mandatory hain. Inhi mein real archi
 
 ## 4. Real Code Folders (ehb-landing-demo)
 
+**Developer entry (scripts, CI, doc links):** [EHB landing-2026/README.md](../EHB%20landing-2026/README.md)
+
 Real development isi structure par chalega:
 
 | Folder | Use for |
