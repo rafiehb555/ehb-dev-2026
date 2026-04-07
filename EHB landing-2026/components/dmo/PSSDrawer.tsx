@@ -11,6 +11,7 @@ type PssDrawerData = {
   risk?: string;
   stage?: string;
   updatedAt?: string;
+  riskScore?: number;
 };
 
 export default function PSSDrawer({
@@ -36,6 +37,33 @@ export default function PSSDrawer({
 
       <h3 className="text-xl font-semibold">{data.user.name}</h3>
       <p className="text-xs text-ehb-textMuted">{data.user.email ?? "No email available"}</p>
+
+      <dl className="mt-3 grid grid-cols-2 gap-2 text-[11px]">
+        {data.status ? (
+          <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5">
+            <dt className="text-ehb-textMuted">Status</dt>
+            <dd className="font-medium text-white">{data.status}</dd>
+          </div>
+        ) : null}
+        {data.stage ? (
+          <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5">
+            <dt className="text-ehb-textMuted">Stage</dt>
+            <dd className="font-medium text-white">{data.stage}</dd>
+          </div>
+        ) : null}
+        {data.riskScore !== undefined ? (
+          <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5">
+            <dt className="text-ehb-textMuted">Risk score</dt>
+            <dd className="font-mono text-cyan-200">{data.riskScore}</dd>
+          </div>
+        ) : null}
+        {data.risk ? (
+          <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5">
+            <dt className="text-ehb-textMuted">Risk band</dt>
+            <dd className="font-medium uppercase text-white">{data.risk}</dd>
+          </div>
+        ) : null}
+      </dl>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {STEPS.map((s, i) => (
