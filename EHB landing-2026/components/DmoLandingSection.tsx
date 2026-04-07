@@ -22,10 +22,10 @@ export function DmoLandingSection() {
             <h2 className="text-2xl md:text-4xl font-semibold leading-tight text-white">
               First-time users can understand EHB through one trust operating system
             </h2>
-            <p className="text-slate-300 text-sm md:text-base">
+            <p className="text-ehb-textBody text-sm md:text-base">
               EHB combines verification, approvals, trust scoring, and business growth into one connected flow.
             </p>
-            <p className="text-slate-400 text-sm">
+            <p className="text-ehb-textMuted text-sm">
               These cards explain the six core parts that help users trust the platform quickly and take action with confidence.
             </p>
             <div className="grid gap-2 pt-1 sm:grid-cols-3">
@@ -52,7 +52,7 @@ export function DmoLandingSection() {
           </div>
           <div className="lg:col-span-5">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-4 md:p-5">
-              <p className="text-xs text-slate-300 mb-3">Why new users trust it faster</p>
+              <p className="text-xs text-ehb-textBody mb-3">Why new users trust it faster</p>
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-xl border border-emerald-400/30 bg-emerald-500/10 p-3">
                   <div className="text-[11px] text-emerald-100">Verification</div>
@@ -97,7 +97,7 @@ export function DmoLandingSection() {
               </div>
               <div className="p-3.5">
                 <h4 className="text-[15px] font-semibold text-white">{card.title}</h4>
-                <p className="mt-1.5 text-[11px] leading-5 text-slate-300">{card.subtitle}</p>
+                <p className="mt-1.5 text-[11px] leading-5 text-ehb-textBody">{card.subtitle}</p>
                 <ul className="mt-2.5 space-y-2 text-[10px] leading-5 text-slate-200">
                   {card.details.map((detail) => (
                     <li key={detail} className="flex gap-2">
@@ -124,7 +124,7 @@ export function DmoLandingSection() {
           {flow.map((step, idx) => (
             <div key={step} className="rounded-xl border border-white/10 bg-[#020c1b]/70 p-3">
               <div className="text-[11px] font-semibold text-cyan-300">Step {idx + 1}</div>
-              <div className="text-xs text-slate-300 mt-1">{step}</div>
+              <div className="text-xs text-ehb-textBody mt-1">{step}</div>
             </div>
           ))}
         </div>
@@ -174,7 +174,7 @@ export function DmoLandingSection() {
 
       <div className="rounded-2xl border border-cyan-400/20 bg-[#020c1b]/80 p-6 text-center">
         <h3 className="text-xl md:text-2xl font-semibold text-white">Enter the EHB trust operating system</h3>
-        <p className="text-slate-300 text-sm mt-2 max-w-2xl mx-auto">
+        <p className="text-ehb-textBody text-sm mt-2 max-w-2xl mx-auto">
           Join the ecosystem where digital verification, physical inspection, and AI governance work together in one platform.
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">

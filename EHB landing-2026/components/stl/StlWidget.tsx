@@ -43,7 +43,7 @@ function Bar({
   const pct = Math.max(0, Math.min(100, ((value - min) / range) * 100));
   return (
     <div>
-      <div className="flex items-center justify-between text-[11px] text-slate-400">
+      <div className="flex items-center justify-between text-[11px] text-ehb-textMuted">
         <span>{label}</span>
         <span className="text-slate-200 font-semibold">{value}</span>
       </div>
@@ -92,17 +92,17 @@ export function StlWidget() {
         <div>
           <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-1">Trust</p>
           <h2 className="text-lg md:text-xl font-semibold text-white">STL Score</h2>
-          <p className="text-[11px] text-slate-400 mt-1">Your live trust ranking across the marketplace.</p>
+          <p className="text-[11px] text-ehb-textMuted mt-1">Your live trust ranking across the marketplace.</p>
         </div>
         <div className={`rounded-2xl glass-panel border px-4 py-3 ${tone}`}>
-          <div className="text-[11px] uppercase tracking-[0.22em] text-slate-300">Level</div>
+          <div className="text-[11px] uppercase tracking-[0.22em] text-ehb-textBody">Level</div>
           <div className="text-lg font-semibold text-white">L{data?.level ?? "—"}</div>
           <div className="text-[11px] text-slate-200">{data?.label ?? "—"}</div>
         </div>
       </div>
 
       {loading ? (
-        <div className="mt-4 rounded-xl bg-white/5 border border-white/10 p-4 text-slate-300">
+        <div className="mt-4 rounded-xl bg-white/5 border border-white/10 p-4 text-ehb-textBody">
           Loading STL…
         </div>
       ) : error ? (
@@ -114,7 +114,7 @@ export function StlWidget() {
           <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
             <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Total</div>
             <div className="text-3xl font-semibold text-white mt-1">{data.total}</div>
-            <div className="text-[11px] text-slate-400 mt-1">0 → 100 trust power</div>
+            <div className="text-[11px] text-ehb-textMuted mt-1">0 → 100 trust power</div>
           </div>
           <div className="rounded-2xl bg-white/5 border border-white/10 p-4 space-y-3">
             <Bar label="PSS (0–40)" value={data.pss} min={0} max={40} tone="bg-cyan-400" />

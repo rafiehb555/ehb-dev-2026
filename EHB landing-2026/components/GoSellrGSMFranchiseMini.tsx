@@ -38,13 +38,13 @@ export function GoSellrGSMFranchiseMini() {
 
         <div className="relative grid gap-6 lg:grid-cols-12 items-center">
           <div className="lg:col-span-7 space-y-2">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-1">
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-1">
               GoSellr GSM (E-Commerce) franchise
             </p>
             <h2 className="text-2xl md:text-3xl font-semibold text-white">
               Book your area and start earning with the verified system
             </h2>
-            <p className="text-slate-400 text-sm md:text-base max-w-2xl">
+            <p className="text-ehb-textMuted text-sm md:text-base max-w-2xl">
               Country → Corporate → Master → Sub franchises (Levels 1–10). GoSellr GSM Ecommerce is live for booking, and other industries are coming soon.
             </p>
 
@@ -204,7 +204,7 @@ export function GoSellrGSMFranchiseMini() {
                       </span>
                       <p className="text-sm font-semibold text-white">{x.label}</p>
                     </div>
-                    <p className="text-[11px] text-slate-400 mt-1">Verified onboarding + revenue share</p>
+                    <p className="text-[11px] text-ehb-textMuted mt-1">Verified onboarding + revenue share</p>
                   </div>
                 ))}
               </div>

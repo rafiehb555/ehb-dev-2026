@@ -90,19 +90,19 @@ export function IndustriesExplorer() {
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
         Work in the Area That Fits You
       </h2>
-      <p className="text-slate-400 max-w-2xl mb-4 text-sm md:text-base">
+      <p className="text-ehb-textMuted max-w-2xl mb-4 text-sm md:text-base">
         EHB is not only for programmers. It covers daily life and business: education, health, IT,
         delivery, shops, finance, real estate, and more.
       </p>
-      <p className="text-[11px] text-slate-400 mb-6">{helperText}</p>
+      <p className="text-[11px] text-ehb-textMuted mb-6">{helperText}</p>
 
       {/* Search + filters */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
         <div className="max-w-md w-full">
-          <div className="flex items-center gap-2 rounded-xl glass-panel px-3 py-2 text-xs md:text-sm text-slate-300">
+          <div className="flex items-center gap-2 rounded-xl glass-panel px-3 py-2 text-xs md:text-sm text-ehb-textBody">
             <span aria-hidden>🔍</span>
             <input
-              className="bg-transparent outline-none flex-1 placeholder:text-slate-500"
+              className="bg-transparent outline-none flex-1 placeholder:text-ehb-textMuted"
               placeholder="Search industries (e.g. Health, IT, Delivery)…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -120,7 +120,7 @@ export function IndustriesExplorer() {
                 className={`rounded-full px-3 py-1 border transition-all ${
                   active
                     ? "bg-gradient-to-r from-[#00eaff] to-[#22c55e] text-slate-950 border-transparent shadow-[0_0_18px_rgba(34,197,94,0.5)]"
-                    : "bg-white/5 border-white/15 text-slate-300 hover:text-white hover:bg-white/10"
+                    : "bg-white/5 border-white/15 text-ehb-textBody hover:text-white hover:bg-white/10"
                 }`}
               >
                 {f.label}

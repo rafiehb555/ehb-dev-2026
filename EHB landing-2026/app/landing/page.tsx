@@ -550,7 +550,7 @@ export default function LandingPage() {
       <section className="py-24 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">What's Inside EHB?</h2>
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">What&apos;s Inside EHB?</h2>
             <p className="text-2xl text-white/60">Explore the products and services available on the platform</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

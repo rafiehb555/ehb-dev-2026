@@ -34,25 +34,25 @@ export function LandingStats() {
         <p className="text-2xl md:text-3xl font-bold text-[#3b82f6]">
           <AnimatedNumber end={10000} suffix="+" />
         </p>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">Users</p>
+        <p className="text-xs sm:text-sm text-ehb-textMuted mt-1">Users</p>
       </div>
       <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#22c55e]/30">
         <p className="text-2xl md:text-3xl font-bold text-[#22c55e]">
           <AnimatedNumber end={700} suffix="+" />
         </p>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">Services</p>
+        <p className="text-xs sm:text-sm text-ehb-textMuted mt-1">Services</p>
       </div>
       <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#f59e0b]/30">
         <p className="text-2xl md:text-3xl font-bold text-[#f59e0b]">
           <AnimatedNumber end={32} />
         </p>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">Industries</p>
+        <p className="text-xs sm:text-sm text-ehb-textMuted mt-1">Industries</p>
       </div>
       <div className="rounded-2xl glass-card card-hover p-6 text-center border border-[#8b5cf6]/30">
         <p className="text-2xl md:text-3xl font-bold text-[#8b5cf6]">
           <AnimatedNumber end={120} suffix="+" />
         </p>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">Countries</p>
+        <p className="text-xs sm:text-sm text-ehb-textMuted mt-1">Countries</p>
       </div>
     </div>
   );

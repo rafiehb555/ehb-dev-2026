@@ -26,7 +26,7 @@ export function CardTitle({ className, children, ...props }: HTMLAttributes<HTML
 }
 
 export function CardDescription({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) {
-  return <p className={cn("text-[11px] text-slate-400", className)} {...props} />;
+  return <p className={cn("text-[11px] text-ehb-textMuted", className)} {...props} />;
 }
 
 export function CardContent({ className, ...props }: HTMLAttributes<HTMLDivElement>) {

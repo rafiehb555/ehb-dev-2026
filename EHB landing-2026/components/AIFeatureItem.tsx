@@ -55,7 +55,7 @@ export function AIFeatureItem({
             </span>
           )}
         </div>
-        <p className="text-xs text-slate-400">{description}</p>
+        <p className="text-xs text-ehb-textMuted">{description}</p>
         {href ? (
           <p className="text-[10px] font-medium text-cyan-400/80 mt-2 group-hover:text-cyan-300">Tap to explore →</p>
         ) : null}

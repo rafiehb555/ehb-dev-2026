@@ -27,13 +27,13 @@ export function EarningHookMoment() {
 
         <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="min-w-0">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
               You can start earning today
             </p>
             <h2 className="text-xl md:text-2xl font-semibold text-white">
               You can start earning today
             </h2>
-            <p className="text-slate-400 text-sm md:text-base mt-2">
+            <p className="text-ehb-textMuted text-sm md:text-base mt-2">
               Top users earned <span className="text-emerald-300 font-semibold">{moneyLabel}</span> this week.
             </p>
 

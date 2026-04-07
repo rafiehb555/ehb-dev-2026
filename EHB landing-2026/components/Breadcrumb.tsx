@@ -64,7 +64,7 @@ export function Breadcrumb() {
 
   return (
     <div
-      className={`container-ultra mt-2 mb-1 text-[11px] sm:text-xs text-slate-400 transition-all duration-300 ${
+      className={`container-ultra mt-2 mb-1 text-[11px] sm:text-xs text-ehb-textMuted transition-all duration-300 ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"
       }`}
     >

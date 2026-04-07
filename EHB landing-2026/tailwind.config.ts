@@ -49,6 +49,10 @@ const config: Config = {
           // Supporting
           slate: "#94a3b8",
           slateSoft: "rgba(148, 163, 184, 0.65)",
+          /** Body / secondary text — EHB_COLOR_SCHEME_PLAN Part 4 */
+          textBody: "#B0BAD3",
+          /** Hints / placeholders — EHB_COLOR_SCHEME_PLAN Part 4 */
+          textMuted: "#6B7A99",
           footer: "#010409"
         },
         // EHB NEW THEME v2 – distinct look (black + purple base, emerald + amber)

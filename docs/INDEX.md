@@ -2,7 +2,7 @@
 
 > Master index of all project documentation (Auto-Updated)
 
-**Last Updated:** April 6, 2026
+**Last Updated:** April 7, 2026
 
 ---
 
@@ -43,7 +43,7 @@ docs
 | [architecture/](architecture/) | [EHB_PLATFORM_ARCHITECTURE.md](architecture/EHB_PLATFORM_ARCHITECTURE.md), [EHB_CORE_SYSTEMS.md](architecture/EHB_CORE_SYSTEMS.md), [SHARED_TOOLS.md](architecture/SHARED_TOOLS.md), [EHB_SUPER_ADMIN_CONTROL_PANEL.md](architecture/EHB_SUPER_ADMIN_CONTROL_PANEL.md), [EHB_MICROSERVICES_ARCHITECTURE.md](architecture/EHB_MICROSERVICES_ARCHITECTURE.md), [EHB_DATABASE_MASTER_SCHEMA.md](architecture/EHB_DATABASE_MASTER_SCHEMA.md), [EHB_FRONTEND_SUPER_APP_ARCHITECTURE.md](architecture/EHB_FRONTEND_SUPER_APP_ARCHITECTURE.md) |
 | [industries/](industries/) | [EHB_INDUSTRIES.md](industries/EHB_INDUSTRIES.md), [INDUSTRY_TEMPLATE.md](industries/INDUSTRY_TEMPLATE.md) |
 | [departments/](departments/) | [AI_DEPARTMENT.md](departments/AI_DEPARTMENT.md), [BLOCKCHAIN.md](departments/BLOCKCHAIN.md), [FINANCE.md](departments/FINANCE.md), [FRANCHISE_SYSTEM.md](departments/FRANCHISE_SYSTEM.md) |
-| [flows/](flows/) | [USER_FLOW.md](flows/USER_FLOW.md), [PROVIDER_FLOW.md](flows/PROVIDER_FLOW.md) |
+| [flows/](flows/) | **[flows/INDEX.md](flows/INDEX.md)** (design-flow P1–P11 index), [ECONOMICS_MASTER.md](flows/ECONOMICS_MASTER.md), [USER_FLOW.md](flows/USER_FLOW.md), [PROVIDER_FLOW.md](flows/PROVIDER_FLOW.md) |
 | [development/](development/) | [DEVELOPMENT_TRACKER.md](development/DEVELOPMENT_TRACKER.md), [DEMO_TO_PRODUCTION.md](development/DEMO_TO_PRODUCTION.md), [LOCAL_DEPLOY_PARITY_CHECKLIST.md](development/LOCAL_DEPLOY_PARITY_CHECKLIST.md), [VERCEL_LOCAL_ROUTE_MISMATCH_INVENTORY.md](development/VERCEL_LOCAL_ROUTE_MISMATCH_INVENTORY.md) |
 
 **Real folder architecture (single source of truth):** [FOLDER_ARCHITECTURE.md](FOLDER_ARCHITECTURE.md) — is structure ko agy bhi follow kiya jayega.  
