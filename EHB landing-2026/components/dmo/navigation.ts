@@ -97,9 +97,11 @@ export const DMO_NAV_SECTIONS: DmoNavSection[] = [
   {
     key: "stl",
     icon: "📊",
-    label: "EHB-STL",
-    href: "/dmo/stl",
+    label: "EHB-STL-LEVEL",
+    href: "/dmo/ehb-stl-level",
     items: [
+      { key: "ehb-stl-level", label: "EHB-STL-LEVEL (reference)", href: "/dmo/ehb-stl-level" },
+      { key: "stl-engine", label: "STL operations", href: "/dmo/stl" },
       { key: "stl-scores", label: "Scores", href: "/dmo/stl/scores" },
       { key: "stl-breakdown", label: "Breakdown", href: "/dmo/stl/breakdown" },
       { key: "stl-history", label: "History", href: "/dmo/stl/history" },

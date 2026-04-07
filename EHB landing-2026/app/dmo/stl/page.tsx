@@ -106,10 +106,19 @@ export default function DmoStlPage() {
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                 <div>
                   <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">STL Engine</p>
-                  <h1 className="mt-1 text-2xl font-semibold gradient-text">Service Trust Level</h1>
+                  <h1 className="mt-1 text-2xl font-semibold gradient-text">EHB-STL-LEVEL · Service Trust Level</h1>
                   <p className="mt-1 text-xs text-ehb-textBody">Trust scoring and ranking across PSS, CRB, performance, behavior, and refill lifecycle.</p>
+                  <p className="mt-2 text-[11px] text-ehb-textMuted">
+                    Full master-plan reference (levels, access matrix, PSS/CRB/JPS links):{" "}
+                    <Link href="/dmo/ehb-stl-level" className="text-cyan-300 underline-offset-2 hover:underline">
+                      EHB-STL-LEVEL page
+                    </Link>
+                  </p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
+                  <Link href="/dmo/ehb-stl-level" className="ehb-btn-secondary ehb-press">
+                    Reference
+                  </Link>
                   <Link href="/dmo" className="ehb-btn-secondary ehb-press">Back to DMO</Link>
                   <button type="button" onClick={() => void load()} className="ehb-btn-primary ehb-press">Refresh</button>
                 </div>
