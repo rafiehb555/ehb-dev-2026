@@ -32,6 +32,9 @@ _git-push-run.log
 .DS_Store
 Thumbs.db
 
+# Local bulk / installers (too large for GitHub; keep outside git)
+ehb data/
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
