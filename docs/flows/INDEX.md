@@ -2,6 +2,8 @@
 
 > Design-flow artifacts (P0–P11). Master business plans: [EHB_MASTER_SYSTEM_PLAN.md](../development/EHB_MASTER_SYSTEM_PLAN.md). Traceability: [TRACEABILITY_MATRIX.md](TRACEABILITY_MATRIX.md).
 
+**Landing app (code + ops):** [docs/INDEX.md](../INDEX.md) — health smoke, Stripe notes, **Law OLS reference** (`content/.../ols-law-source`), Tailwind tokens.
+
 ## Core
 
 | File | Purpose |
