@@ -19,6 +19,8 @@ export default function AuthPage() {
   const [meLoading, setMeLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  const [cooldownSec, setCooldownSec] = useState(0);
+  const [cooldownTotalSec, setCooldownTotalSec] = useState(0);
   const [me, setMe] = useState<MeUser>(null);
 
   const loadMe = useCallback(async () => {
@@ -35,6 +37,14 @@ export default function AuthPage() {
   useEffect(() => {
     void loadMe();
   }, [loadMe]);
+
+  useEffect(() => {
+    if (cooldownSec <= 0) return;
+    const id = window.setInterval(() => {
+      setCooldownSec((s) => (s > 1 ? s - 1 : 0));
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, [cooldownSec]);
 
   function validateForm(): boolean {
     const next: Record<string, string> = {};
@@ -60,6 +70,8 @@ export default function AuthPage() {
     setLoading(true);
     setErr(null);
     setMsg(null);
+    setCooldownSec(0);
+    setCooldownTotalSec(0);
     if (!validateForm()) {
       setLoading(false);
       return;
@@ -76,6 +88,14 @@ export default function AuthPage() {
         body: JSON.stringify(body),
       });
       const json = await res.json().catch(() => null);
+      if (res.status === 429) {
+        const ra = Number(res.headers.get("Retry-After") ?? "0");
+        if (Number.isFinite(ra) && ra > 0) {
+          const limited = Math.min(ra, 3600);
+          setCooldownSec(limited);
+          setCooldownTotalSec(limited);
+        }
+      }
       if (!res.ok) throw new Error(json?.error?.message ?? `Request failed: ${res.status}`);
       setMsg(mode === "login" ? "Signed in successfully." : "Account created and signed in.");
       await loadMe();
@@ -207,10 +227,16 @@ export default function AuthPage() {
               <button
                 type="button"
                 onClick={submit}
-                disabled={loading}
+                disabled={loading || cooldownSec > 0}
                 className="rounded-full bg-gradient-to-r from-cyan-300 to-blue-500 px-5 py-2 text-sm font-semibold text-slate-950"
               >
-                {loading ? "Please wait..." : mode === "login" ? "Sign In" : "Create Account"}
+                {cooldownSec > 0
+                  ? `Retry in ${cooldownSec}s`
+                  : loading
+                    ? "Please wait..."
+                    : mode === "login"
+                      ? "Sign In"
+                      : "Create Account"}
               </button>
               <button
                 type="button"
@@ -233,6 +259,22 @@ export default function AuthPage() {
 
           {msg ? <div className="mt-4 rounded-xl border border-emerald-400/40 bg-emerald-500/10 p-3 text-sm text-emerald-100">{msg}</div> : null}
           {err ? <div className="mt-4 rounded-xl border border-rose-400/40 bg-rose-500/10 p-3 text-sm text-rose-100">{err}</div> : null}
+          {cooldownSec > 0 ? (
+            <div className="mt-3 rounded-xl border border-amber-400/40 bg-amber-500/10 p-3 text-xs text-amber-100">
+              Too many attempts. Please wait {cooldownSec}s before trying again.
+              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-black/25">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-amber-300 to-orange-400 transition-[width] duration-1000 ease-linear"
+                  style={{
+                    width: `${Math.max(
+                      0,
+                      Math.min(100, cooldownTotalSec > 0 ? (cooldownSec / cooldownTotalSec) * 100 : 0)
+                    )}%`,
+                  }}
+                />
+              </div>
+            </div>
+          ) : null}
         </section>
 
         <section className="lg:col-span-5 rounded-3xl border border-white/10 bg-white/[0.03] p-6 space-y-4">

@@ -46,6 +46,7 @@ describe("POST /api/auth/login rate limit", () => {
     const { POST } = await loadPostHandler({ findUser: true, passwordOkSequence: Array(20).fill(false) });
 
     const statuses: number[] = [];
+    let last: Response | null = null;
     for (let i = 0; i < 9; i++) {
       const res = await POST(
         new Request("http://localhost/api/auth/login", {
@@ -55,10 +56,12 @@ describe("POST /api/auth/login rate limit", () => {
         })
       );
       statuses.push(res.status);
+      last = res;
     }
 
     expect(statuses.slice(0, 8).every((s) => s === 401)).toBe(true);
     expect(statuses[8]).toBe(429);
+    expect(last?.headers.get("Retry-After")).toMatch(/^\d+$/);
   });
 
   it("clears failed attempts after successful login", async () => {
@@ -79,6 +82,9 @@ describe("POST /api/auth/login rate limit", () => {
     expect(fail2.status).toBe(401);
     expect(ok.status).toBe(200);
     expect(failAfterSuccess.status).toBe(401);
+    expect(fail1.headers.get("Retry-After")).toBeNull();
+    expect(fail2.headers.get("Retry-After")).toBeNull();
+    expect(failAfterSuccess.headers.get("Retry-After")).toBeNull();
     expect(mocks.createSessionCookieMock).toHaveBeenCalledTimes(1);
   });
 });
