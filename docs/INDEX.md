@@ -30,6 +30,7 @@
 
 - **Workflow:** [`.github/workflows/ehb-landing-ci.yml`](../.github/workflows/ehb-landing-ci.yml) — on changes under `EHB landing-2026/`: `npm ci` → **`npm audit --audit-level=high`** (informational, `continue-on-error`) → `tsc --noEmit` → `npm test` → **`npm run lint`** → **`npm run build`**.
 - **Local audit (same flags as CI):** from `EHB landing-2026/`, run **`npm run audit:info`**. May exit non-zero while known transitive highs remain (see lockfile / Next upgrade path).
+- **Local CI mirror (no `npm ci`, no audit):** **`npm run ci:local`** runs `tsc --noEmit` → `npm test` → `npm run lint` → `npm run build`. Pair with **`npm run audit:info`** when you want the full picture.
 - **Local build issues:** if `next build` fails with missing chunk / `ENOENT` for a route, run **`npm run build:clean`** from `EHB landing-2026/` (removes `.next` then builds; script is `clean` + `build`).
 
 ### Notifications: client vs server state

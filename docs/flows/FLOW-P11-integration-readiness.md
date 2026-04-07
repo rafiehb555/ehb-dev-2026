@@ -8,7 +8,7 @@
 | **Title** | End-to-end epics, open-question rollup, handoff checklist |
 | **Status** | Draft |
 | **Owner** | EHB design-flow |
-| **Last updated** | 2026-04-07 (decisions pass) |
+| **Last updated** | 2026-04-07 (decisions pass; pre-push gate) |
 
 ## Purpose
 
@@ -127,6 +127,19 @@ Har indexed plan file ka link: [TRACEABILITY_MATRIX.md](TRACEABILITY_MATRIX.md).
 **Chain (later phase)**
 
 - [ ] ERC-20 / staking scope from [FLOW-P9](FLOW-P9-blockchain-trust.md) Part 11 — not blocking MVP UX if off-chain first
+
+---
+
+## Pre-push gate (EHB landing-2026)
+
+Before pushing a branch that changes the landing app, from `EHB landing-2026/`:
+
+| Step | Command | Notes |
+|------|---------|--------|
+| 1 | `npm run ci:local` | Typecheck, tests, lint, production build — same core steps as [`.github/workflows/ehb-landing-ci.yml`](../../.github/workflows/ehb-landing-ci.yml) after `npm ci` |
+| 2 | `npm run audit:info` | Same high-level audit as CI; may exit non-zero while known transitive highs remain |
+
+Cross-links: [LOCAL_DEPLOY_PARITY_CHECKLIST.md](../development/LOCAL_DEPLOY_PARITY_CHECKLIST.md) (CI-aligned commands), [INDEX.md](../INDEX.md) (**CI (landing app)**).
 
 ---
 

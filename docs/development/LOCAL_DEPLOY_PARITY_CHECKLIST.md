@@ -21,6 +21,15 @@ Canonical deployed URL for this project:
 - Default parity target is `https://ehb-dev-rafi.vercel.app` unless a deliberate branch-specific preview is being checked.
 - Any user credentials needed for protected routes are available in both environments.
 
+## CI-aligned commands (main landing app)
+
+The GitHub workflow for `EHB landing-2026/` runs `npm ci` → informational `npm audit --audit-level=high` → `tsc --noEmit` → `npm test` → `npm run lint` → `npm run build` (see [INDEX.md](../INDEX.md), **CI (landing app)**). After `npm install` locally, mirror the non-install steps with:
+
+| Step | Command |
+|------|---------|
+| Audit (same flags as CI; may exit non-zero while known highs remain) | `npm run audit:info` |
+| Rest of pipeline (single script) | `npm run ci:local` |
+
 ## Optional — Law OLS reference app (separate package)
 
 The law industry **OLS** Next.js demo under [`EHB landing-2026/content/industries/law/ols-law-source/nextjs-app/`](../../EHB%20landing-2026/content/industries/law/ols-law-source/nextjs-app) is **not** the same deploy as the main Vercel landing app unless you wire it explicitly. Use it only when checking law reference UI parity.
