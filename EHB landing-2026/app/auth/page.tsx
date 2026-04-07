@@ -159,7 +159,13 @@ export default function AuthPage() {
             </button>
           </div>
 
-          <div className="mt-4 grid gap-3">
+          <form
+            className="mt-4 grid gap-3"
+            onSubmit={(e) => {
+              e.preventDefault();
+              void submit();
+            }}
+          >
             {mode === "register" ? (
               <div>
                 <input
@@ -229,9 +235,8 @@ export default function AuthPage() {
             </div>
             <div className="flex flex-wrap gap-2">
               <button
-                type="button"
+                type="submit"
                 data-testid="auth-submit"
-                onClick={submit}
                 disabled={loading || cooldownSec > 0}
                 className="rounded-full bg-gradient-to-r from-cyan-300 to-blue-500 px-5 py-2 text-sm font-semibold text-slate-950"
               >
@@ -260,7 +265,7 @@ export default function AuthPage() {
                 Logout
               </button>
             </div>
-          </div>
+          </form>
 
           {msg ? <div className="mt-4 rounded-xl border border-emerald-400/40 bg-emerald-500/10 p-3 text-sm text-emerald-100">{msg}</div> : null}
           {err ? (
