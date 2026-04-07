@@ -226,12 +226,12 @@ export default function CaseMonitoring({ caseId, caseType, lawyerName, language 
                     <div className="flex-1">
                       <p className={`font-medium ${
                         stage.status === 'current' ? 'text-brand-gold' :
-                        stage.status === 'completed' ? 'text-white' : 'text-slate-500'
+                        stage.status === 'completed' ? 'text-white' : 'text-ehb-textMuted'
                       }`}>
                         {language === 'ur' ? stage.nameUrdu : stage.name}
                       </p>
                       {stage.date && (
-                        <p className="text-slate-500 text-sm">{stage.date}</p>
+                        <p className="text-ehb-textMuted text-sm">{stage.date}</p>
                       )}
                     </div>
 
@@ -297,7 +297,7 @@ export default function CaseMonitoring({ caseId, caseType, lawyerName, language 
                       <p className="text-ehb-textMuted text-sm mt-1">
                         {language === 'ur' ? update.descriptionUrdu : update.description}
                       </p>
-                      <p className="text-slate-500 text-xs mt-2">
+                      <p className="text-ehb-textMuted text-xs mt-2">
                         {update.timestamp.toLocaleString()}
                       </p>
                     </div>

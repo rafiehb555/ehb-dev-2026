@@ -118,11 +118,11 @@ export default function CaseCreationFlow() {
                   <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center font-bold text-sm transition-all ${
                     step >= s.num 
                       ? 'bg-gradient-to-br from-[#D4AF37] to-[#B8860B] text-slate-900 shadow-lg shadow-[#D4AF37]/20' 
-                      : 'bg-white/10 text-slate-500'
+                      : 'bg-white/10 text-ehb-textMuted'
                   }`}>
                     {step > s.num ? <CheckCircle2 size={20} /> : <s.icon size={18} />}
                   </div>
-                  <span className={`text-xs mt-2 hidden md:block ${step >= s.num ? 'text-[#D4AF37]' : 'text-slate-500'}`}>
+                  <span className={`text-xs mt-2 hidden md:block ${step >= s.num ? 'text-[#D4AF37]' : 'text-ehb-textMuted'}`}>
                     {s.label}
                   </span>
                 </div>
@@ -203,7 +203,7 @@ export default function CaseCreationFlow() {
               
               <div className="relative mb-6">
                 <textarea 
-                  className="w-full h-48 bg-slate-900 border border-slate-700 rounded-2xl p-6 text-white placeholder:text-slate-600 outline-none focus:border-[#D4AF37] transition-all resize-none"
+                  className="w-full h-48 bg-slate-900 border border-slate-700 rounded-2xl p-6 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all resize-none"
                   placeholder="Describe your legal issue in detail. For example: 'My landlord is refusing to return my security deposit even though I left the apartment in perfect condition...'"
                   value={issue}
                   onChange={(e) => setIssue(e.target.value)}
@@ -263,11 +263,11 @@ export default function CaseCreationFlow() {
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="p-4 bg-white/5 rounded-xl">
-                    <p className="text-xs text-slate-500 mb-1">Category</p>
+                    <p className="text-xs text-ehb-textMuted mb-1">Category</p>
                     <p className="text-lg font-bold text-white">{analysis?.category}</p>
                   </div>
                   <div className="p-4 bg-white/5 rounded-xl">
-                    <p className="text-xs text-slate-500 mb-1">Recommended Service</p>
+                    <p className="text-xs text-ehb-textMuted mb-1">Recommended Service</p>
                     <p className="text-lg font-bold text-white">{analysis?.service}</p>
                   </div>
                 </div>
@@ -281,7 +281,7 @@ export default function CaseCreationFlow() {
                   <input 
                     type="text" 
                     placeholder="Give your case a brief title"
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-[#D4AF37] transition-all"
+                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all"
                     value={details.title}
                     onChange={(e) => setDetails({...details, title: e.target.value})}
                   />
@@ -293,7 +293,7 @@ export default function CaseCreationFlow() {
                     <input 
                       type="text" 
                       placeholder="e.g. Pakistan"
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-[#D4AF37] transition-all"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all"
                       value={details.country}
                       onChange={(e) => setDetails({...details, country: e.target.value})}
                     />
@@ -303,7 +303,7 @@ export default function CaseCreationFlow() {
                     <input 
                       type="text" 
                       placeholder="e.g. Lahore"
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-[#D4AF37] transition-all"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all"
                       value={details.city}
                       onChange={(e) => setDetails({...details, city: e.target.value})}
                     />
@@ -360,8 +360,8 @@ export default function CaseCreationFlow() {
                   <Upload className="text-[#D4AF37]" size={32} />
                 </div>
                 <p className="text-lg font-bold text-white mb-2">Click to upload demo files</p>
-                <p className="text-sm text-slate-500 mb-4">or drag and drop</p>
-                <p className="text-xs text-slate-600">Supports PDF, JPG, PNG, DOC (Max 10MB each)</p>
+                <p className="text-sm text-ehb-textMuted mb-4">or drag and drop</p>
+                <p className="text-xs text-ehb-textMuted">Supports PDF, JPG, PNG, DOC (Max 10MB each)</p>
               </div>
 
               {uploadedFiles.length > 0 && (
@@ -434,9 +434,9 @@ export default function CaseCreationFlow() {
                           <div className="flex items-center gap-1">
                             <Star className="text-yellow-500 fill-yellow-500" size={14} />
                             <span className="text-sm font-bold text-white">{lawyer.rating}</span>
-                            <span className="text-xs text-slate-500">({lawyer.reviews})</span>
+                            <span className="text-xs text-ehb-textMuted">({lawyer.reviews})</span>
                           </div>
-                          <span className="text-sm text-slate-500">📍 {lawyer.location}</span>
+                          <span className="text-sm text-ehb-textMuted">📍 {lawyer.location}</span>
                           <span className="text-sm font-bold text-emerald-400">{lawyer.fee}</span>
                         </div>
                       </div>
@@ -525,10 +525,10 @@ export default function CaseCreationFlow() {
                         : 'border-white/10 bg-white/5 hover:border-white/30'
                     }`}
                   >
-                    <method.icon className={paymentMethod === method.id ? 'text-[#D4AF37]' : 'text-slate-500'} size={20} />
+                    <method.icon className={paymentMethod === method.id ? 'text-[#D4AF37]' : 'text-ehb-textMuted'} size={20} />
                     <div className="text-left">
                       <span className="text-sm font-bold text-white block">{method.label}</span>
-                      <span className="text-xs text-slate-500">{method.desc}</span>
+                      <span className="text-xs text-ehb-textMuted">{method.desc}</span>
                     </div>
                   </button>
                 ))}
@@ -559,7 +559,7 @@ export default function CaseCreationFlow() {
         </AnimatePresence>
 
         {/* Trust Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-slate-500">
+        <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-ehb-textMuted">
           <div className="flex items-center gap-2">
             <ShieldCheck size={16} />
             <span className="text-xs font-bold">End-to-End Encrypted</span>

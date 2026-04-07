@@ -10,6 +10,9 @@
   --color-brand-secondary: #dc2626;
   --color-surface-light: #f3f3f3;
   --color-surface-dark: #202020;
+  /* Align with main landing P1 tokens ([EHB_COLOR_SCHEME_PLAN] body / muted) */
+  --color-ehb-textBody: #b0bad3;
+  --color-ehb-textMuted: #6b7a99;
 }
 
 @layer base {
@@ -23,7 +26,7 @@
   }
   
   body {
-    @apply font-sans bg-[#020617] text-slate-50 transition-colors duration-300 text-sm;
+    @apply font-sans bg-[#020617] text-white transition-colors duration-300 text-sm;
     background-image: 
       radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
       radial-gradient(at 100% 0%, rgba(147, 51, 234, 0.05) 0px, transparent 50%),

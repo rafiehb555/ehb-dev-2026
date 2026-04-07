@@ -171,7 +171,7 @@ export default function GlobalMarketplacePage() {
                     <input 
                       type="text" 
                       placeholder="Search lawyers by name or specialization..." 
-                      className="flex-1 bg-transparent text-white placeholder:text-slate-500 outline-none py-4"
+                      className="flex-1 bg-transparent text-white placeholder:text-ehb-textMuted outline-none py-4"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -250,7 +250,7 @@ export default function GlobalMarketplacePage() {
             >
               <span className="text-3xl mb-2 block">{country.flag}</span>
               <p className="text-sm font-medium text-white truncate">{country.name}</p>
-              <p className="text-xs text-slate-500">{country.lawyers.toLocaleString()} lawyers</p>
+              <p className="text-xs text-ehb-textMuted">{country.lawyers.toLocaleString()} lawyers</p>
             </button>
           ))}
         </div>
@@ -274,7 +274,7 @@ export default function GlobalMarketplacePage() {
                 <spec.icon className="text-[#D4AF37]" size={20} />
               </div>
               <p className="text-sm font-medium text-white">{spec.name}</p>
-              <p className="text-xs text-slate-500">{spec.count.toLocaleString()} lawyers</p>
+              <p className="text-xs text-ehb-textMuted">{spec.count.toLocaleString()} lawyers</p>
             </button>
           ))}
         </div>
@@ -334,7 +334,7 @@ export default function GlobalMarketplacePage() {
               <div className="mb-4">
                 <h3 className="text-lg font-bold text-white mb-1">{lawyer.name}</h3>
                 <p className="text-sm text-[#D4AF37] mb-1">{lawyer.spec}</p>
-                <p className="text-xs text-slate-500 flex items-center gap-1">
+                <p className="text-xs text-ehb-textMuted flex items-center gap-1">
                   <MapPin size={12} /> {lawyer.location}
                 </p>
               </div>
@@ -342,15 +342,15 @@ export default function GlobalMarketplacePage() {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-2 mb-4">
                 <div className="bg-white/5 rounded-lg p-2 text-center">
-                  <p className="text-xs text-slate-500">Exp</p>
+                  <p className="text-xs text-ehb-textMuted">Exp</p>
                   <p className="text-sm font-bold text-white">{lawyer.exp}</p>
                 </div>
                 <div className="bg-white/5 rounded-lg p-2 text-center">
-                  <p className="text-xs text-slate-500">Cases</p>
+                  <p className="text-xs text-ehb-textMuted">Cases</p>
                   <p className="text-sm font-bold text-emerald-400">{lawyer.cases}</p>
                 </div>
                 <div className="bg-white/5 rounded-lg p-2 text-center">
-                  <p className="text-xs text-slate-500">Rating</p>
+                  <p className="text-xs text-ehb-textMuted">Rating</p>
                   <p className="text-sm font-bold text-yellow-400">⭐ {lawyer.rating}</p>
                 </div>
               </div>
@@ -369,7 +369,7 @@ export default function GlobalMarketplacePage() {
               {/* Price & Actions */}
               <div className="flex items-center justify-between mb-4">
                 <span className="text-lg font-bold text-emerald-400">{lawyer.fee}</span>
-                <span className="text-xs text-slate-500">{lawyer.reviews} reviews</span>
+                <span className="text-xs text-ehb-textMuted">{lawyer.reviews} reviews</span>
               </div>
 
               <div className="flex gap-2">

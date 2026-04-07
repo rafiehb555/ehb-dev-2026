@@ -192,7 +192,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                   );
                 })
               ) : (
-                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-slate-500">
+                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-ehb-textMuted">
                   No runtime history is defined for this agent yet.
                 </div>
               )}
@@ -218,7 +218,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                   </div>
                 ))
               ) : (
-                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-slate-500">
+                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-ehb-textMuted">
                   No runtime handoffs are recorded for this agent yet.
                 </div>
               )}
@@ -247,12 +247,12 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                   href={`/admin/agents/${previous.id}`}
                   className="rounded-xl border border-white/10 bg-slate-950/30 p-3 transition-all duration-200 hover:border-cyan-400/40"
                 >
-                  <div className="text-[10px] uppercase tracking-wide text-slate-500">Previous agent</div>
+                  <div className="text-[10px] uppercase tracking-wide text-ehb-textMuted">Previous agent</div>
                   <div className="mt-1 font-medium text-white">{previous.id}</div>
                   <div className="mt-1 text-ehb-textMuted">{previous.owner}</div>
                 </Link>
               ) : (
-                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-slate-500">
+                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-ehb-textMuted">
                   This is the first agent in the current detail sequence.
                 </div>
               )}
@@ -261,12 +261,12 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                   href={`/admin/agents/${next.id}`}
                   className="rounded-xl border border-white/10 bg-slate-950/30 p-3 transition-all duration-200 hover:border-cyan-400/40"
                 >
-                  <div className="text-[10px] uppercase tracking-wide text-slate-500">Next agent</div>
+                  <div className="text-[10px] uppercase tracking-wide text-ehb-textMuted">Next agent</div>
                   <div className="mt-1 font-medium text-white">{next.id}</div>
                   <div className="mt-1 text-ehb-textMuted">{next.owner}</div>
                 </Link>
               ) : (
-                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-slate-500">
+                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-ehb-textMuted">
                   This is the last agent in the current detail sequence.
                 </div>
               )}
@@ -274,7 +274,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
           </Panel>
           <Panel title="Workflow Position" subtitle="How this agent appears in the default handoff order">
             <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3">
-              <div className="text-[10px] uppercase tracking-wide text-slate-500">Workflow role</div>
+              <div className="text-[10px] uppercase tracking-wide text-ehb-textMuted">Workflow role</div>
               <div className="mt-1 text-white font-medium">
                 {handoffTimeline.find((item) => item.isCurrent)?.step
                   ? `Step ${handoffTimeline.find((item) => item.isCurrent)?.step} in the default handoff path`
@@ -299,7 +299,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                   </Link>
                 ))
               ) : (
-                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-slate-500">
+                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-ehb-textMuted">
                   No related agents are mapped for this detail page yet.
                 </div>
               )}
@@ -318,7 +318,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                   </div>
                 ))
               ) : (
-                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-slate-500">
+                <div className="rounded-xl border border-dashed border-white/10 bg-slate-950/20 p-3 text-ehb-textMuted">
                   No chooser scenarios reference this agent yet.
                 </div>
               )}
@@ -412,7 +412,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                         : "border-white/10 bg-slate-950/20"
                   }`}
                 >
-                  <div className="text-[10px] uppercase tracking-wide text-slate-500">Step {item.step}</div>
+                  <div className="text-[10px] uppercase tracking-wide text-ehb-textMuted">Step {item.step}</div>
                   <div className="mt-1 font-medium text-white">{item.id}</div>
                   <div className="mt-1 text-[11px] text-ehb-textMuted">
                     {item.isCurrent ? "Current detail agent" : item.isPast ? "Earlier in the default flow" : "Later in the default flow"}

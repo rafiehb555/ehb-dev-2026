@@ -96,11 +96,11 @@ export function GlobalExpansionLanding({
   }, [locationQuery?.country, locationQuery?.state, locationQuery?.city]);
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <section className="space-y-2">
           <div
-            className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-slate-200 border-white/10"
+            className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-ehb-textBody border-white/10"
             style={{ borderColor: `${selected.accent}55`, boxShadow: `0 0 22px ${selected.accent}22` }}
           >
             <span aria-hidden>🌍</span>
@@ -110,7 +110,7 @@ export function GlobalExpansionLanding({
 
           {locationLabel ? (
             <div
-              className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-slate-200 border-white/10"
+              className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-ehb-textBody border-white/10"
               style={{ borderColor: `${locationAccent}55`, boxShadow: `0 0 22px ${locationAccent}22` }}
             >
               <span aria-hidden>📍</span>
@@ -155,7 +155,7 @@ export function GlobalExpansionLanding({
                   <select
                     value={selectedCode}
                     onChange={(e) => setSelectedCode(e.target.value)}
-                    className="mt-2 w-full bg-transparent outline-none text-sm text-slate-200"
+                    className="mt-2 w-full bg-transparent outline-none text-sm text-ehb-textBody"
                     aria-label="Select country"
                   >
                     {COUNTRIES.map((c) => (

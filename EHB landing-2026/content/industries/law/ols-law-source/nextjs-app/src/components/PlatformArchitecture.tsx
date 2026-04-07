@@ -111,7 +111,7 @@ export default function PlatformArchitecture() {
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4">
                 {PLATFORM_ARCHITECTURE.databaseSchema.coreTables.map((table, idx) => (
                   <div key={idx} className="p-3 sm:p-4 bg-slate-900 rounded-lg sm:rounded-xl border border-slate-800 flex items-center gap-2 sm:gap-3 group hover:bg-brand-primary/5 transition-colors">
-                    <Code size={12} className="sm:w-3.5 sm:h-3.5 text-slate-500 group-hover:text-brand-primary shrink-0" />
+                    <Code size={12} className="sm:w-3.5 sm:h-3.5 text-ehb-textMuted group-hover:text-brand-primary shrink-0" />
                     <span className="text-[8px] sm:text-[10px] font-mono font-bold text-ehb-textBody truncate">{table}</span>
                   </div>
                 ))}

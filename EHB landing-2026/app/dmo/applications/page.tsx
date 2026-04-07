@@ -9,7 +9,7 @@ export default function DmoApplicationsPage({
   searchParams?: { country?: string; state?: string; city?: string; industry?: string; createdId?: string };
 }) {
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="space-y-1">

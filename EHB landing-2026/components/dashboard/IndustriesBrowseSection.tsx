@@ -13,7 +13,7 @@ export function IndustriesBrowseSection() {
     <div className="glass-panel border border-white/15 rounded-2xl p-5 md:p-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
         <div>
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-1">Industries</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-1">Industries</p>
           <h2 className="text-lg md:text-xl font-semibold text-white">Browse all sectors</h2>
           <p className="text-xs text-ehb-textMuted mt-1">
             Same trust layer across {INDUSTRIES.length} industries — open a landing or industry home.
@@ -32,15 +32,15 @@ export function IndustriesBrowseSection() {
         ))}
       </div>
       <div className="mt-4 flex flex-wrap gap-2 justify-center text-[11px]">
-        <Link href="/dashboard" className="text-slate-500 hover:text-ehb-textBody">
+        <Link href="/dashboard" className="text-ehb-textMuted hover:text-ehb-textBody">
           Dashboard
         </Link>
-        <span className="text-slate-600">·</span>
-        <Link href="/ai-marketplace" className="text-slate-500 hover:text-ehb-textBody">
+        <span className="text-ehb-textMuted">·</span>
+        <Link href="/ai-marketplace" className="text-ehb-textMuted hover:text-ehb-textBody">
           AI marketplace
         </Link>
-        <span className="text-slate-600">·</span>
-        <span className="text-slate-500">Showing {PREVIEW} of {INDUSTRIES.length}</span>
+        <span className="text-ehb-textMuted">·</span>
+        <span className="text-ehb-textMuted">Showing {PREVIEW} of {INDUSTRIES.length}</span>
       </div>
     </div>
   );

@@ -187,7 +187,7 @@ export default function AIAnalyzerPage() {
                         <div className="w-2 h-2 bg-slate-500 rounded-full" />
                       )}
                     </div>
-                    <span className={step.complete ? 'text-emerald-400' : 'text-slate-500'}>
+                    <span className={step.complete ? 'text-emerald-400' : 'text-ehb-textMuted'}>
                       {step.label}
                     </span>
                   </div>
@@ -397,7 +397,7 @@ export default function AIAnalyzerPage() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-white font-medium truncate">{lawyer.name}</p>
-                          <p className="text-xs text-slate-500">{lawyer.spec}</p>
+                          <p className="text-xs text-ehb-textMuted">{lawyer.spec}</p>
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-bold text-emerald-400">{lawyer.match}%</p>

@@ -115,7 +115,7 @@ export function IndustriesBar() {
         <button
           type="button"
           onClick={() => setIsPickerOpen(true)}
-          className="shrink-0 min-h-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-[11px] font-medium text-slate-200 border border-white/20 bg-white/5 hover:bg-white/10 transition-colors gap-1.5"
+          className="shrink-0 min-h-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-[11px] font-medium text-ehb-textBody border border-white/20 bg-white/5 hover:bg-white/10 transition-colors gap-1.5"
         >
           <span aria-hidden>☰</span>
           <span>All industries</span>
@@ -156,7 +156,7 @@ export function IndustriesBar() {
                   "shrink-0 min-h-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-[11px] font-medium transition-all duration-200 whitespace-nowrap border gap-1.5",
                   isActive
                     ? "text-slate-950 shadow-[0_0_18px_rgba(0,234,255,0.55)]"
-                    : "text-slate-200 hover:text-white hover:bg-white/5 border-transparent",
+                    : "text-ehb-textBody hover:text-white hover:bg-white/5 border-transparent",
                 ].join(" ")}
                 style={
                   isActive
@@ -220,14 +220,14 @@ export function IndustriesBar() {
 
               {/* Search bar */}
               <div className="mb-3">
-                <div className="flex items-center gap-2 rounded-xl glass-panel border border-white/15 px-3 py-1.5 text-[11px] sm:text-sm text-slate-200">
+                <div className="flex items-center gap-2 rounded-xl glass-panel border border-white/15 px-3 py-1.5 text-[11px] sm:text-sm text-ehb-textBody">
                   <span aria-hidden>🔍</span>
                   <input
                     autoFocus
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search industries, services or products..."
-                    className="bg-transparent outline-none border-0 flex-1 text-[11px] sm:text-sm placeholder:text-slate-500"
+                    className="bg-transparent outline-none border-0 flex-1 text-[11px] sm:text-sm placeholder:text-ehb-textMuted"
                   />
                 </div>
               </div>
@@ -257,7 +257,7 @@ export function IndustriesBar() {
                         />
                       </span>
                       <div className="min-w-0">
-                        <p className="text-slate-100 truncate">{r.label}</p>
+                        <p className="text-white truncate">{r.label}</p>
                         {r.subtitle && (
                           <p className="text-[10px] text-ehb-textMuted truncate">{r.subtitle}</p>
                         )}
@@ -265,7 +265,7 @@ export function IndustriesBar() {
                     </button>
                   ))}
                   {searchResults.length === 0 && (
-                    <p className="text-[11px] text-slate-500 py-4 text-center">
+                    <p className="text-[11px] text-ehb-textMuted py-4 text-center">
                       No results. Try different keywords like &quot;doctor&quot;, &quot;NFT&quot; or
                       &quot;web development&quot;.
                     </p>
@@ -281,7 +281,7 @@ export function IndustriesBar() {
                       if (!el) return;
                       el.scrollBy({ top: -120, behavior: "smooth" });
                     }}
-                    className="pointer-events-auto h-6 w-6 rounded-full border border-white/20 bg-black/40 text-slate-200 hover:bg-white/10 flex items-center justify-center text-xs"
+                    className="pointer-events-auto h-6 w-6 rounded-full border border-white/20 bg-black/40 text-ehb-textBody hover:bg-white/10 flex items-center justify-center text-xs"
                     aria-label="Scroll up"
                   >
                     ↑
@@ -293,7 +293,7 @@ export function IndustriesBar() {
                       if (!el) return;
                       el.scrollBy({ top: 120, behavior: "smooth" });
                     }}
-                    className="pointer-events-auto h-6 w-6 rounded-full border border-white/20 bg-black/40 text-slate-200 hover:bg-white/10 flex items-center justify-center text-xs"
+                    className="pointer-events-auto h-6 w-6 rounded-full border border-white/20 bg-black/40 text-ehb-textBody hover:bg-white/10 flex items-center justify-center text-xs"
                     aria-label="Scroll down"
                   >
                     ↓

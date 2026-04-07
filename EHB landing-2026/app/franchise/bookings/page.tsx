@@ -100,7 +100,7 @@ export default function FranchiseBookingsPage() {
   }
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <section className="rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-[#031222]/95 to-[#020b18]/95 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">Franchise Booking Desk</p>

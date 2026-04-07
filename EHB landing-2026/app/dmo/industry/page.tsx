@@ -153,7 +153,7 @@ export default function DmoIndustryPage() {
   }
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-6">
         <div className="space-y-4">
           <section className="space-y-4">
@@ -205,11 +205,11 @@ export default function DmoIndustryPage() {
                     <Link className="hover:underline" href={`/landing/${sel.slug}`}>
                       Landing
                     </Link>
-                    <span className="text-slate-600">·</span>
+                    <span className="text-ehb-textMuted">·</span>
                     <Link className="hover:underline" href={`/industry/${sel.slug}`}>
                       Industry home
                     </Link>
-                    <span className="text-slate-600">·</span>
+                    <span className="text-ehb-textMuted">·</span>
                     <Link className="hover:underline" href={`/ai-marketplace?industry=${sel.slug}`}>
                       AI marketplace
                     </Link>

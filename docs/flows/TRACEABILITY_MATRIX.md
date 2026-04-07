@@ -28,7 +28,7 @@
 
 **Ops smoke:** `GET /api/health` in the Next app ([`app/api/health/route.ts`](../../EHB%20landing-2026/app/api/health/route.ts)) — deploy/uptime checks; optional `gitSha` when `VERCEL_GIT_COMMIT_SHA` is set.
 
-**P1 text-token examples (landing):** [`app/development/page.tsx`](../../EHB%20landing-2026/app/development/page.tsx), [`app/dmo/home/page.tsx`](../../EHB%20landing-2026/app/dmo/home/page.tsx), [`components/dmo/Toast.tsx`](../../EHB%20landing-2026/components/dmo/Toast.tsx) — prefer `text-white` / `text-ehb-textBody` / `text-ehb-textMuted` per [FLOW-P1-foundation-ui.md](FLOW-P1-foundation-ui.md).
+**P1 text-token examples (landing):** [`app/development/page.tsx`](../../EHB%20landing-2026/app/development/page.tsx), [`app/dmo/home/page.tsx`](../../EHB%20landing-2026/app/dmo/home/page.tsx), [`components/dmo/Toast.tsx`](../../EHB%20landing-2026/components/dmo/Toast.tsx), [`components/admin/AgentControlClient.tsx`](../../EHB%20landing-2026/components/admin/AgentControlClient.tsx), [`components/admin/AgentRuntimeActionsClient.tsx`](../../EHB%20landing-2026/components/admin/AgentRuntimeActionsClient.tsx), shared primitives under [`components/ui/`](../../EHB%20landing-2026/components/ui/) (`card`, `accordion`, `tabs`, `tooltip`, `badge`, `DmoCard`), plus a repo-wide pass on **[`components/`](../../EHB%20landing-2026/components/)** (landing, DMO, AI panels, industry 3D, etc.) — prefer `text-white` / `text-ehb-textBody` / `text-ehb-textMuted`; keep **`text-slate-950`** on bright gradients and **`text-slate-900`** on light fills per [FLOW-P1-foundation-ui.md](FLOW-P1-foundation-ui.md).
 
 **Economics & PSS:** [ECONOMICS_MASTER.md](ECONOMICS_MASTER.md) · [PSS_TO_STL_ENGINE_MAPPING.md](PSS_TO_STL_ENGINE_MAPPING.md) · [INDEX.md](INDEX.md) (all flows).
 

@@ -115,7 +115,7 @@ export default function DemoNotifications() {
               <div className="p-4 border-b border-white/10 flex items-center justify-between">
                 <div>
                   <h3 className="text-white font-bold">Notifications</h3>
-                  <p className="text-xs text-slate-500">Demo notifications</p>
+                  <p className="text-xs text-ehb-textMuted">Demo notifications</p>
                 </div>
                 <button
                   onClick={() => setNotifications([])}
@@ -128,8 +128,8 @@ export default function DemoNotifications() {
               <div className="max-h-80 overflow-y-auto">
                 {notifications.length === 0 ? (
                   <div className="p-8 text-center">
-                    <Bell className="mx-auto text-slate-600 mb-2" size={32} />
-                    <p className="text-slate-500 text-sm">No notifications</p>
+                    <Bell className="mx-auto text-ehb-textMuted mb-2" size={32} />
+                    <p className="text-ehb-textMuted text-sm">No notifications</p>
                   </div>
                 ) : (
                   notifications.map((notif) => (
@@ -144,7 +144,7 @@ export default function DemoNotifications() {
                         <div className="flex-1 min-w-0">
                           <p className="text-white text-sm font-medium">{notif.title}</p>
                           <p className="text-ehb-textMuted text-xs truncate">{notif.message}</p>
-                          <p className="text-slate-600 text-xs mt-1">{notif.time}</p>
+                          <p className="text-ehb-textMuted text-xs mt-1">{notif.time}</p>
                         </div>
                       </div>
                     </div>
@@ -182,7 +182,7 @@ export default function DemoNotifications() {
                 </div>
                 <button
                   onClick={() => setShowToast(false)}
-                  className="text-slate-500 hover:text-white transition-colors"
+                  className="text-ehb-textMuted hover:text-white transition-colors"
                 >
                   <X size={16} />
                 </button>

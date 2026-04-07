@@ -1031,7 +1031,7 @@ const agentStatusMeta: Record<
 > = {
   idle: {
     label: "Idle",
-    className: "border-slate-400/20 bg-slate-500/10 text-slate-200",
+    className: "border-slate-400/20 bg-slate-500/10 text-ehb-textBody",
   },
   "reading-context": {
     label: "Reading",

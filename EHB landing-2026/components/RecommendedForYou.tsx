@@ -23,7 +23,7 @@ export function RecommendedForYou() {
 
   return (
     <section className="container-ultra section-pad-ultra">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
         Recommended For You
       </p>
       <p className="text-[11px] text-ehb-textMuted mb-2">

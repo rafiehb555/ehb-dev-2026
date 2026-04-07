@@ -90,7 +90,7 @@ export default function SQLCard({ level, description, color, icon: Icon }: SQLCa
               </div>
               <button 
                 onClick={() => setShowDetails(false)} 
-                className="text-slate-500 hover:text-white transition-colors"
+                className="text-ehb-textMuted hover:text-white transition-colors"
               >
                 <X size={20} className="sm:w-6 sm:h-6" />
               </button>
@@ -98,7 +98,7 @@ export default function SQLCard({ level, description, color, icon: Icon }: SQLCa
 
             <div className="space-y-4 mb-6">
               <div>
-                <h3 className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 sm:mb-3">Benefits</h3>
+                <h3 className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-ehb-textMuted mb-2 sm:mb-3">Benefits</h3>
                 <div className="space-y-1.5 sm:space-y-2">
                   {details.benefits.map((benefit, idx) => (
                     <div key={idx} className="flex items-center gap-2">
@@ -110,7 +110,7 @@ export default function SQLCard({ level, description, color, icon: Icon }: SQLCa
               </div>
 
               <div>
-                <h3 className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-slate-500 mb-2 sm:mb-3">Requirements</h3>
+                <h3 className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-ehb-textMuted mb-2 sm:mb-3">Requirements</h3>
                 <div className="space-y-1.5 sm:space-y-2">
                   {details.requirements.map((req, idx) => (
                     <div key={idx} className="flex items-center gap-2">

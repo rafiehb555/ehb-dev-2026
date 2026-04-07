@@ -528,7 +528,7 @@ export const homepageContent = {
           "Lower fees for high-quality, verified users.",
         ],
         accentClass: "border-white/15",
-        toneClass: "text-slate-200",
+        toneClass: "text-ehb-textBody",
         href: "/cart",
       },
       {

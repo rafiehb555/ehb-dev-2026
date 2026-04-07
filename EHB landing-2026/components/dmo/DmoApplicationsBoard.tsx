@@ -49,7 +49,7 @@ function statusPill(status: ApplicationStatus) {
 function stlPill(level: DmoApplication["stlLevel"]) {
   switch (level) {
     case "FREE":
-      return { cls: "bg-slate-500/15 border-slate-500/30 text-slate-200", label: "FREE" };
+      return { cls: "bg-slate-500/15 border-slate-500/30 text-ehb-textBody", label: "FREE" };
     case "BASIC":
       return { cls: "bg-blue-500/15 border-blue-500/30 text-blue-200", label: "BASIC" };
     case "MEDIUM":
@@ -263,7 +263,7 @@ export function DmoApplicationsBoard({
     <div className="space-y-6">
       <section className="space-y-3">
         <div
-          className="inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border border-white/10"
+          className="inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-ehb-textBody border border-white/10"
           style={{ borderColor: `${accent}55`, boxShadow: `0 0 28px ${accent}22` }}
         >
           <span aria-hidden>📍</span>
@@ -310,7 +310,7 @@ export function DmoApplicationsBoard({
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 focus:outline-none"
+              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white focus:outline-none"
             >
               <option value="All">All</option>
               <option value="New">New</option>
@@ -324,7 +324,7 @@ export function DmoApplicationsBoard({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search entity, id, signals..."
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 placeholder:text-slate-500 focus:outline-none min-w-[260px]"
+              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white placeholder:text-ehb-textMuted focus:outline-none min-w-[260px]"
             />
           </div>
         </div>
@@ -360,18 +360,18 @@ export function DmoApplicationsBoard({
                 <div key={a.id} className="grid grid-cols-12 items-center rounded-2xl glass-card border p-3 card-hover">
                   <div className="col-span-2 min-w-0">
                     <div className="text-[11px] font-semibold text-white truncate">{a.id}</div>
-                    <div className="text-[10px] text-slate-500 truncate mt-0.5">{a.createdAt}</div>
+                    <div className="text-[10px] text-ehb-textMuted truncate mt-0.5">{a.createdAt}</div>
                   </div>
 
                   <div className="col-span-3 min-w-0">
                     <div className="text-[11px] font-semibold text-white truncate">{a.entityName}</div>
-                    <div className="text-[10px] text-slate-500 truncate">{a.entityType} · {a.entityCode}</div>
+                    <div className="text-[10px] text-ehb-textMuted truncate">{a.entityType} · {a.entityCode}</div>
                     <div className="text-[10px] text-ehb-textMuted truncate mt-0.5">{a.signals[0] ?? "—"}</div>
                   </div>
 
                   <div className="col-span-2 min-w-0">
                     <div className="text-[11px] font-semibold text-white truncate">{a.serviceName}</div>
-                    <div className="text-[10px] text-slate-500 truncate">{getIndustryBySlug(a.industrySlug)?.name ?? a.industrySlug}</div>
+                    <div className="text-[10px] text-ehb-textMuted truncate">{getIndustryBySlug(a.industrySlug)?.name ?? a.industrySlug}</div>
                   </div>
 
                   <div className="col-span-1">
@@ -429,7 +429,7 @@ export function DmoApplicationsBoard({
 
                     <button
                       type="button"
-                      className="h-9 rounded-xl bg-white/5 border border-white/10 px-3 text-[11px] text-slate-200 hover:bg-white/10 transition-all"
+                      className="h-9 rounded-xl bg-white/5 border border-white/10 px-3 text-[11px] text-ehb-textBody hover:bg-white/10 transition-all"
                       onClick={() => setLastAction(`Opened details for ${a.id} (mock)`)}
                     >
                       Details
@@ -442,7 +442,7 @@ export function DmoApplicationsBoard({
         </div>
 
         <div className="pt-3 text-[10px] text-ehb-textMuted">
-          Tip: To test full flow, go to <Link href="/dashboard/services/new" className="text-[#00eaff] hover:underline">Create new service</Link> and submit; it will open the queue with your draft marked as <span className="text-slate-200 font-semibold">New</span>.
+          Tip: To test full flow, go to <Link href="/dashboard/services/new" className="text-[#00eaff] hover:underline">Create new service</Link> and submit; it will open the queue with your draft marked as <span className="text-ehb-textBody font-semibold">New</span>.
         </div>
       </section>
 
@@ -452,7 +452,7 @@ export function DmoApplicationsBoard({
             <div className="space-y-1">
               <h3 className="text-sm font-semibold text-white">DMO STL + Workflow Context</h3>
               <p className="text-[10px] text-ehb-textMuted">
-                Industry context: <span className="text-slate-200 font-semibold">{industry.name}</span>. Approved items will later reflect STL trust badges and registry updates.
+                Industry context: <span className="text-ehb-textBody font-semibold">{industry.name}</span>. Approved items will later reflect STL trust badges and registry updates.
               </p>
             </div>
           </div>

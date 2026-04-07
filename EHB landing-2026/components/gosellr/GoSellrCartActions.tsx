@@ -24,7 +24,7 @@ export function GoSellrCartActions({ productId }: { productId: string }) {
         {busy ? "Adding..." : "Add to cart"}
       </button>
       {qty > 0 ? (
-        <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-slate-200">
+        <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-ehb-textBody">
           Qty: <span className="text-white font-semibold ml-1">{qty}</span>
         </span>
       ) : null}

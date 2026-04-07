@@ -109,7 +109,7 @@ function TrustBadgesCompact({ deptHint }: TrustBadgesCompactProps) {
       {finalChips.map((c) => (
         <span
           key={c.label}
-          className="inline-flex items-center gap-1 rounded-full border px-2 py-[1px] text-[9px] font-medium text-slate-200 bg-white/5"
+          className="inline-flex items-center gap-1 rounded-full border px-2 py-[1px] text-[9px] font-medium text-ehb-textBody bg-white/5"
           style={{
             borderColor: c.accent,
             boxShadow: `0 0 18px ${c.accent}`,
@@ -146,7 +146,7 @@ function ServiceCard({ title, seller, price, rating, tag, badge, deptHint }: Ser
           <div className="text-2xl mb-1" aria-hidden>
             {getThumbEmoji(title)}
           </div>
-          <p className="text-[10px] text-slate-100/80 line-clamp-1">{title}</p>
+          <p className="text-[10px] text-white/80 line-clamp-1">{title}</p>
         </div>
       </div>
       <div className="flex items-center justify-between gap-2">
@@ -166,7 +166,7 @@ function ServiceCard({ title, seller, price, rating, tag, badge, deptHint }: Ser
       </div>
       <p className="text-[11px] text-ehb-textMuted">By {seller}</p>
       <div className="flex items-center justify-between text-[11px] mt-1">
-        <span className="font-semibold text-slate-100">{price}</span>
+        <span className="font-semibold text-white">{price}</span>
         <span className="flex items-center gap-1 text-amber-300">
           <span>⭐</span>
           <span>{rating.toFixed(1)}</span>
@@ -219,7 +219,7 @@ function ProductCard({ title, price, rating, tag, badge, deptHint }: ProductCard
           <div className="text-2xl mb-1" aria-hidden>
             {getThumbEmoji(title)}
           </div>
-          <p className="text-[10px] text-slate-100/80 line-clamp-1">{title}</p>
+          <p className="text-[10px] text-white/80 line-clamp-1">{title}</p>
         </div>
       </div>
       <div className="flex items-center justify-between gap-2">
@@ -238,7 +238,7 @@ function ProductCard({ title, price, rating, tag, badge, deptHint }: ProductCard
         </div>
       </div>
       <div className="flex items-center justify-between text-[11px] mt-1">
-        <span className="font-semibold text-slate-100">{price}</span>
+        <span className="font-semibold text-white">{price}</span>
         <span className="flex items-center gap-1 text-amber-300">
           <span>⭐</span>
           <span>{rating.toFixed(1)}</span>
@@ -306,12 +306,12 @@ export function MarketplaceSection() {
 
   return (
     <section className="container-ultra section-pad-ultra">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Marketplace</p>
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Marketplace</p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">Explore Services &amp; Products</h2>
       <p className="text-ehb-textMuted max-w-2xl mb-2 text-sm md:text-base">
         Hire experts, offer services, or shop verified products — all in one marketplace.
       </p>
-      <p className="text-[11px] text-slate-500 mb-8">
+      <p className="text-[11px] text-ehb-textMuted mb-8">
         Examples only – tags like Trending, Top Rated, New, and Pro show how discovery will guide users.
       </p>
 

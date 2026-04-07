@@ -27,7 +27,7 @@ export default function JobsPage() {
   );
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-5">
         <section className="glass-panel border border-white/10 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-sky-300">JPS Jobs</p>

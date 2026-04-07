@@ -201,7 +201,7 @@ export default function LawyerPerformance({ language = 'en' }: LawyerPerformance
     if (index === 0) return <Crown className="text-yellow-400" size={20} />;
     if (index === 1) return <Medal className="text-ehb-textBody" size={20} />;
     if (index === 2) return <Medal className="text-orange-400" size={20} />;
-    return <span className="text-slate-500 font-bold">#{index + 1}</span>;
+    return <span className="text-ehb-textMuted font-bold">#{index + 1}</span>;
   };
 
   return (
@@ -418,18 +418,18 @@ export default function LawyerPerformance({ language = 'en' }: LawyerPerformance
                     <p className={`font-bold text-lg ${getScoreColor(lawyer.performanceScore)}`}>
                       {lawyer.performanceScore}%
                     </p>
-                    <p className="text-slate-500 text-xs">{language === 'ur' ? 'اسکور' : 'Score'}</p>
+                    <p className="text-ehb-textMuted text-xs">{language === 'ur' ? 'اسکور' : 'Score'}</p>
                   </div>
                   <div className="text-center">
                     <p className="text-white font-bold text-lg">{lawyer.caseSuccessRate}%</p>
-                    <p className="text-slate-500 text-xs">{language === 'ur' ? 'کامیابی' : 'Success'}</p>
+                    <p className="text-ehb-textMuted text-xs">{language === 'ur' ? 'کامیابی' : 'Success'}</p>
                   </div>
                   <div className="text-center">
                     <div className="flex items-center gap-1">
                       <Star className="text-yellow-400 fill-yellow-400" size={14} />
                       <p className="text-white font-bold">{lawyer.clientRating}</p>
                     </div>
-                    <p className="text-slate-500 text-xs">({lawyer.totalReviews})</p>
+                    <p className="text-ehb-textMuted text-xs">({lawyer.totalReviews})</p>
                   </div>
                 </div>
 

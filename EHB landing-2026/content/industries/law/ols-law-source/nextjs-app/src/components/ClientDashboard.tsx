@@ -203,7 +203,7 @@ export default function ClientDashboard() {
                           <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(caseItem.status)}`}>
                             {caseItem.status.replace('_', ' ').toUpperCase()}
                           </span>
-                          <span className="text-xs text-slate-500">{caseItem.caseNumber}</span>
+                          <span className="text-xs text-ehb-textMuted">{caseItem.caseNumber}</span>
                         </div>
                         <h3 className="text-lg font-bold text-white mb-1">{caseItem.title}</h3>
                         <p className="text-sm text-ehb-textMuted">{caseItem.category}</p>
@@ -274,7 +274,7 @@ export default function ClientDashboard() {
                 ))
               ) : (
                 <div className="text-center py-12 bg-white/5 rounded-2xl border border-dashed border-white/10">
-                  <Briefcase className="mx-auto text-slate-600 mb-4" size={48} />
+                  <Briefcase className="mx-auto text-ehb-textMuted mb-4" size={48} />
                   <p className="text-ehb-textMuted mb-4">No cases found</p>
                   <Link 
                     href="/create-case"
@@ -335,7 +335,7 @@ export default function ClientDashboard() {
                     </div>
                     <div>
                       <p className="text-sm text-white">{activity.title}</p>
-                      <p className="text-xs text-slate-500">{activity.time}</p>
+                      <p className="text-xs text-ehb-textMuted">{activity.time}</p>
                     </div>
                   </div>
                 ))}
@@ -365,7 +365,7 @@ export default function ClientDashboard() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-white truncate max-w-[150px]">{doc.name}</p>
-                        <p className="text-xs text-slate-500">{doc.size}</p>
+                        <p className="text-xs text-ehb-textMuted">{doc.size}</p>
                       </div>
                     </div>
                     <button className="p-2 hover:bg-white/10 rounded-lg transition-all">

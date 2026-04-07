@@ -39,7 +39,7 @@ export function ActionPanel(props: {
             <div className="text-xs text-ehb-textMuted">Selected</div>
             <div className="mt-1 text-sm font-semibold text-white">{props.selected.applicant.name}</div>
             <div className="text-xs text-ehb-textBody">{props.selected.type} · {props.selected.status}</div>
-            <div className="text-[11px] text-slate-500 mt-1">Updated: {fmtDateTime(props.selected.updatedAt)}</div>
+            <div className="text-[11px] text-ehb-textMuted mt-1">Updated: {fmtDateTime(props.selected.updatedAt)}</div>
           </div>
 
           <div className="rounded-xl border border-violet-400/25 bg-violet-500/10 p-3">
@@ -88,7 +88,7 @@ export function ActionPanel(props: {
                 <select
                   value={assigneeId}
                   onChange={(e) => setAssigneeId(e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-transparent px-2.5 py-2 text-xs text-slate-200 outline-none"
+                  className="w-full rounded-lg border border-white/10 bg-transparent px-2.5 py-2 text-xs text-ehb-textBody outline-none"
                 >
                   <option value="">Select assignee</option>
                   {props.assignees.map((u) => (
@@ -102,7 +102,7 @@ export function ActionPanel(props: {
                 value={assigneeId}
                 onChange={(e) => setAssigneeId(e.target.value)}
                 placeholder="Paste user id (optional)"
-                className="mt-2 w-full rounded-lg border border-white/10 bg-transparent px-2.5 py-2 text-xs text-slate-200 outline-none"
+                className="mt-2 w-full rounded-lg border border-white/10 bg-transparent px-2.5 py-2 text-xs text-ehb-textBody outline-none"
               />
               <div className="mt-2 flex gap-2">
                 <button

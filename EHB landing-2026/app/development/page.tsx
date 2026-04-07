@@ -113,7 +113,7 @@ export default function DevelopmentPage() {
         <Section title="1. Platform Structure">
           <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
             <div className="glass-panel card-hover p-3">
-              <div className="font-semibold text-slate-100 mb-1.5">Core Systems</div>
+              <div className="font-semibold text-white mb-1.5">Core Systems</div>
               <ul className="space-y-1 text-ehb-textBody">
                 {coreSystems.map((s) => (
                   <li key={s}>• {s}</li>

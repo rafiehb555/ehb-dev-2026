@@ -545,7 +545,7 @@ export default function LandingPage() {
                   <agent.icon className="text-white" size={24} />
                 </div>
                 <h4 className="text-sm font-bold text-white mb-1">{agent.title}</h4>
-                <p className="text-xs text-slate-500">{agent.description}</p>
+                <p className="text-xs text-ehb-textMuted">{agent.description}</p>
               </motion.div>
             ))}
           </div>
@@ -742,7 +742,7 @@ export default function LandingPage() {
               >
                 <service.icon className="mx-auto text-[#D4AF37] mb-2" size={24} />
                 <p className="text-white font-medium text-sm">{service.name}</p>
-                <p className="text-slate-500 text-xs">{service.cases}</p>
+                <p className="text-ehb-textMuted text-xs">{service.cases}</p>
               </motion.div>
             ))}
           </div>
@@ -1067,7 +1067,7 @@ export default function LandingPage() {
               </div>
             </div>
             
-            <p className="text-slate-500 text-sm">
+            <p className="text-ehb-textMuted text-sm">
               © 2026 EHB Law Services. All rights reserved.
             </p>
             

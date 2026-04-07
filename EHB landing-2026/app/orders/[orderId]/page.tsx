@@ -40,7 +40,7 @@ function orderStatusBadgeClass(status: string): string {
     case "CANCELLED":
       return "bg-rose-500/15 text-rose-100 border-rose-400/35";
     default:
-      return "bg-white/10 text-slate-200 border-white/15";
+      return "bg-white/10 text-ehb-textBody border-white/15";
   }
 }
 
@@ -280,20 +280,20 @@ export default function OrderDetailPage() {
 
   if (!orderId) {
     return (
-      <main className="min-h-screen text-slate-100 container-ehb py-10">
+      <main className="min-h-screen text-white container-ehb py-10">
         <p className="text-ehb-textMuted">Invalid order.</p>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6 max-w-2xl">
         <div className="flex flex-wrap gap-2">
           <Link href="/orders" className="text-sm text-cyan-300 hover:underline">
             ← Orders
           </Link>
-          <span className="text-slate-600">·</span>
+          <span className="text-ehb-textMuted">·</span>
           <Link href="/cart" className="text-sm text-ehb-textMuted hover:text-white">
             Cart
           </Link>
@@ -315,12 +315,12 @@ export default function OrderDetailPage() {
             <header>
               <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Marketplace order</p>
               <h1 className="text-2xl font-semibold text-white mt-1">{data.order.product.name}</h1>
-              <p className="text-xs font-mono text-slate-500 mt-2 break-all">{data.order.id}</p>
+              <p className="text-xs font-mono text-ehb-textMuted mt-2 break-all">{data.order.id}</p>
             </header>
 
             {checkoutCancelledBanner ? (
               <div className="rounded-2xl border border-slate-500/35 bg-slate-800/50 px-4 py-3 flex flex-wrap items-start justify-between gap-3">
-                <p className="text-[13px] text-slate-200">
+                <p className="text-[13px] text-ehb-textBody">
                   Checkout was cancelled — you can pay again when ready.
                 </p>
                 <button
@@ -363,11 +363,11 @@ export default function OrderDetailPage() {
               </div>
               <div className="flex justify-between gap-3">
                 <span className="text-ehb-textMuted">Buyer</span>
-                <span className="text-slate-200">{data.order.buyer.name}</span>
+                <span className="text-ehb-textBody">{data.order.buyer.name}</span>
               </div>
               <div className="flex justify-between gap-3">
                 <span className="text-ehb-textMuted">Seller</span>
-                <span className="text-slate-200">{data.order.seller.name}</span>
+                <span className="text-ehb-textBody">{data.order.seller.name}</span>
               </div>
               <div className="flex justify-between gap-3">
                 <span className="text-ehb-textMuted">Created</span>
@@ -378,14 +378,14 @@ export default function OrderDetailPage() {
             <div className="glass-panel rounded-3xl border border-cyan-500/15 bg-cyan-500/[0.03] p-5 space-y-3">
               <p className="text-[11px] uppercase tracking-[0.22em] text-cyan-300/90">Escrow timeline</p>
               {data.escrowTimeline.length === 0 ? (
-                <p className="text-[13px] text-slate-500">No escrow milestones yet.</p>
+                <p className="text-[13px] text-ehb-textMuted">No escrow milestones yet.</p>
               ) : (
                 <ol className="space-y-3 border-l border-white/10 ml-2 pl-4">
                   {data.escrowTimeline.map((step, i) => (
                     <li key={`${step.title}-${step.at}-${i}`} className="relative">
                       <span className="absolute -left-[21px] top-1.5 h-2 w-2 rounded-full bg-cyan-400/80" />
                       <p className="text-sm text-white font-medium">{step.title}</p>
-                      <p className="text-[11px] text-slate-500">{new Date(step.at).toLocaleString()}</p>
+                      <p className="text-[11px] text-ehb-textMuted">{new Date(step.at).toLocaleString()}</p>
                       {step.note ? <p className="text-[12px] text-ehb-textMuted mt-1">{step.note}</p> : null}
                     </li>
                   ))}
@@ -495,7 +495,7 @@ export default function OrderDetailPage() {
               <summary className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted cursor-pointer">
                 Raw metadata (debug)
               </summary>
-              <pre className="text-[11px] text-slate-500 mt-3 overflow-x-auto whitespace-pre-wrap break-all">
+              <pre className="text-[11px] text-ehb-textMuted mt-3 overflow-x-auto whitespace-pre-wrap break-all">
                 {data.order.metadata ? JSON.stringify(data.order.metadata, null, 2) : "— none —"}
               </pre>
             </details>
@@ -539,7 +539,7 @@ export default function OrderDetailPage() {
                 {extendMsg ? <p className="text-[12px] text-emerald-300">{extendMsg}</p> : null}
               </div>
             ) : (
-              <p className="text-[12px] text-slate-500">
+              <p className="text-[12px] text-ehb-textMuted">
                 Escrow extension is available to franchise and admin operators when logged in with the right role.
               </p>
             )}

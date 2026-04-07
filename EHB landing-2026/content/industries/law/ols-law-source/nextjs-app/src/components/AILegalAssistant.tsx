@@ -223,7 +223,7 @@ export default function AILegalAssistant({ isFloating = false }: AILegalAssistan
                         </div>
                         <div>
                           <h4 className="text-[10px] sm:text-xs font-bold text-slate-900">{msg.data?.title}</h4>
-                          <p className="text-[9px] sm:text-[10px] text-slate-500">{msg.data?.description}</p>
+                          <p className="text-[9px] sm:text-[10px] text-ehb-textMuted">{msg.data?.description}</p>
                         </div>
                       </div>
                       <Link 
@@ -245,7 +245,7 @@ export default function AILegalAssistant({ isFloating = false }: AILegalAssistan
                         <FileText size={16} className="sm:w-[18px] sm:h-[18px]" />
                         <span className="font-bold text-[10px] sm:text-xs uppercase tracking-widest">AI Document Generator</span>
                       </div>
-                      <p className="text-[10px] sm:text-xs text-slate-600">I can draft a professional legal document for you.</p>
+                      <p className="text-[10px] sm:text-xs text-ehb-textMuted">I can draft a professional legal document for you.</p>
                       <Link 
                         href="/document-generator"
                         className="w-full py-1.5 sm:py-2 bg-brand-primary text-white rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold flex items-center justify-center gap-2"
@@ -272,7 +272,7 @@ export default function AILegalAssistant({ isFloating = false }: AILegalAssistan
               </div>
               <div className="bg-white border border-slate-200 p-3 sm:p-4 rounded-xl sm:rounded-2xl rounded-tl-none shadow-sm flex items-center gap-2">
                 <Loader2 size={14} className="sm:w-4 sm:h-4 animate-spin text-brand-primary" />
-                <span className="text-[10px] sm:text-xs text-slate-500">{currentLanguage.ui.thinking}</span>
+                <span className="text-[10px] sm:text-xs text-ehb-textMuted">{currentLanguage.ui.thinking}</span>
               </div>
             </div>
           </motion.div>

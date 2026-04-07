@@ -147,7 +147,7 @@ export function AiDataPipelineAdminPanel() {
                       ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-200"
                       : s.status === "Error"
                         ? "bg-rose-500/15 border-rose-500/30 text-rose-200"
-                        : "bg-white/5 border-white/10 text-slate-200"
+                        : "bg-white/5 border-white/10 text-ehb-textBody"
                 }`}
               >
                 {s.status}
@@ -156,11 +156,11 @@ export function AiDataPipelineAdminPanel() {
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
               <div className="glass-panel rounded-xl border border-white/10 p-2">
                 <div className="text-[10px] text-ehb-textMuted">Last run</div>
-                <div className="text-[11px] text-slate-100 font-semibold truncate">{s.lastRun}</div>
+                <div className="text-[11px] text-white font-semibold truncate">{s.lastRun}</div>
               </div>
               <div className="glass-panel rounded-xl border border-white/10 p-2">
                 <div className="text-[10px] text-ehb-textMuted">Next run</div>
-                <div className="text-[11px] text-slate-100 font-semibold truncate">{s.nextRun}</div>
+                <div className="text-[11px] text-white font-semibold truncate">{s.nextRun}</div>
               </div>
             </div>
           </div>

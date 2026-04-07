@@ -28,7 +28,7 @@ export function IndustryAiPanel({ industry }: { industry: string }) {
   return (
     <section className="rounded-2xl glass-card p-6 border border-white/10 space-y-5">
       <div>
-        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">AI Layer</p>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">AI Layer</p>
         <h2 className="text-lg md:text-xl font-semibold text-white">AI Recommendations</h2>
       </div>
 

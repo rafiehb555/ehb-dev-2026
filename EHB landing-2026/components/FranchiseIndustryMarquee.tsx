@@ -33,7 +33,7 @@ export function FranchiseIndustryMarquee({ selectedAccent }: Props) {
           <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">
             Other industries franchise cards
           </p>
-          <span className="text-[11px] text-slate-500">slowly moving</span>
+          <span className="text-[11px] text-ehb-textMuted">slowly moving</span>
         </div>
 
         <div className="franchise-marquee">
@@ -61,11 +61,11 @@ export function FranchiseIndustryMarquee({ selectedAccent }: Props) {
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-white truncate">{ind.name} Franchise</p>
-                  <p className="mt-1 inline-flex items-center gap-1 rounded-full border px-2 py-[2px] text-[10px] font-semibold border-white/10 bg-white/5 text-slate-200">
+                  <p className="mt-1 inline-flex items-center gap-1 rounded-full border px-2 py-[2px] text-[10px] font-semibold border-white/10 bg-white/5 text-ehb-textBody">
                     <span aria-hidden>⏳</span>
                     Coming soon
                   </p>
-                  <p className="text-[11px] text-slate-500 truncate mt-2">
+                  <p className="text-[11px] text-ehb-textMuted truncate mt-2">
                     GoSellr GSM verified system coming for this industry.
                   </p>
                 </div>

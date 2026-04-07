@@ -372,7 +372,7 @@ export default function CaseManagementAgent({ language = 'en' }: CaseManagementA
                 className="h-full bg-gradient-to-r from-brand-primary to-brand-gold"
               />
             </div>
-            <p className="text-slate-500 text-xs mt-1">
+            <p className="text-ehb-textMuted text-xs mt-1">
               {caseItem.stages.filter(s => s.status === 'completed').length}/{caseItem.stages.length} {language === 'ur' ? 'مراحل مکمل' : 'stages complete'}
             </p>
 
@@ -400,12 +400,12 @@ export default function CaseManagementAgent({ language = 'en' }: CaseManagementA
                           <p className={`text-sm ${
                             stage.status === 'completed' ? 'text-green-400' :
                             stage.status === 'current' ? 'text-brand-gold' :
-                            'text-slate-500'
+                            'text-ehb-textMuted'
                           }`}>
                             {language === 'ur' ? stage.nameUrdu : stage.name}
                           </p>
                           {stage.date && (
-                            <p className="text-slate-500 text-xs">{stage.date.toLocaleDateString()}</p>
+                            <p className="text-ehb-textMuted text-xs">{stage.date.toLocaleDateString()}</p>
                           )}
                         </div>
                         {stage.status === 'completed' && <CheckCircle2 className="text-green-500" size={16} />}
@@ -432,7 +432,7 @@ export default function CaseManagementAgent({ language = 'en' }: CaseManagementA
 
       {filteredCases.length === 0 && (
         <div className="text-center py-12">
-          <Scale className="mx-auto text-slate-600 mb-4" size={48} />
+          <Scale className="mx-auto text-ehb-textMuted mb-4" size={48} />
           <p className="text-ehb-textMuted">
             {language === 'ur' ? 'کوئی کیس نہیں ملا' : 'No cases found'}
           </p>

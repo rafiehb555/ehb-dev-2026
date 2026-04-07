@@ -48,7 +48,7 @@ function ValueCard({
 export function EHBValueForEveryone() {
   return (
     <section className="container-ultra section-pad-ultra">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Value for Everyone</p>
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Value for Everyone</p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-6">Why EHB Works for Users, Companies, and Franchise</h2>
 
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-3">

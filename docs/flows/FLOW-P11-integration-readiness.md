@@ -134,6 +134,7 @@ Har indexed plan file ka link: [TRACEABILITY_MATRIX.md](TRACEABILITY_MATRIX.md).
 
 - [x] TRACEABILITY_MATRIX: no empty flow column for indexed plans
 - [x] Major open questions triaged ([Decisions log](#decisions-log-2026-04-07) + [Remaining](#remaining-open-questions-need-owner))
+- [x] **P1 text tokens (incl. OLS law mirror):** main app `app/` / `components/` / `lib/`; law reference UI [`ols-law-source/nextjs-app/src`](../../EHB%20landing-2026/content/industries/law/ols-law-source/nextjs-app/src) — `@theme` adds `--color-ehb-textBody` / `--color-ehb-textMuted` in [`globals.css`](../../EHB%20landing-2026/content/industries/law/ols-law-source/nextjs-app/src/app/globals.css); gold/white buttons keep `text-slate-900` for contrast ([FLOW-P1](FLOW-P1-foundation-ui.md))
 - [ ] At least **one** epic A/B/C walkthrough approved by product
 
 ---

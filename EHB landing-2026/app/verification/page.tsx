@@ -8,7 +8,7 @@ const checks = [
 
 export default function VerificationPage() {
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-5">
         <section className="glass-panel border border-white/10 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-amber-300">Trust System</p>
@@ -23,7 +23,7 @@ export default function VerificationPage() {
           <div className="space-y-2">
             {checks.map((c) => (
               <div key={c.name} className="rounded-xl border border-white/10 bg-white/5 p-3 flex items-center justify-between">
-                <span className="text-xs text-slate-200">{c.name}</span>
+                <span className="text-xs text-ehb-textBody">{c.name}</span>
                 <span className="text-xs text-cyan-200">{c.status}</span>
               </div>
             ))}

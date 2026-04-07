@@ -128,7 +128,7 @@ export function IndustryCard({ industry }: IndustryCardProps) {
               </div>
               {idx !== miniFlow.length - 1 && (
                 <span
-                  className="text-[12px] text-slate-500 animate-pulse"
+                  className="text-[12px] text-ehb-textMuted animate-pulse"
                   aria-hidden
                   style={{ color: accent }}
                 >

@@ -84,7 +84,7 @@ function BadgeCard({ badge }: { badge: TrustBadge }) {
 export function TrustBadgeLegend() {
   return (
     <section className="container-ultra section-pad-ultra pt-4">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Trust badges</p>
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Trust badges</p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">Instant verification meaning</h2>
       <p className="text-ehb-textMuted max-w-2xl mb-6 text-sm md:text-base">
         These badges explain how verification and trust work in the EHB marketplace.

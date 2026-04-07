@@ -42,7 +42,7 @@ function PhaseRow({ p }: { p: Phase }) {
 export function RoadmapPhasesSection() {
   return (
     <section className="container-ultra section-pad-ultra pt-4">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Future plans</p>
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Future plans</p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">EHB Roadmap (Phases 1–8)</h2>
       <p className="text-ehb-textMuted max-w-2xl mb-6 text-sm md:text-base">
         Clear phases so everyone can understand what’s coming next: trust → marketplace → professional network → global

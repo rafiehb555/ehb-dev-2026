@@ -143,7 +143,7 @@ export function PSSVerificationDrawer(props: {
           ) : (
             props.detail.stepContent.documents.map((doc) => (
               <div key={doc.id} className="rounded-lg border border-white/10 bg-black/20 p-2 text-[11px]">
-                <div className="font-semibold text-slate-200">{doc.type}</div>
+                <div className="font-semibold text-ehb-textBody">{doc.type}</div>
                 <div className="text-ehb-textMuted">Status: {doc.reviewStatus}</div>
                 <div className="text-ehb-textMuted">Uploaded: {fmt(doc.createdAt)}</div>
                 <a className="text-cyan-300 underline" href={doc.fileUrl} target="_blank" rel="noreferrer">

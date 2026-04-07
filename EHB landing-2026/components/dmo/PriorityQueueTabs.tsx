@@ -27,11 +27,11 @@ export function PriorityQueueTabs(props: {
               "inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold transition-all",
               active
                 ? "bg-gradient-to-r from-[#00eaff] to-[#3b82f6] text-slate-950 btn-glow"
-                : "glass-panel border border-white/15 text-slate-200 hover:bg-white/5",
+                : "glass-panel border border-white/15 text-ehb-textBody hover:bg-white/5",
             ].join(" ")}
           >
             <span>{tab.label}</span>
-            <span className={active ? "text-slate-900/80" : "text-ehb-textMuted"}>{props.counts[tab.id]}</span>
+            <span className={active ? "text-slate-950/90" : "text-ehb-textMuted"}>{props.counts[tab.id]}</span>
           </button>
         );
       })}

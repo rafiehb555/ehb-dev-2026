@@ -276,7 +276,7 @@ export function ServiceCreationForm() {
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
             <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Preview</p>
-            <div className="mt-2 text-sm text-slate-200 space-y-1">
+            <div className="mt-2 text-sm text-ehb-textBody space-y-1">
               <div>
                 <span className="text-ehb-textMuted">Industry:</span> <span className="font-semibold">{industry?.name}</span>
               </div>
@@ -293,7 +293,7 @@ export function ServiceCreationForm() {
                 </span>
               </div>
             </div>
-            <p className="text-[11px] text-slate-500 mt-3">
+            <p className="text-[11px] text-ehb-textMuted mt-3">
               After submit: DMO workflows + PSS/CRB/STL trust badges appear on marketplace (demo).
             </p>
           </div>
@@ -302,7 +302,7 @@ export function ServiceCreationForm() {
             <button
               type="button"
               onClick={() => setStep(3)}
-              className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-6 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/10 transition-all"
+              className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-6 py-2.5 text-sm font-semibold text-ehb-textBody hover:bg-white/10 transition-all"
               disabled={busy}
             >
               Back
@@ -329,7 +329,7 @@ export function ServiceCreationForm() {
             <button
               type="button"
               onClick={() => setToast(null)}
-              className="text-[11px] font-semibold text-slate-200 hover:underline underline-offset-2"
+              className="text-[11px] font-semibold text-ehb-textBody hover:underline underline-offset-2"
             >
               Dismiss
             </button>

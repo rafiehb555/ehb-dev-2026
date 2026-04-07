@@ -31,7 +31,7 @@ export function DmoLandingSection() {
             </p>
             <div className="grid gap-2 pt-1 sm:grid-cols-3">
               {quickBenefits.map((benefit) => (
-                <div key={benefit} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-slate-200">
+                <div key={benefit} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-ehb-textBody">
                   {benefit}
                 </div>
               ))}
@@ -45,7 +45,7 @@ export function DmoLandingSection() {
               </Link>
               <Link
                 href="/dmo"
-                className="inline-flex items-center rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-100 hover:bg-white/10 transition-colors"
+                className="inline-flex items-center rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
               >
                 Open DMO dashboard
               </Link>
@@ -78,7 +78,7 @@ export function DmoLandingSection() {
       </div>
 
       <div className="space-y-3">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Explainer Cards</p>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Explainer Cards</p>
         <h3 className="text-2xl md:text-3xl font-semibold text-white">Six cards that explain EHB fast</h3>
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
           {onboardingCards.map((card) => (
@@ -99,7 +99,7 @@ export function DmoLandingSection() {
               <div className="p-3.5">
                 <h4 className="text-[15px] font-semibold text-white">{card.title}</h4>
                 <p className="mt-1.5 text-[11px] leading-5 text-ehb-textBody">{card.subtitle}</p>
-                <ul className="mt-2.5 space-y-2 text-[10px] leading-5 text-slate-200">
+                <ul className="mt-2.5 space-y-2 text-[10px] leading-5 text-ehb-textBody">
                   {card.details.map((detail) => (
                     <li key={detail} className="flex gap-2">
                       <span className="mt-[2px] text-cyan-300" aria-hidden>
@@ -119,7 +119,7 @@ export function DmoLandingSection() {
       </div>
 
       <div className="rounded-3xl border border-white/10 bg-white/5 p-5 md:p-7">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">How EHB Works</p>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">How EHB Works</p>
         <h3 className="text-xl md:text-2xl font-semibold text-white mt-1">A simple trust flow behind every verified action</h3>
         <div className="mt-5 grid gap-3 md:grid-cols-6">
           {flow.map((step, idx) => (
@@ -135,7 +135,7 @@ export function DmoLandingSection() {
         <div className="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-100">Trust System</p>
           <h4 className="text-lg font-semibold text-white mt-1">Why verified users feel safer to work with</h4>
-          <ul className="mt-3 space-y-2 text-sm text-slate-100">
+          <ul className="mt-3 space-y-2 text-sm text-white">
             {trustSystemBullets.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -148,7 +148,7 @@ export function DmoLandingSection() {
         <div className="rounded-2xl border border-amber-400/30 bg-amber-500/10 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-amber-100">Continuous Verification</p>
           <h4 className="text-lg font-semibold text-white mt-1">Refilling system keeps trust fresh</h4>
-          <ul className="mt-3 space-y-2 text-sm text-slate-100">
+          <ul className="mt-3 space-y-2 text-sm text-white">
             {continuousVerificationBullets.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -166,7 +166,7 @@ export function DmoLandingSection() {
         </h3>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           {visionPills.map((item) => (
-            <div key={item} className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-slate-200">
+            <div key={item} className="rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-ehb-textBody">
               {item}
             </div>
           ))}

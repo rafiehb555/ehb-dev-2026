@@ -7,7 +7,7 @@ export default async function ServicePage({
 }) {
   const { serviceId } = await params;
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <div className="flex items-center gap-3">
           <Link href="/services" className="text-xs text-ehb-textMuted hover:text-[#00eaff] transition-colors">← Services</Link>

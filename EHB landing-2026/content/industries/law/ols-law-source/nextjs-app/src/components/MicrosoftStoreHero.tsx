@@ -132,13 +132,13 @@ export default function MicrosoftStoreHero() {
         {/* Main Search Bar */}
         <div className="flex-[2] relative group">
           <div className="absolute inset-y-0 left-0 pl-3 sm:pl-5 flex items-center pointer-events-none">
-            <Search className="text-slate-500 group-focus-within:text-brand-primary transition-colors w-4 h-4 sm:w-5 sm:h-5" />
+            <Search className="text-ehb-textMuted group-focus-within:text-brand-primary transition-colors w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           
           <input 
             type="text" 
             placeholder="Search legal services, lawyers..."
-            className="w-full h-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl py-3 sm:py-4 pl-10 sm:pl-14 pr-32 sm:pr-48 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-brand-primary focus:bg-white/10 transition-all text-white placeholder:text-slate-500 shadow-xl"
+            className="w-full h-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl py-3 sm:py-4 pl-10 sm:pl-14 pr-32 sm:pr-48 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-brand-primary focus:bg-white/10 transition-all text-white placeholder:text-ehb-textMuted shadow-xl"
             value={mainSearch}
             onChange={(e) => setMainSearch(e.target.value)}
           />
@@ -190,7 +190,7 @@ export default function MicrosoftStoreHero() {
               <input 
                 type="text" 
                 placeholder="AI: Describe your issue..."
-                className="w-full h-full bg-transparent border-none rounded-lg sm:rounded-xl pl-10 sm:pl-12 pr-3 sm:pr-4 py-3 sm:py-4 text-[11px] sm:text-xs outline-none focus:ring-2 focus:ring-brand-primary transition-all text-white placeholder:text-slate-500"
+                className="w-full h-full bg-transparent border-none rounded-lg sm:rounded-xl pl-10 sm:pl-12 pr-3 sm:pr-4 py-3 sm:py-4 text-[11px] sm:text-xs outline-none focus:ring-2 focus:ring-brand-primary transition-all text-white placeholder:text-ehb-textMuted"
                 value={aiInput}
                 onChange={(e) => setAiInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAIDetection()}
@@ -405,7 +405,7 @@ export default function MicrosoftStoreHero() {
                     {isProcessing ? (
                       <Loader2 size={48} className="sm:w-16 sm:h-16 text-brand-primary animate-spin" />
                     ) : (
-                      <Mic size={48} className={`sm:w-16 sm:h-16 ${isListening ? 'text-brand-primary' : 'text-slate-600'}`} />
+                      <Mic size={48} className={`sm:w-16 sm:h-16 ${isListening ? 'text-brand-primary' : 'text-ehb-textMuted'}`} />
                     )}
                   </div>
                 </div>
@@ -444,7 +444,7 @@ export default function MicrosoftStoreHero() {
               )}
             </div>
             
-            <div className="absolute bottom-8 sm:bottom-12 flex items-center gap-2 text-slate-500 text-xs sm:text-sm">
+            <div className="absolute bottom-8 sm:bottom-12 flex items-center gap-2 text-ehb-textMuted text-xs sm:text-sm">
               <Volume2 size={14} className="sm:w-4 sm:h-4" />
               <span>AI will confirm and open the service for you</span>
             </div>

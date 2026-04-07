@@ -248,7 +248,7 @@ export default function GuidedDemoMode({ isActive = false, onClose }: GuidedDemo
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-xs font-bold text-[#D4AF37]">Step {currentStep + 1} of {DEMO_STEPS.length}</span>
-                        <span className="text-xs text-slate-500">• {step.duration}s</span>
+                        <span className="text-xs text-ehb-textMuted">• {step.duration}s</span>
                       </div>
                       <h3 className="text-xl font-bold text-white mb-1">{step.title}</h3>
                       <p className="text-sm text-ehb-textMuted mb-3">{step.description}</p>

@@ -31,7 +31,7 @@ export function TopNavTabs() {
               "min-h-touch min-w-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs transition-all duration-200",
               active
                 ? `bg-gradient-to-r ${tab.color} text-slate-950 shadow-[0_0_18px_rgba(56,189,248,0.5)]`
-                : "text-slate-200 hover:text-white hover:bg-white/5",
+                : "text-ehb-textBody hover:text-white hover:bg-white/5",
             ].join(" ")}
           >
             {tab.label}

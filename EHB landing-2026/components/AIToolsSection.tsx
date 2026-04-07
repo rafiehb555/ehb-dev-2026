@@ -64,7 +64,7 @@ export function AIToolsSection({
 
   return (
     <section className="container-ultra section-pad-ultra pt-4">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Top Trusted AI Tools</p>
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Top Trusted AI Tools</p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">AI that helps you act safely</h2>
       <p className="text-ehb-textMuted max-w-2xl mb-6 text-sm md:text-base">
         These AI tools are designed for EHB’s verified ecosystem. They guide decisions, reduce confusion, and

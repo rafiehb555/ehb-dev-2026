@@ -171,7 +171,7 @@ export default function Footer() {
                 <Mail className="text-[#D4AF37]" size={18} />
               </div>
               <div>
-                <p className="text-xs text-slate-500">Email</p>
+                <p className="text-xs text-ehb-textMuted">Email</p>
                 <p className="text-sm text-white">contact@ehblaw.com</p>
               </div>
             </div>
@@ -180,7 +180,7 @@ export default function Footer() {
                 <Phone className="text-[#D4AF37]" size={18} />
               </div>
               <div>
-                <p className="text-xs text-slate-500">Phone</p>
+                <p className="text-xs text-ehb-textMuted">Phone</p>
                 <p className="text-sm text-white">+1 (888) EHB-LAWS</p>
               </div>
             </div>
@@ -189,7 +189,7 @@ export default function Footer() {
                 <MapPin className="text-[#D4AF37]" size={18} />
               </div>
               <div>
-                <p className="text-xs text-slate-500">Headquarters</p>
+                <p className="text-xs text-ehb-textMuted">Headquarters</p>
                 <p className="text-sm text-white">Dubai, UAE • Lahore, PK</p>
               </div>
             </div>
@@ -198,7 +198,7 @@ export default function Footer() {
                 <Globe className="text-[#D4AF37]" size={18} />
               </div>
               <div>
-                <p className="text-xs text-slate-500">Global Network</p>
+                <p className="text-xs text-ehb-textMuted">Global Network</p>
                 <p className="text-sm text-white">50+ Countries</p>
               </div>
             </div>
@@ -210,20 +210,20 @@ export default function Footer() {
       <div className="border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-slate-500 text-sm">
+            <p className="text-ehb-textMuted text-sm">
               © 2026 EHB Law Services. All rights reserved.
             </p>
             <div className="flex flex-wrap gap-6">
-              <Link href="/privacy" className="text-slate-500 text-sm hover:text-white transition-colors">
+              <Link href="/privacy" className="text-ehb-textMuted text-sm hover:text-white transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-slate-500 text-sm hover:text-white transition-colors">
+              <Link href="/terms" className="text-ehb-textMuted text-sm hover:text-white transition-colors">
                 Terms of Service
               </Link>
-              <Link href="/cookies" className="text-slate-500 text-sm hover:text-white transition-colors">
+              <Link href="/cookies" className="text-ehb-textMuted text-sm hover:text-white transition-colors">
                 Cookie Policy
               </Link>
-              <Link href="/disclaimer" className="text-slate-500 text-sm hover:text-white transition-colors">
+              <Link href="/disclaimer" className="text-ehb-textMuted text-sm hover:text-white transition-colors">
                 Legal Disclaimer
               </Link>
             </div>

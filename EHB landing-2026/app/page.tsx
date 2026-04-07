@@ -50,7 +50,7 @@ export default function LandingPage() {
   } = homepageContent.sections;
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <LiveActivityCornerFeed />
       {/* Section 1 — Hero: simple, powerful, beginner-friendly */}
       <section className="relative min-h-hero flex flex-col justify-start overflow-hidden border-b border-white/5 hero-bg-ecosystem pt-safe-t pb-8">
@@ -93,7 +93,7 @@ export default function LandingPage() {
                 Create Profile
               </Link>
             </div>
-            <p className="text-slate-500 text-xs font-medium tracking-wide">
+            <p className="text-ehb-textMuted text-xs font-medium tracking-wide">
               32+ Industries &nbsp;•&nbsp; 700+ Services &nbsp;•&nbsp; AI Powered &nbsp;•&nbsp; Verified System
             </p>
           </div>
@@ -117,7 +117,7 @@ export default function LandingPage() {
       <SectionReveal as="div">
         <section className="container-ultra section-pad-ultra pt-6 pb-10">
           <div className="space-y-4">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">How EHB Works</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">How EHB Works</p>
             <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
               How EHB Works &amp; Why It&apos;s Powerful
             </h2>
@@ -182,7 +182,7 @@ export default function LandingPage() {
       {/* Section 2 — How You Can Earn (4 earning methods) */}
       <SectionReveal as="div">
         <section className="container-ultra section-pad-ultra">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Earning Made Simple</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Earning Made Simple</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
             Start Earning in Multiple Ways
           </h2>
@@ -204,7 +204,7 @@ export default function LandingPage() {
       {/* Section 3 — EHB vs Market comparison (Fiverr, Amazon, LinkedIn, Upwork) */}
       <SectionReveal as="div">
         <section className="container-ultra section-pad-ultra">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Why EHB Is Different</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Why EHB Is Different</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">Why EHB is Better Than Other Platforms</h2>
           <p className="text-ehb-textMuted max-w-2xl mb-8 text-sm md:text-base">
             EHB combines the good parts of Fiverr, Amazon, LinkedIn, and Upwork in one simple place.
@@ -212,7 +212,7 @@ export default function LandingPage() {
           <div className="grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl glass-card border border-emerald-400/40 p-6 md:p-7">
               <p className="text-sm font-semibold text-emerald-300 mb-3">EHB</p>
-              <ul className="space-y-2 text-xs md:text-sm text-slate-200">
+              <ul className="space-y-2 text-xs md:text-sm text-ehb-textBody">
                 {platformComparison.ehb.map((item) => (
                   <li key={item}>✔ {item}</li>
                 ))}
@@ -220,7 +220,7 @@ export default function LandingPage() {
             </div>
             <div className="rounded-2xl glass-card border border-red-400/40 p-6 md:p-7">
               <p className="text-sm font-semibold text-red-300 mb-3">Others (Fiverr, Amazon, LinkedIn, Upwork)</p>
-              <ul className="space-y-2 text-xs md:text-sm text-slate-200">
+              <ul className="space-y-2 text-xs md:text-sm text-ehb-textBody">
                 {platformComparison.others.map((item) => (
                   <li key={item}>❌ {item}</li>
                 ))}
@@ -240,7 +240,7 @@ export default function LandingPage() {
       {/* Section 5 — Value explanation + AI simplified */}
       <SectionReveal as="div">
       <section className="container-ultra section-pad-ultra">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Why EHB Is Powerful</p>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Why EHB Is Powerful</p>
         <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">Why EHB is a Powerful Global Platform</h2>
         <p className="text-ehb-textMuted max-w-2xl mb-4 text-sm md:text-base">
           EHB combines multiple platforms into one system.
@@ -283,7 +283,7 @@ export default function LandingPage() {
       {/* DMO department overview */}
       <SectionReveal as="div">
         <section className="container-ultra section-pad-ultra">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
             EHB Departments
           </p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
@@ -317,7 +317,7 @@ export default function LandingPage() {
       {/* Monetization model, pricing, premium, and token positioning */}
       <SectionReveal as="div">
         <section className="container-ultra section-pad-ultra">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
             Monetization &amp; Pricing
           </p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
@@ -376,7 +376,7 @@ export default function LandingPage() {
       {/* Section 7 — Earnings potential (user + franchise) */}
       <SectionReveal as="div">
         <section className="container-ultra section-pad-ultra">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Earnings Potential</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Earnings Potential</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">Your Earning Potential</h2>
           <p className="text-ehb-textMuted max-w-2xl mb-8 text-sm md:text-base">
             These are example ranges to help you imagine what is possible. Real results depend on your activity and performance.
@@ -419,7 +419,7 @@ export default function LandingPage() {
       {/* Section 8 — Franchise (business opportunity, with urgency) */}
       <SectionReveal as="div">
       <section className="container-ultra section-pad-ultra">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Franchise</p>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Franchise</p>
         <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">Own the EHB Network in Your City</h2>
         <p className="text-ehb-textMuted max-w-2xl mb-8 text-sm md:text-base">
           You do not need to build a tech company. EHB gives you the system. You focus on people, partners, and local growth.
@@ -482,7 +482,7 @@ export default function LandingPage() {
       {/* Section 9 — Platform Statistics (4 cols) */}
       <SectionReveal as="div">
       <section className="container-ultra section-pad-ultra">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Scale</p>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Scale</p>
         <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">Platform Statistics</h2>
         <p className="text-ehb-textMuted text-sm md:text-base mb-8">
           Over 10,000 users and hundreds of services across 32 industries – growing daily as new regions
@@ -496,7 +496,7 @@ export default function LandingPage() {
       {/* Section 10 — Investor opportunity */}
       <SectionReveal as="div">
       <section className="container-ultra section-pad-ultra">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+        <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
           Investor Perspective
         </p>
         <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
@@ -513,7 +513,7 @@ export default function LandingPage() {
               href={item.href}
               className="block rounded-2xl glass-panel p-6 border border-white/15 transition-transform duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.03] focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/35"
             >
-              <p className="text-xs font-semibold text-slate-200 mb-1">{item.title}</p>
+              <p className="text-xs font-semibold text-ehb-textBody mb-1">{item.title}</p>
               <p className="text-sm text-ehb-textBody">{item.description}</p>
               <p className="text-[10px] font-medium text-cyan-400/80 mt-3">Learn more →</p>
             </Link>
@@ -553,7 +553,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/franchise"
-              className="min-h-touch inline-flex items-center justify-center rounded-full border border-[#8b5cf6]/40 bg-[#8b5cf6]/10 px-8 py-3.5 text-sm font-semibold text-slate-200 hover:bg-[#8b5cf6]/20 transition-all"
+              className="min-h-touch inline-flex items-center justify-center rounded-full border border-[#8b5cf6]/40 bg-[#8b5cf6]/10 px-8 py-3.5 text-sm font-semibold text-ehb-textBody hover:bg-[#8b5cf6]/20 transition-all"
             >
               Become Franchise Partner
             </Link>
@@ -581,7 +581,7 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
-          <div className="mt-10 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-3 text-[11px] text-slate-500">
+          <div className="mt-10 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-3 text-[11px] text-ehb-textMuted">
             <p className="">
               EHB is a global AI-powered platform connecting services, jobs, and businesses across multiple industries.
             </p>

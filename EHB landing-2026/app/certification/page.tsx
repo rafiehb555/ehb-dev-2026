@@ -104,7 +104,7 @@ export default function CertificationPage() {
   }
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-xl md:text-2xl font-semibold leading-tight gradient-text">CRB Certification</h1>
@@ -164,7 +164,7 @@ export default function CertificationPage() {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold text-slate-200">Documents (URLs)</h3>
+                <h3 className="text-xs font-semibold text-ehb-textBody">Documents (URLs)</h3>
                 <button
                   className="text-xs rounded-full glass-panel px-3 py-1 hover:shadow-neon-blue transition-all"
                   onClick={() => setDocs((d) => [...d, { type: "OTHER", fileUrl: "" }])}
@@ -246,7 +246,7 @@ export default function CertificationPage() {
                     </div>
                     <div className="text-[11px] text-ehb-textMuted">#{a.id.slice(0, 8)} • {new Date(a.createdAt).toLocaleString()}</div>
                   </div>
-                  <div className="mt-2 text-sm text-slate-200">{a.industry}</div>
+                  <div className="mt-2 text-sm text-ehb-textBody">{a.industry}</div>
                   <div className="mt-2 grid gap-1 text-[12px] text-ehb-textMuted">
                     <div>Docs: {a.documents.length}</div>
                     <div>

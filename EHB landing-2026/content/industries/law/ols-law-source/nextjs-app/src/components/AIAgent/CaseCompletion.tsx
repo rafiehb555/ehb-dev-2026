@@ -209,7 +209,7 @@ export default function CaseCompletion({
                     className={`transition-colors ${
                       star <= (hoverRating || rating)
                         ? 'text-brand-gold fill-brand-gold'
-                        : 'text-slate-600'
+                        : 'text-ehb-textMuted'
                     }`}
                   />
                 </motion.button>

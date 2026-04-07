@@ -18,7 +18,7 @@ export function LiveActivityTicker() {
     <div className="mt-6 rounded-full bg-black/30 border border-white/10 px-3 py-2 text-[11px] sm:text-xs text-ehb-textBody overflow-hidden">
       <div className="flex items-center gap-2">
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden />
-        <span className="font-medium text-slate-200">Live activity</span>
+        <span className="font-medium text-ehb-textBody">Live activity</span>
         <div className="relative flex-1 min-w-0 h-4 sm:h-5">
           <div key={index} className="absolute inset-0 flex items-center ticker-slide">
             <span className="truncate">{events[index]}</span>

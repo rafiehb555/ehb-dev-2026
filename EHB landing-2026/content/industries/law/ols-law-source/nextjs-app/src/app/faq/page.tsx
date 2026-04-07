@@ -194,13 +194,13 @@ export default function FAQPage() {
 
             {/* Search */}
             <div className="relative max-w-xl mx-auto">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-ehb-textMuted" size={20} />
               <input
                 type="text"
                 placeholder="Search questions..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-4 text-white placeholder:text-slate-500 outline-none focus:border-[#D4AF37] transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-4 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all"
               />
             </div>
           </motion.div>
@@ -218,7 +218,7 @@ export default function FAQPage() {
               className="lg:col-span-1"
             >
               <div className="sticky top-24 space-y-2">
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Categories</p>
+                <p className="text-xs font-bold text-ehb-textMuted uppercase tracking-wider mb-4">Categories</p>
                 {FAQ_CATEGORIES.map((category) => (
                   <button
                     key={category.id}
@@ -294,7 +294,7 @@ export default function FAQPage() {
 
             {filteredQuestions.length === 0 && (
               <div className="text-center py-12">
-                <HelpCircle className="mx-auto text-slate-600 mb-4" size={48} />
+                <HelpCircle className="mx-auto text-ehb-textMuted mb-4" size={48} />
                 <p className="text-ehb-textMuted mb-4">No questions found matching your search.</p>
                 <button
                   onClick={() => setSearchQuery('')}

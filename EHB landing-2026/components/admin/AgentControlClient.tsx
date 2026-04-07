@@ -192,7 +192,7 @@ async function postAgentRuntime(body: unknown) {
 
 function getAgentStatusMeta(status: AgentStatus) {
   const meta = {
-    idle: { label: "Idle", className: "border-slate-400/20 bg-slate-500/10 text-slate-200" },
+    idle: { label: "Idle", className: "border-slate-400/20 bg-slate-500/10 text-ehb-textBody" },
     "reading-context": { label: "Reading", className: "border-sky-400/20 bg-sky-500/10 text-sky-200" },
     planning: { label: "Planning", className: "border-violet-400/20 bg-violet-500/10 text-violet-200" },
     "waiting-for-input": { label: "Waiting", className: "border-amber-400/20 bg-amber-500/10 text-amber-200" },
@@ -404,7 +404,7 @@ export default function AgentControlClient(props: {
   }, [allAgentIds, quickAgentId]);
 
   return (
-    <main className="min-h-screen text-slate-100" aria-busy={runtimeRefreshing || actionBusy}>
+    <main className="min-h-screen text-white" aria-busy={runtimeRefreshing || actionBusy}>
       <RuntimeToast toast={runtimeToast} onDismiss={dismissToast} />
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900/95 via-slate-950 to-slate-900 p-5 sm:p-6">
@@ -426,7 +426,7 @@ export default function AgentControlClient(props: {
             <div className="flex flex-wrap gap-2">
               <Link
                 href="/admin"
-                className="min-h-touch inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-[12px] font-semibold text-slate-100 hover:border-cyan-400/30 hover:bg-slate-800/80"
+                className="min-h-touch inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-[12px] font-semibold text-white hover:border-cyan-400/30 hover:bg-slate-800/80"
               >
                 ← Super Admin
               </Link>
@@ -492,12 +492,12 @@ export default function AgentControlClient(props: {
             </div>
             <div className="text-right text-[11px] tabular-nums text-ehb-textMuted">
               <span className="text-lg font-semibold text-emerald-300">{busyAgentsNow.length}</span>
-              <span className="text-slate-500"> / {rosterTotal}</span>
-              <span className="block text-[10px] text-slate-500">share of roster “in motion”</span>
+              <span className="text-ehb-textMuted"> / {rosterTotal}</span>
+              <span className="block text-[10px] text-ehb-textMuted">share of roster “in motion”</span>
             </div>
           </div>
           <div className="mt-4 space-y-1.5">
-            <div className="flex justify-between text-[10px] uppercase tracking-wide text-slate-500">
+            <div className="flex justify-between text-[10px] uppercase tracking-wide text-ehb-textMuted">
               <span>Occupancy</span>
               <span>{busySharePct}%</span>
             </div>
@@ -536,7 +536,7 @@ export default function AgentControlClient(props: {
                       </span>
                     </div>
                     <p className="text-[11px] text-ehb-textMuted line-clamp-2">
-                      <span className="text-slate-500">Task: </span>
+                      <span className="text-ehb-textMuted">Task: </span>
                       {s.lastTask}
                     </p>
                   </Link>
@@ -561,7 +561,7 @@ export default function AgentControlClient(props: {
                     <GroupIcon className="h-5 w-5 text-white" aria-hidden />
                   </div>
                   <div>
-                    <h2 className="text-sm sm:text-base font-semibold text-slate-50">{group.title}</h2>
+                    <h2 className="text-sm sm:text-base font-semibold text-white">{group.title}</h2>
                     <p className="text-[11px] text-ehb-textMuted">{group.detail}</p>
                   </div>
                 </div>
@@ -592,7 +592,7 @@ export default function AgentControlClient(props: {
                           <div className="min-w-0 flex-1 space-y-2">
                             <div className="flex flex-wrap items-start justify-between gap-2">
                               <div className="min-w-0">
-                                <h3 className="truncate font-mono text-[12px] sm:text-[13px] font-semibold text-slate-50">
+                                <h3 className="truncate font-mono text-[12px] sm:text-[13px] font-semibold text-white">
                                   {agent.id}
                                 </h3>
                                 <p className="text-[11px] text-ehb-textMuted">{agent.owner}</p>
@@ -621,7 +621,7 @@ export default function AgentControlClient(props: {
                             <p className="line-clamp-2 text-[11px] leading-snug text-ehb-textBody">{agent.summary}</p>
                             {runtime ? (
                               <div className="space-y-1.5">
-                                <div className="flex items-center justify-between text-[10px] text-slate-500">
+                                <div className="flex items-center justify-between text-[10px] text-ehb-textMuted">
                                   <span className="flex items-center gap-1">
                                     <HeartPulse className="h-3 w-3" aria-hidden />
                                     Health
@@ -635,22 +635,22 @@ export default function AgentControlClient(props: {
                                 />
                                 <div className="grid grid-cols-2 gap-2 text-[10px] sm:grid-cols-3">
                                   <div className="rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-ehb-textMuted">
-                                    Queue <span className="font-medium text-slate-100">{runtime.queueSize}</span>
+                                    Queue <span className="font-medium text-white">{runtime.queueSize}</span>
                                   </div>
                                   <div className="rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-ehb-textMuted">
-                                    Updated <span className="font-medium text-slate-100">{runtime.lastUpdatedLabel}</span>
+                                    Updated <span className="font-medium text-white">{runtime.lastUpdatedLabel}</span>
                                   </div>
                                   <div className="col-span-2 rounded-lg border border-white/10 bg-slate-950/40 px-2 py-1.5 text-ehb-textMuted sm:col-span-1">
-                                    <span className="block text-[9px] uppercase tracking-wide text-slate-500">Current task</span>
-                                    <span className="line-clamp-2 text-[11px] text-slate-200">{runtime.lastTask}</span>
+                                    <span className="block text-[9px] uppercase tracking-wide text-ehb-textMuted">Current task</span>
+                                    <span className="line-clamp-2 text-[11px] text-ehb-textBody">{runtime.lastTask}</span>
                                   </div>
                                 </div>
                               </div>
                             ) : (
-                              <p className="text-[11px] text-slate-500">No runtime row yet — open detail or use quick control.</p>
+                              <p className="text-[11px] text-ehb-textMuted">No runtime row yet — open detail or use quick control.</p>
                             )}
                             <div className="flex items-center justify-between pt-1 text-[11px] text-cyan-300/90">
-                              <span className="text-slate-500">Open playbook →</span>
+                              <span className="text-ehb-textMuted">Open playbook →</span>
                               <span className="font-medium">View</span>
                             </div>
                           </div>
@@ -764,7 +764,7 @@ export default function AgentControlClient(props: {
                   <Label htmlFor="qc-agent">Agent</Label>
                   <select
                     id="qc-agent"
-                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100 outline-none focus:border-cyan-400/40 focus:ring-1 focus:ring-cyan-400/30"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-white outline-none focus:border-cyan-400/40 focus:ring-1 focus:ring-cyan-400/30"
                     value={quickAgentId}
                     disabled={actionBusy || runtimeRefreshing || allAgentIds.length === 0}
                     onChange={(e) => setQuickAgentId(e.target.value)}
@@ -780,7 +780,7 @@ export default function AgentControlClient(props: {
                   <Label htmlFor="qc-status">Status</Label>
                   <select
                     id="qc-status"
-                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100 outline-none focus:border-cyan-400/40"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-white outline-none focus:border-cyan-400/40"
                     value={quickStatus}
                     disabled={actionBusy || runtimeRefreshing}
                     onChange={(e) => setQuickStatus(e.target.value as AgentStatus)}
@@ -796,7 +796,7 @@ export default function AgentControlClient(props: {
                   <Label htmlFor="qc-task">Last task</Label>
                   <input
                     id="qc-task"
-                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100 outline-none focus:border-cyan-400/40"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-white outline-none focus:border-cyan-400/40"
                     value={quickLastTask}
                     disabled={actionBusy || runtimeRefreshing}
                     onChange={(e) => setQuickLastTask(e.target.value)}
@@ -809,7 +809,7 @@ export default function AgentControlClient(props: {
                     type="number"
                     min={0}
                     max={999}
-                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-white"
                     value={quickQueue}
                     disabled={actionBusy || runtimeRefreshing}
                     onChange={(e) => setQuickQueue(Number(e.target.value))}
@@ -822,7 +822,7 @@ export default function AgentControlClient(props: {
                     type="number"
                     min={0}
                     max={100}
-                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-white"
                     value={quickHealth}
                     disabled={actionBusy || runtimeRefreshing}
                     onChange={(e) => setQuickHealth(Number(e.target.value))}
@@ -832,7 +832,7 @@ export default function AgentControlClient(props: {
                   <Label htmlFor="qc-ht">Hist. title (opt.)</Label>
                   <input
                     id="qc-ht"
-                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-white"
                     placeholder="Optional"
                     value={quickHistTitle}
                     disabled={actionBusy || runtimeRefreshing}
@@ -843,7 +843,7 @@ export default function AgentControlClient(props: {
                   <Label htmlFor="qc-hd">Hist. detail (opt.)</Label>
                   <input
                     id="qc-hd"
-                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-slate-100"
+                    className="min-h-touch w-full rounded-xl border border-white/12 bg-slate-950/70 px-3 py-2 text-[12px] text-white"
                     placeholder="Use with title (3+ chars each)"
                     value={quickHistDetail}
                     disabled={actionBusy || runtimeRefreshing}
@@ -901,7 +901,7 @@ export default function AgentControlClient(props: {
             <Badge variant="secondary" className="normal-case tracking-normal">
               Guidance
             </Badge>
-            <h2 className="text-sm font-semibold text-slate-100">Quick routing rules</h2>
+            <h2 className="text-sm font-semibold text-white">Quick routing rules</h2>
           </div>
           <Accordion
             defaultOpenId="g0"
@@ -939,11 +939,11 @@ export default function AgentControlClient(props: {
                   id="owner-query"
                   value={recommendationQuery}
                   onChange={(event) => setRecommendationQuery(event.target.value)}
-                  className="min-h-[120px] w-full resize-y rounded-xl border border-white/12 bg-slate-950/70 px-4 py-3 text-[13px] leading-relaxed text-slate-100 outline-none transition-all focus:border-violet-400/40 focus:ring-1 focus:ring-violet-400/25"
+                  className="min-h-[120px] w-full resize-y rounded-xl border border-white/12 bg-slate-950/70 px-4 py-3 text-[13px] leading-relaxed text-white outline-none transition-all focus:border-violet-400/40 focus:ring-1 focus:ring-violet-400/25"
                   placeholder="Example: I want to change trust verification and make sure deployment is safe."
                 />
                 <div className="space-y-1">
-                  <div className="flex justify-between text-[10px] uppercase tracking-wide text-slate-500">
+                  <div className="flex justify-between text-[10px] uppercase tracking-wide text-ehb-textMuted">
                     <Tooltip content="Heuristic match strength for this text">
                       <span className="cursor-help border-b border-dotted border-slate-500">Routing match</span>
                     </Tooltip>
@@ -954,7 +954,7 @@ export default function AgentControlClient(props: {
               </div>
               <div className="space-y-3 rounded-xl border border-white/10 bg-slate-950/50 p-4">
                 <div>
-                  <div className="text-[10px] font-medium uppercase tracking-wide text-slate-500">Primary agent</div>
+                  <div className="text-[10px] font-medium uppercase tracking-wide text-ehb-textMuted">Primary agent</div>
                   <Link
                     href={`/admin/agents/${recommendationResult.primaryAgentId}`}
                     className="mt-1 inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-500/15 px-3 py-1.5 text-[12px] font-medium text-cyan-100 hover:border-cyan-400/50"
@@ -964,13 +964,13 @@ export default function AgentControlClient(props: {
                 </div>
                 <Separator />
                 <div>
-                  <div className="text-[10px] font-medium uppercase tracking-wide text-slate-500">Supporting</div>
+                  <div className="text-[10px] font-medium uppercase tracking-wide text-ehb-textMuted">Supporting</div>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {recommendationResult.supportingAgentIds.map((agentId) => (
                       <Link
                         key={agentId}
                         href={`/admin/agents/${agentId}`}
-                        className="inline-flex items-center rounded-full border border-white/12 bg-slate-900/70 px-2.5 py-1 text-[11px] text-slate-200 hover:border-violet-400/35"
+                        className="inline-flex items-center rounded-full border border-white/12 bg-slate-900/70 px-2.5 py-1 text-[11px] text-ehb-textBody hover:border-violet-400/35"
                       >
                         {agentId}
                       </Link>
@@ -1013,12 +1013,12 @@ export default function AgentControlClient(props: {
                     <div className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b ${theme.bar}`} aria-hidden />
                     <div className="space-y-3 pl-2">
                       <div className="flex flex-wrap items-start justify-between gap-2">
-                        <h3 className="text-[13px] font-semibold text-slate-50">{item.title}</h3>
+                        <h3 className="text-[13px] font-semibold text-white">{item.title}</h3>
                         <Badge variant={theme.badge}>{props.chooserCategories.find((c) => c.id === item.category)?.label ?? item.category}</Badge>
                       </div>
                       <p className="text-[12px] leading-relaxed text-ehb-textBody">{item.ownerNeed}</p>
                       <div className="flex flex-wrap items-center gap-2 text-[11px]">
-                        <span className="text-slate-500">Primary</span>
+                        <span className="text-ehb-textMuted">Primary</span>
                         <Link
                           href={`/admin/agents/${item.primaryAgentId}`}
                           className="inline-flex items-center rounded-full border border-cyan-400/25 bg-cyan-500/10 px-2 py-0.5 font-medium text-cyan-100 hover:border-cyan-400/45"
@@ -1027,12 +1027,12 @@ export default function AgentControlClient(props: {
                         </Link>
                       </div>
                       <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
-                        <span className="text-slate-500">Supporting</span>
+                        <span className="text-ehb-textMuted">Supporting</span>
                         {item.supportingAgentIds.map((agentId) => (
                           <Link
                             key={agentId}
                             href={`/admin/agents/${agentId}`}
-                            className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/70 px-2 py-0.5 text-slate-200 hover:border-white/25"
+                            className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/70 px-2 py-0.5 text-ehb-textBody hover:border-white/25"
                           >
                             {agentId}
                           </Link>
@@ -1090,7 +1090,7 @@ export default function AgentControlClient(props: {
                           </Badge>
                         </div>
                         <p className="mt-2 text-[12px] text-ehb-textBody">{handoff.requestSummary}</p>
-                        <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+                        <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-ehb-textMuted">
                           <span>
                             Expected: <span className="text-ehb-textMuted">{handoff.expectedOutput}</span> · {handoff.createdAtLabel}
                           </span>
@@ -1155,7 +1155,7 @@ export default function AgentControlClient(props: {
                       </span>
                       <div className="min-w-0">
                         <div className="text-[10px] uppercase tracking-wide text-violet-300/80">Step</div>
-                        <div className="font-mono text-[12px] font-medium text-slate-100">{agent}</div>
+                        <div className="font-mono text-[12px] font-medium text-white">{agent}</div>
                       </div>
                     </li>
                   ))}
@@ -1197,24 +1197,24 @@ export default function AgentControlClient(props: {
             <CardContent>
               <ul className="space-y-2 text-[12px] text-ehb-textBody">
                 <li>
-                  <span className="text-slate-500">Start: </span>
+                  <span className="text-ehb-textMuted">Start: </span>
                   <code className="rounded bg-slate-900/80 px-1.5 py-0.5 text-[11px] text-cyan-200">{props.workflowContract.defaultStartingAgent}</code>
                 </li>
                 <li>
-                  <span className="text-slate-500">Max specialists: </span>
+                  <span className="text-ehb-textMuted">Max specialists: </span>
                   {props.workflowContract.maxSpecialistsPerRequest}
                 </li>
                 <li>
-                  <span className="text-slate-500">Risk: </span>
-                  <code className="text-[11px] text-slate-200">{props.workflowContract.routeRiskThrough}</code>
+                  <span className="text-ehb-textMuted">Risk: </span>
+                  <code className="text-[11px] text-ehb-textBody">{props.workflowContract.routeRiskThrough}</code>
                 </li>
                 <li>
-                  <span className="text-slate-500">Memory: </span>
-                  <code className="text-[11px] text-slate-200">{props.workflowContract.routeMemoryThrough}</code>
+                  <span className="text-ehb-textMuted">Memory: </span>
+                  <code className="text-[11px] text-ehb-textBody">{props.workflowContract.routeMemoryThrough}</code>
                 </li>
                 <li>
-                  <span className="text-slate-500">Release: </span>
-                  <code className="text-[11px] text-slate-200">{props.workflowContract.releaseVerificationThrough}</code>
+                  <span className="text-ehb-textMuted">Release: </span>
+                  <code className="text-[11px] text-ehb-textBody">{props.workflowContract.releaseVerificationThrough}</code>
                 </li>
               </ul>
             </CardContent>

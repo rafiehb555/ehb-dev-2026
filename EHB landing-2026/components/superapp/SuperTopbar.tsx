@@ -28,7 +28,7 @@ export function SuperTopbar() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search services, users, products, actions..."
-              className="w-full bg-transparent outline-none placeholder:text-slate-500"
+              className="w-full bg-transparent outline-none placeholder:text-ehb-textMuted"
             />
           </div>
         </form>

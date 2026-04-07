@@ -34,7 +34,7 @@ export function LawIndustry3D({ accentColor = "#6B7280" }: { accentColor?: strin
 
   return (
     <section className="container-ultra section-pad-ultra">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
         How Legal Work Flows on EHB
       </p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
@@ -122,7 +122,7 @@ export function LawIndustry3D({ accentColor = "#6B7280" }: { accentColor?: strin
               {orbitItems.map((item, idx) => (
                 <div
                   key={item.label}
-                  className="absolute rounded-xl bg-slate-950/75 border px-2.5 py-1.5 text-[10px] text-slate-100 shadow-[0_0_18px_rgba(156,163,175,0.55)] animate-float"
+                  className="absolute rounded-xl bg-slate-950/75 border px-2.5 py-1.5 text-[10px] text-white shadow-[0_0_18px_rgba(156,163,175,0.55)] animate-float"
                   style={{
                     left: item.x,
                     top: item.y,
@@ -155,13 +155,13 @@ export function LawIndustry3D({ accentColor = "#6B7280" }: { accentColor?: strin
               {/* center label */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="text-center">
-                  <p className="text-[10px] uppercase tracking-[0.22em] text-slate-200 mb-1">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-ehb-textBody mb-1">
                     EHB LAW CORE
                   </p>
-                  <p className="text-lg sm:text-xl font-bold text-slate-50 mb-1">
+                  <p className="text-lg sm:text-xl font-bold text-white mb-1">
                     Verified Legal AI
                   </p>
-                  <p className="text-[10px] text-slate-100">
+                  <p className="text-[10px] text-white">
                     Client → AI Match → Verified docs → Safe settlement
                   </p>
                 </div>
@@ -189,7 +189,7 @@ export function LawIndustry3D({ accentColor = "#6B7280" }: { accentColor?: strin
           </div>
         </div>
 
-        <p className="mt-5 text-[10px] text-slate-500 text-center relative">
+        <p className="mt-5 text-[10px] text-ehb-textMuted text-center relative">
           Stylised legal flow. In production, documents, verification, and secure settlement use the
           same verified system layers.
         </p>

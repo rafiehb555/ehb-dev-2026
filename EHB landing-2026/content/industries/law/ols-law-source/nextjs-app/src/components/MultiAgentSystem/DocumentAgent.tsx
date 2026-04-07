@@ -231,7 +231,7 @@ Generated on behalf of EHB Law Services Platform.
               <div className={`w-2 h-2 rounded-full ${getStatusColor(doc.status)}`} />
               <div className="flex-1 min-w-0">
                 <p className="text-white text-sm font-medium truncate">{doc.title}</p>
-                <p className="text-slate-500 text-xs">{doc.createdAt.toLocaleDateString()}</p>
+                <p className="text-ehb-textMuted text-xs">{doc.createdAt.toLocaleDateString()}</p>
               </div>
             </div>
           ))}
@@ -262,7 +262,7 @@ Generated on behalf of EHB Law Services Platform.
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 flex items-center justify-center">
                     <FileText className="text-orange-400" size={20} />
                   </div>
-                  <ChevronRight className="text-slate-500 group-hover:text-orange-400 transition-colors" size={20} />
+                  <ChevronRight className="text-ehb-textMuted group-hover:text-orange-400 transition-colors" size={20} />
                 </div>
                 <h4 className="text-white font-bold mb-1">
                   {language === 'ur' ? template.nameUrdu : template.name}
@@ -274,7 +274,7 @@ Generated on behalf of EHB Law Services Platform.
                   <span className="px-2 py-0.5 bg-orange-500/10 text-orange-400 rounded text-xs">
                     {language === 'ur' ? template.categoryUrdu : template.category}
                   </span>
-                  <span className="flex items-center gap-1 text-slate-500 text-xs">
+                  <span className="flex items-center gap-1 text-ehb-textMuted text-xs">
                     <Languages size={12} />
                     {template.languages.length} {language === 'ur' ? 'زبانیں' : 'languages'}
                   </span>

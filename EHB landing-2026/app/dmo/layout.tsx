@@ -84,7 +84,7 @@ export default function DmoLayout({ children }: { children: React.ReactNode }) {
                         "inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-medium transition-all",
                         isActive
                           ? "border-cyan-400/40 bg-cyan-500/20 text-cyan-100 shadow-[0_0_0_1px_rgba(0,234,255,0.15)]"
-                          : "border-white/10 bg-white/5 text-slate-200 hover:bg-white/10",
+                          : "border-white/10 bg-white/5 text-ehb-textBody hover:bg-white/10",
                       ].join(" ")}
                     >
                       <span className="text-sm">{section.icon}</span>

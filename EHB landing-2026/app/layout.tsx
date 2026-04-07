@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <style dangerouslySetInnerHTML={{ __html: EHB_CRITICAL_CSS }} />
       </head>
-      <body className="min-h-screen font-sans text-slate-100 antialiased text-readability">
+      <body className="min-h-screen font-sans text-white antialiased text-readability">
         <div className="min-h-[100dvh] flex flex-col page-mesh relative">
           {/* Center shine – hero jaisi lighting beech mein */}
           <div className="fixed inset-0 pointer-events-none z-0" aria-hidden style={{

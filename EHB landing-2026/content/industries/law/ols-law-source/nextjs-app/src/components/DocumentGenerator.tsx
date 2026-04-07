@@ -152,7 +152,7 @@ Witness 1: _______________    Witness 2: _______________
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                     i <= step 
                       ? 'bg-gradient-to-r from-emerald-500 to-green-500 text-white' 
-                      : 'bg-white/10 text-slate-500'
+                      : 'bg-white/10 text-ehb-textMuted'
                   }`}>
                     {i < step ? <CheckCircle2 size={16} /> : i + 1}
                   </div>
@@ -229,7 +229,7 @@ Witness 1: _______________    Witness 2: _______________
                       <input 
                         type="text" 
                         placeholder="Enter full name"
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-emerald-500 transition-all"
                         value={formData.partyA || ''}
                         onChange={(e) => setFormData({...formData, partyA: e.target.value})}
                       />
@@ -239,7 +239,7 @@ Witness 1: _______________    Witness 2: _______________
                       <input 
                         type="text" 
                         placeholder="Enter address"
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-emerald-500 transition-all"
                         value={formData.addressA || ''}
                         onChange={(e) => setFormData({...formData, addressA: e.target.value})}
                       />
@@ -249,7 +249,7 @@ Witness 1: _______________    Witness 2: _______________
                       <input 
                         type="text" 
                         placeholder="Enter ID number"
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-emerald-500 transition-all"
                         value={formData.idA || ''}
                         onChange={(e) => setFormData({...formData, idA: e.target.value})}
                       />
@@ -291,7 +291,7 @@ Witness 1: _______________    Witness 2: _______________
                       <input 
                         type="text" 
                         placeholder="Enter full name"
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-emerald-500 transition-all"
                         value={formData.partyB || ''}
                         onChange={(e) => setFormData({...formData, partyB: e.target.value})}
                       />
@@ -301,7 +301,7 @@ Witness 1: _______________    Witness 2: _______________
                       <input 
                         type="text" 
                         placeholder="Enter address"
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-emerald-500 transition-all"
                         value={formData.addressB || ''}
                         onChange={(e) => setFormData({...formData, addressB: e.target.value})}
                       />
@@ -311,7 +311,7 @@ Witness 1: _______________    Witness 2: _______________
                       <input 
                         type="text" 
                         placeholder="Enter ID number"
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-emerald-500 transition-all"
                         value={formData.idB || ''}
                         onChange={(e) => setFormData({...formData, idB: e.target.value})}
                       />
@@ -353,7 +353,7 @@ Witness 1: _______________    Witness 2: _______________
                       <input 
                         type="text" 
                         placeholder="e.g. Dubai, UAE"
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-emerald-500 transition-all"
                         value={formData.location || ''}
                         onChange={(e) => setFormData({...formData, location: e.target.value})}
                       />
@@ -372,7 +372,7 @@ Witness 1: _______________    Witness 2: _______________
                       <textarea 
                         placeholder="Any specific terms or conditions..."
                         rows={3}
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-emerald-500 transition-all resize-none"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-emerald-500 transition-all resize-none"
                         value={formData.notes || ''}
                         onChange={(e) => setFormData({...formData, notes: e.target.value})}
                       />
@@ -475,12 +475,12 @@ Witness 1: _______________    Witness 2: _______________
                     <Bot className="text-white animate-pulse" size={32} />
                   </div>
                   <p className="text-emerald-400 font-bold mb-2">AI is drafting your document...</p>
-                  <p className="text-slate-500 text-xs">Analyzing legal requirements and formatting</p>
+                  <p className="text-ehb-textMuted text-xs">Analyzing legal requirements and formatting</p>
                 </div>
               ) : generatedDoc ? (
                 generatedDoc
               ) : (
-                <div className="h-full flex flex-col items-center justify-center text-center text-slate-600">
+                <div className="h-full flex flex-col items-center justify-center text-center text-ehb-textMuted">
                   <FileText size={48} className="mb-4 opacity-30" />
                   <p className="font-sans max-w-[250px]">Complete the form to see your document preview here</p>
                 </div>

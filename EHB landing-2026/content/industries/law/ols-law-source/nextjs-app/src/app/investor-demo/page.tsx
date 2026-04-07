@@ -274,7 +274,7 @@ export default function InvestorDemoPage() {
                   <Play size={24} />
                   Start Guided Demo (2 Minutes)
                 </a>
-                <p className="text-slate-500 text-sm">or</p>
+                <p className="text-ehb-textMuted text-sm">or</p>
                 <button
                   onClick={startLiveDemo}
                   className="inline-flex items-center gap-3 px-6 py-3 bg-white/10 border border-white/20 text-white font-medium rounded-xl hover:bg-white/20 transition-all"
@@ -299,7 +299,7 @@ export default function InvestorDemoPage() {
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
                         <h4 className="text-white font-medium">{item.title}</h4>
-                        <span className="text-xs text-slate-500">{item.duration}</span>
+                        <span className="text-xs text-ehb-textMuted">{item.duration}</span>
                       </div>
                       <p className="text-sm text-ehb-textMuted">{item.desc}</p>
                     </div>

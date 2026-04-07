@@ -759,7 +759,7 @@ export default function FloatingAI() {
                             className={`flex items-center gap-2 px-2 py-1 rounded text-[10px] ${
                               action.status === 'completed' ? 'bg-green-500/10 text-green-400' :
                               action.status === 'in_progress' ? 'bg-brand-gold/10 text-brand-gold' :
-                              'bg-white/5 text-slate-500'
+                              'bg-white/5 text-ehb-textMuted'
                             }`}
                           >
                             {action.status === 'completed' ? (
@@ -941,7 +941,7 @@ export default function FloatingAI() {
                 >
                   {language === 'ur' ? 'صاف کریں' : 'Clear'}
                 </button>
-                <span className="text-[10px] text-slate-500">
+                <span className="text-[10px] text-ehb-textMuted">
                   {pathname}
                 </span>
                 <button

@@ -163,7 +163,7 @@ export default function FranchiseInspectionsPage() {
   }
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-xl md:text-2xl font-semibold leading-tight gradient-text">Franchise Inspections</h1>
@@ -206,7 +206,7 @@ export default function FranchiseInspectionsPage() {
                   </div>
                   <div className="text-[11px] text-ehb-textMuted">#{i.crbApplication?.id?.slice(0, 8) ?? i.id.slice(0, 8)} • {new Date(i.updatedAt).toLocaleString()}</div>
                 </div>
-                <div className="mt-2 text-sm text-slate-200">{i.crbApplication?.industry ?? "—"}</div>
+                <div className="mt-2 text-sm text-ehb-textBody">{i.crbApplication?.industry ?? "—"}</div>
                 <div className="mt-1 text-[12px] text-ehb-textMuted">
                   Docs: {i.crbApplication?.documents?.length ?? 0} · Franchise: {i.franchise?.name ?? i.franchise?.city ?? "Unmapped"}
                 </div>
@@ -229,7 +229,7 @@ export default function FranchiseInspectionsPage() {
 
             <div className="grid gap-2">
               <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3">
-                <div className="text-xs font-semibold text-slate-200 mb-2">Documents</div>
+                <div className="text-xs font-semibold text-ehb-textBody mb-2">Documents</div>
                 <div className="grid gap-1">
                   {(active.crbApplication.documents ?? []).map((d) => (
                     <a
@@ -247,7 +247,7 @@ export default function FranchiseInspectionsPage() {
 
               <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 space-y-2">
                 <div className="flex items-center justify-between">
-                  <div className="text-xs font-semibold text-slate-200">Geo verification</div>
+                  <div className="text-xs font-semibold text-ehb-textBody">Geo verification</div>
                   <button
                     type="button"
                     onClick={captureGeo}
@@ -264,7 +264,7 @@ export default function FranchiseInspectionsPage() {
 
               <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 space-y-2">
                 <div className="flex items-center justify-between">
-                  <div className="text-xs font-semibold text-slate-200">Media (URLs)</div>
+                  <div className="text-xs font-semibold text-ehb-textBody">Media (URLs)</div>
                   <button
                     type="button"
                     onClick={() => setMediaUrls((m) => [...m, ""])}
@@ -307,7 +307,7 @@ export default function FranchiseInspectionsPage() {
                 />
               </label>
 
-              <label className="flex items-center gap-2 text-sm text-slate-200">
+              <label className="flex items-center gap-2 text-sm text-ehb-textBody">
                 <input
                   type="checkbox"
                   checked={fraudSuspected}
@@ -329,7 +329,7 @@ export default function FranchiseInspectionsPage() {
             </div>
 
             <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 space-y-2">
-              <div className="text-xs font-semibold text-slate-200">Escalations</div>
+              <div className="text-xs font-semibold text-ehb-textBody">Escalations</div>
               <div className="space-y-2">
                 {(active.escalations ?? []).length === 0 ? (
                   <div className="text-[12px] text-ehb-textMuted">No escalations recorded yet.</div>

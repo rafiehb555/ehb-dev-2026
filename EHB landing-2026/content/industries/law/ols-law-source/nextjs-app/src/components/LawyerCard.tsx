@@ -66,15 +66,15 @@ export default function LawyerCard({
         
         <div className="grid grid-cols-3 gap-1 py-2 border-y border-slate-800 bg-slate-900/50 rounded-lg">
           <div className="text-center border-r border-slate-800">
-            <p className="text-[6px] sm:text-[7px] uppercase tracking-widest text-slate-500 font-black">Experience</p>
+            <p className="text-[6px] sm:text-[7px] uppercase tracking-widest text-ehb-textMuted font-black">Experience</p>
             <p className="text-[9px] sm:text-[10px] font-bold text-ehb-textBody">{experience}</p>
           </div>
           <div className="text-center border-r border-slate-800">
-            <p className="text-[6px] sm:text-[7px] uppercase tracking-widest text-slate-500 font-black">Success</p>
+            <p className="text-[6px] sm:text-[7px] uppercase tracking-widest text-ehb-textMuted font-black">Success</p>
             <p className="text-[9px] sm:text-[10px] font-bold text-emerald-500">{successRate}</p>
           </div>
           <div className="text-center">
-            <p className="text-[6px] sm:text-[7px] uppercase tracking-widest text-slate-500 font-black">SQL Level</p>
+            <p className="text-[6px] sm:text-[7px] uppercase tracking-widest text-ehb-textMuted font-black">SQL Level</p>
             <div className="flex items-center justify-center gap-1">
               <Database size={10} className="text-brand-primary" />
               <p className="text-[9px] sm:text-[10px] font-bold text-brand-primary">{sqlLevel}</p>
@@ -122,7 +122,7 @@ export default function LawyerCard({
                     <Star size={12} className="sm:w-3.5 sm:h-3.5 text-yellow-500 fill-yellow-500" />
                     <span className="text-xs sm:text-sm font-bold text-white">{rating}</span>
                   </div>
-                  <span className="text-slate-600">•</span>
+                  <span className="text-ehb-textMuted">•</span>
                   <span className="text-xs sm:text-sm text-emerald-500 font-bold">{successRate} Success</span>
                 </div>
               </div>
@@ -130,21 +130,21 @@ export default function LawyerCard({
 
             <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6">
               <div className="text-center p-2 sm:p-3 bg-slate-800/50 rounded-xl">
-                <p className="text-[8px] sm:text-[10px] uppercase tracking-widest text-slate-500 font-bold">Experience</p>
+                <p className="text-[8px] sm:text-[10px] uppercase tracking-widest text-ehb-textMuted font-bold">Experience</p>
                 <p className="text-base sm:text-lg font-bold text-white">{experience}</p>
               </div>
               <div className="text-center p-2 sm:p-3 bg-slate-800/50 rounded-xl">
-                <p className="text-[8px] sm:text-[10px] uppercase tracking-widest text-slate-500 font-bold">SQL Level</p>
+                <p className="text-[8px] sm:text-[10px] uppercase tracking-widest text-ehb-textMuted font-bold">SQL Level</p>
                 <p className="text-base sm:text-lg font-bold text-brand-primary">{sqlLevel}</p>
               </div>
               <div className="text-center p-2 sm:p-3 bg-slate-800/50 rounded-xl">
-                <p className="text-[8px] sm:text-[10px] uppercase tracking-widest text-slate-500 font-bold">Cases</p>
+                <p className="text-[8px] sm:text-[10px] uppercase tracking-widest text-ehb-textMuted font-bold">Cases</p>
                 <p className="text-base sm:text-lg font-bold text-white">150+</p>
               </div>
             </div>
 
             <div className="space-y-2 sm:space-y-3 mb-6">
-              <h3 className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-slate-500">About</h3>
+              <h3 className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-ehb-textMuted">About</h3>
               <p className="text-xs sm:text-sm text-ehb-textBody leading-relaxed">
                 Experienced {specialization.toLowerCase()} with {experience} of practice. 
                 Specializes in complex cases with a proven track record of {successRate} success rate.

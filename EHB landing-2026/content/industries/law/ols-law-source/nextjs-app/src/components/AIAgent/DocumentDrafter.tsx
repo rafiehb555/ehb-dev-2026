@@ -321,7 +321,7 @@ Please review and verify all information before use.
                     <h4 className="text-white font-medium">
                       {language === 'ur' ? template.nameUrdu : template.name}
                     </h4>
-                    <p className="text-slate-500 text-xs">{template.category}</p>
+                    <p className="text-ehb-textMuted text-xs">{template.category}</p>
                   </div>
                 </div>
                 <ChevronRight className="text-ehb-textMuted ml-auto" size={20} />

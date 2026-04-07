@@ -304,7 +304,7 @@ export default function SmartCommunication({ caseId, lawyerName, lawyerImage, la
                       }`}>
                         <p className="text-sm">{message.content}</p>
                       </div>
-                      <div className={`flex items-center gap-1 mt-1 text-xs text-slate-500 ${
+                      <div className={`flex items-center gap-1 mt-1 text-xs text-ehb-textMuted ${
                         message.senderType === 'client' ? 'justify-end' : 'justify-start'
                       }`}>
                         <span>{message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
@@ -406,7 +406,7 @@ export default function SmartCommunication({ caseId, lawyerName, lawyerImage, la
                       <p className="text-ehb-textMuted text-sm mt-1">
                         {language === 'ur' ? notification.descriptionUrdu : notification.description}
                       </p>
-                      <p className="text-slate-500 text-xs mt-2 flex items-center gap-1">
+                      <p className="text-ehb-textMuted text-xs mt-2 flex items-center gap-1">
                         <Clock size={12} />
                         {notification.timestamp.toLocaleString()}
                       </p>

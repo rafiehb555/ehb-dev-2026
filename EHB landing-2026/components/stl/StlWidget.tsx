@@ -45,7 +45,7 @@ function Bar({
     <div>
       <div className="flex items-center justify-between text-[11px] text-ehb-textMuted">
         <span>{label}</span>
-        <span className="text-slate-200 font-semibold">{value}</span>
+        <span className="text-ehb-textBody font-semibold">{value}</span>
       </div>
       <div className="mt-1 h-1.5 rounded-full bg-slate-800/80 overflow-hidden">
         <div className={`h-full rounded-full ${tone}`} style={{ width: `${pct}%` }} />
@@ -90,14 +90,14 @@ export function StlWidget() {
     <section className="glass-panel border border-white/10 rounded-2xl p-5 md:p-6">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-1">Trust</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-1">Trust</p>
           <h2 className="text-lg md:text-xl font-semibold text-white">STL Score</h2>
           <p className="text-[11px] text-ehb-textMuted mt-1">Your live trust ranking across the marketplace.</p>
         </div>
         <div className={`rounded-2xl glass-panel border px-4 py-3 ${tone}`}>
           <div className="text-[11px] uppercase tracking-[0.22em] text-ehb-textBody">Level</div>
           <div className="text-lg font-semibold text-white">L{data?.level ?? "—"}</div>
-          <div className="text-[11px] text-slate-200">{data?.label ?? "—"}</div>
+          <div className="text-[11px] text-ehb-textBody">{data?.label ?? "—"}</div>
         </div>
       </div>
 
@@ -112,7 +112,7 @@ export function StlWidget() {
       ) : data ? (
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
-            <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Total</div>
+            <div className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Total</div>
             <div className="text-3xl font-semibold text-white mt-1">{data.total}</div>
             <div className="text-[11px] text-ehb-textMuted mt-1">0 → 100 trust power</div>
           </div>

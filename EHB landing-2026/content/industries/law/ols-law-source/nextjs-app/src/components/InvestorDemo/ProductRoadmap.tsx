@@ -354,7 +354,7 @@ export default function ProductRoadmap({ language = 'en' }: ProductRoadmapProps)
               </div>
               <item.icon className="mx-auto text-ehb-textMuted mb-2" size={20} />
               <p className="text-white font-medium text-sm">{item.name}</p>
-              <p className="text-slate-500 text-xs mt-1">{item.description}</p>
+              <p className="text-ehb-textMuted text-xs mt-1">{item.description}</p>
             </motion.div>
           ))}
         </div>
@@ -394,7 +394,7 @@ export default function ProductRoadmap({ language = 'en' }: ProductRoadmapProps)
         {/* Month labels */}
         <div className="flex justify-between mt-2 px-4">
           {['Month 1', 'Month 3', 'Month 6', 'Month 9', 'Month 12'].map((month) => (
-            <span key={month} className="text-slate-500 text-xs">{month}</span>
+            <span key={month} className="text-ehb-textMuted text-xs">{month}</span>
           ))}
         </div>
       </div>

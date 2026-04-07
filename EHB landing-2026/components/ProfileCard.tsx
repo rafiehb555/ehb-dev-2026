@@ -37,14 +37,14 @@ export function ProfileCard({ profile }: { profile: JpsProfile }) {
         <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
           <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Verification</p>
           <p className="text-sm font-semibold text-white leading-relaxed">{profile.verificationStatus}</p>
-          <p className="text-[11px] text-slate-500 mt-2">Meaning shown across trust badges</p>
+          <p className="text-[11px] text-ehb-textMuted mt-2">Meaning shown across trust badges</p>
         </div>
         <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
           <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Rating</p>
           <p className="text-sm font-semibold text-white leading-relaxed">
             {profile.rating.toFixed(1)} / 5.0
           </p>
-          <p className="text-[11px] text-slate-500 mt-2">Trusted outcomes (demo)</p>
+          <p className="text-[11px] text-ehb-textMuted mt-2">Trusted outcomes (demo)</p>
         </div>
       </div>
 
@@ -52,7 +52,7 @@ export function ProfileCard({ profile }: { profile: JpsProfile }) {
         {profile.skills.map((s) => (
           <span
             key={s}
-            className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-slate-200"
+            className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-ehb-textBody"
           >
             {s}
           </span>
@@ -71,7 +71,7 @@ export function ProfileCard({ profile }: { profile: JpsProfile }) {
         </Link>
         <Link
           href="/ai-marketplace"
-          className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-6 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/10 transition-all"
+          className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-6 py-2.5 text-sm font-semibold text-ehb-textBody hover:bg-white/10 transition-all"
         >
           Find verified tools
         </Link>

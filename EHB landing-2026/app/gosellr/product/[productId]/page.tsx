@@ -38,7 +38,7 @@ export default function GosellrProductPage({
   })();
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div className="space-y-1">
@@ -48,7 +48,7 @@ export default function GosellrProductPage({
 
             {locationLabel ? (
               <div
-                className="mt-3 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border border-white/10"
+                className="mt-3 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-ehb-textBody border border-white/10"
                 style={{
                   borderColor: `${locationAccent}55`,
                   boxShadow: `0 0 28px ${locationAccent}22`,
@@ -70,7 +70,7 @@ export default function GosellrProductPage({
             </Link>
             <Link
               href={`/cart${locationQs}`}
-              className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-3 py-1.5 font-semibold text-slate-200 hover:bg-white/10 transition-all duration-200"
+              className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-3 py-1.5 font-semibold text-ehb-textBody hover:bg-white/10 transition-all duration-200"
             >
               Open cart
             </Link>
@@ -94,10 +94,10 @@ export default function GosellrProductPage({
                 />
               </div>
               <div className="mt-4 flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-slate-200">
+                <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-ehb-textBody">
                   Badge: <span className="text-white font-semibold ml-1">{product.badge}</span>
                 </span>
-                <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-slate-200">
+                <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-ehb-textBody">
                   Tier: <span className="text-white font-semibold ml-1">{product.tier}</span>
                 </span>
               </div>

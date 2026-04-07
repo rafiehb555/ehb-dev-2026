@@ -19,7 +19,7 @@ export function HealthIndustry3D() {
 
   return (
     <section className="container-ultra section-pad-ultra">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
         How Health Services Flow on EHB
       </p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
@@ -114,7 +114,7 @@ export function HealthIndustry3D() {
               {orbitItems.map((item, idx) => (
                 <div
                   key={item.label}
-                  className="absolute rounded-xl bg-slate-950/75 border border-white/30 px-2.5 py-1.5 text-[10px] text-slate-100 shadow-[0_0_18px_rgba(56,189,248,0.7)] animate-float"
+                  className="absolute rounded-xl bg-slate-950/75 border border-white/30 px-2.5 py-1.5 text-[10px] text-white shadow-[0_0_18px_rgba(56,189,248,0.7)] animate-float"
                   style={{
                     left: item.x,
                     top: item.y,
@@ -151,7 +151,7 @@ export function HealthIndustry3D() {
                   <p className="text-lg sm:text-xl font-bold text-sky-50 mb-1">
                     AI Diagnosis + Smart Matching
                   </p>
-                  <p className="text-[10px] text-slate-100">
+                  <p className="text-[10px] text-white">
                     System brain for verified patient care
                   </p>
                 </div>
@@ -200,12 +200,12 @@ export function HealthIndustry3D() {
           }}
         >
           <p className="text-[11px] font-semibold text-sky-100 mb-1">Flow</p>
-          <p className="text-[10px] text-slate-200 leading-relaxed">
+          <p className="text-[10px] text-ehb-textBody leading-relaxed">
             Patient → AI suggests best doctor → Appointment → Treatment → Verified → Payment → Feedback → Record saved
           </p>
         </div>
 
-        <p className="mt-4 text-[10px] text-slate-500 text-center">
+        <p className="mt-4 text-[10px] text-ehb-textMuted text-center">
           Clean, verified, and safety-focused. In production, real doctors, appointments, and
           records move through the same EHB layers.
         </p>

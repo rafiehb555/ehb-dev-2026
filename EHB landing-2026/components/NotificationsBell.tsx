@@ -160,12 +160,12 @@ export function NotificationsBell() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="relative inline-flex items-center justify-center rounded-full h-7 w-7 text-xs text-slate-200 hover:bg-white/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+        className="relative inline-flex items-center justify-center rounded-full h-7 w-7 text-xs text-ehb-textBody hover:bg-white/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
         aria-expanded={open}
         aria-haspopup="dialog"
         aria-label={bellAria}
       >
-        <Bell className="h-3.5 w-3.5 text-slate-200" strokeWidth={2} aria-hidden />
+        <Bell className="h-3.5 w-3.5 text-ehb-textBody" strokeWidth={2} aria-hidden />
         {unreadCount > 0 && (
           <span className="absolute -top-0.5 -right-0.5 h-3.5 min-w-[14px] px-[3px] rounded-full bg-rose-500 text-[9px] font-semibold text-white flex items-center justify-center">
             {Math.min(99, unreadCount)}
@@ -188,7 +188,7 @@ export function NotificationsBell() {
               <button
                 type="button"
                 onClick={markAllRead}
-                className="text-[11px] font-semibold text-slate-200 hover:text-white underline-offset-2 hover:underline"
+                className="text-[11px] font-semibold text-ehb-textBody hover:text-white underline-offset-2 hover:underline"
               >
                 Mark all read
               </button>
@@ -213,10 +213,10 @@ export function NotificationsBell() {
                         aria-hidden
                       />
                       <div className="min-w-0 flex-1">
-                        <p className={`text-[12px] ${n.read ? "text-slate-200/90" : "text-white"} leading-relaxed`}>
+                        <p className={`text-[12px] ${n.read ? "text-ehb-textBody/90" : "text-white"} leading-relaxed`}>
                           {n.text}
                         </p>
-                        <p className="text-[10px] text-slate-500 mt-0.5">{timeAgo(n.createdAt)}</p>
+                        <p className="text-[10px] text-ehb-textMuted mt-0.5">{timeAgo(n.createdAt)}</p>
                         {n.href && (
                           <p className="text-[10px] text-cyan-400/90 mt-1 font-medium">Open →</p>
                         )}

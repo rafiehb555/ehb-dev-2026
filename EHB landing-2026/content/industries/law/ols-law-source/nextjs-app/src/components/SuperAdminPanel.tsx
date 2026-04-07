@@ -63,7 +63,7 @@ export default function SuperAdminPanel() {
                 <stat.icon size={20} className="sm:w-6 sm:h-6" />
               </div>
               <div>
-                <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500">{stat.label}</p>
+                <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-ehb-textMuted">{stat.label}</p>
                 <p className="text-lg sm:text-xl font-bold text-white">{stat.value}</p>
               </div>
             </div>

@@ -118,22 +118,22 @@ export default function PaymentSuccessPage() {
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white/5 rounded-xl p-4">
-                  <p className="text-xs text-slate-500 mb-1">Case Type</p>
+                  <p className="text-xs text-ehb-textMuted mb-1">Case Type</p>
                   <p className="text-white font-bold">Family Law - Divorce</p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4">
-                  <p className="text-xs text-slate-500 mb-1">Status</p>
+                  <p className="text-xs text-ehb-textMuted mb-1">Status</p>
                   <p className="text-emerald-400 font-bold flex items-center gap-2">
                     <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                     Active
                   </p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4">
-                  <p className="text-xs text-slate-500 mb-1">Amount Paid</p>
+                  <p className="text-xs text-ehb-textMuted mb-1">Amount Paid</p>
                   <p className="text-[#D4AF37] font-bold">$150.00</p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4">
-                  <p className="text-xs text-slate-500 mb-1">Payment Method</p>
+                  <p className="text-xs text-ehb-textMuted mb-1">Payment Method</p>
                   <p className="text-white font-bold">Credit Card</p>
                 </div>
               </div>
@@ -160,7 +160,7 @@ export default function PaymentSuccessPage() {
                   <div className="flex items-center gap-2 mt-1">
                     <Star className="text-yellow-400 fill-yellow-400" size={14} />
                     <span className="text-white text-sm font-bold">4.9</span>
-                    <span className="text-slate-500 text-sm">(156 reviews)</span>
+                    <span className="text-ehb-textMuted text-sm">(156 reviews)</span>
                   </div>
                 </div>
               </div>
@@ -233,7 +233,7 @@ export default function PaymentSuccessPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="flex flex-wrap items-center justify-center gap-6 mt-8 text-slate-500"
+          className="flex flex-wrap items-center justify-center gap-6 mt-8 text-ehb-textMuted"
         >
           <div className="flex items-center gap-2">
             <Shield size={16} />

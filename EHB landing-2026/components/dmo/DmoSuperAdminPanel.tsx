@@ -48,7 +48,7 @@ export function DmoSuperAdminPanel() {
             <select
               value={industrySlug}
               onChange={(e) => setIndustrySlug(e.target.value)}
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 focus:outline-none"
+              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white focus:outline-none"
             >
               {INDUSTRIES.map((i) => (
                 <option key={i.slug} value={i.slug}>
@@ -81,7 +81,7 @@ export function DmoSuperAdminPanel() {
             <p className="text-[10px] text-ehb-textMuted">To be connected with Phase 72–85 data pipeline later.</p>
           </div>
           <span
-            className="inline-flex items-center rounded-full px-3 py-1 border border-white/10 bg-white/5 text-[10px] text-slate-200"
+            className="inline-flex items-center rounded-full px-3 py-1 border border-white/10 bg-white/5 text-[10px] text-ehb-textBody"
             style={{ borderColor: `${accent}55` }}
           >
             Global view
@@ -101,20 +101,20 @@ export function DmoSuperAdminPanel() {
               <div key={c.id} className="grid grid-cols-12 items-center rounded-2xl glass-card border p-3 card-hover">
                 <div className="col-span-4 min-w-0">
                   <div className="text-[11px] font-semibold text-white truncate">{c.name}</div>
-                  <div className="text-[10px] text-slate-500 truncate mt-0.5">Accent: {c.accent}</div>
+                  <div className="text-[10px] text-ehb-textMuted truncate mt-0.5">Accent: {c.accent}</div>
                 </div>
-                <div className="col-span-3 text-[11px] text-slate-200 font-semibold">{c.activeFranchises}</div>
-                <div className="col-span-2 text-[11px] text-slate-200 font-semibold">{c.pendingApprovals}</div>
+                <div className="col-span-3 text-[11px] text-ehb-textBody font-semibold">{c.activeFranchises}</div>
+                <div className="col-span-2 text-[11px] text-ehb-textBody font-semibold">{c.pendingApprovals}</div>
                 <div className="col-span-3 flex items-center justify-end gap-2">
                   <Link
                     href={`/dmo/applications?country=${encodeURIComponent(c.id.includes("PK-") ? "PK" : "UAE")}&industry=${encodeURIComponent(industrySlug)}`}
-                    className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-200 hover:bg-white/5 transition-all inline-flex items-center justify-center"
+                    className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-ehb-textBody hover:bg-white/5 transition-all inline-flex items-center justify-center"
                   >
                     Route queue
                   </Link>
                   <button
                     type="button"
-                    className="h-9 rounded-xl bg-white/5 border border-white/10 px-3 text-[11px] text-slate-200 hover:bg-white/10 transition-all inline-flex items-center justify-center"
+                    className="h-9 rounded-xl bg-white/5 border border-white/10 px-3 text-[11px] text-ehb-textBody hover:bg-white/10 transition-all inline-flex items-center justify-center"
                     onClick={() => window.alert(`Mock: updated routing policy for ${c.name} (later: backend)`) }
                   >
                     Adjust policy

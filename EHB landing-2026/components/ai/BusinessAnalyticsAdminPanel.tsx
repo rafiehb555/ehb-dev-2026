@@ -171,7 +171,7 @@ export function BusinessAnalyticsAdminPanel() {
                 className={`min-h-touch rounded-full px-3 py-1.5 text-[11px] font-medium transition-all border ${
                   tab === t
                     ? "bg-gradient-to-r from-[#00eaff]/25 to-[#3b82f6]/25 text-white border-white/15 shadow-sm"
-                    : "bg-white/0 text-ehb-textMuted hover:text-slate-200 border-white/10"
+                    : "bg-white/0 text-ehb-textMuted hover:text-ehb-textBody border-white/10"
                 }`}
               >
                 {t}
@@ -181,7 +181,7 @@ export function BusinessAnalyticsAdminPanel() {
             <select
               value={period}
               onChange={(e) => setPeriod(e.target.value as Period)}
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 focus:outline-none"
+              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white focus:outline-none"
               aria-label="Period"
             >
               <option value="30d">{PERIOD_LABEL["30d"]}</option>
@@ -215,7 +215,7 @@ export function BusinessAnalyticsAdminPanel() {
                 <p className="text-[11px] text-ehb-textMuted mt-1 leading-relaxed">{c.subtitle}</p>
               </div>
               <span
-                className="inline-flex items-center rounded-full px-2 py-1 text-[10px] border border-white/10 bg-white/5 text-slate-200"
+                className="inline-flex items-center rounded-full px-2 py-1 text-[10px] border border-white/10 bg-white/5 text-ehb-textBody"
                 style={{ borderColor: `${accent}55` }}
               >
                 AI Report

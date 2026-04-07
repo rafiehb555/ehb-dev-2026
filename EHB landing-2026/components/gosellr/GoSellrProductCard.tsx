@@ -51,7 +51,7 @@ export function GoSellrProductCard({
           <p className="text-sm font-semibold text-white line-clamp-2">{product.name}</p>
           <p className="text-[11px] text-ehb-textMuted mt-1">{product.category}</p>
         </div>
-        <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-2 py-[2px] text-[10px] text-slate-200">
+        <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-2 py-[2px] text-[10px] text-ehb-textBody">
           {trust ? `${trust.badge.badge} ${trust.badge.level}` : product.badge}
         </span>
       </div>

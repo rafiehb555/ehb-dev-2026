@@ -24,7 +24,7 @@ export function EHBSystem3D() {
 
   return (
     <section className="container-ultra section-pad-ultra">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
         How EHB Works
       </p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
@@ -94,7 +94,7 @@ export function EHBSystem3D() {
               {orbitItems.map((item, idx) => (
                 <div
                   key={item.label}
-                  className="absolute rounded-xl bg-slate-950/60 border border-white/20 px-2.5 py-1.5 text-[10px] text-slate-100 shadow-[0_0_16px_rgba(56,189,248,0.4)] animate-float"
+                  className="absolute rounded-xl bg-slate-950/60 border border-white/20 px-2.5 py-1.5 text-[10px] text-white shadow-[0_0_16px_rgba(56,189,248,0.4)] animate-float"
                   style={{
                     left: item.x,
                     top: item.y,
@@ -131,7 +131,7 @@ export function EHBSystem3D() {
                   <p className="text-lg sm:text-xl font-bold gradient-text-new mb-1">
                     Verified Ecosystem
                   </p>
-                  <p className="text-[10px] text-slate-100">
+                  <p className="text-[10px] text-white">
                     Verifies → Manages → Delivers trusted services
                   </p>
                 </div>
@@ -169,7 +169,7 @@ export function EHBSystem3D() {
         </div>
 
         {/* simplified fallback note for very small screens */}
-        <p className="mt-5 text-[10px] text-slate-500 text-center">
+        <p className="mt-5 text-[10px] text-ehb-textMuted text-center">
           On smaller or low‑power devices this visual uses a simplified 2D layout for smooth
           performance.
         </p>

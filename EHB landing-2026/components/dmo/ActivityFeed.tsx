@@ -6,7 +6,7 @@ import { fmtDateTime } from "./ui";
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full glass-panel border border-white/10 px-2 py-0.5 text-[10px] text-slate-200">
+    <span className="inline-flex items-center rounded-full glass-panel border border-white/10 px-2 py-0.5 text-[10px] text-ehb-textBody">
       {children}
     </span>
   );
@@ -51,7 +51,7 @@ export function ActivityFeed(props: {
       </div>
 
       <div className="mt-3 rounded-xl border border-white/10 overflow-hidden">
-        <div className="bg-white/5 px-3 py-2 text-slate-200 font-semibold text-[11px]">
+        <div className="bg-white/5 px-3 py-2 text-ehb-textBody font-semibold text-[11px]">
           Recent approvals
         </div>
         <div className="p-2 space-y-2">
@@ -67,10 +67,10 @@ export function ActivityFeed(props: {
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-semibold text-white text-[11px]">{l.action}</span>
-                  <span className="text-[10px] text-slate-500">{new Date(l.createdAt).toLocaleTimeString()}</span>
+                  <span className="text-[10px] text-ehb-textMuted">{new Date(l.createdAt).toLocaleTimeString()}</span>
                 </div>
                 <div className="text-[10px] text-ehb-textMuted mt-0.5">
-                  App <span className="font-mono text-slate-200">{l.targetId.slice(0, 10)}…</span> ·{" "}
+                  App <span className="font-mono text-ehb-textBody">{l.targetId.slice(0, 10)}…</span> ·{" "}
                   {l.actor ? `${l.actor.name} (${l.actor.role})` : "System"}
                 </div>
               </button>
@@ -80,7 +80,7 @@ export function ActivityFeed(props: {
       </div>
 
       <div className="mt-3 rounded-xl border border-white/10 overflow-hidden">
-        <div className="bg-white/5 px-3 py-2 text-slate-200 font-semibold text-[11px]">
+        <div className="bg-white/5 px-3 py-2 text-ehb-textBody font-semibold text-[11px]">
           Alerts
         </div>
         <div className="p-2">
@@ -100,7 +100,7 @@ export function ActivityFeed(props: {
       </div>
 
       <div className="mt-3 rounded-xl border border-white/10 overflow-hidden">
-        <div className="bg-white/5 px-3 py-2 text-slate-200 font-semibold text-[11px]">
+        <div className="bg-white/5 px-3 py-2 text-ehb-textBody font-semibold text-[11px]">
           Audit stream
         </div>
         <div className="p-2 max-h-[380px] overflow-auto space-y-2">
@@ -115,13 +115,13 @@ export function ActivityFeed(props: {
                 className="rounded-xl glass-panel border border-white/10 p-2"
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-semibold text-slate-100 text-[11px]">{l.action}</span>
-                  <span className="text-[10px] text-slate-500">{new Date(l.createdAt).toLocaleTimeString()}</span>
+                  <span className="font-semibold text-white text-[11px]">{l.action}</span>
+                  <span className="text-[10px] text-ehb-textMuted">{new Date(l.createdAt).toLocaleTimeString()}</span>
                 </div>
                 <div className="text-[10px] text-ehb-textMuted mt-0.5">
-                  {l.targetType} · <span className="font-mono text-slate-200">{l.targetId.slice(0, 10)}…</span>
+                  {l.targetType} · <span className="font-mono text-ehb-textBody">{l.targetId.slice(0, 10)}…</span>
                 </div>
-                <div className="text-[10px] text-slate-500 mt-0.5">
+                <div className="text-[10px] text-ehb-textMuted mt-0.5">
                   Actor: <span className="text-ehb-textBody">{l.actor ? l.actor.name : "System"}</span>
                 </div>
               </motion.div>

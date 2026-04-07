@@ -41,7 +41,7 @@ function Badge(props: { tone?: "cyan" | "emerald" | "amber" | "rose" | "slate" |
             ? "border-amber-400/40 text-amber-200"
             : tone === "violet"
               ? "border-violet-400/40 text-violet-200"
-              : "border-white/15 text-slate-200";
+              : "border-white/15 text-ehb-textBody";
   return (
     <span className={`inline-flex items-center gap-2 rounded-full glass-panel border px-2.5 py-1 text-[10px] font-semibold ${styles}`}>
       {props.children}
@@ -166,7 +166,7 @@ export default function SearchPage() {
   }, [q]);
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-xl md:text-2xl font-semibold leading-tight gradient-text">AI Marketplace Search</h1>
@@ -309,7 +309,7 @@ export default function SearchPage() {
             <div className="lg:col-span-2">
               <div className="text-xs text-ehb-textBody mb-1">Distance</div>
               <div className="flex items-center gap-2">
-                <label className="flex items-center gap-2 text-xs text-slate-200">
+                <label className="flex items-center gap-2 text-xs text-ehb-textBody">
                   <input type="checkbox" checked={useGeo} onChange={(e) => setUseGeo(e.target.checked)} />
                   Use GPS
                 </label>

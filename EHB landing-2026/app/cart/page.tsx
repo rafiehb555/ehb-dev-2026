@@ -157,7 +157,7 @@ export default function CartPage({
   };
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div className="space-y-1">
@@ -172,7 +172,7 @@ export default function CartPage({
 
             {locationLabel ? (
               <div
-                className="mt-3 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border border-white/10"
+                className="mt-3 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-ehb-textBody border border-white/10"
                 style={{
                   borderColor: `${locationAccent}55`,
                   boxShadow: `0 0 28px ${locationAccent}22`,
@@ -194,7 +194,7 @@ export default function CartPage({
             </Link>
             <Link
               href={`/orders${locationQs}`}
-              className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-3 py-1.5 font-semibold text-slate-200 hover:bg-white/10 transition-all duration-200"
+              className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-3 py-1.5 font-semibold text-ehb-textBody hover:bg-white/10 transition-all duration-200"
             >
               Orders
             </Link>
@@ -234,12 +234,12 @@ export default function CartPage({
                     </div>
 
                     <div className="mt-3 flex flex-wrap items-center gap-2">
-                      <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-slate-200">
+                      <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-ehb-textBody">
                         Qty
                       </div>
                       <button
                         type="button"
-                        className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-slate-200 hover:bg-white/10 transition-all"
+                        className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-ehb-textBody hover:bg-white/10 transition-all"
                         onClick={() => setQty(l.product.id, Math.max(0, l.qty - 1))}
                       >
                         −
@@ -249,7 +249,7 @@ export default function CartPage({
                       </span>
                       <button
                         type="button"
-                        className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-slate-200 hover:bg-white/10 transition-all"
+                        className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-ehb-textBody hover:bg-white/10 transition-all"
                         onClick={() => setQty(l.product.id, l.qty + 1)}
                       >
                         +
@@ -257,7 +257,7 @@ export default function CartPage({
 
                       <button
                         type="button"
-                        className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-slate-200 hover:bg-white/10 transition-all ml-auto"
+                        className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-ehb-textBody hover:bg-white/10 transition-all ml-auto"
                         onClick={() => removeItem(l.product.id)}
                       >
                         Remove
@@ -282,7 +282,7 @@ export default function CartPage({
                 <span>Trust settlement</span>
                 <span className="text-white font-semibold">EHB‑STL (demo)</span>
               </div>
-              <p className="text-[11px] text-slate-500 leading-relaxed">
+              <p className="text-[11px] text-ehb-textMuted leading-relaxed">
                 In production: wallet escrow + verification approvals apply before settlement.
               </p>
               {checkoutError ? (

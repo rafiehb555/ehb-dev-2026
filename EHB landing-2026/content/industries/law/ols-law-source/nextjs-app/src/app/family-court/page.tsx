@@ -239,7 +239,7 @@ export default function FamilyCourtPage() {
                 <p className="text-xs text-pink-400 mb-2">{service.titleUrdu}</p>
                 <p className="text-sm text-ehb-textMuted mb-4">{service.description}</p>
                 
-                <div className="flex items-center gap-4 text-xs text-slate-500 mb-4">
+                <div className="flex items-center gap-4 text-xs text-ehb-textMuted mb-4">
                   <span className="flex items-center gap-1">
                     <CheckCircle2 size={12} className="text-emerald-400" />
                     {service.cases} cases
@@ -338,7 +338,7 @@ export default function FamilyCourtPage() {
                     <span className="text-emerald-400">Would you like to start a divorce case?</span>
                   </>
                 ) : (
-                  <span className="text-slate-500 italic">
+                  <span className="text-ehb-textMuted italic">
                     Click on a question above to see AI response...
                   </span>
                 )}
@@ -403,11 +403,11 @@ export default function FamilyCourtPage() {
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div className="bg-white/5 rounded-lg p-2 text-center">
-                    <p className="text-xs text-slate-500">Experience</p>
+                    <p className="text-xs text-ehb-textMuted">Experience</p>
                     <p className="text-sm font-bold text-white">{lawyer.experience}</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-2 text-center">
-                    <p className="text-xs text-slate-500">Cases Won</p>
+                    <p className="text-xs text-ehb-textMuted">Cases Won</p>
                     <p className="text-sm font-bold text-emerald-400">{lawyer.casesWon}</p>
                   </div>
                 </div>
@@ -419,12 +419,12 @@ export default function FamilyCourtPage() {
                       <Star
                         key={i}
                         size={14}
-                        className={i < Math.floor(lawyer.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-slate-600'}
+                        className={i < Math.floor(lawyer.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-ehb-textMuted'}
                       />
                     ))}
                   </div>
                   <span className="text-sm text-white font-medium">{lawyer.rating}</span>
-                  <span className="text-xs text-slate-500">({lawyer.reviews} reviews)</span>
+                  <span className="text-xs text-ehb-textMuted">({lawyer.reviews} reviews)</span>
                 </div>
 
                 {/* Location & Fee */}
@@ -569,7 +569,7 @@ export default function FamilyCourtPage() {
                   }`}>
                     {caseItem.status}
                   </span>
-                  <span className="text-xs text-slate-500">{caseItem.time}</span>
+                  <span className="text-xs text-ehb-textMuted">{caseItem.time}</span>
                 </div>
                 <h4 className="text-white font-medium mb-1">{caseItem.type}</h4>
                 <p className="text-xs text-ehb-textMuted flex items-center gap-1">

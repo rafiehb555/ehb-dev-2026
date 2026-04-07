@@ -397,7 +397,7 @@ export default function AutonomousLegalSystem({ language = 'en' }: AutonomousLeg
                 {language === 'ur' ? module.descriptionUrdu : module.description}
               </p>
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-500">{module.tasksCompleted} tasks</span>
+                <span className="text-ehb-textMuted">{module.tasksCompleted} tasks</span>
                 <span className="text-green-400">{module.accuracy}%</span>
               </div>
             </motion.div>
@@ -477,7 +477,7 @@ export default function AutonomousLegalSystem({ language = 'en' }: AutonomousLeg
                     }`}>
                       {language === 'ur' ? step.nameUrdu : step.name}
                     </p>
-                    <p className="text-slate-500 text-xs">{step.module}</p>
+                    <p className="text-ehb-textMuted text-xs">{step.module}</p>
                   </div>
                   {step.timestamp && (
                     <span className="text-ehb-textMuted text-xs">{step.timestamp}</span>
@@ -523,7 +523,7 @@ export default function AutonomousLegalSystem({ language = 'en' }: AutonomousLeg
                   <span className="text-xs bg-brand-gold/20 text-brand-gold px-2 py-0.5 rounded">
                     {activity.module}
                   </span>
-                  <span className="text-slate-500 text-xs">
+                  <span className="text-ehb-textMuted text-xs">
                     {activity.timestamp.toLocaleTimeString()}
                   </span>
                 </div>

@@ -1508,7 +1508,7 @@ export function DmoSectionWorkspace({
 
   if (!section || !viewMeta) {
     return (
-      <main className="min-h-screen text-slate-100">
+      <main className="min-h-screen text-white">
         <div className="container-ehb py-6">
           <div className="rounded-2xl border border-rose-400/30 bg-rose-500/10 p-5">
             <h1 className="text-lg font-semibold text-rose-100">DMO page not found</h1>
@@ -1523,7 +1523,7 @@ export function DmoSectionWorkspace({
   }
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-6 space-y-5">
         <section className="rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-[#031222]/95 to-[#020b18]/95 p-5">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
@@ -1607,7 +1607,7 @@ export function DmoSectionWorkspace({
                     presentation.rows.map((row) => (
                       <tr key={row.id} className="border-t border-white/10">
                         {row.values.map((value, index) => (
-                          <td key={`${row.id}-${index}`} className="px-3 py-2 align-top text-slate-200">
+                          <td key={`${row.id}-${index}`} className="px-3 py-2 align-top text-ehb-textBody">
                             {value}
                           </td>
                         ))}

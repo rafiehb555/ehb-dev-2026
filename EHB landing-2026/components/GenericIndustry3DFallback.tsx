@@ -16,7 +16,7 @@ export function GenericIndustry3DFallback({
 }) {
   return (
     <section className="container-ultra section-pad-ultra">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
         Verified flow in {industryName}
       </p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
@@ -84,7 +84,7 @@ export function GenericIndustry3DFallback({
               </div>
             </div>
 
-            <p className="mt-3 text-[10px] text-slate-500">
+            <p className="mt-3 text-[10px] text-ehb-textMuted">
               Stylised fallback. Production will feed real data into the same trust layers.
             </p>
           </div>

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function ServicesPage() {
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <div>
           <h1 className="text-xl font-semibold text-white">EHB Services</h1>

@@ -98,7 +98,7 @@ export default function DmoStlPage() {
   }, [scores]);
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-6">
         <div className="space-y-4">
           <section className="space-y-4">

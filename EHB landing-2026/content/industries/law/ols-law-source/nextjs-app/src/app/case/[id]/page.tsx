@@ -181,7 +181,7 @@ export default function CaseDetailPage() {
                 }`}>
                   IN PROGRESS
                 </span>
-                <span className="text-slate-500 text-sm font-mono">{CASE_DATA.id}</span>
+                <span className="text-ehb-textMuted text-sm font-mono">{CASE_DATA.id}</span>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">{CASE_DATA.title}</h1>
               <p className="text-ehb-textMuted mb-4">{CASE_DATA.category} • {CASE_DATA.subCategory}</p>
@@ -300,9 +300,9 @@ export default function CaseDetailPage() {
                           {/* Content */}
                           <div className={`flex-1 pb-6 ${event.status === 'current' ? 'bg-blue-500/10 -mx-4 px-4 py-4 rounded-xl border border-blue-500/30' : ''}`}>
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs text-slate-500">{event.date}</span>
-                              <span className="text-xs text-slate-600">•</span>
-                              <span className="text-xs text-slate-500">{event.time}</span>
+                              <span className="text-xs text-ehb-textMuted">{event.date}</span>
+                              <span className="text-xs text-ehb-textMuted">•</span>
+                              <span className="text-xs text-ehb-textMuted">{event.time}</span>
                               {event.status === 'current' && (
                                 <span className="px-2 py-0.5 bg-blue-500 text-white text-[10px] font-bold rounded-full">CURRENT</span>
                               )}
@@ -352,7 +352,7 @@ export default function CaseDetailPage() {
                           </div>
                           <div>
                             <p className="text-white font-medium mb-1">{doc.name}</p>
-                            <div className="flex items-center gap-3 text-xs text-slate-500">
+                            <div className="flex items-center gap-3 text-xs text-ehb-textMuted">
                               <span>{doc.size}</span>
                               <span>•</span>
                               <span>Uploaded {new Date(doc.uploaded).toLocaleDateString()}</span>
@@ -410,7 +410,7 @@ export default function CaseDetailPage() {
                           }`}>
                             <p className="text-sm">{msg.message}</p>
                           </div>
-                          <p className={`text-xs text-slate-500 mt-1 ${msg.sender === 'client' ? 'text-right' : ''}`}>
+                          <p className={`text-xs text-ehb-textMuted mt-1 ${msg.sender === 'client' ? 'text-right' : ''}`}>
                             {msg.name} • {msg.time}
                           </p>
                         </div>
@@ -429,7 +429,7 @@ export default function CaseDetailPage() {
                         placeholder="Type your message..."
                         value={messageText}
                         onChange={(e) => setMessageText(e.target.value)}
-                        className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-[#D4AF37] transition-all"
+                        className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all"
                       />
                       <button className="px-5 py-3 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-slate-900 font-bold rounded-xl hover:shadow-lg hover:shadow-[#D4AF37]/30 transition-all">
                         <Send size={18} />
@@ -457,7 +457,7 @@ export default function CaseDetailPage() {
                   <div className="flex items-center gap-1 mt-1">
                     <Star className="text-yellow-400 fill-yellow-400" size={12} />
                     <span className="text-white text-sm font-bold">{CASE_DATA.lawyer.rating}</span>
-                    <span className="text-slate-500 text-xs">({CASE_DATA.lawyer.reviews})</span>
+                    <span className="text-ehb-textMuted text-xs">({CASE_DATA.lawyer.reviews})</span>
                   </div>
                 </div>
               </div>
@@ -525,14 +525,14 @@ export default function CaseDetailPage() {
                   <Gavel className="text-blue-400" size={18} />
                   <div>
                     <p className="text-white text-sm font-medium">Court Filing</p>
-                    <p className="text-xs text-slate-500">Mar 15, 2026</p>
+                    <p className="text-xs text-ehb-textMuted">Mar 15, 2026</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 p-3 bg-white/5 rounded-xl">
                   <Calendar className="text-ehb-textMuted" size={18} />
                   <div>
                     <p className="text-white text-sm font-medium">First Hearing</p>
-                    <p className="text-xs text-slate-500">Mar 20, 2026</p>
+                    <p className="text-xs text-ehb-textMuted">Mar 20, 2026</p>
                   </div>
                 </div>
               </div>

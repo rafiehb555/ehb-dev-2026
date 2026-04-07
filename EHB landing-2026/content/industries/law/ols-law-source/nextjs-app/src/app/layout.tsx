@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased min-h-screen min-h-dvh pb-20 bg-[#020617] text-slate-50 overflow-x-hidden">
+      <body className="antialiased min-h-screen min-h-dvh pb-20 bg-[#020617] text-white overflow-x-hidden">
         <Navbar />
         {/* Demo Mode Banner - Shows on all pages */}
         <DemoModeBanner />

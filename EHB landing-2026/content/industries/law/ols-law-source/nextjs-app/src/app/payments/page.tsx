@@ -195,7 +195,7 @@ export default function PaymentsPage() {
                             <method.icon className="text-white" size={20} />
                           </div>
                           <h4 className="text-white font-medium mb-1">{method.label}</h4>
-                          <p className="text-xs text-slate-500">{method.desc}</p>
+                          <p className="text-xs text-ehb-textMuted">{method.desc}</p>
                         </button>
                       ))}
                     </div>
@@ -214,7 +214,7 @@ export default function PaymentsPage() {
                             placeholder="0.00"
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
-                            className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-8 pr-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-[#D4AF37] transition-all"
+                            className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-8 pr-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all"
                           />
                         </div>
                       </div>
@@ -262,7 +262,7 @@ export default function PaymentsPage() {
                       </div>
                     </div>
                     
-                    <p className="text-sm text-slate-500">Funds will be released when the case milestone is completed.</p>
+                    <p className="text-sm text-ehb-textMuted">Funds will be released when the case milestone is completed.</p>
                   </div>
 
                   {/* Escrow Info */}
@@ -281,7 +281,7 @@ export default function PaymentsPage() {
                           </div>
                           <div>
                             <h4 className="text-white font-medium">{item.title}</h4>
-                            <p className="text-sm text-slate-500">{item.desc}</p>
+                            <p className="text-sm text-ehb-textMuted">{item.desc}</p>
                           </div>
                         </div>
                       ))}
@@ -315,7 +315,7 @@ export default function PaymentsPage() {
                           </div>
                           <div>
                             <p className="text-white font-medium">{tx.type}</p>
-                            <p className="text-xs text-slate-500">{tx.desc} • {tx.date}</p>
+                            <p className="text-xs text-ehb-textMuted">{tx.desc} • {tx.date}</p>
                           </div>
                         </div>
                         <div className="text-right">
@@ -353,7 +353,7 @@ export default function PaymentsPage() {
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
                     <span className="text-sm text-ehb-textBody">{item.label}</span>
-                    <span className={`text-xs font-bold ${item.status ? 'text-emerald-400' : 'text-slate-500'}`}>
+                    <span className={`text-xs font-bold ${item.status ? 'text-emerald-400' : 'text-ehb-textMuted'}`}>
                       {item.status ? '✓ Active' : 'Off'}
                     </span>
                   </div>

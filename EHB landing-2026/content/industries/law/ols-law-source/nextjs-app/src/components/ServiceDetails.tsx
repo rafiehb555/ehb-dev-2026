@@ -28,7 +28,7 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
     <div className="w-full max-w-[1800px] 2xl:max-w-[2200px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
       <button 
         onClick={() => router.back()}
-        className="flex items-center gap-2 text-slate-500 hover:text-brand-primary transition-colors mb-6 sm:mb-8 group"
+        className="flex items-center gap-2 text-ehb-textMuted hover:text-brand-primary transition-colors mb-6 sm:mb-8 group"
       >
         <ArrowLeft size={16} className="sm:w-[18px] sm:h-[18px] group-hover:-translate-x-1 transition-transform" />
         <span className="text-xs sm:text-sm font-bold">Back to Services</span>
@@ -49,7 +49,7 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
 
             <div className="space-y-4 sm:space-y-6">
               <div>
-                <h3 className="text-[10px] sm:text-sm font-black uppercase tracking-widest text-slate-500 mb-3 sm:mb-4">Service Overview</h3>
+                <h3 className="text-[10px] sm:text-sm font-black uppercase tracking-widest text-ehb-textMuted mb-3 sm:mb-4">Service Overview</h3>
                 <p className="text-xs sm:text-sm text-ehb-textMuted leading-relaxed">
                   Our {service.title} service provides comprehensive legal support tailored to your specific needs. 
                   We handle everything from initial consultation to final resolution, ensuring your rights are protected 
@@ -64,7 +64,7 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
                     Estimated Timeline
                   </h4>
                   <p className="text-xs sm:text-sm font-bold text-white">{service.estimatedTime || '2-4 Weeks'}</p>
-                  <p className="text-[9px] sm:text-[10px] text-slate-500 mt-1">Varies based on case complexity.</p>
+                  <p className="text-[9px] sm:text-[10px] text-ehb-textMuted mt-1">Varies based on case complexity.</p>
                 </div>
                 <div className="p-4 sm:p-6 bg-slate-800 rounded-2xl sm:rounded-3xl border border-slate-700">
                   <h4 className="font-bold mb-3 sm:mb-4 flex items-center gap-2 text-white text-sm sm:text-base">
@@ -72,14 +72,14 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
                     Service Guarantee
                   </h4>
                   <p className="text-xs sm:text-sm font-bold text-white">Verified Legal Experts</p>
-                  <p className="text-[9px] sm:text-[10px] text-slate-500 mt-1">100% Secure Escrow Payments.</p>
+                  <p className="text-[9px] sm:text-[10px] text-ehb-textMuted mt-1">100% Secure Escrow Payments.</p>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="ms-card p-6 sm:p-8 bg-slate-900 border border-slate-800">
-            <h3 className="text-[10px] sm:text-sm font-black uppercase tracking-widest text-slate-500 mb-4 sm:mb-6">Legal Process</h3>
+            <h3 className="text-[10px] sm:text-sm font-black uppercase tracking-widest text-ehb-textMuted mb-4 sm:mb-6">Legal Process</h3>
             <div className="space-y-4 sm:space-y-6">
               {(service.process || [
                 "Initial Case Review & AI Analysis",
@@ -94,7 +94,7 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm font-bold mb-0.5 sm:mb-1 text-white">{step}</p>
-                    <p className="text-[9px] sm:text-[10px] text-slate-500">Standard procedure for this legal service.</p>
+                    <p className="text-[9px] sm:text-[10px] text-ehb-textMuted">Standard procedure for this legal service.</p>
                   </div>
                 </div>
               ))}
@@ -110,11 +110,11 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
             </h3>
             <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               <div className="flex justify-between text-[10px] sm:text-xs">
-                <span className="text-slate-500">Service Fee</span>
+                <span className="text-ehb-textMuted">Service Fee</span>
                 <span className="font-bold text-white">{service.cost || 'From $250'}</span>
               </div>
               <div className="flex justify-between text-[10px] sm:text-xs">
-                <span className="text-slate-500">EHB Platform Fee</span>
+                <span className="text-ehb-textMuted">EHB Platform Fee</span>
                 <span className="font-bold text-white">10%</span>
               </div>
               <div className="border-t border-slate-700 pt-3 sm:pt-4 flex justify-between text-xs sm:text-sm font-bold">

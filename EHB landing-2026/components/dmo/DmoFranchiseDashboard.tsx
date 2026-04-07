@@ -56,7 +56,7 @@ export function DmoFranchiseDashboard({
             <select
               value={industrySlug}
               onChange={(e) => setIndustrySlug(e.target.value)}
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 focus:outline-none"
+              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white focus:outline-none"
             >
               {INDUSTRIES.map((i) => (
                 <option key={i.slug} value={i.slug}>
@@ -76,7 +76,7 @@ export function DmoFranchiseDashboard({
 
         {locationLabel ? (
           <div
-            className="inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border"
+            className="inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-ehb-textBody border"
             style={{ borderColor: `${accent}55`, boxShadow: `0 0 28px ${accent}22` }}
           >
             <span aria-hidden>📍</span>
@@ -103,7 +103,7 @@ export function DmoFranchiseDashboard({
             </p>
           </div>
           <span
-            className="inline-flex items-center rounded-full px-3 py-1 border border-white/10 bg-white/5 text-[10px] text-slate-200"
+            className="inline-flex items-center rounded-full px-3 py-1 border border-white/10 bg-white/5 text-[10px] text-ehb-textBody"
             style={{ borderColor: `${levelMeta.accent}55` }}
           >
             {levelMeta.action}

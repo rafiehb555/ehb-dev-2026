@@ -21,6 +21,16 @@ Canonical deployed URL for this project:
 - Default parity target is `https://ehb-dev-rafi.vercel.app` unless a deliberate branch-specific preview is being checked.
 - Any user credentials needed for protected routes are available in both environments.
 
+## Optional — Law OLS reference app (separate package)
+
+The law industry **OLS** Next.js demo under [`EHB landing-2026/content/industries/law/ols-law-source/nextjs-app/`](../../EHB%20landing-2026/content/industries/law/ols-law-source/nextjs-app) is **not** the same deploy as the main Vercel landing app unless you wire it explicitly. Use it only when checking law reference UI parity.
+
+| Check | Command / note |
+|------|----------------|
+| Production build | From `nextjs-app/`: `npm ci` → `npm run build` |
+| Monorepo | [`next.config.ts`](../../EHB%20landing-2026/content/industries/law/ols-law-source/nextjs-app/next.config.ts) sets `outputFileTracingRoot` so Next does not pick the wrong workspace root when multiple `package-lock.json` files exist |
+| ESLint during `next build` | `eslint.ignoreDuringBuilds: true` avoids a known ESLint 9 + `react-hooks/rules-of-hooks` (`a.getScope is not a function`) failure; run `npm run lint` manually after toolchain upgrades |
+
 ## Environment Parity
 
 Record the values or source for these settings before comparing UI:

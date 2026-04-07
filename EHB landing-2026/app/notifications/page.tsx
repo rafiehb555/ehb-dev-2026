@@ -9,7 +9,7 @@ const notifications = [
 
 export default function NotificationsPage() {
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-5">
         <section className="glass-panel border border-white/10 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">Super App</p>
@@ -20,7 +20,7 @@ export default function NotificationsPage() {
         <section className="ehb-card-elevated">
           <div className="space-y-2">
             {notifications.map((n) => (
-              <div key={n} className="rounded-xl border border-white/10 bg-white/5 p-3 text-xs text-slate-200">
+              <div key={n} className="rounded-xl border border-white/10 bg-white/5 p-3 text-xs text-ehb-textBody">
                 {n}
               </div>
             ))}

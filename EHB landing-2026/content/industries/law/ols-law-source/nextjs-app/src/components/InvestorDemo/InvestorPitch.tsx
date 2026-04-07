@@ -279,7 +279,7 @@ export function RevenueModel({ language = 'en' }: { language?: 'en' | 'ur' }) {
             </div>
             <div className="p-4">
               <p className="text-ehb-textBody text-sm mb-2">{stream.description}</p>
-              <p className="text-slate-500 text-xs bg-slate-900/50 px-3 py-1.5 rounded inline-block">
+              <p className="text-ehb-textMuted text-xs bg-slate-900/50 px-3 py-1.5 rounded inline-block">
                 Example: {stream.example}
               </p>
             </div>
@@ -322,15 +322,15 @@ export function RevenueModel({ language = 'en' }: { language?: 'en' | 'ur' }) {
               <div className="space-y-2">
                 <div>
                   <p className="text-xl font-bold text-white">{proj.users}</p>
-                  <p className="text-xs text-slate-500">Users</p>
+                  <p className="text-xs text-ehb-textMuted">Users</p>
                 </div>
                 <div>
                   <p className="text-lg font-bold text-violet-400">{proj.lawyers}</p>
-                  <p className="text-xs text-slate-500">Lawyers</p>
+                  <p className="text-xs text-ehb-textMuted">Lawyers</p>
                 </div>
                 <div>
                   <p className="text-lg font-bold text-green-400">{proj.revenue}</p>
-                  <p className="text-xs text-slate-500">Revenue</p>
+                  <p className="text-xs text-ehb-textMuted">Revenue</p>
                 </div>
               </div>
             </motion.div>
@@ -515,15 +515,15 @@ export function GrowthStrategy({ language = 'en' }: { language?: 'en' | 'ur' }) 
                     <div className="grid grid-cols-3 gap-3">
                       <div className="bg-slate-900/50 rounded-lg p-3 text-center">
                         <p className="text-xl font-bold text-white">{phase.metrics.users}</p>
-                        <p className="text-xs text-slate-500">Users</p>
+                        <p className="text-xs text-ehb-textMuted">Users</p>
                       </div>
                       <div className="bg-slate-900/50 rounded-lg p-3 text-center">
                         <p className="text-xl font-bold text-violet-400">{phase.metrics.lawyers}</p>
-                        <p className="text-xs text-slate-500">Lawyers</p>
+                        <p className="text-xs text-ehb-textMuted">Lawyers</p>
                       </div>
                       <div className="bg-slate-900/50 rounded-lg p-3 text-center">
                         <p className="text-xl font-bold text-brand-gold">{phase.metrics.countries}</p>
-                        <p className="text-xs text-slate-500">Countries</p>
+                        <p className="text-xs text-ehb-textMuted">Countries</p>
                       </div>
                     </div>
                   </div>

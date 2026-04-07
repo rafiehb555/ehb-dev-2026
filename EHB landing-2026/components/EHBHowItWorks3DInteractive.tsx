@@ -261,7 +261,7 @@ export function EHBHowItWorks3DInteractive() {
                 <p className="text-lg md:text-xl font-bold text-sky-50 mt-1">
                   Verified System Brain
                 </p>
-                <p className="text-[10px] text-slate-100 mt-0.5">
+                <p className="text-[10px] text-white mt-0.5">
                   PSS · DMO · JPS · CRB · STL · EHW
                 </p>
               </div>

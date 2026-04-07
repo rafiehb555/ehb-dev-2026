@@ -23,7 +23,7 @@ const activity = [
 
 export default function SuperAppPage() {
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-6 space-y-4">
         <motion.section
           initial={{ opacity: 0, y: 8 }}
@@ -135,7 +135,7 @@ export default function SuperAppPage() {
                 <div className="text-xs uppercase tracking-[0.18em] ehb-text-muted">Activity Feed</div>
                 <div className="mt-3 space-y-2">
                   {activity.map((a) => (
-                    <div key={a} className="rounded-xl border border-white/10 bg-white/5 p-2.5 text-xs text-slate-200">
+                    <div key={a} className="rounded-xl border border-white/10 bg-white/5 p-2.5 text-xs text-ehb-textBody">
                       • {a}
                     </div>
                   ))}

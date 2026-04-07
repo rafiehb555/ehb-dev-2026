@@ -293,7 +293,7 @@ export default function Home() {
                       placeholder="Ask AI: 'I need help with divorce case' or 'Find property lawyer in Dubai'"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="flex-1 bg-transparent text-white placeholder:text-slate-500 outline-none py-4"
+                      className="flex-1 bg-transparent text-white placeholder:text-ehb-textMuted outline-none py-4"
                     />
                   </div>
                   <button 
@@ -394,7 +394,7 @@ export default function Home() {
                   </div>
                   <h3 className="text-white font-bold text-sm mb-0.5">{service.title}</h3>
                   <p className="text-[#D4AF37] text-xs mb-1">{service.titleUrdu}</p>
-                  <p className="text-slate-500 text-xs">{service.cases} cases</p>
+                  <p className="text-ehb-textMuted text-xs">{service.cases} cases</p>
                 </Link>
               </motion.div>
             ))}
@@ -483,7 +483,7 @@ export default function Home() {
                       <CheckCircle2 className="text-blue-400" size={14} />
                     </div>
                     <p className="text-[#D4AF37] text-sm">{lawyer.spec}</p>
-                    <p className="text-slate-500 text-xs flex items-center gap-1">
+                    <p className="text-ehb-textMuted text-xs flex items-center gap-1">
                       <MapPin size={10} /> {lawyer.location}
                     </p>
                   </div>
@@ -491,15 +491,15 @@ export default function Home() {
 
                 <div className="grid grid-cols-3 gap-2 mb-4">
                   <div className="bg-white/5 rounded-lg p-2 text-center">
-                    <p className="text-xs text-slate-500">Experience</p>
+                    <p className="text-xs text-ehb-textMuted">Experience</p>
                     <p className="text-sm font-bold text-white">{lawyer.exp}</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-2 text-center">
-                    <p className="text-xs text-slate-500">Cases</p>
+                    <p className="text-xs text-ehb-textMuted">Cases</p>
                     <p className="text-sm font-bold text-emerald-400">{lawyer.cases}</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-2 text-center">
-                    <p className="text-xs text-slate-500">Rating</p>
+                    <p className="text-xs text-ehb-textMuted">Rating</p>
                     <p className="text-sm font-bold text-yellow-400">⭐ {lawyer.rating}</p>
                   </div>
                 </div>
@@ -573,7 +573,7 @@ export default function Home() {
               >
                 <div className="flex gap-1 mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} className={i < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-slate-600'} />
+                    <Star key={i} size={16} className={i < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-ehb-textMuted'} />
                   ))}
                 </div>
                 <p className="text-ehb-textBody italic mb-6">"{testimonial.feedback}"</p>
@@ -584,7 +584,7 @@ export default function Home() {
                     </div>
                     <div>
                       <p className="text-white font-medium">{testimonial.name}</p>
-                      <p className="text-slate-500 text-xs">{testimonial.case}</p>
+                      <p className="text-ehb-textMuted text-xs">{testimonial.case}</p>
                     </div>
                   </div>
                   <CheckCircle2 className="text-emerald-400" size={20} />

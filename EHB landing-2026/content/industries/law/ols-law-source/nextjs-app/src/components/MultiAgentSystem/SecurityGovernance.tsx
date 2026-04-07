@@ -337,7 +337,7 @@ export default function SecurityGovernance({ language = 'en' }: SecurityGovernan
                         {event.status}
                       </span>
                     </div>
-                    <div className="flex flex-wrap gap-4 text-xs text-slate-500">
+                    <div className="flex flex-wrap gap-4 text-xs text-ehb-textMuted">
                       <span className="flex items-center gap-1">
                         <Database size={12} />
                         {event.source}
@@ -420,7 +420,7 @@ export default function SecurityGovernance({ language = 'en' }: SecurityGovernan
                   </div>
                 ))}
               </div>
-              <p className="text-slate-500 text-xs mt-3">
+              <p className="text-ehb-textMuted text-xs mt-3">
                 {language === 'ur' ? 'آخری چیک:' : 'Last checked:'} {rule.lastChecked.toLocaleDateString()}
               </p>
             </motion.div>

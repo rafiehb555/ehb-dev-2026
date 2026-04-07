@@ -67,7 +67,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
   const hasProducts = ["retail", "health", "it", "education"].includes(industry.slug);
 
   return (
-    <div className="min-h-screen text-slate-100">
+    <div className="min-h-screen text-white">
       <div className="container-ehb py-8 md:py-10 space-y-10">
         {/* 1. Industry Header */}
         <SectionReveal as="div">
@@ -92,7 +92,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
 
               {locationLabel ? (
                 <div
-                  className="mt-3 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border"
+                  className="mt-3 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-ehb-textBody border"
                   style={{ borderColor: `${accent}55`, boxShadow: `0 0 28px ${accent}22` }}
                 >
                   <span aria-hidden>📍</span>
@@ -105,7 +105,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
             <div className="flex flex-wrap gap-2">
               <Link
                 href={`/landing/${industry.slug}`}
-                className="px-3 py-1.5 rounded-full glass-panel text-slate-200 hover:text-white hover:shadow-neon-blue transition-all duration-200 text-xs"
+                className="px-3 py-1.5 rounded-full glass-panel text-ehb-textBody hover:text-white hover:shadow-neon-blue transition-all duration-200 text-xs"
               >
                 {industry.name} Landing
               </Link>
@@ -135,7 +135,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                 <div className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2 text-xs md:text-sm text-ehb-textBody">
                   <span aria-hidden>🔍</span>
                   <input
-                    className="bg-transparent outline-none flex-1 placeholder:text-slate-500"
+                    className="bg-transparent outline-none flex-1 placeholder:text-ehb-textMuted"
                     placeholder="Search services, providers, jobs..."
                   />
                 </div>
@@ -159,7 +159,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
         {/* 3. Trending Services */}
         <SectionReveal as="div">
           <section>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Trending</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Trending</p>
             <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Trending Services</h2>
             <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
               {(industry.slug === "law"
@@ -173,7 +173,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                 >
                   <p className="text-xs font-medium text-white line-clamp-2">{row.name}</p>
                   {industry.slug === "law" && "blurb" in row && row.blurb ? (
-                    <p className="text-[10px] text-slate-500 line-clamp-3">{row.blurb}</p>
+                    <p className="text-[10px] text-ehb-textMuted line-clamp-3">{row.blurb}</p>
                   ) : null}
                   <span className="text-[10px] text-ehb-textMuted">View details →</span>
                 </div>
@@ -185,7 +185,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
         {/* 4. Top Providers */}
         <SectionReveal as="div">
           <section>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Top Providers</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Top Providers</p>
             <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Top Providers</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {(industry.slug === "law" ? lawTopProviders : [1, 2, 3].map((i) => ({ i }))).map((item, idx) =>
@@ -242,7 +242,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
         {/* 5. Jobs Section (placeholder) */}
         <SectionReveal as="div">
           <section>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Jobs</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Jobs</p>
             <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Latest Jobs & Opportunities</h2>
             <div className="rounded-2xl glass-panel p-5 border border-white/10">
               <p className="text-ehb-textMuted text-sm mb-4">
@@ -254,12 +254,12 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                 {(industry.slug === "law" ? lawJobOpenings : [1, 2, 3].map((i) => ({ i }))).map((row) =>
                   "title" in row ? (
                     <div key={row.title} className="rounded-xl bg-white/5 px-3 py-2 border border-white/5">
-                      <p className="font-semibold text-slate-100 leading-snug">{row.title}</p>
+                      <p className="font-semibold text-white leading-snug">{row.title}</p>
                       <p className="text-ehb-textMuted mt-1 leading-relaxed">{row.detail}</p>
                     </div>
                   ) : (
                     <div key={row.i} className="rounded-xl bg-white/5 px-3 py-2">
-                      <p className="font-semibold text-slate-100">
+                      <p className="font-semibold text-white">
                         Role {row.i} · {industry.shortName}
                       </p>
                       <p className="text-ehb-textMuted mt-0.5">Salary: — · Location: Remote / On-site</p>
@@ -282,7 +282,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
         {hasProducts && (
           <SectionReveal as="div">
             <section>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Products</p>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Products</p>
               <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Featured Products</h2>
               <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                 {["Laptop", "Medical Equipment", "Books", "Local Store"].map((p) => (
@@ -303,7 +303,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
         {/* 7. AI Recommendations */}
         <SectionReveal as="div">
           <section>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">AI Layer</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">AI Layer</p>
             <h2 className="text-lg md:text-xl font-semibold text-white mb-4">AI Recommendations</h2>
             <IndustryAiPanel industry={industry.slug} />
           </section>
@@ -344,8 +344,8 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                       key={label}
                       className="flex items-center justify-between rounded-xl bg-white/5 px-3 py-2 text-[11px]"
                     >
-                      <span className="text-slate-200">{label}</span>
-                      <span className="text-slate-500">Distance: —</span>
+                      <span className="text-ehb-textBody">{label}</span>
+                      <span className="text-ehb-textMuted">Distance: —</span>
                     </div>
                   );
                 })}
@@ -373,7 +373,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
         {/* 9. Quick Actions */}
         <SectionReveal as="div">
           <section>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Actions</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Actions</p>
             <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Quick Actions</h2>
             <div className="flex flex-wrap gap-3 text-[11px] md:text-xs">
               {[
@@ -385,7 +385,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                 <Link
                   key={a.label}
                   href={a.href}
-                  className="min-h-touch inline-flex items-center justify-center rounded-full px-4 py-2 font-medium text-slate-100 transition-all duration-300 hover:scale-[1.02]"
+                  className="min-h-touch inline-flex items-center justify-center rounded-full px-4 py-2 font-medium text-white transition-all duration-300 hover:scale-[1.02]"
                   style={{ background: `linear-gradient(135deg, ${accent}, ${accent}dd)` }}
                 >
                   {a.label}

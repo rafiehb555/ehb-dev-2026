@@ -130,7 +130,7 @@ export function LocationSelector({
 
       <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
         <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Selected location</p>
-        <p className="text-sm text-slate-200 mt-2 leading-relaxed">
+        <p className="text-sm text-ehb-textBody mt-2 leading-relaxed">
           {country?.name} · {state?.name} · <span className="text-white font-semibold">{city?.name}</span>
         </p>
       </div>

@@ -57,7 +57,7 @@ export function GoSellrGSMFranchiseMini() {
               </Link>
               <Link
                 href="/franchise#details"
-                className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-6 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/10 transition-all"
+                className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-6 py-2.5 text-sm font-semibold text-ehb-textBody hover:bg-white/10 transition-all"
               >
                 More information
               </Link>
@@ -130,7 +130,7 @@ export function GoSellrGSMFranchiseMini() {
                     <div>
                       <p className="text-[10px] uppercase tracking-[0.22em] text-cyan-100">GSM</p>
                       <p className="text-lg font-bold text-sky-50 mt-1">Global Shopping</p>
-                      <p className="text-[10px] text-slate-100 mt-0.5">E-Commerce Management</p>
+                      <p className="text-[10px] text-white mt-0.5">E-Commerce Management</p>
                     </div>
                   </div>
                 </div>

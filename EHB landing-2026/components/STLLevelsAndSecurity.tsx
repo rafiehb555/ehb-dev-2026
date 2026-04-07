@@ -70,7 +70,7 @@ function LevelCard({ title, subtitle, accent }: { title: string; subtitle: strin
 export function STLLevelsAndSecurity() {
   return (
     <section className="container-ultra section-pad-ultra pt-4">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Verification levels</p>
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Verification levels</p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
         STL + Security (Trust made simple)
       </h2>
@@ -90,7 +90,7 @@ export function STLLevelsAndSecurity() {
       </div>
 
       <div className="mt-2">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Security tiers</p>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Security tiers</p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {SECURITY_LEVELS.map((s) => (
             <div

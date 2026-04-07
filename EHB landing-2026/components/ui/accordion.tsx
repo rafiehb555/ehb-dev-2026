@@ -38,8 +38,8 @@ export function Accordion({ items, defaultOpenId }: { items: AccordionItem[]; de
               onClick={() => setOpen(isOpen ? null : item.id)}
             >
               {item.icon ? <span className="shrink-0 text-ehb-textBody">{item.icon}</span> : null}
-              <span className="min-w-0 flex-1 text-[13px] font-semibold text-slate-100">{item.title}</span>
-              <ChevronDown className={cn("h-4 w-4 shrink-0 text-slate-500 transition-transform", isOpen ? "rotate-180" : "")} />
+              <span className="min-w-0 flex-1 text-[13px] font-semibold text-white">{item.title}</span>
+              <ChevronDown className={cn("h-4 w-4 shrink-0 text-ehb-textMuted transition-transform", isOpen ? "rotate-180" : "")} />
             </button>
             {isOpen ? (
               <div className="border-t border-white/5 px-4 py-3 text-[12px] leading-relaxed text-ehb-textBody">{item.content}</div>

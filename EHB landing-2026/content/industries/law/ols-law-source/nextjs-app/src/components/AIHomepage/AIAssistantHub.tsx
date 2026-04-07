@@ -438,7 +438,7 @@ export default function AIAssistantHub() {
                       className={`absolute ${languageConfig.dir === 'rtl' ? 'left-0' : 'right-0'} mt-2 w-52 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden z-50`}
                     >
                       <div className="p-2">
-                        <p className="px-3 py-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                        <p className="px-3 py-2 text-[10px] font-black uppercase tracking-widest text-ehb-textMuted">
                           {languageConfig.ui.changeLanguage}
                         </p>
                         {Object.values(LANGUAGES).map((lang) => (
@@ -458,7 +458,7 @@ export default function AIAssistantHub() {
                             <span className="text-xl">{lang.flag}</span>
                             <div className="flex-grow text-left">
                               <p className={`font-bold ${accessibilityMode ? 'text-base' : 'text-sm'}`}>{lang.nativeName}</p>
-                              <p className="text-[10px] text-slate-500">{lang.name}</p>
+                              <p className="text-[10px] text-ehb-textMuted">{lang.name}</p>
                             </div>
                             {language === lang.code && <Check size={16} className="text-brand-primary" />}
                           </button>
@@ -591,7 +591,7 @@ export default function AIAssistantHub() {
           {/* Divider */}
           <div className="flex items-center gap-4 mb-6">
             <div className="flex-grow h-px bg-slate-700" />
-            <span className={`text-slate-500 font-bold uppercase tracking-widest ${accessibilityMode ? 'text-sm' : 'text-xs'}`}>
+            <span className={`text-ehb-textMuted font-bold uppercase tracking-widest ${accessibilityMode ? 'text-sm' : 'text-xs'}`}>
               {language === 'ur' ? 'یا ٹائپ کریں' : language === 'ar' ? 'أو اكتب' : 'or type'}
             </span>
             <div className="flex-grow h-px bg-slate-700" />
@@ -603,7 +603,7 @@ export default function AIAssistantHub() {
               <div className="flex-grow relative">
                 <MessageSquare 
                   size={18} 
-                  className={`absolute top-1/2 -translate-y-1/2 text-slate-500 ${languageConfig.dir === 'rtl' ? 'right-4' : 'left-4'}`}
+                  className={`absolute top-1/2 -translate-y-1/2 text-ehb-textMuted ${languageConfig.dir === 'rtl' ? 'right-4' : 'left-4'}`}
                 />
                 <input
                   ref={inputRef}

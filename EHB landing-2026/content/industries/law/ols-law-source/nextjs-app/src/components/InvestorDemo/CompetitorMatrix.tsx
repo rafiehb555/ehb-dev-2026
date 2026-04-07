@@ -77,7 +77,7 @@ const StatusIcon = ({ status }: { status: string }) => {
         </div>
       );
     default:
-      return <Minus className="text-slate-500" size={20} />;
+      return <Minus className="text-ehb-textMuted" size={20} />;
   }
 };
 
@@ -184,7 +184,7 @@ export default function CompetitorMatrix({ language = 'en' }: CompetitorMatrixPr
                     <p className="text-white font-medium text-sm">
                       {language === 'ur' ? row.featureUrdu : row.feature}
                     </p>
-                    <p className="text-slate-500 text-xs">{row.category}</p>
+                    <p className="text-ehb-textMuted text-xs">{row.category}</p>
                   </div>
                 </td>
                 <td className={`text-center py-4 px-3 ${row.ehb === 'unique' ? 'bg-brand-gold/5' : ''}`}>

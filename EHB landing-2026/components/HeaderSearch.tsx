@@ -78,7 +78,7 @@ export function HeaderSearch() {
   return (
     <div className="relative flex-1 min-w-[180px] w-full order-3 sm:order-none max-w-xl mx-0 sm:mx-2">
       <form onSubmit={handleSubmit}>
-        <div className="flex items-center gap-2 rounded-xl glass-panel px-3 sm:px-4 py-1.5 sm:py-2 w-full text-[11px] sm:text-sm text-slate-200 border border-white/10">
+        <div className="flex items-center gap-2 rounded-xl glass-panel px-3 sm:px-4 py-1.5 sm:py-2 w-full text-[11px] sm:text-sm text-ehb-textBody border border-white/10">
           <span aria-hidden>🔍</span>
           <input
             type="text"
@@ -89,7 +89,7 @@ export function HeaderSearch() {
                 ? "Opening best matching industry..."
                 : "Search industries, services, products…"
             }
-            className="bg-transparent outline-none border-0 flex-1 text-[11px] sm:text-sm placeholder:text-slate-500"
+            className="bg-transparent outline-none border-0 flex-1 text-[11px] sm:text-sm placeholder:text-ehb-textMuted"
           />
         </div>
       </form>
@@ -107,7 +107,7 @@ export function HeaderSearch() {
                   setValue("");
                   router.push(`/landing/${s.slug}`);
                 }}
-                className="w-full text-left px-3 py-1.5 text-[11px] sm:text-sm text-slate-100 hover:bg-white/5"
+                className="w-full text-left px-3 py-1.5 text-[11px] sm:text-sm text-white hover:bg-white/5"
               >
                 {s.label}
               </button>

@@ -64,7 +64,7 @@ export default function KnowledgeBasePage() {
             className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl text-[10px] sm:text-sm font-bold transition-all whitespace-nowrap ${
               activeTab === tab.id 
                 ? 'bg-slate-800 text-brand-primary shadow-sm' 
-                : 'text-ehb-textMuted hover:text-slate-200'
+                : 'text-ehb-textMuted hover:text-ehb-textBody'
             }`}
           >
             <tab.icon size={14} className="sm:w-[18px] sm:h-[18px]" />
@@ -95,11 +95,11 @@ export default function KnowledgeBasePage() {
                     {guide.title}
                   </h3>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 sm:gap-4 text-[9px] sm:text-[10px] text-slate-500">
+                    <div className="flex items-center gap-3 sm:gap-4 text-[9px] sm:text-[10px] text-ehb-textMuted">
                       <span className="flex items-center gap-1"><Clock size={10} /> {guide.readTime}</span>
                       <span className="flex items-center gap-1"><Star size={10} className="text-yellow-500" /> {guide.rating}</span>
                     </div>
-                    <ChevronRight size={14} className="sm:w-4 sm:h-4 text-slate-500 group-hover:text-brand-primary transition-colors" />
+                    <ChevronRight size={14} className="sm:w-4 sm:h-4 text-ehb-textMuted group-hover:text-brand-primary transition-colors" />
                   </div>
                 </div>
               ))}
@@ -114,7 +114,7 @@ export default function KnowledgeBasePage() {
                   className="ms-card p-4 sm:p-6 group cursor-pointer hover:border-brand-primary/30 transition-all flex items-center justify-between"
                 >
                   <div>
-                    <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1 sm:mb-2 block">
+                    <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-ehb-textMuted mb-1 sm:mb-2 block">
                       {article.category} • {article.date}
                     </span>
                     <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-brand-primary transition-colors">
@@ -122,7 +122,7 @@ export default function KnowledgeBasePage() {
                     </h3>
                     <p className="text-[10px] sm:text-xs text-ehb-textMuted mt-1">By {article.author}</p>
                   </div>
-                  <ChevronRight size={16} className="sm:w-5 sm:h-5 text-slate-500 group-hover:text-brand-primary transition-colors" />
+                  <ChevronRight size={16} className="sm:w-5 sm:h-5 text-ehb-textMuted group-hover:text-brand-primary transition-colors" />
                 </div>
               ))}
             </div>
@@ -130,7 +130,7 @@ export default function KnowledgeBasePage() {
 
           {(activeTab === 'laws' || activeTab === 'cases' || activeTab === 'updates') && (
             <div className="ms-card p-8 sm:p-12 text-center">
-              <p className="text-slate-500 text-sm sm:text-base">Content for "{activeTab}" is being loaded...</p>
+              <p className="text-ehb-textMuted text-sm sm:text-base">Content for "{activeTab}" is being loaded...</p>
             </div>
           )}
         </div>

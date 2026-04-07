@@ -170,7 +170,7 @@ export default function DashboardPage() {
   }, [aiStep]);
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         {/* Welcome header + today summary */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -191,7 +191,7 @@ export default function DashboardPage() {
               <span className="text-ehb-textBody">Active goals</span>
               <span className="font-semibold text-sky-300">2</span>
             </div>
-            <p className="text-[11px] text-slate-500 mt-1">
+            <p className="text-[11px] text-ehb-textMuted mt-1">
               Small, consistent actions turn into long‑term growth.
             </p>
           </div>
@@ -262,7 +262,7 @@ export default function DashboardPage() {
                 </div>
               </div>
             </div>
-            <p className="text-[11px] text-slate-500 mt-2">Example only – real data will come from your activity.</p>
+            <p className="text-[11px] text-ehb-textMuted mt-2">Example only – real data will come from your activity.</p>
           </div>
           <div className="glass-panel border border-violet-400/50 rounded-2xl p-4 flex flex-col justify-between">
             <div>
@@ -283,7 +283,7 @@ export default function DashboardPage() {
               </Link>
               <Link
                 href="/home"
-                className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-3 py-1 font-semibold text-slate-100 hover:bg-white/10 transition-colors"
+                className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-3 py-1 font-semibold text-white hover:bg-white/10 transition-colors"
               >
                 Apply for Jobs
               </Link>
@@ -301,7 +301,7 @@ export default function DashboardPage() {
         <div className="glass-panel border border-white/15 rounded-2xl p-5 md:p-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-1">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-1">
                 Progress
               </p>
               <h2 className="text-lg md:text-xl font-semibold text-white">
@@ -331,7 +331,7 @@ export default function DashboardPage() {
             <span className="text-emerald-300 font-semibold">Main grow kar raha hoon</span>
           </div>
 
-          <div className="mt-3 text-[11px] text-slate-500">
+          <div className="mt-3 text-[11px] text-ehb-textMuted">
             Level 1 Beginner • Level 2 Active • Level 3 Pro • Level 4 Expert
           </div>
         </div>
@@ -340,7 +340,7 @@ export default function DashboardPage() {
         <div className="glass-panel border border-white/15 rounded-2xl p-5 md:p-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">AI recommendations</p>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">AI recommendations</p>
               <h2 className="text-lg md:text-xl font-semibold text-white">Best next actions for your profile</h2>
             </div>
             <div className="text-right">
@@ -375,7 +375,7 @@ export default function DashboardPage() {
         <div className="glass-panel border border-slate-500/40 rounded-2xl p-5 md:p-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-1">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-1">
                 Getting Started
               </p>
               <h2 className="text-lg md:text-xl font-semibold text-white">4 simple steps to get ready</h2>
@@ -435,7 +435,7 @@ export default function DashboardPage() {
             </Link>
             <Link
               href="/home"
-              className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-4 py-1.5 font-semibold text-slate-100 hover:bg-white/10 transition-colors"
+              className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-4 py-1.5 font-semibold text-white hover:bg-white/10 transition-colors"
             >
               Go to jobs &amp; activity
             </Link>
@@ -445,20 +445,20 @@ export default function DashboardPage() {
         {/* Activity feed + navigation shortcuts */}
         <div className="grid gap-4 lg:grid-cols-3">
           <div className="glass-panel border border-white/10 rounded-2xl p-5 lg:col-span-2">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
               Activity Feed (example)
             </p>
             <ul className="space-y-2 text-xs md:text-sm text-ehb-textBody">
               {activity.map((a) => (
                 <li key={a} className="flex items-start gap-2">
-                  <span aria-hidden className="mt-[2px] text-slate-500">
+                  <span aria-hidden className="mt-[2px] text-ehb-textMuted">
                     •
                   </span>
                   <span className={a.includes("+$") ? "text-emerald-200" : undefined}>{a.replace(/^•\s?/, "")}</span>
                 </li>
               ))}
             </ul>
-            <p className="text-[11px] text-slate-500 mt-3">
+            <p className="text-[11px] text-ehb-textMuted mt-3">
               In the live system, this feed will update in real time based on your orders, jobs, and
               AI insights.
             </p>

@@ -84,7 +84,7 @@ export function IndustriesExplorer() {
 
   return (
     <section id="industries" className="container-ultra section-pad-ultra">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
         32 Industries · One Profile
       </p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
@@ -137,7 +137,7 @@ export function IndustriesExplorer() {
       </div>
 
       <div className="mt-8 text-center">
-        <span className="text-[11px] text-slate-500">
+        <span className="text-[11px] text-ehb-textMuted">
           This is example filtering. The live AI system will personalize industries based on your
           profile.
         </span>

@@ -32,7 +32,7 @@ export function MarketplaceSection({ locationQs = "" }: { locationQs?: string })
   return (
     <section className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <h2 className="text-xs font-semibold text-slate-100">Marketplace</h2>
+        <h2 className="text-xs font-semibold text-white">Marketplace</h2>
         <div className="inline-flex rounded-full glass-panel border border-white/10 p-0.5">
           <button
             type="button"
@@ -40,7 +40,7 @@ export function MarketplaceSection({ locationQs = "" }: { locationQs?: string })
             className={`min-h-touch rounded-full px-3 py-1.5 text-[11px] font-medium transition-all ${
               activeTab === "services"
                 ? "bg-gradient-to-r from-[#00eaff]/30 to-[#3b82f6]/30 text-white shadow-sm"
-                : "text-ehb-textMuted hover:text-slate-200"
+                : "text-ehb-textMuted hover:text-ehb-textBody"
             }`}
           >
             Services
@@ -51,7 +51,7 @@ export function MarketplaceSection({ locationQs = "" }: { locationQs?: string })
             className={`min-h-touch rounded-full px-3 py-1.5 text-[11px] font-medium transition-all ${
               activeTab === "products"
                 ? "bg-gradient-to-r from-[#00eaff]/30 to-[#3b82f6]/30 text-white shadow-sm"
-                : "text-ehb-textMuted hover:text-slate-200"
+                : "text-ehb-textMuted hover:text-ehb-textBody"
             }`}
           >
             Products

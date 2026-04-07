@@ -121,7 +121,7 @@ export default function AIMarketplacePage({
               </Link>
               <button
                 type="button"
-                className="min-h-touch inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs md:text-sm text-slate-200 hover:bg-white/10 transition-colors"
+                className="min-h-touch inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs md:text-sm text-ehb-textBody hover:bg-white/10 transition-colors"
               >
                 View Trusty Wallet rules
               </button>
@@ -194,7 +194,7 @@ export default function AIMarketplacePage({
         <section className="space-y-4">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">AI Tools · Verified</p>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">AI Tools · Verified</p>
               <h2 className="text-lg md:text-xl font-semibold text-white">
                 {selectedTool ? selectedTool.title : "Top Trusted AI Services"}
               </h2>
@@ -205,7 +205,7 @@ export default function AIMarketplacePage({
               </p>
               {selectedIndustry ? (
                 <div
-                  className="mt-3 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border"
+                  className="mt-3 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-ehb-textBody border"
                   style={{ borderColor: `${selectedIndustry.accentColor}55`, boxShadow: `0 0 28px ${selectedIndustry.accentColor}22` }}
                 >
                   <span aria-hidden>🌐</span>
@@ -217,7 +217,7 @@ export default function AIMarketplacePage({
 
               {locationLabel ? (
                 <div
-                  className="mt-2 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-slate-200 border"
+                  className="mt-2 inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-ehb-textBody border"
                   style={{ borderColor: `${locationAccent}55`, boxShadow: `0 0 28px ${locationAccent}22` }}
                 >
                   <span aria-hidden>📍</span>
@@ -259,7 +259,7 @@ export default function AIMarketplacePage({
                       <div className="mt-3">
                         <Link
                           href={makeHref(t.title)}
-                          className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] text-slate-200 hover:bg-white/10 transition-colors w-full"
+                          className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] text-ehb-textBody hover:bg-white/10 transition-colors w-full"
                         >
                           Open tool
                         </Link>
@@ -276,7 +276,7 @@ export default function AIMarketplacePage({
         <div id="products" className="space-y-4">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">
                 Marketplace · Realtime Demand
               </p>
               <h2 className="text-lg md:text-xl font-semibold text-white">Trending AI Verified Products</h2>
@@ -286,7 +286,7 @@ export default function AIMarketplacePage({
             </div>
             <Link
               href={allListingsHref}
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-[11px] text-slate-200 hover:bg-white/5"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-[11px] text-ehb-textBody hover:bg-white/5"
             >
               See all listings
               <span className="text-xs">↗</span>
@@ -310,7 +310,7 @@ export default function AIMarketplacePage({
                       className="object-contain w-full h-full max-h-[120px] opacity-90"
                     />
                   </div>
-                  <div className="absolute top-1.5 left-1.5 inline-flex items-center gap-1 rounded-full bg-[#020c1b]/90 border border-white/25 px-1.5 py-0.5 text-[9px] text-slate-100">
+                  <div className="absolute top-1.5 left-1.5 inline-flex items-center gap-1 rounded-full bg-[#020c1b]/90 border border-white/25 px-1.5 py-0.5 text-[9px] text-white">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                     {p.tier}
                   </div>
@@ -342,7 +342,7 @@ export default function AIMarketplacePage({
         <div id="free" className="space-y-4">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">
                 EHB Verified · Free Tier
               </p>
               <h2 className="text-lg md:text-xl font-semibold text-white">Top Trusted Free Tools</h2>
@@ -407,7 +407,7 @@ export default function AIMarketplacePage({
         <div className="space-y-4 pb-6 md:pb-10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">
                 Everyday Ecosystem · {INDUSTRIES.length} Industries
               </p>
               <h2 className="text-lg md:text-xl font-semibold text-white">Browse by industry</h2>
@@ -417,7 +417,7 @@ export default function AIMarketplacePage({
             </div>
             <Link
               href="/#industries"
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-[11px] text-slate-200 hover:bg-white/5 shrink-0"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-[11px] text-ehb-textBody hover:bg-white/5 shrink-0"
             >
               All industries on home
               <span className="text-xs">↗</span>

@@ -85,7 +85,7 @@ export function EHBVerificationSystemFlow() {
 
   return (
     <section className="container-ultra section-pad-ultra">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
         Verification System
       </p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-6">How 700+ Services Are 100% Verified</h2>

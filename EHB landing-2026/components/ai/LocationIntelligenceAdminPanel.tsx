@@ -130,7 +130,7 @@ export function LocationIntelligenceAdminPanel({
             <select
               value={city}
               onChange={(e) => setCity(e.target.value as CityCode)}
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 focus:outline-none"
+              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white focus:outline-none"
             >
               {CITIES.map((c) => (
                 <option key={c.code} value={c.code}>
@@ -143,7 +143,7 @@ export function LocationIntelligenceAdminPanel({
             <select
               value={industrySlug}
               onChange={(e) => setIndustrySlug(e.target.value)}
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 focus:outline-none max-w-[220px]"
+              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white focus:outline-none max-w-[220px]"
             >
               {INDUSTRIES.map((i) => (
                 <option key={i.slug} value={i.slug}>
@@ -178,7 +178,7 @@ export function LocationIntelligenceAdminPanel({
                 <p className="text-[11px] text-ehb-textMuted mt-1 leading-relaxed">{ins.deltaText}</p>
               </div>
               <span
-                className="inline-flex items-center rounded-full px-2 py-1 text-[10px] border border-white/10 bg-white/5 text-slate-200"
+                className="inline-flex items-center rounded-full px-2 py-1 text-[10px] border border-white/10 bg-white/5 text-ehb-textBody"
                 style={{ borderColor: `${ins.accent}55` }}
               >
                 Insight

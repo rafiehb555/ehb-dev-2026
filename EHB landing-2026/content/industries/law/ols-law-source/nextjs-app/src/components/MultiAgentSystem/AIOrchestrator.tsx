@@ -430,7 +430,7 @@ export default function AIOrchestrator({ language = 'en' }: AIOrchestatorProps) 
                     }`}>
                       {step.name}
                     </p>
-                    <p className="text-slate-500 text-xs">Agent: {AGENT_DEFINITIONS[step.agent].name}</p>
+                    <p className="text-ehb-textMuted text-xs">Agent: {AGENT_DEFINITIONS[step.agent].name}</p>
                   </div>
                   {step.status === 'completed' && (
                     <span className="text-green-400 text-xs">Done</span>
@@ -486,7 +486,7 @@ export default function AIOrchestrator({ language = 'en' }: AIOrchestatorProps) 
                   {language === 'ur' ? agent.descriptionUrdu : agent.description}
                 </p>
                 <div className="flex items-center justify-between text-[10px]">
-                  <span className="text-slate-500">{agent.metrics.tasksCompleted} tasks</span>
+                  <span className="text-ehb-textMuted">{agent.metrics.tasksCompleted} tasks</span>
                   <span className="text-green-400">{agent.metrics.accuracy.toFixed(1)}%</span>
                 </div>
 

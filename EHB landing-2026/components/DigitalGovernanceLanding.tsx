@@ -5,10 +5,10 @@ import { AIToolsSection } from "@/components/AIToolsSection";
 
 export function DigitalGovernanceLanding() {
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <section className="space-y-2">
-          <div className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-slate-200 border-white/10">
+          <div className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-ehb-textBody border-white/10">
             <span aria-hidden>🏛️</span>
             <span className="text-ehb-textMuted">Phase 5</span>
             <span className="text-white font-semibold">Digital Governance</span>
@@ -95,7 +95,7 @@ export function DigitalGovernanceLanding() {
                   </Link>
                   <Link
                     href="/ai-marketplace"
-                    className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/10 transition-all"
+                    className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-5 py-2.5 text-sm font-semibold text-ehb-textBody hover:bg-white/10 transition-all"
                   >
                     Use AI for compliance
                   </Link>

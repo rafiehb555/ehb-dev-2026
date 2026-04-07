@@ -351,11 +351,11 @@ export default function LawyerProfilePage() {
                     <div className="flex items-center gap-1">
                       <div className="flex">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} size={14} className={i < Math.floor(lawyer.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-slate-600'} />
+                          <Star key={i} size={14} className={i < Math.floor(lawyer.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-ehb-textMuted'} />
                         ))}
                       </div>
                       <span className="text-white font-bold">{lawyer.rating}</span>
-                      <span className="text-slate-500">({lawyer.reviews} reviews)</span>
+                      <span className="text-ehb-textMuted">({lawyer.reviews} reviews)</span>
                     </div>
                     <div className="flex items-center gap-1 text-ehb-textMuted">
                       <MapPin size={14} />
@@ -376,7 +376,7 @@ export default function LawyerProfilePage() {
                   <div key={i} className="bg-white/5 rounded-xl p-4 border border-white/10">
                     <stat.icon className="text-[#D4AF37] mb-2" size={20} />
                     <p className="text-white font-bold text-lg">{stat.value}</p>
-                    <p className="text-slate-500 text-xs">{stat.label}</p>
+                    <p className="text-ehb-textMuted text-xs">{stat.label}</p>
                   </div>
                 ))}
               </div>
@@ -427,7 +427,7 @@ export default function LawyerProfilePage() {
                             <span className="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 text-xs rounded">Popular</span>
                           )}
                         </div>
-                        <p className="text-slate-500 text-xs">{pkg.desc}</p>
+                        <p className="text-ehb-textMuted text-xs">{pkg.desc}</p>
                       </div>
                       <span className={`font-bold ${selectedPackage === pkg.id ? 'text-[#D4AF37]' : 'text-white'}`}>{pkg.price}</span>
                     </button>
@@ -623,7 +623,7 @@ export default function LawyerProfilePage() {
                       </div>
                       <div>
                         <p className="text-white font-medium">{review.name}</p>
-                        <p className="text-slate-500 text-xs">{review.date}</p>
+                        <p className="text-ehb-textMuted text-xs">{review.date}</p>
                       </div>
                     </div>
                     <div className="flex">
@@ -652,7 +652,7 @@ export default function LawyerProfilePage() {
                     </div>
                     <div className="text-right">
                       <p className="text-2xl font-bold text-white">{pkg.price}</p>
-                      <p className="text-slate-500 text-sm">{pkg.duration}</p>
+                      <p className="text-ehb-textMuted text-sm">{pkg.duration}</p>
                     </div>
                   </div>
                   <button

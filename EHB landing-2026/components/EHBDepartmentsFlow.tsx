@@ -189,7 +189,7 @@ export function EHBDepartmentsFlow({
               >
                 {step.label}
               </p>
-              <p className="text-[10px] text-slate-200">{step.desc}</p>
+              <p className="text-[10px] text-ehb-textBody">{step.desc}</p>
             </div>
           ))}
         </div>

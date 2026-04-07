@@ -140,7 +140,7 @@ export default function ContactPage() {
                         placeholder="John Doe"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-[#D4AF37] transition-all"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all"
                       />
                     </div>
                     <div>
@@ -151,7 +151,7 @@ export default function ContactPage() {
                         placeholder="john@example.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-[#D4AF37] transition-all"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all"
                       />
                     </div>
                   </div>
@@ -164,7 +164,7 @@ export default function ContactPage() {
                         placeholder="+1 234 567 8900"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-[#D4AF37] transition-all"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all"
                       />
                     </div>
                     <div>
@@ -190,7 +190,7 @@ export default function ContactPage() {
                       placeholder="How can we help you?"
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 outline-none focus:border-[#D4AF37] transition-all resize-none"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all resize-none"
                     />
                   </div>
 
@@ -232,7 +232,7 @@ export default function ContactPage() {
                     <Mail className="text-blue-400" size={20} />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-500">Email Us</p>
+                    <p className="text-xs text-ehb-textMuted">Email Us</p>
                     <p className="text-white font-medium">hello@ehblaw.com</p>
                   </div>
                 </a>
@@ -242,7 +242,7 @@ export default function ContactPage() {
                     <Phone className="text-emerald-400" size={20} />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-500">Call Us</p>
+                    <p className="text-xs text-ehb-textMuted">Call Us</p>
                     <p className="text-white font-medium">+1 (888) EHB-LAWS</p>
                   </div>
                 </a>
@@ -252,7 +252,7 @@ export default function ContactPage() {
                     <Clock className="text-[#D4AF37]" size={20} />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-500">Support Hours</p>
+                    <p className="text-xs text-ehb-textMuted">Support Hours</p>
                     <p className="text-white font-medium">24/7 AI Support • Human: Mon-Fri 9-6</p>
                   </div>
                 </div>
@@ -313,19 +313,19 @@ export default function ContactPage() {
                 
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-2">
-                    <MapPin className="text-slate-500 shrink-0 mt-0.5" size={14} />
+                    <MapPin className="text-ehb-textMuted shrink-0 mt-0.5" size={14} />
                     <span className="text-ehb-textMuted">{office.address}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="text-slate-500" size={14} />
+                    <Phone className="text-ehb-textMuted" size={14} />
                     <span className="text-ehb-textMuted">{office.phone}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Mail className="text-slate-500" size={14} />
+                    <Mail className="text-ehb-textMuted" size={14} />
                     <span className="text-ehb-textMuted">{office.email}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Clock className="text-slate-500" size={14} />
+                    <Clock className="text-ehb-textMuted" size={14} />
                     <span className="text-ehb-textMuted">{office.hours}</span>
                   </div>
                 </div>

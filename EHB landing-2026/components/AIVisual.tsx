@@ -23,7 +23,7 @@ export function AIVisual() {
       {floating.map((card, i) => (
         <div
           key={card.label}
-          className="absolute z-10 rounded-xl glass-panel border border-white/15 px-3 py-2 text-[10px] font-medium text-slate-200 backdrop-blur-md animate-float will-change-transform"
+          className="absolute z-10 rounded-xl glass-panel border border-white/15 px-3 py-2 text-[10px] font-medium text-ehb-textBody backdrop-blur-md animate-float will-change-transform"
           style={{
             left: card.x,
             top: card.y,
@@ -88,7 +88,7 @@ export function AIVisual() {
               Powered by AI
             </p>
             <p className="text-[22px] font-bold gradient-text-new">EHB Core</p>
-            <p className="text-[10px] text-slate-100 mt-0.5">
+            <p className="text-[10px] text-white mt-0.5">
               Global buy &amp; sell · 32 industries
             </p>
           </div>

@@ -54,7 +54,7 @@ export function HeroVisual() {
             transform: "translate(-50%, -50%)",
           }}
         >
-          <span className="text-[10px] font-medium text-slate-200 whitespace-nowrap">{card.label}</span>
+          <span className="text-[10px] font-medium text-ehb-textBody whitespace-nowrap">{card.label}</span>
         </div>
       ))}
 
@@ -136,9 +136,9 @@ export function HeroVisual() {
         {/* Center label */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="text-center">
-            <p className="text-[9px] uppercase tracking-[0.2em] text-slate-500 mb-0.5">AI Network</p>
+            <p className="text-[9px] uppercase tracking-[0.2em] text-ehb-textMuted mb-0.5">AI Network</p>
             <p className="text-xl sm:text-2xl font-bold gradient-text-brand">EHB</p>
-            <p className="text-[9px] text-slate-500 mt-0.5">Global ecosystem</p>
+            <p className="text-[9px] text-ehb-textMuted mt-0.5">Global ecosystem</p>
           </div>
         </div>
       </div>

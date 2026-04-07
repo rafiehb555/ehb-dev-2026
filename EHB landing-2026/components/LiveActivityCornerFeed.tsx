@@ -31,9 +31,9 @@ export function LiveActivityCornerFeed() {
       <div className="flex items-center justify-between gap-3 px-4 py-3">
         <div className="flex items-center gap-2 min-w-0">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden />
-          <p className="text-[11px] font-semibold text-slate-200 truncate">Live activity</p>
+          <p className="text-[11px] font-semibold text-ehb-textBody truncate">Live activity</p>
         </div>
-        <span className="text-[10px] text-slate-500" aria-hidden>
+        <span className="text-[10px] text-ehb-textMuted" aria-hidden>
           AI
         </span>
       </div>

@@ -63,7 +63,7 @@ export default function FranchisePage() {
   }, []);
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <section className="rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-[#031222]/95 to-[#020b18]/95 p-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -174,7 +174,7 @@ export default function FranchisePage() {
           </Link>
         </section>
 
-        {loading ? <div className="text-xs text-slate-500">Loading live franchise dashboard...</div> : null}
+        {loading ? <div className="text-xs text-ehb-textMuted">Loading live franchise dashboard...</div> : null}
       </div>
     </main>
   );

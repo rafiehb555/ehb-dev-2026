@@ -94,7 +94,7 @@ export default function ServicesMarketplace() {
                     <input 
                       type="text" 
                       placeholder="Search lawyers, services, or legal categories..." 
-                      className="flex-1 bg-transparent text-white placeholder:text-slate-500 outline-none py-4"
+                      className="flex-1 bg-transparent text-white placeholder:text-ehb-textMuted outline-none py-4"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -186,7 +186,7 @@ export default function ServicesMarketplace() {
                         {lawyer.verified && <CheckCircle2 className="text-blue-400" size={14} />}
                       </div>
                       <p className="text-[#D4AF37] text-sm">{lawyer.spec}</p>
-                      <p className="text-slate-500 text-xs flex items-center gap-1">
+                      <p className="text-ehb-textMuted text-xs flex items-center gap-1">
                         <MapPin size={10} /> {lawyer.location}
                       </p>
                     </div>
@@ -194,15 +194,15 @@ export default function ServicesMarketplace() {
 
                   <div className="grid grid-cols-3 gap-2 mb-4">
                     <div className="bg-white/5 rounded-lg p-2 text-center">
-                      <p className="text-xs text-slate-500">Exp</p>
+                      <p className="text-xs text-ehb-textMuted">Exp</p>
                       <p className="text-sm font-bold text-white">{lawyer.exp}</p>
                     </div>
                     <div className="bg-white/5 rounded-lg p-2 text-center">
-                      <p className="text-xs text-slate-500">Cases</p>
+                      <p className="text-xs text-ehb-textMuted">Cases</p>
                       <p className="text-sm font-bold text-emerald-400">{lawyer.cases}</p>
                     </div>
                     <div className="bg-white/5 rounded-lg p-2 text-center">
-                      <p className="text-xs text-slate-500">Rating</p>
+                      <p className="text-xs text-ehb-textMuted">Rating</p>
                       <p className="text-sm font-bold text-yellow-400">⭐ {lawyer.rating}</p>
                     </div>
                   </div>
@@ -329,7 +329,7 @@ function ServiceCard({ service }: { service: any }) {
       <p className="text-sm text-ehb-textMuted mb-6 line-clamp-2">{service.description}</p>
       
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-xs text-slate-500">
+        <div className="flex items-center gap-2 text-xs text-ehb-textMuted">
           <Clock size={12} />
           <span>2-4 weeks</span>
         </div>

@@ -100,11 +100,11 @@ export default function LegalResearchEngine() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="p-3 sm:p-4 border border-slate-800 rounded-xl sm:rounded-2xl hover:border-brand-primary/30 transition-all cursor-pointer bg-slate-900/50">
                       <h4 className="text-[10px] sm:text-xs font-bold mb-1 text-white">Recent Searches</h4>
-                      <p className="text-[9px] sm:text-[10px] text-slate-500">Property law Pakistan eviction process</p>
+                      <p className="text-[9px] sm:text-[10px] text-ehb-textMuted">Property law Pakistan eviction process</p>
                     </div>
                     <div className="p-3 sm:p-4 border border-slate-800 rounded-xl sm:rounded-2xl hover:border-brand-primary/30 transition-all cursor-pointer bg-slate-900/50">
                       <h4 className="text-[10px] sm:text-xs font-bold mb-1 text-white">Trending Topics</h4>
-                      <p className="text-[9px] sm:text-[10px] text-slate-500">New crypto regulations UAE 2026</p>
+                      <p className="text-[9px] sm:text-[10px] text-ehb-textMuted">New crypto regulations UAE 2026</p>
                     </div>
                   </div>
                 </motion.div>
@@ -153,11 +153,11 @@ export default function LegalResearchEngine() {
                         </div>
                         <div className="space-y-3 sm:space-y-4">
                           <div>
-                            <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500">Category</p>
+                            <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-ehb-textMuted">Category</p>
                             <p className="text-xs sm:text-sm font-bold text-white">{analysisResult.category}</p>
                           </div>
                           <div>
-                            <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500">Recommended Action</p>
+                            <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-ehb-textMuted">Recommended Action</p>
                             <p className="text-xs sm:text-sm font-bold text-white">{analysisResult.action}</p>
                           </div>
                         </div>
@@ -171,11 +171,11 @@ export default function LegalResearchEngine() {
                         <div className="space-y-3 sm:space-y-4">
                           <div className="flex justify-between items-end">
                             <div>
-                              <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500">Success Probability</p>
+                              <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-ehb-textMuted">Success Probability</p>
                               <p className="text-xl sm:text-2xl font-bold text-emerald-400">{analysisResult.probability}%</p>
                             </div>
                             <div className="text-right">
-                              <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500">Est. Timeline</p>
+                              <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-ehb-textMuted">Est. Timeline</p>
                               <p className="text-xs sm:text-sm font-bold text-white">{analysisResult.timeline}</p>
                             </div>
                           </div>
@@ -196,7 +196,7 @@ export default function LegalResearchEngine() {
                         </h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                           <div>
-                            <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">Potential Risks</p>
+                            <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-ehb-textMuted mb-2">Potential Risks</p>
                             <ul className="space-y-1.5 sm:space-y-2">
                               {analysisResult.risks.map((risk: string, i: number) => (
                                 <li key={i} className="text-[10px] sm:text-xs flex items-center gap-2 text-ehb-textMuted">
@@ -207,7 +207,7 @@ export default function LegalResearchEngine() {
                             </ul>
                           </div>
                           <div>
-                            <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">AI Strategy Suggestions</p>
+                            <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-ehb-textMuted mb-2">AI Strategy Suggestions</p>
                             <ul className="space-y-1.5 sm:space-y-2">
                               {analysisResult.suggestions.map((s: string, i: number) => (
                                 <li key={i} className="text-[10px] sm:text-xs flex items-center gap-2 text-ehb-textMuted">

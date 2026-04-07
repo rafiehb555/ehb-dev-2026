@@ -258,7 +258,7 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
                 <h4 className="font-bold mt-2">
                   {language === 'ur' ? model.nameUrdu : model.name}
                 </h4>
-                <p className={`text-xs mt-1 ${selectedModel === model.id ? 'text-white/80' : 'text-slate-500'}`}>
+                <p className={`text-xs mt-1 ${selectedModel === model.id ? 'text-white/80' : 'text-ehb-textMuted'}`}>
                   {language === 'ur' ? model.descriptionUrdu : model.description}
                 </p>
               </motion.button>
@@ -386,7 +386,7 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
                         <Star size={14} fill="currentColor" />
                         <span>{lawyer.rating}</span>
                       </div>
-                      <span className="text-slate-500">({lawyer.reviews} reviews)</span>
+                      <span className="text-ehb-textMuted">({lawyer.reviews} reviews)</span>
                       <span className={`px-2 py-0.5 rounded text-xs ${lawyer.available ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
                         {lawyer.available ? 'Available' : 'Busy'}
                       </span>
@@ -547,7 +547,7 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
 
       {filteredLawyers.length === 0 && (
         <div className="text-center py-12">
-          <Users className="mx-auto text-slate-600 mb-4" size={48} />
+          <Users className="mx-auto text-ehb-textMuted mb-4" size={48} />
           <p className="text-ehb-textMuted">
             {language === 'ur' ? 'کوئی وکیل نہیں ملا' : 'No lawyers found matching your criteria'}
           </p>

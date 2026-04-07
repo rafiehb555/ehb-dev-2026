@@ -50,7 +50,7 @@ export default function Navbar() {
             <span className="text-[10px] text-ehb-textBody ml-2 hidden sm:inline">{welcomeMessage}</span>
           </div>
           <div className="hidden sm:flex items-center gap-2">
-            <span className="text-[9px] text-slate-500">AI Detected: English (US)</span>
+            <span className="text-[9px] text-ehb-textMuted">AI Detected: English (US)</span>
             <div className="w-1 h-1 rounded-full bg-green-500" />
           </div>
         </div>
@@ -119,7 +119,7 @@ export default function Navbar() {
             </div>
 
             <div className="hidden lg:flex items-center bg-slate-900 rounded-full px-3 py-1.5 gap-2 border border-slate-800 shadow-sm">
-              <Search size={14} className="text-slate-500" />
+              <Search size={14} className="text-ehb-textMuted" />
               <input 
                 type="text" 
                 placeholder="Search services..." 

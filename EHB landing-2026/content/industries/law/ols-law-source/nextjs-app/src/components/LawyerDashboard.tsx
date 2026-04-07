@@ -76,11 +76,11 @@ export default function LawyerDashboard() {
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="bg-slate-900 p-2 sm:p-3 rounded-lg sm:rounded-xl border border-slate-800">
-                <p className="text-[7px] sm:text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Experience</p>
+                <p className="text-[7px] sm:text-[8px] font-black text-ehb-textMuted uppercase tracking-widest mb-1">Experience</p>
                 <p className="text-xs sm:text-sm font-bold text-white">{lawyer.experience}</p>
               </div>
               <div className="bg-slate-900 p-2 sm:p-3 rounded-lg sm:rounded-xl border border-slate-800">
-                <p className="text-[7px] sm:text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Rating</p>
+                <p className="text-[7px] sm:text-[8px] font-black text-ehb-textMuted uppercase tracking-widest mb-1">Rating</p>
                 <div className="flex items-center justify-center gap-1">
                   <Star size={10} className="sm:w-3 sm:h-3 text-yellow-500 fill-yellow-500" />
                   <p className="text-xs sm:text-sm font-bold text-white">{lawyer.rating}</p>
@@ -90,7 +90,7 @@ export default function LawyerDashboard() {
           </div>
 
           <div className="ms-card p-3 sm:p-4 space-y-1 sm:space-y-2">
-            <h4 className="text-[8px] sm:text-[10px] font-black text-slate-500 uppercase tracking-widest px-2 mb-2">Quick Navigation</h4>
+            <h4 className="text-[8px] sm:text-[10px] font-black text-ehb-textMuted uppercase tracking-widest px-2 mb-2">Quick Navigation</h4>
             {[
               { id: 'overview', label: 'Dashboard', icon: BarChart3, count: null },
               { id: 'sql', label: 'SQL Level', icon: ShieldCheck, count: 'Upgrade' },
@@ -108,7 +108,7 @@ export default function LawyerDashboard() {
                 }`}
               >
                 <div className="flex items-center gap-2 sm:gap-3">
-                  <item.icon size={14} className={`sm:w-[18px] sm:h-[18px] ${activeTab === item.id ? 'text-white' : 'text-slate-500'}`} />
+                  <item.icon size={14} className={`sm:w-[18px] sm:h-[18px] ${activeTab === item.id ? 'text-white' : 'text-ehb-textMuted'}`} />
                   <span>{item.label}</span>
                 </div>
                 {item.count && (
@@ -139,7 +139,7 @@ export default function LawyerDashboard() {
                       <stat.icon size={20} className={`sm:w-6 sm:h-6 ${stat.color}`} />
                     </div>
                     <div>
-                      <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500">{stat.label}</p>
+                      <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-ehb-textMuted">{stat.label}</p>
                       <p className="text-lg sm:text-xl font-bold text-white">{stat.value}</p>
                     </div>
                   </div>
@@ -166,18 +166,18 @@ export default function LawyerDashboard() {
                           </div>
                           <div>
                             <p className="text-xs sm:text-sm font-bold text-white">{item.client_name}</p>
-                            <p className="text-[9px] sm:text-[10px] text-slate-500">{item.title}</p>
+                            <p className="text-[9px] sm:text-[10px] text-ehb-textMuted">{item.title}</p>
                           </div>
                         </div>
                         <div className="text-right">
                           <p className="text-[8px] sm:text-[10px] font-bold text-brand-primary uppercase tracking-widest">{item.status}</p>
-                          <p className="text-[8px] sm:text-[10px] text-slate-500">{new Date(item.created_at).toLocaleDateString()}</p>
+                          <p className="text-[8px] sm:text-[10px] text-ehb-textMuted">{new Date(item.created_at).toLocaleDateString()}</p>
                         </div>
                       </div>
                     ))
                   ) : (
                     <div className="p-8 sm:p-12 text-center">
-                      <p className="text-slate-500 text-xs sm:text-sm">No active cases found.</p>
+                      <p className="text-ehb-textMuted text-xs sm:text-sm">No active cases found.</p>
                     </div>
                   )}
                 </div>
@@ -197,7 +197,7 @@ export default function LawyerDashboard() {
                   >
                     <tool.icon size={20} className="sm:w-6 sm:h-6 text-brand-primary mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
                     <h4 className="text-xs sm:text-sm font-bold mb-1 text-white">{tool.title}</h4>
-                    <p className="text-[9px] sm:text-[10px] text-slate-500">{tool.desc}</p>
+                    <p className="text-[9px] sm:text-[10px] text-ehb-textMuted">{tool.desc}</p>
                   </Link>
                 ))}
               </div>

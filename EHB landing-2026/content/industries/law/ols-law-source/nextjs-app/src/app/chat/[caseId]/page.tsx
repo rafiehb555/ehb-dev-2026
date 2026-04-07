@@ -200,8 +200,8 @@ export default function ChatPage() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'read': return <CheckCheck className="text-blue-400" size={14} />;
-      case 'delivered': return <CheckCheck className="text-slate-500" size={14} />;
-      default: return <Clock className="text-slate-600" size={14} />;
+      case 'delivered': return <CheckCheck className="text-ehb-textMuted" size={14} />;
+      default: return <Clock className="text-ehb-textMuted" size={14} />;
     }
   };
 
@@ -280,22 +280,22 @@ export default function ChatPage() {
             <div className="max-w-4xl mx-auto px-4 py-4">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="bg-white/5 rounded-xl p-3">
-                  <p className="text-xs text-slate-500 mb-1">Lawyer</p>
+                  <p className="text-xs text-ehb-textMuted mb-1">Lawyer</p>
                   <p className="text-sm text-white font-medium">{LAWYER_INFO.name}</p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-3">
-                  <p className="text-xs text-slate-500 mb-1">Specialization</p>
+                  <p className="text-xs text-ehb-textMuted mb-1">Specialization</p>
                   <p className="text-sm text-white font-medium">{LAWYER_INFO.title}</p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-3">
-                  <p className="text-xs text-slate-500 mb-1">Rating</p>
+                  <p className="text-xs text-ehb-textMuted mb-1">Rating</p>
                   <p className="text-sm text-white font-medium flex items-center gap-1">
                     <Star className="text-yellow-400 fill-yellow-400" size={12} />
                     {LAWYER_INFO.rating}
                   </p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-3">
-                  <p className="text-xs text-slate-500 mb-1">Response Time</p>
+                  <p className="text-xs text-ehb-textMuted mb-1">Response Time</p>
                   <p className="text-sm text-emerald-400 font-medium">Usually within 1 hour</p>
                 </div>
               </div>
@@ -316,13 +316,13 @@ export default function ChatPage() {
             >
               {message.type === 'system' ? (
                 <div className="px-4 py-2 bg-white/5 rounded-full">
-                  <p className="text-xs text-slate-500">{message.content}</p>
+                  <p className="text-xs text-ehb-textMuted">{message.content}</p>
                 </div>
               ) : (
                 <div className={`max-w-[75%] ${message.sender === 'client' ? 'order-2' : ''}`}>
                   {message.sender === 'lawyer' && (
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs text-slate-500">{LAWYER_INFO.name}</span>
+                      <span className="text-xs text-ehb-textMuted">{LAWYER_INFO.name}</span>
                     </div>
                   )}
                   
@@ -342,7 +342,7 @@ export default function ChatPage() {
                           <p className={`text-sm font-medium ${message.sender === 'client' ? 'text-slate-900' : 'text-white'}`}>
                             {message.fileName}
                           </p>
-                          <p className={`text-xs ${message.sender === 'client' ? 'text-slate-700' : 'text-slate-500'}`}>
+                          <p className="text-xs text-ehb-textMuted">
                             {message.fileSize}
                           </p>
                         </div>
@@ -364,7 +364,7 @@ export default function ChatPage() {
                   )}
                   
                   <div className={`flex items-center gap-2 mt-1 ${message.sender === 'client' ? 'justify-end' : ''}`}>
-                    <span className="text-[10px] text-slate-600">
+                    <span className="text-[10px] text-ehb-textMuted">
                       {message.timestamp.split(' ').slice(-2).join(' ')}
                     </span>
                     {message.sender === 'client' && getStatusIcon(message.status)}
@@ -437,13 +437,13 @@ export default function ChatPage() {
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
                 onFocus={() => setShowQuickReplies(true)}
                 placeholder="Type your message..."
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder:text-slate-600 outline-none focus:border-[#D4AF37] transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 text-white placeholder:text-ehb-textMuted outline-none focus:border-[#D4AF37] transition-all"
               />
               <button 
                 onClick={() => setShowQuickReplies(!showQuickReplies)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-white/10 rounded-lg"
               >
-                <ChevronDown className={`text-slate-500 transition-transform ${showQuickReplies ? 'rotate-180' : ''}`} size={18} />
+                <ChevronDown className={`text-ehb-textMuted transition-transform ${showQuickReplies ? 'rotate-180' : ''}`} size={18} />
               </button>
             </div>
             

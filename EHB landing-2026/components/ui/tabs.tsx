@@ -59,7 +59,7 @@ export function TabsTrigger({
       aria-selected={active}
       className={cn(
         "min-h-touch rounded-lg px-3 py-1.5 text-[11px] font-medium transition-colors",
-        active ? "bg-gradient-to-r from-cyan-500/25 to-blue-500/20 text-cyan-100 shadow-inner shadow-cyan-500/10" : "text-ehb-textMuted hover:bg-slate-800/60 hover:text-slate-200",
+        active ? "bg-gradient-to-r from-cyan-500/25 to-blue-500/20 text-cyan-100 shadow-inner shadow-cyan-500/10" : "text-ehb-textMuted hover:bg-slate-800/60 hover:text-ehb-textBody",
         className,
       )}
       onClick={() => ctx.setValue(value)}

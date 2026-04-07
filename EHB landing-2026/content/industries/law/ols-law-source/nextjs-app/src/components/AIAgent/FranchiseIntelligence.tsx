@@ -364,15 +364,15 @@ export default function FranchiseIntelligence({ language = 'en' }: FranchiseInte
                       <div className="hidden md:flex items-center gap-6 text-center">
                         <div>
                           <p className="text-white font-bold">{franchise.totalLawyers}</p>
-                          <p className="text-slate-500 text-xs">{language === 'ur' ? 'وکلاء' : 'Lawyers'}</p>
+                          <p className="text-ehb-textMuted text-xs">{language === 'ur' ? 'وکلاء' : 'Lawyers'}</p>
                         </div>
                         <div>
                           <p className="text-white font-bold">{franchise.activeCases}</p>
-                          <p className="text-slate-500 text-xs">{language === 'ur' ? 'کیسز' : 'Cases'}</p>
+                          <p className="text-ehb-textMuted text-xs">{language === 'ur' ? 'کیسز' : 'Cases'}</p>
                         </div>
                         <div>
                           <p className="text-green-400 font-bold">${(franchise.revenue/1000).toFixed(0)}K</p>
-                          <p className="text-slate-500 text-xs">{language === 'ur' ? 'آمدنی' : 'Revenue'}</p>
+                          <p className="text-ehb-textMuted text-xs">{language === 'ur' ? 'آمدنی' : 'Revenue'}</p>
                         </div>
                         <div className="flex items-center gap-1">
                           {franchise.trend === 'up' ? (

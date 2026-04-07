@@ -30,7 +30,7 @@ export default function CorporateFranchisePage({
   })();
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="space-y-1">
           <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">DMO · Corporate Franchise</p>
@@ -45,7 +45,7 @@ export default function CorporateFranchisePage({
         <div className="pt-2 flex flex-wrap gap-2">
           <Link
             href="/dmo/applications"
-            className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-3 py-1.5 text-[11px] font-semibold text-slate-200 border border-white/10 hover:bg-white/5 transition-all"
+            className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-3 py-1.5 text-[11px] font-semibold text-ehb-textBody border border-white/10 hover:bg-white/5 transition-all"
           >
             Open queue without filters
           </Link>

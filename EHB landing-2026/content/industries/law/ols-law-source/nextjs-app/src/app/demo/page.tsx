@@ -145,7 +145,7 @@ export default function DemoPage() {
                     ? 'bg-[#D4AF37] text-slate-900'
                     : currentStep > step.id
                     ? 'bg-emerald-500/20 text-emerald-400'
-                    : 'bg-white/5 text-slate-500'
+                    : 'bg-white/5 text-ehb-textMuted'
                 }`}
               >
                 {currentStep > step.id ? <Check size={12} /> : <span>{step.id}</span>}
@@ -374,7 +374,7 @@ export default function DemoPage() {
                           <p className="text-ehb-textMuted text-sm">{lawyer.spec}</p>
                           <div className="flex items-center gap-4 mt-2 text-xs">
                             <span className="text-yellow-400">⭐ {lawyer.rating}</span>
-                            <span className="text-slate-500">{lawyer.cases} cases</span>
+                            <span className="text-ehb-textMuted">{lawyer.cases} cases</span>
                             <span className="text-emerald-400">{lawyer.fee}</span>
                           </div>
                         </div>
@@ -410,7 +410,7 @@ export default function DemoPage() {
                   ].map((stat, i) => (
                     <div key={i} className="bg-white/5 rounded-xl p-3 text-center">
                       <p className="text-white font-bold">{stat.value}</p>
-                      <p className="text-slate-500 text-xs">{stat.label}</p>
+                      <p className="text-ehb-textMuted text-xs">{stat.label}</p>
                     </div>
                   ))}
                 </div>
@@ -439,7 +439,7 @@ export default function DemoPage() {
                     }`}>
                       <div>
                         <p className="text-white font-medium">{service.name}</p>
-                        <p className="text-slate-500 text-sm">{service.desc}</p>
+                        <p className="text-ehb-textMuted text-sm">{service.desc}</p>
                       </div>
                       <div className="text-right">
                         <p className={`font-bold ${service.selected ? 'text-[#D4AF37]' : 'text-white'}`}>{service.price}</p>
@@ -507,10 +507,10 @@ export default function DemoPage() {
                 </div>
                 <div className="bg-white/5 rounded-xl p-4 mb-4">
                   <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div><span className="text-slate-500">Case ID</span><p className="text-white font-bold">EHB-CASE-2031</p></div>
-                    <div><span className="text-slate-500">Type</span><p className="text-white font-bold">Divorce Case</p></div>
-                    <div><span className="text-slate-500">Lawyer</span><p className="text-white font-bold">Sarah Ahmed</p></div>
-                    <div><span className="text-slate-500">Status</span><p className="text-emerald-400 font-bold">Active</p></div>
+                    <div><span className="text-ehb-textMuted">Case ID</span><p className="text-white font-bold">EHB-CASE-2031</p></div>
+                    <div><span className="text-ehb-textMuted">Type</span><p className="text-white font-bold">Divorce Case</p></div>
+                    <div><span className="text-ehb-textMuted">Lawyer</span><p className="text-white font-bold">Sarah Ahmed</p></div>
+                    <div><span className="text-ehb-textMuted">Status</span><p className="text-emerald-400 font-bold">Active</p></div>
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -523,8 +523,8 @@ export default function DemoPage() {
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-3">
                       <div className={`w-3 h-3 rounded-full ${item.done ? 'bg-emerald-400' : 'bg-slate-600'}`} />
-                      <span className={item.done ? 'text-white' : 'text-slate-500'}>{item.title}</span>
-                      <span className="ml-auto text-xs text-slate-500">{item.time}</span>
+                      <span className={item.done ? 'text-white' : 'text-ehb-textMuted'}>{item.title}</span>
+                      <span className="ml-auto text-xs text-ehb-textMuted">{item.time}</span>
                     </div>
                   ))}
                 </div>
@@ -550,7 +550,7 @@ export default function DemoPage() {
                 </div>
                 <div className="flex gap-2">
                   <button className="p-3 bg-white/10 rounded-xl"><Paperclip className="text-ehb-textMuted" size={20} /></button>
-                  <input className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 text-white placeholder:text-slate-500" placeholder="Type a message..." />
+                  <input className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 text-white placeholder:text-ehb-textMuted" placeholder="Type a message..." />
                   <button className="p-3 bg-[#D4AF37] rounded-xl"><Send className="text-slate-900" size={20} /></button>
                 </div>
               </DemoCard>
@@ -574,7 +574,7 @@ export default function DemoPage() {
                     <div key={i} className="bg-white/5 rounded-xl p-4 text-center">
                       <stat.icon className="mx-auto text-[#D4AF37] mb-2" size={24} />
                       <p className="text-white font-bold text-xl">{stat.value}</p>
-                      <p className="text-slate-500 text-xs">{stat.label}</p>
+                      <p className="text-ehb-textMuted text-xs">{stat.label}</p>
                     </div>
                   ))}
                 </div>
@@ -597,7 +597,7 @@ export default function DemoPage() {
           </button>
           <div className="text-center">
             <p className="text-[#D4AF37] font-bold">{currentStep} / 14</p>
-            <p className="text-slate-500 text-xs">{DEMO_STEPS[currentStep - 1].title}</p>
+            <p className="text-ehb-textMuted text-xs">{DEMO_STEPS[currentStep - 1].title}</p>
           </div>
           <button onClick={nextStep} disabled={currentStep === 14} className="px-6 py-3 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-slate-900 font-bold rounded-xl flex items-center gap-2 disabled:opacity-30">
             Next <ArrowRight size={18} />

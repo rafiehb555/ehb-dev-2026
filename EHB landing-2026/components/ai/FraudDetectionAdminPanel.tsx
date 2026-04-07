@@ -147,7 +147,7 @@ export function FraudDetectionAdminPanel() {
             <select
               value={severity}
               onChange={(e) => setSeverity(e.target.value as any)}
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 focus:outline-none"
+              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white focus:outline-none"
             >
               <option value="All">All</option>
               <option value="Low">Low</option>
@@ -159,14 +159,14 @@ export function FraudDetectionAdminPanel() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search entity, code, signals..."
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 placeholder:text-slate-500 focus:outline-none min-w-[240px]"
+              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white placeholder:text-ehb-textMuted focus:outline-none min-w-[240px]"
             />
           </div>
         </div>
 
         {lastAction ? (
           <div className="rounded-xl glass-panel border border-white/10 p-3 text-[10px] text-ehb-textBody">
-            <span className="text-slate-100 font-semibold">Last action:</span> {lastAction}
+            <span className="text-white font-semibold">Last action:</span> {lastAction}
           </div>
         ) : null}
 
@@ -191,14 +191,14 @@ export function FraudDetectionAdminPanel() {
                 >
                   <div className="col-span-2 min-w-0">
                     <div className="text-[11px] font-semibold text-white truncate">{f.entityName}</div>
-                    <div className="text-[10px] text-slate-500 truncate">{f.entityType}</div>
+                    <div className="text-[10px] text-ehb-textMuted truncate">{f.entityType}</div>
                   </div>
 
                   <div className="col-span-3 min-w-0">
                     <div className="text-[10px] text-ehb-textBody line-clamp-2">
                       {f.signals.join(" · ")}
                     </div>
-                    <div className="text-[10px] text-slate-500 mt-0.5 truncate">{f.entityCode}</div>
+                    <div className="text-[10px] text-ehb-textMuted mt-0.5 truncate">{f.entityCode}</div>
                   </div>
 
                   <div className="col-span-1">
@@ -215,7 +215,7 @@ export function FraudDetectionAdminPanel() {
 
                   <div className="col-span-2">
                     <div className={`text-[12px] font-semibold ${risk.color}`}>{f.riskScore}/100</div>
-                    <div className="text-[10px] text-slate-500">{risk.label}</div>
+                    <div className="text-[10px] text-ehb-textMuted">{risk.label}</div>
                   </div>
 
                   <div className="col-span-1">
@@ -229,7 +229,7 @@ export function FraudDetectionAdminPanel() {
                   <div className="col-span-3 text-right flex items-center justify-end gap-2">
                     <button
                       type="button"
-                      className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 hover:bg-white/5 transition-all"
+                      className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white hover:bg-white/5 transition-all"
                       onClick={() => setLastAction(`Review ${f.entityType} "${f.entityName}" (${f.id})`)}
                     >
                       Review

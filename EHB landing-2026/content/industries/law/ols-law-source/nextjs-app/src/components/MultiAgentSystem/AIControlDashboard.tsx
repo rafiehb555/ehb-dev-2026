@@ -289,7 +289,7 @@ export default function AIControlDashboard({ language = 'en' }: AIControlDashboa
                     {language === 'ur' ? agent.nameUrdu : agent.name}
                   </h4>
                 </div>
-                <span className="text-slate-500 text-xs">{agent.uptime}</span>
+                <span className="text-ehb-textMuted text-xs">{agent.uptime}</span>
               </div>
               
               <div className="space-y-2">
@@ -372,7 +372,7 @@ export default function AIControlDashboard({ language = 'en' }: AIControlDashboa
                   {language === 'ur' ? event.messageUrdu : event.message}
                 </p>
               </div>
-              <span className="text-slate-500 text-xs">
+              <span className="text-ehb-textMuted text-xs">
                 {event.timestamp.toLocaleTimeString()}
               </span>
             </motion.div>

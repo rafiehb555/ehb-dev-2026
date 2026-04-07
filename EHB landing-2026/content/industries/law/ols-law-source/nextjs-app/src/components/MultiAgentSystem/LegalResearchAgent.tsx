@@ -336,7 +336,7 @@ export default function LegalResearchAgent({ language = 'en' }: LegalResearchAge
                     <p className="text-ehb-textBody text-sm mb-3">
                       {language === 'ur' ? law.summaryUrdu : law.summary}
                     </p>
-                    <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <div className="flex items-center gap-4 text-xs text-ehb-textMuted">
                       <span className="flex items-center gap-1">
                         <Clock size={12} />
                         {law.year}
@@ -460,7 +460,7 @@ export default function LegalResearchAgent({ language = 'en' }: LegalResearchAge
           animate={{ opacity: 1 }}
           className="text-center py-16"
         >
-          <Brain className="mx-auto text-slate-600 mb-4" size={64} />
+          <Brain className="mx-auto text-ehb-textMuted mb-4" size={64} />
           <h3 className="text-white font-bold text-xl mb-2">
             {language === 'ur' ? 'AI قانونی تحقیق' : 'AI Legal Research'}
           </h3>

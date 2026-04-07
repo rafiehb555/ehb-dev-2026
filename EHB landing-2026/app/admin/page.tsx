@@ -90,7 +90,7 @@ export default function AdminPage() {
 
         <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
           <Panel title="Core Systems Monitoring" path="/admin/core-systems">
-            <ul className="space-y-1 text-slate-200">
+            <ul className="space-y-1 text-ehb-textBody">
               {coreSystems.map((s) => (
                 <li key={s}>• {s}</li>
               ))}
@@ -145,7 +145,7 @@ export default function AdminPage() {
             <p className="text-ehb-textBody mb-1">Multi-layer franchise network for global, country, corporate and sub franchises.</p>
             <div className="flex flex-wrap gap-1.5 mb-2">
               {franchiseLevels.map((lvl) => (
-                <span key={lvl} className="inline-flex items-center rounded-full glass-panel px-2 py-0.5 text-[10px] text-slate-100">
+                <span key={lvl} className="inline-flex items-center rounded-full glass-panel px-2 py-0.5 text-[10px] text-white">
                   {lvl}
                 </span>
               ))}

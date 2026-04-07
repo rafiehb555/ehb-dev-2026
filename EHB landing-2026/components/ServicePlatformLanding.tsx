@@ -34,10 +34,10 @@ export function ServicePlatformLanding({
   })();
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <section className="space-y-2">
-          <div className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-slate-200"
+          <div className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-ehb-textBody"
             style={{ borderColor: `${accentColor}55`, boxShadow: `0 0 22px ${accentColor}22` }}
           >
             <span aria-hidden>{acronym}</span>
@@ -45,7 +45,7 @@ export function ServicePlatformLanding({
           </div>
 
           {locationQs ? (
-            <div className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-slate-200 border-white/10">
+            <div className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-ehb-textBody border-white/10">
               <span aria-hidden>📍</span>
               <span className="text-ehb-textMuted">Location context enabled</span>
             </div>
@@ -93,7 +93,7 @@ export function ServicePlatformLanding({
                 </Link>
                 <Link
                   href={`/dmo${locationQs}`}
-                  className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-6 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/10 transition-all"
+                  className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-6 py-2.5 text-sm font-semibold text-ehb-textBody hover:bg-white/10 transition-all"
                 >
                   View DMO monitoring
                 </Link>
@@ -111,8 +111,8 @@ export function ServicePlatformLanding({
                     { label: "EHB-STL Payments", note: "secure settlement" },
                   ].map((item) => (
                     <div key={item.label} className="flex items-start justify-between gap-3">
-                      <span className="text-slate-200 text-[11px] font-semibold">{item.label}</span>
-                      <span className="text-slate-500 text-[10px]">{item.note}</span>
+                      <span className="text-ehb-textBody text-[11px] font-semibold">{item.label}</span>
+                      <span className="text-ehb-textMuted text-[10px]">{item.note}</span>
                     </div>
                   ))}
                 </div>
@@ -136,7 +136,7 @@ export function ServicePlatformLanding({
                         return qs ? `/ai-marketplace?${qs}` : "/ai-marketplace";
                       })()
                     }
-                    className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] text-slate-200 hover:bg-white/10 transition-colors w-full"
+                    className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] text-ehb-textBody hover:bg-white/10 transition-colors w-full"
                   >
                     Open marketplace for this context
                   </Link>

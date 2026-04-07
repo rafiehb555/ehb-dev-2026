@@ -2,7 +2,7 @@ import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/utils/cn";
 
 const variants = {
-  default: "border-white/15 bg-slate-800/80 text-slate-200",
+  default: "border-white/15 bg-slate-800/80 text-ehb-textBody",
   secondary: "border-slate-500/25 bg-slate-800/60 text-ehb-textBody",
   cyan: "border-cyan-400/30 bg-cyan-500/15 text-cyan-100",
   violet: "border-violet-400/30 bg-violet-500/15 text-violet-100",

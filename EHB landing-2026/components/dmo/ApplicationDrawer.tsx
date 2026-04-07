@@ -24,7 +24,7 @@ function Badge({
             ? "border-amber-400/40 text-amber-200"
             : tone === "violet"
               ? "border-violet-400/40 text-violet-200"
-            : "border-white/15 text-slate-200";
+            : "border-white/15 text-ehb-textBody";
 
   return (
     <span
@@ -94,13 +94,13 @@ export function ApplicationDrawer(props: {
           >
             <div className="flex items-start justify-between gap-3 mb-4">
               <div className="space-y-1">
-                <div className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Application</div>
+                <div className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Application</div>
                 <div className="font-semibold text-white">{props.application?.id ?? "—"}</div>
               </div>
               <button
                 type="button"
                 onClick={props.onClose}
-                className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-slate-200 hover:bg-white/5"
+                className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-ehb-textBody hover:bg-white/5"
               >
                 Close
               </button>
@@ -124,22 +124,22 @@ export function ApplicationDrawer(props: {
                   </div>
                   <div className="text-[11px] text-ehb-textBody">
                     Applicant: <span className="font-semibold text-white">{props.application.applicant.name}</span>{" "}
-                    <span className="text-slate-500">({props.application.applicant.email})</span>
+                    <span className="text-ehb-textMuted">({props.application.applicant.email})</span>
                   </div>
-                  <div className="text-[10px] text-slate-500">Created: {fmtDateTime(props.application.createdAt)}</div>
-                  <div className="text-[10px] text-slate-500">Updated: {fmtDateTime(props.application.updatedAt)}</div>
+                  <div className="text-[10px] text-ehb-textMuted">Created: {fmtDateTime(props.application.createdAt)}</div>
+                  <div className="text-[10px] text-ehb-textMuted">Updated: {fmtDateTime(props.application.updatedAt)}</div>
                 </div>
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-xs font-semibold text-slate-100">Fast decision</h3>
+                    <h3 className="text-xs font-semibold text-white">Fast decision</h3>
                     <Badge tone={canApprove ? "emerald" : "slate"}>{canApprove ? "Admin" : "Read-only"}</Badge>
                   </div>
                   <textarea
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Notes (optional)…"
-                    className="w-full h-20 rounded-2xl bg-white/5 border border-white/10 px-3 py-2 text-[11px] text-slate-200 outline-none placeholder:text-slate-500"
+                    className="w-full h-20 rounded-2xl bg-white/5 border border-white/10 px-3 py-2 text-[11px] text-ehb-textBody outline-none placeholder:text-ehb-textMuted"
                     disabled={!canApprove}
                   />
                   <div className="flex flex-wrap gap-2">
@@ -150,7 +150,7 @@ export function ApplicationDrawer(props: {
                       className={`min-h-touch inline-flex items-center justify-center rounded-full px-4 py-2 text-[11px] font-semibold ${
                         canApprove
                           ? "bg-gradient-to-r from-emerald-400 to-emerald-300 text-slate-950"
-                          : "glass-panel border border-white/15 text-slate-500 cursor-not-allowed"
+                          : "glass-panel border border-white/15 text-ehb-textMuted cursor-not-allowed"
                       }`}
                     >
                       {busy === "APPROVED" ? "Approving…" : "Approve"}
@@ -162,27 +162,27 @@ export function ApplicationDrawer(props: {
                       className={`min-h-touch inline-flex items-center justify-center rounded-full px-4 py-2 text-[11px] font-semibold ${
                         canApprove
                           ? "bg-gradient-to-r from-rose-400 to-rose-300 text-slate-950"
-                          : "glass-panel border border-white/15 text-slate-500 cursor-not-allowed"
+                          : "glass-panel border border-white/15 text-ehb-textMuted cursor-not-allowed"
                       }`}
                     >
                       {busy === "REJECTED" ? "Rejecting…" : "Reject"}
                     </button>
                   </div>
-                  <div className="text-[10px] text-slate-500">
+                  <div className="text-[10px] text-ehb-textMuted">
                     Approve/Reject writes Approval + updates Application + logs Audit events.
                   </div>
                 </div>
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
-                  <h3 className="text-xs font-semibold text-slate-100">Approval History</h3>
+                  <h3 className="text-xs font-semibold text-white">Approval History</h3>
                   <div className="space-y-2">
                     {props.approvals.map((approval) => (
                       <div key={approval.id} className="rounded-xl bg-white/5 border border-white/10 p-3">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-semibold text-slate-100 text-[11px]">{approval.approvedBy.name}</span>
+                          <span className="font-semibold text-white text-[11px]">{approval.approvedBy.name}</span>
                           <Badge tone={approval.decision === "APPROVED" ? "emerald" : "rose"}>{approval.decision}</Badge>
                         </div>
-                        <div className="text-[10px] text-slate-500 mt-1">{fmtDateTime(approval.createdAt)}</div>
+                        <div className="text-[10px] text-ehb-textMuted mt-1">{fmtDateTime(approval.createdAt)}</div>
                         {approval.notes ? <div className="text-[11px] text-ehb-textBody mt-1">{approval.notes}</div> : null}
                       </div>
                     ))}
@@ -191,15 +191,15 @@ export function ApplicationDrawer(props: {
                 </div>
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
-                  <h3 className="text-xs font-semibold text-slate-100">Audit Timeline</h3>
+                  <h3 className="text-xs font-semibold text-white">Audit Timeline</h3>
                   <div className="space-y-2">
                     {props.auditLogs.map((log) => (
                       <div key={log.id} className="rounded-xl bg-white/5 border border-white/10 p-3">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-semibold text-slate-100 text-[11px]">{log.action}</span>
+                          <span className="font-semibold text-white text-[11px]">{log.action}</span>
                           <Badge tone="slate">{fmtDateTime(log.createdAt)}</Badge>
                         </div>
-                        <div className="text-[10px] text-slate-500 mt-1">
+                        <div className="text-[10px] text-ehb-textMuted mt-1">
                           {log.actor ? `By ${log.actor.name}` : "System"} · {log.targetType}
                         </div>
                       </div>
@@ -209,7 +209,7 @@ export function ApplicationDrawer(props: {
                 </div>
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
-                  <h3 className="text-xs font-semibold text-slate-100">Overview</h3>
+                  <h3 className="text-xs font-semibold text-white">Overview</h3>
                   <div className="grid grid-cols-1 xs:grid-cols-2 gap-2 text-[11px]">
                     <div className="rounded-xl border border-white/10 bg-white/5 p-2">
                       <div className="text-ehb-textMuted">Applicant</div>
@@ -231,7 +231,7 @@ export function ApplicationDrawer(props: {
                 </div>
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
-                  <h3 className="text-xs font-semibold text-slate-100">PSS Data</h3>
+                  <h3 className="text-xs font-semibold text-white">PSS Data</h3>
                   <div className="text-[11px] text-ehb-textBody">
                     {(props.application.payload as any)?.pss
                       ? `Verification phase: ${(props.application.payload as any).pss.phaseCompleted ?? "n/a"}`
@@ -240,7 +240,7 @@ export function ApplicationDrawer(props: {
                 </div>
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
-                  <h3 className="text-xs font-semibold text-slate-100">CRB Data</h3>
+                  <h3 className="text-xs font-semibold text-white">CRB Data</h3>
                   <div className="text-[11px] text-ehb-textBody">
                     {(props.application.payload as any)?.crbApplicationId
                       ? `CRB Application: ${(props.application.payload as any).crbApplicationId}`
@@ -249,7 +249,7 @@ export function ApplicationDrawer(props: {
                 </div>
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
-                  <h3 className="text-xs font-semibold text-slate-100">Industry Verification</h3>
+                  <h3 className="text-xs font-semibold text-white">Industry Verification</h3>
                   <div className="text-[11px] text-ehb-textBody">
                     {(props.application.payload as any)?.industryVerificationId
                       ? `Industry Verification: ${(props.application.payload as any).industryVerificationId}`
@@ -258,7 +258,7 @@ export function ApplicationDrawer(props: {
                 </div>
 
                 <div className="rounded-2xl glass-panel border border-white/10 p-4 space-y-2">
-                  <h3 className="text-xs font-semibold text-slate-100">Raw Payload</h3>
+                  <h3 className="text-xs font-semibold text-white">Raw Payload</h3>
                   <pre className="text-[10px] text-ehb-textBody whitespace-pre-wrap break-words rounded-2xl bg-black/30 border border-white/10 p-3 overflow-auto max-h-[240px]">
                     {prettyJson(props.application.payload ?? {})}
                   </pre>

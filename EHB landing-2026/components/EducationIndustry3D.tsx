@@ -22,7 +22,7 @@ export function EducationIndustry3D({ accentColor = "#E53935" }: { accentColor?:
 
   return (
     <section className="container-ultra section-pad-ultra">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
+      <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
         How Education Services Flow on EHB
       </p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
@@ -131,7 +131,7 @@ export function EducationIndustry3D({ accentColor = "#E53935" }: { accentColor?:
               {orbitItems.map((item, idx) => (
                 <div
                   key={item.label}
-                  className="absolute rounded-xl bg-slate-950/75 border px-2.5 py-1.5 text-[10px] text-slate-100 shadow-[0_0_18px_rgba(229,57,53,0.55)] animate-float"
+                  className="absolute rounded-xl bg-slate-950/75 border px-2.5 py-1.5 text-[10px] text-white shadow-[0_0_18px_rgba(229,57,53,0.55)] animate-float"
                   style={{
                     left: idx % 2 === 0 ? `${14 + (idx * 10) % 80}%` : `${18 + (idx * 12) % 70}%`,
                     top: idx < 3 ? `${12 + idx * 18}%` : `${52 + (idx - 3) * 12}%`,
@@ -172,7 +172,7 @@ export function EducationIndustry3D({ accentColor = "#E53935" }: { accentColor?:
                   <p className="text-lg sm:text-xl font-bold text-sky-50 mb-1">
                     Verified Learning AI
                   </p>
-                  <p className="text-[10px] text-slate-100">
+                  <p className="text-[10px] text-white">
                     Student → AI Path → Verified teaching → Progress & records
                   </p>
                 </div>
@@ -227,7 +227,7 @@ export function EducationIndustry3D({ accentColor = "#E53935" }: { accentColor?:
           </div>
         </div>
 
-        <p className="mt-5 text-[10px] text-slate-500 text-center relative">
+        <p className="mt-5 text-[10px] text-ehb-textMuted text-center relative">
           Stylised education flow. In production, real courses, assignments and verification steps
           will move through the same verified system layers.
         </p>

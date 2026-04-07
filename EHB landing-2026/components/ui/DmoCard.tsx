@@ -15,7 +15,7 @@ export function DmoCard() {
           Single source of truth for users, companies, certificates, STL scores, wallet accounts and
           applications across all EHB industries.
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[10px] xs:text-[11px] text-slate-200">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[10px] xs:text-[11px] text-ehb-textBody">
           <span>• Identity &amp; JPS profiles</span>
           <span>• PSS &amp; CRB verification</span>
           <span>• STL trust engine</span>
@@ -30,7 +30,7 @@ export function DmoCard() {
           >
             Open DMO Dashboard
           </a>
-          <span className="inline-flex items-center rounded-full glass-panel px-2 py-0.5 text-[9px] xs:text-[10px] text-slate-200">
+          <span className="inline-flex items-center rounded-full glass-panel px-2 py-0.5 text-[9px] xs:text-[10px] text-ehb-textBody">
             Includes Applications &amp; Approvals service
           </span>
         </div>

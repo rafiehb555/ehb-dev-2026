@@ -117,7 +117,7 @@ export default function AgentRuntimeActionsClient(props: {
     <section className="glass-panel card-hover p-4 space-y-3 border border-cyan-500/15" aria-busy={busy}>
       <RuntimeToast toast={runtimeToast} onDismiss={dismissToast} />
       <div className="space-y-1">
-        <h2 className="text-sm sm:text-base font-semibold text-slate-100">Runtime actions</h2>
+        <h2 className="text-sm sm:text-base font-semibold text-white">Runtime actions</h2>
         <p className="text-[11px] text-ehb-textMuted">
           Updates persist to the local agent runtime store. Set <code className="text-ehb-textBody">EHB_DEV_AUTH_BYPASS=false</code> locally to require a real login.
         </p>
@@ -127,9 +127,9 @@ export default function AgentRuntimeActionsClient(props: {
         <SubPanel title="Update status">
           <div className="grid gap-2 text-[11px]">
             <label className="grid gap-1">
-              <span className="text-slate-500">Status</span>
+              <span className="text-ehb-textMuted">Status</span>
               <select
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 value={statusForm.status}
                 disabled={busy}
                 onChange={(e) => setStatusForm((s) => ({ ...s, status: e.target.value as AgentStatus }))}
@@ -142,9 +142,9 @@ export default function AgentRuntimeActionsClient(props: {
               </select>
             </label>
             <label className="grid gap-1">
-              <span className="text-slate-500">Last task (3–200 chars)</span>
+              <span className="text-ehb-textMuted">Last task (3–200 chars)</span>
               <input
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 value={statusForm.lastTask}
                 disabled={busy}
                 onChange={(e) => setStatusForm((s) => ({ ...s, lastTask: e.target.value }))}
@@ -152,24 +152,24 @@ export default function AgentRuntimeActionsClient(props: {
             </label>
             <div className="grid gap-2 sm:grid-cols-2">
               <label className="grid gap-1">
-                <span className="text-slate-500">Queue</span>
+                <span className="text-ehb-textMuted">Queue</span>
                 <input
                   type="number"
                   min={0}
                   max={999}
-                  className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                  className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                   value={statusForm.queueSize}
                   disabled={busy}
                   onChange={(e) => setStatusForm((s) => ({ ...s, queueSize: Number(e.target.value) }))}
                 />
               </label>
               <label className="grid gap-1">
-                <span className="text-slate-500">Health %</span>
+                <span className="text-ehb-textMuted">Health %</span>
                 <input
                   type="number"
                   min={0}
                   max={100}
-                  className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                  className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                   value={statusForm.healthScore}
                   disabled={busy}
                   onChange={(e) => setStatusForm((s) => ({ ...s, healthScore: Number(e.target.value) }))}
@@ -177,9 +177,9 @@ export default function AgentRuntimeActionsClient(props: {
               </label>
             </div>
             <label className="grid gap-1">
-              <span className="text-slate-500">Optional history title</span>
+              <span className="text-ehb-textMuted">Optional history title</span>
               <input
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 placeholder="Leave empty to skip history row"
                 value={statusForm.historyTitle}
                 disabled={busy}
@@ -187,9 +187,9 @@ export default function AgentRuntimeActionsClient(props: {
               />
             </label>
             <label className="grid gap-1">
-              <span className="text-slate-500">Optional history detail</span>
+              <span className="text-ehb-textMuted">Optional history detail</span>
               <input
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 placeholder="Required if title is set"
                 value={statusForm.historyDetail}
                 disabled={busy}
@@ -234,9 +234,9 @@ export default function AgentRuntimeActionsClient(props: {
         <SubPanel title="Append history only">
           <div className="grid gap-2 text-[11px]">
             <label className="grid gap-1">
-              <span className="text-slate-500">Status label</span>
+              <span className="text-ehb-textMuted">Status label</span>
               <select
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 value={historyForm.status}
                 disabled={busy}
                 onChange={(e) => setHistoryForm((s) => ({ ...s, status: e.target.value as AgentStatus }))}
@@ -249,18 +249,18 @@ export default function AgentRuntimeActionsClient(props: {
               </select>
             </label>
             <label className="grid gap-1">
-              <span className="text-slate-500">Title</span>
+              <span className="text-ehb-textMuted">Title</span>
               <input
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 value={historyForm.title}
                 disabled={busy}
                 onChange={(e) => setHistoryForm((s) => ({ ...s, title: e.target.value }))}
               />
             </label>
             <label className="grid gap-1">
-              <span className="text-slate-500">Detail</span>
+              <span className="text-ehb-textMuted">Detail</span>
               <textarea
-                className="min-h-[72px] rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="min-h-[72px] rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 value={historyForm.detail}
                 disabled={busy}
                 onChange={(e) => setHistoryForm((s) => ({ ...s, detail: e.target.value }))}
@@ -269,7 +269,7 @@ export default function AgentRuntimeActionsClient(props: {
             <button
               type="button"
               disabled={busy}
-              className="min-h-touch rounded-full border border-white/15 bg-slate-900/60 px-3 py-2 font-semibold text-slate-100 hover:border-cyan-400/30 disabled:opacity-50"
+              className="min-h-touch rounded-full border border-white/15 bg-slate-900/60 px-3 py-2 font-semibold text-white hover:border-cyan-400/30 disabled:opacity-50"
               onClick={() =>
                 run(async () => {
                   await postRuntime({
@@ -290,9 +290,9 @@ export default function AgentRuntimeActionsClient(props: {
         <SubPanel title="Create handoff from this agent">
           <div className="grid gap-2 text-[11px]">
             <label className="grid gap-1">
-              <span className="text-slate-500">To agent</span>
+              <span className="text-ehb-textMuted">To agent</span>
               <select
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 value={handoffForm.toAgentId}
                 disabled={busy || targetAgents.length === 0}
                 onChange={(e) => setHandoffForm((s) => ({ ...s, toAgentId: e.target.value }))}
@@ -305,36 +305,36 @@ export default function AgentRuntimeActionsClient(props: {
               </select>
             </label>
             <label className="grid gap-1">
-              <span className="text-slate-500">Request summary</span>
+              <span className="text-ehb-textMuted">Request summary</span>
               <input
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 value={handoffForm.requestSummary}
                 disabled={busy}
                 onChange={(e) => setHandoffForm((s) => ({ ...s, requestSummary: e.target.value }))}
               />
             </label>
             <label className="grid gap-1">
-              <span className="text-slate-500">Reason</span>
+              <span className="text-ehb-textMuted">Reason</span>
               <textarea
-                className="min-h-[56px] rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="min-h-[56px] rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 value={handoffForm.reason}
                 disabled={busy}
                 onChange={(e) => setHandoffForm((s) => ({ ...s, reason: e.target.value }))}
               />
             </label>
             <label className="grid gap-1">
-              <span className="text-slate-500">Expected output</span>
+              <span className="text-ehb-textMuted">Expected output</span>
               <input
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 value={handoffForm.expectedOutput}
                 disabled={busy}
                 onChange={(e) => setHandoffForm((s) => ({ ...s, expectedOutput: e.target.value }))}
               />
             </label>
             <label className="grid gap-1">
-              <span className="text-slate-500">Priority</span>
+              <span className="text-ehb-textMuted">Priority</span>
               <select
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-slate-100"
+                className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 text-white"
                 value={handoffForm.priority}
                 disabled={busy}
                 onChange={(e) =>
@@ -383,9 +383,9 @@ export default function AgentRuntimeActionsClient(props: {
                   key={h.id}
                   className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/10 bg-slate-950/40 px-3 py-2 text-[11px]"
                 >
-                  <span className="text-slate-200">
+                  <span className="text-ehb-textBody">
                     {h.fromAgentId} → {h.toAgentId}{" "}
-                    <span className="text-slate-500">({h.id})</span>
+                    <span className="text-ehb-textMuted">({h.id})</span>
                   </span>
                   <button
                     type="button"

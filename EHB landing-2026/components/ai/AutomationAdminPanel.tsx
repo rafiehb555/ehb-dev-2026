@@ -88,7 +88,7 @@ export function AutomationAdminPanel() {
             <select
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 focus:outline-none"
+              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white focus:outline-none"
             >
               {cityOptions.map((c) => (
                 <option key={c} value={c}>
@@ -101,7 +101,7 @@ export function AutomationAdminPanel() {
             <select
               value={industrySlug}
               onChange={(e) => setIndustrySlug(e.target.value)}
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-slate-100 focus:outline-none min-w-[240px]"
+              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white focus:outline-none min-w-[240px]"
             >
               {INDUSTRIES.map((i) => (
                 <option key={i.slug} value={i.slug}>
@@ -114,7 +114,7 @@ export function AutomationAdminPanel() {
 
         {appliedActionId ? (
           <div className="rounded-xl glass-panel border border-emerald-500/25 p-3 text-[10px] text-emerald-100">
-            Applied: <span className="text-slate-100 font-semibold">{appliedActionId}</span>
+            Applied: <span className="text-white font-semibold">{appliedActionId}</span>
           </div>
         ) : null}
 
@@ -142,12 +142,12 @@ export function AutomationAdminPanel() {
 
               <div className="mt-4 space-y-2 text-[11px] text-ehb-textBody">
                 <div>
-                  <span className="text-slate-100 font-semibold">Reason:</span> {a.reason}
+                  <span className="text-white font-semibold">Reason:</span> {a.reason}
                 </div>
                 <div>
-                  <span className="text-slate-100 font-semibold">Impact:</span> {a.impact}
+                  <span className="text-white font-semibold">Impact:</span> {a.impact}
                 </div>
-                <div className="text-slate-500">
+                <div className="text-ehb-textMuted">
                   Recommended for: {a.recommendedFor.city} · {a.recommendedFor.industrySlug}
                 </div>
               </div>
@@ -165,7 +165,7 @@ export function AutomationAdminPanel() {
                 </button>
                 <Link
                   href="/dashboard/services/new"
-                  className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-4 py-2 text-[11px] font-semibold text-slate-200 border border-white/10 hover:bg-white/5 transition-all"
+                  className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-4 py-2 text-[11px] font-semibold text-ehb-textBody border border-white/10 hover:bg-white/5 transition-all"
                 >
                   Open Service Creator
                 </Link>

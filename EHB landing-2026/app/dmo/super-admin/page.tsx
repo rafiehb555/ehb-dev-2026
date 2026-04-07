@@ -5,7 +5,7 @@ import { UniversalStructuredAdminBlocks } from "@/components/admin/UniversalStru
 
 export default function DmoSuperAdminPage() {
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="space-y-1">
           <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">DMO · Super Admin</p>

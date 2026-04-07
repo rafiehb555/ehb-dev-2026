@@ -49,7 +49,7 @@ export function SellerOnboardingCta() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
           <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Sell on GoSellr</p>
-          <p className="text-sm text-slate-200 mt-1">
+          <p className="text-sm text-ehb-textBody mt-1">
             Start seller onboarding — creates a DMO application for review.
           </p>
         </div>
@@ -69,7 +69,7 @@ export function SellerOnboardingCta() {
             <input
               value={storeName}
               onChange={(e) => setStoreName(e.target.value)}
-              className="w-full rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+              className="w-full rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-ehb-textMuted"
               placeholder="My verified shop"
               maxLength={120}
             />
@@ -79,7 +79,7 @@ export function SellerOnboardingCta() {
             <input
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+              className="w-full rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-ehb-textMuted"
               placeholder="Electronics, fashion…"
               maxLength={120}
             />
@@ -89,7 +89,7 @@ export function SellerOnboardingCta() {
             <input
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+              className="w-full rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-ehb-textMuted"
               placeholder="Links, inventory size, regions…"
               maxLength={1000}
             />
@@ -103,7 +103,7 @@ export function SellerOnboardingCta() {
             >
               {busy ? "Submitting…" : "Submit to DMO"}
             </button>
-            <span className="text-[11px] text-slate-500">Requires login.</span>
+            <span className="text-[11px] text-ehb-textMuted">Requires login.</span>
           </div>
         </div>
       ) : null}

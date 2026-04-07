@@ -22,7 +22,7 @@ function Badge({
             ? "border-amber-400/40 text-amber-200"
             : tone === "violet"
               ? "border-violet-400/40 text-violet-200"
-            : "border-white/15 text-slate-200";
+            : "border-white/15 text-ehb-textBody";
 
   return (
     <span
@@ -84,7 +84,7 @@ export function ApplicationsTable(props: {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-0.5">
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="text-xs font-semibold text-slate-100">Applications Queue</h2>
+            <h2 className="text-xs font-semibold text-white">Applications Queue</h2>
             <Badge tone="slate">{props.totalShown} shown</Badge>
           </div>
           <div className="text-[11px] ehb-text-muted">
@@ -93,7 +93,7 @@ export function ApplicationsTable(props: {
         </div>
 
         <div className="grid w-full gap-2 sm:flex sm:w-auto sm:flex-wrap sm:items-center">
-          <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-slate-200 min-h-touch">
+          <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-ehb-textBody min-h-touch">
             <span className="text-ehb-textMuted mr-1">Status</span>
             <select
               className="ehb-select"
@@ -109,7 +109,7 @@ export function ApplicationsTable(props: {
             </select>
           </div>
 
-          <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-slate-200 min-h-touch">
+          <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-ehb-textBody min-h-touch">
             <span className="text-ehb-textMuted mr-1">Type</span>
             <select
               className="ehb-select"
@@ -131,7 +131,7 @@ export function ApplicationsTable(props: {
               <option value="OTHER">OTHER</option>
             </select>
           </div>
-          <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-slate-200 min-h-touch">
+          <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-ehb-textBody min-h-touch">
             <span className="text-ehb-textMuted mr-1">Risk</span>
             <select
               className="ehb-select"
@@ -145,13 +145,13 @@ export function ApplicationsTable(props: {
             </select>
           </div>
 
-          <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-slate-200 min-h-touch">
+          <div className="rounded-full glass-panel border border-white/10 px-3 py-1.5 text-[11px] text-ehb-textBody min-h-touch">
             <span className="text-ehb-textMuted mr-1">Search</span>
             <input
               value={props.search}
               onChange={(e) => props.onChangeSearch(e.target.value)}
               placeholder="ID / applicant / assignee"
-              className="bg-transparent outline-none placeholder:text-slate-500 w-full sm:w-[160px]"
+              className="bg-transparent outline-none placeholder:text-ehb-textMuted w-full sm:w-[160px]"
             />
           </div>
           <button
@@ -176,7 +176,7 @@ export function ApplicationsTable(props: {
       {props.error ? (
         <div className="mt-3 rounded-xl border border-rose-400/40 bg-rose-500/10 p-4 text-rose-100">
           <div className="font-semibold mb-1">Unable to load applications</div>
-          <div className="text-slate-200 text-xs">{props.error}</div>
+          <div className="text-ehb-textBody text-xs">{props.error}</div>
           <button
             type="button"
             onClick={props.onRefresh}
@@ -230,12 +230,12 @@ export function ApplicationsTable(props: {
                     aria-label={`Select ${a.id}`}
                   />
                 </td>
-                <td className="px-3 py-2 font-mono text-slate-200 whitespace-nowrap">{a.id.slice(0, 10)}…</td>
-                <td className="px-3 py-2 text-slate-200">
+                <td className="px-3 py-2 font-mono text-ehb-textBody whitespace-nowrap">{a.id.slice(0, 10)}…</td>
+                <td className="px-3 py-2 text-ehb-textBody">
                   <div className="font-semibold text-white leading-tight">{a.applicant.name}</div>
-                  <div className="text-[10px] text-slate-500">{a.applicant.email}</div>
+                  <div className="text-[10px] text-ehb-textMuted">{a.applicant.email}</div>
                 </td>
-                <td className="px-3 py-2 text-slate-200">{a.type}</td>
+                <td className="px-3 py-2 text-ehb-textBody">{a.type}</td>
                 <td className="px-3 py-2">
                   <Badge tone={statusTone(a.status)}>{a.status}</Badge>
                 </td>
@@ -258,7 +258,7 @@ export function ApplicationsTable(props: {
                   )}
                 </td>
                 <td className="px-3 py-2 text-ehb-textBody">
-                  {a.assignedTo ? a.assignedTo.name : <span className="text-slate-500">Unassigned</span>}
+                  {a.assignedTo ? a.assignedTo.name : <span className="text-ehb-textMuted">Unassigned</span>}
                 </td>
                 <td className="px-3 py-2 text-ehb-textMuted whitespace-nowrap">{fmtDateTime(a.updatedAt)}</td>
               </motion.tr>
@@ -266,7 +266,7 @@ export function ApplicationsTable(props: {
             {props.rows.length === 0 ? (
               <tr>
                 <td colSpan={9} className="px-3 py-10 text-center text-ehb-textBody">
-                  <div className="font-semibold text-slate-100">No applications found</div>
+                  <div className="font-semibold text-white">No applications found</div>
                   <div className="text-xs text-ehb-textMuted mt-1">Try refresh or clear filters to load queue data.</div>
                   <div className="mt-3 flex items-center justify-center gap-2">
                     <button
@@ -292,7 +292,7 @@ export function ApplicationsTable(props: {
       </div>
 
       <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="text-[10px] text-slate-500">
+        <div className="text-[10px] text-ehb-textMuted">
           Page: {props.page.skip / props.page.take + 1} · Showing {props.rows.length} items
         </div>
         <div className="flex gap-2">
