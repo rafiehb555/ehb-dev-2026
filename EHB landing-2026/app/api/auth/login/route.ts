@@ -61,9 +61,15 @@ export async function POST(req: Request) {
     const key = rateLimitKey(req, body.email);
     if (isRateLimited(key, now)) {
       const ra = retryAfterSeconds(key, now);
-      return fail(429, "RATE_LIMITED", "Too many login attempts. Try again in a few minutes.", undefined, {
-        headers: { "Retry-After": String(ra) },
-      });
+      return fail(
+        429,
+        "RATE_LIMITED",
+        "Too many login attempts. Try again in a few minutes.",
+        { cooldownSeconds: ra },
+        {
+          headers: { "Retry-After": String(ra) },
+        }
+      );
     }
 
     const user = await prisma.user.findUnique({

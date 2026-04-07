@@ -61,7 +61,10 @@ describe("POST /api/auth/login rate limit", () => {
 
     expect(statuses.slice(0, 8).every((s) => s === 401)).toBe(true);
     expect(statuses[8]).toBe(429);
-    expect(last?.headers.get("Retry-After")).toMatch(/^\d+$/);
+    const retryAfter = last?.headers.get("Retry-After");
+    expect(retryAfter).toMatch(/^\d+$/);
+    const payload = await last?.json();
+    expect(payload?.error?.details?.cooldownSeconds).toBe(Number(retryAfter));
   });
 
   it("clears failed attempts after successful login", async () => {

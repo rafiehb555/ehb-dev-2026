@@ -25,6 +25,23 @@ export default function DmoLayout({ children }: { children: React.ReactNode }) {
     DMO_NAV_SECTIONS.find((section) => section.key === activeSectionFromPath) ??
     DMO_NAV_SECTIONS[0];
 
+  const PRIMARY_MODULE_COUNT = 7;
+  const primarySections = useMemo(() => DMO_NAV_SECTIONS.slice(0, PRIMARY_MODULE_COUNT), []);
+  const overflowSections = useMemo(() => DMO_NAV_SECTIONS.slice(PRIMARY_MODULE_COUNT), []);
+  const [moreModulesOpen, setMoreModulesOpen] = useState(false);
+
+  useEffect(() => {
+    setMoreModulesOpen(overflowSections.some((s) => s.key === selectedSection.key));
+  }, [selectedSection.key, overflowSections]);
+
+  const moduleChipClass = (isActive: boolean) =>
+    [
+      "inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-medium transition-all",
+      isActive
+        ? "border-cyan-400/40 bg-cyan-500/20 text-cyan-100 shadow-[0_0_0_1px_rgba(51, 195, 255,0.15)]"
+        : "border-white/10 bg-white/5 text-ehb-textBody hover:bg-white/10",
+    ].join(" ");
+
   return (
     <div className="flex min-h-screen bg-[#0B0F14] text-white">
       <div className="sticky top-0 h-screen w-[320px] p-3 hidden lg:block">
@@ -36,7 +53,9 @@ export default function DmoLayout({ children }: { children: React.ReactNode }) {
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">DMO Workspace</p>
-                <p className="text-sm text-ehb-textBody">Top card se main module choose karein, aur left sidebar us module ke andar ke options dikhayegi.</p>
+                <p className="text-sm text-ehb-textBody">
+                  Pick a main module — left sidebar shows that module&apos;s items.
+                </p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <Link href="/dmo" className="ehb-btn-primary ehb-press">
@@ -60,7 +79,8 @@ export default function DmoLayout({ children }: { children: React.ReactNode }) {
                   <p className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted">Module Switcher</p>
                   <h2 className="mt-1 text-base font-semibold text-white">Main sidebar options</h2>
                   <p className="mt-1 text-sm text-ehb-textBody">
-                    <span className="font-medium text-cyan-100">{selectedSection.label}</span> selected hai. Kisi bhi main module par click karein, us ke andar ke options left sidebar mein khul jayenge.
+                    <span className="font-medium text-cyan-100">{selectedSection.label}</span> is active. Extra modules live under{" "}
+                    <span className="text-white/90">More</span>.
                   </p>
                 </div>
                 <Link
@@ -72,26 +92,56 @@ export default function DmoLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               </div>
 
-              <div className="mt-3 flex flex-wrap gap-2">
-                {DMO_NAV_SECTIONS.map((section) => {
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                {primarySections.map((section) => {
                   const isActive = section.key === selectedSection.key;
                   return (
                     <Link
                       key={section.key}
                       href={section.href}
                       onClick={() => setSelectedSectionKey(section.key)}
-                      className={[
-                        "inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-medium transition-all",
-                        isActive
-                          ? "border-cyan-400/40 bg-cyan-500/20 text-cyan-100 shadow-[0_0_0_1px_rgba(51, 195, 255,0.15)]"
-                          : "border-white/10 bg-white/5 text-ehb-textBody hover:bg-white/10",
-                      ].join(" ")}
+                      className={moduleChipClass(isActive)}
                     >
                       <span className="text-sm">{section.icon}</span>
                       <span>{section.label}</span>
                     </Link>
                   );
                 })}
+                {overflowSections.length > 0 ? (
+                  <details
+                    className="group relative"
+                    open={moreModulesOpen}
+                    onToggle={(e) => setMoreModulesOpen((e.target as HTMLDetailsElement).open)}
+                  >
+                    <summary className="inline-flex cursor-pointer list-none items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-xs font-medium text-ehb-textBody marker:content-none [&::-webkit-details-marker]:hidden hover:bg-white/10">
+                      <span className="text-sm" aria-hidden>
+                        ⋯
+                      </span>
+                      <span>
+                        More{" "}
+                        <span className="text-ehb-textMuted">
+                          ({overflowSections.length})
+                        </span>
+                      </span>
+                    </summary>
+                    <div className="mt-2 flex flex-wrap gap-2 border-t border-white/10 pt-3">
+                      {overflowSections.map((section) => {
+                        const isActive = section.key === selectedSection.key;
+                        return (
+                          <Link
+                            key={section.key}
+                            href={section.href}
+                            onClick={() => setSelectedSectionKey(section.key)}
+                            className={moduleChipClass(isActive)}
+                          >
+                            <span className="text-sm">{section.icon}</span>
+                            <span>{section.label}</span>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </details>
+                ) : null}
               </div>
             </div>
           </div>
