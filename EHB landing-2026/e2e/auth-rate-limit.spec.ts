@@ -16,6 +16,13 @@ test.describe("Auth login rate limit", () => {
     page.on("pageerror", (err) => {
       throw err;
     });
+    page.on("response", (res) => {
+      const u = res.url();
+      if (u.includes("auth") && u.includes("api")) {
+        // eslint-disable-next-line no-console -- e2e debug
+        console.log("[e2e]", res.request().method(), res.status(), u);
+      }
+    });
 
     const email = `e2e-rate-${Date.now()}@example.com`;
     await page.goto("/auth", { waitUntil: "domcontentloaded" });
