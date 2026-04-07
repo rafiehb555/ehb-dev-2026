@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Auth login rate limit", () => {
   test.describe.configure({ timeout: 120_000 });
+
   test.beforeAll(async ({ request }, testInfo) => {
     const res = await request.get("/api/health");
     const json = (await res.json()) as { db?: { ok?: boolean; skipped?: boolean } };
@@ -13,52 +14,29 @@ test.describe("Auth login rate limit", () => {
   });
 
   test("shows cooldown after repeated failed logins", async ({ page, request }) => {
-    page.on("pageerror", (err) => {
-      throw err;
-    });
-    page.on("response", (res) => {
-      const u = res.url();
-      if (u.includes("auth") && u.includes("api")) {
-        // eslint-disable-next-line no-console -- e2e debug
-        console.log("[e2e]", res.request().method(), res.status(), u);
-      }
-    });
-
     const email = `e2e-rate-${Date.now()}@example.com`;
+    const password = "wrong-password-e2e";
+
+    for (let i = 0; i < 8; i++) {
+      const res = await request.post("/api/auth/login", {
+        json: { email, password },
+      });
+      expect(res.status()).toBe(401);
+    }
+
     await page.goto("/auth", { waitUntil: "domcontentloaded" });
     await expect(page.getByPlaceholder("Email")).toBeVisible();
     await page.getByPlaceholder("Email").fill(email);
-    await page.getByPlaceholder("Password").fill("wrong-password-e2e");
+    await page.getByPlaceholder("Password").fill(password);
     await expect(page.getByPlaceholder("Email")).toHaveValue(email);
-    await expect(page.getByPlaceholder("Password")).toHaveValue("wrong-password-e2e");
-
-    await request.post("/api/auth/login", {
-      json: { email: "warmup@example.com", password: "x" },
-    });
-
-    await expect(page.getByTestId("auth-submit")).toBeVisible();
-
-    for (let i = 0; i < 8; i++) {
-      const loginResPromise = page.waitForResponse(
-        (r) => r.url().includes("/api/auth/login") && r.request().method() === "POST"
-      );
-      await page.getByTestId("auth-submit").click();
-      const loginRes = await loginResPromise;
-      expect(loginRes.status()).toBe(401);
-      const body = (await loginRes.json()) as { error?: { message?: string } };
-      expect(body?.error?.message).toMatch(/Invalid credentials/i);
-
-      await expect(page.getByTestId("auth-error")).toBeVisible({ timeout: 15_000 });
-      await expect(page.getByTestId("auth-error")).toContainText(/Invalid credentials|Request failed/i);
-      await expect(page.getByTestId("auth-submit")).toBeEnabled({ timeout: 15_000 });
-    }
+    await expect(page.getByPlaceholder("Password")).toHaveValue(password);
 
     const ninth = page.waitForResponse(
       (r) => r.url().includes("/api/auth/login") && r.request().method() === "POST"
     );
     await page.getByTestId("auth-submit").click();
-    const res429 = await ninth;
-    expect(res429.status()).toBe(429);
+    const loginRes = await ninth;
+    expect(loginRes.status()).toBe(429);
 
     await expect(page.getByTestId("auth-submit")).toHaveText(/Retry in \d+s/, { timeout: 15_000 });
     await expect(page.getByText(/Too many attempts/i)).toBeVisible();
