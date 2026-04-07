@@ -92,4 +92,21 @@ describe("GET /api/health", () => {
     expect(res.status).toBe(200);
     expect(connect).not.toHaveBeenCalled();
   });
+
+  it("uses user.count when $runCommandRaw is not available (PostgreSQL path)", async () => {
+    vi.resetModules();
+    const connect = vi.fn(async () => undefined);
+    const count = vi.fn(async () => 0);
+    vi.doMock("@/lib/prisma", () => ({
+      prisma: { $connect: connect, user: { count } },
+    }));
+    const { GET } = await import("@/app/api/health/route");
+
+    const res = await GET(new Request("http://localhost/api/health"));
+    expect(res.status).toBe(200);
+    expect(connect).toHaveBeenCalled();
+    expect(count).toHaveBeenCalled();
+    const json = (await res.json()) as { db: { ok: boolean } };
+    expect(json.db.ok).toBe(true);
+  });
 });
