@@ -37,11 +37,11 @@ export function IndustryAiPanel({ industry }: { industry: string }) {
       {trending && (
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Demand Change</p>
+            <p className="text-xs text-ehb-textMuted uppercase tracking-wider mb-1">Demand Change</p>
             <p className="text-2xl font-black text-white">+{trending.demandChange}%</p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 md:col-span-2">
-            <p className="text-xs text-slate-400 uppercase tracking-wider mb-2">People Also Search</p>
+            <p className="text-xs text-ehb-textMuted uppercase tracking-wider mb-2">People Also Search</p>
             <div className="flex flex-wrap gap-2">
               {trending.trendingKeywords.map((keyword) => (
                 <span key={keyword} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">

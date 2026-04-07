@@ -30,7 +30,7 @@ export default function CommunicationCenter() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold font-display text-white">Communication Center</h1>
-          <p className="text-xs sm:text-sm text-slate-400">Secure messaging, video calls, and real-time alerts.</p>
+          <p className="text-xs sm:text-sm text-ehb-textMuted">Secure messaging, video calls, and real-time alerts.</p>
         </div>
         <div className="flex gap-1 sm:gap-2 p-1 bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl overflow-x-auto">
           {[
@@ -44,7 +44,7 @@ export default function CommunicationCenter() {
               className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap ${
                 activeTab === tab.id 
                   ? 'bg-slate-800 text-brand-primary shadow-sm' 
-                  : 'text-slate-500 hover:text-slate-300'
+                  : 'text-slate-500 hover:text-ehb-textBody'
               }`}
             >
               <tab.icon size={14} className="sm:w-4 sm:h-4" />
@@ -67,7 +67,7 @@ export default function CommunicationCenter() {
               {/* Chat List */}
               <div className="lg:w-80 flex flex-col gap-3 sm:gap-4">
                 <div className="relative">
-                  <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                  <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-ehb-textMuted" size={16} />
                   <input 
                     type="text" 
                     placeholder="Search messages..."
@@ -82,7 +82,7 @@ export default function CommunicationCenter() {
                       className={`w-full p-3 sm:p-4 rounded-xl sm:rounded-2xl flex items-center gap-3 sm:gap-4 transition-all text-left ${
                         selectedChat?.id === chat.id 
                           ? 'bg-brand-primary text-white shadow-lg shadow-brand-primary/20' 
-                          : 'hover:bg-slate-900 text-slate-400'
+                          : 'hover:bg-slate-900 text-ehb-textMuted'
                       }`}
                     >
                       <div className="relative shrink-0">
@@ -125,13 +125,13 @@ export default function CommunicationCenter() {
                         </div>
                       </div>
                       <div className="flex items-center gap-1 sm:gap-2">
-                        <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg sm:rounded-xl transition-colors text-slate-400">
+                        <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg sm:rounded-xl transition-colors text-ehb-textMuted">
                           <Phone size={16} className="sm:w-[18px] sm:h-[18px]" />
                         </button>
-                        <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg sm:rounded-xl transition-colors text-slate-400">
+                        <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg sm:rounded-xl transition-colors text-ehb-textMuted">
                           <Video size={16} className="sm:w-[18px] sm:h-[18px]" />
                         </button>
-                        <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg sm:rounded-xl transition-colors text-slate-400">
+                        <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg sm:rounded-xl transition-colors text-ehb-textMuted">
                           <MoreVertical size={16} className="sm:w-[18px] sm:h-[18px]" />
                         </button>
                       </div>
@@ -175,7 +175,7 @@ export default function CommunicationCenter() {
                           className="w-full pl-3 sm:pl-4 pr-20 sm:pr-24 py-3 sm:py-4 bg-slate-800 border-none rounded-xl sm:rounded-2xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-brand-primary/20 text-white"
                         />
                         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 sm:gap-2">
-                          <button className="p-1.5 sm:p-2 text-slate-400 hover:text-brand-primary transition-colors">
+                          <button className="p-1.5 sm:p-2 text-ehb-textMuted hover:text-brand-primary transition-colors">
                             <Paperclip size={18} className="sm:w-5 sm:h-5" />
                           </button>
                           <button className="w-8 h-8 sm:w-10 sm:h-10 bg-brand-primary text-white rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg shadow-brand-primary/20">
@@ -191,7 +191,7 @@ export default function CommunicationCenter() {
                       <MessageSquare size={32} className="sm:w-10 sm:h-10" />
                     </div>
                     <h3 className="text-lg sm:text-xl font-bold mb-2 text-white">Your Messages</h3>
-                    <p className="text-xs sm:text-sm text-slate-400 max-w-xs">Select a conversation to start chatting with your lawyer or consultant.</p>
+                    <p className="text-xs sm:text-sm text-ehb-textMuted max-w-xs">Select a conversation to start chatting with your lawyer or consultant.</p>
                   </div>
                 )}
               </div>
@@ -209,10 +209,10 @@ export default function CommunicationCenter() {
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <h3 className="font-bold text-white text-sm sm:text-base">Recent Notifications</h3>
                 <div className="flex gap-1 sm:gap-2">
-                  <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg sm:rounded-xl text-slate-400 transition-colors">
+                  <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg sm:rounded-xl text-ehb-textMuted transition-colors">
                     <Filter size={16} className="sm:w-[18px] sm:h-[18px]" />
                   </button>
-                  <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg sm:rounded-xl text-slate-400 transition-colors">
+                  <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg sm:rounded-xl text-ehb-textMuted transition-colors">
                     <Settings size={16} className="sm:w-[18px] sm:h-[18px]" />
                   </button>
                 </div>
@@ -229,13 +229,13 @@ export default function CommunicationCenter() {
                       <span className="text-[8px] sm:text-[10px] text-slate-500">{n.time}</span>
                     </div>
                     <h4 className="font-bold mb-1 text-white text-sm sm:text-base">{n.title}</h4>
-                    <p className="text-xs sm:text-sm text-slate-400">{n.desc}</p>
+                    <p className="text-xs sm:text-sm text-ehb-textMuted">{n.desc}</p>
                   </div>
                   <div className="flex sm:flex-col gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                    <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-brand-primary">
+                    <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg text-ehb-textMuted hover:text-brand-primary">
                       <Archive size={14} className="sm:w-4 sm:h-4" />
                     </button>
-                    <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-rose-500">
+                    <button className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg text-ehb-textMuted hover:text-rose-500">
                       <Trash2 size={14} className="sm:w-4 sm:h-4" />
                     </button>
                   </div>
@@ -255,7 +255,7 @@ export default function CommunicationCenter() {
               <div className="ms-card p-6 sm:p-8 flex flex-col items-center justify-center text-center">
                 <Calendar size={40} className="sm:w-12 sm:h-12 text-brand-primary mb-4 sm:mb-6" />
                 <h3 className="text-lg sm:text-xl font-bold mb-2 text-white">Schedule Consultation</h3>
-                <p className="text-xs sm:text-sm text-slate-400 mb-6 sm:mb-8">Book a video or audio call with a verified legal expert.</p>
+                <p className="text-xs sm:text-sm text-ehb-textMuted mb-6 sm:mb-8">Book a video or audio call with a verified legal expert.</p>
                 <button className="w-full py-3 sm:py-4 bg-brand-primary text-white rounded-xl sm:rounded-2xl font-bold text-sm shadow-lg shadow-brand-primary/20">
                   Book New Meeting
                 </button>

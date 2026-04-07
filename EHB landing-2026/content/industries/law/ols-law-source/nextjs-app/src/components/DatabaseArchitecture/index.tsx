@@ -579,7 +579,7 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
                   {totalTables} Tables
                 </span>
               </h1>
-              <p className="text-slate-400">
+              <p className="text-ehb-textMuted">
                 {language === 'ur' 
                   ? 'EHB AI عالمی قانونی پلیٹ فارم کا ڈیٹابیس ڈھانچہ - فیز 1-4'
                   : 'Global database structure for EHB AI Legal Platform - Phases 1-4'}
@@ -602,7 +602,7 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                   selectedPhase === phase.id 
                     ? 'bg-brand-gold text-slate-900' 
-                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                    : 'bg-slate-800 text-ehb-textMuted hover:bg-slate-700'
                 }`}
               >
                 {phase.label}
@@ -636,7 +636,7 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
             >
               <stat.icon className={`${stat.color} mb-2`} size={20} />
               <p className="text-white font-bold text-2xl">{stat.value}</p>
-              <p className="text-slate-400 text-xs">{stat.label}</p>
+              <p className="text-ehb-textMuted text-xs">{stat.label}</p>
             </div>
           ))}
         </motion.div>
@@ -654,7 +654,7 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
               className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all ${
                 viewMode === mode.id 
                   ? 'bg-brand-gold text-slate-900' 
-                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                  : 'bg-slate-800 text-ehb-textMuted hover:bg-slate-700'
               }`}
             >
               <mode.icon size={18} />
@@ -740,7 +740,7 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
                                   </span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  <span className="text-slate-400 text-xs font-mono">{field.type}</span>
+                                  <span className="text-ehb-textMuted text-xs font-mono">{field.type}</span>
                                   {!field.nullable && (
                                     <span className="text-red-400 text-[10px]">NOT NULL</span>
                                   )}
@@ -752,7 +752,7 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
                           {/* Foreign Keys */}
                           {table.foreignKeys && table.foreignKeys.length > 0 && (
                             <div className="mt-4 pt-4 border-t border-white/10">
-                              <p className="text-slate-400 text-xs mb-2 flex items-center gap-1">
+                              <p className="text-ehb-textMuted text-xs mb-2 flex items-center gap-1">
                                 <Link size={12} />
                                 Foreign Keys:
                               </p>
@@ -767,7 +767,7 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
                           {/* Indexes */}
                           {table.indexes && table.indexes.length > 0 && (
                             <div className="mt-4 pt-4 border-t border-white/10">
-                              <p className="text-slate-400 text-xs mb-2 flex items-center gap-1">
+                              <p className="text-ehb-textMuted text-xs mb-2 flex items-center gap-1">
                                 <Zap size={12} />
                                 Indexes:
                               </p>
@@ -853,15 +853,15 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
             
             <div className="mt-8 grid grid-cols-3 gap-4 text-center">
               <div className="p-4 bg-white/5 rounded-xl">
-                <p className="text-slate-400 text-sm">One-to-Many</p>
+                <p className="text-ehb-textMuted text-sm">One-to-Many</p>
                 <p className="text-white font-bold">8</p>
               </div>
               <div className="p-4 bg-white/5 rounded-xl">
-                <p className="text-slate-400 text-sm">Many-to-Many</p>
+                <p className="text-ehb-textMuted text-sm">Many-to-Many</p>
                 <p className="text-white font-bold">3</p>
               </div>
               <div className="p-4 bg-white/5 rounded-xl">
-                <p className="text-slate-400 text-sm">One-to-One</p>
+                <p className="text-ehb-textMuted text-sm">One-to-One</p>
                 <p className="text-white font-bold">2</p>
               </div>
             </div>
@@ -883,19 +883,19 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
               </h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Total Users</span>
+                  <span className="text-ehb-textMuted">Total Users</span>
                   <span className="text-white font-bold">{MOCK_DB_STATS.users.total.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Active Users</span>
+                  <span className="text-ehb-textMuted">Active Users</span>
                   <span className="text-green-400 font-bold">{MOCK_DB_STATS.users.active.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Clients</span>
+                  <span className="text-ehb-textMuted">Clients</span>
                   <span className="text-white font-bold">{MOCK_DB_STATS.users.clients.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Lawyers</span>
+                  <span className="text-ehb-textMuted">Lawyers</span>
                   <span className="text-violet-400 font-bold">{MOCK_DB_STATS.users.lawyers.toLocaleString()}</span>
                 </div>
               </div>
@@ -909,19 +909,19 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
               </h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Total Cases</span>
+                  <span className="text-ehb-textMuted">Total Cases</span>
                   <span className="text-white font-bold">{MOCK_DB_STATS.cases.total.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Active Cases</span>
+                  <span className="text-ehb-textMuted">Active Cases</span>
                   <span className="text-blue-400 font-bold">{MOCK_DB_STATS.cases.active.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Completed</span>
+                  <span className="text-ehb-textMuted">Completed</span>
                   <span className="text-green-400 font-bold">{MOCK_DB_STATS.cases.completed.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Pending</span>
+                  <span className="text-ehb-textMuted">Pending</span>
                   <span className="text-yellow-400 font-bold">{MOCK_DB_STATS.cases.pending.toLocaleString()}</span>
                 </div>
               </div>
@@ -935,19 +935,19 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
               </h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Total Transactions</span>
+                  <span className="text-ehb-textMuted">Total Transactions</span>
                   <span className="text-white font-bold">{MOCK_DB_STATS.payments.total.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Total Amount</span>
+                  <span className="text-ehb-textMuted">Total Amount</span>
                   <span className="text-green-400 font-bold">PKR {(MOCK_DB_STATS.payments.totalAmount / 1000000).toFixed(1)}M</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">This Month</span>
+                  <span className="text-ehb-textMuted">This Month</span>
                   <span className="text-white font-bold">{MOCK_DB_STATS.payments.thisMonth.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">This Month Amount</span>
+                  <span className="text-ehb-textMuted">This Month Amount</span>
                   <span className="text-brand-gold font-bold">PKR {(MOCK_DB_STATS.payments.thisMonthAmount / 1000000).toFixed(1)}M</span>
                 </div>
               </div>
@@ -961,19 +961,19 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
               </h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Total Lawyers</span>
+                  <span className="text-ehb-textMuted">Total Lawyers</span>
                   <span className="text-white font-bold">{MOCK_DB_STATS.lawyers.total.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Verified</span>
+                  <span className="text-ehb-textMuted">Verified</span>
                   <span className="text-green-400 font-bold">{MOCK_DB_STATS.lawyers.verified.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Active</span>
+                  <span className="text-ehb-textMuted">Active</span>
                   <span className="text-blue-400 font-bold">{MOCK_DB_STATS.lawyers.active.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Average Rating</span>
+                  <span className="text-ehb-textMuted">Average Rating</span>
                   <span className="text-brand-gold font-bold">{MOCK_DB_STATS.lawyers.avgRating} ⭐</span>
                 </div>
               </div>
@@ -995,19 +995,19 @@ export default function DatabaseArchitecture({ language = 'en' }: DatabaseArchit
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
               <p className="text-brand-gold font-bold text-2xl">{DATABASE_STATS.totalTables}</p>
-              <p className="text-slate-400 text-sm">{language === 'ur' ? 'ٹیبلز' : 'Tables'}</p>
+              <p className="text-ehb-textMuted text-sm">{language === 'ur' ? 'ٹیبلز' : 'Tables'}</p>
             </div>
             <div>
               <p className="text-brand-gold font-bold text-2xl">{DATABASE_STATS.totalFields}+</p>
-              <p className="text-slate-400 text-sm">{language === 'ur' ? 'فیلڈز' : 'Fields'}</p>
+              <p className="text-ehb-textMuted text-sm">{language === 'ur' ? 'فیلڈز' : 'Fields'}</p>
             </div>
             <div>
               <p className="text-brand-gold font-bold text-2xl">{DATABASE_STATS.supportedCurrencies}</p>
-              <p className="text-slate-400 text-sm">{language === 'ur' ? 'کرنسیاں' : 'Currencies'}</p>
+              <p className="text-ehb-textMuted text-sm">{language === 'ur' ? 'کرنسیاں' : 'Currencies'}</p>
             </div>
             <div>
               <p className="text-brand-gold font-bold text-2xl">{DATABASE_STATS.supportedLanguages}</p>
-              <p className="text-slate-400 text-sm">{language === 'ur' ? 'زبانیں' : 'Languages'}</p>
+              <p className="text-ehb-textMuted text-sm">{language === 'ur' ? 'زبانیں' : 'Languages'}</p>
             </div>
           </div>
         </motion.div>

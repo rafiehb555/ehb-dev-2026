@@ -139,13 +139,13 @@ export default function CaseMonitoring({ caseId, caseType, lawyerName, language 
               <Briefcase className="text-brand-gold" size={24} />
               {language === 'ur' ? 'کیس کی نگرانی' : 'Case Monitoring'}
             </h3>
-            <p className="text-slate-400 text-sm mt-1">
+            <p className="text-ehb-textMuted text-sm mt-1">
               {language === 'ur' ? `کیس ID: ${caseId}` : `Case ID: ${caseId}`}
             </p>
           </div>
           <div className="text-right">
             <p className="text-white font-medium">{caseType}</p>
-            <p className="text-slate-400 text-sm flex items-center gap-1 justify-end">
+            <p className="text-ehb-textMuted text-sm flex items-center gap-1 justify-end">
               <User size={14} />
               {lawyerName}
             </p>
@@ -155,7 +155,7 @@ export default function CaseMonitoring({ caseId, caseType, lawyerName, language 
         {/* Progress Bar */}
         <div className="mb-4">
           <div className="flex justify-between text-sm mb-2">
-            <span className="text-slate-400">
+            <span className="text-ehb-textMuted">
               {language === 'ur' ? 'مجموعی پیش رفت' : 'Overall Progress'}
             </span>
             <span className="text-brand-gold font-bold">{Math.round(progressPercent)}%</span>
@@ -294,7 +294,7 @@ export default function CaseMonitoring({ caseId, caseType, lawyerName, language 
                       <p className="text-white font-medium">
                         {language === 'ur' ? update.titleUrdu : update.title}
                       </p>
-                      <p className="text-slate-400 text-sm mt-1">
+                      <p className="text-ehb-textMuted text-sm mt-1">
                         {language === 'ur' ? update.descriptionUrdu : update.description}
                       </p>
                       <p className="text-slate-500 text-xs mt-2">

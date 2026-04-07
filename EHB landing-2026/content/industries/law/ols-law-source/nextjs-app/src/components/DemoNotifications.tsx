@@ -143,7 +143,7 @@ export default function DemoNotifications() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-white text-sm font-medium">{notif.title}</p>
-                          <p className="text-slate-400 text-xs truncate">{notif.message}</p>
+                          <p className="text-ehb-textMuted text-xs truncate">{notif.message}</p>
                           <p className="text-slate-600 text-xs mt-1">{notif.time}</p>
                         </div>
                       </div>
@@ -178,7 +178,7 @@ export default function DemoNotifications() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-white text-sm font-medium">{currentToast.title}</p>
-                  <p className="text-slate-400 text-xs">{currentToast.message}</p>
+                  <p className="text-ehb-textMuted text-xs">{currentToast.message}</p>
                 </div>
                 <button
                   onClick={() => setShowToast(false)}

@@ -95,7 +95,7 @@ export default function PaymentSuccessPage() {
               className="bg-slate-800/50 rounded-2xl p-6 mb-6 border border-slate-700"
             >
               <div className="flex items-center justify-between mb-4">
-                <span className="text-slate-400 text-sm">Case ID</span>
+                <span className="text-ehb-textMuted text-sm">Case ID</span>
                 <button
                   onClick={handleCopy}
                   className="flex items-center gap-2 text-[#D4AF37] text-sm hover:text-yellow-400 transition-colors"
@@ -114,7 +114,7 @@ export default function PaymentSuccessPage() {
               transition={{ delay: 0.5 }}
               className="space-y-4 mb-8"
             >
-              <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Case Summary</h3>
+              <h3 className="text-sm font-bold text-ehb-textMuted uppercase tracking-wider">Case Summary</h3>
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white/5 rounded-xl p-4">
@@ -156,7 +156,7 @@ export default function PaymentSuccessPage() {
                     <h4 className="text-white font-bold text-lg">Sarah Ahmed</h4>
                     <CheckCircle2 className="text-blue-400" size={16} />
                   </div>
-                  <p className="text-slate-400 text-sm">Family Law Specialist • 12 yrs experience</p>
+                  <p className="text-ehb-textMuted text-sm">Family Law Specialist • 12 yrs experience</p>
                   <div className="flex items-center gap-2 mt-1">
                     <Star className="text-yellow-400 fill-yellow-400" size={14} />
                     <span className="text-white text-sm font-bold">4.9</span>
@@ -182,7 +182,7 @@ export default function PaymentSuccessPage() {
               transition={{ delay: 0.7 }}
               className="mb-8"
             >
-              <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">What's Next?</h3>
+              <h3 className="text-sm font-bold text-ehb-textMuted uppercase tracking-wider mb-4">What's Next?</h3>
               <div className="space-y-3">
                 {[
                   { icon: Bell, title: 'Lawyer will contact you within 24 hours', done: false },

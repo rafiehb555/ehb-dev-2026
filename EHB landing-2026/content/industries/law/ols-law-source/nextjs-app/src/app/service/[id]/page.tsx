@@ -140,14 +140,14 @@ export default function ServiceDetailsPage() {
               </div>
               <div>
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold font-display text-white">{service.title}</h1>
-                <p className="text-xs sm:text-sm text-slate-400">{service.description}</p>
+                <p className="text-xs sm:text-sm text-ehb-textMuted">{service.description}</p>
               </div>
             </div>
 
             <div className="space-y-4 sm:space-y-6">
               <div>
                 <h3 className="text-[10px] sm:text-sm font-black uppercase tracking-widest text-slate-500 mb-3 sm:mb-4">Service Overview</h3>
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                <p className="text-xs sm:text-sm text-ehb-textMuted leading-relaxed">
                   Our {service.title} service provides comprehensive legal support tailored to your specific needs. 
                   We handle everything from initial consultation to final resolution, ensuring your rights are protected 
                   at every step of the legal process.
@@ -219,7 +219,7 @@ export default function ServiceDetailsPage() {
             >
               Start Legal Case <ArrowRight size={16} className="sm:w-[18px] sm:h-[18px]" />
             </button>
-            <p className="text-[9px] sm:text-[10px] text-slate-400 text-center mt-3 sm:mt-4">
+            <p className="text-[9px] sm:text-[10px] text-ehb-textMuted text-center mt-3 sm:mt-4">
               Secure escrow payment required after lawyer match.
             </p>
           </div>
@@ -244,7 +244,7 @@ export default function ServiceDetailsPage() {
               <Info size={16} className="sm:w-[18px] sm:h-[18px]" />
               <h4 className="font-bold text-[10px] sm:text-xs uppercase tracking-widest">AI Matching</h4>
             </div>
-            <p className="text-[9px] sm:text-[10px] text-slate-400 leading-relaxed">
+            <p className="text-[9px] sm:text-[10px] text-ehb-textMuted leading-relaxed">
               Our AI will analyze your case details and match you with the top 3 lawyers specialized in {service.title}.
             </p>
           </div>

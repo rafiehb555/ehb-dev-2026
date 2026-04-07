@@ -19,7 +19,7 @@ export default function PlatformArchitecture() {
           <Zap size={12} className="sm:w-3.5 sm:h-3.5" /> Phase 20: Final Master Blueprint
         </div>
         <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold font-display mb-3 sm:mb-4 text-white">EHB Law Platform Architecture</h1>
-        <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto px-4">
+        <p className="text-xs sm:text-sm text-ehb-textMuted max-w-2xl mx-auto px-4">
           The complete master blueprint of the EHB Law Services ecosystem, integrating AI, blockchain, and global legal networks.
         </p>
       </div>
@@ -38,7 +38,7 @@ export default function PlatformArchitecture() {
             className={`flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl text-[10px] sm:text-sm font-bold transition-all ${
               activeTab === tab.id 
                 ? 'bg-brand-primary text-white shadow-lg shadow-brand-primary/20' 
-                : 'bg-slate-900 border border-slate-800 text-slate-400 hover:bg-slate-800'
+                : 'bg-slate-900 border border-slate-800 text-ehb-textMuted hover:bg-slate-800'
             }`}
           >
             <tab.icon size={14} className="sm:w-[18px] sm:h-[18px]" />
@@ -63,7 +63,7 @@ export default function PlatformArchitecture() {
                     <Database size={18} className="sm:w-5 sm:h-5" />
                   </div>
                   <h3 className="text-sm sm:text-base font-bold mb-1 sm:mb-2 text-white">{module.name}</h3>
-                  <p className="text-[10px] sm:text-xs text-slate-400 leading-relaxed">{module.description}</p>
+                  <p className="text-[10px] sm:text-xs text-ehb-textMuted leading-relaxed">{module.description}</p>
                 </div>
               ))}
             </div>
@@ -80,7 +80,7 @@ export default function PlatformArchitecture() {
                       <h4 className="text-brand-primary font-bold text-[10px] sm:text-sm uppercase tracking-widest">{user.type}</h4>
                       <ul className="space-y-1 sm:space-y-2">
                         {user.permissions.map((p, i) => (
-                          <li key={i} className="text-[8px] sm:text-[10px] text-slate-400 flex items-center gap-1.5 sm:gap-2">
+                          <li key={i} className="text-[8px] sm:text-[10px] text-ehb-textMuted flex items-center gap-1.5 sm:gap-2">
                             <div className="w-1 h-1 rounded-full bg-slate-600 shrink-0" /> {p}
                           </li>
                         ))}
@@ -106,18 +106,18 @@ export default function PlatformArchitecture() {
                 <h3 className="text-lg sm:text-xl font-bold font-display flex items-center gap-2 sm:gap-3 text-white">
                   <Table className="text-brand-primary" size={20} /> Core Database Schema
                 </h3>
-                <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest bg-slate-800 text-slate-300 px-2 sm:px-3 py-1 rounded-full">500+ Tables Planned</span>
+                <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest bg-slate-800 text-ehb-textBody px-2 sm:px-3 py-1 rounded-full">500+ Tables Planned</span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4">
                 {PLATFORM_ARCHITECTURE.databaseSchema.coreTables.map((table, idx) => (
                   <div key={idx} className="p-3 sm:p-4 bg-slate-900 rounded-lg sm:rounded-xl border border-slate-800 flex items-center gap-2 sm:gap-3 group hover:bg-brand-primary/5 transition-colors">
                     <Code size={12} className="sm:w-3.5 sm:h-3.5 text-slate-500 group-hover:text-brand-primary shrink-0" />
-                    <span className="text-[8px] sm:text-[10px] font-mono font-bold text-slate-300 truncate">{table}</span>
+                    <span className="text-[8px] sm:text-[10px] font-mono font-bold text-ehb-textBody truncate">{table}</span>
                   </div>
                 ))}
               </div>
               <div className="mt-6 sm:mt-8 p-4 sm:p-6 bg-slate-900 text-white rounded-xl sm:rounded-2xl border border-slate-800">
-                <p className="text-[10px] sm:text-xs text-slate-400 leading-relaxed">
+                <p className="text-[10px] sm:text-xs text-ehb-textMuted leading-relaxed">
                   The database is designed for high availability and global sharding. Each region (Country Franchise) maintains its own data partition while syncing critical governance data to the Global Master Ledger.
                 </p>
               </div>
@@ -140,7 +140,7 @@ export default function PlatformArchitecture() {
                 </div>
                 <div>
                   <h3 className="text-sm sm:text-lg font-bold mb-1 sm:mb-2 text-white">{ai.name}</h3>
-                  <p className="text-[10px] sm:text-sm text-slate-400 leading-relaxed">{ai.task}</p>
+                  <p className="text-[10px] sm:text-sm text-ehb-textMuted leading-relaxed">{ai.task}</p>
                 </div>
               </div>
             ))}
@@ -167,7 +167,7 @@ export default function PlatformArchitecture() {
                 ].map((item, i) => (
                   <div key={i} className="p-3 sm:p-4 bg-white/5 rounded-xl sm:rounded-2xl border border-white/5">
                     <h4 className="text-xs sm:text-sm font-bold mb-0.5 sm:mb-1">{item.title}</h4>
-                    <p className="text-[9px] sm:text-[10px] text-slate-400">{item.desc}</p>
+                    <p className="text-[9px] sm:text-[10px] text-ehb-textMuted">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -198,7 +198,7 @@ export default function PlatformArchitecture() {
         <div className="inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-emerald-500 text-white rounded-2xl sm:rounded-3xl font-bold text-sm sm:text-lg shadow-xl shadow-emerald-500/20">
           <CheckCircle2 size={20} className="sm:w-6 sm:h-6" /> All 20 Phases Completed Successfully
         </div>
-        <p className="mt-4 sm:mt-6 text-xs sm:text-sm text-slate-400 font-bold">
+        <p className="mt-4 sm:mt-6 text-xs sm:text-sm text-ehb-textMuted font-bold">
           EHB Law Platform is now Development-Ready.
         </p>
       </div>

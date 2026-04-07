@@ -118,7 +118,7 @@ export default function CasePredictionComponent({ caseType, caseDetails, languag
     switch (impact) {
       case 'positive': return <ArrowUp className="text-green-400" size={16} />;
       case 'negative': return <ArrowDown className="text-red-400" size={16} />;
-      default: return <Minus className="text-slate-400" size={16} />;
+      default: return <Minus className="text-ehb-textMuted" size={16} />;
     }
   };
 
@@ -145,7 +145,7 @@ export default function CasePredictionComponent({ caseType, caseDetails, languag
               <Sparkles className="text-brand-gold" size={24} />
               {language === 'ur' ? 'AI کیس پیشن گوئی' : 'AI Case Prediction'}
             </h2>
-            <p className="text-slate-400">
+            <p className="text-ehb-textMuted">
               {language === 'ur' 
                 ? 'آپ کے کیس کی کامیابی کا امکان اور تجزیہ'
                 : 'Success probability and analysis for your case'}
@@ -221,7 +221,7 @@ export default function CasePredictionComponent({ caseType, caseDetails, languag
                   <span className={`text-3xl font-bold ${getScoreColor(prediction.successProbability)}`}>
                     {prediction.successProbability}%
                   </span>
-                  <span className="text-slate-400 text-xs">
+                  <span className="text-ehb-textMuted text-xs">
                     {language === 'ur' ? 'کامیابی' : 'Success'}
                   </span>
                 </div>
@@ -234,13 +234,13 @@ export default function CasePredictionComponent({ caseType, caseDetails, languag
             {/* Timeline */}
             <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 border border-white/10">
               <Clock className="text-brand-gold mb-4" size={24} />
-              <h4 className="text-slate-400 text-sm mb-2">
+              <h4 className="text-ehb-textMuted text-sm mb-2">
                 {language === 'ur' ? 'متوقع مدت' : 'Estimated Timeline'}
               </h4>
               <p className="text-white font-bold text-3xl mb-2">
                 {language === 'ur' ? prediction.estimatedTimelineUrdu : prediction.estimatedTimeline}
               </p>
-              <p className="text-slate-400 text-sm">
+              <p className="text-ehb-textMuted text-sm">
                 {language === 'ur' ? 'عدالتی تاخیر سے بڑھ سکتا ہے' : 'May extend due to court delays'}
               </p>
             </div>
@@ -248,24 +248,24 @@ export default function CasePredictionComponent({ caseType, caseDetails, languag
             {/* Quick Assessment */}
             <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 border border-white/10">
               <TrendingUp className="text-brand-gold mb-4" size={24} />
-              <h4 className="text-slate-400 text-sm mb-2">
+              <h4 className="text-ehb-textMuted text-sm mb-2">
                 {language === 'ur' ? 'فوری تشخیص' : 'Quick Assessment'}
               </h4>
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-slate-400">{language === 'ur' ? 'مضبوط پہلو' : 'Strong Points'}</span>
+                  <span className="text-ehb-textMuted">{language === 'ur' ? 'مضبوط پہلو' : 'Strong Points'}</span>
                   <span className="text-green-400 font-medium">
                     {prediction.factors.filter(f => f.impact === 'positive').length}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-slate-400">{language === 'ur' ? 'کمزور پہلو' : 'Weak Points'}</span>
+                  <span className="text-ehb-textMuted">{language === 'ur' ? 'کمزور پہلو' : 'Weak Points'}</span>
                   <span className="text-red-400 font-medium">
                     {prediction.factors.filter(f => f.impact === 'negative').length}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-slate-400">{language === 'ur' ? 'خطرات' : 'Risks'}</span>
+                  <span className="text-ehb-textMuted">{language === 'ur' ? 'خطرات' : 'Risks'}</span>
                   <span className="text-yellow-400 font-medium">{prediction.risks.length}</span>
                 </div>
               </div>
@@ -310,7 +310,7 @@ export default function CasePredictionComponent({ caseType, caseDetails, languag
                     />
                   </div>
                   {factor.recommendation && (
-                    <p className="text-slate-400 text-sm">
+                    <p className="text-ehb-textMuted text-sm">
                       {language === 'ur' ? factor.recommendationUrdu : factor.recommendation}
                     </p>
                   )}
@@ -334,7 +334,7 @@ export default function CasePredictionComponent({ caseType, caseDetails, languag
               </h3>
               <ul className="space-y-3">
                 {(language === 'ur' ? prediction.risksUrdu : prediction.risks).map((risk, index) => (
-                  <li key={index} className="flex items-start gap-2 text-slate-300 text-sm">
+                  <li key={index} className="flex items-start gap-2 text-ehb-textBody text-sm">
                     <FileWarning className="text-red-400 flex-shrink-0 mt-0.5" size={16} />
                     {risk}
                   </li>
@@ -355,7 +355,7 @@ export default function CasePredictionComponent({ caseType, caseDetails, languag
               </h3>
               <ul className="space-y-3">
                 {(language === 'ur' ? prediction.improvementsUrdu : prediction.improvements).map((imp, index) => (
-                  <li key={index} className="flex items-start gap-2 text-slate-300 text-sm">
+                  <li key={index} className="flex items-start gap-2 text-ehb-textBody text-sm">
                     <CheckCircle2 className="text-green-400 flex-shrink-0 mt-0.5" size={16} />
                     {imp}
                   </li>
@@ -371,8 +371,8 @@ export default function CasePredictionComponent({ caseType, caseDetails, languag
             transition={{ delay: 0.5 }}
             className="bg-white/5 rounded-xl p-4 flex items-start gap-3"
           >
-            <Shield className="text-slate-400 flex-shrink-0 mt-0.5" size={20} />
-            <p className="text-slate-400 text-sm">
+            <Shield className="text-ehb-textMuted flex-shrink-0 mt-0.5" size={20} />
+            <p className="text-ehb-textMuted text-sm">
               {language === 'ur' 
                 ? 'یہ پیشن گوئی AI تجزیے پر مبنی ہے اور قانونی مشورہ نہیں ہے۔ نتائج عدالتی فیصلوں اور دیگر عوامل کی بنا پر مختلف ہو سکتے ہیں۔'
                 : 'This prediction is based on AI analysis and is not legal advice. Results may vary based on court decisions and other factors.'}

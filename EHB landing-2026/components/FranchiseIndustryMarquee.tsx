@@ -30,7 +30,7 @@ export function FranchiseIndustryMarquee({ selectedAccent }: Props) {
 
       <div className="relative">
         <div className="flex items-center justify-between gap-4 mb-3">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">
             Other industries franchise cards
           </p>
           <span className="text-[11px] text-slate-500">slowly moving</span>

@@ -217,7 +217,7 @@ export default function LegalResearchAgent({ language = 'en' }: LegalResearchAge
               <Sparkles className="text-brand-gold" size={20} />
               {language === 'ur' ? 'قانونی تحقیق ایجنٹ' : 'Legal Research Agent'}
             </h2>
-            <p className="text-slate-400 text-sm">
+            <p className="text-ehb-textMuted text-sm">
               {language === 'ur' ? 'AI سے خودکار قانونی تحقیق' : 'AI-powered intelligent legal research'}
             </p>
           </div>
@@ -226,7 +226,7 @@ export default function LegalResearchAgent({ language = 'en' }: LegalResearchAge
         {/* Search */}
         <div className="flex flex-col md:flex-row gap-3">
           <div className="flex-1 relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-ehb-textMuted" size={20} />
             <input
               type="text"
               value={searchQuery}
@@ -289,7 +289,7 @@ export default function LegalResearchAgent({ language = 'en' }: LegalResearchAge
                   className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all ${
                     activeTab === tab.id
                       ? 'bg-emerald-500 text-white'
-                      : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                      : 'bg-slate-800 text-ehb-textMuted hover:bg-slate-700'
                   }`}
                 >
                   {tab.label}
@@ -317,7 +317,7 @@ export default function LegalResearchAgent({ language = 'en' }: LegalResearchAge
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <Scale className="text-emerald-400" size={16} />
-                          <span className="text-slate-400 text-xs">{law.jurisdiction} • {law.category}</span>
+                          <span className="text-ehb-textMuted text-xs">{law.jurisdiction} • {law.category}</span>
                           <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 rounded text-xs font-medium">
                             {law.relevance}% {language === 'ur' ? 'متعلقہ' : 'relevant'}
                           </span>
@@ -328,12 +328,12 @@ export default function LegalResearchAgent({ language = 'en' }: LegalResearchAge
                       </div>
                       <button
                         onClick={() => toggleBookmark(law.id)}
-                        className={`p-2 rounded-lg ${bookmarked.includes(law.id) ? 'bg-brand-gold/20 text-brand-gold' : 'bg-white/5 text-slate-400 hover:text-white'}`}
+                        className={`p-2 rounded-lg ${bookmarked.includes(law.id) ? 'bg-brand-gold/20 text-brand-gold' : 'bg-white/5 text-ehb-textMuted hover:text-white'}`}
                       >
                         <Bookmark size={18} fill={bookmarked.includes(law.id) ? 'currentColor' : 'none'} />
                       </button>
                     </div>
-                    <p className="text-slate-300 text-sm mb-3">
+                    <p className="text-ehb-textBody text-sm mb-3">
                       {language === 'ur' ? law.summaryUrdu : law.summary}
                     </p>
                     <div className="flex items-center gap-4 text-xs text-slate-500">
@@ -365,7 +365,7 @@ export default function LegalResearchAgent({ language = 'en' }: LegalResearchAge
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-slate-400 text-xs">{prec.court} • {prec.year}</span>
+                          <span className="text-ehb-textMuted text-xs">{prec.court} • {prec.year}</span>
                           <span className="px-2 py-0.5 bg-violet-500/20 text-violet-400 rounded text-xs font-medium">
                             {prec.relevance}% {language === 'ur' ? 'متعلقہ' : 'match'}
                           </span>
@@ -379,9 +379,9 @@ export default function LegalResearchAgent({ language = 'en' }: LegalResearchAge
                       </span>
                     </div>
                     <div className="space-y-2">
-                      <p className="text-slate-400 text-sm font-medium">{language === 'ur' ? 'اہم نکات:' : 'Key Points:'}</p>
+                      <p className="text-ehb-textMuted text-sm font-medium">{language === 'ur' ? 'اہم نکات:' : 'Key Points:'}</p>
                       {(language === 'ur' ? prec.keyPointsUrdu : prec.keyPoints).map((point, i) => (
-                        <div key={i} className="flex items-start gap-2 text-sm text-slate-300">
+                        <div key={i} className="flex items-start gap-2 text-sm text-ehb-textBody">
                           <ChevronRight className="text-emerald-400 flex-shrink-0 mt-0.5" size={14} />
                           <span>{point}</span>
                         </div>
@@ -415,7 +415,7 @@ export default function LegalResearchAgent({ language = 'en' }: LegalResearchAge
                          (language === 'ur' ? 'کمزور' : 'Weak')}
                       </span>
                     </div>
-                    <p className="text-slate-300 text-sm mb-4">
+                    <p className="text-ehb-textBody text-sm mb-4">
                       {language === 'ur' ? arg.descriptionUrdu : arg.description}
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -464,7 +464,7 @@ export default function LegalResearchAgent({ language = 'en' }: LegalResearchAge
           <h3 className="text-white font-bold text-xl mb-2">
             {language === 'ur' ? 'AI قانونی تحقیق' : 'AI Legal Research'}
           </h3>
-          <p className="text-slate-400 max-w-md mx-auto">
+          <p className="text-ehb-textMuted max-w-md mx-auto">
             {language === 'ur' 
               ? 'قانونی موضوع یا کیس ٹائپ تلاش کریں اور AI خودکار طور پر متعلقہ قوانین، سابقہ فیصلے اور دلائل تلاش کرے گا'
               : 'Search for any legal topic or case type and AI will automatically find relevant laws, precedents, and arguments'}

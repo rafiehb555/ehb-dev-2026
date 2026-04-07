@@ -88,7 +88,7 @@ export default function CaseCompletion({
               <h2 className="text-white font-bold text-2xl mb-2">
                 {language === 'ur' ? 'کیس مکمل ہو گیا!' : 'Case Completed!'}
               </h2>
-              <p className="text-slate-400">
+              <p className="text-ehb-textMuted">
                 {language === 'ur' 
                   ? 'آپ کے وکیل نے کیس مکمل کر دیا ہے۔ براہ کرم جائزہ لیں۔'
                   : 'Your lawyer has marked the case as completed. Please review.'}
@@ -103,15 +103,15 @@ export default function CaseCompletion({
               </h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">{language === 'ur' ? 'کیس ID' : 'Case ID'}</span>
+                  <span className="text-ehb-textMuted">{language === 'ur' ? 'کیس ID' : 'Case ID'}</span>
                   <span className="text-white font-mono">{caseId}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">{language === 'ur' ? 'کیس کی قسم' : 'Case Type'}</span>
+                  <span className="text-ehb-textMuted">{language === 'ur' ? 'کیس کی قسم' : 'Case Type'}</span>
                   <span className="text-white">{caseType}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">{language === 'ur' ? 'وکیل' : 'Lawyer'}</span>
+                  <span className="text-ehb-textMuted">{language === 'ur' ? 'وکیل' : 'Lawyer'}</span>
                   <span className="text-white">{lawyerName}</span>
                 </div>
               </div>
@@ -123,22 +123,22 @@ export default function CaseCompletion({
                 <Wallet className="text-brand-gold" size={20} />
                 {language === 'ur' ? 'ایسکرو ادائیگی' : 'Escrow Payment'}
               </h3>
-              <p className="text-slate-400 text-sm mb-4">
+              <p className="text-ehb-textMuted text-sm mb-4">
                 {language === 'ur' 
                   ? 'تصدیق کرنے پر ایسکرو سے ادائیگی جاری ہو جائے گی'
                   : 'Upon confirmation, payment will be released from escrow'}
               </p>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">{language === 'ur' ? 'وکیل فیس' : 'Lawyer Fee'}</span>
+                  <span className="text-ehb-textMuted">{language === 'ur' ? 'وکیل فیس' : 'Lawyer Fee'}</span>
                   <span className="text-white">${paymentBreakdown.lawyerFee.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">{language === 'ur' ? 'پلیٹ فارم فیس' : 'Platform Fee'}</span>
+                  <span className="text-ehb-textMuted">{language === 'ur' ? 'پلیٹ فارم فیس' : 'Platform Fee'}</span>
                   <span className="text-white">${paymentBreakdown.platformFee.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">{language === 'ur' ? 'فرنچائز فیس' : 'Franchise Fee'}</span>
+                  <span className="text-ehb-textMuted">{language === 'ur' ? 'فرنچائز فیس' : 'Franchise Fee'}</span>
                   <span className="text-white">${paymentBreakdown.franchiseFee.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between pt-2 border-t border-white/10">
@@ -162,7 +162,7 @@ export default function CaseCompletion({
               
               <button 
                 onClick={() => setShowDispute(true)}
-                className="w-full py-3 bg-white/5 text-slate-400 rounded-xl hover:bg-white/10 transition-all text-sm"
+                className="w-full py-3 bg-white/5 text-ehb-textMuted rounded-xl hover:bg-white/10 transition-all text-sm"
               >
                 {language === 'ur' ? 'مسئلہ رپورٹ کریں' : 'Report an Issue'}
               </button>
@@ -185,7 +185,7 @@ export default function CaseCompletion({
               <h2 className="text-white font-bold text-2xl mb-2">
                 {language === 'ur' ? 'اپنا تجربہ بتائیں' : 'Rate Your Experience'}
               </h2>
-              <p className="text-slate-400">
+              <p className="text-ehb-textMuted">
                 {language === 'ur' 
                   ? 'آپ کی رائے ہمیں بہتر بنانے میں مدد کرتی ہے'
                   : 'Your feedback helps us improve'}
@@ -215,7 +215,7 @@ export default function CaseCompletion({
                 </motion.button>
               ))}
             </div>
-            <p className="text-center text-slate-400 text-sm mb-6">
+            <p className="text-center text-ehb-textMuted text-sm mb-6">
               {rating === 0 ? (language === 'ur' ? 'ستارے منتخب کریں' : 'Select stars') :
                rating === 1 ? (language === 'ur' ? 'بہت خراب' : 'Very Poor') :
                rating === 2 ? (language === 'ur' ? 'خراب' : 'Poor') :
@@ -255,7 +255,7 @@ export default function CaseCompletion({
                           ? option.color === 'green' ? 'text-green-400' :
                             option.color === 'yellow' ? 'text-yellow-400' :
                             'text-red-400'
-                          : 'text-slate-400'
+                          : 'text-ehb-textMuted'
                       }
                     />
                     <span className="text-white text-sm">{option.label}</span>
@@ -346,7 +346,7 @@ export default function CaseCompletion({
             <h2 className="text-white font-bold text-2xl mb-2">
               {language === 'ur' ? 'شکریہ!' : 'Thank You!'}
             </h2>
-            <p className="text-slate-400 mb-6">
+            <p className="text-ehb-textMuted mb-6">
               {language === 'ur' 
                 ? 'آپ کی رائے کا شکریہ۔ ادائیگی کامیابی سے جاری ہو گئی۔'
                 : 'Thank you for your feedback. Payment has been released successfully.'}
@@ -357,7 +357,7 @@ export default function CaseCompletion({
                 <Sparkles className="text-brand-gold" size={18} />
                 {language === 'ur' ? 'مزید قانونی مدد چاہیے؟' : 'Need More Legal Help?'}
               </h4>
-              <p className="text-slate-400 text-sm mb-4">
+              <p className="text-ehb-textMuted text-sm mb-4">
                 {language === 'ur' 
                   ? 'ہم آپ کی مدد کے لیے ہمیشہ موجود ہیں'
                   : 'We are always here to help you'}
@@ -406,12 +406,12 @@ export default function CaseCompletion({
                   <AlertCircle className="text-orange-400" size={20} />
                   {language === 'ur' ? 'مسئلہ رپورٹ کریں' : 'Report an Issue'}
                 </h3>
-                <button onClick={() => setShowDispute(false)} className="text-slate-400 hover:text-white">
+                <button onClick={() => setShowDispute(false)} className="text-ehb-textMuted hover:text-white">
                   <X size={24} />
                 </button>
               </div>
               
-              <p className="text-slate-400 text-sm mb-4">
+              <p className="text-ehb-textMuted text-sm mb-4">
                 {language === 'ur' 
                   ? 'اگر آپ کو کوئی مسئلہ ہے تو براہ کرم بتائیں'
                   : 'Please describe the issue you are facing'}

@@ -6,7 +6,7 @@ export function QuickActionsStrip() {
   return (
     <section className="container-ultra py-6">
       <div className="rounded-2xl glass-panel border border-white/10 px-4 py-4 md:px-6 md:py-5 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-[11px] sm:text-xs text-slate-300">
+        <p className="text-[11px] sm:text-xs text-ehb-textBody">
           Ready to take action? Start with one of these quick steps.
         </p>
         <div className="flex flex-wrap gap-2 text-[11px] sm:text-xs">

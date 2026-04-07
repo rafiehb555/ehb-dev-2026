@@ -9,7 +9,7 @@ export function EhbHomeCard() {
       <div className="text-xs sm:text-sm font-semibold text-white mb-1">
         Manage industries, trust systems, wallet & AI tools from one place.
       </div>
-      <p className="text-[10px] xs:text-[11px] text-slate-300 mb-2">
+      <p className="text-[10px] xs:text-[11px] text-ehb-textBody mb-2">
         Central dashboard connecting DMO, PSS, CRB, STL, Wallet and Affiliate program – built to
         scale 32+ industries with shared tools.
       </p>

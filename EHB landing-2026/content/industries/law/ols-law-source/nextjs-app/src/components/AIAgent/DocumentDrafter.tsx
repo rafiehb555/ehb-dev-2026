@@ -284,7 +284,7 @@ Please review and verify all information before use.
               <Sparkles className="text-brand-gold" size={24} />
               {language === 'ur' ? 'AI دستاویز ڈرافٹر' : 'AI Document Drafter'}
             </h2>
-            <p className="text-slate-400">
+            <p className="text-ehb-textMuted">
               {language === 'ur' 
                 ? 'قانونی دستاویزات خود بخود تیار کریں'
                 : 'Automatically generate legal documents'}
@@ -324,7 +324,7 @@ Please review and verify all information before use.
                     <p className="text-slate-500 text-xs">{template.category}</p>
                   </div>
                 </div>
-                <ChevronRight className="text-slate-400 ml-auto" size={20} />
+                <ChevronRight className="text-ehb-textMuted ml-auto" size={20} />
               </motion.button>
             ))}
           </div>
@@ -348,7 +348,7 @@ Please review and verify all information before use.
                 setSelectedTemplate(null);
                 setFormData({});
               }}
-              className="text-slate-400 hover:text-white text-sm"
+              className="text-ehb-textMuted hover:text-white text-sm"
             >
               {language === 'ur' ? 'تبدیل کریں' : 'Change'}
             </button>
@@ -357,7 +357,7 @@ Please review and verify all information before use.
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {selectedTemplate.fields.map((field) => (
               <div key={field.id} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
-                <label className="block text-slate-400 text-sm mb-2">
+                <label className="block text-ehb-textMuted text-sm mb-2">
                   {language === 'ur' ? field.labelUrdu : field.label}
                 </label>
                 {field.type === 'textarea' ? (

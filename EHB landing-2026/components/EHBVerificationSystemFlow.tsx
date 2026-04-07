@@ -33,7 +33,7 @@ function Step({
         </div>
         <div>
           <p className="text-sm font-semibold text-white">{title}</p>
-          <p className="text-[11px] text-slate-300 mt-0.5 leading-relaxed">{desc}</p>
+          <p className="text-[11px] text-ehb-textBody mt-0.5 leading-relaxed">{desc}</p>
         </div>
       </div>
     </div>

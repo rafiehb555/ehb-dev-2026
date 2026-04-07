@@ -35,7 +35,7 @@ export default function AIMarketplaceLayout({ children }: { children: ReactNode 
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
                 item.active
                   ? "bg-[#00eaff]/20 text-[#00eaff] border border-[#00eaff]/30"
-                  : "text-slate-400 hover:text-white hover:bg-white/5"
+                  : "text-ehb-textMuted hover:text-white hover:bg-white/5"
               }`}
             >
               <span className="text-base opacity-80">{item.icon}</span>

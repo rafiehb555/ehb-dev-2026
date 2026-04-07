@@ -139,7 +139,7 @@ export default function MultiAgentSystem({ initialLanguage = 'en' }: MultiAgentS
                 </div>
                 {language === 'ur' ? 'EHB AI ملٹی-ایجنٹ سسٹم' : 'EHB AI Multi-Agent System'}
               </h1>
-              <p className="text-slate-400 mt-1">
+              <p className="text-ehb-textMuted mt-1">
                 {language === 'ur' 
                   ? 'عالمی قانونی AI ماحولیاتی نظام'
                   : 'Global Legal AI Ecosystem with 14+ Specialized Agents'}
@@ -188,7 +188,7 @@ export default function MultiAgentSystem({ initialLanguage = 'en' }: MultiAgentS
                       ? 'EHB عالمی قانونی AI پلیٹ فارم'
                       : 'EHB Global Legal AI Platform'}
                   </h2>
-                  <p className="text-slate-300 text-lg mb-6 max-w-2xl">
+                  <p className="text-ehb-textBody text-lg mb-6 max-w-2xl">
                     {language === 'ur'
                       ? 'دنیا کا سب سے جدید AI قانونی ماحولیاتی نظام جس میں 14+ خصوصی AI ایجنٹس ہیں جو مل کر کام کرتے ہیں'
                       : 'The world\'s most advanced AI legal ecosystem with 14+ specialized AI agents working together to automate your legal workflows'}
@@ -229,7 +229,7 @@ export default function MultiAgentSystem({ initialLanguage = 'en' }: MultiAgentS
                       <h3 className="text-white font-bold text-lg mb-2">
                         {language === 'ur' ? feature.nameUrdu : feature.name}
                       </h3>
-                      <p className="text-slate-400 text-sm mb-4">
+                      <p className="text-ehb-textMuted text-sm mb-4">
                         {language === 'ur' ? feature.descriptionUrdu : feature.description}
                       </p>
                       <div className="flex items-center text-brand-gold text-sm font-medium group-hover:gap-2 transition-all">
@@ -259,7 +259,7 @@ export default function MultiAgentSystem({ initialLanguage = 'en' }: MultiAgentS
                     className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-xl p-6 text-center border border-white/5"
                   >
                     <p className="text-brand-gold font-bold text-3xl mb-1">{stat.value}</p>
-                    <p className="text-slate-400 text-sm">{stat.label}</p>
+                    <p className="text-ehb-textMuted text-sm">{stat.label}</p>
                   </div>
                 ))}
               </motion.div>

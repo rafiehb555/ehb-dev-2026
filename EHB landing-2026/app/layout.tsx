@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   <span className="font-semibold text-[11px] sm:text-xs md:text-sm tracking-wide">
                     EHB TECHNOLOGIES (Pvt.) Ltd.
                   </span>
-                  <span className="text-[10px] sm:text-[11px] text-slate-300 block">
+                  <span className="text-[10px] sm:text-[11px] text-ehb-textBody block">
                     EDUCATION · HEALTH · BUSINESS
                   </span>
                 </div>
@@ -80,7 +80,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </main>
           <footer className="nav-glass border-t border-white/5 pb-safe-b">
-            <div className="container-ehb py-3 flex flex-col xs:flex-row justify-between gap-2 text-[11px] sm:text-xs text-slate-400">
+            <div className="container-ehb py-3 flex flex-col xs:flex-row justify-between gap-2 text-[11px] sm:text-xs text-ehb-textMuted">
               <span className="text-center xs:text-left">EHB · Unified global services, trust & AI platform.</span>
               <span className="text-center xs:text-right">Investor Demo · Not final production UI.</span>
             </div>

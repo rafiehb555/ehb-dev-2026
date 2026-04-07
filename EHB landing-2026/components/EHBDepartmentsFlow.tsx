@@ -94,7 +94,7 @@ export function EHBDepartmentsFlow({
           >
             EHB Intelligent Departments
           </span>
-          <span className="text-[11px] text-slate-300">
+          <span className="text-[11px] text-ehb-textBody">
             {subtitle}
           </span>
         </div>
@@ -194,7 +194,7 @@ export function EHBDepartmentsFlow({
           ))}
         </div>
 
-        <p className="text-[10px] text-slate-400 pt-1">
+        <p className="text-[10px] text-ehb-textMuted pt-1">
           Every listing and profile passes through these layers so that 700+ services remain
           high‑quality, verified, and safe for users and partners.
         </p>

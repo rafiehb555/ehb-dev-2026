@@ -34,7 +34,7 @@ export function RuntimeToast(props: RuntimeToastProps) {
         <span>{toast.text}</span>
         <button
           type="button"
-          className="shrink-0 rounded-full border border-white/15 px-2 py-0.5 text-[10px] uppercase tracking-wide text-slate-300 hover:border-white/30"
+          className="shrink-0 rounded-full border border-white/15 px-2 py-0.5 text-[10px] uppercase tracking-wide text-ehb-textBody hover:border-white/30"
           onClick={onDismiss}
         >
           Dismiss

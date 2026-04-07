@@ -310,7 +310,7 @@ export default function LawyerProfilePage() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-colors"
+            className="flex items-center gap-2 text-ehb-textMuted hover:text-white mb-6 transition-colors"
           >
             <ArrowLeft size={20} />
             Back to Lawyers
@@ -345,7 +345,7 @@ export default function LawyerProfilePage() {
                     )}
                   </div>
                   <p className="text-[#D4AF37] font-medium mb-1">{lawyer.title}</p>
-                  <p className="text-slate-400 text-sm mb-3">{lawyer.tagline}</p>
+                  <p className="text-ehb-textMuted text-sm mb-3">{lawyer.tagline}</p>
                   
                   <div className="flex flex-wrap items-center gap-4 text-sm">
                     <div className="flex items-center gap-1">
@@ -357,7 +357,7 @@ export default function LawyerProfilePage() {
                       <span className="text-white font-bold">{lawyer.rating}</span>
                       <span className="text-slate-500">({lawyer.reviews} reviews)</span>
                     </div>
-                    <div className="flex items-center gap-1 text-slate-400">
+                    <div className="flex items-center gap-1 text-ehb-textMuted">
                       <MapPin size={14} />
                       {lawyer.location}
                     </div>
@@ -389,7 +389,7 @@ export default function LawyerProfilePage() {
                   </span>
                 ))}
               </div>
-              <div className="flex items-center gap-2 text-sm text-slate-400">
+              <div className="flex items-center gap-2 text-sm text-ehb-textMuted">
                 <Languages size={16} />
                 <span>{lawyer.languages.join(' • ')}</span>
               </div>
@@ -400,11 +400,11 @@ export default function LawyerProfilePage() {
               <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 sticky top-32">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <p className="text-slate-400 text-sm">Consultation Fee</p>
+                    <p className="text-ehb-textMuted text-sm">Consultation Fee</p>
                     <p className="text-3xl font-bold text-white">{lawyer.consultationFee}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-slate-400 text-sm">Full Case</p>
+                    <p className="text-ehb-textMuted text-sm">Full Case</p>
                     <p className="text-lg font-bold text-[#D4AF37]">{lawyer.fullCaseFee}</p>
                   </div>
                 </div>
@@ -464,13 +464,13 @@ export default function LawyerProfilePage() {
                 </div>
 
                 <div className="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-white/10">
-                  <button className="text-slate-400 hover:text-white transition-colors">
+                  <button className="text-ehb-textMuted hover:text-white transition-colors">
                     <Heart size={20} />
                   </button>
-                  <button className="text-slate-400 hover:text-white transition-colors">
+                  <button className="text-ehb-textMuted hover:text-white transition-colors">
                     <Share2 size={20} />
                   </button>
-                  <button className="text-slate-400 hover:text-white transition-colors">
+                  <button className="text-ehb-textMuted hover:text-white transition-colors">
                     <Download size={20} />
                   </button>
                 </div>
@@ -495,7 +495,7 @@ export default function LawyerProfilePage() {
                 className={`px-6 py-4 font-medium text-sm transition-all ${
                   activeTab === tab.id
                     ? 'text-[#D4AF37] border-b-2 border-[#D4AF37]'
-                    : 'text-slate-400 hover:text-white'
+                    : 'text-ehb-textMuted hover:text-white'
                 }`}
               >
                 {tab.label}
@@ -513,7 +513,7 @@ export default function LawyerProfilePage() {
               {/* About */}
               <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
                 <h2 className="text-xl font-bold text-white mb-4">About</h2>
-                <p className="text-slate-300 leading-relaxed whitespace-pre-line">{lawyer.bio}</p>
+                <p className="text-ehb-textBody leading-relaxed whitespace-pre-line">{lawyer.bio}</p>
               </div>
 
               {/* Education */}
@@ -530,7 +530,7 @@ export default function LawyerProfilePage() {
                       </div>
                       <div>
                         <p className="text-white font-medium">{edu.degree}</p>
-                        <p className="text-slate-400 text-sm">{edu.institution} • {edu.year}</p>
+                        <p className="text-ehb-textMuted text-sm">{edu.institution} • {edu.year}</p>
                       </div>
                     </div>
                   ))}
@@ -579,7 +579,7 @@ export default function LawyerProfilePage() {
                   {Object.entries(lawyer.availability).map(([day, time]) => (
                     <div key={day} className="bg-white/5 rounded-lg p-3">
                       <p className="text-white font-medium capitalize">{day}</p>
-                      <p className="text-slate-400 text-sm">{time as string}</p>
+                      <p className="text-ehb-textMuted text-sm">{time as string}</p>
                     </div>
                   ))}
                 </div>
@@ -598,12 +598,12 @@ export default function LawyerProfilePage() {
                         <Star key={i} size={18} className="text-yellow-400 fill-yellow-400" />
                       ))}
                     </div>
-                    <p className="text-slate-400 text-sm">{lawyer.reviews} reviews</p>
+                    <p className="text-ehb-textMuted text-sm">{lawyer.reviews} reviews</p>
                   </div>
                   <div className="flex-1">
                     {[5, 4, 3, 2, 1].map((stars) => (
                       <div key={stars} className="flex items-center gap-2 mb-1">
-                        <span className="text-xs text-slate-400 w-3">{stars}</span>
+                        <span className="text-xs text-ehb-textMuted w-3">{stars}</span>
                         <Star size={12} className="text-yellow-400 fill-yellow-400" />
                         <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
                           <div className="h-full bg-yellow-400 rounded-full" style={{ width: `${stars === 5 ? 70 : stars === 4 ? 20 : 10}%` }} />
@@ -632,7 +632,7 @@ export default function LawyerProfilePage() {
                       ))}
                     </div>
                   </div>
-                  <p className="text-slate-300">{review.text}</p>
+                  <p className="text-ehb-textBody">{review.text}</p>
                 </div>
               ))}
             </motion.div>
@@ -648,7 +648,7 @@ export default function LawyerProfilePage() {
                         <h3 className="text-xl font-bold text-white">{pkg.name}</h3>
                         {pkg.popular && <span className="px-2 py-1 bg-[#D4AF37] text-slate-900 text-xs font-bold rounded">Most Popular</span>}
                       </div>
-                      <p className="text-slate-400 text-sm mt-1">{pkg.desc}</p>
+                      <p className="text-ehb-textMuted text-sm mt-1">{pkg.desc}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-2xl font-bold text-white">{pkg.price}</p>
@@ -677,7 +677,7 @@ export default function LawyerProfilePage() {
         <div className="bg-gradient-to-r from-[#D4AF37]/20 to-blue-500/20 rounded-3xl p-8 md:p-12 border border-[#D4AF37]/30 text-center">
           <Zap className="mx-auto text-[#D4AF37] mb-4" size={40} />
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Ready to Start Your Case?</h2>
-          <p className="text-slate-300 mb-6 max-w-xl mx-auto">
+          <p className="text-ehb-textBody mb-6 max-w-xl mx-auto">
             {lawyer.name} is ready to help you with your legal needs. Book a consultation today.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

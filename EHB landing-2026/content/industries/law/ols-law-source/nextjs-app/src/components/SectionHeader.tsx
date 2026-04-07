@@ -17,7 +17,7 @@ export default function SectionHeader({ title, subtitle, linkText, linkHref, onL
     <div className="flex justify-between items-end mb-4">
       <div>
         <h2 className="text-base sm:text-lg font-bold font-display text-white">{title}</h2>
-        {subtitle && <p className="text-slate-400 text-[9px] sm:text-[10px] mt-0.5">{subtitle}</p>}
+        {subtitle && <p className="text-ehb-textMuted text-[9px] sm:text-[10px] mt-0.5">{subtitle}</p>}
       </div>
       {linkText && (
         linkHref ? (

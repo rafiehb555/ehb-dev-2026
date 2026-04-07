@@ -73,7 +73,7 @@ export default function ServicesMarketplace() {
                 Legal Expert
               </span>
             </h1>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-ehb-textMuted max-w-2xl mx-auto">
               25,000+ verified lawyers across 50+ countries. AI-powered matching for the best legal representation.
             </p>
           </motion.div>
@@ -100,7 +100,7 @@ export default function ServicesMarketplace() {
                     />
                   </div>
                   <button className="p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-all">
-                    <Filter className="text-slate-400" size={20} />
+                    <Filter className="text-ehb-textMuted" size={20} />
                   </button>
                   <button className="px-6 py-4 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-slate-900 font-bold rounded-xl hover:shadow-lg hover:shadow-[#D4AF37]/30 transition-all">
                     Search
@@ -121,7 +121,7 @@ export default function ServicesMarketplace() {
               <div key={stat.label} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 text-center">
                 <stat.icon className="mx-auto text-[#D4AF37] mb-2" size={24} />
                 <p className="text-2xl font-bold text-white">{stat.value}</p>
-                <p className="text-xs text-slate-400">{stat.label}</p>
+                <p className="text-xs text-ehb-textMuted">{stat.label}</p>
               </div>
             ))}
           </motion.div>
@@ -160,7 +160,7 @@ export default function ServicesMarketplace() {
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h2 className="text-2xl font-bold text-white mb-2">Featured Lawyers</h2>
-                <p className="text-slate-400">Top-rated legal professionals</p>
+                <p className="text-ehb-textMuted">Top-rated legal professionals</p>
               </div>
               <Link href="/ai-agent" className="text-[#D4AF37] hover:text-yellow-400 flex items-center gap-1 text-sm">
                 AI Matching <ChevronRight size={16} />
@@ -238,7 +238,7 @@ export default function ServicesMarketplace() {
                       className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap lg:w-full ${
                         activeCategory === cat.id 
                           ? 'bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-slate-900 shadow-lg shadow-[#D4AF37]/20' 
-                          : 'bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white'
+                          : 'bg-white/5 hover:bg-white/10 text-ehb-textMuted hover:text-white'
                       }`}
                     >
                       <cat.icon size={18} />
@@ -256,7 +256,7 @@ export default function ServicesMarketplace() {
                   <h2 className="text-2xl font-bold text-white">
                     {LAW_CATEGORIES.find(c => c.id === activeCategory)?.name}
                   </h2>
-                  <p className="text-slate-400 text-sm">
+                  <p className="text-ehb-textMuted text-sm">
                     {filteredServices.length} services available
                   </p>
                 </div>
@@ -289,7 +289,7 @@ export default function ServicesMarketplace() {
           <h2 className="text-3xl font-bold text-white mb-4">
             Not Sure Which Service You Need?
           </h2>
-          <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-ehb-textBody mb-8 max-w-2xl mx-auto">
             Let our AI analyze your legal situation and recommend the perfect service and lawyer match.
           </p>
           <Link
@@ -326,7 +326,7 @@ function ServiceCard({ service }: { service: any }) {
       <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#D4AF37] transition-colors">
         {service.title}
       </h3>
-      <p className="text-sm text-slate-400 mb-6 line-clamp-2">{service.description}</p>
+      <p className="text-sm text-ehb-textMuted mb-6 line-clamp-2">{service.description}</p>
       
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-xs text-slate-500">

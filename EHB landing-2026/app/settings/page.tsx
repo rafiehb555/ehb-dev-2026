@@ -15,7 +15,7 @@ export default function SettingsPage() {
         <section className="glass-panel border border-white/10 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-violet-300">EHB Super App</p>
           <h1 className="text-2xl font-semibold gradient-text mt-1">Settings</h1>
-          <p className="text-sm text-slate-300 mt-2">
+          <p className="text-sm text-ehb-textBody mt-2">
             Manage account preferences, security, alerts, and system behavior.
           </p>
         </section>
@@ -24,7 +24,7 @@ export default function SettingsPage() {
           {sections.map((name) => (
             <div key={name} className="ehb-card-elevated">
               <h2 className="text-sm font-semibold text-white">{name}</h2>
-              <p className="text-xs text-slate-400 mt-1">Configuration panel for {name.toLowerCase()}.</p>
+              <p className="text-xs text-ehb-textMuted mt-1">Configuration panel for {name.toLowerCase()}.</p>
             </div>
           ))}
         </section>

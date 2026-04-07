@@ -22,7 +22,7 @@ export function GenericIndustry3DFallback({
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
         PSS → DMO → JPS → Refilling → EHB‑STL
       </h2>
-      <p className="text-slate-400 max-w-3xl mb-8 text-sm md:text-base">
+      <p className="text-ehb-textMuted max-w-3xl mb-8 text-sm md:text-base">
         EHB verifies providers, uses AI matching, ensures availability, and releases secure payments
         only through trusted steps.
       </p>
@@ -53,14 +53,14 @@ export function GenericIndustry3DFallback({
                 <p className="text-[11px] font-semibold mb-0.5" style={{ color: item.color }}>
                   {item.title}
                 </p>
-                <p className="text-[11px] md:text-xs text-slate-300">{item.desc}</p>
+                <p className="text-[11px] md:text-xs text-ehb-textBody">{item.desc}</p>
               </div>
             ))}
           </div>
 
           <div className="lg:col-span-2">
             <div className="rounded-2xl glass-panel border p-5 border-white/10">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400 mb-3">
+              <p className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted mb-3">
                 Output steps
               </p>
               <div className="grid gap-3 sm:grid-cols-2">
@@ -78,7 +78,7 @@ export function GenericIndustry3DFallback({
                     <p className="text-[11px] font-semibold mb-1" style={{ color: accentColor }}>
                       {o.title}
                     </p>
-                    <p className="text-[10px] text-slate-300">{o.desc}</p>
+                    <p className="text-[10px] text-ehb-textBody">{o.desc}</p>
                   </div>
                 ))}
               </div>

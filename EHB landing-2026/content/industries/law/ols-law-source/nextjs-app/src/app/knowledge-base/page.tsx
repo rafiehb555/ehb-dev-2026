@@ -33,12 +33,12 @@ export default function KnowledgeBasePage() {
       {/* Search Header */}
       <div className="relative mb-8 sm:mb-12 text-center">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display mb-3 sm:mb-4 text-white">Global Legal Knowledge Base</h1>
-        <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto mb-6 sm:mb-8">
+        <p className="text-xs sm:text-sm text-ehb-textMuted max-w-2xl mx-auto mb-6 sm:mb-8">
           Access verified legal guides, country laws, and expert articles.
         </p>
         
         <div className="max-w-2xl mx-auto relative">
-          <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+          <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-ehb-textMuted" size={18} />
           <input 
             type="text" 
             placeholder="Search for laws, guides, or legal topics..."
@@ -64,7 +64,7 @@ export default function KnowledgeBasePage() {
             className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl text-[10px] sm:text-sm font-bold transition-all whitespace-nowrap ${
               activeTab === tab.id 
                 ? 'bg-slate-800 text-brand-primary shadow-sm' 
-                : 'text-slate-400 hover:text-slate-200'
+                : 'text-ehb-textMuted hover:text-slate-200'
             }`}
           >
             <tab.icon size={14} className="sm:w-[18px] sm:h-[18px]" />
@@ -87,7 +87,7 @@ export default function KnowledgeBasePage() {
                     <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded-full">
                       {guide.category}
                     </span>
-                    <span className="text-[8px] sm:text-[10px] font-bold text-slate-400 flex items-center gap-1">
+                    <span className="text-[8px] sm:text-[10px] font-bold text-ehb-textMuted flex items-center gap-1">
                       <Globe size={10} /> {guide.country}
                     </span>
                   </div>
@@ -120,7 +120,7 @@ export default function KnowledgeBasePage() {
                     <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-brand-primary transition-colors">
                       {article.title}
                     </h3>
-                    <p className="text-[10px] sm:text-xs text-slate-400 mt-1">By {article.author}</p>
+                    <p className="text-[10px] sm:text-xs text-ehb-textMuted mt-1">By {article.author}</p>
                   </div>
                   <ChevronRight size={16} className="sm:w-5 sm:h-5 text-slate-500 group-hover:text-brand-primary transition-colors" />
                 </div>
@@ -144,7 +144,7 @@ export default function KnowledgeBasePage() {
             </h3>
             <div className="flex flex-wrap gap-2">
               {['Divorce', 'Property', 'Business', 'Employment', 'Criminal'].map((topic) => (
-                <span key={topic} className="px-2 sm:px-3 py-1 bg-slate-800 rounded-full text-[10px] sm:text-xs font-bold text-slate-300 hover:bg-brand-primary hover:text-white cursor-pointer transition-colors">
+                <span key={topic} className="px-2 sm:px-3 py-1 bg-slate-800 rounded-full text-[10px] sm:text-xs font-bold text-ehb-textBody hover:bg-brand-primary hover:text-white cursor-pointer transition-colors">
                   {topic}
                 </span>
               ))}

@@ -60,7 +60,7 @@ export default function PaymentsPage() {
                 Payment & Wallet
                 <span className="block text-[#D4AF37]">Center</span>
               </h1>
-              <p className="text-slate-400">Manage your funds, escrow, and transaction history</p>
+              <p className="text-ehb-textMuted">Manage your funds, escrow, and transaction history</p>
             </div>
             
             <div className="hidden md:flex gap-3">
@@ -90,9 +90,9 @@ export default function PaymentsPage() {
                 </div>
                 <div className="flex items-baseline gap-1">
                   <p className="text-2xl font-bold text-white">{stat.value}</p>
-                  {stat.suffix && <span className="text-xs text-slate-400">{stat.suffix}</span>}
+                  {stat.suffix && <span className="text-xs text-ehb-textMuted">{stat.suffix}</span>}
                 </div>
-                <p className="text-sm text-slate-400">{stat.label}</p>
+                <p className="text-sm text-ehb-textMuted">{stat.label}</p>
                 <p className="text-xs text-emerald-400 mt-1">{stat.change}</p>
               </motion.div>
             ))}
@@ -118,7 +118,7 @@ export default function PaymentsPage() {
                   className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
                     activeTab === tab.id 
                       ? 'bg-[#D4AF37] text-slate-900' 
-                      : 'text-slate-400 hover:text-white'
+                      : 'text-ehb-textMuted hover:text-white'
                   }`}
                 >
                   <tab.icon size={16} />
@@ -145,7 +145,7 @@ export default function PaymentsPage() {
                     <div className="relative">
                       <div className="flex items-start justify-between mb-8">
                         <div>
-                          <p className="text-sm text-slate-400 mb-1">Available Balance</p>
+                          <p className="text-sm text-ehb-textMuted mb-1">Available Balance</p>
                           <div className="flex items-center gap-3">
                             <p className="text-4xl font-bold text-white">
                               {showBalance ? '$12,450.00' : '••••••'}
@@ -154,7 +154,7 @@ export default function PaymentsPage() {
                               onClick={() => setShowBalance(!showBalance)}
                               className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all"
                             >
-                              {showBalance ? <EyeOff className="text-slate-400" size={18} /> : <Eye className="text-slate-400" size={18} />}
+                              {showBalance ? <EyeOff className="text-ehb-textMuted" size={18} /> : <Eye className="text-ehb-textMuted" size={18} />}
                             </button>
                           </div>
                         </div>
@@ -206,9 +206,9 @@ export default function PaymentsPage() {
                     <h3 className="text-lg font-bold text-white mb-4">Quick Pay</h3>
                     <div className="flex gap-4">
                       <div className="flex-1">
-                        <label className="block text-xs font-bold text-slate-400 mb-2">AMOUNT</label>
+                        <label className="block text-xs font-bold text-ehb-textMuted mb-2">AMOUNT</label>
                         <div className="relative">
-                          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-ehb-textMuted font-bold">$</span>
                           <input 
                             type="number"
                             placeholder="0.00"
@@ -244,7 +244,7 @@ export default function PaymentsPage() {
                         </div>
                         <div>
                           <h3 className="text-xl font-bold text-white">Active Escrow</h3>
-                          <p className="text-sm text-slate-400">Case #EHB-2026-001</p>
+                          <p className="text-sm text-ehb-textMuted">Case #EHB-2026-001</p>
                         </div>
                       </div>
                       <span className="px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-xs font-bold">Protected</span>
@@ -254,7 +254,7 @@ export default function PaymentsPage() {
                     
                     <div className="mb-4">
                       <div className="flex justify-between text-sm mb-2">
-                        <span className="text-slate-400">Milestone Progress</span>
+                        <span className="text-ehb-textMuted">Milestone Progress</span>
                         <span className="text-orange-400">60%</span>
                       </div>
                       <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
@@ -311,7 +311,7 @@ export default function PaymentsPage() {
                           <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                             tx.amount > 0 ? 'bg-emerald-500/20' : 'bg-slate-800'
                           }`}>
-                            <tx.icon className={tx.amount > 0 ? 'text-emerald-400' : 'text-slate-400'} size={18} />
+                            <tx.icon className={tx.amount > 0 ? 'text-emerald-400' : 'text-ehb-textMuted'} size={18} />
                           </div>
                           <div>
                             <p className="text-white font-medium">{tx.type}</p>
@@ -352,7 +352,7 @@ export default function PaymentsPage() {
                   { label: 'Biometric Lock', status: false },
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center justify-between p-3 bg-white/5 rounded-xl">
-                    <span className="text-sm text-slate-300">{item.label}</span>
+                    <span className="text-sm text-ehb-textBody">{item.label}</span>
                     <span className={`text-xs font-bold ${item.status ? 'text-emerald-400' : 'text-slate-500'}`}>
                       {item.status ? '✓ Active' : 'Off'}
                     </span>
@@ -369,7 +369,7 @@ export default function PaymentsPage() {
                 </div>
                 <div>
                   <h3 className="text-white font-bold">EHBGC Staking</h3>
-                  <p className="text-xs text-slate-400">Earn up to 12% APY</p>
+                  <p className="text-xs text-ehb-textMuted">Earn up to 12% APY</p>
                 </div>
               </div>
               
@@ -387,9 +387,9 @@ export default function PaymentsPage() {
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
               <h3 className="text-sm font-bold text-white mb-3">Your Wallet Address</h3>
               <div className="flex items-center gap-2 p-3 bg-slate-900 rounded-xl">
-                <p className="text-xs text-slate-400 font-mono flex-1 truncate">0x7a2E...8b3F</p>
+                <p className="text-xs text-ehb-textMuted font-mono flex-1 truncate">0x7a2E...8b3F</p>
                 <button className="p-2 hover:bg-white/10 rounded-lg transition-all">
-                  <Copy className="text-slate-400" size={14} />
+                  <Copy className="text-ehb-textMuted" size={14} />
                 </button>
               </div>
             </div>

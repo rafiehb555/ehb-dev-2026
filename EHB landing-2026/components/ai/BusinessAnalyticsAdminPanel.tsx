@@ -157,7 +157,7 @@ export function BusinessAnalyticsAdminPanel() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
             <h2 className="text-sm font-semibold text-white">AI Business Analytics</h2>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-ehb-textMuted">
               Auto-generated reports for franchise owners, providers, and the platform (UI mock).
             </p>
           </div>
@@ -171,7 +171,7 @@ export function BusinessAnalyticsAdminPanel() {
                 className={`min-h-touch rounded-full px-3 py-1.5 text-[11px] font-medium transition-all border ${
                   tab === t
                     ? "bg-gradient-to-r from-[#00eaff]/25 to-[#3b82f6]/25 text-white border-white/15 shadow-sm"
-                    : "bg-white/0 text-slate-400 hover:text-slate-200 border-white/10"
+                    : "bg-white/0 text-ehb-textMuted hover:text-slate-200 border-white/10"
                 }`}
               >
                 {t}
@@ -212,7 +212,7 @@ export function BusinessAnalyticsAdminPanel() {
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-white">{c.title}</p>
-                <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">{c.subtitle}</p>
+                <p className="text-[11px] text-ehb-textMuted mt-1 leading-relaxed">{c.subtitle}</p>
               </div>
               <span
                 className="inline-flex items-center rounded-full px-2 py-1 text-[10px] border border-white/10 bg-white/5 text-slate-200"
@@ -221,7 +221,7 @@ export function BusinessAnalyticsAdminPanel() {
                 AI Report
               </span>
             </div>
-            <ul className="mt-4 space-y-1.5 text-[11px] text-slate-300">
+            <ul className="mt-4 space-y-1.5 text-[11px] text-ehb-textBody">
               {c.bullets.map((b) => (
                 <li key={b}>• {b}</li>
               ))}

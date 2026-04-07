@@ -279,7 +279,7 @@ export default function AutonomousLegalSystem({ language = 'en' }: AutonomousLeg
                 <Sparkles className="text-brand-gold" size={24} />
                 {language === 'ur' ? 'AI خود مختار قانونی نظام' : 'AI Autonomous Legal System'}
               </h2>
-              <p className="text-slate-400">
+              <p className="text-ehb-textMuted">
                 {language === 'ur' 
                   ? 'مکمل خود کار قانونی ورک فلو مینجمنٹ'
                   : 'Fully automated legal workflow management'}
@@ -307,42 +307,42 @@ export default function AutonomousLegalSystem({ language = 'en' }: AutonomousLeg
         {/* System Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <Target size={14} />
               {language === 'ur' ? 'کل کیسز' : 'Total Cases'}
             </div>
             <p className="text-white font-bold text-xl">{metrics.totalCasesProcessed.toLocaleString()}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <Activity size={14} />
               {language === 'ur' ? 'فعال ورک فلوز' : 'Active Workflows'}
             </div>
             <p className="text-green-400 font-bold text-xl">{metrics.activeWorkflows}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <Clock size={14} />
               {language === 'ur' ? 'اوسط وقت' : 'Avg Response'}
             </div>
             <p className="text-white font-bold text-xl">{metrics.avgResponseTime}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <Zap size={14} />
               {language === 'ur' ? 'درستگی' : 'Accuracy'}
             </div>
             <p className="text-brand-gold font-bold text-xl">{metrics.systemAccuracy}%</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <Shield size={14} />
               {language === 'ur' ? 'اپ ٹائم' : 'Uptime'}
             </div>
             <p className="text-green-400 font-bold text-xl">{metrics.uptime}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <TrendingUp size={14} />
               {language === 'ur' ? 'آج کے کیسز' : 'Today'}
             </div>
@@ -363,7 +363,7 @@ export default function AutonomousLegalSystem({ language = 'en' }: AutonomousLeg
             <Network className="text-brand-gold" size={20} />
             {language === 'ur' ? 'AI ایجنٹس' : 'AI Agents'}
           </h3>
-          <span className="text-slate-400 text-sm">
+          <span className="text-ehb-textMuted text-sm">
             {modules.filter(m => m.status === 'active' || m.status === 'processing').length}/{modules.length} {language === 'ur' ? 'فعال' : 'active'}
           </span>
         </div>
@@ -387,13 +387,13 @@ export default function AutonomousLegalSystem({ language = 'en' }: AutonomousLeg
                 </div>
                 <div className="flex items-center gap-2">
                   <div className={`w-2 h-2 rounded-full ${getStatusColor(module.status)}`} />
-                  <span className="text-xs text-slate-400">{getStatusLabel(module.status)}</span>
+                  <span className="text-xs text-ehb-textMuted">{getStatusLabel(module.status)}</span>
                 </div>
               </div>
               <h4 className="text-white font-bold text-sm mb-1">
                 {language === 'ur' ? module.nameUrdu : module.name}
               </h4>
-              <p className="text-slate-400 text-xs mb-3">
+              <p className="text-ehb-textMuted text-xs mb-3">
                 {language === 'ur' ? module.descriptionUrdu : module.description}
               </p>
               <div className="flex items-center justify-between text-xs">
@@ -473,14 +473,14 @@ export default function AutonomousLegalSystem({ language = 'en' }: AutonomousLeg
                     <p className={`font-medium ${
                       step.status === 'active' ? 'text-brand-gold' :
                       step.status === 'completed' ? 'text-white' :
-                      'text-slate-400'
+                      'text-ehb-textMuted'
                     }`}>
                       {language === 'ur' ? step.nameUrdu : step.name}
                     </p>
                     <p className="text-slate-500 text-xs">{step.module}</p>
                   </div>
                   {step.timestamp && (
-                    <span className="text-slate-400 text-xs">{step.timestamp}</span>
+                    <span className="text-ehb-textMuted text-xs">{step.timestamp}</span>
                   )}
                 </motion.div>
               ))}
@@ -554,7 +554,7 @@ export default function AutonomousLegalSystem({ language = 'en' }: AutonomousLeg
           <h4 className="text-white font-bold mb-1">
             {language === 'ur' ? 'سسٹم رپورٹ' : 'System Report'}
           </h4>
-          <p className="text-slate-400 text-sm">
+          <p className="text-ehb-textMuted text-sm">
             {language === 'ur' ? 'کارکردگی کا تفصیلی تجزیہ' : 'Detailed performance analysis'}
           </p>
         </button>
@@ -563,7 +563,7 @@ export default function AutonomousLegalSystem({ language = 'en' }: AutonomousLeg
           <h4 className="text-white font-bold mb-1">
             {language === 'ur' ? 'AI ترتیبات' : 'AI Settings'}
           </h4>
-          <p className="text-slate-400 text-sm">
+          <p className="text-ehb-textMuted text-sm">
             {language === 'ur' ? 'ایجنٹس کو کنفیگر کریں' : 'Configure AI agents'}
           </p>
         </button>

@@ -182,7 +182,7 @@ export default function LegalStrategyAdvisor({ caseType, caseDetails, language =
     switch (impact) {
       case 'positive': return 'text-green-400 bg-green-400/20';
       case 'negative': return 'text-red-400 bg-red-400/20';
-      default: return 'text-slate-400 bg-slate-400/20';
+      default: return 'text-ehb-textMuted bg-slate-400/20';
     }
   };
 
@@ -203,7 +203,7 @@ export default function LegalStrategyAdvisor({ caseType, caseDetails, language =
               <Sparkles className="text-brand-gold" size={24} />
               {language === 'ur' ? 'AI قانونی حکمت عملی مشیر' : 'AI Legal Strategy Advisor'}
             </h2>
-            <p className="text-slate-400">
+            <p className="text-ehb-textMuted">
               {language === 'ur' 
                 ? 'آپ کے کیس کا تجزیہ کرکے بہترین قانونی حکمت عملی تجویز کرتا ہے'
                 : 'Analyzes your case and suggests the best legal strategy'}
@@ -340,12 +340,12 @@ export default function LegalStrategyAdvisor({ caseType, caseDetails, language =
                               </span>
                             )}
                           </div>
-                          <p className="text-slate-400 text-sm mt-1">
+                          <p className="text-ehb-textMuted text-sm mt-1">
                             {language === 'ur' ? strategy.descriptionUrdu : strategy.description}
                           </p>
                         </div>
                         <ChevronRight 
-                          className={`text-slate-400 transition-transform ${selectedStrategy === strategy.id ? 'rotate-90' : ''}`} 
+                          className={`text-ehb-textMuted transition-transform ${selectedStrategy === strategy.id ? 'rotate-90' : ''}`} 
                           size={24} 
                         />
                       </div>
@@ -353,7 +353,7 @@ export default function LegalStrategyAdvisor({ caseType, caseDetails, language =
                       <div className="flex items-center gap-4 mt-3">
                         <div className="flex items-center gap-1 text-sm">
                           <Clock size={14} className="text-brand-gold" />
-                          <span className="text-slate-400">
+                          <span className="text-ehb-textMuted">
                             {language === 'ur' ? strategy.timelineUrdu : strategy.timeline}
                           </span>
                         </div>
@@ -384,7 +384,7 @@ export default function LegalStrategyAdvisor({ caseType, caseDetails, language =
                                     <span className="w-6 h-6 rounded-full bg-brand-gold/20 text-brand-gold text-xs flex items-center justify-center font-bold">
                                       {index + 1}
                                     </span>
-                                    <span className="text-slate-300 text-sm">
+                                    <span className="text-ehb-textBody text-sm">
                                       {language === 'ur' ? step.stepUrdu : step.step}
                                     </span>
                                   </div>
@@ -400,7 +400,7 @@ export default function LegalStrategyAdvisor({ caseType, caseDetails, language =
                               </h5>
                               <ul className="space-y-1">
                                 {(language === 'ur' ? strategy.risksUrdu : strategy.risks).map((risk, index) => (
-                                  <li key={index} className="text-slate-400 text-sm flex items-center gap-2">
+                                  <li key={index} className="text-ehb-textMuted text-sm flex items-center gap-2">
                                     <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
                                     {risk}
                                   </li>
@@ -439,7 +439,7 @@ export default function LegalStrategyAdvisor({ caseType, caseDetails, language =
                 {(language === 'ur' ? analysis.recommendationsUrdu : analysis.recommendations).map((rec, index) => (
                   <li key={index} className="flex items-start gap-3 p-3 bg-white/5 rounded-xl">
                     <CheckCircle2 className="text-brand-gold flex-shrink-0 mt-0.5" size={20} />
-                    <span className="text-slate-300">{rec}</span>
+                    <span className="text-ehb-textBody">{rec}</span>
                   </li>
                 ))}
               </ul>

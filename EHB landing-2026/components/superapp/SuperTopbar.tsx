@@ -20,7 +20,7 @@ export function SuperTopbar() {
     <div className="rounded-2xl border border-cyan-400/20 bg-gradient-to-r from-[#031225]/90 via-[#04182e]/90 to-[#041326]/90 p-3 sm:p-4 shadow-[0_16px_40px_rgba(2,8,23,0.55)]">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <form onSubmit={submitSearch} className="flex-1">
-          <div className="flex items-center rounded-xl border border-white/15 bg-black/20 px-3 py-2 text-sm text-slate-300">
+          <div className="flex items-center rounded-xl border border-white/15 bg-black/20 px-3 py-2 text-sm text-ehb-textBody">
             <span className="mr-2" aria-hidden>
               🔍
             </span>

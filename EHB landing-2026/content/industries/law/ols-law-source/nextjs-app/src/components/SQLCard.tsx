@@ -58,7 +58,7 @@ export default function SQLCard({ level, description, color, icon: Icon }: SQLCa
         </div>
         <div>
           <h3 className="text-[10px] sm:text-xs font-black uppercase tracking-tighter" style={{ color: color }}>{level}</h3>
-          <p className="text-[8px] sm:text-[10px] text-slate-400 mt-1 leading-tight">{description}</p>
+          <p className="text-[8px] sm:text-[10px] text-ehb-textMuted mt-1 leading-tight">{description}</p>
         </div>
         <button className="mt-auto text-[8px] sm:text-[10px] font-bold hover:underline" style={{ color: color }}>
           Learn More
@@ -85,7 +85,7 @@ export default function SQLCard({ level, description, color, icon: Icon }: SQLCa
                 </div>
                 <div>
                   <h2 className="text-lg sm:text-xl font-bold text-white">{level}</h2>
-                  <p className="text-xs sm:text-sm text-slate-400">{description}</p>
+                  <p className="text-xs sm:text-sm text-ehb-textMuted">{description}</p>
                 </div>
               </div>
               <button 
@@ -103,7 +103,7 @@ export default function SQLCard({ level, description, color, icon: Icon }: SQLCa
                   {details.benefits.map((benefit, idx) => (
                     <div key={idx} className="flex items-center gap-2">
                       <CheckCircle2 size={12} className="sm:w-3.5 sm:h-3.5" style={{ color: color }} />
-                      <span className="text-xs sm:text-sm text-slate-300">{benefit}</span>
+                      <span className="text-xs sm:text-sm text-ehb-textBody">{benefit}</span>
                     </div>
                   ))}
                 </div>
@@ -115,7 +115,7 @@ export default function SQLCard({ level, description, color, icon: Icon }: SQLCa
                   {details.requirements.map((req, idx) => (
                     <div key={idx} className="flex items-center gap-2">
                       <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: color }} />
-                      <span className="text-xs sm:text-sm text-slate-400">{req}</span>
+                      <span className="text-xs sm:text-sm text-ehb-textMuted">{req}</span>
                     </div>
                   ))}
                 </div>

@@ -47,7 +47,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <Sparkles size={12} className="text-blue-400 animate-pulse" />
             <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">AI Welcome System</span>
-            <span className="text-[10px] text-slate-300 ml-2 hidden sm:inline">{welcomeMessage}</span>
+            <span className="text-[10px] text-ehb-textBody ml-2 hidden sm:inline">{welcomeMessage}</span>
           </div>
           <div className="hidden sm:flex items-center gap-2">
             <span className="text-[9px] text-slate-500">AI Detected: English (US)</span>
@@ -78,7 +78,7 @@ export default function Navbar() {
                   className={`transition-all flex-shrink-0 py-2 border-b-2 ${
                     pathname === item.id 
                       ? 'text-blue-400 border-blue-400' 
-                      : 'text-slate-400 border-transparent hover:text-blue-400'
+                      : 'text-ehb-textMuted border-transparent hover:text-blue-400'
                   }`}
                 >
                   {item.label}
@@ -93,7 +93,7 @@ export default function Navbar() {
             <div className="relative">
               <button 
                 onClick={() => setShowLangMenu(!showLangMenu)}
-                className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-full text-[9px] sm:text-[10px] font-bold text-slate-300 hover:bg-slate-800 transition-all"
+                className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-full text-[9px] sm:text-[10px] font-bold text-ehb-textBody hover:bg-slate-800 transition-all"
               >
                 <Globe size={12} className="sm:w-3.5 sm:h-3.5 text-blue-400" />
                 <span className="hidden xs:inline">{currentLang.name}</span>
@@ -108,7 +108,7 @@ export default function Navbar() {
                         setCurrentLang(lang);
                         setShowLangMenu(false);
                       }}
-                      className="w-full flex items-center gap-2 px-4 py-2.5 text-[10px] font-bold text-slate-300 hover:bg-blue-600/20 hover:text-blue-400 transition-colors border-b border-slate-800/50 last:border-0"
+                      className="w-full flex items-center gap-2 px-4 py-2.5 text-[10px] font-bold text-ehb-textBody hover:bg-blue-600/20 hover:text-blue-400 transition-colors border-b border-slate-800/50 last:border-0"
                     >
                       <span>{lang.flag}</span>
                       <span>{lang.name}</span>
@@ -127,13 +127,13 @@ export default function Navbar() {
               />
             </div>
 
-            <button className="p-1.5 rounded-full hover:bg-slate-800 transition-colors text-slate-400">
+            <button className="p-1.5 rounded-full hover:bg-slate-800 transition-colors text-ehb-textMuted">
               <User size={18} />
             </button>
             
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-1.5 rounded-full hover:bg-slate-800 transition-colors text-slate-400"
+              className="md:hidden p-1.5 rounded-full hover:bg-slate-800 transition-colors text-ehb-textMuted"
             >
               {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -153,7 +153,7 @@ export default function Navbar() {
                 className={`block w-full text-left px-3 py-3 rounded-xl text-sm font-medium transition-colors ${
                   pathname === item.id 
                     ? 'bg-blue-600/20 text-blue-400' 
-                    : 'text-slate-300 hover:bg-slate-900'
+                    : 'text-ehb-textBody hover:bg-slate-900'
                 }`}
               >
                 {item.label}

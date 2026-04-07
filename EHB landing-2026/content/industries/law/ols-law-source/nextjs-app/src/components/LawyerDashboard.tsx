@@ -44,7 +44,7 @@ export default function LawyerDashboard() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 sm:mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold font-display mb-2 text-white">Lawyer Dashboard</h1>
-          <p className="text-sm text-slate-400">Manage your practice, clients, and legal services.</p>
+          <p className="text-sm text-ehb-textMuted">Manage your practice, clients, and legal services.</p>
         </div>
         <div className="flex gap-2 sm:gap-3">
           <Link 
@@ -67,7 +67,7 @@ export default function LawyerDashboard() {
                <img src="https://i.pravatar.cc/150?u=ahmed" alt="Ahmed" className="w-full h-full object-cover" />
             </div>
             <h3 className="text-base sm:text-lg font-bold text-white">{lawyer.name}</h3>
-            <p className="text-[10px] sm:text-xs text-slate-400 mb-3 sm:mb-4">{lawyer.specialization}</p>
+            <p className="text-[10px] sm:text-xs text-ehb-textMuted mb-3 sm:mb-4">{lawyer.specialization}</p>
             <div className="flex items-center justify-center gap-2 mb-4 sm:mb-6">
               <div className={`flex items-center gap-1.5 px-2 sm:px-3 py-1 rounded-full bg-slate-800 border border-slate-700 ${sqlInfo.color}`}>
                 <SQLIcon size={12} className="sm:w-3.5 sm:h-3.5" />
@@ -104,7 +104,7 @@ export default function LawyerDashboard() {
                 className={`w-full flex items-center justify-between p-2 sm:p-3 rounded-lg sm:rounded-xl transition-colors text-xs sm:text-sm font-bold ${
                   activeTab === item.id 
                     ? 'bg-brand-primary text-white' 
-                    : 'hover:bg-slate-800 text-slate-400'
+                    : 'hover:bg-slate-800 text-ehb-textMuted'
                 }`}
               >
                 <div className="flex items-center gap-2 sm:gap-3">

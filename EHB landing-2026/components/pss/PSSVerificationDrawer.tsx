@@ -83,21 +83,21 @@ function stepBadge(status: PssStepStatus) {
 }
 
 function reviewBlock(review: ReviewMeta | null) {
-  if (!review) return <div className="text-[11px] text-slate-400">No review yet.</div>;
+  if (!review) return <div className="text-[11px] text-ehb-textMuted">No review yet.</div>;
   return (
-    <div className="rounded-lg border border-white/10 bg-black/20 p-2 text-[11px] text-slate-300 space-y-1">
+    <div className="rounded-lg border border-white/10 bg-black/20 p-2 text-[11px] text-ehb-textBody space-y-1">
       <div>
-        <span className="text-slate-400">Decision:</span> {review.decision}
+        <span className="text-ehb-textMuted">Decision:</span> {review.decision}
       </div>
       <div>
-        <span className="text-slate-400">Reviewer:</span> {review.reviewer.name}
+        <span className="text-ehb-textMuted">Reviewer:</span> {review.reviewer.name}
       </div>
       <div>
-        <span className="text-slate-400">At:</span> {fmt(review.createdAt)}
+        <span className="text-ehb-textMuted">At:</span> {fmt(review.createdAt)}
       </div>
       {review.notes ? (
         <div>
-          <span className="text-slate-400">Notes:</span> {review.notes}
+          <span className="text-ehb-textMuted">Notes:</span> {review.notes}
         </div>
       ) : null}
     </div>
@@ -128,9 +128,9 @@ export function PSSVerificationDrawer(props: {
     if (activeStep === "IDENTITY") {
       return (
         <div className="space-y-2 text-xs">
-          <div><span className="text-slate-400">Name:</span> {props.detail.stepContent.identity.name}</div>
-          <div><span className="text-slate-400">DOB:</span> {props.detail.stepContent.identity.dob ?? "Not provided"}</div>
-          <div><span className="text-slate-400">ID Number:</span> {props.detail.stepContent.identity.idNumber ?? "Not provided"}</div>
+          <div><span className="text-ehb-textMuted">Name:</span> {props.detail.stepContent.identity.name}</div>
+          <div><span className="text-ehb-textMuted">DOB:</span> {props.detail.stepContent.identity.dob ?? "Not provided"}</div>
+          <div><span className="text-ehb-textMuted">ID Number:</span> {props.detail.stepContent.identity.idNumber ?? "Not provided"}</div>
           {reviewBlock(props.detail.stepContent.identity.latestReview)}
         </div>
       );
@@ -139,17 +139,17 @@ export function PSSVerificationDrawer(props: {
       return (
         <div className="space-y-2">
           {props.detail.stepContent.documents.length === 0 ? (
-            <div className="text-[11px] text-slate-400">No documents uploaded for this step.</div>
+            <div className="text-[11px] text-ehb-textMuted">No documents uploaded for this step.</div>
           ) : (
             props.detail.stepContent.documents.map((doc) => (
               <div key={doc.id} className="rounded-lg border border-white/10 bg-black/20 p-2 text-[11px]">
                 <div className="font-semibold text-slate-200">{doc.type}</div>
-                <div className="text-slate-400">Status: {doc.reviewStatus}</div>
-                <div className="text-slate-400">Uploaded: {fmt(doc.createdAt)}</div>
+                <div className="text-ehb-textMuted">Status: {doc.reviewStatus}</div>
+                <div className="text-ehb-textMuted">Uploaded: {fmt(doc.createdAt)}</div>
                 <a className="text-cyan-300 underline" href={doc.fileUrl} target="_blank" rel="noreferrer">
                   Open file (zoom/view)
                 </a>
-                {doc.notes ? <div className="text-slate-300 mt-1">Notes: {doc.notes}</div> : null}
+                {doc.notes ? <div className="text-ehb-textBody mt-1">Notes: {doc.notes}</div> : null}
               </div>
             ))
           )}
@@ -159,21 +159,21 @@ export function PSSVerificationDrawer(props: {
     if (activeStep === "LIVENESS") {
       return (
         <div className="space-y-2 text-xs">
-          <div><span className="text-slate-400">Face Match Score:</span> {props.detail.stepContent.liveness.faceMatchScore ?? "N/A"}</div>
+          <div><span className="text-ehb-textMuted">Face Match Score:</span> {props.detail.stepContent.liveness.faceMatchScore ?? "N/A"}</div>
           <div className="flex flex-wrap gap-2">
             {props.detail.stepContent.liveness.selfieUrl ? (
               <a className="text-cyan-300 underline" href={props.detail.stepContent.liveness.selfieUrl} target="_blank" rel="noreferrer">
                 Open Selfie
               </a>
             ) : (
-              <span className="text-slate-400">Selfie not available</span>
+              <span className="text-ehb-textMuted">Selfie not available</span>
             )}
             {props.detail.stepContent.liveness.videoUrl ? (
               <a className="text-cyan-300 underline" href={props.detail.stepContent.liveness.videoUrl} target="_blank" rel="noreferrer">
                 Open Liveness Video
               </a>
             ) : (
-              <span className="text-slate-400">Video not available</span>
+              <span className="text-ehb-textMuted">Video not available</span>
             )}
           </div>
           {reviewBlock(props.detail.stepContent.liveness.latestReview)}
@@ -183,9 +183,9 @@ export function PSSVerificationDrawer(props: {
     if (activeStep === "AML_RISK") {
       return (
         <div className="space-y-2 text-xs">
-          <div><span className="text-slate-400">AML Result:</span> {props.detail.stepContent.aml.result}</div>
+          <div><span className="text-ehb-textMuted">AML Result:</span> {props.detail.stepContent.aml.result}</div>
           <div>
-            <span className="text-slate-400">Flags:</span>{" "}
+            <span className="text-ehb-textMuted">Flags:</span>{" "}
             {props.detail.stepContent.aml.flags.length > 0 ? props.detail.stepContent.aml.flags.join(", ") : "No flags"}
           </div>
           {reviewBlock(props.detail.stepContent.aml.latestReview)}
@@ -194,9 +194,9 @@ export function PSSVerificationDrawer(props: {
     }
     return (
       <div className="space-y-2 text-xs">
-        <div><span className="text-slate-400">Summary:</span> Review all step outcomes before final approval/rejection.</div>
-        <div><span className="text-slate-400">Risk:</span> {props.detail.riskLevel} {props.detail.riskScore !== null ? `(score: ${props.detail.riskScore})` : ""}</div>
-        <div><span className="text-slate-400">Current Verification Status:</span> {props.detail.profile?.verificationStatus ?? "PENDING"}</div>
+        <div><span className="text-ehb-textMuted">Summary:</span> Review all step outcomes before final approval/rejection.</div>
+        <div><span className="text-ehb-textMuted">Risk:</span> {props.detail.riskLevel} {props.detail.riskScore !== null ? `(score: ${props.detail.riskScore})` : ""}</div>
+        <div><span className="text-ehb-textMuted">Current Verification Status:</span> {props.detail.profile?.verificationStatus ?? "PENDING"}</div>
       </div>
     );
   }, [activeStep, props.detail]);
@@ -220,23 +220,23 @@ export function PSSVerificationDrawer(props: {
             </div>
 
             {props.loading || !props.detail ? (
-              <div className="text-xs text-slate-400">Loading case detail...</div>
+              <div className="text-xs text-ehb-textMuted">Loading case detail...</div>
             ) : (
               <>
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-xs space-y-1">
                   <div>
-                    <span className="text-slate-400">User:</span> {props.detail.user.name} ({props.detail.user.email})
+                    <span className="text-ehb-textMuted">User:</span> {props.detail.user.name} ({props.detail.user.email})
                   </div>
                   <div>
-                    <span className="text-slate-400">Country:</span> {props.detail.user.country ?? "Not set"}
+                    <span className="text-ehb-textMuted">Country:</span> {props.detail.user.country ?? "Not set"}
                   </div>
                   <div>
-                    <span className="text-slate-400">Risk:</span>{" "}
+                    <span className="text-ehb-textMuted">Risk:</span>{" "}
                     <span className={`rounded-full border px-2 py-0.5 ${riskTone(props.detail.riskLevel)}`}>{props.detail.riskLevel}</span>
-                    {props.detail.riskScore !== null ? <span className="ml-2 text-slate-300">Score: {props.detail.riskScore}</span> : null}
+                    {props.detail.riskScore !== null ? <span className="ml-2 text-ehb-textBody">Score: {props.detail.riskScore}</span> : null}
                   </div>
                   <div>
-                    <div className="text-slate-400">Risk meter:</div>
+                    <div className="text-ehb-textMuted">Risk meter:</div>
                     <div className="mt-1 h-2 overflow-hidden rounded-full bg-white/10">
                       <div
                         className={[
@@ -252,7 +252,7 @@ export function PSSVerificationDrawer(props: {
                     </div>
                   </div>
                   <div>
-                    <span className="text-slate-400">Fraud status:</span>{" "}
+                    <span className="text-ehb-textMuted">Fraud status:</span>{" "}
                     <span
                       className={[
                         "rounded-full border px-2 py-0.5",
@@ -266,14 +266,14 @@ export function PSSVerificationDrawer(props: {
                       {props.detail.fraudStatus}
                     </span>
                     {props.detail.fraudReasons.length > 0 ? (
-                      <div className="mt-1 text-[11px] text-slate-300">{props.detail.fraudReasons.join(", ")}</div>
+                      <div className="mt-1 text-[11px] text-ehb-textBody">{props.detail.fraudReasons.join(", ")}</div>
                     ) : null}
                   </div>
                   <div>
-                    <span className="text-slate-400">Profile status:</span> {props.detail.profile?.verificationStatus ?? "PENDING"}
+                    <span className="text-ehb-textMuted">Profile status:</span> {props.detail.profile?.verificationStatus ?? "PENDING"}
                   </div>
                   <div>
-                    <span className="text-slate-400">Next refill:</span> {props.detail.nextRefill ? fmt(props.detail.nextRefill.dueDate) : "Not scheduled"}
+                    <span className="text-ehb-textMuted">Next refill:</span> {props.detail.nextRefill ? fmt(props.detail.nextRefill.dueDate) : "Not scheduled"}
                     {props.detail.nextRefill ? (
                       <span
                         className={[
@@ -298,7 +298,7 @@ export function PSSVerificationDrawer(props: {
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3">
                   <div className="flex items-center justify-between">
                     <div className="text-xs font-semibold">Stepper</div>
-                    <div className="text-[11px] text-slate-300">{progress}% completed</div>
+                    <div className="text-[11px] text-ehb-textBody">{progress}% completed</div>
                   </div>
                   <div className="mt-2 h-2 rounded-full bg-white/10 overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-cyan-400 to-blue-500" style={{ width: `${progress}%` }} />
@@ -317,7 +317,7 @@ export function PSSVerificationDrawer(props: {
                           ].join(" ")}
                         >
                                           <div className="font-semibold">{stepBadge(s)} {step}</div>
-                          <div className="text-[11px] text-slate-300">{s}</div>
+                          <div className="text-[11px] text-ehb-textBody">{s}</div>
                         </button>
                       );
                     })}
@@ -326,7 +326,7 @@ export function PSSVerificationDrawer(props: {
 
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-2">
                   <div className="text-xs font-semibold">Active Step: {activeStep}</div>
-                  <div className="text-[11px] text-slate-300">Status: {activeStatus}</div>
+                  <div className="text-[11px] text-ehb-textBody">Status: {activeStatus}</div>
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeStep}

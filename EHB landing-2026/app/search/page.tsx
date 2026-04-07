@@ -170,7 +170,7 @@ export default function SearchPage() {
       <div className="container-ehb py-8 space-y-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-xl md:text-2xl font-semibold leading-tight gradient-text">AI Marketplace Search</h1>
-          <p className="text-slate-400 text-sm">
+          <p className="text-ehb-textMuted text-sm">
             Ranked by STL (40%), Distance (20%), Reviews (15%), Industry Verification (15%), Availability (10%).
           </p>
         </div>
@@ -180,7 +180,7 @@ export default function SearchPage() {
 
           <div className="grid gap-3 lg:grid-cols-12">
             <div className="lg:col-span-5">
-              <div className="text-xs text-slate-300 mb-1">Search</div>
+              <div className="text-xs text-ehb-textBody mb-1">Search</div>
               <input
                 className="w-full rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                 value={q}
@@ -226,7 +226,7 @@ export default function SearchPage() {
               ) : null}
             </div>
             <div className="lg:col-span-2">
-              <div className="text-xs text-slate-300 mb-1">Type</div>
+              <div className="text-xs text-ehb-textBody mb-1">Type</div>
               <select
                 className="w-full rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                 value={type}
@@ -238,7 +238,7 @@ export default function SearchPage() {
               </select>
             </div>
             <div className="lg:col-span-3">
-              <div className="text-xs text-slate-300 mb-1">Industry</div>
+              <div className="text-xs text-ehb-textBody mb-1">Industry</div>
               <select
                 className="w-full rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                 value={industry}
@@ -253,7 +253,7 @@ export default function SearchPage() {
               </select>
             </div>
             <div className="lg:col-span-2">
-              <div className="text-xs text-slate-300 mb-1">Min STL</div>
+              <div className="text-xs text-ehb-textBody mb-1">Min STL</div>
               <select
                 className="w-full rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                 value={String(minStlLevel)}
@@ -270,7 +270,7 @@ export default function SearchPage() {
 
           <div className="grid gap-3 lg:grid-cols-12">
             <div className="lg:col-span-3">
-              <div className="text-xs text-slate-300 mb-1">Verified Industry</div>
+              <div className="text-xs text-ehb-textBody mb-1">Verified Industry</div>
               <select
                 className="w-full rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                 value={verifiedIndustry}
@@ -285,7 +285,7 @@ export default function SearchPage() {
               </select>
             </div>
             <div className="lg:col-span-3">
-              <div className="text-xs text-slate-300 mb-1">Location (text)</div>
+              <div className="text-xs text-ehb-textBody mb-1">Location (text)</div>
               <input
                 className="w-full rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                 value={location}
@@ -294,7 +294,7 @@ export default function SearchPage() {
               />
             </div>
             <div className="lg:col-span-2">
-              <div className="text-xs text-slate-300 mb-1">Min rating</div>
+              <div className="text-xs text-ehb-textBody mb-1">Min rating</div>
               <select
                 className="w-full rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                 value={String(minRating)}
@@ -307,7 +307,7 @@ export default function SearchPage() {
               </select>
             </div>
             <div className="lg:col-span-2">
-              <div className="text-xs text-slate-300 mb-1">Distance</div>
+              <div className="text-xs text-ehb-textBody mb-1">Distance</div>
               <div className="flex items-center gap-2">
                 <label className="flex items-center gap-2 text-xs text-slate-200">
                   <input type="checkbox" checked={useGeo} onChange={(e) => setUseGeo(e.target.checked)} />
@@ -345,11 +345,11 @@ export default function SearchPage() {
         <section className="space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-white">Best Matches</h2>
-            <div className="text-[11px] text-slate-400">{items.length} results</div>
+            <div className="text-[11px] text-ehb-textMuted">{items.length} results</div>
           </div>
 
           {items.length === 0 && !loading ? (
-            <div className="rounded-2xl border border-white/10 bg-slate-950/30 p-6 text-sm text-slate-300">
+            <div className="rounded-2xl border border-white/10 bg-slate-950/30 p-6 text-sm text-ehb-textBody">
               No results. Try removing filters or expanding radius.
             </div>
           ) : null}
@@ -360,13 +360,13 @@ export default function SearchPage() {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="text-sm font-semibold text-white leading-tight">{r.title}</div>
-                    <div className="text-[12px] text-slate-300">{r.subtitle}</div>
-                    <div className="text-[11px] text-slate-400 mt-1">
+                    <div className="text-[12px] text-ehb-textBody">{r.subtitle}</div>
+                    <div className="text-[11px] text-ehb-textMuted mt-1">
                       {r.industry ? r.industry.name : "—"} {r.kind === "PRODUCT" ? "· Product" : "· Service"}
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-[10px] text-slate-400">Rank</div>
+                    <div className="text-[10px] text-ehb-textMuted">Rank</div>
                     <div className="text-lg font-semibold text-cyan-200">{r.rankScore.toFixed(1)}</div>
                   </div>
                 </div>
@@ -388,7 +388,7 @@ export default function SearchPage() {
                     {r.verifiedIndustries.length > 4 ? <Badge tone="slate">+{r.verifiedIndustries.length - 4}</Badge> : null}
                   </div>
                 ) : (
-                  <div className="text-[12px] text-slate-400">No verified industries yet.</div>
+                  <div className="text-[12px] text-ehb-textMuted">No verified industries yet.</div>
                 )}
 
                 {r.labels.length > 0 ? (

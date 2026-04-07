@@ -41,9 +41,9 @@ export default function GosellrProductPage({
       <div className="container-ehb py-8 space-y-6">
         <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">GoSellr Product</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">GoSellr Product</p>
             <h1 className="text-2xl md:text-3xl font-semibold leading-tight gradient-text">{product.name}</h1>
-            <p className="text-slate-400 max-w-2xl text-sm">{product.short}</p>
+            <p className="text-ehb-textMuted max-w-2xl text-sm">{product.short}</p>
 
             {locationLabel ? (
               <div
@@ -100,18 +100,18 @@ export default function GosellrProductPage({
             <div className="rounded-3xl glass-panel border border-white/10 p-5 space-y-4">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Category</p>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Category</p>
                   <p className="text-sm font-semibold text-white mt-2">{product.category}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Price</p>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Price</p>
                   <p className="text-xl font-semibold text-white mt-2">
                     {product.priceUsd === 0 ? "Free" : `$${product.priceUsd}`}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-[11px] text-slate-400">
+              <div className="flex items-center justify-between text-[11px] text-ehb-textMuted">
                 <span className="flex items-center gap-2">
                   <span aria-hidden>⭐</span> Rating
                 </span>
@@ -120,8 +120,8 @@ export default function GosellrProductPage({
 
               <div className="flex items-center justify-between gap-3">
                 <div className="space-y-1">
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Verified trust</p>
-                  <p className="text-sm text-slate-300">
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Verified trust</p>
+                  <p className="text-sm text-ehb-textBody">
                     PSS verified • CRB certified • STL level trust (demo)
                   </p>
                 </div>
@@ -132,10 +132,10 @@ export default function GosellrProductPage({
               <GoSellrCartActions productId={product.id} />
 
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
                   Next step after purchase
                 </p>
-                <p className="text-[12px] text-slate-300 leading-relaxed">
+                <p className="text-[12px] text-ehb-textBody leading-relaxed">
                   EHB uses DMO workflow approvals and EHB‑STL secure settlement to keep delivery and records trusted.
                 </p>
               </div>

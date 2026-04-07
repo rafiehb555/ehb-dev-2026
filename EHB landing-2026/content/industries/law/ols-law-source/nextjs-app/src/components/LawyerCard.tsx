@@ -53,13 +53,13 @@ export default function LawyerCard({
                 <span className="text-[7px] sm:text-[8px] font-black uppercase tracking-wider">Verified</span>
               </div>
             </div>
-            <div className="flex items-center gap-1 text-slate-400">
+            <div className="flex items-center gap-1 text-ehb-textMuted">
               <SpecIcon size={10} />
               <p className="text-[9px] sm:text-[10px] leading-tight truncate">{specialization}</p>
             </div>
             <div className="flex items-center gap-1 mt-0.5">
               <Star size={10} className="text-yellow-500 fill-yellow-500" />
-              <span className="text-[9px] sm:text-[10px] font-bold text-slate-300">{rating}</span>
+              <span className="text-[9px] sm:text-[10px] font-bold text-ehb-textBody">{rating}</span>
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function LawyerCard({
         <div className="grid grid-cols-3 gap-1 py-2 border-y border-slate-800 bg-slate-900/50 rounded-lg">
           <div className="text-center border-r border-slate-800">
             <p className="text-[6px] sm:text-[7px] uppercase tracking-widest text-slate-500 font-black">Experience</p>
-            <p className="text-[9px] sm:text-[10px] font-bold text-slate-300">{experience}</p>
+            <p className="text-[9px] sm:text-[10px] font-bold text-ehb-textBody">{experience}</p>
           </div>
           <div className="text-center border-r border-slate-800">
             <p className="text-[6px] sm:text-[7px] uppercase tracking-widest text-slate-500 font-black">Success</p>
@@ -85,7 +85,7 @@ export default function LawyerCard({
         <div className="flex gap-2">
           <button 
             onClick={() => setShowProfile(true)}
-            className="flex-1 py-1.5 bg-slate-800 rounded-md text-[9px] sm:text-[10px] font-bold hover:bg-slate-700 transition-all text-slate-300"
+            className="flex-1 py-1.5 bg-slate-800 rounded-md text-[9px] sm:text-[10px] font-bold hover:bg-slate-700 transition-all text-ehb-textBody"
           >
             View Profile
           </button>
@@ -116,7 +116,7 @@ export default function LawyerCard({
               />
               <div>
                 <h2 className="text-lg sm:text-xl font-bold text-white">{name}</h2>
-                <p className="text-xs sm:text-sm text-slate-400">{specialization}</p>
+                <p className="text-xs sm:text-sm text-ehb-textMuted">{specialization}</p>
                 <div className="flex items-center gap-2 mt-1">
                   <div className="flex items-center gap-1">
                     <Star size={12} className="sm:w-3.5 sm:h-3.5 text-yellow-500 fill-yellow-500" />
@@ -145,7 +145,7 @@ export default function LawyerCard({
 
             <div className="space-y-2 sm:space-y-3 mb-6">
               <h3 className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-slate-500">About</h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-ehb-textBody leading-relaxed">
                 Experienced {specialization.toLowerCase()} with {experience} of practice. 
                 Specializes in complex cases with a proven track record of {successRate} success rate.
               </p>
@@ -154,7 +154,7 @@ export default function LawyerCard({
             <div className="flex gap-3">
               <button 
                 onClick={() => setShowProfile(false)}
-                className="flex-1 py-2.5 sm:py-3 bg-slate-800 rounded-xl text-xs sm:text-sm font-bold hover:bg-slate-700 transition-all text-slate-300"
+                className="flex-1 py-2.5 sm:py-3 bg-slate-800 rounded-xl text-xs sm:text-sm font-bold hover:bg-slate-700 transition-all text-ehb-textBody"
               >
                 Close
               </button>

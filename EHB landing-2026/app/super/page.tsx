@@ -33,7 +33,7 @@ export default function SuperAppPage() {
         >
           <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">EHB Super App</p>
           <h1 className="mt-1 text-2xl md:text-3xl font-semibold gradient-text">All-in-one trust economy dashboard</h1>
-          <p className="mt-2 text-sm text-slate-300 max-w-3xl">
+          <p className="mt-2 text-sm text-ehb-textBody max-w-3xl">
             One unified interface connecting DMO, Marketplace, Verification, Certification, STL, Franchise,
             Industries, Wallet and AI guidance.
           </p>
@@ -102,7 +102,7 @@ export default function SuperAppPage() {
                   <Link key={c.title} href={c.href} className="rounded-xl border border-white/10 bg-white/5 p-3 ehb-hover-lift hover:border-cyan-400/40">
                     <div className="text-base">{c.icon}</div>
                     <div className="text-sm font-semibold text-white mt-1">{c.title}</div>
-                    <div className="text-xs text-slate-300 mt-1">{c.desc}</div>
+                    <div className="text-xs text-ehb-textBody mt-1">{c.desc}</div>
                     <div className="text-[11px] text-cyan-200 mt-2">Open →</div>
                   </Link>
                 ))}

@@ -133,7 +133,7 @@ export default function MarketplacePage() {
         <section className="rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-[#031222]/95 to-[#020b18]/95 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">AI Marketplace</p>
           <h1 className="mt-1 text-2xl font-semibold gradient-text">Trust-based Smart Marketplace</h1>
-          <p className="mt-1 text-xs text-slate-300">Ranking = STL + Industry + Reviews + Distance + Availability</p>
+          <p className="mt-1 text-xs text-ehb-textBody">Ranking = STL + Industry + Reviews + Distance + Availability</p>
         </section>
 
         <section className="ehb-card-elevated space-y-3">
@@ -175,10 +175,10 @@ export default function MarketplacePage() {
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <div className="text-sm font-semibold">{item.name}</div>
-                  <div className="text-[11px] text-slate-300">{item.subtitle}</div>
+                  <div className="text-[11px] text-ehb-textBody">{item.subtitle}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[10px] text-slate-400">Rank</div>
+                  <div className="text-[10px] text-ehb-textMuted">Rank</div>
                   <div className="text-lg font-semibold text-cyan-200">{item.rankScore.toFixed(1)}</div>
                 </div>
               </div>
@@ -187,7 +187,7 @@ export default function MarketplacePage() {
                 <span className="rounded-full border border-white/20 px-2 py-0.5">{item.kind === "PRODUCT" ? "Product" : "Service"}</span>
                 <span className="rounded-full border border-white/20 px-2 py-0.5">{item.rating !== null ? `★ ${item.rating.toFixed(1)}` : "No ratings"}</span>
               </div>
-              <div className="text-[11px] text-slate-300">
+              <div className="text-[11px] text-ehb-textBody">
                 Industry: {item.industry?.name ?? "—"} {item.location ? `• ${item.location}` : ""}
               </div>
               <div className="flex flex-wrap gap-1">
@@ -207,7 +207,7 @@ export default function MarketplacePage() {
             </div>
           ))}
           {!loading && items.length === 0 ? (
-            <div className="sm:col-span-2 lg:col-span-3 rounded-xl border border-white/10 bg-white/5 p-6 text-sm text-slate-300">
+            <div className="sm:col-span-2 lg:col-span-3 rounded-xl border border-white/10 bg-white/5 p-6 text-sm text-ehb-textBody">
               No marketplace results found.
             </div>
           ) : null}

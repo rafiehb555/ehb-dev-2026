@@ -40,7 +40,7 @@ export function FinanceIndustry3D({ accentColor = "#F59E0B" }: { accentColor?: s
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
         Verified finance with safe payments
       </h2>
-      <p className="text-slate-400 max-w-3xl mb-8 text-sm md:text-base">
+      <p className="text-ehb-textMuted max-w-3xl mb-8 text-sm md:text-base">
         EHB helps users and businesses find verified finance providers, choose secure plans,
         and complete transactions with monitored quality and protected wallet payments.
       </p>
@@ -86,7 +86,7 @@ export function FinanceIndustry3D({ accentColor = "#F59E0B" }: { accentColor?: s
                 >
                   {item.title}
                 </p>
-                <p className="text-[11px] md:text-xs text-slate-300">{item.desc}</p>
+                <p className="text-[11px] md:text-xs text-ehb-textBody">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -137,7 +137,7 @@ export function FinanceIndustry3D({ accentColor = "#F59E0B" }: { accentColor?: s
                   }}
                 >
                   <p className="font-semibold">{item.label}</p>
-                  <p className="text-[9px] text-slate-300">{item.sub}</p>
+                  <p className="text-[9px] text-ehb-textBody">{item.sub}</p>
                 </div>
               ))}
 
@@ -192,7 +192,7 @@ export function FinanceIndustry3D({ accentColor = "#F59E0B" }: { accentColor?: s
                 >
                   {item.title}
                 </p>
-                <p className="text-[11px] md:text-xs text-slate-300">{item.desc}</p>
+                <p className="text-[11px] md:text-xs text-ehb-textBody">{item.desc}</p>
               </div>
             ))}
           </div>

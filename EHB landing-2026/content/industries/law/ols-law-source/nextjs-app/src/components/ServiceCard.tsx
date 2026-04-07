@@ -21,7 +21,7 @@ export default function ServiceCard({ title, description, icon: Icon, buttonText
         <Icon size={16} className="sm:w-5 sm:h-5" />
       </div>
       <h4 className="text-[10px] sm:text-xs font-bold mb-1 text-white">{title}</h4>
-      <p className="text-[8px] sm:text-[9px] text-slate-400 leading-tight mb-2 sm:mb-3 line-clamp-2">{description}</p>
+      <p className="text-[8px] sm:text-[9px] text-ehb-textMuted leading-tight mb-2 sm:mb-3 line-clamp-2">{description}</p>
       {buttonText && (
         <button className="text-[8px] sm:text-[9px] font-bold text-brand-primary hover:underline uppercase tracking-wider mt-auto">
           {buttonText}

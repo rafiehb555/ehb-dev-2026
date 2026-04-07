@@ -141,7 +141,7 @@ export default function AIControlDashboard({ language = 'en' }: AIControlDashboa
                 <Sparkles className="text-brand-gold" size={24} />
                 {language === 'ur' ? 'AI کنٹرول ڈیش بورڈ' : 'AI Control Dashboard'}
               </h2>
-              <p className="text-slate-400">
+              <p className="text-ehb-textMuted">
                 {language === 'ur' ? 'EHB AI نظام کا مرکزی کنٹرول' : 'Central command center for EHB AI system'}
               </p>
             </div>
@@ -177,28 +177,28 @@ export default function AIControlDashboard({ language = 'en' }: AIControlDashboa
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white/5 rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-slate-400 text-xs">{language === 'ur' ? 'فعال ایجنٹس' : 'Running Agents'}</span>
+              <span className="text-ehb-textMuted text-xs">{language === 'ur' ? 'فعال ایجنٹس' : 'Running Agents'}</span>
               <Network className="text-brand-gold" size={16} />
             </div>
             <p className="text-white font-bold text-3xl">{runningAgents}/{agents.length}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-slate-400 text-xs">{language === 'ur' ? 'کل ٹاسکس' : 'Total Tasks'}</span>
+              <span className="text-ehb-textMuted text-xs">{language === 'ur' ? 'کل ٹاسکس' : 'Total Tasks'}</span>
               <Activity className="text-blue-400" size={16} />
             </div>
             <p className="text-white font-bold text-3xl">{totalTasks}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-slate-400 text-xs">{language === 'ur' ? 'اوسط لوڈ' : 'Avg Load'}</span>
+              <span className="text-ehb-textMuted text-xs">{language === 'ur' ? 'اوسط لوڈ' : 'Avg Load'}</span>
               <Cpu className="text-violet-400" size={16} />
             </div>
             <p className={`font-bold text-3xl ${getLoadColor(avgLoad)}`}>{avgLoad}%</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-slate-400 text-xs">{language === 'ur' ? 'اپ ٹائم' : 'System Uptime'}</span>
+              <span className="text-ehb-textMuted text-xs">{language === 'ur' ? 'اپ ٹائم' : 'System Uptime'}</span>
               <Clock className="text-green-400" size={16} />
             </div>
             <p className="text-green-400 font-bold text-3xl">99.99%</p>
@@ -226,19 +226,19 @@ export default function AIControlDashboard({ language = 'en' }: AIControlDashboa
               <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${metric.color} flex items-center justify-center mb-3`}>
                 <Icon className="text-white" size={20} />
               </div>
-              <p className="text-slate-400 text-xs mb-1">
+              <p className="text-ehb-textMuted text-xs mb-1">
                 {language === 'ur' ? metric.nameUrdu : metric.name}
               </p>
               <p className="text-white font-bold text-xl">
                 {metric.id === 'revenue' 
                   ? `${(metric.value / 1000000).toFixed(1)}M`
                   : metric.value.toLocaleString()}
-                {metric.unit && <span className="text-xs text-slate-400 ml-1">{metric.unit}</span>}
+                {metric.unit && <span className="text-xs text-ehb-textMuted ml-1">{metric.unit}</span>}
               </p>
               <div className={`flex items-center gap-1 text-xs mt-1 ${
                 metric.changeType === 'increase' ? 'text-green-400' :
                 metric.changeType === 'decrease' ? 'text-red-400' :
-                'text-slate-400'
+                'text-ehb-textMuted'
               }`}>
                 {metric.changeType === 'increase' ? <ArrowUpRight size={12} /> :
                  metric.changeType === 'decrease' ? <ArrowDownRight size={12} /> :
@@ -263,7 +263,7 @@ export default function AIControlDashboard({ language = 'en' }: AIControlDashboa
             {language === 'ur' ? 'AI ایجنٹس اسٹیٹس' : 'AI Agents Status'}
           </h3>
           <div className="flex items-center gap-2">
-            <span className="text-slate-400 text-sm">{language === 'ur' ? 'آٹو ریفریش' : 'Auto Refresh'}</span>
+            <span className="text-ehb-textMuted text-sm">{language === 'ur' ? 'آٹو ریفریش' : 'Auto Refresh'}</span>
             <button
               onClick={() => setAutoRefresh(!autoRefresh)}
               className={`w-12 h-6 rounded-full transition-colors ${autoRefresh ? 'bg-green-500' : 'bg-slate-600'}`}
@@ -294,11 +294,11 @@ export default function AIControlDashboard({ language = 'en' }: AIControlDashboa
               
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">{language === 'ur' ? 'ٹاسکس' : 'Tasks'}</span>
+                  <span className="text-ehb-textMuted">{language === 'ur' ? 'ٹاسکس' : 'Tasks'}</span>
                   <span className="text-white">{agent.tasks}</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">{language === 'ur' ? 'لوڈ' : 'Load'}</span>
+                  <span className="text-ehb-textMuted">{language === 'ur' ? 'لوڈ' : 'Load'}</span>
                   <span className={getLoadColor(agent.load)}>{agent.load}%</span>
                 </div>
                 <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden">

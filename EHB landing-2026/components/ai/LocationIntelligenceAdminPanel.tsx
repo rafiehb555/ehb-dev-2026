@@ -120,13 +120,13 @@ export function LocationIntelligenceAdminPanel({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
             <h2 className="text-sm font-semibold text-white">Location Intelligence AI</h2>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-ehb-textMuted">
               City/region demand insights and trust-adjusted gaps. (UI mock; backend later)
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <label className="text-[10px] text-slate-400">City</label>
+            <label className="text-[10px] text-ehb-textMuted">City</label>
             <select
               value={city}
               onChange={(e) => setCity(e.target.value as CityCode)}
@@ -139,7 +139,7 @@ export function LocationIntelligenceAdminPanel({
               ))}
             </select>
 
-            <label className="text-[10px] text-slate-400">Industry</label>
+            <label className="text-[10px] text-ehb-textMuted">Industry</label>
             <select
               value={industrySlug}
               onChange={(e) => setIndustrySlug(e.target.value)}
@@ -175,7 +175,7 @@ export function LocationIntelligenceAdminPanel({
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-white">{ins.title}</p>
-                <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">{ins.deltaText}</p>
+                <p className="text-[11px] text-ehb-textMuted mt-1 leading-relaxed">{ins.deltaText}</p>
               </div>
               <span
                 className="inline-flex items-center rounded-full px-2 py-1 text-[10px] border border-white/10 bg-white/5 text-slate-200"
@@ -185,7 +185,7 @@ export function LocationIntelligenceAdminPanel({
               </span>
             </div>
 
-            <ul className="mt-4 space-y-1.5 text-[11px] text-slate-300">
+            <ul className="mt-4 space-y-1.5 text-[11px] text-ehb-textBody">
               {ins.bullets.map((b) => (
                 <li key={b}>• {b}</li>
               ))}

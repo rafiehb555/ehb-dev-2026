@@ -32,7 +32,7 @@ export default function JobsPage() {
         <section className="glass-panel border border-white/10 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-sky-300">JPS Jobs</p>
           <h1 className="text-2xl font-semibold gradient-text mt-1">Jobs & Activity</h1>
-          <p className="text-sm text-slate-300 mt-2">Apply to jobs that match your profile and track application activity.</p>
+          <p className="text-sm text-ehb-textBody mt-2">Apply to jobs that match your profile and track application activity.</p>
         </section>
 
         <section className="ehb-card-elevated">
@@ -42,7 +42,7 @@ export default function JobsPage() {
               <div key={j.id} className="rounded-xl border border-white/10 bg-white/5 p-3 flex items-center justify-between gap-3">
                 <div>
                   <div className="text-xs text-white font-semibold">{j.title}</div>
-                  <div className="text-[11px] text-slate-400">
+                  <div className="text-[11px] text-ehb-textMuted">
                     {j.type} · {j.city} · Best match: {j.candidate}
                   </div>
                 </div>

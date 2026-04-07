@@ -177,7 +177,7 @@ export default function FamilyCourtPage() {
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
               Family Court Services
             </h1>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-8">
+            <p className="text-xl text-ehb-textMuted max-w-2xl mx-auto mb-8">
               AI-powered legal assistance for family disputes, divorce, child custody, and settlements.
             </p>
 
@@ -215,7 +215,7 @@ export default function FamilyCourtPage() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h2 className="text-2xl font-bold text-white mb-2">Family Legal Services</h2>
-              <p className="text-slate-400">Choose a service to start your case</p>
+              <p className="text-ehb-textMuted">Choose a service to start your case</p>
             </div>
             <Link href="/marketplace?category=family" className="text-pink-400 hover:text-pink-300 flex items-center gap-1 text-sm">
               View All <ChevronRight size={16} />
@@ -237,7 +237,7 @@ export default function FamilyCourtPage() {
                 
                 <h3 className="text-lg font-bold text-white mb-1">{service.title}</h3>
                 <p className="text-xs text-pink-400 mb-2">{service.titleUrdu}</p>
-                <p className="text-sm text-slate-400 mb-4">{service.description}</p>
+                <p className="text-sm text-ehb-textMuted mb-4">{service.description}</p>
                 
                 <div className="flex items-center gap-4 text-xs text-slate-500 mb-4">
                   <span className="flex items-center gap-1">
@@ -275,17 +275,17 @@ export default function FamilyCourtPage() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white">Ask AI About Family Law</h3>
-                <p className="text-sm text-slate-400">Get instant answers to your questions</p>
+                <p className="text-sm text-ehb-textMuted">Get instant answers to your questions</p>
               </div>
             </div>
 
             <div className="space-y-2 mb-6">
-              <p className="text-xs text-slate-400 mb-2">Example Questions:</p>
+              <p className="text-xs text-ehb-textMuted mb-2">Example Questions:</p>
               {AI_QUESTIONS.map((question, index) => (
                 <button
                   key={index}
                   onClick={() => handleAskAI(question)}
-                  className="w-full text-left px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-sm text-slate-300 hover:bg-white/10 hover:border-blue-500/30 transition-all"
+                  className="w-full text-left px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-sm text-ehb-textBody hover:bg-white/10 hover:border-blue-500/30 transition-all"
                 >
                   • {question}
                 </button>
@@ -313,12 +313,12 @@ export default function FamilyCourtPage() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white">AI Response</h3>
-                <p className="text-sm text-slate-400">Intelligent legal guidance</p>
+                <p className="text-sm text-ehb-textMuted">Intelligent legal guidance</p>
               </div>
             </div>
 
             <div className="bg-white/5 rounded-xl p-4 mb-6 border border-white/10">
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-ehb-textBody leading-relaxed">
                 {showAIResponse ? (
                   <>
                     <span className="text-emerald-400 font-medium">Regarding: {selectedQuestion}</span>
@@ -367,7 +367,7 @@ export default function FamilyCourtPage() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h2 className="text-2xl font-bold text-white mb-2">Recommended Family Lawyers</h2>
-              <p className="text-slate-400">Top-rated family law specialists</p>
+              <p className="text-ehb-textMuted">Top-rated family law specialists</p>
             </div>
             <Link href="/marketplace?category=family" className="text-pink-400 hover:text-pink-300 flex items-center gap-1 text-sm">
               View All Lawyers <ChevronRight size={16} />
@@ -396,7 +396,7 @@ export default function FamilyCourtPage() {
                       )}
                     </div>
                     <p className="text-xs text-pink-400">{lawyer.nameUrdu}</p>
-                    <p className="text-sm text-slate-400">{lawyer.title}</p>
+                    <p className="text-sm text-ehb-textMuted">{lawyer.title}</p>
                   </div>
                 </div>
 
@@ -428,7 +428,7 @@ export default function FamilyCourtPage() {
                 </div>
 
                 {/* Location & Fee */}
-                <div className="flex items-center justify-between text-xs text-slate-400 mb-4">
+                <div className="flex items-center justify-between text-xs text-ehb-textMuted mb-4">
                   <span className="flex items-center gap-1">
                     <MapPin size={12} />
                     {lawyer.location}
@@ -439,7 +439,7 @@ export default function FamilyCourtPage() {
                 {/* Languages */}
                 <div className="flex gap-1 mb-4">
                   {lawyer.languages.map((lang) => (
-                    <span key={lang} className="px-2 py-0.5 bg-white/10 rounded text-xs text-slate-400">
+                    <span key={lang} className="px-2 py-0.5 bg-white/10 rounded text-xs text-ehb-textMuted">
                       {lang}
                     </span>
                   ))}
@@ -480,11 +480,11 @@ export default function FamilyCourtPage() {
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-white">AI Family Case Analyzer</h3>
-                    <p className="text-slate-400">Upload documents for instant AI analysis</p>
+                    <p className="text-ehb-textMuted">Upload documents for instant AI analysis</p>
                   </div>
                 </div>
                 
-                <p className="text-slate-300 mb-6">
+                <p className="text-ehb-textBody mb-6">
                   Our AI will analyze your case documents and recommend the best lawyer 
                   based on your specific family law situation.
                 </p>
@@ -519,22 +519,22 @@ export default function FamilyCourtPage() {
 
               {/* Analysis Preview */}
               <div className="w-full lg:w-80 bg-white/5 rounded-xl p-4 border border-white/10">
-                <p className="text-xs text-slate-400 mb-3">AI Analysis Preview:</p>
+                <p className="text-xs text-ehb-textMuted mb-3">AI Analysis Preview:</p>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-300">Case Type Detection</span>
+                    <span className="text-sm text-ehb-textBody">Case Type Detection</span>
                     <span className="text-emerald-400 text-sm">✓ Ready</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-300">Document Verification</span>
+                    <span className="text-sm text-ehb-textBody">Document Verification</span>
                     <span className="text-emerald-400 text-sm">✓ Ready</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-300">Success Probability</span>
+                    <span className="text-sm text-ehb-textBody">Success Probability</span>
                     <span className="text-emerald-400 text-sm">✓ Ready</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-300">Lawyer Matching</span>
+                    <span className="text-sm text-ehb-textBody">Lawyer Matching</span>
                     <span className="text-emerald-400 text-sm">✓ Ready</span>
                   </div>
                 </div>
@@ -548,7 +548,7 @@ export default function FamilyCourtPage() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-xl font-bold text-white mb-1">Recent Cases on Platform</h2>
-              <p className="text-sm text-slate-400">Family law cases being handled globally</p>
+              <p className="text-sm text-ehb-textMuted">Family law cases being handled globally</p>
             </div>
           </div>
 
@@ -572,7 +572,7 @@ export default function FamilyCourtPage() {
                   <span className="text-xs text-slate-500">{caseItem.time}</span>
                 </div>
                 <h4 className="text-white font-medium mb-1">{caseItem.type}</h4>
-                <p className="text-xs text-slate-400 flex items-center gap-1">
+                <p className="text-xs text-ehb-textMuted flex items-center gap-1">
                   <Globe size={12} />
                   {caseItem.location}
                 </p>
@@ -592,7 +592,7 @@ export default function FamilyCourtPage() {
             <h2 className="text-3xl font-bold text-white mb-4">
               Start Your Family Court Case Today
             </h2>
-            <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-ehb-textBody mb-8 max-w-2xl mx-auto">
               Get AI-powered legal assistance and connect with top family law specialists. 
               Our platform handles divorce, custody, alimony, and all family legal matters.
             </p>

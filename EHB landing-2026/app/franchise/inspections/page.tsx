@@ -167,7 +167,7 @@ export default function FranchiseInspectionsPage() {
       <div className="container-ehb py-8 space-y-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-xl md:text-2xl font-semibold leading-tight gradient-text">Franchise Inspections</h1>
-          <p className="text-slate-400 text-sm">Assigned inspection tasks. Capture geo + media + score, then submit to DMO for decision.</p>
+          <p className="text-ehb-textMuted text-sm">Assigned inspection tasks. Capture geo + media + score, then submit to DMO for decision.</p>
         </div>
 
         {err ? <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-200">{err}</div> : null}
@@ -184,9 +184,9 @@ export default function FranchiseInspectionsPage() {
             </button>
           </div>
 
-          {loading ? <div className="text-sm text-slate-400">Loading...</div> : null}
+          {loading ? <div className="text-sm text-ehb-textMuted">Loading...</div> : null}
           {!loading && items.length === 0 ? (
-            <div className="rounded-xl border border-white/10 bg-slate-950/30 p-4 text-sm text-slate-300">No inspections assigned.</div>
+            <div className="rounded-xl border border-white/10 bg-slate-950/30 p-4 text-sm text-ehb-textBody">No inspections assigned.</div>
           ) : null}
 
           <div className="grid gap-2">
@@ -204,10 +204,10 @@ export default function FranchiseInspectionsPage() {
                       <span className="text-xs rounded-full bg-emerald-500/15 text-emerald-200 px-2 py-1">score {i.report.score}</span>
                     ) : null}
                   </div>
-                  <div className="text-[11px] text-slate-400">#{i.crbApplication?.id?.slice(0, 8) ?? i.id.slice(0, 8)} • {new Date(i.updatedAt).toLocaleString()}</div>
+                  <div className="text-[11px] text-ehb-textMuted">#{i.crbApplication?.id?.slice(0, 8) ?? i.id.slice(0, 8)} • {new Date(i.updatedAt).toLocaleString()}</div>
                 </div>
                 <div className="mt-2 text-sm text-slate-200">{i.crbApplication?.industry ?? "—"}</div>
-                <div className="mt-1 text-[12px] text-slate-400">
+                <div className="mt-1 text-[12px] text-ehb-textMuted">
                   Docs: {i.crbApplication?.documents?.length ?? 0} · Franchise: {i.franchise?.name ?? i.franchise?.city ?? "Unmapped"}
                 </div>
               </button>
@@ -220,7 +220,7 @@ export default function FranchiseInspectionsPage() {
             <div className="flex items-center justify-between gap-2">
               <div>
                 <h3 className="text-sm font-semibold text-white">Inspection #{active.id.slice(0, 8)}</h3>
-                <p className="text-[12px] text-slate-400">{active.crbApplication.industry} • {active.crbApplication.type}</p>
+                <p className="text-[12px] text-ehb-textMuted">{active.crbApplication.industry} • {active.crbApplication.type}</p>
               </div>
               <button className="text-xs rounded-full glass-panel px-3 py-1" onClick={() => setActive(null)} type="button">
                 Close
@@ -257,7 +257,7 @@ export default function FranchiseInspectionsPage() {
                     Capture GPS
                   </button>
                 </div>
-                <div className="text-[12px] text-slate-400">
+                <div className="text-[12px] text-ehb-textMuted">
                   {geo ? `lat ${geo.lat.toFixed(6)}, lng ${geo.lng.toFixed(6)} (±${Math.round(geo.accuracyM ?? 0)}m)` : "Not captured yet"}
                 </div>
               </div>
@@ -288,7 +288,7 @@ export default function FranchiseInspectionsPage() {
               </div>
 
               <label className="grid gap-1">
-                <span className="text-xs text-slate-300">Score (0–100)</span>
+                <span className="text-xs text-ehb-textBody">Score (0–100)</span>
                 <input
                   className="rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                   value={score}
@@ -298,7 +298,7 @@ export default function FranchiseInspectionsPage() {
               </label>
 
               <label className="grid gap-1">
-                <span className="text-xs text-slate-300">Report</span>
+                <span className="text-xs text-ehb-textBody">Report</span>
                 <textarea
                   className="min-h-[140px] rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                   value={report}
@@ -317,7 +317,7 @@ export default function FranchiseInspectionsPage() {
               </label>
               {fraudSuspected ? (
                 <label className="grid gap-1">
-                  <span className="text-xs text-slate-300">Fraud notes</span>
+                  <span className="text-xs text-ehb-textBody">Fraud notes</span>
                   <textarea
                     className="min-h-[90px] rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                     value={fraudNotes}
@@ -332,10 +332,10 @@ export default function FranchiseInspectionsPage() {
               <div className="text-xs font-semibold text-slate-200">Escalations</div>
               <div className="space-y-2">
                 {(active.escalations ?? []).length === 0 ? (
-                  <div className="text-[12px] text-slate-400">No escalations recorded yet.</div>
+                  <div className="text-[12px] text-ehb-textMuted">No escalations recorded yet.</div>
                 ) : (
                   active.escalations?.map((item) => (
-                    <div key={item.id} className="rounded-lg border border-white/10 bg-black/20 p-2 text-[11px] text-slate-300">
+                    <div key={item.id} className="rounded-lg border border-white/10 bg-black/20 p-2 text-[11px] text-ehb-textBody">
                       {item.level} · {item.reason} · {new Date(item.createdAt).toLocaleString()}
                     </div>
                   ))

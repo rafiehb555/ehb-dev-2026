@@ -210,7 +210,7 @@ function AIAgentSystemContent({ language }: { language: 'en' | 'ur' }) {
         <div className="max-w-4xl mx-auto">
           <button
             onClick={() => setActiveView(null)}
-            className="flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-all group"
+            className="flex items-center gap-2 text-ehb-textMuted hover:text-white mb-6 transition-all group"
           >
             <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
             {language === 'ur' ? 'واپس' : 'Back to Dashboard'}
@@ -245,7 +245,7 @@ function AIAgentSystemContent({ language }: { language: 'en' | 'ur' }) {
           <h1 className="text-4xl font-bold text-white mb-4">
             {language === 'ur' ? 'AI قانونی ایجنٹ سسٹم' : 'AI Legal Agent System'}
           </h1>
-          <p className="text-slate-400 max-w-2xl mx-auto">
+          <p className="text-ehb-textMuted max-w-2xl mx-auto">
             {language === 'ur'
               ? 'آپ کا ذاتی قانونی معاون جو آپ کے لیے کام کرتا ہے۔ کیس فائل کرنے سے لے کر مکمل ہونے تک، AI سب سنبھالتا ہے۔'
               : 'Your personal legal assistant that works for you. From filing a case to completion, AI handles everything.'}
@@ -264,7 +264,7 @@ function AIAgentSystemContent({ language }: { language: 'en' | 'ur' }) {
             className={`px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 ${
               activeTab === 'agent' 
                 ? 'bg-gradient-to-r from-brand-primary to-brand-gold text-white' 
-                : 'bg-white/10 text-slate-400 hover:text-white'
+                : 'bg-white/10 text-ehb-textMuted hover:text-white'
             }`}
           >
             <Bot size={20} />
@@ -275,7 +275,7 @@ function AIAgentSystemContent({ language }: { language: 'en' | 'ur' }) {
             className={`px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 ${
               activeTab === 'super' 
                 ? 'bg-gradient-to-r from-purple-500 to-brand-gold text-white' 
-                : 'bg-white/10 text-slate-400 hover:text-white'
+                : 'bg-white/10 text-ehb-textMuted hover:text-white'
             }`}
           >
             <Brain size={20} />
@@ -308,7 +308,7 @@ function AIAgentSystemContent({ language }: { language: 'en' | 'ur' }) {
                 <h3 className="text-white font-bold text-lg mb-2">
                   {language === 'ur' ? feature.titleUrdu : feature.title}
                 </h3>
-                <p className="text-slate-400 text-sm">
+                <p className="text-ehb-textMuted text-sm">
                   {language === 'ur' ? feature.descriptionUrdu : feature.description}
                 </p>
               </motion.div>
@@ -334,7 +334,7 @@ function AIAgentSystemContent({ language }: { language: 'en' | 'ur' }) {
                   ? (language === 'ur' ? 'ابھی شروع کریں' : 'Start Now')
                   : (language === 'ur' ? 'AI سپر پاور استعمال کریں' : 'Use AI Super Powers')}
               </h3>
-              <p className="text-slate-400">
+              <p className="text-ehb-textMuted">
                 {activeTab === 'agent'
                   ? (language === 'ur'
                       ? 'AI کو بتائیں آپ کو کیا قانونی مدد چاہیے اور AI سب کچھ خود کرے گا'
@@ -377,7 +377,7 @@ function AIAgentSystemContent({ language }: { language: 'en' | 'ur' }) {
                   <h4 className="text-white font-bold">
                     {language === 'ur' ? 'فعال کیس' : 'Active Case Demo'}
                   </h4>
-                  <p className="text-slate-400 text-sm">EHB-123456 - Property Dispute</p>
+                  <p className="text-ehb-textMuted text-sm">EHB-123456 - Property Dispute</p>
                 </div>
               </div>
               <button

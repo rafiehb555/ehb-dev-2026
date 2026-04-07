@@ -62,7 +62,7 @@ function LevelCard({ title, subtitle, accent }: { title: string; subtitle: strin
       style={{ borderColor: `${accent}40`, boxShadow: `0 0 26px ${accent}16` }}
     >
       <p className="text-sm font-semibold text-white">{title}</p>
-      <p className="text-[11px] text-slate-300 mt-2 leading-relaxed">{subtitle}</p>
+      <p className="text-[11px] text-ehb-textBody mt-2 leading-relaxed">{subtitle}</p>
     </div>
   );
 }
@@ -74,7 +74,7 @@ export function STLLevelsAndSecurity() {
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
         STL + Security (Trust made simple)
       </h2>
-      <p className="text-slate-400 max-w-2xl mb-7 text-sm md:text-base">
+      <p className="text-ehb-textMuted max-w-2xl mb-7 text-sm md:text-base">
         STL is your trust score. Security levels explain how deep your verification goes.
       </p>
 
@@ -99,7 +99,7 @@ export function STLLevelsAndSecurity() {
               style={{ borderColor: `${s.accent}40`, boxShadow: `0 0 26px ${s.accent}16` }}
             >
               <p className="text-sm font-semibold text-white">{s.name}</p>
-              <p className="text-[11px] text-slate-300 mt-2 leading-relaxed">{s.arrowLine}</p>
+              <p className="text-[11px] text-ehb-textBody mt-2 leading-relaxed">{s.arrowLine}</p>
             </div>
           ))}
         </div>

@@ -132,7 +132,7 @@ export default function GlobalMarketplacePage() {
                 Worldwide
               </span>
             </h1>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-ehb-textMuted max-w-2xl mx-auto">
               Connect with 25,000+ verified lawyers across 50+ countries. Get expert legal help anywhere in the world.
             </p>
           </motion.div>
@@ -150,7 +150,7 @@ export default function GlobalMarketplacePage() {
                   <stat.icon className="text-white" size={24} />
                 </div>
                 <p className="text-2xl font-bold text-white">{stat.value}</p>
-                <p className="text-sm text-slate-400">{stat.label}</p>
+                <p className="text-sm text-ehb-textMuted">{stat.label}</p>
               </div>
             ))}
           </motion.div>
@@ -181,9 +181,9 @@ export default function GlobalMarketplacePage() {
                       onClick={() => setShowFilters(!showFilters)}
                       className="px-4 py-3 bg-white/10 hover:bg-white/20 rounded-xl transition-all flex items-center gap-2"
                     >
-                      <Filter className="text-slate-400" size={20} />
+                      <Filter className="text-ehb-textMuted" size={20} />
                       <span className="text-white text-sm">Filters</span>
-                      <ChevronDown className={`text-slate-400 transition-transform ${showFilters ? 'rotate-180' : ''}`} size={16} />
+                      <ChevronDown className={`text-ehb-textMuted transition-transform ${showFilters ? 'rotate-180' : ''}`} size={16} />
                     </button>
                     <button className="px-8 py-3 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-slate-900 font-bold rounded-xl hover:shadow-lg hover:shadow-[#D4AF37]/30 transition-all">
                       Search
@@ -200,7 +200,7 @@ export default function GlobalMarketplacePage() {
                   >
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-bold text-slate-400 mb-2">COUNTRY</label>
+                        <label className="block text-xs font-bold text-ehb-textMuted mb-2">COUNTRY</label>
                         <select 
                           className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-[#D4AF37] transition-all"
                           value={selectedCountry || ''}
@@ -213,7 +213,7 @@ export default function GlobalMarketplacePage() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-400 mb-2">SPECIALIZATION</label>
+                        <label className="block text-xs font-bold text-ehb-textMuted mb-2">SPECIALIZATION</label>
                         <select 
                           className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-[#D4AF37] transition-all"
                           value={selectedSpec || ''}
@@ -285,7 +285,7 @@ export default function GlobalMarketplacePage() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-xl font-bold text-white">Featured Lawyers</h2>
-            <p className="text-sm text-slate-400">{filteredLawyers.length} lawyers found</p>
+            <p className="text-sm text-ehb-textMuted">{filteredLawyers.length} lawyers found</p>
           </div>
           <select className="bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-white text-sm outline-none">
             <option>Top Rated</option>
@@ -359,7 +359,7 @@ export default function GlobalMarketplacePage() {
               <div className="mb-4">
                 <div className="flex flex-wrap gap-1">
                   {lawyer.languages.map(lang => (
-                    <span key={lang} className="px-2 py-0.5 bg-white/5 text-slate-400 text-[10px] rounded-full">
+                    <span key={lang} className="px-2 py-0.5 bg-white/5 text-ehb-textMuted text-[10px] rounded-full">
                       {lang}
                     </span>
                   ))}
@@ -405,7 +405,7 @@ export default function GlobalMarketplacePage() {
           <h2 className="text-3xl font-bold text-white mb-4">
             Are You a Lawyer?
           </h2>
-          <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-ehb-textBody mb-8 max-w-2xl mx-auto">
             Join our global network of 25,000+ lawyers and expand your practice worldwide.
           </p>
           <Link

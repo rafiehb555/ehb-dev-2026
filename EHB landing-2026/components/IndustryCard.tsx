@@ -99,7 +99,7 @@ export function IndustryCard({ industry }: IndustryCardProps) {
       <p className="font-semibold text-white text-sm group-hover:text-white transition-colors">
         {industry.shortName}
       </p>
-      <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-2">{industry.overview}</p>
+      <p className="text-[11px] text-ehb-textMuted mt-0.5 line-clamp-2">{industry.overview}</p>
       <div
         className="mt-3 h-0.5 w-12 rounded-full transition-opacity group-hover:opacity-100 opacity-80"
         style={{ backgroundColor: accent }}
@@ -121,7 +121,7 @@ export function IndustryCard({ industry }: IndustryCardProps) {
                 <span aria-hidden className="text-[13px]">
                   {n.emoji}
                 </span>
-                <span className="text-[10px] text-slate-300 max-w-[70px] truncate">
+                <span className="text-[10px] text-ehb-textBody max-w-[70px] truncate">
                   {n.label}
                 </span>
               </div>

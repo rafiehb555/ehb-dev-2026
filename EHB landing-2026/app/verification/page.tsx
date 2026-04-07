@@ -13,7 +13,7 @@ export default function VerificationPage() {
         <section className="glass-panel border border-white/10 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-amber-300">Trust System</p>
           <h1 className="text-2xl font-semibold gradient-text mt-1">Verification Center</h1>
-          <p className="text-sm text-slate-300 mt-2">
+          <p className="text-sm text-ehb-textBody mt-2">
             Manage identity and compliance verification to improve profile trust and ranking.
           </p>
         </section>

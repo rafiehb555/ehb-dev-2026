@@ -178,17 +178,17 @@ export default function DashboardPage() {
             <h1 className="text-xl md:text-2xl font-semibold leading-tight gradient-text">
               Welcome back, Rafi
             </h1>
-            <p className="text-slate-400 mt-2 text-sm md:text-base">
+            <p className="text-ehb-textMuted mt-2 text-sm md:text-base">
               This is your personal control center for earnings, jobs, services, and progress on EHB.
             </p>
           </div>
           <div className="glass-panel border border-emerald-400/40 rounded-2xl px-4 py-3 text-xs md:text-sm flex flex-col gap-1 min-w-[210px]">
             <div className="flex items-center justify-between">
-              <span className="text-slate-300">Today&apos;s earnings</span>
+              <span className="text-ehb-textBody">Today&apos;s earnings</span>
               <span className="font-semibold text-emerald-300">${todaysEarningsUsd}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-300">Active goals</span>
+              <span className="text-ehb-textBody">Active goals</span>
               <span className="font-semibold text-sky-300">2</span>
             </div>
             <p className="text-[11px] text-slate-500 mt-1">
@@ -209,7 +209,7 @@ export default function DashboardPage() {
               <p className="text-sm font-semibold text-white mb-1">
                 {claimedToday ? "Bonus claimed ✓ 🎁" : "Daily reward available 🎁"}
               </p>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-ehb-textMuted">
                 Log in today and complete 1 small action to claim bonus points.
               </p>
             </div>
@@ -228,13 +228,13 @@ export default function DashboardPage() {
             <div>
               <p className="text-[11px] uppercase tracking-[0.22em] text-sky-300 mb-1">Goals</p>
               <p className="text-sm font-semibold text-white mb-1">Weekly earning goal</p>
-              <p className="text-xs text-slate-400 mb-2">
+              <p className="text-xs text-ehb-textMuted mb-2">
                 Goal: Earn ${WEEKLY_GOAL_USD} this week • Complete {TASKS_GOAL} tasks
               </p>
 
               <div className="space-y-2">
                 <div>
-                  <div className="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                  <div className="flex items-center justify-between text-[11px] text-ehb-textMuted mb-1">
                     <span>Earn progress</span>
                     <span className="text-sky-200 font-semibold">${weekEarningsUsd}</span>
                   </div>
@@ -247,7 +247,7 @@ export default function DashboardPage() {
                 </div>
 
                 <div>
-                  <div className="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                  <div className="flex items-center justify-between text-[11px] text-ehb-textMuted mb-1">
                     <span>Tasks progress</span>
                     <span className="text-emerald-200 font-semibold">
                       {tasksCompleted}/{TASKS_GOAL}
@@ -270,7 +270,7 @@ export default function DashboardPage() {
                 Quick Actions
               </p>
               <p className="text-sm font-semibold text-white mb-1">Start something now</p>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-ehb-textMuted">
                 Create a service, apply for a job, or add a product to keep your account active.
               </p>
             </div>
@@ -307,7 +307,7 @@ export default function DashboardPage() {
               <h2 className="text-lg md:text-xl font-semibold text-white">
                 Level {LEVELS.indexOf(currentLevel) + 1} – {currentLevel.name}
               </h2>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-ehb-textMuted mt-1">
                 {pointsToNext > 0
                   ? `Earn ${pointsToNext} more points to reach Level ${
                       LEVELS.indexOf(currentLevel) + 2
@@ -316,7 +316,7 @@ export default function DashboardPage() {
               </p>
             </div>
             <div className="text-right">
-              <p className="text-xs text-slate-400">Profile points (example)</p>
+              <p className="text-xs text-ehb-textMuted">Profile points (example)</p>
               <p className="text-lg font-semibold text-emerald-300">{points} pts</p>
             </div>
           </div>
@@ -326,7 +326,7 @@ export default function DashboardPage() {
               style={{ width: `${progressPct}%` }}
             />
           </div>
-          <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-ehb-textMuted">
             <span>Next level examples: complete 3 jobs, add 1 service, and maintain 4★+ rating.</span>
             <span className="text-emerald-300 font-semibold">Main grow kar raha hoon</span>
           </div>
@@ -344,7 +344,7 @@ export default function DashboardPage() {
               <h2 className="text-lg md:text-xl font-semibold text-white">Best next actions for your profile</h2>
             </div>
             <div className="text-right">
-              <p className="text-[11px] text-slate-400 mb-1">AI status</p>
+              <p className="text-[11px] text-ehb-textMuted mb-1">AI status</p>
               <p className="text-sm font-semibold text-sky-300">
                 {aiStep === 0 ? "Analyzing opportunities..." : aiStep === 1 ? "Finding best match..." : "Optimizing growth..."}
               </p>
@@ -357,9 +357,9 @@ export default function DashboardPage() {
                 href={c.href}
                 className={`rounded-2xl glass-card border p-5 transition-all duration-300 hover:shadow-[0_0_28px_rgba(0,234,255,0.16)] ${c.accent}`}
               >
-                <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400 mb-2">{c.title}</p>
+                <p className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted mb-2">{c.title}</p>
                 <p className="text-sm font-semibold text-white mb-2">{c.headline}</p>
-                <p className="text-xs text-slate-400 mb-3 leading-relaxed">{c.body}</p>
+                <p className="text-xs text-ehb-textMuted mb-3 leading-relaxed">{c.body}</p>
                 <span className="text-[11px] font-semibold text-sky-300 hover:underline underline-offset-4">
                   {c.cta}
                 </span>
@@ -379,12 +379,12 @@ export default function DashboardPage() {
                 Getting Started
               </p>
               <h2 className="text-lg md:text-xl font-semibold text-white">4 simple steps to get ready</h2>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-ehb-textMuted mt-1">
                 Complete these basics once. After that, EHB can send you better jobs, clients, and offers.
               </p>
             </div>
             <div className="text-right">
-              <p className="text-xs text-slate-400 mb-1">Example completion</p>
+              <p className="text-xs text-ehb-textMuted mb-1">Example completion</p>
               <p className="text-lg font-semibold text-sky-300">2 / 4 steps</p>
             </div>
           </div>
@@ -393,7 +393,7 @@ export default function DashboardPage() {
               <span className="mt-[3px] h-3 w-3 rounded-full bg-emerald-400" aria-hidden />
               <div>
                 <p className="font-semibold text-white">1. Complete your profile</p>
-                <p className="text-slate-400">
+                <p className="text-ehb-textMuted">
                   Add photo, skills, and a short bio so people can trust and choose you.
                 </p>
               </div>
@@ -402,7 +402,7 @@ export default function DashboardPage() {
               <span className="mt-[3px] h-3 w-3 rounded-full bg-emerald-400" aria-hidden />
               <div>
                 <p className="font-semibold text-white">2. Create your first service</p>
-                <p className="text-slate-400">
+                <p className="text-ehb-textMuted">
                   List at least one thing you can do – teaching, design, delivery, tech help, anything.
                 </p>
               </div>
@@ -411,7 +411,7 @@ export default function DashboardPage() {
               <span className="mt-[3px] h-3 w-3 rounded-full bg-slate-500" aria-hidden />
               <div>
                 <p className="font-semibold text-white">3. Apply to your first job</p>
-                <p className="text-slate-400">
+                <p className="text-ehb-textMuted">
                   Send at least one simple application so the system can learn what you like.
                 </p>
               </div>
@@ -420,7 +420,7 @@ export default function DashboardPage() {
               <span className="mt-[3px] h-3 w-3 rounded-full bg-slate-500" aria-hidden />
               <div>
                 <p className="font-semibold text-white">4. Turn on notifications</p>
-                <p className="text-slate-400">
+                <p className="text-ehb-textMuted">
                   Allow alerts so you never miss new jobs, orders, or important updates.
                 </p>
               </div>
@@ -448,7 +448,7 @@ export default function DashboardPage() {
             <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">
               Activity Feed (example)
             </p>
-            <ul className="space-y-2 text-xs md:text-sm text-slate-300">
+            <ul className="space-y-2 text-xs md:text-sm text-ehb-textBody">
               {activity.map((a) => (
                 <li key={a} className="flex items-start gap-2">
                   <span aria-hidden className="mt-[2px] text-slate-500">
@@ -465,25 +465,25 @@ export default function DashboardPage() {
           </div>
           <div className="space-y-3">
             <Link href="/wallet" className="glass-panel card-hover p-4 block border border-white/10">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400">Wallet</span>
+              <span className="text-[10px] uppercase tracking-wider text-ehb-textMuted">Wallet</span>
               <p className="text-sm font-semibold text-white mt-1">Balance &amp; earnings</p>
             </Link>
             <Link href="/home" className="glass-panel card-hover p-4 block border border-white/10">
-              <span className="text-[10px] uppercase tracking-wider text-slate-400">Home</span>
+              <span className="text-[10px] uppercase tracking-wider text-ehb-textMuted">Home</span>
               <p className="text-sm font-semibold text-white mt-1">Operations view</p>
             </Link>
             <Link
               href="/ai-marketplace"
               className="glass-panel card-hover p-4 block border border-white/10"
             >
-              <span className="text-[10px] uppercase tracking-wider text-slate-400">AI Market</span>
+              <span className="text-[10px] uppercase tracking-wider text-ehb-textMuted">AI Market</span>
               <p className="text-sm font-semibold text-white mt-1">Tools &amp; products</p>
             </Link>
             <Link
               href="/settings"
               className="glass-panel card-hover p-4 block border border-white/10"
             >
-              <span className="text-[10px] uppercase tracking-wider text-slate-400">Settings</span>
+              <span className="text-[10px] uppercase tracking-wider text-ehb-textMuted">Settings</span>
               <p className="text-sm font-semibold text-white mt-1">Account &amp; preferences</p>
             </Link>
           </div>
@@ -506,7 +506,7 @@ export default function DashboardPage() {
               <p className="text-lg font-semibold text-white">
                 +${toast.amountUsd} earned
               </p>
-              <p className="text-[10px] text-slate-400 mt-0.5">
+              <p className="text-[10px] text-ehb-textMuted mt-0.5">
                 +{toast.points} points • {toast.secondary}
               </p>
             </div>

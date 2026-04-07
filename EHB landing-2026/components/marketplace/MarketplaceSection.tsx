@@ -40,7 +40,7 @@ export function MarketplaceSection({ locationQs = "" }: { locationQs?: string })
             className={`min-h-touch rounded-full px-3 py-1.5 text-[11px] font-medium transition-all ${
               activeTab === "services"
                 ? "bg-gradient-to-r from-[#00eaff]/30 to-[#3b82f6]/30 text-white shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                : "text-ehb-textMuted hover:text-slate-200"
             }`}
           >
             Services
@@ -51,7 +51,7 @@ export function MarketplaceSection({ locationQs = "" }: { locationQs?: string })
             className={`min-h-touch rounded-full px-3 py-1.5 text-[11px] font-medium transition-all ${
               activeTab === "products"
                 ? "bg-gradient-to-r from-[#00eaff]/30 to-[#3b82f6]/30 text-white shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                : "text-ehb-textMuted hover:text-slate-200"
             }`}
           >
             Products
@@ -59,13 +59,13 @@ export function MarketplaceSection({ locationQs = "" }: { locationQs?: string })
         </div>
         <Link
           href={`/ai-marketplace${locationQs}`}
-          className="text-[10px] text-slate-400 hover:text-[#00eaff] transition-colors"
+          className="text-[10px] text-ehb-textMuted hover:text-[#00eaff] transition-colors"
         >
           AI Marketplace →
         </Link>
         <Link
           href={`/gosellr${locationQs}`}
-          className="text-[10px] text-slate-400 hover:text-[#00eaff] transition-colors"
+          className="text-[10px] text-ehb-textMuted hover:text-[#00eaff] transition-colors"
         >
           GoSellr →
         </Link>
@@ -87,7 +87,7 @@ export function MarketplaceSection({ locationQs = "" }: { locationQs?: string })
                 <span className="text-[11px] font-semibold text-white line-clamp-1">{s.serviceName}</span>
                 <span aria-hidden className="text-[12px] opacity-70">↗</span>
               </div>
-              <p className="text-[10px] text-slate-400 mt-1">
+              <p className="text-[10px] text-ehb-textMuted mt-1">
                 {s.categoryName} · {s.industrySlug}
               </p>
             </Link>

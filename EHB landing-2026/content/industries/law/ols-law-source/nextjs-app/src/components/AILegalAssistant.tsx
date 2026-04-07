@@ -285,7 +285,7 @@ export default function AILegalAssistant({ isFloating = false }: AILegalAssistan
           <input 
             type="text" 
             placeholder={currentLanguage.ui.placeholder}
-            className="w-full bg-stone-100 border-none rounded-xl sm:rounded-2xl pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-brand-primary transition-all text-slate-900 placeholder:text-slate-400"
+            className="w-full bg-stone-100 border-none rounded-xl sm:rounded-2xl pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-brand-primary transition-all text-slate-900 placeholder:text-ehb-textMuted"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
@@ -298,7 +298,7 @@ export default function AILegalAssistant({ isFloating = false }: AILegalAssistan
             <Send size={16} className="sm:w-[18px] sm:h-[18px]" />
           </button>
         </div>
-        <p className="text-[8px] sm:text-[9px] text-center text-slate-400 mt-2 sm:mt-3 uppercase tracking-widest font-bold">
+        <p className="text-[8px] sm:text-[9px] text-center text-ehb-textMuted mt-2 sm:mt-3 uppercase tracking-widest font-bold">
           {currentLanguage.ui.disclaimer}
         </p>
       </div>

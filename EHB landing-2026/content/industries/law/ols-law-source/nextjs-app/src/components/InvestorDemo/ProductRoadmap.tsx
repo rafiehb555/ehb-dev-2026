@@ -150,7 +150,7 @@ export default function ProductRoadmap({ language = 'en' }: ProductRoadmapProps)
       case 'in_progress':
         return <span className="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded-full">In Progress</span>;
       default:
-        return <span className="px-2 py-0.5 bg-slate-500/20 text-slate-400 text-xs rounded-full">Planned</span>;
+        return <span className="px-2 py-0.5 bg-slate-500/20 text-ehb-textMuted text-xs rounded-full">Planned</span>;
     }
   };
 
@@ -161,7 +161,7 @@ export default function ProductRoadmap({ language = 'en' }: ProductRoadmapProps)
       case 'high':
         return <span className="px-2 py-0.5 bg-orange-500/20 text-orange-400 text-xs rounded-full">High</span>;
       default:
-        return <span className="px-2 py-0.5 bg-slate-500/20 text-slate-400 text-xs rounded-full">Medium</span>;
+        return <span className="px-2 py-0.5 bg-slate-500/20 text-ehb-textMuted text-xs rounded-full">Medium</span>;
     }
   };
 
@@ -173,7 +173,7 @@ export default function ProductRoadmap({ language = 'en' }: ProductRoadmapProps)
           <Calendar className="text-brand-gold" />
           {language === 'ur' ? 'پروڈکٹ روڈ میپ' : 'Product Roadmap'}
         </h2>
-        <p className="text-slate-400">
+        <p className="text-ehb-textMuted">
           {language === 'ur'
             ? '12 ماہ کا ترقیاتی منصوبہ'
             : '12-Month Development Plan'}
@@ -193,7 +193,7 @@ export default function ProductRoadmap({ language = 'en' }: ProductRoadmapProps)
               className={`relative flex flex-col items-center min-w-[100px] p-4 rounded-xl transition-all ${
                 isSelected
                   ? `bg-gradient-to-br ${quarter.color} text-white shadow-lg`
-                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                  : 'bg-slate-800 text-ehb-textMuted hover:bg-slate-700'
               }`}
             >
               {/* Connection line */}
@@ -352,7 +352,7 @@ export default function ProductRoadmap({ language = 'en' }: ProductRoadmapProps)
               <div className="w-12 h-12 rounded-full bg-brand-gold/20 flex items-center justify-center mx-auto mb-2">
                 <span className="text-brand-gold font-bold">{item.priority}</span>
               </div>
-              <item.icon className="mx-auto text-slate-400 mb-2" size={20} />
+              <item.icon className="mx-auto text-ehb-textMuted mb-2" size={20} />
               <p className="text-white font-medium text-sm">{item.name}</p>
               <p className="text-slate-500 text-xs mt-1">{item.description}</p>
             </motion.div>
@@ -407,7 +407,7 @@ export default function ProductRoadmap({ language = 'en' }: ProductRoadmapProps)
             ? 'اگلے 12 مہینوں میں، ہم EHB کو پروٹو ٹائپ سے مکمل طور پر آپریشنل AI قانونی پلیٹ فارم میں تبدیل کریں گے'
             : 'Over the next 12 months, we will evolve EHB from a prototype into a fully operational AI legal platform'}
         </p>
-        <p className="text-slate-400">
+        <p className="text-ehb-textMuted">
           Clear milestones, measurable goals, scalable architecture
         </p>
       </div>

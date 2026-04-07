@@ -73,7 +73,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
         <SectionReveal as="div">
           <section className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400 mb-1">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted mb-1">
                 {industry.name} · Industry Home
               </p>
               <div className="flex items-center gap-3 mb-2">
@@ -84,7 +84,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                   {industry.heroTitle}
                 </h1>
               </div>
-              <p className="text-slate-400 text-sm mt-1 max-w-xl">
+              <p className="text-ehb-textMuted text-sm mt-1 max-w-xl">
                 {industry.slug === "law"
                   ? lawIndustryHomeIntro
                   : `Live marketplace for services, jobs, products, and providers in ${industry.name}.`}
@@ -132,7 +132,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
           <section className="rounded-2xl glass-card p-4 md:p-5 border border-white/10">
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <div className="flex-1">
-                <div className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2 text-xs md:text-sm text-slate-300">
+                <div className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2 text-xs md:text-sm text-ehb-textBody">
                   <span aria-hidden>🔍</span>
                   <input
                     className="bg-transparent outline-none flex-1 placeholder:text-slate-500"
@@ -175,7 +175,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                   {industry.slug === "law" && "blurb" in row && row.blurb ? (
                     <p className="text-[10px] text-slate-500 line-clamp-3">{row.blurb}</p>
                   ) : null}
-                  <span className="text-[10px] text-slate-400">View details →</span>
+                  <span className="text-[10px] text-ehb-textMuted">View details →</span>
                 </div>
               ))}
             </div>
@@ -203,11 +203,11 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                       </div>
                       <div className="min-w-0">
                         <p className="text-sm font-semibold text-white leading-snug">{item.headline}</p>
-                        <p className="text-[11px] text-slate-400">{item.city}</p>
+                        <p className="text-[11px] text-ehb-textMuted">{item.city}</p>
                       </div>
                     </div>
-                    <p className="text-[11px] text-slate-300 mt-1">{item.focus}</p>
-                    <p className="text-[11px] text-slate-400 mt-2">
+                    <p className="text-[11px] text-ehb-textBody mt-1">{item.focus}</p>
+                    <p className="text-[11px] text-ehb-textMuted mt-2">
                       ★ {item.rating} · {item.reviews} · {item.badge}
                     </p>
                   </div>
@@ -225,10 +225,10 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-white">Provider {"i" in item ? item.i : idx + 1}</p>
-                        <p className="text-[11px] text-slate-400">Specialist in {industry.name}</p>
+                        <p className="text-[11px] text-ehb-textMuted">Specialist in {industry.name}</p>
                       </div>
                     </div>
-                    <p className="text-[11px] text-slate-400 mt-2">
+                    <p className="text-[11px] text-ehb-textMuted mt-2">
                       Rating: 4.{9 - (typeof item === "object" && "i" in item ? item.i : idx + 1)} · Location: — · Demo
                       placeholder.
                     </p>
@@ -245,7 +245,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
             <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Jobs</p>
             <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Latest Jobs & Opportunities</h2>
             <div className="rounded-2xl glass-panel p-5 border border-white/10">
-              <p className="text-slate-400 text-sm mb-4">
+              <p className="text-ehb-textMuted text-sm mb-4">
                 {industry.slug === "law"
                   ? "Sample legal roles aligned with OLS franchise + remote hiring (demo — live feed from JPS later)."
                   : `Jobs and gigs in ${industry.name} will appear here. Same UI for all industries – data from JPS and marketplace.`}
@@ -255,14 +255,14 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                   "title" in row ? (
                     <div key={row.title} className="rounded-xl bg-white/5 px-3 py-2 border border-white/5">
                       <p className="font-semibold text-slate-100 leading-snug">{row.title}</p>
-                      <p className="text-slate-400 mt-1 leading-relaxed">{row.detail}</p>
+                      <p className="text-ehb-textMuted mt-1 leading-relaxed">{row.detail}</p>
                     </div>
                   ) : (
                     <div key={row.i} className="rounded-xl bg-white/5 px-3 py-2">
                       <p className="font-semibold text-slate-100">
                         Role {row.i} · {industry.shortName}
                       </p>
-                      <p className="text-slate-400 mt-0.5">Salary: — · Location: Remote / On-site</p>
+                      <p className="text-ehb-textMuted mt-0.5">Salary: — · Location: Remote / On-site</p>
                     </div>
                   )
                 )}
@@ -292,7 +292,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
                     style={{ borderColor: `${accent}25` }}
                   >
                     <p className="text-sm font-semibold text-white">{p}</p>
-                    <p className="text-[11px] text-slate-400">GoSellr · Demo product</p>
+                    <p className="text-[11px] text-ehb-textMuted">GoSellr · Demo product</p>
                   </div>
                 ))}
               </div>
@@ -332,7 +332,7 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
           <section className="grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl glass-panel card-hover p-5 border border-white/10">
               <h2 className="text-sm font-semibold text-white mb-3">Nearby Services</h2>
-              <p className="text-slate-400 text-xs mb-4">
+              <p className="text-ehb-textMuted text-xs mb-4">
                 Verified {industry.name} services near your location{locationLabel ? ` in ${locationLabel}` : ""}. Demo
                 – location-based data will connect in production.
               </p>
@@ -353,14 +353,14 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
             </div>
             <div className="rounded-2xl glass-panel card-hover p-5 border border-white/10">
               <h2 className="text-sm font-semibold text-white mb-3">Top Companies</h2>
-              <p className="text-slate-400 text-xs mb-4">
+              <p className="text-ehb-textMuted text-xs mb-4">
                 Leading {industry.name} organizations on EHB. Demo – real companies will appear here.
               </p>
               <div className="space-y-2">
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between rounded-xl bg-white/5 px-3 py-2 text-[11px] text-slate-300"
+                    className="flex items-center justify-between rounded-xl bg-white/5 px-3 py-2 text-[11px] text-ehb-textBody"
                   >
                     Company {i} · {industry.name}
                   </div>
@@ -399,11 +399,11 @@ export default async function IndustryHomePage({ params, searchParams }: PagePro
         <section className="flex flex-wrap gap-3 pt-4 text-xs">
           <Link
             href={`/ai-marketplace${locationQs}`}
-            className="text-slate-400 hover:text-[#00eaff] transition-colors"
+            className="text-ehb-textMuted hover:text-[#00eaff] transition-colors"
           >
             AI Marketplace →
           </Link>
-          <Link href="/" className="text-slate-400 hover:text-[#00eaff] transition-colors">
+          <Link href="/" className="text-ehb-textMuted hover:text-[#00eaff] transition-colors">
             EHB Home →
           </Link>
         </section>

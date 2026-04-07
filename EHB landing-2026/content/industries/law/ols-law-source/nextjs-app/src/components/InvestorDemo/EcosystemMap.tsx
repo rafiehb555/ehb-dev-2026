@@ -109,7 +109,7 @@ export default function EcosystemMap({ language = 'en', mode = 'full' }: Ecosyst
             <Network className="text-brand-gold" />
             {language === 'ur' ? 'EHB ایکو سسٹم میپ' : 'EHB Ecosystem Map'}
           </h2>
-          <p className="text-slate-400 mt-1">
+          <p className="text-ehb-textMuted mt-1">
             {language === 'ur' 
               ? 'عالمی AI قانونی پلیٹ فارم کا مکمل نظارہ'
               : 'Complete view of the global AI legal platform'}
@@ -121,7 +121,7 @@ export default function EcosystemMap({ language = 'en', mode = 'full' }: Ecosyst
           disabled={isAnimating}
           className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${
             isAnimating 
-              ? 'bg-slate-700 text-slate-400 cursor-not-allowed' 
+              ? 'bg-slate-700 text-ehb-textMuted cursor-not-allowed' 
               : 'bg-brand-gold text-slate-900 hover:bg-brand-gold/90'
           }`}
         >
@@ -142,7 +142,7 @@ export default function EcosystemMap({ language = 'en', mode = 'full' }: Ecosyst
           >
             <stat.icon className="mx-auto text-brand-gold mb-2" size={24} />
             <p className="text-2xl font-bold text-white">{stat.value}</p>
-            <p className="text-xs text-slate-400">{stat.label}</p>
+            <p className="text-xs text-ehb-textMuted">{stat.label}</p>
           </motion.div>
         ))}
       </div>
@@ -253,7 +253,7 @@ export default function EcosystemMap({ language = 'en', mode = 'full' }: Ecosyst
             ? 'یہ صرف ایک ایپ نہیں — یہ ایک قانونی ایکو سسٹم ہے'
             : 'This is not just an app — This is a Legal Ecosystem'}
         </p>
-        <p className="text-slate-400 text-sm">
+        <p className="text-ehb-textMuted text-sm">
           {language === 'ur'
             ? 'EHB صارفین، وکلاء، AI ٹیکنالوجی، اور قانونی خدمات کو ایک پلیٹ فارم میں جوڑتا ہے'
             : 'EHB connects users, lawyers, AI technology, and legal services into a single platform'}

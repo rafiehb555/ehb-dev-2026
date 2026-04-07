@@ -41,18 +41,18 @@ export function ServicePlatformLanding({
             style={{ borderColor: `${accentColor}55`, boxShadow: `0 0 22px ${accentColor}22` }}
           >
             <span aria-hidden>{acronym}</span>
-            <span className="text-slate-400">Service Platform</span>
+            <span className="text-ehb-textMuted">Service Platform</span>
           </div>
 
           {locationQs ? (
             <div className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-slate-200 border-white/10">
               <span aria-hidden>📍</span>
-              <span className="text-slate-400">Location context enabled</span>
+              <span className="text-ehb-textMuted">Location context enabled</span>
             </div>
           ) : null}
 
           <h1 className="text-2xl md:text-3xl font-semibold leading-tight gradient-text">{title}</h1>
-          <p className="text-slate-400 max-w-2xl">{subtitle}</p>
+          <p className="text-ehb-textMuted max-w-2xl">{subtitle}</p>
         </section>
 
         <section
@@ -72,10 +72,10 @@ export function ServicePlatformLanding({
 
           <div className="relative grid gap-6 lg:grid-cols-12 items-start">
             <div className="lg:col-span-7 space-y-3">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-1">What this platform adds</p>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-1">What this platform adds</p>
               <ul className="space-y-2">
                 {bullets.map((b) => (
-                  <li key={b} className="flex items-start gap-2 text-slate-300">
+                  <li key={b} className="flex items-start gap-2 text-ehb-textBody">
                     <span aria-hidden className="mt-[2px]">✅</span>
                     <span className="leading-relaxed">{b}</span>
                   </li>
@@ -102,7 +102,7 @@ export function ServicePlatformLanding({
 
             <div className="lg:col-span-5 space-y-3">
               <div className="glass-card card-hover rounded-2xl border p-4" style={{ borderColor: `${accentColor}35` }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">Trust stack</p>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Trust stack</p>
                 <div className="space-y-2">
                   {[
                     { label: "PSS Verified", note: "identity & documents" },
@@ -119,8 +119,8 @@ export function ServicePlatformLanding({
               </div>
 
               <div className="glass-card rounded-2xl border p-4" style={{ borderColor: `${accentColor}25` }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">Quick next step</p>
-                <p className="text-sm text-slate-300 leading-relaxed">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Quick next step</p>
+                <p className="text-sm text-ehb-textBody leading-relaxed">
                   Use AI tools to match verified providers, then book and complete with secure trust layers.
                 </p>
                 <div className="mt-3">

@@ -61,7 +61,7 @@ export interface IndustryVerificationStandard {
 // ---------------------------------------------------------------------------
 const BADGE_COLORS: Record<VerificationBadge, string> = {
   BRONZE:   "bg-orange-900/30 text-orange-300 border-orange-500/40",
-  SILVER:   "bg-slate-700/30 text-slate-300 border-slate-400/40",
+  SILVER:   "bg-slate-700/30 text-ehb-textBody border-ehb-textMuted/40",
   GOLD:     "bg-yellow-900/30 text-yellow-300 border-yellow-500/40",
   PLATINUM: "bg-purple-900/30 text-purple-300 border-purple-500/40",
 };

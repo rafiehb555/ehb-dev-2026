@@ -95,17 +95,17 @@ export function ServiceCreationForm() {
       <div className="glass-panel card-hover p-4 space-y-3 border border-white/10">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Service creation</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Service creation</p>
             <h1 className="text-xl md:text-2xl font-semibold leading-tight gradient-text">
               Select industry → category → service → details
             </h1>
-            <p className="text-slate-400 text-sm max-w-2xl">
+            <p className="text-ehb-textMuted text-sm max-w-2xl">
               This is a demo flow. In production it will connect to your DMO workflow, wallet escrow, and STL trust engine.
             </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 w-full sm:w-[260px]">
             <div className="flex items-center justify-between gap-3">
-              <span className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Step</span>
+              <span className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Step</span>
               <span className="text-sm font-semibold text-white">
                 {step}/4
               </span>
@@ -150,7 +150,7 @@ export function ServiceCreationForm() {
 
       {step === 1 && (
         <div className="glass-panel border border-white/10 rounded-2xl p-4 space-y-3">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Industry</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Industry</p>
           <div className="grid gap-3 sm:grid-cols-2">
             {INDUSTRIES.slice(0, 6).map((ind) => (
               <button
@@ -170,7 +170,7 @@ export function ServiceCreationForm() {
                     ↗
                   </span>
                 </div>
-                <div className="text-[11px] text-slate-400 mt-2">Verified ecosystem (demo)</div>
+                <div className="text-[11px] text-ehb-textMuted mt-2">Verified ecosystem (demo)</div>
               </button>
             ))}
           </div>
@@ -179,10 +179,10 @@ export function ServiceCreationForm() {
 
       {step === 2 && (
         <div className="glass-panel border border-white/10 rounded-2xl p-4 space-y-3">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Category</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Category</p>
           <div className="flex flex-wrap gap-2">
             {categories.length === 0 ? (
-              <div className="text-slate-400 text-sm">No categories available for this industry.</div>
+              <div className="text-ehb-textMuted text-sm">No categories available for this industry.</div>
             ) : (
               categories.map((c) => (
                 <button
@@ -213,7 +213,7 @@ export function ServiceCreationForm() {
 
       {step === 3 && (
         <div className="glass-panel border border-white/10 rounded-2xl p-4 space-y-3">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Service</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Service</p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {servicesList.map((s) => (
               <button
@@ -229,9 +229,9 @@ export function ServiceCreationForm() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <span className="text-sm font-semibold text-white">{s.name}</span>
-                  <span aria-hidden className="text-[12px] text-slate-400">•</span>
+                  <span aria-hidden className="text-[12px] text-ehb-textMuted">•</span>
                 </div>
-                <div className="text-[11px] text-slate-400 mt-2">Draft listing (demo)</div>
+                <div className="text-[11px] text-ehb-textMuted mt-2">Draft listing (demo)</div>
               </button>
             ))}
           </div>
@@ -250,10 +250,10 @@ export function ServiceCreationForm() {
 
       {step === 4 && (
         <div className="glass-panel border border-white/10 rounded-2xl p-4 space-y-3">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Details</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Details</p>
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="space-y-2">
-              <span className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Price (USD)</span>
+              <span className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Price (USD)</span>
               <input
                 value={priceUsd}
                 onChange={(e) => setPriceUsd(e.target.value)}
@@ -266,7 +266,7 @@ export function ServiceCreationForm() {
             </div>
           </div>
           <label className="space-y-2">
-            <span className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Service notes</span>
+            <span className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Service notes</span>
             <textarea
               value={serviceNotes}
               onChange={(e) => setServiceNotes(e.target.value)}
@@ -275,19 +275,19 @@ export function ServiceCreationForm() {
           </label>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Preview</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Preview</p>
             <div className="mt-2 text-sm text-slate-200 space-y-1">
               <div>
-                <span className="text-slate-400">Industry:</span> <span className="font-semibold">{industry?.name}</span>
+                <span className="text-ehb-textMuted">Industry:</span> <span className="font-semibold">{industry?.name}</span>
               </div>
               <div>
-                <span className="text-slate-400">Service:</span> <span className="font-semibold">{selectedService?.name}</span>
+                <span className="text-ehb-textMuted">Service:</span> <span className="font-semibold">{selectedService?.name}</span>
               </div>
               <div>
-                <span className="text-slate-400">Price:</span> <span className="font-semibold">${priceUsd}</span>
+                <span className="text-ehb-textMuted">Price:</span> <span className="font-semibold">${priceUsd}</span>
               </div>
               <div>
-                <span className="text-slate-400">Location:</span>{" "}
+                <span className="text-ehb-textMuted">Location:</span>{" "}
                 <span className="font-semibold">
                   {selectedCountry?.name ?? "—"} · {selectedState?.name ?? "—"} · {selectedCity?.name ?? "—"}
                 </span>
@@ -324,7 +324,7 @@ export function ServiceCreationForm() {
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-1">
               <div className="text-sm font-semibold text-white">{toast.title}</div>
-              <div className="text-sm text-slate-300">{toast.body}</div>
+              <div className="text-sm text-ehb-textBody">{toast.body}</div>
             </div>
             <button
               type="button"

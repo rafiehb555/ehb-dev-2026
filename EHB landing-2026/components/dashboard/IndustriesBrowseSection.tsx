@@ -15,7 +15,7 @@ export function IndustriesBrowseSection() {
         <div>
           <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-1">Industries</p>
           <h2 className="text-lg md:text-xl font-semibold text-white">Browse all sectors</h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-ehb-textMuted mt-1">
             Same trust layer across {INDUSTRIES.length} industries — open a landing or industry home.
           </p>
         </div>
@@ -32,11 +32,11 @@ export function IndustriesBrowseSection() {
         ))}
       </div>
       <div className="mt-4 flex flex-wrap gap-2 justify-center text-[11px]">
-        <Link href="/dashboard" className="text-slate-500 hover:text-slate-300">
+        <Link href="/dashboard" className="text-slate-500 hover:text-ehb-textBody">
           Dashboard
         </Link>
         <span className="text-slate-600">·</span>
-        <Link href="/ai-marketplace" className="text-slate-500 hover:text-slate-300">
+        <Link href="/ai-marketplace" className="text-slate-500 hover:text-ehb-textBody">
           AI marketplace
         </Link>
         <span className="text-slate-600">·</span>

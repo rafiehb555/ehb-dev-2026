@@ -48,7 +48,7 @@ export function SellerOnboardingCta() {
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 space-y-3">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
-          <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Sell on GoSellr</p>
+          <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Sell on GoSellr</p>
           <p className="text-sm text-slate-200 mt-1">
             Start seller onboarding — creates a DMO application for review.
           </p>
@@ -65,7 +65,7 @@ export function SellerOnboardingCta() {
       {open ? (
         <div className="grid gap-3 sm:grid-cols-2 pt-2 border-t border-white/10">
           <label className="block space-y-1">
-            <span className="text-[11px] text-slate-400">Store name</span>
+            <span className="text-[11px] text-ehb-textMuted">Store name</span>
             <input
               value={storeName}
               onChange={(e) => setStoreName(e.target.value)}
@@ -75,7 +75,7 @@ export function SellerOnboardingCta() {
             />
           </label>
           <label className="block space-y-1">
-            <span className="text-[11px] text-slate-400">Primary category</span>
+            <span className="text-[11px] text-ehb-textMuted">Primary category</span>
             <input
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -85,7 +85,7 @@ export function SellerOnboardingCta() {
             />
           </label>
           <label className="block space-y-1 sm:col-span-2">
-            <span className="text-[11px] text-slate-400">Notes (optional)</span>
+            <span className="text-[11px] text-ehb-textMuted">Notes (optional)</span>
             <input
               value={notes}
               onChange={(e) => setNotes(e.target.value)}

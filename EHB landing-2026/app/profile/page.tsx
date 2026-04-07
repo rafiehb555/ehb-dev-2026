@@ -20,7 +20,7 @@ export default function ProfilePage() {
         <section className="glass-panel border border-white/10 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-300">JPS Profile</p>
           <h1 className="text-2xl font-semibold gradient-text mt-1">User Profile</h1>
-          <p className="text-sm text-slate-300 mt-2">
+          <p className="text-sm text-ehb-textBody mt-2">
             Update personal profile, skills, services, and trust signals for better matching.
           </p>
         </section>
@@ -28,13 +28,13 @@ export default function ProfilePage() {
         <section className="grid gap-3 md:grid-cols-2">
           <div className="ehb-card-elevated">
             <h2 className="text-sm font-semibold text-white">Identity</h2>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-ehb-textMuted mt-1">
               {featuredProfile?.name ?? "JPS Profile"} · {featuredProfile?.designation ?? "Pending"} · {featuredProfile?.city ?? "Pakistan"}
             </p>
           </div>
           <div className="ehb-card-elevated">
             <h2 className="text-sm font-semibold text-white">Skills & Services</h2>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-ehb-textMuted mt-1">
               {featuredProfile?.skills.slice(0, 3).join(", ") ?? "Skills pending"} · {featuredProfile?.services.slice(0, 2).join(", ") ?? "Services pending"}
             </p>
           </div>
@@ -42,7 +42,7 @@ export default function ProfilePage() {
 
         <section className="ehb-card-elevated">
           <h2 className="text-sm font-semibold text-white">Featured JPS Snapshot</h2>
-          <div className="mt-3 grid gap-2 md:grid-cols-2 text-xs text-slate-300">
+          <div className="mt-3 grid gap-2 md:grid-cols-2 text-xs text-ehb-textBody">
             <div>Industry: {featuredProfile?.industry ?? "Pending"}</div>
             <div>Experience: {featuredProfile?.experience ?? "Pending"}</div>
             <div>Education: {featuredProfile?.education ?? "Pending"}</div>

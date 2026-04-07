@@ -258,7 +258,7 @@ export default function ChatPage() {
           <div className="max-w-4xl mx-auto px-4 py-2 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Scale className="text-[#D4AF37]" size={14} />
-              <span className="text-xs text-slate-400">Case: </span>
+              <span className="text-xs text-ehb-textMuted">Case: </span>
               <span className="text-xs text-white font-mono">{caseId}</span>
             </div>
             <Link href={`/case/${caseId}`} className="text-xs text-[#D4AF37] hover:underline">
@@ -349,7 +349,7 @@ export default function ChatPage() {
                         <button className={`p-2 rounded-lg ${
                           message.sender === 'client' ? 'hover:bg-slate-900/20' : 'hover:bg-white/10'
                         }`}>
-                          <Download size={16} className={message.sender === 'client' ? 'text-slate-900' : 'text-slate-400'} />
+                          <Download size={16} className={message.sender === 'client' ? 'text-slate-900' : 'text-ehb-textMuted'} />
                         </button>
                       </div>
                     </div>
@@ -426,7 +426,7 @@ export default function ChatPage() {
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center gap-3">
             <button className="p-3 bg-white/10 rounded-xl hover:bg-white/20 transition-all">
-              <Paperclip className="text-slate-400" size={20} />
+              <Paperclip className="text-ehb-textMuted" size={20} />
             </button>
             
             <div className="flex-1 relative">
@@ -448,7 +448,7 @@ export default function ChatPage() {
             </div>
             
             <button className="p-3 bg-white/10 rounded-xl hover:bg-white/20 transition-all">
-              <Mic className="text-slate-400" size={20} />
+              <Mic className="text-ehb-textMuted" size={20} />
             </button>
             
             <button 

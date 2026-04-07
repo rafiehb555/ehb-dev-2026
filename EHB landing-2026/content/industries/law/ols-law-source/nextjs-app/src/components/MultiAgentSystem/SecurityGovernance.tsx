@@ -224,7 +224,7 @@ export default function SecurityGovernance({ language = 'en' }: SecurityGovernan
               <h2 className="text-white font-bold text-xl">
                 {language === 'ur' ? 'سیکیورٹی اور گورننس' : 'Security & Governance'}
               </h2>
-              <p className="text-slate-400 text-sm">
+              <p className="text-ehb-textMuted text-sm">
                 {language === 'ur' ? 'AI نظام کی حفاظت اور تعمیل' : 'AI system security and compliance monitoring'}
               </p>
             </div>
@@ -246,28 +246,28 @@ export default function SecurityGovernance({ language = 'en' }: SecurityGovernan
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <Activity size={14} />
               {language === 'ur' ? 'کل واقعات' : 'Total Events'}
             </div>
             <p className="text-white font-bold text-2xl">{stats.totalEvents}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <AlertOctagon size={14} />
               {language === 'ur' ? 'اہم' : 'Critical'}
             </div>
             <p className="text-red-400 font-bold text-2xl">{stats.critical}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <ShieldAlert size={14} />
               {language === 'ur' ? 'فعال' : 'Active'}
             </div>
             <p className="text-orange-400 font-bold text-2xl">{stats.active}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <ShieldCheck size={14} />
               {language === 'ur' ? 'حل شدہ' : 'Resolved'}
             </div>
@@ -292,7 +292,7 @@ export default function SecurityGovernance({ language = 'en' }: SecurityGovernan
               className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all ${
                 activeTab === tab.id
                   ? 'bg-red-500 text-white'
-                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                  : 'bg-slate-800 text-ehb-textMuted hover:bg-slate-700'
               }`}
             >
               <Icon size={18} />
@@ -329,7 +329,7 @@ export default function SecurityGovernance({ language = 'en' }: SecurityGovernan
                         <h4 className="text-white font-bold">
                           {language === 'ur' ? event.titleUrdu : event.title}
                         </h4>
-                        <p className="text-slate-400 text-sm">
+                        <p className="text-ehb-textMuted text-sm">
                           {language === 'ur' ? event.descriptionUrdu : event.description}
                         </p>
                       </div>
@@ -400,7 +400,7 @@ export default function SecurityGovernance({ language = 'en' }: SecurityGovernan
                   <h4 className="text-white font-bold">
                     {language === 'ur' ? rule.nameUrdu : rule.name}
                   </h4>
-                  <p className="text-slate-400 text-sm">{rule.region}</p>
+                  <p className="text-ehb-textMuted text-sm">{rule.region}</p>
                 </div>
                 <span className={`px-3 py-1 rounded-lg text-xs font-medium ${
                   rule.status === 'compliant' ? 'bg-green-500/20 text-green-400' :
@@ -414,7 +414,7 @@ export default function SecurityGovernance({ language = 'en' }: SecurityGovernan
               </div>
               <div className="space-y-2">
                 {rule.requirements.map((req, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-slate-300">
+                  <div key={i} className="flex items-center gap-2 text-sm text-ehb-textBody">
                     <CheckCircle2 className="text-green-400" size={14} />
                     {req}
                   </div>
@@ -439,11 +439,11 @@ export default function SecurityGovernance({ language = 'en' }: SecurityGovernan
             <table className="w-full">
               <thead className="bg-slate-700/50">
                 <tr>
-                  <th className="text-left p-4 text-slate-400 text-xs font-medium">{language === 'ur' ? 'صارف' : 'User'}</th>
-                  <th className="text-left p-4 text-slate-400 text-xs font-medium">{language === 'ur' ? 'عمل' : 'Action'}</th>
-                  <th className="text-left p-4 text-slate-400 text-xs font-medium">{language === 'ur' ? 'وسائل' : 'Resource'}</th>
-                  <th className="text-left p-4 text-slate-400 text-xs font-medium">{language === 'ur' ? 'وقت' : 'Time'}</th>
-                  <th className="text-left p-4 text-slate-400 text-xs font-medium">{language === 'ur' ? 'حیثیت' : 'Status'}</th>
+                  <th className="text-left p-4 text-ehb-textMuted text-xs font-medium">{language === 'ur' ? 'صارف' : 'User'}</th>
+                  <th className="text-left p-4 text-ehb-textMuted text-xs font-medium">{language === 'ur' ? 'عمل' : 'Action'}</th>
+                  <th className="text-left p-4 text-ehb-textMuted text-xs font-medium">{language === 'ur' ? 'وسائل' : 'Resource'}</th>
+                  <th className="text-left p-4 text-ehb-textMuted text-xs font-medium">{language === 'ur' ? 'وقت' : 'Time'}</th>
+                  <th className="text-left p-4 text-ehb-textMuted text-xs font-medium">{language === 'ur' ? 'حیثیت' : 'Status'}</th>
                 </tr>
               </thead>
               <tbody>
@@ -451,13 +451,13 @@ export default function SecurityGovernance({ language = 'en' }: SecurityGovernan
                   <tr key={log.id} className="border-t border-slate-700">
                     <td className="p-4">
                       <div className="flex items-center gap-2">
-                        <Users size={16} className="text-slate-400" />
+                        <Users size={16} className="text-ehb-textMuted" />
                         <span className="text-white text-sm">{log.user}</span>
                       </div>
                     </td>
-                    <td className="p-4 text-slate-300 text-sm">{log.action}</td>
-                    <td className="p-4 text-slate-300 text-sm">{log.resource}</td>
-                    <td className="p-4 text-slate-400 text-sm">{log.timestamp.toLocaleTimeString()}</td>
+                    <td className="p-4 text-ehb-textBody text-sm">{log.action}</td>
+                    <td className="p-4 text-ehb-textBody text-sm">{log.resource}</td>
+                    <td className="p-4 text-ehb-textMuted text-sm">{log.timestamp.toLocaleTimeString()}</td>
                     <td className="p-4">
                       <span className={`px-2 py-1 rounded text-xs font-medium ${
                         log.status === 'success' ? 'bg-green-500/20 text-green-400' :

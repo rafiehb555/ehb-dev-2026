@@ -29,7 +29,7 @@ export default function ComplianceCenter() {
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-8 sm:mb-12 gap-4 sm:gap-6">
         <div>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display mb-2 text-white">Global Compliance System</h1>
-          <p className="text-sm text-slate-400">Ensuring EHB Law operates within the legal framework of 120+ countries.</p>
+          <p className="text-sm text-ehb-textMuted">Ensuring EHB Law operates within the legal framework of 120+ countries.</p>
         </div>
         <div className="flex flex-wrap gap-2 sm:gap-4">
           {complianceStats.map((stat, idx) => (

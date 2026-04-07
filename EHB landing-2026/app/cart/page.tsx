@@ -160,11 +160,11 @@ export default function CartPage({
       <div className="container-ehb py-8 space-y-6">
         <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Cart</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Cart</p>
             <h1 className="text-2xl md:text-3xl font-semibold leading-tight gradient-text">
               {count > 0 ? `You have ${count} item(s)` : "Your cart is empty"}
             </h1>
-            <p className="text-slate-400 max-w-2xl text-sm">
+            <p className="text-ehb-textMuted max-w-2xl text-sm">
               Checkout calls <code className="text-cyan-200/90">POST /api/marketplace/order</code> (login required). High-value
               lines can open a DMO order review.
             </p>
@@ -204,7 +204,7 @@ export default function CartPage({
           <div className="lg:col-span-7 space-y-4">
             {lines.length === 0 ? (
               <div className="glass-panel border border-white/10 p-5">
-                <p className="text-slate-300">Add some verified products to your cart.</p>
+                <p className="text-ehb-textBody">Add some verified products to your cart.</p>
               </div>
             ) : (
               lines.map((l) => (
@@ -216,10 +216,10 @@ export default function CartPage({
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
                         <p className="text-sm font-semibold text-white line-clamp-2">{l.product.name}</p>
-                        <p className="text-[11px] text-slate-400 mt-1">{l.product.category}</p>
+                        <p className="text-[11px] text-ehb-textMuted mt-1">{l.product.category}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Total</p>
+                        <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Total</p>
                         <p className="text-sm font-semibold text-white mt-2">
                           {l.product.priceUsd === 0 ? "Free" : `$${l.lineUsd.toFixed(2)}`}
                         </p>
@@ -264,14 +264,14 @@ export default function CartPage({
 
           <div className="lg:col-span-5 space-y-4">
             <div className="glass-panel rounded-3xl border border-white/10 p-5 space-y-3">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Order summary</p>
-              <div className="flex items-center justify-between gap-3 text-slate-300">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Order summary</p>
+              <div className="flex items-center justify-between gap-3 text-ehb-textBody">
                 <span>Subtotal</span>
                 <span className="text-white font-semibold">
                   {totalUsd === 0 ? "Free" : `$${totalUsd.toFixed(2)}`}
                 </span>
               </div>
-              <div className="flex items-center justify-between gap-3 text-slate-300">
+              <div className="flex items-center justify-between gap-3 text-ehb-textBody">
                 <span>Trust settlement</span>
                 <span className="text-white font-semibold">EHB‑STL (demo)</span>
               </div>

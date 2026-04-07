@@ -221,7 +221,7 @@ export function DailyRewardClaimMini({
               <p className="text-sm font-semibold text-white">
                 +${toast.amountUsd} earned
               </p>
-              <p className="text-[10px] text-slate-400 mt-0.5">{toast.secondary}</p>
+              <p className="text-[10px] text-ehb-textMuted mt-0.5">{toast.secondary}</p>
             </div>
           </div>
         </div>

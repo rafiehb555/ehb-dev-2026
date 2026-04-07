@@ -88,19 +88,19 @@ export default function DemoModeBanner() {
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="bg-white/5 rounded-xl p-4 border border-white/10">
                     <h4 className="text-white font-bold text-sm mb-1">What is Demo Mode?</h4>
-                    <p className="text-slate-400 text-xs">All data shown is simulated for demonstration. No real transactions occur.</p>
+                    <p className="text-ehb-textMuted text-xs">All data shown is simulated for demonstration. No real transactions occur.</p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-4 border border-white/10">
                     <h4 className="text-white font-bold text-sm mb-1">For Investors</h4>
-                    <p className="text-slate-400 text-xs">Experience the complete platform flow in 2 minutes with our guided demo.</p>
+                    <p className="text-ehb-textMuted text-xs">Experience the complete platform flow in 2 minutes with our guided demo.</p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-4 border border-white/10">
                     <h4 className="text-white font-bold text-sm mb-1">AI Features</h4>
-                    <p className="text-slate-400 text-xs">AI responses are simulated. Production version uses real AI models.</p>
+                    <p className="text-ehb-textMuted text-xs">AI responses are simulated. Production version uses real AI models.</p>
                   </div>
                   <div className="bg-white/5 rounded-xl p-4 border border-white/10">
                     <h4 className="text-white font-bold text-sm mb-1">Payments</h4>
-                    <p className="text-slate-400 text-xs">Payment flows are simulated. No real money is processed.</p>
+                    <p className="text-ehb-textMuted text-xs">Payment flows are simulated. No real money is processed.</p>
                   </div>
                 </div>
 

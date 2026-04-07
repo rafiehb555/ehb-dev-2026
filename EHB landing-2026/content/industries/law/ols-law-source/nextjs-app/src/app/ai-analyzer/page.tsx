@@ -125,7 +125,7 @@ export default function AIAnalyzerPage() {
                 Analyzer
               </span>
             </h1>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-ehb-textMuted max-w-2xl mx-auto">
               Our AI analyzes your case details to provide insights, risk assessment, and lawyer recommendations
             </p>
           </div>
@@ -152,12 +152,12 @@ export default function AIAnalyzerPage() {
               </div>
 
               <h2 className="text-2xl font-bold text-white mb-2">Analyzing Your Case</h2>
-              <p className="text-slate-400 mb-8">Please wait while our AI processes your information</p>
+              <p className="text-ehb-textMuted mb-8">Please wait while our AI processes your information</p>
 
               {/* Progress Bar */}
               <div className="mb-8">
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-slate-400">Progress</span>
+                  <span className="text-ehb-textMuted">Progress</span>
                   <span className="text-violet-400 font-bold">{analysisProgress}%</span>
                 </div>
                 <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
@@ -222,7 +222,7 @@ export default function AIAnalyzerPage() {
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center mb-4`}>
                     <card.icon className="text-white" size={24} />
                   </div>
-                  <p className="text-sm text-slate-400 mb-1">{card.label}</p>
+                  <p className="text-sm text-ehb-textMuted mb-1">{card.label}</p>
                   <p className="text-xl font-bold text-white">{card.value}</p>
                 </motion.div>
               ))}
@@ -290,7 +290,7 @@ export default function AIAnalyzerPage() {
                     {ANALYSIS_RESULTS.keyInsights.map((insight, i) => (
                       <div key={i} className="flex items-start gap-3 p-3 bg-white/5 rounded-xl">
                         <Sparkles className="text-[#D4AF37] shrink-0 mt-0.5" size={16} />
-                        <p className="text-sm text-slate-300">{insight}</p>
+                        <p className="text-sm text-ehb-textBody">{insight}</p>
                       </div>
                     ))}
                   </div>
@@ -374,7 +374,7 @@ export default function AIAnalyzerPage() {
                       </span>
                     </div>
                   </div>
-                  <p className="text-sm text-slate-400">Based on similar cases analysis</p>
+                  <p className="text-sm text-ehb-textMuted">Based on similar cases analysis</p>
                 </motion.div>
 
                 {/* Matched Lawyers */}
@@ -427,7 +427,7 @@ export default function AIAnalyzerPage() {
                     Cost Estimate
                   </h3>
                   <p className="text-3xl font-bold text-white mb-2">{ANALYSIS_RESULTS.estimatedCost}</p>
-                  <p className="text-sm text-slate-400 mb-4">Based on market rates and case complexity</p>
+                  <p className="text-sm text-ehb-textMuted mb-4">Based on market rates and case complexity</p>
                   
                   <Link
                     href="/create-case"

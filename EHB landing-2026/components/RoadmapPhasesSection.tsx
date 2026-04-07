@@ -33,7 +33,7 @@ function PhaseRow({ p }: { p: Phase }) {
       </div>
       <div className="min-w-0">
         <p className="text-sm font-semibold text-white">{p.label}</p>
-        <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">{p.focus}</p>
+        <p className="text-[11px] text-ehb-textBody mt-1 leading-relaxed">{p.focus}</p>
       </div>
     </div>
   );
@@ -44,7 +44,7 @@ export function RoadmapPhasesSection() {
     <section className="container-ultra section-pad-ultra pt-4">
       <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Future plans</p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">EHB Roadmap (Phases 1–8)</h2>
-      <p className="text-slate-400 max-w-2xl mb-6 text-sm md:text-base">
+      <p className="text-ehb-textMuted max-w-2xl mb-6 text-sm md:text-base">
         Clear phases so everyone can understand what’s coming next: trust → marketplace → professional network → global
         growth.
       </p>

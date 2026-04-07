@@ -9,11 +9,11 @@ export default function CreateMyServicePage() {
       <div className="container-ehb py-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">My Services</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">My Services</p>
             <h1 className="text-xl md:text-2xl font-semibold leading-tight gradient-text">
               Create a new service (demo)
             </h1>
-            <p className="text-slate-400 text-sm">Same flow as “new service”, routed for provider convenience.</p>
+            <p className="text-ehb-textMuted text-sm">Same flow as “new service”, routed for provider convenience.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Link

@@ -35,7 +35,7 @@ export default function SecurityCenter() {
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-8 sm:mb-12 gap-4 sm:gap-6">
         <div>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display mb-2 text-white">Security & Fraud Detection</h1>
-          <p className="text-sm text-slate-400">Enterprise-level protection for your legal data.</p>
+          <p className="text-sm text-ehb-textMuted">Enterprise-level protection for your legal data.</p>
         </div>
         <div className="flex flex-wrap gap-2 sm:gap-4">
           {securityStats.map((stat, idx) => (

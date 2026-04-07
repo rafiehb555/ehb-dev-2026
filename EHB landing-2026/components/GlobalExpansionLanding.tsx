@@ -104,7 +104,7 @@ export function GlobalExpansionLanding({
             style={{ borderColor: `${selected.accent}55`, boxShadow: `0 0 22px ${selected.accent}22` }}
           >
             <span aria-hidden>🌍</span>
-            <span className="text-slate-400">Phase 6</span>
+            <span className="text-ehb-textMuted">Phase 6</span>
             <span className="text-white font-semibold">Global Expansion</span>
           </div>
 
@@ -124,7 +124,7 @@ export function GlobalExpansionLanding({
             Multi-country franchise onboarding (demo)
           </h1>
 
-          <p className="text-slate-400 max-w-2xl">
+          <p className="text-ehb-textMuted max-w-2xl">
             One verified system scales across countries. DMO coordinates trust (PSS, CRB, STL) while
             franchise operations keep local delivery and orders consistent.
           </p>
@@ -145,13 +145,13 @@ export function GlobalExpansionLanding({
             <div className="lg:col-span-7 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">Select country</p>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Select country</p>
                   <h2 className="text-lg font-semibold text-white">
-                    {selected.name} <span className="text-slate-400 text-sm font-medium">({selected.code})</span>
+                    {selected.name} <span className="text-ehb-textMuted text-sm font-medium">({selected.code})</span>
                   </h2>
                 </div>
                 <div className="glass-panel border border-white/10 rounded-2xl px-4 py-3 w-full sm:w-[280px]">
-                  <label className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Country</label>
+                  <label className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Country</label>
                   <select
                     value={selectedCode}
                     onChange={(e) => setSelectedCode(e.target.value)}
@@ -168,9 +168,9 @@ export function GlobalExpansionLanding({
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">Expansion readiness</p>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Expansion readiness</p>
                 <div className="flex items-center justify-between gap-3">
-                  <div className="text-sm text-slate-300">{selected.franchiseStage}</div>
+                  <div className="text-sm text-ehb-textBody">{selected.franchiseStage}</div>
                   <div className="text-sm font-semibold" style={{ color: selected.accent }}>
                     {selected.readinessPct}%
                   </div>
@@ -193,9 +193,9 @@ export function GlobalExpansionLanding({
                     className="glass-card rounded-2xl border p-4 card-hover"
                     style={{ borderColor: `${selected.accent}30`, boxShadow: `0 0 22px ${selected.accent}12` }}
                   >
-                    <div className="text-[11px] uppercase tracking-[0.22em] text-slate-400">City</div>
+                    <div className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">City</div>
                     <div className="text-sm font-semibold text-white mt-2">{city}</div>
-                    <div className="text-[11px] text-slate-400 mt-1">Verified onboarding included</div>
+                    <div className="text-[11px] text-ehb-textMuted mt-1">Verified onboarding included</div>
                   </div>
                 ))}
               </div>
@@ -203,8 +203,8 @@ export function GlobalExpansionLanding({
 
             <div className="lg:col-span-5 space-y-4">
               <div className="glass-card rounded-2xl border p-4" style={{ borderColor: `${selected.accent}30` }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">How scaling works</p>
-                <ul className="space-y-2 text-slate-300">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">How scaling works</p>
+                <ul className="space-y-2 text-ehb-textBody">
                   <li className="flex items-start gap-2">
                     <span aria-hidden className="mt-[2px]">
                       ✅
@@ -227,8 +227,8 @@ export function GlobalExpansionLanding({
               </div>
 
               <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(245,158,11,0.35)" }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">Next action</p>
-                <p className="text-sm text-slate-300 leading-relaxed">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Next action</p>
+                <p className="text-sm text-ehb-textBody leading-relaxed">
                   Book your area in the live ecommerce franchise and start earning with the verified EHB system.
                 </p>
                 <div className="mt-3 grid gap-2">
@@ -243,7 +243,7 @@ export function GlobalExpansionLanding({
                   </Link>
                   <Link
                     href={`/ai-marketplace${locationQs}`}
-                    className="text-sm text-slate-300 hover:underline text-center"
+                    className="text-sm text-ehb-textBody hover:underline text-center"
                   >
                     Explore verified AI tools
                   </Link>

@@ -68,7 +68,7 @@ function Node({
         </div>
         <div>
           <p className="text-sm font-semibold text-white leading-tight">{label}</p>
-          <p className="text-[11px] text-slate-300 mt-0.5">{subtitle}</p>
+          <p className="text-[11px] text-ehb-textBody mt-0.5">{subtitle}</p>
         </div>
       </div>
     </div>

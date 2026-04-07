@@ -106,7 +106,7 @@ export default function CompetitorMatrix({ language = 'en' }: CompetitorMatrixPr
           <Shield className="text-brand-gold" />
           {language === 'ur' ? 'مقابلہ کا تجزیہ' : 'Competitive Analysis'}
         </h2>
-        <p className="text-slate-400 mt-1">
+        <p className="text-ehb-textMuted mt-1">
           {language === 'ur' 
             ? 'EHB بمقابلہ روایتی قانونی پلیٹ فارمز'
             : 'EHB vs Traditional Legal Platforms'}
@@ -118,17 +118,17 @@ export default function CompetitorMatrix({ language = 'en' }: CompetitorMatrixPr
         <div className="bg-gradient-to-br from-brand-gold/20 to-brand-gold/5 rounded-xl p-4 border border-brand-gold/30">
           <Crown className="text-brand-gold mb-2" size={24} />
           <p className="text-3xl font-bold text-white">{uniqueFeatures}</p>
-          <p className="text-sm text-slate-400">Unique Features</p>
+          <p className="text-sm text-ehb-textMuted">Unique Features</p>
         </div>
         <div className="bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-xl p-4 border border-green-500/30">
           <Check className="text-green-400 mb-2" size={24} />
           <p className="text-3xl font-bold text-white">{totalYes}</p>
-          <p className="text-sm text-slate-400">Total Features</p>
+          <p className="text-sm text-ehb-textMuted">Total Features</p>
         </div>
         <div className="bg-gradient-to-br from-blue-500/20 to-blue-500/5 rounded-xl p-4 border border-blue-500/30 col-span-2 md:col-span-1">
           <Globe className="text-blue-400 mb-2" size={24} />
           <p className="text-3xl font-bold text-white">50+</p>
-          <p className="text-sm text-slate-400">Target Countries</p>
+          <p className="text-sm text-ehb-textMuted">Target Countries</p>
         </div>
       </div>
 
@@ -141,7 +141,7 @@ export default function CompetitorMatrix({ language = 'en' }: CompetitorMatrixPr
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               selectedCategory === cat
                 ? 'bg-brand-gold text-slate-900'
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                : 'bg-slate-800 text-ehb-textMuted hover:bg-slate-700'
             }`}
           >
             {cat === 'all' ? 'All Features' : cat}
@@ -154,12 +154,12 @@ export default function CompetitorMatrix({ language = 'en' }: CompetitorMatrixPr
         <table className="w-full min-w-[800px]">
           <thead>
             <tr className="border-b border-slate-700">
-              <th className="text-left py-4 px-3 text-slate-400 font-medium text-sm w-1/4">Feature</th>
+              <th className="text-left py-4 px-3 text-ehb-textMuted font-medium text-sm w-1/4">Feature</th>
               {COMPETITORS.map((comp) => (
                 <th 
                   key={comp.id} 
                   className={`text-center py-4 px-3 text-sm ${
-                    comp.highlight ? 'text-brand-gold font-bold' : 'text-slate-400 font-medium'
+                    comp.highlight ? 'text-brand-gold font-bold' : 'text-ehb-textMuted font-medium'
                   }`}
                 >
                   <div className="flex flex-col items-center gap-1">
@@ -212,19 +212,19 @@ export default function CompetitorMatrix({ language = 'en' }: CompetitorMatrixPr
       <div className="mt-6 flex flex-wrap gap-6 justify-center text-sm">
         <div className="flex items-center gap-2">
           <Crown className="text-brand-gold" size={16} />
-          <span className="text-slate-400">Unique to EHB</span>
+          <span className="text-ehb-textMuted">Unique to EHB</span>
         </div>
         <div className="flex items-center gap-2">
           <Check className="text-green-400" size={16} />
-          <span className="text-slate-400">Available</span>
+          <span className="text-ehb-textMuted">Available</span>
         </div>
         <div className="flex items-center gap-2">
           <Minus className="text-yellow-400" size={16} />
-          <span className="text-slate-400">Partial</span>
+          <span className="text-ehb-textMuted">Partial</span>
         </div>
         <div className="flex items-center gap-2">
           <X className="text-red-400" size={16} />
-          <span className="text-slate-400">Not Available</span>
+          <span className="text-ehb-textMuted">Not Available</span>
         </div>
       </div>
 
@@ -247,7 +247,7 @@ export default function CompetitorMatrix({ language = 'en' }: CompetitorMatrixPr
               </div>
               <div>
                 <p className="text-white font-medium">{diff.title}</p>
-                <p className="text-slate-400 text-sm">{diff.desc}</p>
+                <p className="text-ehb-textMuted text-sm">{diff.desc}</p>
               </div>
             </div>
           ))}

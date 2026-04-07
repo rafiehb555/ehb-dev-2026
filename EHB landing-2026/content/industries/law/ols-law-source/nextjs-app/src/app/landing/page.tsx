@@ -287,10 +287,10 @@ export default function LandingPage() {
             </div>
             
             <div className="hidden md:flex items-center gap-6">
-              <a href="#features" className="text-slate-400 hover:text-white transition-colors text-sm">Features</a>
-              <a href="#ai-agents" className="text-slate-400 hover:text-white transition-colors text-sm">AI Agents</a>
-              <a href="#market" className="text-slate-400 hover:text-white transition-colors text-sm">Market</a>
-              <a href="#ecosystem" className="text-slate-400 hover:text-white transition-colors text-sm">Ecosystem</a>
+              <a href="#features" className="text-ehb-textMuted hover:text-white transition-colors text-sm">Features</a>
+              <a href="#ai-agents" className="text-ehb-textMuted hover:text-white transition-colors text-sm">AI Agents</a>
+              <a href="#market" className="text-ehb-textMuted hover:text-white transition-colors text-sm">Market</a>
+              <a href="#ecosystem" className="text-ehb-textMuted hover:text-white transition-colors text-sm">Ecosystem</a>
               <Link href="/database" className="flex items-center gap-2 text-[#D4AF37] hover:text-yellow-400 transition-colors text-sm font-medium">
                 <Database size={16} />
                 Database
@@ -351,7 +351,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed"
+              className="text-xl text-ehb-textMuted mb-10 max-w-2xl mx-auto leading-relaxed"
             >
               EHB combines AI technology, global lawyer marketplace, and franchise network 
               to make legal services accessible, affordable, and efficient worldwide.
@@ -398,7 +398,7 @@ export default function LandingPage() {
                   <p className="text-3xl font-bold text-white mb-1">
                     {stat.prefix}<AnimatedCounter end={stat.value} />{stat.suffix}
                   </p>
-                  <p className="text-sm text-slate-400">{stat.label}</p>
+                  <p className="text-sm text-ehb-textMuted">{stat.label}</p>
                 </div>
               ))}
             </motion.div>
@@ -433,7 +433,7 @@ export default function LandingPage() {
                   'Finding the right lawyer is confusing',
                   'Cross-border legal services nearly impossible',
                 ].map((problem, i) => (
-                  <li key={i} className="flex items-start gap-3 text-slate-300">
+                  <li key={i} className="flex items-start gap-3 text-ehb-textBody">
                     <div className="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center shrink-0 mt-0.5">
                       <span className="text-red-400 text-sm">{i + 1}</span>
                     </div>
@@ -461,7 +461,7 @@ export default function LandingPage() {
                   'Intelligent lawyer matching algorithm',
                   'Global platform, local expertise',
                 ].map((solution, i) => (
-                  <li key={i} className="flex items-start gap-3 text-slate-300">
+                  <li key={i} className="flex items-start gap-3 text-ehb-textBody">
                     <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
                       <Check className="text-emerald-400" size={14} />
                     </div>
@@ -487,7 +487,7 @@ export default function LandingPage() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-4">
               Powerful AI Legal Tools
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <p className="text-ehb-textMuted max-w-2xl mx-auto">
               Everything you need to access legal services, powered by artificial intelligence
             </p>
           </motion.div>
@@ -506,7 +506,7 @@ export default function LandingPage() {
                   <feature.icon className="text-white" size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{feature.description}</p>
+                <p className="text-ehb-textMuted text-sm leading-relaxed">{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -526,7 +526,7 @@ export default function LandingPage() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-4">
               14 Specialized AI Agents
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <p className="text-ehb-textMuted max-w-2xl mx-auto">
               Our multi-agent AI system handles everything from case filing to prediction
             </p>
           </motion.div>
@@ -577,7 +577,7 @@ export default function LandingPage() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-4">
               5-Layer Architecture
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <p className="text-ehb-textMuted max-w-2xl mx-auto">
               A complete legal services ecosystem from user interaction to global expansion
             </p>
           </motion.div>
@@ -601,7 +601,7 @@ export default function LandingPage() {
                     <h3 className="text-xl font-bold text-white mb-2">{layer.name}</h3>
                     <div className="flex flex-wrap justify-center md:justify-start gap-2">
                       {layer.items.map((item) => (
-                        <span key={item} className="px-3 py-1 bg-white/10 rounded-full text-sm text-slate-300">
+                        <span key={item} className="px-3 py-1 bg-white/10 rounded-full text-sm text-ehb-textBody">
                           {item}
                         </span>
                       ))}
@@ -627,7 +627,7 @@ export default function LandingPage() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-4">
               Enterprise Database
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <p className="text-ehb-textMuted max-w-2xl mx-auto">
               25-table database architecture supporting global legal operations
             </p>
           </motion.div>
@@ -644,7 +644,7 @@ export default function LandingPage() {
               >
                 <stat.icon className="mx-auto text-[#D4AF37] mb-3" size={28} />
                 <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
-                <p className="text-sm text-slate-400">{stat.name}</p>
+                <p className="text-sm text-ehb-textMuted">{stat.name}</p>
               </motion.div>
             ))}
           </div>
@@ -769,11 +769,11 @@ export default function LandingPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th className="text-left p-4 text-slate-400 font-medium">Platform</th>
-                    <th className="text-center p-4 text-slate-400 font-medium">AI-Powered</th>
-                    <th className="text-center p-4 text-slate-400 font-medium">Global</th>
-                    <th className="text-center p-4 text-slate-400 font-medium">Franchise</th>
-                    <th className="text-center p-4 text-slate-400 font-medium">Multi-Agent</th>
+                    <th className="text-left p-4 text-ehb-textMuted font-medium">Platform</th>
+                    <th className="text-center p-4 text-ehb-textMuted font-medium">AI-Powered</th>
+                    <th className="text-center p-4 text-ehb-textMuted font-medium">Global</th>
+                    <th className="text-center p-4 text-ehb-textMuted font-medium">Franchise</th>
+                    <th className="text-center p-4 text-ehb-textMuted font-medium">Multi-Agent</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -839,7 +839,7 @@ export default function LandingPage() {
                     <item.icon className="text-[#D4AF37]" size={18} />
                     <h4 className="text-white font-bold">{item.title}</h4>
                   </div>
-                  <p className="text-sm text-slate-400">{item.desc}</p>
+                  <p className="text-sm text-ehb-textMuted">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -904,15 +904,15 @@ export default function LandingPage() {
               <div className="mt-8 pt-8 border-t border-white/10 grid grid-cols-3 gap-4 text-center">
                 <div>
                   <p className="text-3xl font-bold text-white">$500M</p>
-                  <p className="text-sm text-slate-400">Year 5 Target</p>
+                  <p className="text-sm text-ehb-textMuted">Year 5 Target</p>
                 </div>
                 <div>
                   <p className="text-3xl font-bold text-emerald-400">5</p>
-                  <p className="text-sm text-slate-400">Revenue Streams</p>
+                  <p className="text-sm text-ehb-textMuted">Revenue Streams</p>
                 </div>
                 <div>
                   <p className="text-3xl font-bold text-[#D4AF37]">50+</p>
-                  <p className="text-sm text-slate-400">Countries</p>
+                  <p className="text-sm text-ehb-textMuted">Countries</p>
                 </div>
               </div>
             </div>
@@ -952,11 +952,11 @@ export default function LandingPage() {
                 {item.status === 'current' && (
                   <div className="absolute -top-2 -right-2 w-4 h-4 bg-[#D4AF37] rounded-full animate-pulse" />
                 )}
-                <p className={`text-sm font-medium mb-2 ${item.status === 'current' ? 'text-[#D4AF37]' : 'text-slate-400'}`}>
+                <p className={`text-sm font-medium mb-2 ${item.status === 'current' ? 'text-[#D4AF37]' : 'text-ehb-textMuted'}`}>
                   {item.quarter}
                 </p>
                 <p className="text-xl font-bold text-white mb-2">{item.title}</p>
-                <p className="text-sm text-slate-400">{item.metrics}</p>
+                <p className="text-sm text-ehb-textMuted">{item.metrics}</p>
               </motion.div>
             ))}
           </div>
@@ -975,7 +975,7 @@ export default function LandingPage() {
             <h2 className="text-3xl font-bold text-white mb-4">
               Explore the Platform
             </h2>
-            <p className="text-slate-400">Quick access to all platform features</p>
+            <p className="text-ehb-textMuted">Quick access to all platform features</p>
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
@@ -1025,7 +1025,7 @@ export default function LandingPage() {
               <h2 className="text-4xl font-bold text-white mb-4">
                 Ready to Transform Legal Services?
               </h2>
-              <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
+              <p className="text-ehb-textBody mb-8 max-w-2xl mx-auto">
                 Join us in building the world's largest AI-powered legal ecosystem. 
                 Experience the future of legal services today.
               </p>
@@ -1072,13 +1072,13 @@ export default function LandingPage() {
             </p>
             
             <div className="flex gap-4">
-              <a href="#" className="text-slate-400 hover:text-[#D4AF37] transition-colors">
+              <a href="#" className="text-ehb-textMuted hover:text-[#D4AF37] transition-colors">
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="text-slate-400 hover:text-[#D4AF37] transition-colors">
+              <a href="#" className="text-ehb-textMuted hover:text-[#D4AF37] transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-slate-400 hover:text-[#D4AF37] transition-colors">
+              <a href="#" className="text-ehb-textMuted hover:text-[#D4AF37] transition-colors">
                 <Mail size={20} />
               </a>
             </div>

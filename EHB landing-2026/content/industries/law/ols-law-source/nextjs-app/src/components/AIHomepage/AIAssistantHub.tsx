@@ -346,7 +346,7 @@ export default function AIAssistantHub() {
           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
           className="w-16 h-16 rounded-full border-4 border-brand-primary border-t-transparent"
         />
-        <p className="mt-4 text-slate-400 text-sm">Loading AI Assistant...</p>
+        <p className="mt-4 text-ehb-textMuted text-sm">Loading AI Assistant...</p>
       </div>
     );
   }
@@ -394,7 +394,7 @@ export default function AIAssistantHub() {
                  language === 'ar' ? 'مساعد قانوني AI' : 
                  'AI Legal Assistant'}
               </h2>
-              <p className={`text-slate-400 ${accessibilityMode ? 'text-base' : 'text-xs sm:text-sm'}`}>
+              <p className={`text-ehb-textMuted ${accessibilityMode ? 'text-base' : 'text-xs sm:text-sm'}`}>
                 {languageConfig.helpPrompt}
               </p>
             </div>
@@ -407,7 +407,7 @@ export default function AIAssistantHub() {
               className={`p-2 sm:p-2.5 rounded-xl transition-all ${
                 accessibilityMode 
                   ? 'bg-brand-primary text-white shadow-lg shadow-brand-primary/30' 
-                  : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700'
+                  : 'bg-slate-800 text-ehb-textMuted hover:text-white border border-slate-700'
               }`}
               title={languageConfig.ui.accessibilityMode}
             >
@@ -424,7 +424,7 @@ export default function AIAssistantHub() {
                 <span className={`font-bold text-white hidden sm:inline ${accessibilityMode ? 'text-base' : 'text-sm'}`}>
                   {languageConfig.nativeName}
                 </span>
-                <ChevronDown size={14} className={`text-slate-400 transition-transform ${showLanguageDropdown ? 'rotate-180' : ''}`} />
+                <ChevronDown size={14} className={`text-ehb-textMuted transition-transform ${showLanguageDropdown ? 'rotate-180' : ''}`} />
               </button>
 
               <AnimatePresence>
@@ -519,7 +519,7 @@ export default function AIAssistantHub() {
 
             {/* Status Text */}
             <p className={`mt-4 font-bold text-center ${accessibilityMode ? 'text-xl' : 'text-sm sm:text-base'} ${
-              isListening ? 'text-red-400' : 'text-slate-400'
+              isListening ? 'text-red-400' : 'text-ehb-textMuted'
             }`}>
               {isProcessing ? languageConfig.ui.processing :
                isListening ? `🎤 ${languageConfig.ui.listening}` :
@@ -555,7 +555,7 @@ export default function AIAssistantHub() {
                 >
                   <div className="flex items-start gap-3">
                     <Bot size={22} className="text-brand-primary shrink-0 mt-0.5" />
-                    <p className="text-slate-300">{aiResponse}</p>
+                    <p className="text-ehb-textBody">{aiResponse}</p>
                   </div>
                   {isSpeaking && (
                     <button 
@@ -632,7 +632,7 @@ export default function AIAssistantHub() {
 
         {/* Quick Actions Section */}
         <div className={`mt-6 ${accessibilityMode ? 'mt-8' : ''}`}>
-          <h3 className={`font-bold text-slate-400 uppercase tracking-widest mb-4 ${accessibilityMode ? 'text-base' : 'text-xs'}`}>
+          <h3 className={`font-bold text-ehb-textMuted uppercase tracking-widest mb-4 ${accessibilityMode ? 'text-base' : 'text-xs'}`}>
             {languageConfig.ui.quickActions}
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -655,7 +655,7 @@ export default function AIAssistantHub() {
         {/* Accessibility Mode - Service Categories */}
         {accessibilityMode && (
           <div className="mt-8">
-            <h3 className="text-base font-bold text-slate-400 uppercase tracking-widest mb-4">
+            <h3 className="text-base font-bold text-ehb-textMuted uppercase tracking-widest mb-4">
               {language === 'ur' ? 'قانونی خدمات' : 'Legal Services'}
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -693,7 +693,7 @@ export default function AIAssistantHub() {
                 <p className="text-base font-bold text-blue-400">
                   {languageConfig.ui.accessibilityMode} {language === 'ur' ? 'فعال ہے' : 'Active'}
                 </p>
-                <p className="text-sm text-slate-400">
+                <p className="text-sm text-ehb-textMuted">
                   {language === 'ur' 
                     ? 'بڑے بٹن اور آواز سے رہنمائی فعال ہے۔ صرف بولیں یا بڑے بٹن دبائیں۔' 
                     : 'Large buttons and voice guidance enabled. Just speak or press the large buttons.'}
@@ -703,7 +703,7 @@ export default function AIAssistantHub() {
                 onClick={() => setAccessibilityMode(false)}
                 className="ml-auto p-2 hover:bg-slate-800 rounded-lg"
               >
-                <X size={20} className="text-slate-400" />
+                <X size={20} className="text-ehb-textMuted" />
               </button>
             </div>
           </motion.div>

@@ -372,7 +372,7 @@ export default function AIAgentPanel() {
                   </div>
                   <div className="flex-1">
                     <h5 className="text-white font-bold">{lawyer.name}</h5>
-                    <p className="text-slate-400 text-sm">{lawyer.specialization} • {lawyer.experience}</p>
+                    <p className="text-ehb-textMuted text-sm">{lawyer.specialization} • {lawyer.experience}</p>
                     <div className="flex items-center gap-3 mt-2">
                       <span className="flex items-center gap-1 text-brand-gold text-sm">
                         <Star size={14} fill="currentColor" />
@@ -384,7 +384,7 @@ export default function AIAgentPanel() {
                       <span className="text-green-400 text-sm font-bold">${lawyer.fee}</span>
                     </div>
                   </div>
-                  <ChevronRight className="text-slate-400" size={24} />
+                  <ChevronRight className="text-ehb-textMuted" size={24} />
                 </div>
               </motion.div>
             ))}
@@ -419,11 +419,11 @@ export default function AIAgentPanel() {
             
             <div className="space-y-3 mb-4">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-400">{language === 'ur' ? 'سروس فیس' : 'Service Fee'}</span>
+                <span className="text-ehb-textMuted">{language === 'ur' ? 'سروس فیس' : 'Service Fee'}</span>
                 <span className="text-white">${CASE_TYPES[caseType!].baseFee}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-400">{language === 'ur' ? 'وکیل فیس' : 'Lawyer Fee'}</span>
+                <span className="text-ehb-textMuted">{language === 'ur' ? 'وکیل فیس' : 'Lawyer Fee'}</span>
                 <span className="text-white">${caseData?.selectedLawyer?.fee || 0}</span>
               </div>
               <div className="border-t border-white/10 pt-2 flex justify-between">
@@ -432,7 +432,7 @@ export default function AIAgentPanel() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-slate-400 mb-4">
+            <div className="flex items-center gap-2 text-xs text-ehb-textMuted mb-4">
               <Shield className="text-green-400" size={16} />
               {language === 'ur' ? 'ادائیگی ایسکرو میں محفوظ رہے گی' : 'Payment secured in escrow'}
             </div>
@@ -458,7 +458,7 @@ export default function AIAgentPanel() {
             <h4 className="text-white font-bold text-xl mb-2">
               {language === 'ur' ? 'کیس کامیابی سے بن گیا!' : 'Case Created Successfully!'}
             </h4>
-            <p className="text-slate-300 mb-4">
+            <p className="text-ehb-textBody mb-4">
               {language === 'ur' ? `کیس ID: ${caseData?.id}` : `Case ID: ${caseData?.id}`}
             </p>
             <div className="flex gap-3 justify-center">
@@ -530,7 +530,7 @@ export default function AIAgentPanel() {
             <h4 className="text-white font-bold mb-2">
               {language === 'ur' ? 'میں آپ کا قانونی ایجنٹ ہوں' : 'I am your Legal Agent'}
             </h4>
-            <p className="text-slate-400 text-sm mb-4">
+            <p className="text-ehb-textMuted text-sm mb-4">
               {language === 'ur' 
                 ? 'مجھے بتائیں آپ کو کیا قانونی مدد چاہیے اور میں آپ کے لیے سب کچھ کروں گا'
                 : 'Tell me what legal help you need and I will handle everything for you'}
@@ -579,7 +579,7 @@ export default function AIAgentPanel() {
       {/* Progress Bar */}
       {phase !== 'idle' && phase !== 'completed' && (
         <div className="px-4 py-2 bg-white/5">
-          <div className="flex items-center gap-2 text-xs text-slate-400 mb-1">
+          <div className="flex items-center gap-2 text-xs text-ehb-textMuted mb-1">
             <Clock size={14} />
             {language === 'ur' ? 'پیش رفت' : 'Progress'}
           </div>

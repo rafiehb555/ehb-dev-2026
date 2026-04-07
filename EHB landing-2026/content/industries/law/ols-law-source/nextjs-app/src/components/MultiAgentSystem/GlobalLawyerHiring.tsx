@@ -232,7 +232,7 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
               <Globe className="text-brand-gold" size={20} />
               {language === 'ur' ? 'عالمی وکیل مارکیٹ پلیس' : 'Global Lawyer Marketplace'}
             </h2>
-            <p className="text-slate-400 text-sm">
+            <p className="text-ehb-textMuted text-sm">
               {language === 'ur' ? 'دنیا بھر کے بہترین وکلاء کی خدمات حاصل کریں' : 'Hire the best lawyers from around the world'}
             </p>
           </div>
@@ -251,7 +251,7 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
                 className={`p-4 rounded-xl text-left transition-all ${
                   selectedModel === model.id
                     ? 'bg-gradient-to-br from-brand-primary to-brand-gold text-white'
-                    : 'bg-white/5 hover:bg-white/10 text-slate-300'
+                    : 'bg-white/5 hover:bg-white/10 text-ehb-textBody'
                 }`}
               >
                 <Icon className={selectedModel === model.id ? 'text-white' : 'text-brand-gold'} size={24} />
@@ -275,7 +275,7 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
         className="flex flex-col md:flex-row gap-3"
       >
         <div className="flex-1 relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-ehb-textMuted" size={20} />
           <input
             type="text"
             value={searchQuery}
@@ -393,7 +393,7 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
                     </div>
                   </div>
                   <button className="p-2 hover:bg-white/10 rounded-lg">
-                    <Heart size={18} className="text-slate-400" />
+                    <Heart size={18} className="text-ehb-textMuted" />
                   </button>
                 </div>
 
@@ -407,7 +407,7 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
                 </div>
 
                 {/* Stats */}
-                <div className="flex items-center gap-4 mt-3 text-xs text-slate-400">
+                <div className="flex items-center gap-4 mt-3 text-xs text-ehb-textMuted">
                   <span className="flex items-center gap-1">
                     <MapPin size={12} />
                     {lawyer.city}, {lawyer.country}
@@ -440,22 +440,22 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
                     <div className={`p-3 rounded-lg text-center ${selectedModel === 'case_based' ? 'bg-brand-gold/20 border border-brand-gold' : 'bg-white/5'}`}>
                       <Briefcase className="mx-auto text-brand-gold mb-1" size={18} />
-                      <p className="text-slate-400 text-xs">{language === 'ur' ? 'فی کیس' : 'Per Case'}</p>
+                      <p className="text-ehb-textMuted text-xs">{language === 'ur' ? 'فی کیس' : 'Per Case'}</p>
                       <p className="text-white font-bold text-sm">{formatPrice(lawyer.pricing.caseBase)}</p>
                     </div>
                     <div className={`p-3 rounded-lg text-center ${selectedModel === 'hourly' ? 'bg-brand-gold/20 border border-brand-gold' : 'bg-white/5'}`}>
                       <Clock className="mx-auto text-brand-gold mb-1" size={18} />
-                      <p className="text-slate-400 text-xs">{language === 'ur' ? 'فی گھنٹہ' : 'Per Hour'}</p>
+                      <p className="text-ehb-textMuted text-xs">{language === 'ur' ? 'فی گھنٹہ' : 'Per Hour'}</p>
                       <p className="text-white font-bold text-sm">{formatPrice(lawyer.pricing.hourly)}</p>
                     </div>
                     <div className={`p-3 rounded-lg text-center ${selectedModel === 'monthly' ? 'bg-brand-gold/20 border border-brand-gold' : 'bg-white/5'}`}>
                       <Calendar className="mx-auto text-brand-gold mb-1" size={18} />
-                      <p className="text-slate-400 text-xs">{language === 'ur' ? 'ماہانہ' : 'Monthly'}</p>
+                      <p className="text-ehb-textMuted text-xs">{language === 'ur' ? 'ماہانہ' : 'Monthly'}</p>
                       <p className="text-white font-bold text-sm">{formatPrice(lawyer.pricing.monthly)}</p>
                     </div>
                     <div className={`p-3 rounded-lg text-center ${selectedModel === 'annual' ? 'bg-brand-gold/20 border border-brand-gold' : 'bg-white/5'}`}>
                       <FileText className="mx-auto text-brand-gold mb-1" size={18} />
-                      <p className="text-slate-400 text-xs">{language === 'ur' ? 'سالانہ' : 'Annual'}</p>
+                      <p className="text-ehb-textMuted text-xs">{language === 'ur' ? 'سالانہ' : 'Annual'}</p>
                       <p className="text-white font-bold text-sm">{formatPrice(lawyer.pricing.annual)}</p>
                     </div>
                   </div>
@@ -487,7 +487,7 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
 
                   {/* Languages & Badges */}
                   <div className="flex items-center gap-4 mt-3">
-                    <div className="flex items-center gap-1 text-xs text-slate-400">
+                    <div className="flex items-center gap-1 text-xs text-ehb-textMuted">
                       <Globe size={12} />
                       {lawyer.languages.join(', ')}
                     </div>
@@ -529,7 +529,7 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
               <h3 className="text-white font-bold text-2xl mb-2">
                 {language === 'ur' ? 'بکنگ کامیاب!' : 'Booking Successful!'}
               </h3>
-              <p className="text-slate-400 mb-6">
+              <p className="text-ehb-textMuted mb-6">
                 {language === 'ur' 
                   ? 'آپ کی درخواست وکیل کو بھیج دی گئی ہے۔ وہ جلد آپ سے رابطہ کریں گے۔'
                   : 'Your request has been sent to the lawyer. They will contact you shortly.'}
@@ -548,7 +548,7 @@ export default function GlobalLawyerHiring({ language = 'en' }: GlobalLawyerHiri
       {filteredLawyers.length === 0 && (
         <div className="text-center py-12">
           <Users className="mx-auto text-slate-600 mb-4" size={48} />
-          <p className="text-slate-400">
+          <p className="text-ehb-textMuted">
             {language === 'ur' ? 'کوئی وکیل نہیں ملا' : 'No lawyers found matching your criteria'}
           </p>
         </div>

@@ -7,7 +7,7 @@
 |-----------|---------------|--------|-------|
 | EHB_MASTER_SYSTEM_PLAN.md | — (anchor) | n/a | Single source of truth; no separate flow required |
 | EHB_MASTER_NAMES_PLAN.md | [GLOSSARY_EHB.md](GLOSSARY_EHB.md) | Draft | Naming + tree; full tables stay in names plan |
-| EHB_COLOR_SCHEME_PLAN.md | [FLOW-P1-foundation-ui.md](FLOW-P1-foundation-ui.md) | Draft | Full tables in color plan; **code:** `ehb.textBody` / `textMuted` in [`tailwind.config.ts`](../../EHB%20landing-2026/tailwind.config.ts); rollout includes landing, DMO `app/dmo/**` routes, and `components/dmo/*` workspace UI |
+| EHB_COLOR_SCHEME_PLAN.md | [FLOW-P1-foundation-ui.md](FLOW-P1-foundation-ui.md) | Draft | Full tables in color plan; **code:** `ehb.textBody` / `textMuted` in [`tailwind.config.ts`](../../EHB%20landing-2026/tailwind.config.ts); text-token rollout covers **all** `app/**` and `components/**` in the landing project plus SILVER badge in `lib/industry/verificationStandards.ts`; OLS law mirror under `content/industries/law/ols-law-source/nextjs-app/src` aligned for copy-paste (see FLOW-P1) |
 | EHB_UIUX_DESIGN_PLAN.md | [FLOW-P1-foundation-ui.md](FLOW-P1-foundation-ui.md) | Draft | Components/wireframes stay in UIUX plan |
 | EHB_STL_FULL_PLAN.md | [FLOW-P2-trust-stack.md](FLOW-P2-trust-stack.md) | Draft | Engine + triggers + gaps |
 | EHB_STL_UI_DESIGN_PLAN.md | [FLOW-P2-trust-stack.md](FLOW-P2-trust-stack.md) | Draft | DMO + user STL UI |

@@ -126,7 +126,7 @@ Witness 1: _______________    Witness 2: _______________
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <button 
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-6"
+            className="flex items-center gap-2 text-ehb-textMuted hover:text-white transition-colors mb-6"
           >
             <ArrowLeft size={18} />
             <span className="text-sm font-medium">Back</span>
@@ -142,7 +142,7 @@ Witness 1: _______________    Witness 2: _______________
                 Create Legal Documents
                 <span className="block text-[#D4AF37]">Instantly with AI</span>
               </h1>
-              <p className="text-slate-400">Generate professional legal documents in seconds</p>
+              <p className="text-ehb-textMuted">Generate professional legal documents in seconds</p>
             </div>
 
             {/* Progress */}
@@ -180,7 +180,7 @@ Witness 1: _______________    Witness 2: _______________
                   className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6"
                 >
                   <h2 className="text-xl font-bold text-white mb-2">Select Document Type</h2>
-                  <p className="text-sm text-slate-400 mb-6">Choose the type of legal document you need</p>
+                  <p className="text-sm text-ehb-textMuted mb-6">Choose the type of legal document you need</p>
                   
                   <div className="grid grid-cols-2 gap-4">
                     {DOCUMENT_TYPES.map((type) => (
@@ -221,11 +221,11 @@ Witness 1: _______________    Witness 2: _______________
                   className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6"
                 >
                   <h2 className="text-xl font-bold text-white mb-2">First Party Details</h2>
-                  <p className="text-sm text-slate-400 mb-6">Enter the information for Party A</p>
+                  <p className="text-sm text-ehb-textMuted mb-6">Enter the information for Party A</p>
                   
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">FULL LEGAL NAME</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">FULL LEGAL NAME</label>
                       <input 
                         type="text" 
                         placeholder="Enter full name"
@@ -235,7 +235,7 @@ Witness 1: _______________    Witness 2: _______________
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">ADDRESS</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">ADDRESS</label>
                       <input 
                         type="text" 
                         placeholder="Enter address"
@@ -245,7 +245,7 @@ Witness 1: _______________    Witness 2: _______________
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">CNIC/ID NUMBER</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">CNIC/ID NUMBER</label>
                       <input 
                         type="text" 
                         placeholder="Enter ID number"
@@ -283,11 +283,11 @@ Witness 1: _______________    Witness 2: _______________
                   className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6"
                 >
                   <h2 className="text-xl font-bold text-white mb-2">Second Party Details</h2>
-                  <p className="text-sm text-slate-400 mb-6">Enter the information for Party B</p>
+                  <p className="text-sm text-ehb-textMuted mb-6">Enter the information for Party B</p>
                   
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">FULL LEGAL NAME</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">FULL LEGAL NAME</label>
                       <input 
                         type="text" 
                         placeholder="Enter full name"
@@ -297,7 +297,7 @@ Witness 1: _______________    Witness 2: _______________
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">ADDRESS</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">ADDRESS</label>
                       <input 
                         type="text" 
                         placeholder="Enter address"
@@ -307,7 +307,7 @@ Witness 1: _______________    Witness 2: _______________
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">CNIC/ID NUMBER</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">CNIC/ID NUMBER</label>
                       <input 
                         type="text" 
                         placeholder="Enter ID number"
@@ -345,11 +345,11 @@ Witness 1: _______________    Witness 2: _______________
                   className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6"
                 >
                   <h2 className="text-xl font-bold text-white mb-2">Document Details</h2>
-                  <p className="text-sm text-slate-400 mb-6">Enter additional document information</p>
+                  <p className="text-sm text-ehb-textMuted mb-6">Enter additional document information</p>
                   
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">JURISDICTION/LOCATION</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">JURISDICTION/LOCATION</label>
                       <input 
                         type="text" 
                         placeholder="e.g. Dubai, UAE"
@@ -359,7 +359,7 @@ Witness 1: _______________    Witness 2: _______________
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">EFFECTIVE DATE</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">EFFECTIVE DATE</label>
                       <input 
                         type="date" 
                         className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-emerald-500 transition-all"
@@ -368,7 +368,7 @@ Witness 1: _______________    Witness 2: _______________
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">ADDITIONAL NOTES (OPTIONAL)</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">ADDITIONAL NOTES (OPTIONAL)</label>
                       <textarea 
                         placeholder="Any specific terms or conditions..."
                         rows={3}
@@ -418,7 +418,7 @@ Witness 1: _______________    Witness 2: _______________
                   <div className="text-center p-6 bg-emerald-500/10 border border-emerald-500/30 rounded-xl mb-6">
                     <CheckCircle2 className="mx-auto text-emerald-400 mb-4" size={48} />
                     <h2 className="text-2xl font-bold text-white mb-2">Document Generated!</h2>
-                    <p className="text-slate-400">Your {DOCUMENT_TYPES.find(d => d.id === selectedType)?.name} is ready</p>
+                    <p className="text-ehb-textMuted">Your {DOCUMENT_TYPES.find(d => d.id === selectedType)?.name} is ready</p>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4 mb-4">
@@ -468,7 +468,7 @@ Witness 1: _______________    Witness 2: _______________
               </div>
             </div>
 
-            <div className="flex-1 bg-slate-950 rounded-xl p-6 overflow-y-auto font-mono text-sm leading-relaxed whitespace-pre-wrap text-slate-300 border border-slate-800">
+            <div className="flex-1 bg-slate-950 rounded-xl p-6 overflow-y-auto font-mono text-sm leading-relaxed whitespace-pre-wrap text-ehb-textBody border border-slate-800">
               {isGenerating ? (
                 <div className="h-full flex flex-col items-center justify-center text-center">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center mb-4">

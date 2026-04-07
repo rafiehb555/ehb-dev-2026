@@ -35,14 +35,14 @@ export default async function LegacyIndustryRoute({
     <main className="min-h-screen text-slate-100">
       <div className="container-ehb py-8 space-y-6">
         <div className="flex items-center gap-3">
-          <Link href="/industries" className="text-xs text-slate-400 hover:text-[#00eaff] transition-colors">
+          <Link href="/industries" className="text-xs text-ehb-textMuted hover:text-[#00eaff] transition-colors">
             ← All industries
           </Link>
         </div>
         <div className="glass-panel card-hover p-6 rounded-xl border border-white/10">
           <h1 className="text-xl font-semibold text-white">Industry not found</h1>
-          <p className="text-slate-400 mt-2">
-            Use a URL like <code className="text-slate-300">/landing/health</code> or choose from the full list.
+          <p className="text-ehb-textMuted mt-2">
+            Use a URL like <code className="text-ehb-textBody">/landing/health</code> or choose from the full list.
           </p>
           <Link href="/industries" className="inline-flex mt-4 text-sm font-medium text-[#00eaff] hover:underline">
             Browse all 32 industries →

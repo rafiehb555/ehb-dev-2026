@@ -210,7 +210,7 @@ export default function CaseManagementAgent({ language = 'en' }: CaseManagementA
               <h2 className="text-white font-bold text-xl">
                 {language === 'ur' ? 'کیس مینجمنٹ ایجنٹ' : 'Case Management Agent'}
               </h2>
-              <p className="text-slate-400 text-sm">
+              <p className="text-ehb-textMuted text-sm">
                 {language === 'ur' ? 'قانونی کیس کا مکمل انتظام' : 'Complete legal case lifecycle management'}
               </p>
             </div>
@@ -238,28 +238,28 @@ export default function CaseManagementAgent({ language = 'en' }: CaseManagementA
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white/5 rounded-xl p-4">
             <div className="flex items-center justify-between">
-              <div className="text-slate-400 text-xs">{language === 'ur' ? 'کل کیسز' : 'Total Cases'}</div>
+              <div className="text-ehb-textMuted text-xs">{language === 'ur' ? 'کل کیسز' : 'Total Cases'}</div>
               <BarChart2 className="text-brand-gold" size={16} />
             </div>
             <p className="text-white font-bold text-2xl mt-1">{stats.total}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
             <div className="flex items-center justify-between">
-              <div className="text-slate-400 text-xs">{language === 'ur' ? 'نئے کیسز' : 'New Cases'}</div>
+              <div className="text-ehb-textMuted text-xs">{language === 'ur' ? 'نئے کیسز' : 'New Cases'}</div>
               <ArrowUpRight className="text-blue-400" size={16} />
             </div>
             <p className="text-blue-400 font-bold text-2xl mt-1">{stats.new}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
             <div className="flex items-center justify-between">
-              <div className="text-slate-400 text-xs">{language === 'ur' ? 'جاری کیسز' : 'In Progress'}</div>
+              <div className="text-ehb-textMuted text-xs">{language === 'ur' ? 'جاری کیسز' : 'In Progress'}</div>
               <TrendingUp className="text-violet-400" size={16} />
             </div>
             <p className="text-violet-400 font-bold text-2xl mt-1">{stats.inProgress}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
             <div className="flex items-center justify-between">
-              <div className="text-slate-400 text-xs">{language === 'ur' ? 'مکمل' : 'Completed'}</div>
+              <div className="text-ehb-textMuted text-xs">{language === 'ur' ? 'مکمل' : 'Completed'}</div>
               <CheckCircle2 className="text-green-400" size={16} />
             </div>
             <p className="text-green-400 font-bold text-2xl mt-1">{stats.completed}</p>
@@ -275,7 +275,7 @@ export default function CaseManagementAgent({ language = 'en' }: CaseManagementA
         className="flex flex-col md:flex-row gap-4"
       >
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-ehb-textMuted" size={20} />
           <input
             type="text"
             value={searchQuery}
@@ -292,7 +292,7 @@ export default function CaseManagementAgent({ language = 'en' }: CaseManagementA
               className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${
                 filter === f 
                   ? 'bg-brand-gold text-slate-900' 
-                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                  : 'bg-slate-800 text-ehb-textMuted hover:bg-slate-700'
               }`}
             >
               {f === 'all' ? (language === 'ur' ? 'سب' : 'All') :
@@ -329,7 +329,7 @@ export default function CaseManagementAgent({ language = 'en' }: CaseManagementA
                 <h4 className="text-white font-bold">
                   {language === 'ur' ? caseItem.titleUrdu : caseItem.title}
                 </h4>
-                <p className="text-slate-400 text-sm">
+                <p className="text-ehb-textMuted text-sm">
                   {language === 'ur' ? caseItem.typeUrdu : caseItem.type}
                 </p>
               </div>
@@ -340,11 +340,11 @@ export default function CaseManagementAgent({ language = 'en' }: CaseManagementA
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-3 text-sm">
-              <div className="flex items-center gap-2 text-slate-400">
+              <div className="flex items-center gap-2 text-ehb-textMuted">
                 <User size={14} />
                 <span className="truncate">{caseItem.client.name}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-400">
+              <div className="flex items-center gap-2 text-ehb-textMuted">
                 <MapPin size={14} />
                 <span>{caseItem.city}, {caseItem.country}</span>
               </div>
@@ -433,7 +433,7 @@ export default function CaseManagementAgent({ language = 'en' }: CaseManagementA
       {filteredCases.length === 0 && (
         <div className="text-center py-12">
           <Scale className="mx-auto text-slate-600 mb-4" size={48} />
-          <p className="text-slate-400">
+          <p className="text-ehb-textMuted">
             {language === 'ur' ? 'کوئی کیس نہیں ملا' : 'No cases found'}
           </p>
         </div>

@@ -270,7 +270,7 @@ export default function GlobalLegalIntelligence({ language = 'en' }: GlobalLegal
               <Sparkles className="text-brand-gold" size={24} />
               {language === 'ur' ? 'AI عالمی قانونی انٹیلیجنس' : 'AI Global Legal Intelligence'}
             </h2>
-            <p className="text-slate-400">
+            <p className="text-ehb-textMuted">
               {language === 'ur' 
                 ? 'دنیا بھر کے قوانین اور قانونی طریقہ کار'
                 : 'Laws and legal procedures from around the world'}
@@ -280,7 +280,7 @@ export default function GlobalLegalIntelligence({ language = 'en' }: GlobalLegal
 
         {/* Search */}
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-ehb-textMuted" size={20} />
           <input
             type="text"
             value={searchQuery}
@@ -306,7 +306,7 @@ export default function GlobalLegalIntelligence({ language = 'en' }: GlobalLegal
           </button>
           {selectedCountry && (
             <>
-              <ChevronRight className="text-slate-400" size={16} />
+              <ChevronRight className="text-ehb-textMuted" size={16} />
               <button 
                 onClick={() => { setSelectedCategory(null); setSelectedProcedure(null); }}
                 className={selectedCategory ? 'text-brand-gold hover:text-brand-gold/80' : 'text-white'}
@@ -317,7 +317,7 @@ export default function GlobalLegalIntelligence({ language = 'en' }: GlobalLegal
           )}
           {selectedCategory && (
             <>
-              <ChevronRight className="text-slate-400" size={16} />
+              <ChevronRight className="text-ehb-textMuted" size={16} />
               <button
                 onClick={() => setSelectedProcedure(null)}
                 className={selectedProcedure ? 'text-brand-gold hover:text-brand-gold/80' : 'text-white'}
@@ -328,7 +328,7 @@ export default function GlobalLegalIntelligence({ language = 'en' }: GlobalLegal
           )}
           {selectedProcedure && (
             <>
-              <ChevronRight className="text-slate-400" size={16} />
+              <ChevronRight className="text-ehb-textMuted" size={16} />
               <span className="text-white">
                 {language === 'ur' ? selectedProcedure.nameUrdu : selectedProcedure.name}
               </span>
@@ -364,15 +364,15 @@ export default function GlobalLegalIntelligence({ language = 'en' }: GlobalLegal
                     <h3 className="text-white font-bold">
                       {language === 'ur' ? country.nameUrdu : country.name}
                     </h3>
-                    <p className="text-slate-400 text-sm">{country.region}</p>
+                    <p className="text-ehb-textMuted text-sm">{country.region}</p>
                   </div>
                 </div>
                 <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2 text-slate-400">
+                  <div className="flex items-center gap-2 text-ehb-textMuted">
                     <Scale size={14} />
                     {country.legalSystem}
                   </div>
-                  <div className="flex items-center gap-2 text-slate-400">
+                  <div className="flex items-center gap-2 text-ehb-textMuted">
                     <BookOpen size={14} />
                     {country.officialLanguage}
                   </div>
@@ -403,16 +403,16 @@ export default function GlobalLegalIntelligence({ language = 'en' }: GlobalLegal
                   <h3 className="text-white font-bold text-2xl">
                     {language === 'ur' ? selectedCountry.nameUrdu : selectedCountry.name}
                   </h3>
-                  <p className="text-slate-400">{selectedCountry.region}</p>
+                  <p className="text-ehb-textMuted">{selectedCountry.region}</p>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="bg-white/5 rounded-xl p-3">
-                  <p className="text-slate-400 mb-1">{language === 'ur' ? 'قانونی نظام' : 'Legal System'}</p>
+                  <p className="text-ehb-textMuted mb-1">{language === 'ur' ? 'قانونی نظام' : 'Legal System'}</p>
                   <p className="text-white">{selectedCountry.legalSystem}</p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-3">
-                  <p className="text-slate-400 mb-1">{language === 'ur' ? 'سرکاری زبان' : 'Official Language'}</p>
+                  <p className="text-ehb-textMuted mb-1">{language === 'ur' ? 'سرکاری زبان' : 'Official Language'}</p>
                   <p className="text-white">{selectedCountry.officialLanguage}</p>
                 </div>
               </div>
@@ -440,12 +440,12 @@ export default function GlobalLegalIntelligence({ language = 'en' }: GlobalLegal
                         <h4 className="text-white font-bold">
                           {language === 'ur' ? category.nameUrdu : category.name}
                         </h4>
-                        <p className="text-slate-400 text-sm">
+                        <p className="text-ehb-textMuted text-sm">
                           {category.procedures.length} {language === 'ur' ? 'طریقہ کار' : 'procedures'}
                         </p>
                       </div>
                     </div>
-                    <ChevronRight className="text-slate-400" size={20} />
+                    <ChevronRight className="text-ehb-textMuted" size={20} />
                   </div>
                 </motion.div>
               ))}
@@ -475,14 +475,14 @@ export default function GlobalLegalIntelligence({ language = 'en' }: GlobalLegal
                     <h4 className="text-white font-bold text-lg">
                       {language === 'ur' ? procedure.nameUrdu : procedure.name}
                     </h4>
-                    <p className="text-slate-400 mt-1">
+                    <p className="text-ehb-textMuted mt-1">
                       {language === 'ur' ? procedure.descriptionUrdu : procedure.description}
                     </p>
                   </div>
-                  <ChevronRight className="text-slate-400" size={24} />
+                  <ChevronRight className="text-ehb-textMuted" size={24} />
                 </div>
                 <div className="flex items-center gap-6 mt-4 text-sm">
-                  <div className="flex items-center gap-2 text-slate-400">
+                  <div className="flex items-center gap-2 text-ehb-textMuted">
                     <Clock size={16} />
                     {procedure.estimatedTime}
                   </div>
@@ -507,7 +507,7 @@ export default function GlobalLegalIntelligence({ language = 'en' }: GlobalLegal
               <h3 className="text-white font-bold text-2xl mb-2">
                 {language === 'ur' ? selectedProcedure.nameUrdu : selectedProcedure.name}
               </h3>
-              <p className="text-slate-300">
+              <p className="text-ehb-textBody">
                 {language === 'ur' ? selectedProcedure.descriptionUrdu : selectedProcedure.description}
               </p>
               <div className="flex items-center gap-6 mt-4">
@@ -533,7 +533,7 @@ export default function GlobalLegalIntelligence({ language = 'en' }: GlobalLegal
                   {(language === 'ur' ? selectedProcedure.requirementsUrdu : selectedProcedure.requirements).map((req, i) => (
                     <div key={i} className="flex items-center gap-2 bg-white/5 rounded-lg p-3">
                       <CheckCircle2 className="text-green-400 flex-shrink-0" size={18} />
-                      <span className="text-slate-300 text-sm">{req}</span>
+                      <span className="text-ehb-textBody text-sm">{req}</span>
                     </div>
                   ))}
                 </div>

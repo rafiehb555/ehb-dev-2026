@@ -85,7 +85,7 @@ export default function ClientDashboard() {
       case 'completed': return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
       case 'in_progress': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
       case 'pending': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      default: return 'bg-slate-500/20 text-slate-400 border-slate-500/30';
+      default: return 'bg-slate-500/20 text-ehb-textMuted border-slate-500/30';
     }
   };
 
@@ -107,7 +107,7 @@ export default function ClientDashboard() {
                 </div>
                 <div>
                   <h1 className="text-2xl md:text-3xl font-bold text-white">Welcome Back!</h1>
-                  <p className="text-slate-400">Manage your legal cases and documents</p>
+                  <p className="text-ehb-textMuted">Manage your legal cases and documents</p>
                 </div>
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function ClientDashboard() {
                   <stat.icon className="text-white" size={20} />
                 </div>
                 <p className="text-2xl font-bold text-white">{stat.value}</p>
-                <p className="text-sm text-slate-400">{stat.label}</p>
+                <p className="text-sm text-ehb-textMuted">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -170,7 +170,7 @@ export default function ClientDashboard() {
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                       activeTab === tab.id 
                         ? 'bg-[#D4AF37] text-slate-900' 
-                        : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                        : 'bg-white/5 text-ehb-textMuted hover:bg-white/10'
                     }`}
                   >
                     {tab.label}
@@ -206,7 +206,7 @@ export default function ClientDashboard() {
                           <span className="text-xs text-slate-500">{caseItem.caseNumber}</span>
                         </div>
                         <h3 className="text-lg font-bold text-white mb-1">{caseItem.title}</h3>
-                        <p className="text-sm text-slate-400">{caseItem.category}</p>
+                        <p className="text-sm text-ehb-textMuted">{caseItem.category}</p>
                       </div>
                       
                       {caseItem.lawyer && (
@@ -223,7 +223,7 @@ export default function ClientDashboard() {
                     {/* Progress Bar */}
                     <div className="mb-4">
                       <div className="flex items-center justify-between text-xs mb-2">
-                        <span className="text-slate-400">Progress</span>
+                        <span className="text-ehb-textMuted">Progress</span>
                         <span className="text-[#D4AF37] font-medium">{caseItem.progress}%</span>
                       </div>
                       <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
@@ -244,12 +244,12 @@ export default function ClientDashboard() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         {caseItem.nextHearing && (
-                          <div className="flex items-center gap-2 text-xs text-slate-400">
+                          <div className="flex items-center gap-2 text-xs text-ehb-textMuted">
                             <Calendar size={14} />
                             Next: {new Date(caseItem.nextHearing).toLocaleDateString()}
                           </div>
                         )}
-                        <div className="flex items-center gap-2 text-xs text-slate-400">
+                        <div className="flex items-center gap-2 text-xs text-ehb-textMuted">
                           <Clock size={14} />
                           Created: {new Date(caseItem.created_at).toLocaleDateString()}
                         </div>
@@ -257,10 +257,10 @@ export default function ClientDashboard() {
                       
                       <div className="flex gap-2">
                         <button className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all">
-                          <MessageSquare className="text-slate-400" size={16} />
+                          <MessageSquare className="text-ehb-textMuted" size={16} />
                         </button>
                         <button className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all">
-                          <Eye className="text-slate-400" size={16} />
+                          <Eye className="text-ehb-textMuted" size={16} />
                         </button>
                         <Link 
                           href={`/case/${caseItem.caseNumber}`}
@@ -275,7 +275,7 @@ export default function ClientDashboard() {
               ) : (
                 <div className="text-center py-12 bg-white/5 rounded-2xl border border-dashed border-white/10">
                   <Briefcase className="mx-auto text-slate-600 mb-4" size={48} />
-                  <p className="text-slate-400 mb-4">No cases found</p>
+                  <p className="text-ehb-textMuted mb-4">No cases found</p>
                   <Link 
                     href="/create-case"
                     className="inline-flex items-center gap-2 text-[#D4AF37] font-medium hover:underline"
@@ -295,7 +295,7 @@ export default function ClientDashboard() {
               >
                 <Bot className="text-blue-400 mb-4" size={32} />
                 <h3 className="text-lg font-bold text-white mb-2">AI Legal Advisor</h3>
-                <p className="text-sm text-slate-400 mb-4">Get instant AI-powered legal guidance</p>
+                <p className="text-sm text-ehb-textMuted mb-4">Get instant AI-powered legal guidance</p>
                 <span className="text-blue-400 text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
                   Ask AI <ArrowRight size={16} />
                 </span>
@@ -307,7 +307,7 @@ export default function ClientDashboard() {
               >
                 <FileText className="text-emerald-400 mb-4" size={32} />
                 <h3 className="text-lg font-bold text-white mb-2">Document Generator</h3>
-                <p className="text-sm text-slate-400 mb-4">Create legal documents instantly</p>
+                <p className="text-sm text-ehb-textMuted mb-4">Create legal documents instantly</p>
                 <span className="text-emerald-400 text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
                   Generate <ArrowRight size={16} />
                 </span>
@@ -324,7 +324,7 @@ export default function ClientDashboard() {
                   <Bell size={18} className="text-[#D4AF37]" />
                   Recent Activity
                 </h3>
-                <button className="text-xs text-slate-400 hover:text-white">View All</button>
+                <button className="text-xs text-ehb-textMuted hover:text-white">View All</button>
               </div>
               
               <div className="space-y-4">
@@ -349,7 +349,7 @@ export default function ClientDashboard() {
                   <FileText size={18} className="text-[#D4AF37]" />
                   Recent Documents
                 </h3>
-                <button className="text-xs text-slate-400 hover:text-white">View All</button>
+                <button className="text-xs text-ehb-textMuted hover:text-white">View All</button>
               </div>
               
               <div className="space-y-3">
@@ -369,13 +369,13 @@ export default function ClientDashboard() {
                       </div>
                     </div>
                     <button className="p-2 hover:bg-white/10 rounded-lg transition-all">
-                      <Download className="text-slate-400" size={16} />
+                      <Download className="text-ehb-textMuted" size={16} />
                     </button>
                   </div>
                 ))}
               </div>
               
-              <button className="w-full mt-4 py-3 border-2 border-dashed border-white/10 rounded-xl text-sm font-medium text-slate-400 hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all flex items-center justify-center gap-2">
+              <button className="w-full mt-4 py-3 border-2 border-dashed border-white/10 rounded-xl text-sm font-medium text-ehb-textMuted hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all flex items-center justify-center gap-2">
                 <Upload size={16} />
                 Upload Document
               </button>
@@ -393,7 +393,7 @@ export default function ClientDashboard() {
                   <p className="text-2xl font-bold text-white">$450.00</p>
                   <p className="text-xs text-orange-400">Due by Mar 15, 2026</p>
                 </div>
-                <span className="text-xs text-slate-400">Case #EHB-2026-001</span>
+                <span className="text-xs text-ehb-textMuted">Case #EHB-2026-001</span>
               </div>
               
               <button className="w-full py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-orange-500/30 transition-all">

@@ -70,7 +70,7 @@ export default function FranchisePage() {
             <div>
               <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">Franchise Control Center</p>
               <h1 className="mt-1 text-2xl font-semibold gradient-text">EHB Franchise Home</h1>
-              <p className="mt-1 text-sm text-slate-300">
+              <p className="mt-1 text-sm text-ehb-textBody">
                 A unified workspace for local bookings, inspections, escalations, and DMO coordination.
               </p>
             </div>
@@ -98,7 +98,7 @@ export default function FranchisePage() {
           <div className="ehb-card-elevated space-y-4">
             <div>
               <div className="text-sm font-semibold text-white">Assigned Franchise Network</div>
-              <div className="text-xs text-slate-400 mt-1">
+              <div className="text-xs text-ehb-textMuted mt-1">
                 Scope: {data.profile.roleScope} · Operator: {data.profile.operatorId}
               </div>
             </div>
@@ -106,14 +106,14 @@ export default function FranchisePage() {
               {data.profile.assignedFranchises.map((item) => (
                 <div key={item.id} className="rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="text-sm font-semibold text-white">{item.name}</div>
-                  <div className="mt-1 text-xs text-slate-400">
+                  <div className="mt-1 text-xs text-ehb-textMuted">
                     {item.city} · {item.level} · {item.status}
                   </div>
                 </div>
               ))}
             </div>
             {data.profile.assignedFranchises.length === 0 ? (
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-slate-400">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-ehb-textMuted">
                 No franchise membership mapped yet.
               </div>
             ) : null}
@@ -124,14 +124,14 @@ export default function FranchisePage() {
               <div className="text-sm font-semibold text-white">Next Due Inspection</div>
               {data.profile.nextDueTask ? (
                 <div className="mt-3 rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="text-xs text-slate-400">{data.profile.nextDueTask.industry}</div>
+                  <div className="text-xs text-ehb-textMuted">{data.profile.nextDueTask.industry}</div>
                   <div className="mt-1 text-sm font-semibold text-white">{data.profile.nextDueTask.id}</div>
-                  <div className="mt-1 text-xs text-slate-400">
+                  <div className="mt-1 text-xs text-ehb-textMuted">
                     {new Date(data.profile.nextDueTask.dueDate).toLocaleString()} · {data.profile.nextDueTask.status}
                   </div>
                 </div>
               ) : (
-                <div className="mt-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-slate-400">
+                <div className="mt-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-ehb-textMuted">
                   No due inspection task found.
                 </div>
               )}
@@ -141,7 +141,7 @@ export default function FranchisePage() {
               <div className="text-sm font-semibold text-white">Action Plan</div>
               <div className="mt-3 space-y-2">
                 {data.suggestions.map((item) => (
-                  <div key={item} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300">
+                  <div key={item} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-ehb-textBody">
                     {item}
                   </div>
                 ))}
@@ -152,23 +152,23 @@ export default function FranchisePage() {
 
         <section className="grid gap-4 md:grid-cols-3">
           <Link href="/franchise/bookings" className="glass-panel card-hover p-4 border border-white/10 block">
-            <span className="text-[10px] uppercase tracking-wider text-slate-400">Booking Queue</span>
+            <span className="text-[10px] uppercase tracking-wider text-ehb-textMuted">Booking Queue</span>
             <p className="mt-1 text-sm font-semibold text-white">Handle service booking requests</p>
-            <p className="mt-1 text-xs text-slate-400">
+            <p className="mt-1 text-xs text-ehb-textMuted">
               Claim requests, update status, schedule visits, and coordinate with DMO.
             </p>
           </Link>
           <Link href="/franchise/inspections" className="glass-panel card-hover p-4 border border-white/10 block">
-            <span className="text-[10px] uppercase tracking-wider text-slate-400">Inspections</span>
+            <span className="text-[10px] uppercase tracking-wider text-ehb-textMuted">Inspections</span>
             <p className="mt-1 text-sm font-semibold text-white">Submit geo-tagged inspection reports</p>
-            <p className="mt-1 text-xs text-slate-400">
+            <p className="mt-1 text-xs text-ehb-textMuted">
               Use score, fraud notes, media links, and escalation paths from one screen.
             </p>
           </Link>
           <Link href="/dmo/franchise" className="glass-panel card-hover p-4 border border-white/10 block">
-            <span className="text-[10px] uppercase tracking-wider text-slate-400">DMO Coordination</span>
+            <span className="text-[10px] uppercase tracking-wider text-ehb-textMuted">DMO Coordination</span>
             <p className="mt-1 text-sm font-semibold text-white">Review franchise tasks inside DMO</p>
-            <p className="mt-1 text-xs text-slate-400">
+            <p className="mt-1 text-xs text-ehb-textMuted">
               Track reports, escalations, and inspection queue health from the DMO workspace.
             </p>
           </Link>

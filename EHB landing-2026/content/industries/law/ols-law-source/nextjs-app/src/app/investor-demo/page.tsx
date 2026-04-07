@@ -78,7 +78,7 @@ export default function InvestorDemoPage() {
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
               EHB AI Legal Platform
             </h1>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-8">
+            <p className="text-xl text-ehb-textMuted max-w-2xl mx-auto mb-8">
               The World's First AI-Powered Global Legal Ecosystem
             </p>
 
@@ -94,7 +94,7 @@ export default function InvestorDemoPage() {
                 >
                   <stat.icon className="mx-auto text-brand-gold mb-2" size={24} />
                   <p className="text-2xl font-bold text-white">{stat.label}</p>
-                  <p className="text-xs text-slate-400">{stat.desc}</p>
+                  <p className="text-xs text-ehb-textMuted">{stat.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -113,7 +113,7 @@ export default function InvestorDemoPage() {
                 className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
                   activeSection === section.id
                     ? 'bg-brand-gold text-slate-900'
-                    : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                    : 'text-ehb-textMuted hover:bg-slate-800 hover:text-white'
                 }`}
               >
                 <section.icon size={18} />
@@ -143,7 +143,7 @@ export default function InvestorDemoPage() {
                     <Target size={20} />
                     The Problem
                   </h3>
-                  <ul className="space-y-3 text-slate-300">
+                  <ul className="space-y-3 text-ehb-textBody">
                     <li className="flex items-start gap-2">
                       <ChevronRight className="text-red-400 mt-1 shrink-0" size={16} />
                       Legal services are expensive and inaccessible
@@ -168,7 +168,7 @@ export default function InvestorDemoPage() {
                     <Zap size={20} />
                     Our Solution
                   </h3>
-                  <ul className="space-y-3 text-slate-300">
+                  <ul className="space-y-3 text-ehb-textBody">
                     <li className="flex items-start gap-2">
                       <ChevronRight className="text-green-400 mt-1 shrink-0" size={16} />
                       AI-powered legal assistance in any language
@@ -195,7 +195,7 @@ export default function InvestorDemoPage() {
                 <h3 className="text-2xl font-bold text-white mb-2">
                   "Uber for Legal Services"
                 </h3>
-                <p className="text-slate-400 max-w-2xl mx-auto">
+                <p className="text-ehb-textMuted max-w-2xl mx-auto">
                   EHB combines the marketplace model of Uber, the professional network of Upwork, 
                   and the AI power of ChatGPT — specifically designed for the $900B legal industry.
                 </p>
@@ -262,7 +262,7 @@ export default function InvestorDemoPage() {
             >
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-white mb-2">Live Demo Flow</h2>
-                <p className="text-slate-400">7-minute guided demonstration</p>
+                <p className="text-ehb-textMuted">7-minute guided demonstration</p>
               </div>
 
               {/* Start Demo Button */}
@@ -301,14 +301,14 @@ export default function InvestorDemoPage() {
                         <h4 className="text-white font-medium">{item.title}</h4>
                         <span className="text-xs text-slate-500">{item.duration}</span>
                       </div>
-                      <p className="text-sm text-slate-400">{item.desc}</p>
+                      <p className="text-sm text-ehb-textMuted">{item.desc}</p>
                     </div>
                     <a
                       href={item.route}
                       target="_blank"
                       className="p-2 hover:bg-slate-700 rounded-lg transition-colors"
                     >
-                      <ArrowRight className="text-slate-400" size={18} />
+                      <ArrowRight className="text-ehb-textMuted" size={18} />
                     </a>
                   </motion.div>
                 ))}
@@ -327,7 +327,7 @@ export default function InvestorDemoPage() {
             >
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-white mb-2">Business Model</h2>
-                <p className="text-slate-400">Multiple revenue streams for sustainable growth</p>
+                <p className="text-ehb-textMuted">Multiple revenue streams for sustainable growth</p>
               </div>
 
               {/* Revenue Streams */}
@@ -341,7 +341,7 @@ export default function InvestorDemoPage() {
                     <div key={stream.name} className="space-y-2">
                       <div className="flex justify-between text-sm">
                         <span className="text-white">{stream.name}</span>
-                        <span className="text-slate-400">{stream.percentage}%</span>
+                        <span className="text-ehb-textMuted">{stream.percentage}%</span>
                       </div>
                       <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
                         <motion.div
@@ -360,15 +360,15 @@ export default function InvestorDemoPage() {
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
                   <p className="text-4xl font-bold text-brand-gold mb-2">$900B</p>
-                  <p className="text-slate-400 text-sm">Global Legal Market</p>
+                  <p className="text-ehb-textMuted text-sm">Global Legal Market</p>
                 </div>
                 <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
                   <p className="text-4xl font-bold text-brand-gold mb-2">1%</p>
-                  <p className="text-slate-400 text-sm">Target Market Share (5 years)</p>
+                  <p className="text-ehb-textMuted text-sm">Target Market Share (5 years)</p>
                 </div>
                 <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
                   <p className="text-4xl font-bold text-brand-gold mb-2">$9B</p>
-                  <p className="text-slate-400 text-sm">Revenue Potential</p>
+                  <p className="text-ehb-textMuted text-sm">Revenue Potential</p>
                 </div>
               </div>
 
@@ -384,7 +384,7 @@ export default function InvestorDemoPage() {
                   ].map((item) => (
                     <div key={item.label} className="text-center">
                       <p className="text-3xl font-bold text-brand-gold mb-1">{item.percentage}%</p>
-                      <p className="text-sm text-slate-400">{item.label}</p>
+                      <p className="text-sm text-ehb-textMuted">{item.label}</p>
                     </div>
                   ))}
                 </div>

@@ -7,7 +7,7 @@ import { calculateRiskScore } from "@/lib/fraud/riskEngine";
 function getTrustBadge(score: number): { badge: string; level: string; color: string } {
   if (score >= 85) return { badge: "🥇", level: "Platinum", color: "text-purple-300" };
   if (score >= 70) return { badge: "🥇", level: "Gold",     color: "text-yellow-300" };
-  if (score >= 50) return { badge: "🥈", level: "Silver",   color: "text-slate-300"  };
+  if (score >= 50) return { badge: "🥈", level: "Silver",   color: "text-ehb-textBody"  };
   return             { badge: "🥉", level: "Bronze",   color: "text-orange-400" };
 }
 

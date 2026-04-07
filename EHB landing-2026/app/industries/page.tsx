@@ -7,7 +7,7 @@ export default function IndustriesPage() {
       <div className="container-ehb py-8 space-y-6">
         <div>
           <h1 className="text-xl md:text-2xl font-semibold leading-tight gradient-text">EHB Industries</h1>
-          <p className="text-slate-400 mt-2">
+          <p className="text-ehb-textMuted mt-2">
             32 industries — open a landing page or industry home for full services and AI tools.
           </p>
         </div>
@@ -25,7 +25,7 @@ export default function IndustriesPage() {
           ))}
         </div>
         <p className="text-[11px] text-slate-500">
-          <Link href="/" className="text-slate-400 hover:text-[#00eaff] underline-offset-2">
+          <Link href="/" className="text-ehb-textMuted hover:text-[#00eaff] underline-offset-2">
             Back to main landing
           </Link>
         </p>

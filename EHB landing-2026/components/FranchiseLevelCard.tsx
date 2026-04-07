@@ -20,11 +20,11 @@ export function FranchiseLevelCard({ title, description, color, highlighted, hre
         boxShadow: highlighted ? `0 0 28px ${color}55` : undefined,
       }}
     >
-      <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
+      <p className="text-xs uppercase tracking-[0.18em] text-ehb-textMuted">
         {highlighted ? "Recommended" : "Franchise Level"}
       </p>
       <h3 className="text-lg font-semibold text-white">{title}</h3>
-      <p className="text-xs text-slate-400">{description}</p>
+      <p className="text-xs text-ehb-textMuted">{description}</p>
       <p className="text-[10px] font-medium text-cyan-400/90 mt-1">Open in DMO →</p>
     </Link>
   );

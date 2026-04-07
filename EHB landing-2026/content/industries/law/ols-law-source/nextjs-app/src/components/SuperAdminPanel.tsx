@@ -30,7 +30,7 @@ export default function SuperAdminPanel() {
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8 sm:mb-10">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold font-display mb-1 sm:mb-2 text-white">Super Admin Control Panel</h1>
-          <p className="text-xs sm:text-sm text-slate-400">Global platform management and system monitoring.</p>
+          <p className="text-xs sm:text-sm text-ehb-textMuted">Global platform management and system monitoring.</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full lg:w-auto">
           <button 

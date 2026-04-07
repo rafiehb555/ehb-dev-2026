@@ -37,7 +37,7 @@ function ValueCard({
         </div>
         <div>
           <p className="text-sm font-semibold text-white">{title}</p>
-          <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">{desc}</p>
+          <p className="text-[11px] text-ehb-textBody mt-1 leading-relaxed">{desc}</p>
           <p className="text-[10px] font-medium text-cyan-400/80 mt-2 group-hover:text-cyan-300">Go →</p>
         </div>
       </div>

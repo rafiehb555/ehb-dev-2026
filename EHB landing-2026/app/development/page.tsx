@@ -47,7 +47,7 @@ function ProgressBlock(props: { title: string; items: { label: string; value: nu
           <div key={item.label}>
             <div className="flex justify-between">
               <span className="text-slate-200">{item.label}</span>
-              <span className="text-slate-400">{item.value}%</span>
+              <span className="text-ehb-textMuted">{item.value}%</span>
             </div>
             <ProgressBar value={item.value} />
           </div>
@@ -61,7 +61,7 @@ function FlowCard(props: { title: string; steps: string[] }) {
   return (
     <div className="glass-panel card-hover p-3">
       <div className="font-semibold text-slate-100 mb-1.5 text-[10px] xs:text-[11px]">{props.title}</div>
-      <ol className="space-y-1 text-slate-300">
+      <ol className="space-y-1 text-ehb-textBody">
         {props.steps.map((s, i) => (
           <li key={s}><span className="text-slate-500 mr-1">{i + 1}.</span>{s}</li>
         ))}
@@ -74,7 +74,7 @@ function MapCard(props: { title: string; items: string[] }) {
   return (
     <div className="glass-panel card-hover p-3">
       <div className="font-semibold text-slate-100 mb-1.5 text-[10px] xs:text-[11px]">{props.title}</div>
-      <ul className="space-y-1 text-slate-300">
+      <ul className="space-y-1 text-ehb-textBody">
         {props.items.map((item) => (
           <li key={item}>• {item}</li>
         ))}
@@ -89,7 +89,7 @@ export default function DevelopmentPage() {
       <div className="container-ehb py-6 sm:py-8 space-y-6 sm:space-y-8 text-[10px] xs:text-[11px]">
         <section className="space-y-1 sm:space-y-2">
           <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">EHB Development Center – Real Platform Build</h1>
-          <p className="text-slate-300 text-[10px] xs:text-[11px] max-w-2xl">
+          <p className="text-ehb-textBody text-[10px] xs:text-[11px] max-w-2xl">
             Real control panel for tracking EHB platform architecture, progress, shared tools, and system flows. This page is directly aligned with{" "}
             <span className="font-semibold text-[#00eaff]">EHB_SUPER_ADMIN_CONTROL_PANEL</span> and{" "}
             <span className="font-semibold text-[#00eaff]">EHB_MICROSERVICES_ARCHITECTURE</span> source docs.
@@ -114,7 +114,7 @@ export default function DevelopmentPage() {
           <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
             <div className="glass-panel card-hover p-3">
               <div className="font-semibold text-slate-100 mb-1.5">Core Systems</div>
-              <ul className="space-y-1 text-slate-300">
+              <ul className="space-y-1 text-ehb-textBody">
                 {coreSystems.map((s) => (
                   <li key={s}>• {s}</li>
                 ))}
@@ -122,7 +122,7 @@ export default function DevelopmentPage() {
             </div>
             <div className="glass-panel card-hover p-3">
               <div className="font-semibold text-slate-100 mb-1.5">Industries (Phase‑1)</div>
-              <ul className="space-y-1 text-slate-300">
+              <ul className="space-y-1 text-ehb-textBody">
                 <li>• E‑commerce (GoSellr GSM)</li>
                 <li>• Legal Services (EHB OLS)</li>
                 <li>• Medical & Health (WMS)</li>
@@ -154,7 +154,7 @@ export default function DevelopmentPage() {
                   <div key={ind.name}>
                     <div className="flex justify-between">
                       <span className="text-slate-200">{ind.name}</span>
-                      <span className="text-slate-400">{ind.progress}%</span>
+                      <span className="text-ehb-textMuted">{ind.progress}%</span>
                     </div>
                     <ProgressBar value={ind.progress} />
                   </div>
@@ -200,13 +200,13 @@ export default function DevelopmentPage() {
         </Section>
 
         <Section title="8. Industries Development Map">
-          <p className="text-slate-300 mb-2 text-[10px] xs:text-[11px]">High‑level snapshot of which industries are prioritized for Phase‑1 and how much of their demo stack is in place.</p>
+          <p className="text-ehb-textBody mb-2 text-[10px] xs:text-[11px]">High‑level snapshot of which industries are prioritized for Phase‑1 and how much of their demo stack is in place.</p>
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {industries.map((ind) => (
               <div key={ind.name} className="glass-panel card-hover p-3">
                 <div className="font-semibold text-slate-100 mb-1.5 text-[10px] xs:text-[11px]">{ind.name}</div>
                 <ProgressBar value={ind.progress} />
-                <p className="mt-1 text-slate-400">Build readiness: <span className="font-semibold">{ind.progress}%</span></p>
+                <p className="mt-1 text-ehb-textMuted">Build readiness: <span className="font-semibold">{ind.progress}%</span></p>
               </div>
             ))}
           </div>

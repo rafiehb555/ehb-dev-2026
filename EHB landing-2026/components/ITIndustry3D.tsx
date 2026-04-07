@@ -27,7 +27,7 @@ export function ITIndustry3D() {
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
         Developers, clients, and AI working together
       </h2>
-      <p className="text-slate-400 max-w-3xl mb-8 text-sm md:text-base">
+      <p className="text-ehb-textMuted max-w-3xl mb-8 text-sm md:text-base">
         Clients post projects, EHB AI finds the best developers, and every step is verified – from
         first message to final payment and rating.
       </p>
@@ -74,7 +74,7 @@ export function ITIndustry3D() {
                 className="rounded-2xl glass-panel border border-sky-500/50 px-4 py-3 shadow-[0_0_18px_rgba(56,189,248,0.35)]"
               >
                 <p className="text-[11px] font-semibold text-sky-200 mb-0.5">{item.title}</p>
-                <p className="text-[11px] md:text-xs text-slate-300">{item.desc}</p>
+                <p className="text-[11px] md:text-xs text-ehb-textBody">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -118,7 +118,7 @@ export function ITIndustry3D() {
                   }}
                 >
                   <p className="font-semibold">{item.label}</p>
-                  <p className="text-[9px] text-slate-300">{item.sub}</p>
+                  <p className="text-[9px] text-ehb-textBody">{item.sub}</p>
                 </div>
               ))}
 
@@ -176,7 +176,7 @@ export function ITIndustry3D() {
                 <p className="text-[11px] font-semibold text-emerald-200 mb-0.5">
                   {item.title}
                 </p>
-                <p className="text-[11px] md:text-xs text-slate-300">{item.desc}</p>
+                <p className="text-[11px] md:text-xs text-ehb-textBody">{item.desc}</p>
               </div>
             ))}
           </div>

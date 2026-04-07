@@ -15,7 +15,7 @@ export function LiveActivityTicker() {
   }, [events.length]);
 
   return (
-    <div className="mt-6 rounded-full bg-black/30 border border-white/10 px-3 py-2 text-[11px] sm:text-xs text-slate-300 overflow-hidden">
+    <div className="mt-6 rounded-full bg-black/30 border border-white/10 px-3 py-2 text-[11px] sm:text-xs text-ehb-textBody overflow-hidden">
       <div className="flex items-center gap-2">
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden />
         <span className="font-medium text-slate-200">Live activity</span>

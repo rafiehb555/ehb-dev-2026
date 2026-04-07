@@ -308,7 +308,7 @@ export default function AIOrchestrator({ language = 'en' }: AIOrchestatorProps) 
                 <Sparkles className="text-brand-gold" size={24} />
                 {language === 'ur' ? 'AI آرکیسٹریٹر' : 'AI Orchestrator'}
               </h2>
-              <p className="text-slate-400">
+              <p className="text-ehb-textMuted">
                 {language === 'ur' 
                   ? 'مرکزی AI دماغ - تمام ایجنٹس کو منظم کرتا ہے'
                   : 'Central AI Brain - Coordinating all agents'}
@@ -334,35 +334,35 @@ export default function AIOrchestrator({ language = 'en' }: AIOrchestatorProps) 
         {/* System Stats */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <Network size={14} />
               {language === 'ur' ? 'فعال ایجنٹس' : 'Active Agents'}
             </div>
             <p className="text-green-400 font-bold text-2xl">{activeAgents.length}/{agents.length}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <CheckCircle2 size={14} />
               {language === 'ur' ? 'مکمل ٹاسکس' : 'Tasks Done'}
             </div>
             <p className="text-white font-bold text-2xl">{totalTasks.toLocaleString()}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <Activity size={14} />
               {language === 'ur' ? 'درستگی' : 'Accuracy'}
             </div>
             <p className="text-brand-gold font-bold text-2xl">{avgAccuracy}%</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <Clock size={14} />
               {language === 'ur' ? 'اوسط وقت' : 'Avg Time'}
             </div>
             <p className="text-white font-bold text-2xl">1.2s</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-xs mb-1">
               <Cpu size={14} />
               {language === 'ur' ? 'سسٹم لوڈ' : 'System Load'}
             </div>
@@ -419,14 +419,14 @@ export default function AIOrchestrator({ language = 'en' }: AIOrchestatorProps) 
                     ) : step.status === 'in_progress' ? (
                       <Loader2 className="text-white animate-spin" size={20} />
                     ) : (
-                      <AgentIcon className="text-slate-400" size={20} />
+                      <AgentIcon className="text-ehb-textMuted" size={20} />
                     )}
                   </div>
                   <div className="flex-1">
                     <p className={`font-medium ${
                       step.status === 'in_progress' ? 'text-brand-gold' :
                       step.status === 'completed' ? 'text-green-400' :
-                      'text-slate-400'
+                      'text-ehb-textMuted'
                     }`}>
                       {step.name}
                     </p>
@@ -452,7 +452,7 @@ export default function AIOrchestrator({ language = 'en' }: AIOrchestatorProps) 
         <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
           <Network className="text-brand-gold" size={20} />
           {language === 'ur' ? 'AI ایجنٹس نیٹ ورک' : 'AI Agents Network'}
-          <span className="text-slate-400 text-sm font-normal">({agents.length} agents)</span>
+          <span className="text-ehb-textMuted text-sm font-normal">({agents.length} agents)</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -476,13 +476,13 @@ export default function AIOrchestrator({ language = 'en' }: AIOrchestatorProps) 
                   </div>
                   <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${getStatusColor(agent.status)}`} />
-                    <span className="text-[10px] text-slate-400">{agent.status}</span>
+                    <span className="text-[10px] text-ehb-textMuted">{agent.status}</span>
                   </div>
                 </div>
                 <h4 className="text-white font-bold text-sm mb-1">
                   {language === 'ur' ? agent.nameUrdu : agent.name}
                 </h4>
-                <p className="text-slate-400 text-xs mb-3 line-clamp-2">
+                <p className="text-ehb-textMuted text-xs mb-3 line-clamp-2">
                   {language === 'ur' ? agent.descriptionUrdu : agent.description}
                 </p>
                 <div className="flex items-center justify-between text-[10px]">
@@ -500,11 +500,11 @@ export default function AIOrchestrator({ language = 'en' }: AIOrchestatorProps) 
                     >
                       <div className="grid grid-cols-2 gap-2 text-xs">
                         <div className="bg-white/5 rounded-lg p-2">
-                          <p className="text-slate-400">Response</p>
+                          <p className="text-ehb-textMuted">Response</p>
                           <p className="text-white font-medium">{agent.metrics.avgResponseTime.toFixed(2)}s</p>
                         </div>
                         <div className="bg-white/5 rounded-lg p-2">
-                          <p className="text-slate-400">Uptime</p>
+                          <p className="text-ehb-textMuted">Uptime</p>
                           <p className="text-green-400 font-medium">{agent.metrics.uptime.toFixed(2)}%</p>
                         </div>
                       </div>

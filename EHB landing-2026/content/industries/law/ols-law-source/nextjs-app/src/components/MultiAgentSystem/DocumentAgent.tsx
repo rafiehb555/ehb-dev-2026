@@ -215,7 +215,7 @@ Generated on behalf of EHB Law Services Platform.
               <Sparkles className="text-brand-gold" size={20} />
               {language === 'ur' ? 'دستاویز ایجنٹ' : 'Legal Document Agent'}
             </h2>
-            <p className="text-slate-400 text-sm">
+            <p className="text-ehb-textMuted text-sm">
               {language === 'ur' ? 'AI سے خودکار قانونی دستاویزات' : 'AI-powered automatic legal document generation'}
             </p>
           </div>
@@ -267,7 +267,7 @@ Generated on behalf of EHB Law Services Platform.
                 <h4 className="text-white font-bold mb-1">
                   {language === 'ur' ? template.nameUrdu : template.name}
                 </h4>
-                <p className="text-slate-400 text-sm mb-3">
+                <p className="text-ehb-textMuted text-sm mb-3">
                   {language === 'ur' ? template.descriptionUrdu : template.description}
                 </p>
                 <div className="flex items-center gap-2">
@@ -296,7 +296,7 @@ Generated on behalf of EHB Law Services Platform.
             <div>
               <button
                 onClick={() => { setSelectedTemplate(null); setFormData({}); }}
-                className="text-slate-400 text-sm hover:text-white mb-2"
+                className="text-ehb-textMuted text-sm hover:text-white mb-2"
               >
                 ← {language === 'ur' ? 'واپس' : 'Back to templates'}
               </button>
@@ -305,7 +305,7 @@ Generated on behalf of EHB Law Services Platform.
               </h3>
             </div>
             <div className="flex items-center gap-2">
-              <Globe className="text-slate-400" size={16} />
+              <Globe className="text-ehb-textMuted" size={16} />
               <select
                 value={selectedLanguage}
                 onChange={(e) => setSelectedLanguage(e.target.value)}
@@ -321,7 +321,7 @@ Generated on behalf of EHB Law Services Platform.
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {selectedTemplate.fields.map((field) => (
               <div key={field.id} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
-                <label className="block text-slate-300 text-sm font-medium mb-2">
+                <label className="block text-ehb-textBody text-sm font-medium mb-2">
                   {language === 'ur' ? field.nameUrdu : field.name}
                   {field.required && <span className="text-red-400 ml-1">*</span>}
                 </label>
@@ -393,7 +393,7 @@ Generated on behalf of EHB Law Services Platform.
             </div>
             <button
               onClick={() => { setGeneratedDoc(null); setFormData({}); setSelectedTemplate(null); }}
-              className="text-slate-400 hover:text-white text-sm"
+              className="text-ehb-textMuted hover:text-white text-sm"
             >
               {language === 'ur' ? 'نئی دستاویز' : 'New Document'}
             </button>
@@ -404,12 +404,12 @@ Generated on behalf of EHB Law Services Platform.
               <span className="text-white font-medium">
                 {selectedTemplate?.name} - {selectedLanguage}
               </span>
-              <div className="flex items-center gap-2 text-xs text-slate-400">
+              <div className="flex items-center gap-2 text-xs text-ehb-textMuted">
                 <Clock size={14} />
                 {new Date().toLocaleString()}
               </div>
             </div>
-            <pre className="p-6 text-slate-300 text-sm whitespace-pre-wrap font-mono max-h-[500px] overflow-y-auto">
+            <pre className="p-6 text-ehb-textBody text-sm whitespace-pre-wrap font-mono max-h-[500px] overflow-y-auto">
               {generatedDoc}
             </pre>
           </div>

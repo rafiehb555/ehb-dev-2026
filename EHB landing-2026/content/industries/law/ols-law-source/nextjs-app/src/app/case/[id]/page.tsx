@@ -147,7 +147,7 @@ export default function CaseDetailPage() {
       case 'verified': return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
       case 'review': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
       case 'pending': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      default: return 'bg-slate-500/20 text-slate-400 border-slate-500/30';
+      default: return 'bg-slate-500/20 text-ehb-textMuted border-slate-500/30';
     }
   };
 
@@ -164,7 +164,7 @@ export default function CaseDetailPage() {
           {/* Back Button */}
           <Link 
             href="/dashboard"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-colors"
+            className="inline-flex items-center gap-2 text-ehb-textMuted hover:text-white mb-6 transition-colors"
           >
             <ArrowLeft size={18} />
             Back to Dashboard
@@ -184,9 +184,9 @@ export default function CaseDetailPage() {
                 <span className="text-slate-500 text-sm font-mono">{CASE_DATA.id}</span>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">{CASE_DATA.title}</h1>
-              <p className="text-slate-400 mb-4">{CASE_DATA.category} • {CASE_DATA.subCategory}</p>
+              <p className="text-ehb-textMuted mb-4">{CASE_DATA.category} • {CASE_DATA.subCategory}</p>
               
-              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-ehb-textMuted">
                 <div className="flex items-center gap-2">
                   <Calendar size={16} />
                   Created: {new Date(CASE_DATA.created).toLocaleDateString()}
@@ -221,7 +221,7 @@ export default function CaseDetailPage() {
           {/* Progress Bar */}
           <div className="mt-8">
             <div className="flex items-center justify-between text-sm mb-2">
-              <span className="text-slate-400">Case Progress</span>
+              <span className="text-ehb-textMuted">Case Progress</span>
               <span className="text-[#D4AF37] font-bold">{CASE_DATA.progress}%</span>
             </div>
             <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
@@ -254,7 +254,7 @@ export default function CaseDetailPage() {
                   className={`flex-1 py-3 px-4 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${
                     activeTab === tab.id 
                       ? 'bg-[#D4AF37] text-slate-900' 
-                      : 'text-slate-400 hover:text-white hover:bg-white/5'
+                      : 'text-ehb-textMuted hover:text-white hover:bg-white/5'
                   }`}
                 >
                   <tab.icon size={18} />
@@ -308,7 +308,7 @@ export default function CaseDetailPage() {
                               )}
                             </div>
                             <h4 className="text-white font-bold mb-1">{event.title}</h4>
-                            <p className="text-sm text-slate-400">{event.description}</p>
+                            <p className="text-sm text-ehb-textMuted">{event.description}</p>
                           </div>
                         </motion.div>
                       ))}
@@ -366,10 +366,10 @@ export default function CaseDetailPage() {
                           </span>
                           <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all">
                             <button className="p-2 hover:bg-white/10 rounded-lg">
-                              <Eye className="text-slate-400" size={16} />
+                              <Eye className="text-ehb-textMuted" size={16} />
                             </button>
                             <button className="p-2 hover:bg-white/10 rounded-lg">
-                              <Download className="text-slate-400" size={16} />
+                              <Download className="text-ehb-textMuted" size={16} />
                             </button>
                           </div>
                         </div>
@@ -422,7 +422,7 @@ export default function CaseDetailPage() {
                   <div className="p-4 border-t border-white/10 bg-slate-900/50">
                     <div className="flex gap-3">
                       <button className="p-3 bg-white/10 rounded-xl hover:bg-white/20 transition-all">
-                        <Paperclip className="text-slate-400" size={18} />
+                        <Paperclip className="text-ehb-textMuted" size={18} />
                       </button>
                       <input
                         type="text"
@@ -445,7 +445,7 @@ export default function CaseDetailPage() {
           <div className="space-y-6">
             {/* Assigned Lawyer */}
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-              <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Assigned Lawyer</h3>
+              <h3 className="text-sm font-bold text-ehb-textMuted uppercase tracking-wider mb-4">Assigned Lawyer</h3>
               
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#B8860B] flex items-center justify-center text-3xl">
@@ -453,7 +453,7 @@ export default function CaseDetailPage() {
                 </div>
                 <div>
                   <h4 className="text-white font-bold">{CASE_DATA.lawyer.name}</h4>
-                  <p className="text-sm text-slate-400">{CASE_DATA.lawyer.title}</p>
+                  <p className="text-sm text-ehb-textMuted">{CASE_DATA.lawyer.title}</p>
                   <div className="flex items-center gap-1 mt-1">
                     <Star className="text-yellow-400 fill-yellow-400" size={12} />
                     <span className="text-white text-sm font-bold">{CASE_DATA.lawyer.rating}</span>
@@ -463,11 +463,11 @@ export default function CaseDetailPage() {
               </div>
               
               <div className="space-y-2 mb-4">
-                <div className="flex items-center gap-2 text-sm text-slate-400">
+                <div className="flex items-center gap-2 text-sm text-ehb-textMuted">
                   <Phone size={14} />
                   {CASE_DATA.lawyer.phone}
                 </div>
-                <div className="flex items-center gap-2 text-sm text-slate-400">
+                <div className="flex items-center gap-2 text-sm text-ehb-textMuted">
                   <MessageSquare size={14} />
                   {CASE_DATA.lawyer.email}
                 </div>
@@ -483,8 +483,8 @@ export default function CaseDetailPage() {
 
             {/* Case Summary */}
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-              <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Case Summary</h3>
-              <p className="text-slate-300 text-sm leading-relaxed">
+              <h3 className="text-sm font-bold text-ehb-textMuted uppercase tracking-wider mb-4">Case Summary</h3>
+              <p className="text-ehb-textBody text-sm leading-relaxed">
                 {CASE_DATA.description}
               </p>
             </div>
@@ -495,11 +495,11 @@ export default function CaseDetailPage() {
               
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Total Paid</span>
+                  <span className="text-ehb-textMuted">Total Paid</span>
                   <span className="text-emerald-400 font-bold">${CASE_DATA.financials.totalPaid}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Amount Due</span>
+                  <span className="text-ehb-textMuted">Amount Due</span>
                   <span className="text-orange-400 font-bold">${CASE_DATA.financials.totalDue}</span>
                 </div>
                 <div className="h-px bg-white/10 my-2" />
@@ -518,7 +518,7 @@ export default function CaseDetailPage() {
 
             {/* Next Steps */}
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
-              <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Next Steps</h3>
+              <h3 className="text-sm font-bold text-ehb-textMuted uppercase tracking-wider mb-4">Next Steps</h3>
               
               <div className="space-y-3">
                 <div className="flex items-center gap-3 p-3 bg-blue-500/10 border border-blue-500/30 rounded-xl">
@@ -529,7 +529,7 @@ export default function CaseDetailPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3 p-3 bg-white/5 rounded-xl">
-                  <Calendar className="text-slate-400" size={18} />
+                  <Calendar className="text-ehb-textMuted" size={18} />
                   <div>
                     <p className="text-white text-sm font-medium">First Hearing</p>
                     <p className="text-xs text-slate-500">Mar 20, 2026</p>

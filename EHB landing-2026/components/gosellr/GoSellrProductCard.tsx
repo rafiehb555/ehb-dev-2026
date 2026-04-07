@@ -43,14 +43,14 @@ export function GoSellrProductCard({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-sm font-semibold text-white line-clamp-2">{product.name}</p>
-          <p className="text-[11px] text-slate-400 mt-1">{product.category}</p>
+          <p className="text-[11px] text-ehb-textMuted mt-1">{product.category}</p>
         </div>
         <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-2 py-[2px] text-[10px] text-slate-200">
           {trust ? `${trust.badge.badge} ${trust.badge.level}` : product.badge}
         </span>
       </div>
 
-      <p className="text-[12px] text-slate-300 leading-relaxed">{product.short}</p>
+      <p className="text-[12px] text-ehb-textBody leading-relaxed">{product.short}</p>
 
       <div className="flex items-center justify-between text-[11px]">
         <span className="font-semibold text-white">
@@ -69,7 +69,7 @@ export function GoSellrProductCard({
       )}
 
       <div className="flex items-center justify-between gap-3">
-        <span className="text-[10px] text-slate-400">{trust ? trust.badge.level : product.tier}</span>
+        <span className="text-[10px] text-ehb-textMuted">{trust ? trust.badge.level : product.tier}</span>
         <Link
           href={`/gosellr/product/${product.id}${locationQs ?? ""}`}
           className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#00eaff] to-[#22c55e] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"

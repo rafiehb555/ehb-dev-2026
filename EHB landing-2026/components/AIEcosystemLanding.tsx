@@ -60,11 +60,11 @@ export function AIEcosystemLanding() {
         <section className="space-y-2">
           <div className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-slate-200 border-white/10">
             <span aria-hidden>🤖</span>
-            <span className="text-slate-400">Phase 7</span>
+            <span className="text-ehb-textMuted">Phase 7</span>
             <span className="text-white font-semibold">AI Ecosystem</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-semibold leading-tight gradient-text">ML, Fraud Detection & NLP (demo)</h1>
-          <p className="text-slate-400 max-w-2xl">
+          <p className="text-ehb-textMuted max-w-2xl">
             AI runs behind the scenes to keep opportunities accurate, decisions understandable, and trust verifications consistent.
           </p>
         </section>
@@ -113,14 +113,14 @@ export function AIEcosystemLanding() {
               <div className="glass-card rounded-2xl border p-5" style={{ borderColor: `${activeCopy.accent}`, boxShadow: `0 0 30px ${activeCopy.accent}` }}>
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">{activeCopy.title}</p>
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">{activeCopy.title}</p>
                     <h2 className="text-xl font-semibold text-white mt-2">{activeCopy.headline}</h2>
                   </div>
-                  <span className="text-[13px] text-slate-300" aria-hidden>
+                  <span className="text-[13px] text-ehb-textBody" aria-hidden>
                     →
                   </span>
                 </div>
-                <p className="text-slate-300 mt-3 leading-relaxed">{activeCopy.detail}</p>
+                <p className="text-ehb-textBody mt-3 leading-relaxed">{activeCopy.detail}</p>
                 <ul className="mt-4 space-y-2 text-slate-200">
                   {activeCopy.bullets.map((b) => (
                     <li key={b} className="flex items-start gap-2">
@@ -151,8 +151,8 @@ export function AIEcosystemLanding() {
 
             <div className="lg:col-span-5 space-y-4">
               <div className="glass-card rounded-2xl border p-4">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">Trusted AI flow</p>
-                <div className="space-y-2 text-slate-300 text-[12px]">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Trusted AI flow</p>
+                <div className="space-y-2 text-ehb-textBody text-[12px]">
                   <div className="flex items-start gap-2">
                     <span aria-hidden>1.</span>
                     <span>Verified signals enter the system (PSS + CRB + STL).</span>
@@ -169,8 +169,8 @@ export function AIEcosystemLanding() {
               </div>
 
               <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(34,197,94,0.25)" }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">AI status (demo)</p>
-                <p className="text-slate-300 text-[12px] leading-relaxed">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">AI status (demo)</p>
+                <p className="text-ehb-textBody text-[12px] leading-relaxed">
                   AI is analyzing opportunities for you... Best match found... Optimizing your growth... (simulated)
                 </p>
               </div>

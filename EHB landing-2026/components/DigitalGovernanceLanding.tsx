@@ -10,13 +10,13 @@ export function DigitalGovernanceLanding() {
         <section className="space-y-2">
           <div className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-slate-200 border-white/10">
             <span aria-hidden>🏛️</span>
-            <span className="text-slate-400">Phase 5</span>
+            <span className="text-ehb-textMuted">Phase 5</span>
             <span className="text-white font-semibold">Digital Governance</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-semibold leading-tight gradient-text">
             Applications, Licenses & Compliance
           </h1>
-          <p className="text-slate-400 max-w-2xl">
+          <p className="text-ehb-textMuted max-w-2xl">
             Structured governance for verification approvals, licenses registry and compliance notifications — with
             trust meanings always visible.
           </p>
@@ -37,7 +37,7 @@ export function DigitalGovernanceLanding() {
           <div className="relative grid gap-6 lg:grid-cols-12 items-start">
             <div className="lg:col-span-7 space-y-4">
               <div>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
                   Applications & approvals (Workflow Engine)
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -55,16 +55,16 @@ export function DigitalGovernanceLanding() {
                     >
                       <div className="flex items-start justify-between gap-3">
                         <p className="text-sm font-semibold text-white">{col.title}</p>
-                        <span className="text-[10px] text-slate-400">demo</span>
+                        <span className="text-[10px] text-ehb-textMuted">demo</span>
                       </div>
-                      <p className="text-[12px] text-slate-300 mt-2 leading-relaxed">{col.desc}</p>
+                      <p className="text-[12px] text-ehb-textBody mt-2 leading-relaxed">{col.desc}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
                   License registry (Certificates & Registry)
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -74,7 +74,7 @@ export function DigitalGovernanceLanding() {
                     "Certificate registry & renewals",
                     "Compliance status audit trail",
                   ].map((item) => (
-                    <div key={item} className="flex items-start gap-2 text-slate-300">
+                    <div key={item} className="flex items-start gap-2 text-ehb-textBody">
                       <span aria-hidden className="mt-[2px]">
                         ✅
                       </span>
@@ -105,7 +105,7 @@ export function DigitalGovernanceLanding() {
 
             <div className="lg:col-span-5 space-y-4">
               <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(0,174,239,0.35)" }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
                   Trust stack meaning (always visible)
                 </p>
                 <div className="space-y-2">
@@ -115,7 +115,7 @@ export function DigitalGovernanceLanding() {
                     "⭐ STL Level → Trust score level",
                     "🌐 DMO Registered → Marketplace officially registered",
                   ].map((t) => (
-                    <p key={t} className="text-[12px] text-slate-300 leading-relaxed">
+                    <p key={t} className="text-[12px] text-ehb-textBody leading-relaxed">
                       {t}
                     </p>
                   ))}
@@ -123,7 +123,7 @@ export function DigitalGovernanceLanding() {
               </div>
 
               <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(34,197,94,0.25)" }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
                   Compliance notifications (demo)
                 </p>
                 <div className="space-y-2">
@@ -132,7 +132,7 @@ export function DigitalGovernanceLanding() {
                     "• STL score updated — secure record stored.",
                     "• License registry entry renewed — refilling count increments.",
                   ].map((n) => (
-                    <p key={n} className="text-[12px] text-slate-300 leading-relaxed">
+                    <p key={n} className="text-[12px] text-ehb-textBody leading-relaxed">
                       {n}
                     </p>
                   ))}
@@ -140,10 +140,10 @@ export function DigitalGovernanceLanding() {
               </div>
 
               <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(139,92,246,0.25)" }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">
                   AI tools for governance
                 </p>
-                <p className="text-[12px] text-slate-300 leading-relaxed">
+                <p className="text-[12px] text-ehb-textBody leading-relaxed">
                   Use AI to reduce mistakes in documents, detect inconsistencies, and match the right compliance workflow.
                 </p>
               </div>

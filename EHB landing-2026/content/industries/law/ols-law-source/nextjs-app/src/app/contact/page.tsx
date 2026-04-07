@@ -90,7 +90,7 @@ export default function ContactPage() {
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Contact Us
             </h1>
-            <p className="text-xl text-slate-400">
+            <p className="text-xl text-ehb-textMuted">
               Have questions? We're here to help. Reach out to our team anytime.
             </p>
           </motion.div>
@@ -118,7 +118,7 @@ export default function ContactPage() {
                     <CheckCircle2 className="text-white" size={32} />
                   </div>
                   <h3 className="text-xl font-bold text-white mb-2">Message Sent!</h3>
-                  <p className="text-slate-400 mb-6">We'll get back to you within 24 hours.</p>
+                  <p className="text-ehb-textMuted mb-6">We'll get back to you within 24 hours.</p>
                   <button
                     onClick={() => {
                       setIsSubmitted(false);
@@ -133,7 +133,7 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">FULL NAME *</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">FULL NAME *</label>
                       <input
                         type="text"
                         required
@@ -144,7 +144,7 @@ export default function ContactPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">EMAIL *</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">EMAIL *</label>
                       <input
                         type="email"
                         required
@@ -158,7 +158,7 @@ export default function ContactPage() {
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">PHONE</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">PHONE</label>
                       <input
                         type="tel"
                         placeholder="+1 234 567 8900"
@@ -168,7 +168,7 @@ export default function ContactPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-400 mb-2">REASON *</label>
+                      <label className="block text-xs font-bold text-ehb-textMuted mb-2">REASON *</label>
                       <select
                         required
                         value={formData.reason}
@@ -183,7 +183,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 mb-2">MESSAGE *</label>
+                    <label className="block text-xs font-bold text-ehb-textMuted mb-2">MESSAGE *</label>
                     <textarea
                       required
                       rows={5}
@@ -272,7 +272,7 @@ export default function ContactPage() {
                   <a
                     key={social.label}
                     href="#"
-                    className={`w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 transition-all ${social.color}`}
+                    className={`w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-ehb-textMuted transition-all ${social.color}`}
                   >
                     <social.icon size={20} />
                   </a>
@@ -292,7 +292,7 @@ export default function ContactPage() {
               Global Presence
             </div>
             <h2 className="text-3xl font-bold text-white mb-4">Our Offices</h2>
-            <p className="text-slate-400">Visit us at any of our global locations</p>
+            <p className="text-ehb-textMuted">Visit us at any of our global locations</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -314,19 +314,19 @@ export default function ContactPage() {
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-2">
                     <MapPin className="text-slate-500 shrink-0 mt-0.5" size={14} />
-                    <span className="text-slate-400">{office.address}</span>
+                    <span className="text-ehb-textMuted">{office.address}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Phone className="text-slate-500" size={14} />
-                    <span className="text-slate-400">{office.phone}</span>
+                    <span className="text-ehb-textMuted">{office.phone}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Mail className="text-slate-500" size={14} />
-                    <span className="text-slate-400">{office.email}</span>
+                    <span className="text-ehb-textMuted">{office.email}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="text-slate-500" size={14} />
-                    <span className="text-slate-400">{office.hours}</span>
+                    <span className="text-ehb-textMuted">{office.hours}</span>
                   </div>
                 </div>
               </motion.div>

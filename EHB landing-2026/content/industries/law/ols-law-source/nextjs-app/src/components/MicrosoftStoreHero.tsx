@@ -147,21 +147,21 @@ export default function MicrosoftStoreHero() {
           <div className="absolute inset-y-0 right-20 sm:right-24 flex items-center gap-1 sm:gap-2">
             <button 
               onClick={handleVoiceSearch}
-              className={`p-1.5 sm:p-2 rounded-lg transition-colors ${isListening ? 'bg-red-500 text-white animate-pulse' : 'text-slate-400 hover:bg-white/10'}`}
+              className={`p-1.5 sm:p-2 rounded-lg transition-colors ${isListening ? 'bg-red-500 text-white animate-pulse' : 'text-ehb-textMuted hover:bg-white/10'}`}
               title="AI Voice Search"
             >
               <Mic size={14} className="sm:w-[18px] sm:h-[18px]" />
             </button>
             <button 
               onClick={() => imageInputRef.current?.click()}
-              className="p-1.5 sm:p-2 text-slate-400 hover:bg-white/10 rounded-lg transition-colors hidden sm:block"
+              className="p-1.5 sm:p-2 text-ehb-textMuted hover:bg-white/10 rounded-lg transition-colors hidden sm:block"
               title="Upload Image"
             >
               <Image size={14} className="sm:w-[18px] sm:h-[18px]" />
             </button>
             <button 
               onClick={() => docInputRef.current?.click()}
-              className="p-1.5 sm:p-2 text-slate-400 hover:bg-white/10 rounded-lg transition-colors hidden sm:block"
+              className="p-1.5 sm:p-2 text-ehb-textMuted hover:bg-white/10 rounded-lg transition-colors hidden sm:block"
               title="Upload Document"
             >
               <FileText size={14} className="sm:w-[18px] sm:h-[18px]" />
@@ -383,7 +383,7 @@ export default function MicrosoftStoreHero() {
           >
             <button 
               onClick={() => setShowVoiceOverlay(false)}
-              className="absolute top-4 right-4 sm:top-8 sm:right-8 text-slate-400 hover:text-white transition-colors"
+              className="absolute top-4 right-4 sm:top-8 sm:right-8 text-ehb-textMuted hover:text-white transition-colors"
             >
               <X size={24} className="sm:w-8 sm:h-8" />
             </button>

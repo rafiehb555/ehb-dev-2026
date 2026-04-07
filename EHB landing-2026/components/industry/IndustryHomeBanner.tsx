@@ -39,9 +39,9 @@ export function IndustryHomeBanner({ industry }: { industry: Industry }) {
       />
       <div className="relative z-10 px-4 py-4 md:px-6 md:py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
         <div>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-slate-300 mb-1">EHB marketplace</p>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-ehb-textBody mb-1">EHB marketplace</p>
           <p className="text-sm md:text-base font-semibold text-white drop-shadow-sm">{industry.heroTitle}</p>
-          <p className="text-[11px] text-slate-300 mt-1 max-w-2xl line-clamp-2">{industry.overview}</p>
+          <p className="text-[11px] text-ehb-textBody mt-1 max-w-2xl line-clamp-2">{industry.overview}</p>
         </div>
       </div>
     </div>

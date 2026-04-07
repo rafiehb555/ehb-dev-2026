@@ -195,8 +195,8 @@ export default function SmartCommunication({ caseId, lawyerName, lawyerImage, la
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'sent': return <Check className="text-slate-400" size={14} />;
-      case 'delivered': return <CheckCheck className="text-slate-400" size={14} />;
+      case 'sent': return <Check className="text-ehb-textMuted" size={14} />;
+      case 'delivered': return <CheckCheck className="text-ehb-textMuted" size={14} />;
       case 'read': return <CheckCheck className="text-blue-400" size={14} />;
       default: return null;
     }
@@ -217,7 +217,7 @@ export default function SmartCommunication({ caseId, lawyerName, lawyerImage, la
             className={`flex-1 py-4 px-6 font-medium flex items-center justify-center gap-2 transition-all ${
               activeTab === 'chat' 
                 ? 'text-white border-b-2 border-brand-gold bg-white/5' 
-                : 'text-slate-400 hover:text-white'
+                : 'text-ehb-textMuted hover:text-white'
             }`}
           >
             <MessageSquare size={20} />
@@ -228,7 +228,7 @@ export default function SmartCommunication({ caseId, lawyerName, lawyerImage, la
             className={`flex-1 py-4 px-6 font-medium flex items-center justify-center gap-2 transition-all relative ${
               activeTab === 'notifications' 
                 ? 'text-white border-b-2 border-brand-gold bg-white/5' 
-                : 'text-slate-400 hover:text-white'
+                : 'text-ehb-textMuted hover:text-white'
             }`}
           >
             <Bell size={20} />
@@ -351,7 +351,7 @@ export default function SmartCommunication({ caseId, lawyerName, lawyerImage, la
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="p-2 text-slate-400 hover:text-white transition-all"
+                  className="p-2 text-ehb-textMuted hover:text-white transition-all"
                 >
                   <Paperclip size={20} />
                 </button>
@@ -378,7 +378,7 @@ export default function SmartCommunication({ caseId, lawyerName, lawyerImage, la
           /* Notifications */
           <div className="h-[400px] overflow-y-auto p-4 space-y-3">
             {notifications.length === 0 ? (
-              <div className="text-center py-12 text-slate-400">
+              <div className="text-center py-12 text-ehb-textMuted">
                 <Bell size={48} className="mx-auto mb-4 opacity-50" />
                 <p>{language === 'ur' ? 'کوئی اطلاع نہیں' : 'No notifications'}</p>
               </div>
@@ -403,7 +403,7 @@ export default function SmartCommunication({ caseId, lawyerName, lawyerImage, la
                       <p className="text-white font-medium">
                         {language === 'ur' ? notification.titleUrdu : notification.title}
                       </p>
-                      <p className="text-slate-400 text-sm mt-1">
+                      <p className="text-ehb-textMuted text-sm mt-1">
                         {language === 'ur' ? notification.descriptionUrdu : notification.description}
                       </p>
                       <p className="text-slate-500 text-xs mt-2 flex items-center gap-1">
@@ -472,14 +472,14 @@ export default function SmartCommunication({ caseId, lawyerName, lawyerImage, la
                 <h3 className="text-white font-bold text-lg">
                   {language === 'ur' ? 'مشاورت طے کریں' : 'Schedule Consultation'}
                 </h3>
-                <button onClick={() => setShowScheduleModal(false)} className="text-slate-400 hover:text-white">
+                <button onClick={() => setShowScheduleModal(false)} className="text-ehb-textMuted hover:text-white">
                   <X size={24} />
                 </button>
               </div>
               
               <div className="space-y-4">
                 <div>
-                  <label className="text-slate-400 text-sm mb-2 block">
+                  <label className="text-ehb-textMuted text-sm mb-2 block">
                     {language === 'ur' ? 'تاریخ' : 'Date'}
                   </label>
                   <input
@@ -488,7 +488,7 @@ export default function SmartCommunication({ caseId, lawyerName, lawyerImage, la
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 text-sm mb-2 block">
+                  <label className="text-ehb-textMuted text-sm mb-2 block">
                     {language === 'ur' ? 'وقت' : 'Time'}
                   </label>
                   <input
@@ -497,7 +497,7 @@ export default function SmartCommunication({ caseId, lawyerName, lawyerImage, la
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 text-sm mb-2 block">
+                  <label className="text-ehb-textMuted text-sm mb-2 block">
                     {language === 'ur' ? 'قسم' : 'Type'}
                   </label>
                   <select className="w-full bg-white/10 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-gold">

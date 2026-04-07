@@ -137,16 +137,16 @@ export default function Home() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-2">
-              <Link href="/ai-agent" className="px-4 py-2 text-slate-400 hover:text-white transition-colors text-sm font-medium rounded-lg hover:bg-white/5">
+              <Link href="/ai-agent" className="px-4 py-2 text-ehb-textMuted hover:text-white transition-colors text-sm font-medium rounded-lg hover:bg-white/5">
                 AI Agent
               </Link>
-              <Link href="/marketplace" className="px-4 py-2 text-slate-400 hover:text-white transition-colors text-sm font-medium rounded-lg hover:bg-white/5">
+              <Link href="/marketplace" className="px-4 py-2 text-ehb-textMuted hover:text-white transition-colors text-sm font-medium rounded-lg hover:bg-white/5">
                 Lawyers
               </Link>
-              <Link href="/create-case" className="px-4 py-2 text-slate-400 hover:text-white transition-colors text-sm font-medium rounded-lg hover:bg-white/5">
+              <Link href="/create-case" className="px-4 py-2 text-ehb-textMuted hover:text-white transition-colors text-sm font-medium rounded-lg hover:bg-white/5">
                 Create Case
               </Link>
-              <Link href="/dashboard" className="px-4 py-2 text-slate-400 hover:text-white transition-colors text-sm font-medium rounded-lg hover:bg-white/5">
+              <Link href="/dashboard" className="px-4 py-2 text-ehb-textMuted hover:text-white transition-colors text-sm font-medium rounded-lg hover:bg-white/5">
                 Dashboard
               </Link>
             </div>
@@ -206,23 +206,23 @@ export default function Home() {
                   <span className="font-medium">Landing Page</span>
                   <ExternalLink size={16} className="ml-auto text-[#D4AF37]" />
                 </Link>
-                <Link href="/ai-agent" className="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 rounded-xl transition-all">
+                <Link href="/ai-agent" className="flex items-center gap-3 px-4 py-3 text-ehb-textBody hover:bg-white/5 rounded-xl transition-all">
                   <Bot size={20} />
                   AI Agent System
                 </Link>
-                <Link href="/marketplace" className="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 rounded-xl transition-all">
+                <Link href="/marketplace" className="flex items-center gap-3 px-4 py-3 text-ehb-textBody hover:bg-white/5 rounded-xl transition-all">
                   <Users size={20} />
                   Find Lawyers
                 </Link>
-                <Link href="/create-case" className="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 rounded-xl transition-all">
+                <Link href="/create-case" className="flex items-center gap-3 px-4 py-3 text-ehb-textBody hover:bg-white/5 rounded-xl transition-all">
                   <FileText size={20} />
                   Create Case
                 </Link>
-                <Link href="/dashboard" className="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 rounded-xl transition-all">
+                <Link href="/dashboard" className="flex items-center gap-3 px-4 py-3 text-ehb-textBody hover:bg-white/5 rounded-xl transition-all">
                   <BarChart3 size={20} />
                   Dashboard
                 </Link>
-                <Link href="/investor-demo" className="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-white/5 rounded-xl transition-all">
+                <Link href="/investor-demo" className="flex items-center gap-3 px-4 py-3 text-ehb-textBody hover:bg-white/5 rounded-xl transition-all">
                   <Play size={20} />
                   Investor Demo
                 </Link>
@@ -269,7 +269,7 @@ export default function Home() {
                 Reimagined with AI
               </span>
             </h1>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-ehb-textMuted max-w-2xl mx-auto">
               Connect with 25,000+ verified lawyers, get AI-powered legal assistance, 
               and resolve your cases faster than ever.
             </p>
@@ -300,7 +300,7 @@ export default function Home() {
                     onClick={() => setIsVoiceActive(!isVoiceActive)}
                     className={`p-4 rounded-xl transition-all ${isVoiceActive ? 'bg-red-500 animate-pulse' : 'bg-white/10 hover:bg-white/20'}`}
                   >
-                    <Mic className={isVoiceActive ? 'text-white' : 'text-slate-400'} size={20} />
+                    <Mic className={isVoiceActive ? 'text-white' : 'text-ehb-textMuted'} size={20} />
                   </button>
                   <button className="px-6 py-4 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-slate-900 font-bold rounded-xl hover:shadow-lg hover:shadow-[#D4AF37]/30 transition-all flex items-center gap-2">
                     <Search size={20} />
@@ -311,7 +311,7 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap justify-center gap-2 mt-4">
               {['Divorce Case', 'Property Dispute', 'Child Custody', 'Corporate Contract'].map((tag) => (
-                <button key={tag} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs text-slate-400 hover:bg-white/10 hover:text-white transition-all">
+                <button key={tag} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs text-ehb-textMuted hover:bg-white/10 hover:text-white transition-all">
                   {tag}
                 </button>
               ))}
@@ -356,7 +356,7 @@ export default function Home() {
                 <p className="text-2xl md:text-3xl font-bold text-white">
                   <AnimatedCounter end={stat.value} suffix={stat.suffix} />
                 </p>
-                <p className="text-sm text-slate-400">{stat.label}</p>
+                <p className="text-sm text-ehb-textMuted">{stat.label}</p>
               </div>
             ))}
           </motion.div>
@@ -369,7 +369,7 @@ export default function Home() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Legal Services</h2>
-              <p className="text-slate-400">Expert legal assistance across all practice areas</p>
+              <p className="text-ehb-textMuted">Expert legal assistance across all practice areas</p>
             </div>
             <Link href="/marketplace" className="text-[#D4AF37] hover:text-yellow-400 flex items-center gap-1 text-sm">
               View All <ChevronRight size={16} />
@@ -413,7 +413,7 @@ export default function Home() {
             <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
               AI-Powered Legal Intelligence
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <p className="text-ehb-textMuted max-w-2xl mx-auto">
               Our 14 specialized AI agents work together to provide comprehensive legal assistance
             </p>
           </div>
@@ -432,7 +432,7 @@ export default function Home() {
                   <feature.icon className="text-white" size={28} />
                 </div>
                 <h3 className="text-white font-bold text-lg mb-2">{feature.title}</h3>
-                <p className="text-slate-400 text-sm">{feature.desc}</p>
+                <p className="text-ehb-textMuted text-sm">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -456,7 +456,7 @@ export default function Home() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Top Lawyers</h2>
-              <p className="text-slate-400">Verified and highly rated legal professionals</p>
+              <p className="text-ehb-textMuted">Verified and highly rated legal professionals</p>
             </div>
             <Link href="/marketplace" className="text-[#D4AF37] hover:text-yellow-400 flex items-center gap-1 text-sm">
               View All <ChevronRight size={16} />
@@ -524,7 +524,7 @@ export default function Home() {
           <div className="bg-gradient-to-r from-[#D4AF37]/10 to-blue-500/10 rounded-3xl p-8 md:p-12 border border-white/10">
             <div className="text-center mb-12">
               <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">How EHB Law Works</h2>
-              <p className="text-slate-400">Simple 4-step process to resolve your legal matters</p>
+              <p className="text-ehb-textMuted">Simple 4-step process to resolve your legal matters</p>
             </div>
 
             <div className="grid md:grid-cols-4 gap-8">
@@ -542,7 +542,7 @@ export default function Home() {
                     {item.step}
                   </div>
                   <h3 className="text-white font-bold mb-2">{item.title}</h3>
-                  <p className="text-slate-400 text-sm">{item.desc}</p>
+                  <p className="text-ehb-textMuted text-sm">{item.desc}</p>
                   {index < 3 && (
                     <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-px bg-gradient-to-r from-[#D4AF37]/50 to-transparent" />
                   )}
@@ -558,7 +558,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Client Success Stories</h2>
-            <p className="text-slate-400">What our clients say about EHB Law</p>
+            <p className="text-ehb-textMuted">What our clients say about EHB Law</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -576,7 +576,7 @@ export default function Home() {
                     <Star key={i} size={16} className={i < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-slate-600'} />
                   ))}
                 </div>
-                <p className="text-slate-300 italic mb-6">"{testimonial.feedback}"</p>
+                <p className="text-ehb-textBody italic mb-6">"{testimonial.feedback}"</p>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#D4AF37] to-[#B8860B] flex items-center justify-center text-white font-bold">
@@ -606,7 +606,7 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                 Start Your Legal Case Today
               </h2>
-              <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
+              <p className="text-ehb-textBody mb-8 max-w-2xl mx-auto">
                 Don't wait for legal problems to grow. Get AI-powered assistance and 
                 connect with top lawyers in minutes.
               </p>
@@ -632,7 +632,7 @@ export default function Home() {
 
               {/* Landing Page CTA */}
               <div className="mt-8 pt-8 border-t border-white/10">
-                <p className="text-slate-400 text-sm mb-4">Want to learn more about our platform?</p>
+                <p className="text-ehb-textMuted text-sm mb-4">Want to learn more about our platform?</p>
                 <Link
                   href="/landing"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/20 text-white font-medium rounded-xl hover:bg-white/10 hover:border-[#D4AF37]/30 transition-all"
@@ -661,7 +661,7 @@ export default function Home() {
             </div>
             <div>
               <p className="text-white font-bold">EHB Law App</p>
-              <p className="text-slate-400 text-xs">Legal help in your pocket</p>
+              <p className="text-ehb-textMuted text-xs">Legal help in your pocket</p>
             </div>
           </div>
           <div className="flex gap-2">

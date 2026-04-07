@@ -28,7 +28,7 @@ export function EducationIndustry3D({ accentColor = "#E53935" }: { accentColor?:
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">
         Learn with verified teachers, safe payments, and real progress
       </h2>
-      <p className="text-slate-400 max-w-3xl mb-8 text-sm md:text-base">
+      <p className="text-ehb-textMuted max-w-3xl mb-8 text-sm md:text-base">
         Students get AI-matched learning paths. Teachers are verified for trust. Payments and
         progress move through secure, monitored steps.
       </p>
@@ -87,7 +87,7 @@ export function EducationIndustry3D({ accentColor = "#E53935" }: { accentColor?:
                 >
                   {item.title}
                 </p>
-                <p className="text-[11px] md:text-xs text-slate-300">{item.desc}</p>
+                <p className="text-[11px] md:text-xs text-ehb-textBody">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -144,7 +144,7 @@ export function EducationIndustry3D({ accentColor = "#E53935" }: { accentColor?:
                   <p className="font-semibold" style={{ color: `${accentColor}` }}>
                     {item.label}
                   </p>
-                  <p className="text-[9px] text-slate-300">{item.sub}</p>
+                  <p className="text-[9px] text-ehb-textBody">{item.sub}</p>
                 </div>
               ))}
 
@@ -207,7 +207,7 @@ export function EducationIndustry3D({ accentColor = "#E53935" }: { accentColor?:
                 <p className="text-[11px] font-semibold mb-0.5" style={{ color: `${accentColor}` }}>
                   {item.title}
                 </p>
-                <p className="text-[11px] md:text-xs text-slate-300">{item.desc}</p>
+                <p className="text-[11px] md:text-xs text-ehb-textBody">{item.desc}</p>
               </div>
             ))}
             <div
@@ -220,7 +220,7 @@ export function EducationIndustry3D({ accentColor = "#E53935" }: { accentColor?:
               <p className="text-[11px] font-semibold mb-0.5" style={{ color: `${accent2}` }}>
                 Payment & progress record
               </p>
-              <p className="text-[11px] md:text-xs text-slate-300">
+              <p className="text-[11px] md:text-xs text-ehb-textBody">
                 Secure payment, feedback and learning records.
               </p>
             </div>

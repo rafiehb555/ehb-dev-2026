@@ -281,7 +281,7 @@ export default function OrderDetailPage() {
   if (!orderId) {
     return (
       <main className="min-h-screen text-slate-100 container-ehb py-10">
-        <p className="text-slate-400">Invalid order.</p>
+        <p className="text-ehb-textMuted">Invalid order.</p>
       </main>
     );
   }
@@ -294,7 +294,7 @@ export default function OrderDetailPage() {
             ← Orders
           </Link>
           <span className="text-slate-600">·</span>
-          <Link href="/cart" className="text-sm text-slate-400 hover:text-white">
+          <Link href="/cart" className="text-sm text-ehb-textMuted hover:text-white">
             Cart
           </Link>
         </div>
@@ -313,7 +313,7 @@ export default function OrderDetailPage() {
             ) : null}
 
             <header>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Marketplace order</p>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Marketplace order</p>
               <h1 className="text-2xl font-semibold text-white mt-1">{data.order.product.name}</h1>
               <p className="text-xs font-mono text-slate-500 mt-2 break-all">{data.order.id}</p>
             </header>
@@ -348,7 +348,7 @@ export default function OrderDetailPage() {
 
             <div className="glass-card rounded-3xl border border-white/10 p-5 space-y-3 text-sm">
               <div className="flex justify-between gap-3 items-center">
-                <span className="text-slate-400">Status</span>
+                <span className="text-ehb-textMuted">Status</span>
                 <span
                   className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold tracking-wide ${orderStatusBadgeClass(data.order.status)}`}
                 >
@@ -356,22 +356,22 @@ export default function OrderDetailPage() {
                 </span>
               </div>
               <div className="flex justify-between gap-3">
-                <span className="text-slate-400">Qty × unit</span>
+                <span className="text-ehb-textMuted">Qty × unit</span>
                 <span className="text-white">
                   {data.order.quantity} × ${data.order.price.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between gap-3">
-                <span className="text-slate-400">Buyer</span>
+                <span className="text-ehb-textMuted">Buyer</span>
                 <span className="text-slate-200">{data.order.buyer.name}</span>
               </div>
               <div className="flex justify-between gap-3">
-                <span className="text-slate-400">Seller</span>
+                <span className="text-ehb-textMuted">Seller</span>
                 <span className="text-slate-200">{data.order.seller.name}</span>
               </div>
               <div className="flex justify-between gap-3">
-                <span className="text-slate-400">Created</span>
-                <span className="text-slate-300">{new Date(data.order.createdAt).toLocaleString()}</span>
+                <span className="text-ehb-textMuted">Created</span>
+                <span className="text-ehb-textBody">{new Date(data.order.createdAt).toLocaleString()}</span>
               </div>
             </div>
 
@@ -386,7 +386,7 @@ export default function OrderDetailPage() {
                       <span className="absolute -left-[21px] top-1.5 h-2 w-2 rounded-full bg-cyan-400/80" />
                       <p className="text-sm text-white font-medium">{step.title}</p>
                       <p className="text-[11px] text-slate-500">{new Date(step.at).toLocaleString()}</p>
-                      {step.note ? <p className="text-[12px] text-slate-400 mt-1">{step.note}</p> : null}
+                      {step.note ? <p className="text-[12px] text-ehb-textMuted mt-1">{step.note}</p> : null}
                     </li>
                   ))}
                 </ol>
@@ -396,7 +396,7 @@ export default function OrderDetailPage() {
             {data.viewer.actions.pay ? (
               <div className="rounded-3xl border border-sky-500/25 bg-sky-500/5 p-5 space-y-3">
                 <p className="text-sm font-semibold text-sky-100">Payment</p>
-                <p className="text-[12px] text-slate-400">
+                <p className="text-[12px] text-ehb-textMuted">
                   {stripeCheckout ? (
                     <>
                       Opens <span className="text-white">Stripe Checkout</span> when configured server-side; otherwise
@@ -439,12 +439,12 @@ export default function OrderDetailPage() {
                     <Loader2 className="h-3.5 w-3.5 animate-spin text-emerald-300/80" aria-hidden />
                   ) : null}
                 </p>
-                <p className="text-[12px] text-slate-400">
+                <p className="text-[12px] text-ehb-textMuted">
                   After payment, seller ships then delivers. Buyers can cancel while pending or paid. Uses{" "}
                   <code className="text-cyan-200/90">PATCH /api/marketplace/order/[id]</code>.
                 </p>
                 {data.viewer.actions.markShipped ? (
-                  <label className="block text-[12px] text-slate-400">
+                  <label className="block text-[12px] text-ehb-textMuted">
                     Tracking (optional when marking shipped)
                     <input
                       value={trackingInput}
@@ -492,7 +492,7 @@ export default function OrderDetailPage() {
             )}
 
             <details className="glass-panel rounded-3xl border border-white/10 p-5">
-              <summary className="text-[11px] uppercase tracking-[0.22em] text-slate-400 cursor-pointer">
+              <summary className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted cursor-pointer">
                 Raw metadata (debug)
               </summary>
               <pre className="text-[11px] text-slate-500 mt-3 overflow-x-auto whitespace-pre-wrap break-all">
@@ -503,12 +503,12 @@ export default function OrderDetailPage() {
             {data.viewer.canExtendEscrow ? (
               <div className="rounded-3xl border border-amber-500/25 bg-amber-500/5 p-5 space-y-3">
                 <p className="text-sm font-semibold text-amber-100">Extend escrow (DMO / admin)</p>
-                <p className="text-[12px] text-slate-400">
+                <p className="text-[12px] text-ehb-textMuted">
                   Calls <code className="text-cyan-200/90">POST /api/gosellr/escrow/extend</code>. Requires franchise or
                   admin session in production.
                 </p>
                 <div className="flex flex-wrap gap-3 items-end">
-                  <label className="text-[12px] text-slate-400">
+                  <label className="text-[12px] text-ehb-textMuted">
                     Extra days
                     <input
                       type="number"
@@ -519,7 +519,7 @@ export default function OrderDetailPage() {
                       className="mt-1 block w-24 rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-white"
                     />
                   </label>
-                  <label className="flex-1 min-w-[200px] text-[12px] text-slate-400">
+                  <label className="flex-1 min-w-[200px] text-[12px] text-ehb-textMuted">
                     Reason
                     <input
                       value={reason}

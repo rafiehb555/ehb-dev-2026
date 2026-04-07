@@ -38,8 +38,8 @@ function DeptCard({
           {icon}
         </div>
         <p className="mt-4 text-sm font-semibold text-white">{title}</p>
-        <p className="text-[10px] text-slate-300 mt-1 leading-relaxed">{standFor}</p>
-        <p className="text-xs text-slate-400 mt-1 leading-relaxed">{desc}</p>
+        <p className="text-[10px] text-ehb-textBody mt-1 leading-relaxed">{standFor}</p>
+        <p className="text-xs text-ehb-textMuted mt-1 leading-relaxed">{desc}</p>
         <p className="text-[10px] font-medium text-cyan-400/80 mt-3">View module →</p>
       </div>
     </Link>

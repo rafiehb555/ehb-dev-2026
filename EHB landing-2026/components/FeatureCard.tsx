@@ -34,7 +34,7 @@ export function FeatureCard({ title, description, icon, accentColor = "#00eaff",
         </div>
         <h3 className="text-base md:text-lg font-semibold text-white">{title}</h3>
       </div>
-      <p className="text-sm text-slate-400 flex-1">{description}</p>
+      <p className="text-sm text-ehb-textMuted flex-1">{description}</p>
       {href ? (
         <p className="mt-3 text-[11px] font-medium text-cyan-400/90 group-hover:text-cyan-300">Open →</p>
       ) : null}

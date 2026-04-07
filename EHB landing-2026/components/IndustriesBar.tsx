@@ -105,7 +105,7 @@ export function IndustriesBar() {
           className={`shrink-0 min-h-touch inline-flex items-center justify-center rounded-full px-3 py-1.5 text-[11px] font-medium transition-all duration-200 whitespace-nowrap border ${
             pathname === "/" || pathname.startsWith("/landing/")
               ? "bg-[#00eaff]/20 text-[#00eaff] border-[#00eaff]/60 shadow-neon-blue"
-              : "text-slate-300 hover:text-white hover:bg-white/5 border-transparent"
+              : "text-ehb-textBody hover:text-white hover:bg-white/5 border-transparent"
           }`}
         >
           EHB Landing
@@ -125,7 +125,7 @@ export function IndustriesBar() {
         <button
           type="button"
           onClick={() => scroll("left")}
-          className="hidden sm:inline-flex items-center justify-center h-8 w-8 rounded-full border border-white/15 text-slate-300 hover:text-white hover:bg-white/10 transition-colors ml-1"
+          className="hidden sm:inline-flex items-center justify-center h-8 w-8 rounded-full border border-white/15 text-ehb-textBody hover:text-white hover:bg-white/10 transition-colors ml-1"
           aria-label="Scroll industries left"
         >
           ‹
@@ -187,7 +187,7 @@ export function IndustriesBar() {
         <button
           type="button"
           onClick={() => scroll("right")}
-          className="hidden sm:inline-flex items-center justify-center h-8 w-8 rounded-full border border-white/15 text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+          className="hidden sm:inline-flex items-center justify-center h-8 w-8 rounded-full border border-white/15 text-ehb-textBody hover:text-white hover:bg-white/10 transition-colors"
           aria-label="Scroll industries right"
         >
           ›
@@ -204,14 +204,14 @@ export function IndustriesBar() {
                   <p className="text-sm font-semibold text-white">
                     Find industries, services & products
                   </p>
-                  <p className="text-[11px] text-slate-400">
+                  <p className="text-[11px] text-ehb-textMuted">
                     Type anything – we&apos;ll highlight the most relevant industry.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setIsPickerOpen(false)}
-                  className="h-8 w-8 rounded-full border border-white/20 text-slate-300 hover:text-white hover:bg-white/10 flex items-center justify-center text-sm"
+                  className="h-8 w-8 rounded-full border border-white/20 text-ehb-textBody hover:text-white hover:bg-white/10 flex items-center justify-center text-sm"
                   aria-label="Close"
                 >
                   ✕
@@ -259,7 +259,7 @@ export function IndustriesBar() {
                       <div className="min-w-0">
                         <p className="text-slate-100 truncate">{r.label}</p>
                         {r.subtitle && (
-                          <p className="text-[10px] text-slate-400 truncate">{r.subtitle}</p>
+                          <p className="text-[10px] text-ehb-textMuted truncate">{r.subtitle}</p>
                         )}
                       </div>
                     </button>

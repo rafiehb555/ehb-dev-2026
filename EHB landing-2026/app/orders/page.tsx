@@ -84,11 +84,11 @@ export default function OrdersPage({
       <div className="container-ehb py-8 space-y-6">
         <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Orders</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Orders</p>
             <h1 className="text-2xl md:text-3xl font-semibold leading-tight gradient-text">
               {orders.length ? `Your latest orders (${orders.length})` : "No orders yet"}
             </h1>
-            <p className="text-slate-400 max-w-2xl text-sm">
+            <p className="text-ehb-textMuted max-w-2xl text-sm">
               Recent checkouts from cart (local snapshot). DB order ids appear when checkout used the marketplace API.
             </p>
 
@@ -125,7 +125,7 @@ export default function OrdersPage({
 
         {orders.length === 0 ? (
           <div className="glass-panel rounded-3xl border border-white/10 p-6">
-            <p className="text-slate-300">Place an order from your cart to see it here.</p>
+            <p className="text-ehb-textBody">Place an order from your cart to see it here.</p>
           </div>
         ) : (
           <section className="grid gap-4 lg:grid-cols-2">
@@ -133,11 +133,11 @@ export default function OrdersPage({
               <div key={o.id} className="glass-card rounded-3xl border p-5 space-y-3">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Order id</p>
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Order id</p>
                     <p className="text-sm font-semibold text-white mt-2">{o.id}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Total</p>
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Total</p>
                     <p className="text-sm font-semibold text-white mt-2">
                       {o.totalUsd === 0 ? "Free" : `$${o.totalUsd.toFixed(2)}`}
                     </p>
@@ -149,7 +149,7 @@ export default function OrdersPage({
                     const p = productMap.get(it.productId);
                     if (!p) return null;
                     return (
-                      <div key={it.productId} className="flex items-center justify-between gap-3 text-slate-300 text-[12px]">
+                      <div key={it.productId} className="flex items-center justify-between gap-3 text-ehb-textBody text-[12px]">
                         <span className="line-clamp-1">{p.name}</span>
                         <span className="font-semibold text-white">
                           Qty {it.qty}
@@ -160,13 +160,13 @@ export default function OrdersPage({
                 </div>
 
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-2">
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">Settlement</p>
-                  <p className="text-[12px] text-slate-300 leading-relaxed">
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Settlement</p>
+                  <p className="text-[12px] text-ehb-textBody leading-relaxed">
                     EHB‑STL secure settlement after verification (demo). Created at:{" "}
                     {new Date(o.createdAt).toLocaleString()}
                   </p>
                   {o.dbOrderIds?.length ? (
-                    <p className="text-[11px] text-slate-400 font-mono break-all">
+                    <p className="text-[11px] text-ehb-textMuted font-mono break-all">
                       DB orders: {o.dbOrderIds.join(", ")}
                     </p>
                   ) : null}

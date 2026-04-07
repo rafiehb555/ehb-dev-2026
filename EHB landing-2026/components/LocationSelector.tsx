@@ -54,7 +54,7 @@ export function LocationSelector({
     <div className="space-y-3">
       <div className="grid gap-3 sm:grid-cols-3">
         <label className="space-y-2">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Country</span>
+          <span className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Country</span>
           <select
             value={value.countryCode}
             onChange={(e) => {
@@ -80,7 +80,7 @@ export function LocationSelector({
         </label>
 
         <label className="space-y-2">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-slate-400">State</span>
+          <span className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">State</span>
           <select
             value={String(value.stateCode)}
             onChange={(e) => {
@@ -105,7 +105,7 @@ export function LocationSelector({
         </label>
 
         <label className="space-y-2">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-slate-400">City</span>
+          <span className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">City</span>
           <select
             value={String(value.cityCode)}
             onChange={(e) => {
@@ -129,7 +129,7 @@ export function LocationSelector({
       </div>
 
       <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Selected location</p>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Selected location</p>
         <p className="text-sm text-slate-200 mt-2 leading-relaxed">
           {country?.name} · {state?.name} · <span className="text-white font-semibold">{city?.name}</span>
         </p>

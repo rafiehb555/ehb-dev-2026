@@ -109,7 +109,7 @@ export function AiDataPipelineAdminPanel() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
             <h2 className="text-sm font-semibold text-white">AI Data Pipeline (Phase 85)</h2>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-ehb-textMuted">
               Continuous clean data for AI: ingestion → storage → scoring → insights publish. (UI mock)
             </p>
           </div>
@@ -127,7 +127,7 @@ export function AiDataPipelineAdminPanel() {
         </div>
 
         {message ? (
-          <div className="rounded-xl glass-panel border border-white/10 p-3 text-[10px] text-slate-300">{message}</div>
+          <div className="rounded-xl glass-panel border border-white/10 p-3 text-[10px] text-ehb-textBody">{message}</div>
         ) : null}
       </section>
 
@@ -137,7 +137,7 @@ export function AiDataPipelineAdminPanel() {
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-white">{s.title}</p>
-                <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">{s.description}</p>
+                <p className="text-[11px] text-ehb-textMuted mt-1 leading-relaxed">{s.description}</p>
               </div>
               <span
                 className={`inline-flex items-center rounded-full px-2 py-1 text-[10px] border ${
@@ -155,11 +155,11 @@ export function AiDataPipelineAdminPanel() {
             </div>
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
               <div className="glass-panel rounded-xl border border-white/10 p-2">
-                <div className="text-[10px] text-slate-400">Last run</div>
+                <div className="text-[10px] text-ehb-textMuted">Last run</div>
                 <div className="text-[11px] text-slate-100 font-semibold truncate">{s.lastRun}</div>
               </div>
               <div className="glass-panel rounded-xl border border-white/10 p-2">
-                <div className="text-[10px] text-slate-400">Next run</div>
+                <div className="text-[10px] text-ehb-textMuted">Next run</div>
                 <div className="text-[11px] text-slate-100 font-semibold truncate">{s.nextRun}</div>
               </div>
             </div>

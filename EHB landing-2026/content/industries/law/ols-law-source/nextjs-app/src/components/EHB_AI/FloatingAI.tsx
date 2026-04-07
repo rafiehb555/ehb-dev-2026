@@ -570,7 +570,7 @@ export default function FloatingAI() {
                   className={`flex-1 flex items-center justify-center gap-1 py-2 rounded-lg text-xs font-medium transition-all relative ${
                     mode === m.id 
                       ? m.special ? 'bg-gradient-to-r from-green-500 to-brand-gold text-white' : 'bg-brand-gold text-brand-dark'
-                      : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                      : 'bg-white/5 text-ehb-textMuted hover:bg-white/10'
                   }`}
                 >
                   <m.icon size={14} />
@@ -603,13 +603,13 @@ export default function FloatingAI() {
                           />
                           <span className="text-red-400 text-[10px] font-bold">LIVE</span>
                         </div>
-                        <span className="text-slate-400 text-[10px]">
+                        <span className="text-ehb-textMuted text-[10px]">
                           {language === 'ur' ? 'AI اسکرین' : 'AI Screen'}
                         </span>
                       </div>
                       <button
                         onClick={() => setShowLiveScreen(false)}
-                        className="text-slate-400 hover:text-white"
+                        className="text-ehb-textMuted hover:text-white"
                       >
                         <X size={14} />
                       </button>
@@ -624,7 +624,7 @@ export default function FloatingAI() {
                           <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
                           <div className="w-2 h-2 rounded-full bg-green-500/50" />
                         </div>
-                        <div className="flex-1 flex items-center gap-1 px-2 py-0.5 bg-slate-800 rounded text-[9px] text-slate-400">
+                        <div className="flex-1 flex items-center gap-1 px-2 py-0.5 bg-slate-800 rounded text-[9px] text-ehb-textMuted">
                           <Globe size={10} />
                           <span>ehb-law.com{pathname}</span>
                         </div>
@@ -793,7 +793,7 @@ export default function FloatingAI() {
                   <h4 className="text-white font-bold text-sm mb-1">
                     {language === 'ur' ? 'میں EHB AI ہوں' : 'I am EHB AI'}
                   </h4>
-                  <p className="text-slate-400 text-xs mb-4">
+                  <p className="text-ehb-textMuted text-xs mb-4">
                     {language === 'ur' 
                       ? 'آواز یا ٹیکسٹ سے کمانڈ دیں'
                       : 'Give commands via voice or text'}
@@ -878,7 +878,7 @@ export default function FloatingAI() {
                     <button
                       onClick={() => setShowLiveScreen(!showLiveScreen)}
                       className={`text-[10px] flex items-center gap-1 px-1.5 py-0.5 rounded ${
-                        showLiveScreen ? 'bg-brand-gold/20 text-brand-gold' : 'text-slate-400 hover:text-white'
+                        showLiveScreen ? 'bg-brand-gold/20 text-brand-gold' : 'text-ehb-textMuted hover:text-white'
                       }`}
                     >
                       <Monitor size={10} />
@@ -937,7 +937,7 @@ export default function FloatingAI() {
               <div className="flex items-center justify-between mt-2 px-1">
                 <button
                   onClick={clearChat}
-                  className="text-[10px] text-slate-400 hover:text-white"
+                  className="text-[10px] text-ehb-textMuted hover:text-white"
                 >
                   {language === 'ur' ? 'صاف کریں' : 'Clear'}
                 </button>

@@ -20,7 +20,7 @@ export default function FranchiseCard({ title, description, icon: Icon }: Franch
         <Icon size={18} className="sm:w-5 sm:h-5" />
       </div>
       <h3 className="text-[10px] sm:text-xs font-bold mb-1 text-white">{title}</h3>
-      <p className="text-[8px] sm:text-[10px] text-slate-400 leading-tight mb-3 sm:mb-4">{description}</p>
+      <p className="text-[8px] sm:text-[10px] text-ehb-textMuted leading-tight mb-3 sm:mb-4">{description}</p>
       <span className="text-[8px] sm:text-[10px] font-bold text-brand-primary hover:underline uppercase tracking-wider">
         Apply Franchise
       </span>

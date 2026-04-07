@@ -63,7 +63,7 @@ export default function Footer() {
               </div>
             </Link>
             
-            <p className="text-slate-400 text-sm mb-6 max-w-sm">
+            <p className="text-ehb-textMuted text-sm mb-6 max-w-sm">
               World's first AI-powered legal services platform. Connecting clients with verified lawyers globally through intelligent matching and automated case management.
             </p>
             
@@ -71,11 +71,11 @@ export default function Footer() {
             <div className="flex flex-wrap gap-3 mb-6">
               <div className="flex items-center gap-2 px-3 py-2 bg-white/5 rounded-lg">
                 <Shield className="text-emerald-400" size={16} />
-                <span className="text-xs text-slate-400">Secure & Encrypted</span>
+                <span className="text-xs text-ehb-textMuted">Secure & Encrypted</span>
               </div>
               <div className="flex items-center gap-2 px-3 py-2 bg-white/5 rounded-lg">
                 <Award className="text-[#D4AF37]" size={16} />
-                <span className="text-xs text-slate-400">Verified Lawyers</span>
+                <span className="text-xs text-ehb-textMuted">Verified Lawyers</span>
               </div>
             </div>
 
@@ -86,7 +86,7 @@ export default function Footer() {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-slate-400 hover:bg-[#D4AF37]/20 hover:text-[#D4AF37] transition-all"
+                  className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-ehb-textMuted hover:bg-[#D4AF37]/20 hover:text-[#D4AF37] transition-all"
                 >
                   <social.icon size={18} />
                 </a>
@@ -102,7 +102,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link 
                     href={link.href}
-                    className="text-slate-400 text-sm hover:text-[#D4AF37] transition-colors"
+                    className="text-ehb-textMuted text-sm hover:text-[#D4AF37] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -119,7 +119,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link 
                     href={link.href}
-                    className="text-slate-400 text-sm hover:text-[#D4AF37] transition-colors"
+                    className="text-ehb-textMuted text-sm hover:text-[#D4AF37] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -136,7 +136,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link 
                     href={link.href}
-                    className="text-slate-400 text-sm hover:text-[#D4AF37] transition-colors"
+                    className="text-ehb-textMuted text-sm hover:text-[#D4AF37] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -153,7 +153,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link 
                     href={link.href}
-                    className="text-slate-400 text-sm hover:text-[#D4AF37] transition-colors"
+                    className="text-ehb-textMuted text-sm hover:text-[#D4AF37] transition-colors"
                   >
                     {link.label}
                   </Link>

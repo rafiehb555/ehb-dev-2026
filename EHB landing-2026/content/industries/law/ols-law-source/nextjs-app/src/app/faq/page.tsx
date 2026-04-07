@@ -188,7 +188,7 @@ export default function FAQPage() {
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Frequently Asked Questions
             </h1>
-            <p className="text-xl text-slate-400 mb-8">
+            <p className="text-xl text-ehb-textMuted mb-8">
               Find answers to common questions about EHB Law
             </p>
 
@@ -226,7 +226,7 @@ export default function FAQPage() {
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${
                       activeCategory === category.id
                         ? 'bg-[#D4AF37]/20 border border-[#D4AF37]/30 text-white'
-                        : 'bg-white/5 border border-transparent text-slate-400 hover:bg-white/10 hover:text-white'
+                        : 'bg-white/5 border border-transparent text-ehb-textMuted hover:bg-white/10 hover:text-white'
                     }`}
                   >
                     <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center`}>
@@ -246,7 +246,7 @@ export default function FAQPage() {
             className={searchQuery ? 'lg:col-span-4' : 'lg:col-span-3'}
           >
             {searchQuery && (
-              <p className="text-slate-400 mb-6">
+              <p className="text-ehb-textMuted mb-6">
                 Showing {filteredQuestions.length} results for "{searchQuery}"
               </p>
             )}
@@ -283,7 +283,7 @@ export default function FAQPage() {
                       >
                         <div className="px-6 pb-6 pt-0">
                           <div className="h-px bg-white/10 mb-4" />
-                          <p className="text-slate-400 leading-relaxed">{item.answer}</p>
+                          <p className="text-ehb-textMuted leading-relaxed">{item.answer}</p>
                         </div>
                       </motion.div>
                     )}
@@ -295,7 +295,7 @@ export default function FAQPage() {
             {filteredQuestions.length === 0 && (
               <div className="text-center py-12">
                 <HelpCircle className="mx-auto text-slate-600 mb-4" size={48} />
-                <p className="text-slate-400 mb-4">No questions found matching your search.</p>
+                <p className="text-ehb-textMuted mb-4">No questions found matching your search.</p>
                 <button
                   onClick={() => setSearchQuery('')}
                   className="text-[#D4AF37] hover:underline"
@@ -320,7 +320,7 @@ export default function FAQPage() {
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
                 Still Have Questions?
               </h2>
-              <p className="text-slate-300 mb-6">
+              <p className="text-ehb-textBody mb-6">
                 Can't find what you're looking for? Our support team is here to help 24/7.
               </p>
               <div className="flex flex-wrap gap-4">

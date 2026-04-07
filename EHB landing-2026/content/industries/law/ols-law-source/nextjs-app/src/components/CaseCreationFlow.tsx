@@ -107,7 +107,7 @@ export default function CaseCreationFlow() {
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
               Start Your Legal Case
             </h1>
-            <p className="text-slate-400">Let AI guide you through the process</p>
+            <p className="text-ehb-textMuted">Let AI guide you through the process</p>
           </div>
 
           {/* Progress Steps */}
@@ -150,7 +150,7 @@ export default function CaseCreationFlow() {
               className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8"
             >
               <h2 className="text-2xl font-bold text-white mb-2">What type of legal case?</h2>
-              <p className="text-slate-400 mb-8">Select the category that best describes your legal matter</p>
+              <p className="text-ehb-textMuted mb-8">Select the category that best describes your legal matter</p>
               
               <div className="grid md:grid-cols-2 gap-4 mb-8">
                 {CASE_TYPES.map((type) => (
@@ -167,7 +167,7 @@ export default function CaseCreationFlow() {
                       <type.icon className="text-white" size={24} />
                     </div>
                     <h3 className="text-lg font-bold text-white mb-1">{type.name}</h3>
-                    <p className="text-sm text-slate-400">{type.desc}</p>
+                    <p className="text-sm text-ehb-textMuted">{type.desc}</p>
                   </button>
                 ))}
               </div>
@@ -197,7 +197,7 @@ export default function CaseCreationFlow() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-white">Describe Your Issue</h2>
-                  <p className="text-slate-400">AI will analyze and classify your case</p>
+                  <p className="text-ehb-textMuted">AI will analyze and classify your case</p>
                 </div>
               </div>
               
@@ -209,7 +209,7 @@ export default function CaseCreationFlow() {
                   onChange={(e) => setIssue(e.target.value)}
                 />
                 <button className="absolute bottom-4 right-4 p-3 bg-white/10 rounded-xl hover:bg-white/20 transition-all">
-                  <Mic className="text-slate-400" size={20} />
+                  <Mic className="text-ehb-textMuted" size={20} />
                 </button>
               </div>
 
@@ -277,7 +277,7 @@ export default function CaseCreationFlow() {
               
               <div className="space-y-4 mb-8">
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 mb-2">CASE TITLE</label>
+                  <label className="block text-xs font-bold text-ehb-textMuted mb-2">CASE TITLE</label>
                   <input 
                     type="text" 
                     placeholder="Give your case a brief title"
@@ -289,7 +289,7 @@ export default function CaseCreationFlow() {
 
                 <div className="grid md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 mb-2">COUNTRY</label>
+                    <label className="block text-xs font-bold text-ehb-textMuted mb-2">COUNTRY</label>
                     <input 
                       type="text" 
                       placeholder="e.g. Pakistan"
@@ -299,7 +299,7 @@ export default function CaseCreationFlow() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 mb-2">CITY</label>
+                    <label className="block text-xs font-bold text-ehb-textMuted mb-2">CITY</label>
                     <input 
                       type="text" 
                       placeholder="e.g. Lahore"
@@ -309,7 +309,7 @@ export default function CaseCreationFlow() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 mb-2">URGENCY</label>
+                    <label className="block text-xs font-bold text-ehb-textMuted mb-2">URGENCY</label>
                     <select 
                       className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-[#D4AF37] transition-all"
                       value={details.urgency}
@@ -348,7 +348,7 @@ export default function CaseCreationFlow() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-white">Upload Documents</h2>
-                  <p className="text-slate-400">Add supporting documents for your case</p>
+                  <p className="text-ehb-textMuted">Add supporting documents for your case</p>
                 </div>
               </div>
 
@@ -403,7 +403,7 @@ export default function CaseCreationFlow() {
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-white">Select Your Lawyer</h2>
-                    <p className="text-slate-400">AI recommended based on your case</p>
+                    <p className="text-ehb-textMuted">AI recommended based on your case</p>
                   </div>
                 </div>
               </div>
@@ -429,7 +429,7 @@ export default function CaseCreationFlow() {
                           <h4 className="text-lg font-bold text-white">{lawyer.name}</h4>
                           <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 text-[10px] font-bold rounded-full">VERIFIED</span>
                         </div>
-                        <p className="text-sm text-slate-400 mb-2">{lawyer.specialization} • {lawyer.experience}</p>
+                        <p className="text-sm text-ehb-textMuted mb-2">{lawyer.specialization} • {lawyer.experience}</p>
                         <div className="flex items-center gap-4">
                           <div className="flex items-center gap-1">
                             <Star className="text-yellow-500 fill-yellow-500" size={14} />
@@ -481,7 +481,7 @@ export default function CaseCreationFlow() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-white">Secure Payment</h2>
-                  <p className="text-slate-400">Complete your case filing</p>
+                  <p className="text-ehb-textMuted">Complete your case filing</p>
                 </div>
               </div>
 
@@ -490,15 +490,15 @@ export default function CaseCreationFlow() {
                 <h3 className="text-sm font-bold text-white mb-4">Order Summary</h3>
                 <div className="space-y-3 mb-4">
                   <div className="flex justify-between text-sm">
-                    <span className="text-slate-400">Consultation Fee</span>
+                    <span className="text-ehb-textMuted">Consultation Fee</span>
                     <span className="text-white">$50.00</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-slate-400">Service Retainer</span>
+                    <span className="text-ehb-textMuted">Service Retainer</span>
                     <span className="text-white">$100.00</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-slate-400">Platform Fee</span>
+                    <span className="text-ehb-textMuted">Platform Fee</span>
                     <span className="text-white">$0.00</span>
                   </div>
                 </div>

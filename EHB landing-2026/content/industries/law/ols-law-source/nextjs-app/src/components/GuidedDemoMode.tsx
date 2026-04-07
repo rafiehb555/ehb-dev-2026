@@ -251,11 +251,11 @@ export default function GuidedDemoMode({ isActive = false, onClose }: GuidedDemo
                         <span className="text-xs text-slate-500">• {step.duration}s</span>
                       </div>
                       <h3 className="text-xl font-bold text-white mb-1">{step.title}</h3>
-                      <p className="text-sm text-slate-400 mb-3">{step.description}</p>
+                      <p className="text-sm text-ehb-textMuted mb-3">{step.description}</p>
                       
                       {/* Script */}
                       <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-                        <p className="text-sm text-slate-300 leading-relaxed">"{step.script}"</p>
+                        <p className="text-sm text-ehb-textBody leading-relaxed">"{step.script}"</p>
                       </div>
                     </div>
 
@@ -263,7 +263,7 @@ export default function GuidedDemoMode({ isActive = false, onClose }: GuidedDemo
                     <div className="flex flex-col items-center gap-3">
                       <button
                         onClick={handleClose}
-                        className="p-2 hover:bg-white/10 rounded-lg transition-all text-slate-400 hover:text-white"
+                        className="p-2 hover:bg-white/10 rounded-lg transition-all text-ehb-textMuted hover:text-white"
                       >
                         <X size={20} />
                       </button>
@@ -271,7 +271,7 @@ export default function GuidedDemoMode({ isActive = false, onClose }: GuidedDemo
                       <button
                         onClick={speakScript}
                         className={`p-2 rounded-lg transition-all ${
-                          isSpeaking ? 'bg-[#D4AF37] text-slate-900' : 'hover:bg-white/10 text-slate-400 hover:text-white'
+                          isSpeaking ? 'bg-[#D4AF37] text-slate-900' : 'hover:bg-white/10 text-ehb-textMuted hover:text-white'
                         }`}
                       >
                         {isSpeaking ? <VolumeX size={20} /> : <Volume2 size={20} />}

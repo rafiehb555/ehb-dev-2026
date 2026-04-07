@@ -40,7 +40,7 @@ export default function LegalResearchEngine() {
       <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
         {/* Sidebar Tools */}
         <div className="lg:w-64 space-y-2">
-          <h2 className="text-[9px] sm:text-xs font-black uppercase tracking-widest text-slate-400 mb-3 sm:mb-4 px-3 sm:px-4">Research Tools</h2>
+          <h2 className="text-[9px] sm:text-xs font-black uppercase tracking-widest text-ehb-textMuted mb-3 sm:mb-4 px-3 sm:px-4">Research Tools</h2>
           {tools.map((tool) => (
             <button
               key={tool.id}
@@ -48,7 +48,7 @@ export default function LegalResearchEngine() {
               className={`w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold transition-all ${
                 activeTool === tool.id 
                   ? 'bg-brand-primary text-white shadow-lg shadow-brand-primary/20' 
-                  : 'text-slate-400 hover:bg-slate-900'
+                  : 'text-ehb-textMuted hover:bg-slate-900'
               }`}
             >
               <tool.icon size={16} className="sm:w-[18px] sm:h-[18px]" />
@@ -61,7 +61,7 @@ export default function LegalResearchEngine() {
               <Zap size={14} className="sm:w-4 sm:h-4" />
               <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest">AI Status</span>
             </div>
-            <p className="text-[9px] sm:text-[10px] text-slate-400 leading-relaxed">
+            <p className="text-[9px] sm:text-[10px] text-ehb-textMuted leading-relaxed">
               Research engine is connected to EHB Global Knowledge Base v2.4
             </p>
           </div>
@@ -74,7 +74,7 @@ export default function LegalResearchEngine() {
               <h1 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 text-white">
                 {tools.find(t => t.id === activeTool)?.label}
               </h1>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="text-xs sm:text-sm text-ehb-textMuted">
                 {tools.find(t => t.id === activeTool)?.desc}
               </p>
             </div>
@@ -89,7 +89,7 @@ export default function LegalResearchEngine() {
                   className="space-y-4 sm:space-y-6"
                 >
                   <div className="relative">
-                    <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                    <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-ehb-textMuted" size={18} />
                     <input 
                       type="text" 
                       placeholder="Search legal topics, court cases, or regulations..."
@@ -199,7 +199,7 @@ export default function LegalResearchEngine() {
                             <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">Potential Risks</p>
                             <ul className="space-y-1.5 sm:space-y-2">
                               {analysisResult.risks.map((risk: string, i: number) => (
-                                <li key={i} className="text-[10px] sm:text-xs flex items-center gap-2 text-slate-400">
+                                <li key={i} className="text-[10px] sm:text-xs flex items-center gap-2 text-ehb-textMuted">
                                   <div className="w-1 h-1 bg-rose-500 rounded-full shrink-0" />
                                   {risk}
                                 </li>
@@ -210,7 +210,7 @@ export default function LegalResearchEngine() {
                             <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">AI Strategy Suggestions</p>
                             <ul className="space-y-1.5 sm:space-y-2">
                               {analysisResult.suggestions.map((s: string, i: number) => (
-                                <li key={i} className="text-[10px] sm:text-xs flex items-center gap-2 text-slate-400">
+                                <li key={i} className="text-[10px] sm:text-xs flex items-center gap-2 text-ehb-textMuted">
                                   <CheckCircle2 size={10} className="sm:w-3 sm:h-3 text-emerald-500 shrink-0" />
                                   {s}
                                 </li>
@@ -236,7 +236,7 @@ export default function LegalResearchEngine() {
                     <FileSearch size={32} className="sm:w-10 sm:h-10" />
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold mb-2 text-white">AI Document Auditor</h3>
-                  <p className="text-xs sm:text-sm text-slate-400 max-w-md mb-6 sm:mb-8 px-4">
+                  <p className="text-xs sm:text-sm text-ehb-textMuted max-w-md mb-6 sm:mb-8 px-4">
                     Upload your legal documents (PDF, DOCX) for a comprehensive AI audit. We detect missing clauses, legal risks, and potential issues.
                   </p>
                   <button className="px-6 sm:px-8 py-3 sm:py-4 bg-slate-900 text-white border border-slate-800 rounded-xl sm:rounded-2xl font-bold flex items-center gap-2 hover:scale-105 transition-all text-xs sm:text-sm">
@@ -258,7 +258,7 @@ export default function LegalResearchEngine() {
                     <TrendingUp size={32} className="sm:w-10 sm:h-10" />
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold mb-2 text-white">AI Legal Strategy</h3>
-                  <p className="text-xs sm:text-sm text-slate-400 max-w-md mb-6 sm:mb-8 px-4">
+                  <p className="text-xs sm:text-sm text-ehb-textMuted max-w-md mb-6 sm:mb-8 px-4">
                     Get AI-powered strategy recommendations based on your case details and historical outcomes.
                   </p>
                   <button className="px-6 sm:px-8 py-3 sm:py-4 bg-brand-primary text-white rounded-xl sm:rounded-2xl font-bold flex items-center gap-2 hover:scale-105 transition-all shadow-lg shadow-brand-primary/20 text-xs sm:text-sm">

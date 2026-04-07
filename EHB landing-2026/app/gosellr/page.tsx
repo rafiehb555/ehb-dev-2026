@@ -35,11 +35,11 @@ export default function GoSellrListPage({
       <div className="container-ehb py-8 space-y-6">
         <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">GoSellr</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">GoSellr</p>
             <h1 className="text-2xl md:text-3xl font-semibold leading-tight gradient-text">
               GoSellr Marketplace (Products)
             </h1>
-            <p className="text-slate-400 max-w-2xl text-sm">
+            <p className="text-ehb-textMuted max-w-2xl text-sm">
               Verified product listings powered by the EHB trust stack (demo data).
             </p>
 

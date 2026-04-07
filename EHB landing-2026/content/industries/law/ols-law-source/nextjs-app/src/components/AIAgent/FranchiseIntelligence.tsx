@@ -254,7 +254,7 @@ export default function FranchiseIntelligence({ language = 'en' }: FranchiseInte
               <Sparkles className="text-brand-gold" size={24} />
               {language === 'ur' ? 'AI فرنچائز انٹیلیجنس' : 'AI Franchise Intelligence'}
             </h2>
-            <p className="text-slate-400">
+            <p className="text-ehb-textMuted">
               {language === 'ur' 
                 ? 'فرنچائز نیٹ ورک کا تجزیہ اور توسیع کی تجاویز'
                 : 'Franchise network analysis and expansion recommendations'}
@@ -265,28 +265,28 @@ export default function FranchiseIntelligence({ language = 'en' }: FranchiseInte
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-sm mb-1">
               <Building2 size={16} />
               {language === 'ur' ? 'فرنچائزز' : 'Franchises'}
             </div>
             <p className="text-white font-bold text-2xl">{MOCK_FRANCHISES.length}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-sm mb-1">
               <Users size={16} />
               {language === 'ur' ? 'کل وکلاء' : 'Total Lawyers'}
             </div>
             <p className="text-white font-bold text-2xl">{totalLawyers}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-sm mb-1">
               <Briefcase size={16} />
               {language === 'ur' ? 'فعال کیسز' : 'Active Cases'}
             </div>
             <p className="text-white font-bold text-2xl">{totalCases}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-sm mb-1">
               <DollarSign size={16} />
               {language === 'ur' ? 'کل آمدنی' : 'Total Revenue'}
             </div>
@@ -356,7 +356,7 @@ export default function FranchiseIntelligence({ language = 'en' }: FranchiseInte
                       </div>
                       <div className="flex-1">
                         <h4 className="text-white font-bold">{franchise.name}</h4>
-                        <p className="text-slate-400 text-sm flex items-center gap-1">
+                        <p className="text-ehb-textMuted text-sm flex items-center gap-1">
                           <MapPin size={14} />
                           {franchise.city}, {franchise.region}
                         </p>
@@ -380,9 +380,9 @@ export default function FranchiseIntelligence({ language = 'en' }: FranchiseInte
                           ) : franchise.trend === 'down' ? (
                             <ArrowDown className="text-red-400" size={16} />
                           ) : (
-                            <span className="text-slate-400">—</span>
+                            <span className="text-ehb-textMuted">—</span>
                           )}
-                          <span className={franchise.monthlyGrowth > 0 ? 'text-green-400' : franchise.monthlyGrowth < 0 ? 'text-red-400' : 'text-slate-400'}>
+                          <span className={franchise.monthlyGrowth > 0 ? 'text-green-400' : franchise.monthlyGrowth < 0 ? 'text-red-400' : 'text-ehb-textMuted'}>
                             {franchise.monthlyGrowth > 0 ? '+' : ''}{franchise.monthlyGrowth}%
                           </span>
                         </div>
@@ -390,7 +390,7 @@ export default function FranchiseIntelligence({ language = 'en' }: FranchiseInte
                       <span className={`px-3 py-1 rounded-full text-xs ${getDemandColor(franchise.demand)}`}>
                         {getDemandLabel(franchise.demand)}
                       </span>
-                      <ChevronRight className="text-slate-400" size={20} />
+                      <ChevronRight className="text-ehb-textMuted" size={20} />
                     </div>
 
                     <AnimatePresence>
@@ -402,21 +402,21 @@ export default function FranchiseIntelligence({ language = 'en' }: FranchiseInte
                           className="mt-4 pt-4 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4"
                         >
                           <div className="bg-white/5 rounded-xl p-3">
-                            <p className="text-slate-400 text-xs mb-1">{language === 'ur' ? 'کارکردگی اسکور' : 'Performance Score'}</p>
+                            <p className="text-ehb-textMuted text-xs mb-1">{language === 'ur' ? 'کارکردگی اسکور' : 'Performance Score'}</p>
                             <p className="text-brand-gold font-bold text-xl">{franchise.performanceScore}%</p>
                           </div>
                           <div className="bg-white/5 rounded-xl p-3">
-                            <p className="text-slate-400 text-xs mb-1">{language === 'ur' ? 'مکمل کیسز' : 'Completed Cases'}</p>
+                            <p className="text-ehb-textMuted text-xs mb-1">{language === 'ur' ? 'مکمل کیسز' : 'Completed Cases'}</p>
                             <p className="text-white font-bold text-xl">{franchise.completedCases}</p>
                           </div>
                           <div className="bg-white/5 rounded-xl p-3">
-                            <p className="text-slate-400 text-xs mb-1">{language === 'ur' ? 'ماہانہ ترقی' : 'Monthly Growth'}</p>
+                            <p className="text-ehb-textMuted text-xs mb-1">{language === 'ur' ? 'ماہانہ ترقی' : 'Monthly Growth'}</p>
                             <p className={`font-bold text-xl ${franchise.monthlyGrowth > 0 ? 'text-green-400' : 'text-red-400'}`}>
                               {franchise.monthlyGrowth > 0 ? '+' : ''}{franchise.monthlyGrowth}%
                             </p>
                           </div>
                           <div className="bg-white/5 rounded-xl p-3">
-                            <p className="text-slate-400 text-xs mb-1">{language === 'ur' ? 'مانگ کی سطح' : 'Demand Level'}</p>
+                            <p className="text-ehb-textMuted text-xs mb-1">{language === 'ur' ? 'مانگ کی سطح' : 'Demand Level'}</p>
                             <p className="text-white font-bold text-xl">{getDemandLabel(franchise.demand)}</p>
                           </div>
                         </motion.div>
@@ -458,18 +458,18 @@ export default function FranchiseIntelligence({ language = 'en' }: FranchiseInte
                       </div>
                       <div>
                         <h4 className="text-white font-bold">{city.city}</h4>
-                        <p className="text-slate-400 text-sm">{city.region}</p>
+                        <p className="text-ehb-textMuted text-sm">{city.region}</p>
                       </div>
                     </div>
                     <div className="text-right">
                       <p className="text-green-400 font-bold">${city.potentialRevenue.toLocaleString()}</p>
-                      <p className="text-slate-400 text-xs">{language === 'ur' ? 'ممکنہ آمدنی' : 'Potential Revenue'}</p>
+                      <p className="text-ehb-textMuted text-xs">{language === 'ur' ? 'ممکنہ آمدنی' : 'Potential Revenue'}</p>
                     </div>
                   </div>
 
                   <div className="mb-3">
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="text-slate-400">{language === 'ur' ? 'مانگ کی سطح' : 'Demand Level'}</span>
+                      <span className="text-ehb-textMuted">{language === 'ur' ? 'مانگ کی سطح' : 'Demand Level'}</span>
                       <span className="text-white font-bold">{city.demand}%</span>
                     </div>
                     <div className="h-3 bg-white/10 rounded-full overflow-hidden">
@@ -495,10 +495,10 @@ export default function FranchiseIntelligence({ language = 'en' }: FranchiseInte
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <p className="text-slate-300 text-sm">
+                    <p className="text-ehb-textBody text-sm">
                       {language === 'ur' ? city.recommendationUrdu : city.recommendation}
                     </p>
-                    <span className="text-slate-400 text-xs">
+                    <span className="text-ehb-textMuted text-xs">
                       {city.competitorCount} {language === 'ur' ? 'مقابلے' : 'competitors'}
                     </span>
                   </div>
@@ -551,7 +551,7 @@ export default function FranchiseIntelligence({ language = 'en' }: FranchiseInte
                         {rec.priority.toUpperCase()}
                       </span>
                     </div>
-                    <p className="text-slate-400 mb-4">
+                    <p className="text-ehb-textMuted mb-4">
                       {language === 'ur' ? rec.descriptionUrdu : rec.description}
                     </p>
                     {rec.action && (

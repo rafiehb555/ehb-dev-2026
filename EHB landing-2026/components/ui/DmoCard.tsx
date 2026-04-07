@@ -11,7 +11,7 @@ export function DmoCard() {
             Core Operating Layer
           </span>
         </div>
-        <p className="text-[10px] xs:text-[11px] text-slate-300">
+        <p className="text-[10px] xs:text-[11px] text-ehb-textBody">
           Single source of truth for users, companies, certificates, STL scores, wallet accounts and
           applications across all EHB industries.
         </p>

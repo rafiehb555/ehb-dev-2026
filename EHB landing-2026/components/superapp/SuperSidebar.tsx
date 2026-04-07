@@ -39,7 +39,7 @@ export function SuperSidebar() {
                 "flex items-center gap-2 rounded-xl px-3 py-2 text-xs transition-all duration-200",
                 active
                   ? "bg-cyan-500/20 border border-cyan-400/45 text-cyan-100 shadow-[0_0_16px_rgba(34,211,238,0.28)]"
-                  : "text-slate-300 border border-transparent hover:bg-white/5 hover:border-white/10",
+                  : "text-ehb-textBody border border-transparent hover:bg-white/5 hover:border-white/10",
               ].join(" ")}
             >
               <span aria-hidden>{item.icon}</span>

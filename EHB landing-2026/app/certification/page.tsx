@@ -108,7 +108,7 @@ export default function CertificationPage() {
       <div className="container-ehb py-8 space-y-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-xl md:text-2xl font-semibold leading-tight gradient-text">CRB Certification</h1>
-          <p className="text-slate-400 text-sm">
+          <p className="text-ehb-textMuted text-sm">
             Apply for Skill / Service / Product / Company verification. Real workflow: CRB → Franchise inspection → Certificate → Registry → STL boost.
           </p>
         </div>
@@ -117,7 +117,7 @@ export default function CertificationPage() {
           <section className="glass-panel p-4 lg:col-span-5 space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-semibold text-white">New Application</h2>
-              <span className="text-[11px] text-slate-400">Step 1–3 (v1)</span>
+              <span className="text-[11px] text-ehb-textMuted">Step 1–3 (v1)</span>
             </div>
 
             {err ? <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-200">{err}</div> : null}
@@ -127,7 +127,7 @@ export default function CertificationPage() {
 
             <div className="grid gap-3">
               <label className="grid gap-1">
-                <span className="text-xs text-slate-300">Type</span>
+                <span className="text-xs text-ehb-textBody">Type</span>
                 <select
                   className="rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                   value={type}
@@ -142,7 +142,7 @@ export default function CertificationPage() {
               </label>
 
               <label className="grid gap-1">
-                <span className="text-xs text-slate-300">Industry</span>
+                <span className="text-xs text-ehb-textBody">Industry</span>
                 <input
                   className="rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                   value={industry}
@@ -152,7 +152,7 @@ export default function CertificationPage() {
               </label>
 
               <label className="grid gap-1">
-                <span className="text-xs text-slate-300">Notes (optional)</span>
+                <span className="text-xs text-ehb-textBody">Notes (optional)</span>
                 <textarea
                   className="min-h-[90px] rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
                   value={notes}
@@ -199,7 +199,7 @@ export default function CertificationPage() {
                   </div>
                 ))}
               </div>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-ehb-textMuted">
                 v1 uses URL-based docs (works now). Next step: direct upload to S3/R2 with signed URLs.
               </p>
             </div>
@@ -225,10 +225,10 @@ export default function CertificationPage() {
               </button>
             </div>
 
-            {loading ? <div className="text-sm text-slate-400">Loading...</div> : null}
+            {loading ? <div className="text-sm text-ehb-textMuted">Loading...</div> : null}
 
             {!loading && items.length === 0 ? (
-              <div className="rounded-xl border border-white/10 bg-slate-950/30 p-4 text-sm text-slate-300">
+              <div className="rounded-xl border border-white/10 bg-slate-950/30 p-4 text-sm text-ehb-textBody">
                 No applications yet. Submit your first CRB certification.
               </div>
             ) : null}
@@ -244,10 +244,10 @@ export default function CertificationPage() {
                         <span className="text-xs rounded-full bg-emerald-500/15 text-emerald-200 px-2 py-1">CERT ACTIVE</span>
                       ) : null}
                     </div>
-                    <div className="text-[11px] text-slate-400">#{a.id.slice(0, 8)} • {new Date(a.createdAt).toLocaleString()}</div>
+                    <div className="text-[11px] text-ehb-textMuted">#{a.id.slice(0, 8)} • {new Date(a.createdAt).toLocaleString()}</div>
                   </div>
                   <div className="mt-2 text-sm text-slate-200">{a.industry}</div>
-                  <div className="mt-2 grid gap-1 text-[12px] text-slate-400">
+                  <div className="mt-2 grid gap-1 text-[12px] text-ehb-textMuted">
                     <div>Docs: {a.documents.length}</div>
                     <div>
                       Inspection: {a.inspection ? `${a.inspection.status}${a.inspection.score ? ` • score ${a.inspection.score}` : ""}` : "Not assigned"}

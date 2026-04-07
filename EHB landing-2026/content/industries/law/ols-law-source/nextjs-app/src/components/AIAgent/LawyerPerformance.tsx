@@ -194,12 +194,12 @@ export default function LawyerPerformance({ language = 'en' }: LawyerPerformance
   const getTrendIcon = (trend: string) => {
     if (trend === 'up') return <ArrowUp className="text-green-400" size={16} />;
     if (trend === 'down') return <ArrowDown className="text-red-400" size={16} />;
-    return <span className="text-slate-400">—</span>;
+    return <span className="text-ehb-textMuted">—</span>;
   };
 
   const getRankBadge = (index: number) => {
     if (index === 0) return <Crown className="text-yellow-400" size={20} />;
-    if (index === 1) return <Medal className="text-slate-300" size={20} />;
+    if (index === 1) return <Medal className="text-ehb-textBody" size={20} />;
     if (index === 2) return <Medal className="text-orange-400" size={20} />;
     return <span className="text-slate-500 font-bold">#{index + 1}</span>;
   };
@@ -221,7 +221,7 @@ export default function LawyerPerformance({ language = 'en' }: LawyerPerformance
               <Sparkles className="text-brand-gold" size={24} />
               {language === 'ur' ? 'AI وکیل کارکردگی انٹیلیجنس' : 'AI Lawyer Performance Intelligence'}
             </h2>
-            <p className="text-slate-400">
+            <p className="text-ehb-textMuted">
               {language === 'ur' 
                 ? 'وکلاء کی کارکردگی کا تجزیہ اور بہترین وکیل کی سفارش'
                 : 'Analyze lawyer performance and recommend top lawyers'}
@@ -232,28 +232,28 @@ export default function LawyerPerformance({ language = 'en' }: LawyerPerformance
         {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-sm mb-1">
               <Users size={16} />
               {language === 'ur' ? 'کل وکلاء' : 'Total Lawyers'}
             </div>
             <p className="text-white font-bold text-2xl">{lawyers.length}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-sm mb-1">
               <Award size={16} />
               {language === 'ur' ? 'ٹاپ پرفارمرز' : 'Top Performers'}
             </div>
             <p className="text-green-400 font-bold text-2xl">{topPerformers.length}</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-sm mb-1">
               <Target size={16} />
               {language === 'ur' ? 'اوسط اسکور' : 'Avg Score'}
             </div>
             <p className="text-brand-gold font-bold text-2xl">{avgPerformance}%</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4">
-            <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
+            <div className="flex items-center gap-2 text-ehb-textMuted text-sm mb-1">
               <TrendingUp size={16} />
               {language === 'ur' ? 'کامیابی کی شرح' : 'Success Rate'}
             </div>
@@ -294,7 +294,7 @@ export default function LawyerPerformance({ language = 'en' }: LawyerPerformance
                   {language === 'ur' ? insight.titleUrdu : insight.title}
                 </span>
               </div>
-              <p className="text-slate-400 text-xs">
+              <p className="text-ehb-textMuted text-xs">
                 {language === 'ur' ? insight.descriptionUrdu : insight.description}
               </p>
             </motion.div>
@@ -409,7 +409,7 @@ export default function LawyerPerformance({ language = 'en' }: LawyerPerformance
                       </span>
                     )}
                   </div>
-                  <p className="text-slate-400 text-sm">{lawyer.specialization} • {lawyer.city}</p>
+                  <p className="text-ehb-textMuted text-sm">{lawyer.specialization} • {lawyer.city}</p>
                 </div>
 
                 {/* Metrics */}
@@ -434,7 +434,7 @@ export default function LawyerPerformance({ language = 'en' }: LawyerPerformance
                 </div>
 
                 <ChevronRight 
-                  className={`text-slate-400 transition-transform ${selectedLawyer?.id === lawyer.id ? 'rotate-90' : ''}`} 
+                  className={`text-ehb-textMuted transition-transform ${selectedLawyer?.id === lawyer.id ? 'rotate-90' : ''}`} 
                   size={20} 
                 />
               </div>
@@ -459,25 +459,25 @@ export default function LawyerPerformance({ language = 'en' }: LawyerPerformance
                   >
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="bg-white/5 rounded-xl p-3">
-                        <p className="text-slate-400 text-xs mb-1">
+                        <p className="text-ehb-textMuted text-xs mb-1">
                           {language === 'ur' ? 'مکمل کیسز' : 'Completed Cases'}
                         </p>
                         <p className="text-white font-bold">{lawyer.completedCases}</p>
                       </div>
                       <div className="bg-white/5 rounded-xl p-3">
-                        <p className="text-slate-400 text-xs mb-1">
+                        <p className="text-ehb-textMuted text-xs mb-1">
                           {language === 'ur' ? 'فعال کیسز' : 'Active Cases'}
                         </p>
                         <p className="text-white font-bold">{lawyer.activeCases}</p>
                       </div>
                       <div className="bg-white/5 rounded-xl p-3">
-                        <p className="text-slate-400 text-xs mb-1">
+                        <p className="text-ehb-textMuted text-xs mb-1">
                           {language === 'ur' ? 'جوابی وقت' : 'Response Time'}
                         </p>
                         <p className="text-white font-bold">{lawyer.avgResponseTime}</p>
                       </div>
                       <div className="bg-white/5 rounded-xl p-3">
-                        <p className="text-slate-400 text-xs mb-1">
+                        <p className="text-ehb-textMuted text-xs mb-1">
                           {language === 'ur' ? 'آمدنی' : 'Revenue'}
                         </p>
                         <p className="text-green-400 font-bold">${lawyer.revenueGenerated.toLocaleString()}</p>
@@ -526,11 +526,11 @@ export default function LawyerPerformance({ language = 'en' }: LawyerPerformance
                 </div>
                 <div>
                   <h4 className="text-white font-bold">{lawyer.name}</h4>
-                  <p className="text-slate-400 text-sm">{lawyer.specialization}</p>
+                  <p className="text-ehb-textMuted text-sm">{lawyer.specialization}</p>
                 </div>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-400">
+                <span className="text-ehb-textMuted">
                   {language === 'ur' ? 'کامیابی' : 'Success'}: {lawyer.caseSuccessRate}%
                 </span>
                 <span className="flex items-center gap-1 text-yellow-400">

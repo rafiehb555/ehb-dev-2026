@@ -106,7 +106,7 @@ export default function AboutPage() {
               Revolutionizing Legal Services
               <span className="block text-[#D4AF37]">Through AI Innovation</span>
             </h1>
-            <p className="text-xl text-slate-400 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-ehb-textMuted mb-8 max-w-3xl mx-auto">
               We're on a mission to make quality legal services accessible to everyone, everywhere. 
               By combining AI technology with human expertise, we're building the future of law.
             </p>
@@ -146,7 +146,7 @@ export default function AboutPage() {
                   <stat.icon className="text-white" size={24} />
                 </div>
                 <p className="text-3xl md:text-4xl font-bold text-white mb-1">{stat.value}</p>
-                <p className="text-slate-400">{stat.label}</p>
+                <p className="text-ehb-textMuted">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -167,12 +167,12 @@ export default function AboutPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
               Making Justice Accessible to Everyone
             </h2>
-            <p className="text-slate-400 mb-6 leading-relaxed">
+            <p className="text-ehb-textMuted mb-6 leading-relaxed">
               Legal services have traditionally been expensive, time-consuming, and geographically limited. 
               We're changing that. Our AI-powered platform connects clients with the right lawyers instantly, 
               automates routine legal work, and reduces costs by up to 70%.
             </p>
-            <p className="text-slate-400 mb-8 leading-relaxed">
+            <p className="text-ehb-textMuted mb-8 leading-relaxed">
               Whether you need help with a simple contract or a complex international dispute, 
               EHB Law provides the tools and expertise to get the best possible outcome.
             </p>
@@ -201,22 +201,22 @@ export default function AboutPage() {
                 <div className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 rounded-2xl p-6 text-center">
                   <Bot className="text-blue-400 mx-auto mb-3" size={32} />
                   <p className="text-2xl font-bold text-white mb-1">AI Agent</p>
-                  <p className="text-xs text-slate-400">24/7 Legal Assistance</p>
+                  <p className="text-xs text-ehb-textMuted">24/7 Legal Assistance</p>
                 </div>
                 <div className="bg-gradient-to-br from-emerald-500/20 to-green-500/20 border border-emerald-500/30 rounded-2xl p-6 text-center">
                   <Users className="text-emerald-400 mx-auto mb-3" size={32} />
                   <p className="text-2xl font-bold text-white mb-1">500+</p>
-                  <p className="text-xs text-slate-400">Expert Lawyers</p>
+                  <p className="text-xs text-ehb-textMuted">Expert Lawyers</p>
                 </div>
                 <div className="bg-gradient-to-br from-violet-500/20 to-purple-500/20 border border-violet-500/30 rounded-2xl p-6 text-center">
                   <Globe className="text-violet-400 mx-auto mb-3" size={32} />
                   <p className="text-2xl font-bold text-white mb-1">50+</p>
-                  <p className="text-xs text-slate-400">Countries</p>
+                  <p className="text-xs text-ehb-textMuted">Countries</p>
                 </div>
                 <div className="bg-gradient-to-br from-[#D4AF37]/20 to-amber-500/20 border border-[#D4AF37]/30 rounded-2xl p-6 text-center">
                   <Award className="text-[#D4AF37] mx-auto mb-3" size={32} />
                   <p className="text-2xl font-bold text-white mb-1">98%</p>
-                  <p className="text-xs text-slate-400">Success Rate</p>
+                  <p className="text-xs text-ehb-textMuted">Success Rate</p>
                 </div>
               </div>
             </div>
@@ -235,7 +235,7 @@ export default function AboutPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               What Drives Us
             </h2>
-            <p className="text-slate-400">
+            <p className="text-ehb-textMuted">
               Our core values guide every decision we make and every feature we build.
             </p>
           </div>
@@ -253,7 +253,7 @@ export default function AboutPage() {
                   <value.icon className="text-[#D4AF37]" size={24} />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-2">{value.title}</h3>
-                <p className="text-sm text-slate-400">{value.description}</p>
+                <p className="text-sm text-ehb-textMuted">{value.description}</p>
               </motion.div>
             ))}
           </div>
@@ -288,7 +288,7 @@ export default function AboutPage() {
                   <div className={`bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 ${index % 2 === 0 ? 'md:ml-auto' : ''} max-w-md`}>
                     <span className="text-[#D4AF37] font-bold text-lg">{milestone.year}</span>
                     <h3 className="text-xl font-bold text-white mb-2">{milestone.title}</h3>
-                    <p className="text-slate-400 text-sm">{milestone.description}</p>
+                    <p className="text-ehb-textMuted text-sm">{milestone.description}</p>
                   </div>
                 </div>
                 <div className="w-4 h-4 rounded-full bg-[#D4AF37] border-4 border-slate-900 z-10 hidden md:block" />
@@ -310,7 +310,7 @@ export default function AboutPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Meet the Visionaries
             </h2>
-            <p className="text-slate-400">
+            <p className="text-ehb-textMuted">
               Our team combines deep legal expertise with cutting-edge technology skills.
             </p>
           </div>
@@ -329,13 +329,13 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-lg font-bold text-white mb-1">{member.name}</h3>
                 <p className="text-[#D4AF37] text-sm font-medium mb-3">{member.role}</p>
-                <p className="text-slate-400 text-sm mb-4">{member.bio}</p>
+                <p className="text-ehb-textMuted text-sm mb-4">{member.bio}</p>
                 <div className="flex justify-center gap-3">
                   <a href={member.linkedin} className="p-2 bg-white/10 rounded-lg hover:bg-blue-500/20 transition-all">
-                    <Linkedin size={16} className="text-slate-400 hover:text-blue-400" />
+                    <Linkedin size={16} className="text-ehb-textMuted hover:text-blue-400" />
                   </a>
                   <a href={member.twitter} className="p-2 bg-white/10 rounded-lg hover:bg-sky-500/20 transition-all">
-                    <Twitter size={16} className="text-slate-400 hover:text-sky-400" />
+                    <Twitter size={16} className="text-ehb-textMuted hover:text-sky-400" />
                   </a>
                 </div>
               </motion.div>
@@ -354,7 +354,7 @@ export default function AboutPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Ready to Experience the Future of Law?
           </h2>
-          <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-ehb-textBody mb-8 max-w-2xl mx-auto">
             Join thousands of clients and lawyers who are already using EHB Law to transform their legal experience.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

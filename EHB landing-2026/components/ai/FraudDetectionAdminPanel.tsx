@@ -137,13 +137,13 @@ export function FraudDetectionAdminPanel() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
             <h2 className="text-sm font-semibold text-white">Fraud Flags (Admin)</h2>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-ehb-textMuted">
               Detect fake providers, duplicate listings, suspicious orders, and risky accounts. (UI mock; backend later)
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <label className="text-[10px] text-slate-400">Severity</label>
+            <label className="text-[10px] text-ehb-textMuted">Severity</label>
             <select
               value={severity}
               onChange={(e) => setSeverity(e.target.value as any)}
@@ -165,14 +165,14 @@ export function FraudDetectionAdminPanel() {
         </div>
 
         {lastAction ? (
-          <div className="rounded-xl glass-panel border border-white/10 p-3 text-[10px] text-slate-300">
+          <div className="rounded-xl glass-panel border border-white/10 p-3 text-[10px] text-ehb-textBody">
             <span className="text-slate-100 font-semibold">Last action:</span> {lastAction}
           </div>
         ) : null}
 
         <div className="overflow-x-auto">
           <div className="min-w-[760px] space-y-2">
-            <div className="grid grid-cols-12 text-[10px] text-slate-400 px-2">
+            <div className="grid grid-cols-12 text-[10px] text-ehb-textMuted px-2">
               <div className="col-span-2">Entity</div>
               <div className="col-span-3">Signals</div>
               <div className="col-span-1">Loc</div>
@@ -195,7 +195,7 @@ export function FraudDetectionAdminPanel() {
                   </div>
 
                   <div className="col-span-3 min-w-0">
-                    <div className="text-[10px] text-slate-300 line-clamp-2">
+                    <div className="text-[10px] text-ehb-textBody line-clamp-2">
                       {f.signals.join(" · ")}
                     </div>
                     <div className="text-[10px] text-slate-500 mt-0.5 truncate">{f.entityCode}</div>
@@ -254,7 +254,7 @@ export function FraudDetectionAdminPanel() {
             })}
 
             {filtered.length === 0 ? (
-              <div className="rounded-2xl glass-card border p-4 text-[11px] text-slate-400 text-center">
+              <div className="rounded-2xl glass-card border p-4 text-[11px] text-ehb-textMuted text-center">
                 No flags match your filter.
               </div>
             ) : null}

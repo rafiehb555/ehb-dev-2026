@@ -25,7 +25,7 @@ export function PageSwitch({ industrySlug }: PageSwitchProps) {
     "bg-gradient-to-r from-[#00eaff] to-[#22c55e] text-slate-950 shadow-[0_0_24px_rgba(34,197,94,0.4)] scale-[1.03] border border-white/60";
 
   const inactiveClass =
-    "glass-panel border border-white/15 text-slate-300 hover:text-white hover:border-[#00eaff]/40 hover:shadow-[0_0_16px_rgba(0,234,255,0.25)]";
+    "glass-panel border border-white/15 text-ehb-textBody hover:text-white hover:border-[#00eaff]/40 hover:shadow-[0_0_16px_rgba(0,234,255,0.25)]";
 
   const items = [
     { key: "landing", label: "Landing", href: landingHref, active: isLanding },

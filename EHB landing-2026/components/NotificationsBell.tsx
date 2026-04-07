@@ -182,7 +182,7 @@ export function NotificationsBell() {
           <div className="rounded-2xl glass-panel border border-white/10 bg-slate-950/85 backdrop-blur p-3 shadow-[0_0_42px_rgba(0,234,255,0.12)]">
             <div className="flex items-start justify-between gap-3 mb-2">
               <div>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Notifications</p>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Notifications</p>
                 <p className="text-sm font-semibold text-white mt-1">Stay updated</p>
               </div>
               <button
@@ -202,7 +202,7 @@ export function NotificationsBell() {
                   ))}
                 </div>
               ) : items.length === 0 ? (
-                <p className="text-[12px] text-slate-400 py-2">You&apos;re all caught up.</p>
+                <p className="text-[12px] text-ehb-textMuted py-2">You&apos;re all caught up.</p>
               ) : (
                 items.map((n) => {
                   const inner = (

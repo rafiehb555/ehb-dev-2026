@@ -38,7 +38,7 @@ function Tile({ t, href }: { t: AiToolTile; href: string }) {
         </div>
         <div className="min-w-0">
           <p className="text-sm font-semibold text-white">{t.title}</p>
-          <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">{t.arrowLine}</p>
+          <p className="text-[11px] text-ehb-textBody mt-1 leading-relaxed">{t.arrowLine}</p>
         </div>
       </div>
     </Link>
@@ -66,7 +66,7 @@ export function AIToolsSection({
     <section className="container-ultra section-pad-ultra pt-4">
       <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Top Trusted AI Tools</p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">AI that helps you act safely</h2>
-      <p className="text-slate-400 max-w-2xl mb-6 text-sm md:text-base">
+      <p className="text-ehb-textMuted max-w-2xl mb-6 text-sm md:text-base">
         These AI tools are designed for EHB’s verified ecosystem. They guide decisions, reduce confusion, and
         match you with trusted services.
       </p>

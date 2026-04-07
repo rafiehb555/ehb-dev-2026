@@ -12,9 +12,9 @@ export default function ProfilePage({ params }: { params: { username: string } }
       <div className="container-ehb py-8 space-y-6">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">JPS Profile</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">JPS Profile</p>
             <h1 className="text-2xl md:text-3xl font-semibold leading-tight gradient-text">{profile.name}</h1>
-            <p className="text-slate-400 text-sm max-w-2xl">
+            <p className="text-ehb-textMuted text-sm max-w-2xl">
               {profile.verificationStatus}. This profile helps match trusted services and jobs.
             </p>
           </div>
@@ -46,7 +46,7 @@ export default function ProfilePage({ params }: { params: { username: string } }
             ].map((x) => (
               <div key={x.t} className="rounded-2xl bg-white/5 border border-white/10 p-4">
                 <p className="text-sm font-semibold text-white">{x.t}</p>
-                <p className="text-[12px] text-slate-400 mt-2 leading-relaxed">{x.d}</p>
+                <p className="text-[12px] text-ehb-textMuted mt-2 leading-relaxed">{x.d}</p>
               </div>
             ))}
           </div>

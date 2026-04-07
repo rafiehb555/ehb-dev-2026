@@ -164,7 +164,7 @@ function ServiceCard({ title, seller, price, rating, tag, badge, deptHint }: Ser
           )}
         </div>
       </div>
-      <p className="text-[11px] text-slate-400">By {seller}</p>
+      <p className="text-[11px] text-ehb-textMuted">By {seller}</p>
       <div className="flex items-center justify-between text-[11px] mt-1">
         <span className="font-semibold text-slate-100">{price}</span>
         <span className="flex items-center gap-1 text-amber-300">
@@ -187,7 +187,7 @@ function ServiceCard({ title, seller, price, rating, tag, badge, deptHint }: Ser
       </div>
       <TrustBadgesCompact deptHint={deptHint} />
       <div className="mt-2">
-        <p className="text-[10px] text-slate-400">
+        <p className="text-[10px] text-ehb-textMuted">
           {deptHint ?? "PSS + EHB‑STL protected"}
         </p>
       </div>
@@ -259,7 +259,7 @@ function ProductCard({ title, price, rating, tag, badge, deptHint }: ProductCard
       </div>
       <TrustBadgesCompact deptHint={deptHint} />
       <div className="mt-2">
-        <p className="text-[10px] text-slate-400">
+        <p className="text-[10px] text-ehb-textMuted">
           {deptHint ?? "PSS + EHB‑STL protected"}
         </p>
       </div>
@@ -284,7 +284,7 @@ function TabsSwitch({ active, onChange }: { active: "services" | "products"; onC
             className={`px-4 py-1.5 rounded-full transition-all duration-200 ${
               isActive
                 ? "bg-gradient-to-r from-[#00eaff] to-[#22c55e] text-slate-950 shadow-[0_0_18px_rgba(34,197,94,0.5)]"
-                : "text-slate-300 hover:text-white"
+                : "text-ehb-textBody hover:text-white"
             }`}
           >
             {tab.label}
@@ -308,7 +308,7 @@ export function MarketplaceSection() {
     <section className="container-ultra section-pad-ultra">
       <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Marketplace</p>
       <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">Explore Services &amp; Products</h2>
-      <p className="text-slate-400 max-w-2xl mb-2 text-sm md:text-base">
+      <p className="text-ehb-textMuted max-w-2xl mb-2 text-sm md:text-base">
         Hire experts, offer services, or shop verified products — all in one marketplace.
       </p>
       <p className="text-[11px] text-slate-500 mb-8">
@@ -317,7 +317,7 @@ export function MarketplaceSection() {
 
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <TabsSwitch active={activeTab} onChange={setActiveTab} />
-        <div className="hidden sm:flex gap-2 text-[11px] text-slate-400">
+        <div className="hidden sm:flex gap-2 text-[11px] text-ehb-textMuted">
           {filterChips.map((chip) => (
             <span key={chip} className="px-2 py-1 rounded-full bg-white/5 border border-white/10">
               {chip}
@@ -331,7 +331,7 @@ export function MarketplaceSection() {
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex gap-2 text-[11px] text-slate-400 sm:hidden">
+        <div className="flex gap-2 text-[11px] text-ehb-textMuted sm:hidden">
           {filterChips.slice(0, 2).map((chip) => (
             <span key={chip} className="px-2 py-1 rounded-full bg-white/5 border border-white/10">
               {chip}

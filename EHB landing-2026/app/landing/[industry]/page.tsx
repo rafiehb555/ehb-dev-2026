@@ -93,14 +93,14 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
                     {industry.shortName} Landing Page
                   </span>
                 </div>
-                <span className="text-[10px] sm:text-[11px] text-slate-400">
+                <span className="text-[10px] sm:text-[11px] text-ehb-textMuted">
                   {industry.name} · Verified by EHB
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight max-w-2xl mb-4 text-white">
                 {industry.heroTitle}
               </h1>
-              <p className="text-slate-300 text-sm md:text-base max-w-2xl mb-8">
+              <p className="text-ehb-textBody text-sm md:text-base max-w-2xl mb-8">
                 {industry.slug === "law" ? lawLandingContent.heroLead : industry.heroSubtitle ?? industry.overview}
               </p>
               {locationLabel ? (
@@ -148,7 +148,7 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
                       key={s.label}
                       className="rounded-xl border border-cyan-500/20 bg-slate-950/50 px-3 py-2.5 text-left shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"
                     >
-                      <p className="text-[10px] text-slate-400 uppercase tracking-wide leading-tight">{s.label}</p>
+                      <p className="text-[10px] text-ehb-textMuted uppercase tracking-wide leading-tight">{s.label}</p>
                       <p className="text-white font-semibold mt-1 text-sm tabular-nums whitespace-nowrap">{s.value}</p>
                     </div>
                   ))}
@@ -185,7 +185,7 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
         <section className="container-ultra section-pad-ultra">
           <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Overview</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">Industry Overview</h2>
-          <p className="text-slate-400 max-w-2xl">
+          <p className="text-ehb-textMuted max-w-2xl">
             {industry.overview} Start earning, hiring, or growing your business in this industry today.
           </p>
         </section>
@@ -242,7 +242,7 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
                   <h3 className="text-lg font-semibold text-white mb-3">{cat.name}</h3>
                   <ul className="space-y-1.5">
                     {cat.services.slice(0, 5).map((s) => (
-                      <li key={s.slug} className="text-sm text-slate-400 flex items-center gap-2">
+                      <li key={s.slug} className="text-sm text-ehb-textMuted flex items-center gap-2">
                         <span className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: accent }} />
                         {s.name}
                       </li>
@@ -287,7 +287,7 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
                 style={{ borderColor: `${accent}30` }}
               >
                 <p className="font-semibold text-white">{label}</p>
-                <p className="text-xs text-slate-400 mt-1">{industry.name} · Verified</p>
+                <p className="text-xs text-ehb-textMuted mt-1">{industry.name} · Verified</p>
               </Link>
             ))}
           </div>
@@ -321,9 +321,9 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
                   <IndustryIcon name={industry.icon} accentColor={accent} size={18} />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
-                <p className="text-sm text-slate-400">{item.desc}</p>
+                <p className="text-sm text-ehb-textMuted">{item.desc}</p>
                 <p className="text-[11px] text-slate-500 mt-3">
-                  Verified by <span className="text-slate-300">PSS</span> · Protected by <span className="text-slate-300">EHB‑STL</span>
+                  Verified by <span className="text-ehb-textBody">PSS</span> · Protected by <span className="text-ehb-textBody">EHB‑STL</span>
                 </p>
               </div>
             ))}
@@ -337,7 +337,7 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
           <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">AI Layer</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">AI Insights</h2>
           <div className="rounded-2xl glass-card p-8 border" style={{ borderColor: `${accent}30` }}>
-            <p className="text-slate-300 max-w-2xl">
+            <p className="text-ehb-textBody max-w-2xl">
               {industry.slug === "law"
                 ? lawLandingContent.aiInsights
                 : `AI will recommend demand, opportunities and suggested services for ${industry.name} based on location and market trends. Providers get insights; users get better matches.`}
@@ -351,7 +351,7 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
         <section className="container-ultra section-pad-ultra">
           <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Live</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">Marketplace Preview</h2>
-          <p className="text-slate-400 max-w-2xl mb-8">Trending {industry.name.toLowerCase()} services on EHB.</p>
+          <p className="text-ehb-textMuted max-w-2xl mb-8">Trending {industry.name.toLowerCase()} services on EHB.</p>
           <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
             {(exampleServices.length >= 4 ? exampleServices : industry.services.slice(0, 4)).map((s) => (
               <Link
@@ -361,7 +361,7 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
                 style={{ borderColor: `${accent}25` }}
               >
                 <p className="font-semibold text-white">{typeof s === "string" ? s : s.name}</p>
-                <p className="text-xs text-slate-400 mt-1">{industry.name} · Verified</p>
+                <p className="text-xs text-ehb-textMuted mt-1">{industry.name} · Verified</p>
                 <p className="text-[11px] text-slate-500 mt-2">Verified by PSS · Payment by EHB‑STL</p>
               </Link>
             ))}
@@ -380,10 +380,10 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
           <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-2">Expand</p>
           <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">Franchise Opportunities</h2>
           <div className="rounded-2xl glass-panel card-hover p-8 border" style={{ borderColor: `${accent}30` }}>
-            <p className="text-slate-300 mb-6 max-w-2xl">
+            <p className="text-ehb-textBody mb-6 max-w-2xl">
               Run {industry.name} operations in your city with EHB franchise. Revenue share, support and trust backbone included.
             </p>
-            <p className="text-[11px] text-slate-400 mb-5">
+            <p className="text-[11px] text-ehb-textMuted mb-5">
               Trust stack included: <span className="text-slate-200">PSS</span> verification ·{" "}
               <span className="text-slate-200">DMO</span> monitoring ·{" "}
               <span className="text-slate-200">EHB‑STL</span> secure payments
@@ -404,7 +404,7 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
         <section className="container-ultra section-pad-ultra">
           <div className="rounded-2xl glass-card p-10 text-center border" style={{ borderColor: `${accent}25` }}>
             <h2 className="text-2xl font-semibold text-white mb-2">Join {industry.name} on EHB</h2>
-            <p className="text-slate-400 max-w-md mx-auto mb-6">
+            <p className="text-ehb-textMuted max-w-md mx-auto mb-6">
               Register as a provider or explore services. One platform for trust, payments and growth.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -429,11 +429,11 @@ export default async function IndustryLandingPage({ params, searchParams }: Page
       {/* Footer */}
       <section className="border-t border-white/5 py-8">
         <div className="container-ultra flex flex-wrap justify-center gap-6 text-sm">
-          <Link href="/" className="text-slate-400 hover:text-white transition-colors">EHB Home</Link>
-          <Link href="/#industries" className="text-slate-400 hover:text-white transition-colors">All Industries</Link>
+          <Link href="/" className="text-ehb-textMuted hover:text-white transition-colors">EHB Home</Link>
+          <Link href="/#industries" className="text-ehb-textMuted hover:text-white transition-colors">All Industries</Link>
           <Link
             href={`/ai-marketplace${locationQs}`}
-            className="text-slate-400 hover:text-white transition-colors"
+            className="text-ehb-textMuted hover:text-white transition-colors"
           >
             Marketplace
           </Link>

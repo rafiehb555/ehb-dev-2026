@@ -34,13 +34,13 @@ export function LocationLanding() {
             style={{ borderColor: `${accent}55`, boxShadow: `0 0 22px ${accent}22` }}
           >
             <span aria-hidden>📍</span>
-            <span className="text-slate-400">Phase 72</span>
+            <span className="text-ehb-textMuted">Phase 72</span>
             <span className="text-white font-semibold">Location-Based System</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-semibold leading-tight gradient-text">
             Country → State → City
           </h1>
-          <p className="text-slate-400 max-w-2xl">
+          <p className="text-ehb-textMuted max-w-2xl">
             Location filters help matching, provider discovery, franchise operations and verified service bookings.
             (Demo UI)
           </p>
@@ -61,8 +61,8 @@ export function LocationLanding() {
             </div>
             <div className="lg:col-span-5 space-y-4">
               <div className="glass-card rounded-2xl border p-5" style={{ borderColor: `${accent}30`, boxShadow: `0 0 30px ${accent}14` }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">What location powers</p>
-                <ul className="space-y-2 text-slate-300 text-[12px]">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">What location powers</p>
+                <ul className="space-y-2 text-ehb-textBody text-[12px]">
                   <li className="flex items-start gap-2">
                     <span aria-hidden>✅</span>
                     <span>Provider discovery and verified listing filtering.</span>
@@ -78,8 +78,8 @@ export function LocationLanding() {
                 </ul>
               </div>
               <div className="glass-card rounded-2xl border p-5" style={{ borderColor: `${accent}30` }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">Next step</p>
-                <p className="text-slate-300 text-[12px] leading-relaxed">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Next step</p>
+                <p className="text-ehb-textBody text-[12px] leading-relaxed">
                   Create a service listing with this location context to see consistent trust-aware flow.
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -101,8 +101,8 @@ export function LocationLanding() {
                 </div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">Selected</p>
-                <p className="text-sm text-slate-300 mt-2 leading-relaxed">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Selected</p>
+                <p className="text-sm text-ehb-textBody mt-2 leading-relaxed">
                   {selected.c?.name ?? "—"} · {selected.s?.name ?? "—"} ·{" "}
                   <span className="text-white font-semibold">{selected.city?.name ?? "—"}</span>
                 </p>

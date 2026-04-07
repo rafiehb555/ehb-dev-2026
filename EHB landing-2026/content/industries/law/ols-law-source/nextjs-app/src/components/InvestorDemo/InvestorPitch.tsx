@@ -42,7 +42,7 @@ export function MarketOpportunity({ language = 'en' }: { language?: 'en' | 'ur' 
           <Target className="text-brand-gold" />
           {language === 'ur' ? 'مارکیٹ کا موقع' : 'Market Opportunity'}
         </h2>
-        <p className="text-slate-400">
+        <p className="text-ehb-textMuted">
           {language === 'ur' 
             ? '$900 بلین کی عالمی قانونی مارکیٹ'
             : '$900 Billion Global Legal Services Market'}
@@ -123,7 +123,7 @@ export function MarketOpportunity({ language = 'en' }: { language?: 'en' | 'ur' 
           >
             <stat.icon className="mx-auto text-brand-gold mb-2" size={24} />
             <p className="text-2xl font-bold text-white">{stat.value}</p>
-            <p className="text-xs text-slate-400">{stat.label}</p>
+            <p className="text-xs text-ehb-textMuted">{stat.label}</p>
           </motion.div>
         ))}
       </div>
@@ -142,7 +142,7 @@ export function MarketOpportunity({ language = 'en' }: { language?: 'en' | 'ur' 
               </div>
               <div>
                 <p className="text-white font-medium">{item.problem}</p>
-                <p className="text-slate-400 text-sm">{item.impact}</p>
+                <p className="text-ehb-textMuted text-sm">{item.impact}</p>
               </div>
             </div>
           ))}
@@ -243,7 +243,7 @@ export function RevenueModel({ language = 'en' }: { language?: 'en' | 'ur' }) {
           <DollarSign className="text-brand-gold" />
           {language === 'ur' ? 'آمدنی کا ماڈل' : 'Revenue Model'}
         </h2>
-        <p className="text-slate-400">
+        <p className="text-ehb-textMuted">
           {language === 'ur'
             ? 'متعدد آمدنی کے ذرائع'
             : 'Multiple Revenue Streams for Sustainable Growth'}
@@ -278,7 +278,7 @@ export function RevenueModel({ language = 'en' }: { language?: 'en' | 'ur' }) {
               </div>
             </div>
             <div className="p-4">
-              <p className="text-slate-300 text-sm mb-2">{stream.description}</p>
+              <p className="text-ehb-textBody text-sm mb-2">{stream.description}</p>
               <p className="text-slate-500 text-xs bg-slate-900/50 px-3 py-1.5 rounded inline-block">
                 Example: {stream.example}
               </p>
@@ -297,7 +297,7 @@ export function RevenueModel({ language = 'en' }: { language?: 'en' | 'ur' }) {
           {revenueStreams.map((stream) => (
             <div key={stream.id} className="flex items-center gap-2">
               <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${stream.color}`} />
-              <span className="text-slate-400 text-sm">{stream.name}: {stream.percentage}%</span>
+              <span className="text-ehb-textMuted text-sm">{stream.name}: {stream.percentage}%</span>
             </div>
           ))}
         </div>
@@ -345,7 +345,7 @@ export function RevenueModel({ language = 'en' }: { language?: 'en' | 'ur' }) {
             ? 'EHB قانونی خدمات، وکیل سبسکرپشنز، AI ٹولز، اور فرنچائز پارٹنرشپس سے آمدنی کماتا ہے'
             : 'EHB generates revenue from legal service transactions, lawyer subscriptions, AI tools, and franchise partnerships'}
         </p>
-        <p className="text-slate-400">
+        <p className="text-ehb-textMuted">
           Hybrid model = Multiple revenue streams = Sustainable growth
         </p>
       </div>
@@ -452,7 +452,7 @@ export function GrowthStrategy({ language = 'en' }: { language?: 'en' | 'ur' }) 
           <Rocket className="text-brand-gold" />
           {language === 'ur' ? 'ترقی کی حکمت عملی' : 'Growth Strategy'}
         </h2>
-        <p className="text-slate-400">
+        <p className="text-ehb-textMuted">
           {language === 'ur'
             ? '5 سال میں عالمی توسیع کا منصوبہ'
             : '5-Year Global Expansion Roadmap'}
@@ -498,7 +498,7 @@ export function GrowthStrategy({ language = 'en' }: { language?: 'en' | 'ur' }) 
                 <div className="grid md:grid-cols-2 gap-6">
                   {/* Goals */}
                   <div>
-                    <p className="text-slate-400 text-sm font-medium mb-3">Key Goals</p>
+                    <p className="text-ehb-textMuted text-sm font-medium mb-3">Key Goals</p>
                     <ul className="space-y-2">
                       {phase.goals.map((goal, i) => (
                         <li key={i} className="flex items-start gap-2 text-white text-sm">
@@ -511,7 +511,7 @@ export function GrowthStrategy({ language = 'en' }: { language?: 'en' | 'ur' }) 
 
                   {/* Metrics */}
                   <div>
-                    <p className="text-slate-400 text-sm font-medium mb-3">Target Metrics</p>
+                    <p className="text-ehb-textMuted text-sm font-medium mb-3">Target Metrics</p>
                     <div className="grid grid-cols-3 gap-3">
                       <div className="bg-slate-900/50 rounded-lg p-3 text-center">
                         <p className="text-xl font-bold text-white">{phase.metrics.users}</p>
@@ -548,7 +548,7 @@ export function GrowthStrategy({ language = 'en' }: { language?: 'en' | 'ur' }) 
             <h4 className="text-white font-bold mb-2">{strategy.title}</h4>
             <ul className="space-y-1">
               {strategy.items.map((item, i) => (
-                <li key={i} className="text-slate-400 text-sm flex items-center gap-1">
+                <li key={i} className="text-ehb-textMuted text-sm flex items-center gap-1">
                   <ChevronRight className="text-brand-gold" size={12} />
                   {item}
                 </li>
@@ -576,7 +576,7 @@ export function GrowthStrategy({ language = 'en' }: { language?: 'en' | 'ur' }) 
               </div>
               <div>
                 <p className="text-white font-medium">{item.title}</p>
-                <p className="text-slate-400 text-sm">{item.desc}</p>
+                <p className="text-ehb-textMuted text-sm">{item.desc}</p>
               </div>
             </div>
           ))}
@@ -591,7 +591,7 @@ export function GrowthStrategy({ language = 'en' }: { language?: 'en' | 'ur' }) 
             ? 'EHB دنیا کا سب سے بڑا AI قانونی پلیٹ فارم بننے کا ارادہ رکھتا ہے'
             : 'EHB aims to become the world\'s largest AI-powered legal platform'}
         </p>
-        <p className="text-slate-400">
+        <p className="text-ehb-textMuted">
           With a clear roadmap from local launch to global dominance
         </p>
       </div>
@@ -627,7 +627,7 @@ export default function InvestorPitch({ language = 'en' }: InvestorPitchProps) {
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
               activeSlide === slide.id
                 ? 'bg-brand-gold text-slate-900'
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                : 'bg-slate-800 text-ehb-textMuted hover:bg-slate-700'
             }`}
           >
             <slide.icon size={18} />

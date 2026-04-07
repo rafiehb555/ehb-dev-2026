@@ -158,7 +158,7 @@ export function EHBHowItWorks3DInteractive() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-white">{it.title}</p>
-                  <p className="text-[11px] text-slate-300 mt-0.5">{it.desc}</p>
+                  <p className="text-[11px] text-ehb-textBody mt-0.5">{it.desc}</p>
                 </div>
               </div>
             </div>
@@ -312,7 +312,7 @@ export function EHBHowItWorks3DInteractive() {
                   </span>
                   <div className="leading-tight">
                     <p className="text-[10px] font-semibold text-white">{detail.title}</p>
-                    <p className="text-[9px] text-slate-300">Verified</p>
+                    <p className="text-[9px] text-ehb-textBody">Verified</p>
                   </div>
                 </div>
 
@@ -327,8 +327,8 @@ export function EHBHowItWorks3DInteractive() {
                       }}
                     >
                       <p className="text-[10px] font-semibold text-white">{detail.title}</p>
-                      <p className="text-[9.5px] text-slate-300 mt-0.5">{detail.standFor}</p>
-                      <p className="text-[9.5px] text-slate-300 mt-0.5">{detail.desc}</p>
+                      <p className="text-[9.5px] text-ehb-textBody mt-0.5">{detail.standFor}</p>
+                      <p className="text-[9.5px] text-ehb-textBody mt-0.5">{detail.desc}</p>
                     </div>
                   </div>
                 )}
@@ -381,7 +381,7 @@ export function EHBHowItWorks3DInteractive() {
                     </span>
                     <div>
                       <p className="text-[10px] font-semibold text-white leading-tight">{o.title}</p>
-                      <p className="text-[9.5px] text-slate-300 mt-0.5">{o.desc}</p>
+                      <p className="text-[9.5px] text-ehb-textBody mt-0.5">{o.desc}</p>
                     </div>
                   </div>
                 </div>
@@ -404,10 +404,10 @@ export function EHBHowItWorks3DInteractive() {
               />
             </div>
             <div className="relative space-y-3">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">AI Intelligence Layer</p>
+              <p className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted">AI Intelligence Layer</p>
               <div className="space-y-2">
                 <p className="text-sm font-semibold text-white">{message.title}</p>
-                <p className="text-[11px] text-slate-300">{message.sub}</p>
+                <p className="text-[11px] text-ehb-textBody">{message.sub}</p>
               </div>
               <div className="flex flex-wrap gap-2">
                 {[message.chipA, message.chipB].map((c) => (
@@ -427,7 +427,7 @@ export function EHBHowItWorks3DInteractive() {
               </div>
               <div className="rounded-2xl glass-panel border border-white/10 p-3">
                 <p className="text-[11px] font-semibold text-white">Verified outcome</p>
-                <p className="text-[10px] text-slate-300 mt-1">
+                <p className="text-[10px] text-ehb-textBody mt-1">
                   PSS + DMO + CRB + STL + EHW ensures quality, trust, and secure transactions.
                 </p>
               </div>

@@ -108,16 +108,16 @@ export default function DemoPage() {
 
           <div className="flex items-center gap-2">
             <button onClick={resetDemo} className="p-2 hover:bg-white/10 rounded-lg transition-all" title="Restart">
-              <RotateCcw className="text-slate-400" size={18} />
+              <RotateCcw className="text-ehb-textMuted" size={18} />
             </button>
             <button 
               onClick={() => setIsAutoPlaying(!isAutoPlaying)} 
-              className={`p-2 rounded-lg transition-all ${isAutoPlaying ? 'bg-[#D4AF37] text-slate-900' : 'hover:bg-white/10 text-slate-400'}`}
+              className={`p-2 rounded-lg transition-all ${isAutoPlaying ? 'bg-[#D4AF37] text-slate-900' : 'hover:bg-white/10 text-ehb-textMuted'}`}
             >
               {isAutoPlaying ? <Pause size={18} /> : <Play size={18} />}
             </button>
             <Link href="/" className="p-2 hover:bg-white/10 rounded-lg transition-all" title="Exit Demo">
-              <Home className="text-slate-400" size={18} />
+              <Home className="text-ehb-textMuted" size={18} />
             </Link>
           </div>
         </div>
@@ -165,7 +165,7 @@ export default function DemoPage() {
               <DemoCard key="step1" title="Homepage" subtitle="Entry Point">
                 <div className="text-center mb-8">
                   <h2 className="text-3xl font-bold text-white mb-2">AI-Powered Global Legal Platform</h2>
-                  <p className="text-slate-400">User lands on the homepage</p>
+                  <p className="text-ehb-textMuted">User lands on the homepage</p>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   {[
@@ -231,7 +231,7 @@ export default function DemoPage() {
                 <div className="grid grid-cols-2 gap-3">
                   {FAMILY_SERVICES.map((service, i) => (
                     <button key={i} className={`p-4 rounded-xl flex items-center gap-3 transition-all ${
-                      service.active ? 'bg-[#D4AF37]/20 border-2 border-[#D4AF37] text-white' : 'bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10'
+                      service.active ? 'bg-[#D4AF37]/20 border-2 border-[#D4AF37] text-white' : 'bg-white/5 border border-white/10 text-ehb-textBody hover:bg-white/10'
                     }`}>
                       <service.icon size={20} className={service.active ? 'text-[#D4AF37]' : ''} />
                       {service.name}
@@ -277,7 +277,7 @@ export default function DemoPage() {
                 <div className="bg-slate-800/50 rounded-xl p-4 mb-4">
                   <p className="text-white text-sm mb-2">User types:</p>
                   <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-                    <p className="text-slate-300 text-sm italic">"My spouse and I want to file for divorce. We also need help dividing assets."</p>
+                    <p className="text-ehb-textBody text-sm italic">"My spouse and I want to file for divorce. We also need help dividing assets."</p>
                   </div>
                 </div>
                 <div className="bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/30">
@@ -339,7 +339,7 @@ export default function DemoPage() {
                         </div>
                       </div>
                       <p className="text-white font-medium mb-2">AI is analyzing your case...</p>
-                      <p className="text-slate-400 text-sm">Matching lawyers • Preparing recommendations</p>
+                      <p className="text-ehb-textMuted text-sm">Matching lawyers • Preparing recommendations</p>
                       <p className="text-[#D4AF37] font-bold text-2xl mt-4">{analysisProgress}%</p>
                     </>
                   ) : (
@@ -348,7 +348,7 @@ export default function DemoPage() {
                         <CheckCircle2 className="text-emerald-400" size={40} />
                       </div>
                       <p className="text-emerald-400 font-bold text-xl mb-2">Case Analysis Complete!</p>
-                      <p className="text-slate-400 text-sm">Found 3 recommended lawyers</p>
+                      <p className="text-ehb-textMuted text-sm">Found 3 recommended lawyers</p>
                     </motion.div>
                   )}
                 </div>
@@ -371,7 +371,7 @@ export default function DemoPage() {
                             {lawyer.verified && <CheckCircle2 className="text-blue-400" size={14} />}
                             {i === 0 && <span className="px-2 py-0.5 bg-[#D4AF37]/20 text-[#D4AF37] text-xs rounded-full">Best Match</span>}
                           </div>
-                          <p className="text-slate-400 text-sm">{lawyer.spec}</p>
+                          <p className="text-ehb-textMuted text-sm">{lawyer.spec}</p>
                           <div className="flex items-center gap-4 mt-2 text-xs">
                             <span className="text-yellow-400">⭐ {lawyer.rating}</span>
                             <span className="text-slate-500">{lawyer.cases} cases</span>
@@ -450,11 +450,11 @@ export default function DemoPage() {
                 </div>
                 <div className="bg-white/5 rounded-xl p-4 mb-4">
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="text-slate-400">Service Fee</span>
+                    <span className="text-ehb-textMuted">Service Fee</span>
                     <span className="text-white">$1,500</span>
                   </div>
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="text-slate-400">Platform Fee</span>
+                    <span className="text-ehb-textMuted">Platform Fee</span>
                     <span className="text-white">$75</span>
                   </div>
                   <div className="border-t border-white/10 pt-2 mt-2 flex justify-between">
@@ -476,7 +476,7 @@ export default function DemoPage() {
                     <button key={i} className={`w-full p-4 rounded-xl flex items-center gap-3 transition-all ${
                       i === 0 ? 'bg-[#D4AF37]/20 border-2 border-[#D4AF37]' : 'bg-white/5 border border-white/10'
                     }`}>
-                      <CreditCard className={i === 0 ? 'text-[#D4AF37]' : 'text-slate-400'} size={20} />
+                      <CreditCard className={i === 0 ? 'text-[#D4AF37]' : 'text-ehb-textMuted'} size={20} />
                       <span className="text-white">{method}</span>
                       {i === 0 && <Check className="ml-auto text-[#D4AF37]" size={20} />}
                     </button>
@@ -502,7 +502,7 @@ export default function DemoPage() {
                   <CheckCircle2 className="text-emerald-400" size={24} />
                   <div>
                     <p className="text-emerald-400 font-bold">Payment Successful!</p>
-                    <p className="text-slate-400 text-sm">Your legal case has been created</p>
+                    <p className="text-ehb-textMuted text-sm">Your legal case has been created</p>
                   </div>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4 mb-4">
@@ -514,7 +514,7 @@ export default function DemoPage() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-slate-400 text-sm font-medium mb-3">Case Timeline</p>
+                  <p className="text-ehb-textMuted text-sm font-medium mb-3">Case Timeline</p>
                   {[
                     { title: 'Case Created', time: 'Just now', done: true },
                     { title: 'Documents Uploaded', time: '2 min ago', done: true },
@@ -549,7 +549,7 @@ export default function DemoPage() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <button className="p-3 bg-white/10 rounded-xl"><Paperclip className="text-slate-400" size={20} /></button>
+                  <button className="p-3 bg-white/10 rounded-xl"><Paperclip className="text-ehb-textMuted" size={20} /></button>
                   <input className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 text-white placeholder:text-slate-500" placeholder="Type a message..." />
                   <button className="p-3 bg-[#D4AF37] rounded-xl"><Send className="text-slate-900" size={20} /></button>
                 </div>
@@ -562,7 +562,7 @@ export default function DemoPage() {
                 <div className="text-center mb-6">
                   <Globe className="mx-auto text-[#D4AF37] mb-4" size={48} />
                   <h3 className="text-white font-bold text-xl mb-2">Franchise & Global Infrastructure</h3>
-                  <p className="text-slate-400 text-sm">Expanding legal access worldwide</p>
+                  <p className="text-ehb-textMuted text-sm">Expanding legal access worldwide</p>
                 </div>
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {[
@@ -581,7 +581,7 @@ export default function DemoPage() {
                 <div className="bg-gradient-to-r from-[#D4AF37]/20 to-blue-500/20 rounded-xl p-4 border border-[#D4AF37]/30 text-center">
                   <Crown className="mx-auto text-[#D4AF37] mb-2" size={28} />
                   <p className="text-white font-bold">Demo Complete!</p>
-                  <p className="text-slate-400 text-sm">Experience the full platform at EHB Law</p>
+                  <p className="text-ehb-textMuted text-sm">Experience the full platform at EHB Law</p>
                 </div>
               </DemoCard>
             )}
@@ -618,7 +618,7 @@ function DemoCard({ title, subtitle, children }: { title: string; subtitle: stri
     >
       <div className="bg-gradient-to-r from-[#D4AF37]/20 to-blue-500/20 px-6 py-4 border-b border-white/10">
         <h2 className="text-white font-bold text-lg">{title}</h2>
-        <p className="text-slate-400 text-sm">{subtitle}</p>
+        <p className="text-ehb-textMuted text-sm">{subtitle}</p>
       </div>
       <div className="p-6">{children}</div>
     </motion.div>

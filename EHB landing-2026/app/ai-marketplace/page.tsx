@@ -95,7 +95,7 @@ export default function AIMarketplacePage({
               AI Marketplace · Verified by EHB
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-400 mb-2">
+              <p className="text-xs uppercase tracking-[0.2em] text-ehb-textMuted mb-2">
                 Trusted Global AI & Products Exchange
               </p>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight gradient-text">
@@ -104,7 +104,7 @@ export default function AIMarketplacePage({
                 Tools & Products
               </h1>
             </div>
-            <p className="text-slate-300 text-sm md:text-base max-w-lg">
+            <p className="text-ehb-textBody text-sm md:text-base max-w-lg">
               Every item is protected by{" "}
               <span className="font-semibold text-cyan-300">EHB Trusty Wallet</span> and{" "}
               <span className="font-semibold text-[#8b5cf6]">Franchise Monitoring System</span> so your
@@ -125,7 +125,7 @@ export default function AIMarketplacePage({
                 View Trusty Wallet rules
               </button>
             </div>
-            <div className="flex flex-wrap gap-4 text-[11px] text-slate-400">
+            <div className="flex flex-wrap gap-4 text-[11px] text-ehb-textMuted">
               <div className="flex items-center gap-1.5">
                 <span className="text-emerald-400">●</span> 100% Verified Sellers
               </div>
@@ -142,38 +142,38 @@ export default function AIMarketplacePage({
           <div className="relative w-full max-w-md lg:max-w-lg mx-auto">
             <div className="relative rounded-3xl glass-card card-interactive overflow-hidden p-5 md:p-6">
               <div className="card-shine-inner" />
-              <div className="flex items-center justify-between mb-4 text-xs text-slate-300">
+              <div className="flex items-center justify-between mb-4 text-xs text-ehb-textBody">
                 <span className="inline-flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   Live AI Products
                 </span>
-                <span className="text-slate-400">EHB SQL & STL Engine</span>
+                <span className="text-ehb-textMuted">EHB SQL & STL Engine</span>
               </div>
               <div className="relative h-40 md:h-44 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900/40 to-slate-800 border border-white/10 flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(34,211,238,0.25),transparent_55%),radial-gradient(circle_at_85%_100%,rgba(139,92,246,0.28),transparent_60%)] opacity-80" />
                 <div className="relative z-10 text-center space-y-1">
-                  <div className="text-[11px] tracking-[0.32em] text-slate-300 uppercase">
+                  <div className="text-[11px] tracking-[0.32em] text-ehb-textBody uppercase">
                     EHB · AI MARKET
                   </div>
                   <div className="text-lg md:text-xl font-semibold text-white">
                     QuantumForge Laptop
                   </div>
-                  <p className="text-[11px] text-slate-300">
+                  <p className="text-[11px] text-ehb-textBody">
                     Optimized for AI terminals, EHB SQL, and STL dashboards.
                   </p>
                 </div>
               </div>
               <div className="mt-4 grid grid-cols-3 gap-3 text-[11px]">
                 <div className="rounded-xl bg-[#020c1b]/80 border border-cyan-400/25 px-3 py-2 flex flex-col gap-0.5">
-                  <span className="text-slate-400">Avg. Rating</span>
+                  <span className="text-ehb-textMuted">Avg. Rating</span>
                   <span className="font-semibold text-cyan-300">4.9 / 5.0</span>
                 </div>
                 <div className="rounded-xl bg-[#020c1b]/80 border border-emerald-400/25 px-3 py-2 flex flex-col gap-0.5">
-                  <span className="text-slate-400">Verified Trades</span>
+                  <span className="text-ehb-textMuted">Verified Trades</span>
                   <span className="font-semibold text-emerald-300">28.4K</span>
                 </div>
                 <div className="rounded-xl bg-[#020c1b]/80 border border-violet-400/25 px-3 py-2 flex flex-col gap-0.5">
-                  <span className="text-slate-400">Trust Score</span>
+                  <span className="text-ehb-textMuted">Trust Score</span>
                   <span className="font-semibold text-violet-200">99.2%</span>
                 </div>
               </div>
@@ -197,7 +197,7 @@ export default function AIMarketplacePage({
               <h2 className="text-lg md:text-xl font-semibold text-white">
                 {selectedTool ? selectedTool.title : "Top Trusted AI Services"}
               </h2>
-              <p className="text-[12px] text-slate-400">
+              <p className="text-[12px] text-ehb-textMuted">
                 {selectedTool
                   ? selectedTool.arrowLine
                   : "AI tools that plug into EHB verified trust flows across industries."}
@@ -254,7 +254,7 @@ export default function AIMarketplacePage({
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-semibold text-white">{t.title}</p>
-                      <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">{t.arrowLine}</p>
+                      <p className="text-[11px] text-ehb-textBody mt-1 leading-relaxed">{t.arrowLine}</p>
                       <div className="mt-3">
                         <Link
                           href={makeHref(t.title)}
@@ -279,7 +279,7 @@ export default function AIMarketplacePage({
                 Marketplace · Realtime Demand
               </p>
               <h2 className="text-lg md:text-xl font-semibold text-white">Trending AI Verified Products</h2>
-              <p className="text-[12px] text-slate-400">
+              <p className="text-[12px] text-ehb-textMuted">
                 Cross‑industry AI, devices and smart services curated by EHB franchise network.
               </p>
             </div>
@@ -315,7 +315,7 @@ export default function AIMarketplacePage({
                   <p className="card-title text-xs font-medium text-white leading-snug line-clamp-2">
                     {p.name}
                   </p>
-                  <p className="card-body text-[10px] text-slate-400 flex items-center justify-between">
+                  <p className="card-body text-[10px] text-ehb-textMuted flex items-center justify-between">
                     <span className="text-amber-300">{"★".repeat(p.stars)}</span>
                     <span className="text-cyan-300 font-semibold">{p.price}</span>
                   </p>
@@ -339,7 +339,7 @@ export default function AIMarketplacePage({
                 EHB Verified · Free Tier
               </p>
               <h2 className="text-lg md:text-xl font-semibold text-white">Top Trusted Free Tools</h2>
-              <p className="text-[12px] text-slate-400">
+              <p className="text-[12px] text-ehb-textMuted">
                 Launch‑ready AI utilities that plug directly into EHB Home, SQL verification and STL flows.
               </p>
             </div>
@@ -374,7 +374,7 @@ export default function AIMarketplacePage({
                   <p className="card-title text-xs font-medium text-white leading-snug line-clamp-2">
                     {p.name}
                   </p>
-                  <p className="card-body text-[10px] text-slate-400 flex items-center justify-between">
+                  <p className="card-body text-[10px] text-ehb-textMuted flex items-center justify-between">
                     <span className="text-emerald-300">{"★".repeat(p.stars)}</span>
                     <span className="text-emerald-300 font-semibold">EHB Verified</span>
                   </p>
@@ -398,7 +398,7 @@ export default function AIMarketplacePage({
                 Everyday Ecosystem · {INDUSTRIES.length} Industries
               </p>
               <h2 className="text-lg md:text-xl font-semibold text-white">Browse by industry</h2>
-              <p className="text-[12px] text-slate-400 mt-1">
+              <p className="text-[12px] text-ehb-textMuted mt-1">
                 Open AI marketplace context for any vertical — same trust and wallet rules.
               </p>
             </div>

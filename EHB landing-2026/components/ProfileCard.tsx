@@ -13,7 +13,7 @@ export function ProfileCard({ profile }: { profile: JpsProfile }) {
         </div>
         <div className="min-w-0 flex-1">
           <h1 className="text-xl font-semibold text-white leading-tight">{profile.name}</h1>
-          <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-slate-300">
+          <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-ehb-textBody">
             <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px]">
               @{profile.username}
             </span>
@@ -24,16 +24,16 @@ export function ProfileCard({ profile }: { profile: JpsProfile }) {
         </div>
       </div>
 
-      <p className="text-slate-400 text-sm leading-relaxed">{profile.bio}</p>
+      <p className="text-ehb-textMuted text-sm leading-relaxed">{profile.bio}</p>
 
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">Verification</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Verification</p>
           <p className="text-sm font-semibold text-white leading-relaxed">{profile.verificationStatus}</p>
           <p className="text-[11px] text-slate-500 mt-2">Meaning shown across trust badges</p>
         </div>
         <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">Rating</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Rating</p>
           <p className="text-sm font-semibold text-white leading-relaxed">
             {profile.rating.toFixed(1)} / 5.0
           </p>

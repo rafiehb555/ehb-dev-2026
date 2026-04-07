@@ -7,7 +7,7 @@ export default function WalletPage() {
         <section className="glass-panel border border-white/10 p-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">EHB Super App</p>
           <h1 className="text-2xl font-semibold gradient-text mt-1">Wallet</h1>
-          <p className="text-sm text-slate-300 mt-2">
+          <p className="text-sm text-ehb-textBody mt-2">
             Track available balance, recent payouts, and reward credits in one place.
           </p>
         </section>

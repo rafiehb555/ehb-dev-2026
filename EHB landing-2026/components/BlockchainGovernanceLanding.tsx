@@ -95,11 +95,11 @@ export function BlockchainGovernanceLanding({
         <section className="space-y-2">
           <div className="inline-flex items-center gap-2 rounded-full border glass-panel px-3 py-1.5 text-[11px] text-slate-200 border-white/10">
             <span aria-hidden>⛓️</span>
-            <span className="text-slate-400">Phase 8</span>
+            <span className="text-ehb-textMuted">Phase 8</span>
             <span className="text-white font-semibold">Blockchain Governance</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-semibold leading-tight gradient-text">Trust network + smart contracts (demo)</h1>
-          <p className="text-slate-400 max-w-2xl">
+          <p className="text-ehb-textMuted max-w-2xl">
             Smart contracts and trust anchoring create an investor-ready integrity layer for every verified transaction.
           </p>
 
@@ -158,9 +158,9 @@ export function BlockchainGovernanceLanding({
               </div>
 
               <div className="glass-card rounded-2xl border p-5" style={{ borderColor: `${copy.accent}`, boxShadow: `0 0 30px ${copy.accent}` }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400">{copy.title}</p>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">{copy.title}</p>
                 <h2 className="text-xl font-semibold text-white mt-2">{copy.headline}</h2>
-                <p className="text-slate-300 mt-3 leading-relaxed">{copy.detail}</p>
+                <p className="text-ehb-textBody mt-3 leading-relaxed">{copy.detail}</p>
                 <ul className="mt-4 space-y-2 text-slate-200">
                   {copy.bullets.map((b) => (
                     <li key={b} className="flex items-start gap-2">
@@ -193,26 +193,26 @@ export function BlockchainGovernanceLanding({
 
             <div className="lg:col-span-5 space-y-4">
               <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(0,174,239,0.25)" }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">On-chain status (demo)</p>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">On-chain status (demo)</p>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[12px] text-slate-300">Active validators</span>
+                    <span className="text-[12px] text-ehb-textBody">Active validators</span>
                     <span className="text-[12px] text-white font-semibold">12</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[12px] text-slate-300">Anchors verified</span>
+                    <span className="text-[12px] text-ehb-textBody">Anchors verified</span>
                     <span className="text-[12px] text-white font-semibold">98.7%</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[12px] text-slate-300">Smart contracts</span>
+                    <span className="text-[12px] text-ehb-textBody">Smart contracts</span>
                     <span className="text-[12px] text-white font-semibold">6 active</span>
                   </div>
                 </div>
               </div>
 
               <div className="glass-card rounded-2xl border p-4" style={{ borderColor: "rgba(245,158,11,0.25)" }}>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-2">Why it matters</p>
-                <p className="text-slate-300 text-[12px] leading-relaxed">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">Why it matters</p>
+                <p className="text-ehb-textBody text-[12px] leading-relaxed">
                   Blockchain governance adds tamper-aware integrity to approvals, registry updates and settlement flows.
                 </p>
               </div>
