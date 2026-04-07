@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { flatAgentDefinitions } from "@/lib/agents/catalog";
 import {
   createAgentHandoff,
@@ -9,8 +9,17 @@ import {
   setAllAgentsToWorking,
   updateAgentRuntimeStatus,
 } from "@/lib/agents/runtimeStore";
+import { setupAgentRuntimeTestDir, teardownAgentRuntimeTestDir } from "./agentRuntimeTestEnv";
 
 describe("agent runtime store", () => {
+  beforeEach(async () => {
+    await setupAgentRuntimeTestDir();
+  });
+
+  afterEach(async () => {
+    await teardownAgentRuntimeTestDir();
+  });
+
   it("updates runtime status and keeps live mode", async () => {
     await resetAgentRuntimeStore();
 

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/rbac", () => ({
   requireSession: async () => ({
@@ -16,10 +16,16 @@ import {
   resetAgentRuntimeStore,
   updateAgentRuntimeStatus,
 } from "@/lib/agents/runtimeStore";
+import { setupAgentRuntimeTestDir, teardownAgentRuntimeTestDir } from "./agentRuntimeTestEnv";
 
 describe("agent runtime api routes", () => {
   beforeEach(async () => {
+    await setupAgentRuntimeTestDir();
     await resetAgentRuntimeStore();
+  });
+
+  afterEach(async () => {
+    await teardownAgentRuntimeTestDir();
   });
 
   it("returns runtime status payload", async () => {
