@@ -1,6 +1,6 @@
 # EHB Technologies Limited — UI/UX DESIGN PLAN
 > Ultra Level Design System — Non-Technical, First Impression Magic
-> Version: 1.0 | April 2026 | Status: PLANNING
+> Version: 1.0 | April 2026 | Status: **Implementation in progress** (see § Implementation status below)
 
 ---
 
@@ -934,9 +934,32 @@ Loading...
 
 ---
 
+## Implementation status (codebase — `EHB landing-2026`)
+
+| Part | Summary | Status |
+|------|---------|--------|
+| **1** Color system | Tailwind `ehb.*` tokens + `EHB_COLOR_SCHEME_PLAN` alignment; gradients/shadows | **Done** (ongoing token use in components) |
+| **2** Typography | Inter + JetBrains Mono (`--font-inter`, `--font-jetbrains-mono`); scale: `text-ui-h1`, `ui-h2`, `ui-caption`, `ui-badge`, `ui-price` | **Done** |
+| **3** Component library | Reusable **STL badge** (`components/ui/EhbStlBadge.tsx`); mobile **bottom nav** (`components/MobileBottomNav.tsx`); cards/button patterns still distributed across pages | **Partial** — full sidebar/product cards as in wireframes = backlog |
+| **4** Homepage | Hero copy + CTAs aligned to plan; trust stats (`LandingStats`); `#how-ehb-works` anchor | **Partial** — full collage/hero asset as spec = content |
+| **5** Onboarding | **`/onboarding`** — 5-step wizard (`components/OnboardingWizard.tsx`), demo only (no backend) | **Done** (demo) |
+| **6** GoSellr | Existing `/gosellr` + product cards; not full PDP spec | **Partial** |
+| **7** STL page | Existing `/dmo/stl`, widgets; not full “My Trust” page spec | **Partial** |
+| **8** Image strategy | Rules in doc; asset pipeline per industry = backlog | **Doc only** |
+| **9** Icons | Lucide used across app | **Done** (ongoing) |
+| **10** Glass / glow | `globals.css`: `.glass-card`, `.live-glow`, `.vip-glow`, `.stl-l4-glow` | **Done** |
+| **11** Content rules | No Lorem on landing; sections have copy — audit remaining routes | **Ongoing** |
+| **12** Breakpoints | Tailwind screens match plan | **Done** |
+| **13** Animations | Fade-in, hover, ticker limits per plan | **Partial** |
+| **14–15** Empty/error states | Patterns exist on some routes; **RuntimeToast** for client toasts | **Partial** |
+
+**Next implementation slices (suggested):** GoSellr PDP layout (Part 6), dedicated “My STL” user page (Part 7), admin sidebar (Part 3.1A), real image assets (Part 8).
+
+---
+
 ## AUTO-SAVE TO MASTER PLAN ✅
 > This UI/UX plan is reflected in EHB_MASTER_SYSTEM_PLAN.md Section 21
 
 ---
 
-*EHB_UIUX_DESIGN_PLAN.md | Version 1.0 | April 2026 | Planning Phase*
+*EHB_UIUX_DESIGN_PLAN.md | Version 1.0 | April 2026 | Implementation in progress*

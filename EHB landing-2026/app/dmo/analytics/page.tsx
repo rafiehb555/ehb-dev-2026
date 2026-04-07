@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type FraudAnalytics = {
@@ -28,11 +29,45 @@ export default function DmoAnalyticsPage() {
       .catch(() => {});
   }, []);
 
+  function exportDemoCsv() {
+    const rows = [
+      ["metric", "value"],
+      ["fraud_unresolved", String(fraud?.unresolvedCount ?? 0)],
+      ["complaints_pending", String(complaints)],
+      ["order_reviews", String(pendingOrderReviews)],
+    ];
+    const csv = rows.map((r) => r.join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "dmo-marketplace-analytics-demo.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <main className="min-h-screen bg-[#05050f] text-white p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-black">DMO Marketplace Analytics</h1>
-        <p className="text-white/40 text-sm">Orders, complaints, fraud alerts, and pending reviews in one view</p>
+      <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <h1 className="text-2xl font-black">DMO Marketplace Analytics</h1>
+          <p className="text-white/40 text-sm">Orders, complaints, fraud alerts, and pending reviews in one view</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href="/dmo/roadmap"
+            className="rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/80 hover:bg-white/10"
+          >
+            Growth roadmap
+          </Link>
+          <button
+            type="button"
+            onClick={exportDemoCsv}
+            className="rounded-xl border border-cyan-400/30 bg-cyan-500/15 px-4 py-2 text-sm font-semibold text-cyan-100 hover:bg-cyan-500/25"
+          >
+            Export CSV (demo)
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">

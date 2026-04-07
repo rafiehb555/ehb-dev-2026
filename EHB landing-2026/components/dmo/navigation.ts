@@ -18,7 +18,11 @@ export const DMO_NAV_SECTIONS: DmoNavSection[] = [
     icon: "🏠",
     label: "Dashboard",
     href: "/dmo",
-    items: [{ key: "dashboard-overview", label: "Overview", href: "/dmo" }],
+    items: [
+      { key: "dashboard-overview", label: "Overview", href: "/dmo" },
+      { key: "dashboard-hub", label: "DMO hub", href: "/dmo/home" },
+      { key: "dashboard-roadmap", label: "Pending work (11–30)", href: "/dmo/roadmap" },
+    ],
   },
   {
     key: "applications",
@@ -126,6 +130,7 @@ export const DMO_NAV_SECTIONS: DmoNavSection[] = [
     label: "Automation",
     href: "/dmo/automation",
     items: [
+      { key: "ai-recommendations", label: "AI recommendations (UI)", href: "/dmo/ai-recommendations" },
       { key: "automation-rules", label: "Rules", href: "/dmo/automation/rules" },
       { key: "automation-triggers", label: "Triggers", href: "/dmo/automation/triggers" },
       { key: "automation-decisions", label: "Auto Decisions", href: "/dmo/automation/decisions" },

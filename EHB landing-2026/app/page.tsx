@@ -67,34 +67,39 @@ export default function LandingPage() {
         <HeroParticles />
         <div className="container-ultra relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-6 lg:py-8">
           <div className="lg:col-span-6 text-center lg:text-left">
-            <p className="text-[11px] uppercase tracking-[0.25em] text-ehb-textMuted mb-3">
-              Earn Online · Even If You Are New
+            <p className="text-[11px] uppercase tracking-[0.25em] text-ehb-textMuted mb-2">
+              EHB Technologies Limited
             </p>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug gradient-text max-w-2xl mx-auto lg:mx-0 mb-4">
-              EHB – Earn, Hire, and Grow in One Global Platform
+            <p className="text-sm text-[#06B6D4] font-medium mb-3">
+              Education · Health · Business
+            </p>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-snug gradient-text max-w-2xl mx-auto lg:mx-0 mb-4">
+              Pakistan&apos;s First AI-Powered Trust-Verified Super Platform
             </h1>
-            <p className="text-ehb-textBody text-sm md:text-base max-w-xl mx-auto lg:mx-0 mb-2">
-              A powerful AI-based platform where you can find jobs, offer services, sell products, and build your own business across 32 industries.
+            <p className="text-ehb-textBody text-sm md:text-base max-w-xl mx-auto lg:mx-0 mb-3">
+              Connect with verified doctors, lawyers, sellers &amp; employers — all in one place, all trust-scored, all blockchain-backed.
             </p>
             <p className="text-ehb-textBody text-xs md:text-sm max-w-xl mx-auto lg:mx-0 mb-5">
-              Even if you have no experience, you can start and grow with EHB.
+              Jobs, services, GoSellr GSM, franchise, and wallet — guided by EHB-STL-LEVEL (Service Trust Level).
             </p>
             <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-6">
               <Link
-                href="#industries"
+                href="/onboarding"
                 className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#29ABE2] to-[#22B14C] px-8 py-3.5 text-sm font-semibold text-white btn-glow transition-all duration-300 hover:opacity-95 hover:scale-[1.02]"
               >
-                Explore Industries
+                Get Started Free
               </Link>
               <Link
-                href="/dashboard"
+                href="#how-ehb-works"
                 className="min-h-touch inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-8 py-3.5 text-sm font-semibold text-white hover:bg-white/10 hover:border-[#29ABE2]/50 hover:shadow-[0_0_20px_rgba(41, 171, 226,0.2)] transition-all duration-300"
               >
-                Create Profile
+                See how it works
               </Link>
             </div>
-            <p className="text-ehb-textMuted text-xs font-medium tracking-wide">
-              32+ Industries &nbsp;•&nbsp; 700+ Services &nbsp;•&nbsp; AI Powered &nbsp;•&nbsp; Verified System
+            <p className="text-ehb-textMuted text-xs font-medium tracking-wide flex flex-wrap justify-center lg:justify-start gap-x-3 gap-y-1">
+              <span>✔ 1,500+ users</span>
+              <span>✔ 35+ industries</span>
+              <span>✔ CRB-ready verification</span>
             </p>
           </div>
           <div className="lg:col-span-6 flex justify-center items-center">
@@ -115,7 +120,7 @@ export default function LandingPage() {
 
       {/* PHASE 1 — How EHB Works & Why It’s Powerful (NEW) */}
       <SectionReveal as="div">
-        <section className="container-ultra section-pad-ultra pt-6 pb-10">
+        <section id="how-ehb-works" className="container-ultra section-pad-ultra pt-6 pb-10 scroll-mt-24">
           <div className="space-y-4">
             <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted mb-2">How EHB Works</p>
             <h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">

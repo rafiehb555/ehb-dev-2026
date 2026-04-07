@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { PendingWorkRoadmap } from "@/components/dmo/PendingWorkRoadmap";
 
 const coreDepartments = [
   {
@@ -24,7 +25,7 @@ const coreDepartments = [
     icon: "📊",
     title: "EHB-STL-LEVEL · Trust Engine",
     desc: "Service Trust Level — score intelligence, ranking, and impact visibility.",
-    href: "/dmo/stl",
+    href: "/dmo/ehb-stl-level",
     cta: "Open EHB-STL view",
     tone: "from-emerald-500/20 to-teal-500/10 border-emerald-400/30",
   },
@@ -57,7 +58,7 @@ const coreDepartments = [
 const supportSystems = [
   { icon: "💰", title: "Wallet System", desc: "Escrow, payouts, and financial traceability.", href: "/dashboard" },
   { icon: "📂", title: "Registry System", desc: "Verified records and governance registry outputs.", href: "/dmo" },
-  { icon: "📢", title: "Notifications", desc: "Decision alerts, SLA warnings, and risk notifications.", href: "/dashboard" },
+  { icon: "📢", title: "Notifications", desc: "Decision alerts, SLA warnings, and risk notifications.", href: "/dmo/notifications" },
   { icon: "⚙️", title: "Settings", desc: "Control role rules, defaults, and operational preferences.", href: "/admin" },
   { icon: "📊", title: "Reports", desc: "Operational analytics and trust-performance summaries.", href: "/development" },
 ];
@@ -65,8 +66,8 @@ const supportSystems = [
 const quickActions = [
   { label: "New Application", href: "/dmo/crb", tone: "primary" as const },
   { label: "Open DMO Dashboard", href: "/dmo", tone: "secondary" as const },
-  { label: "View High Risk", href: "/dmo", tone: "danger" as const },
-  { label: "Check Refilling", href: "/dashboard", tone: "secondary" as const },
+  { label: "View High Risk", href: "/dmo/fraud", tone: "danger" as const },
+  { label: "Check Refilling", href: "/dmo/refilling", tone: "secondary" as const },
 ];
 
 function Card({
@@ -101,6 +102,12 @@ export default function DmoHomePage() {
               <Link href="/dmo" className="rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-xs font-semibold text-slate-950 btn-glow">
                 Open Dashboard
               </Link>
+              <Link
+                href="/dmo/roadmap"
+                className="rounded-full glass-panel border border-violet-400/30 px-4 py-2 text-xs font-semibold text-violet-100 hover:bg-white/5"
+              >
+                Pending work (11–30)
+              </Link>
               <Link href="/home" className="rounded-full glass-panel border border-white/15 px-4 py-2 text-xs font-semibold text-ehb-textBody hover:bg-white/5">
                 Back to EHB Home
               </Link>
@@ -114,6 +121,8 @@ export default function DmoHomePage() {
             </div>
           </div>
         </motion.section>
+
+        <PendingWorkRoadmap compact />
 
         <section className="space-y-3">
           <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Core Departments</p>
