@@ -19,10 +19,24 @@ import {
   type AgentRuntimeStatus,
 } from "@/lib/agents/schemas";
 
-const AGENT_DATA_DIR = path.join(process.cwd(), "data", "agents");
-const RUNTIME_STATUS_PATH = path.join(AGENT_DATA_DIR, "runtime.json");
-const RUNTIME_HISTORY_PATH = path.join(AGENT_DATA_DIR, "history.json");
-const RUNTIME_HANDOFF_PATH = path.join(AGENT_DATA_DIR, "handoffs.json");
+/** When set (e.g. Vitest), JSON files live under this directory instead of `cwd/data/agents`. */
+function resolveAgentRuntimeDataDir(): string {
+  const raw = process.env.EHB_AGENT_RUNTIME_DIR?.trim();
+  if (raw) {
+    return path.isAbsolute(raw) ? raw : path.join(process.cwd(), raw);
+  }
+  return path.join(process.cwd(), "data", "agents");
+}
+
+function agentRuntimePaths() {
+  const dir = resolveAgentRuntimeDataDir();
+  return {
+    dir,
+    status: path.join(dir, "runtime.json"),
+    history: path.join(dir, "history.json"),
+    handoffs: path.join(dir, "handoffs.json"),
+  };
+}
 const MAX_HISTORY_EVENTS = 250;
 
 const RuntimeStatusesFileSchema = z.array(AgentRuntimeStatusSchema);
@@ -98,7 +112,7 @@ const defaultRuntimeHandoffs: AgentHandoffRecord[] = agentRuntimeHandoffs.map((h
 }));
 
 async function ensureDirectory() {
-  await mkdir(AGENT_DATA_DIR, { recursive: true });
+  await mkdir(agentRuntimePaths().dir, { recursive: true });
 }
 
 async function readOrSeedFile<T>(
@@ -123,28 +137,32 @@ async function writeStoreFile(filePath: string, value: unknown) {
 }
 
 async function readStatuses() {
-  return readOrSeedFile(RUNTIME_STATUS_PATH, defaultRuntimeStatuses, (value) =>
+  const p = agentRuntimePaths();
+  return readOrSeedFile(p.status, defaultRuntimeStatuses, (value) =>
     RuntimeStatusesFileSchema.parse(value),
   );
 }
 
 async function readHistory() {
-  return readOrSeedFile(RUNTIME_HISTORY_PATH, defaultRuntimeHistory, (value) =>
+  const p = agentRuntimePaths();
+  return readOrSeedFile(p.history, defaultRuntimeHistory, (value) =>
     RuntimeHistoryFileSchema.parse(value),
   );
 }
 
 async function readHandoffs() {
-  return readOrSeedFile(RUNTIME_HANDOFF_PATH, defaultRuntimeHandoffs, (value) =>
+  const p = agentRuntimePaths();
+  return readOrSeedFile(p.handoffs, defaultRuntimeHandoffs, (value) =>
     RuntimeHandoffFileSchema.parse(value),
   );
 }
 
 async function writeSnapshot(snapshot: AgentRuntimeSnapshot) {
+  const p = agentRuntimePaths();
   await Promise.all([
-    writeStoreFile(RUNTIME_STATUS_PATH, snapshot.statuses),
-    writeStoreFile(RUNTIME_HISTORY_PATH, snapshot.history),
-    writeStoreFile(RUNTIME_HANDOFF_PATH, snapshot.handoffs),
+    writeStoreFile(p.status, snapshot.statuses),
+    writeStoreFile(p.history, snapshot.history),
+    writeStoreFile(p.handoffs, snapshot.handoffs),
   ]);
 }
 
