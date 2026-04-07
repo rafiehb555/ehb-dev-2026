@@ -21,7 +21,9 @@ test.describe("Auth login rate limit", () => {
       const res = await request.post("/api/auth/login", {
         json: { email, password },
       });
-      expect(res.status()).toBe(401);
+      if (res.status() !== 401) {
+        throw new Error(`login POST ${i + 1}: expected 401, got ${res.status()}: ${await res.text()}`);
+      }
     }
 
     await page.goto("/auth", { waitUntil: "domcontentloaded" });
