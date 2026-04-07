@@ -57,3 +57,7 @@ Use consistent JSON responses:
 ```
 
 This makes frontend integration simpler and more predictable.
+
+## EHB landing-2026 (Next.js App Router)
+
+The live app uses route handlers under `EHB landing-2026/app/api/`. Example: **`GET /api/stl/meta`** returns `{ "success": true, "data": { ... } }` for the **EHB-STL-LEVEL** reference (levels, formula, cross-module tables) with `Cache-Control` suitable for CDN caching — see [`INDEX.md`](INDEX.md) (EHB-STL-LEVEL section) and [`app/api/stl/meta/route.ts`](../EHB%20landing-2026/app/api/stl/meta/route.ts).

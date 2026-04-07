@@ -66,7 +66,7 @@
     "title": "Shared source-of-truth aligned",
     "detail": "Validated shared agent catalog and API ownership before UI integration.",
     "occurredAt": "2026-04-06T14:36:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -76,7 +76,7 @@
     "title": "Admin placement reviewed",
     "detail": "Checked how the agent control center should sit inside the admin shell.",
     "occurredAt": "2026-04-06T14:36:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -86,7 +86,7 @@
     "title": "Control-center iteration shipped",
     "detail": "Delivered the current admin-facing agent dashboard iteration.",
     "occurredAt": "2026-04-06T14:36:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -96,7 +96,7 @@
     "title": "Phase order reviewed",
     "detail": "Checked dependencies before recommending the next implementation wave.",
     "occurredAt": "2026-04-06T14:35:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -106,7 +106,7 @@
     "title": "No active franchise task",
     "detail": "Franchise-specific workflow review is waiting for a new request.",
     "occurredAt": "2026-04-06T14:34:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -116,7 +116,7 @@
     "title": "Agent docs aligned",
     "detail": "Updated docs references to match the current development-agent model.",
     "occurredAt": "2026-04-06T14:33:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -126,7 +126,7 @@
     "title": "Trust rule confirmation pending",
     "detail": "Awaiting clarification before approving trust-sensitive wording changes.",
     "occurredAt": "2026-04-06T14:32:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   },
   {
@@ -136,7 +136,7 @@
     "title": "Request intake started",
     "detail": "Collected owner request context for feature and deploy planning.",
     "occurredAt": "2026-04-06T14:30:44.619Z",
-    "occurredAtLabel": "17h ago",
+    "occurredAtLabel": "18h ago",
     "mode": "live"
   }
 ]

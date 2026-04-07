@@ -20,6 +20,13 @@
 
 - **`GET /api/health`** — [`EHB landing-2026/app/api/health/route.ts`](../EHB%20landing-2026/app/api/health/route.ts) returns `{ ok: true, service, gitSha? }` (short SHA when `VERCEL_GIT_COMMIT_SHA` is set). Use for monitors and post-deploy checks alongside [`/dmo/stl`](../EHB%20landing-2026/app/dmo/stl/page.tsx) (static STL DMO page).
 
+### EHB-STL-LEVEL (Service Trust Level) — APIs + DMO UI
+
+- **`GET /api/stl/meta`** — [`app/api/stl/meta/route.ts`](../EHB%20landing-2026/app/api/stl/meta/route.ts) — public JSON bundle (`success`, `data`) from [`lib/dmo/ehbStlLevelContent.ts`](../EHB%20landing-2026/lib/dmo/ehbStlLevelContent.ts): formula, levels L1–L5, access matrix, PSS/CRB/JPS/GoSellr tables, DMO panel bullets, ecosystem links. **`Cache-Control`** `public` (1h + `stale-while-revalidate`). Same content as the DMO reference page below.
+- **`GET` / `POST /api/stl/calculate`** — [`app/api/stl/calculate/route.ts`](../EHB%20landing-2026/app/api/stl/calculate/route.ts) — scores + logs; POST triggers recalc for USER / SERVICE / PRODUCT.
+- **`GET /api/stl/me`** — [`app/api/stl/me/route.ts`](../EHB%20landing-2026/app/api/stl/me/route.ts) — authenticated user breakdown (`requireSession`).
+- **DMO UI:** [`/dmo/ehb-stl-level`](../EHB%20landing-2026/app/dmo/ehb-stl-level/page.tsx) (full reference, master plan §7) · [`/dmo/stl`](../EHB%20landing-2026/app/dmo/stl/page.tsx) (operations: tables, manual calc).
+
 ### Law industry — OLS reference source (not a separate deploy)
 
 - **Folder:** [`EHB landing-2026/content/industries/law/ols-law-source/nextjs-app/src/`](../EHB%20landing-2026/content/industries/law/ols-law-source/nextjs-app/src) — legacy/next reference UI for law (multi-agent, investor demo, etc.). Body/muted text uses the same Tailwind tokens as the main app (`text-ehb-textBody`, `text-ehb-textMuted`; see [FLOW-P1-foundation-ui.md](flows/FLOW-P1-foundation-ui.md)).
