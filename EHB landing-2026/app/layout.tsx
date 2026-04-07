@@ -2,11 +2,12 @@ import "./globals.css";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { IndustriesBar } from "@/components/IndustriesBar";
 import { TopNavTabs } from "@/components/TopNavTabs";
 import { HeaderSearch } from "@/components/HeaderSearch";
 import { NotificationsBell } from "@/components/NotificationsBell";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 
 /** Ships with HTML so base theme applies even if `/_next/static/css/*.css` fails to load. */
 const EHB_CRITICAL_CSS = `
@@ -19,6 +20,12 @@ main{background:transparent!important}
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap"
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
   display: "swap"
 });
 
@@ -36,7 +43,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`scroll-smooth ${inter.variable}`}>
+    <html lang="en" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         <style dangerouslySetInnerHTML={{ __html: EHB_CRITICAL_CSS }} />
       </head>
@@ -90,9 +97,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </div>
           </header>
           <IndustriesBar />
-          <main className="flex-1 w-full overflow-x-hidden">
+          <main className="flex-1 w-full overflow-x-hidden pb-[4.75rem] md:pb-0">
             {children}
           </main>
+          <MobileBottomNav />
           <footer className="nav-glass border-t border-white/5 pb-safe-b">
             <div className="container-ehb py-3 flex flex-col xs:flex-row justify-between gap-2 text-[11px] sm:text-xs text-ehb-textMuted">
               <span className="text-center xs:text-left">EHB · Unified global services, trust & AI platform.</span>

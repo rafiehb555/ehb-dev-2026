@@ -22,13 +22,21 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"]
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        /** EHB_UIUX_DESIGN_PLAN Part 2 — prices, scores, stats */
+        mono: ["var(--font-jetbrains-mono)", "ui-monospace", "monospace"]
       },
       fontSize: {
         hero: ["64px", { lineHeight: "1.1" }],
         section: ["36px", { lineHeight: "1.2" }],
         "card-title": ["20px", { lineHeight: "1.3" }],
-        body: ["16px", { lineHeight: "1.6" }]
+        body: ["16px", { lineHeight: "1.6" }],
+        /** UIUX Part 2 type scale */
+        "ui-h1": ["48px", { lineHeight: "1.15", fontWeight: "800" }],
+        "ui-h2": ["32px", { lineHeight: "1.2", fontWeight: "700" }],
+        "ui-caption": ["13px", { lineHeight: "1.45" }],
+        "ui-badge": ["11px", { lineHeight: "1.2", fontWeight: "700" }],
+        "ui-price": ["24px", { lineHeight: "1.1", fontWeight: "700" }]
       },
       colors: {
         // Page / card defaults — Part 3
