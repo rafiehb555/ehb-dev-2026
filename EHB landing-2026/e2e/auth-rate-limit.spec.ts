@@ -18,6 +18,8 @@ test.describe("Auth login rate limit", () => {
     await expect(page.getByPlaceholder("Email")).toBeVisible();
     await page.getByPlaceholder("Email").fill(email);
     await page.getByPlaceholder("Password").fill("wrong-password-e2e");
+    await expect(page.getByPlaceholder("Email")).toHaveValue(email);
+    await expect(page.getByPlaceholder("Password")).toHaveValue("wrong-password-e2e");
 
     await request.post("/api/auth/login", {
       json: { email: "warmup@example.com", password: "x" },
@@ -25,16 +27,11 @@ test.describe("Auth login rate limit", () => {
 
     await expect(page.getByTestId("auth-submit")).toBeVisible();
 
-    const triggerSubmit = () =>
-      page.getByTestId("auth-submit").evaluate((el) => {
-        (el as HTMLButtonElement).click();
-      });
-
     for (let i = 0; i < 8; i++) {
       const loginResPromise = page.waitForResponse(
         (r) => r.url().includes("/api/auth/login") && r.request().method() === "POST"
       );
-      await triggerSubmit();
+      await page.getByTestId("auth-submit").click();
       const loginRes = await loginResPromise;
       expect(loginRes.status()).toBe(401);
       const body = (await loginRes.json()) as { error?: { message?: string } };
@@ -48,7 +45,7 @@ test.describe("Auth login rate limit", () => {
     const ninth = page.waitForResponse(
       (r) => r.url().includes("/api/auth/login") && r.request().method() === "POST"
     );
-    await triggerSubmit();
+    await page.getByTestId("auth-submit").click();
     const res429 = await ninth;
     expect(res429.status()).toBe(429);
 
