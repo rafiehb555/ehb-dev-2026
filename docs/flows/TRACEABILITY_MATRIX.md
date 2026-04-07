@@ -28,6 +28,8 @@
 
 **Ops smoke:** `GET /api/health` in the Next app ([`app/api/health/route.ts`](../../EHB%20landing-2026/app/api/health/route.ts)) — deploy/uptime checks; optional `gitSha` when `VERCEL_GIT_COMMIT_SHA` is set.
 
+**P1 text-token examples (landing):** [`app/development/page.tsx`](../../EHB%20landing-2026/app/development/page.tsx), [`app/dmo/home/page.tsx`](../../EHB%20landing-2026/app/dmo/home/page.tsx), [`components/dmo/Toast.tsx`](../../EHB%20landing-2026/components/dmo/Toast.tsx) — prefer `text-white` / `text-ehb-textBody` / `text-ehb-textMuted` per [FLOW-P1-foundation-ui.md](FLOW-P1-foundation-ui.md).
+
 **Economics & PSS:** [ECONOMICS_MASTER.md](ECONOMICS_MASTER.md) · [PSS_TO_STL_ENGINE_MAPPING.md](PSS_TO_STL_ENGINE_MAPPING.md) · [INDEX.md](INDEX.md) (all flows).
 
 **How to update:** When a flow doc is added, replace `*TBD*` with a markdown link and set **Status** to Draft → Review → Approved.

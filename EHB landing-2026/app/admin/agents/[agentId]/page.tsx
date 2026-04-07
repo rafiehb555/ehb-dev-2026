@@ -31,7 +31,7 @@ function Panel(props: { title: string; subtitle?: string; children: ReactNode })
   return (
     <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
       <div className="space-y-1">
-        <h2 className="text-sm sm:text-base font-semibold text-slate-100">{props.title}</h2>
+        <h2 className="text-sm sm:text-base font-semibold text-white">{props.title}</h2>
         {props.subtitle ? <p className="text-[11px] text-ehb-textMuted">{props.subtitle}</p> : null}
       </div>
       {props.children}
@@ -57,7 +57,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
   const relatedRecommendations = getAgentRelatedRecommendations(agent.id);
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
@@ -131,16 +131,16 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
             <Panel title="Current Runtime Snapshot" subtitle="Live snapshot from the local persistent runtime store">
               <div className="grid gap-2 sm:grid-cols-2">
                 <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
-                  Last task: <span className="font-medium text-slate-100">{runtime.lastTask}</span>
+                  Last task: <span className="font-medium text-white">{runtime.lastTask}</span>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
-                  Last update: <span className="font-medium text-slate-100">{runtime.lastUpdatedLabel}</span>
+                  Last update: <span className="font-medium text-white">{runtime.lastUpdatedLabel}</span>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
-                  Queue size: <span className="font-medium text-slate-100">{runtime.queueSize}</span>
+                  Queue size: <span className="font-medium text-white">{runtime.queueSize}</span>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
-                  Health score: <span className="font-medium text-slate-100">{runtime.healthScore}%</span>
+                  Health score: <span className="font-medium text-white">{runtime.healthScore}%</span>
                 </div>
               </div>
             </Panel>
@@ -153,7 +153,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
               <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-ehb-textBody">
                 Release-sensitive verification still routes through
                 {" "}
-                <span className="font-medium text-slate-100">
+                <span className="font-medium text-white">
                   {agentWorkflowContractSummary.releaseVerificationThrough}
                 </span>
                 .
@@ -175,7 +175,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                       className="rounded-xl border border-white/10 bg-slate-950/30 p-3 space-y-2"
                     >
                       <div className="flex flex-wrap items-center justify-between gap-2">
-                        <div className="font-medium text-slate-100">{event.title}</div>
+                        <div className="font-medium text-white">{event.title}</div>
                         <div className="flex flex-wrap items-center gap-1.5">
                           <span
                             className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium ${eventStatus.className}`}
@@ -204,7 +204,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                 runtimeHandoffs.map((handoff) => (
                   <div key={handoff.id} className="rounded-xl border border-white/10 bg-slate-950/30 p-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div className="font-medium text-slate-100">
+                      <div className="font-medium text-white">
                         {handoff.fromAgentId} → {handoff.toAgentId}
                       </div>
                       <span className="inline-flex items-center rounded-full border border-white/10 bg-slate-900/60 px-2 py-0.5 text-[10px] text-ehb-textBody">
@@ -248,7 +248,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                   className="rounded-xl border border-white/10 bg-slate-950/30 p-3 transition-all duration-200 hover:border-cyan-400/40"
                 >
                   <div className="text-[10px] uppercase tracking-wide text-slate-500">Previous agent</div>
-                  <div className="mt-1 font-medium text-slate-100">{previous.id}</div>
+                  <div className="mt-1 font-medium text-white">{previous.id}</div>
                   <div className="mt-1 text-ehb-textMuted">{previous.owner}</div>
                 </Link>
               ) : (
@@ -262,7 +262,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                   className="rounded-xl border border-white/10 bg-slate-950/30 p-3 transition-all duration-200 hover:border-cyan-400/40"
                 >
                   <div className="text-[10px] uppercase tracking-wide text-slate-500">Next agent</div>
-                  <div className="mt-1 font-medium text-slate-100">{next.id}</div>
+                  <div className="mt-1 font-medium text-white">{next.id}</div>
                   <div className="mt-1 text-ehb-textMuted">{next.owner}</div>
                 </Link>
               ) : (
@@ -275,7 +275,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
           <Panel title="Workflow Position" subtitle="How this agent appears in the default handoff order">
             <div className="rounded-xl border border-white/10 bg-slate-950/30 p-3">
               <div className="text-[10px] uppercase tracking-wide text-slate-500">Workflow role</div>
-              <div className="mt-1 text-slate-100 font-medium">
+              <div className="mt-1 text-white font-medium">
                 {handoffTimeline.find((item) => item.isCurrent)?.step
                   ? `Step ${handoffTimeline.find((item) => item.isCurrent)?.step} in the default handoff path`
                   : "Not in the default handoff path"}
@@ -294,7 +294,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                     href={`/admin/agents/${relatedAgent.id}`}
                     className="rounded-xl border border-white/10 bg-slate-950/30 p-3 transition-all duration-200 hover:border-cyan-400/30"
                   >
-                    <div className="font-medium text-slate-100">{relatedAgent.id}</div>
+                    <div className="font-medium text-white">{relatedAgent.id}</div>
                     <div className="mt-1 text-ehb-textMuted">{relatedAgent.owner}</div>
                   </Link>
                 ))
@@ -313,7 +313,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                     key={recommendation.id}
                     className="rounded-xl border border-white/10 bg-slate-950/30 p-3"
                   >
-                    <div className="font-medium text-slate-100">{recommendation.title}</div>
+                    <div className="font-medium text-white">{recommendation.title}</div>
                     <div className="mt-1 text-ehb-textBody">{recommendation.reason}</div>
                   </div>
                 ))
@@ -413,7 +413,7 @@ export default async function AdminAgentDetailPage({ params }: AgentDetailPagePr
                   }`}
                 >
                   <div className="text-[10px] uppercase tracking-wide text-slate-500">Step {item.step}</div>
-                  <div className="mt-1 font-medium text-slate-100">{item.id}</div>
+                  <div className="mt-1 font-medium text-white">{item.id}</div>
                   <div className="mt-1 text-[11px] text-ehb-textMuted">
                     {item.isCurrent ? "Current detail agent" : item.isPast ? "Earlier in the default flow" : "Later in the default flow"}
                   </div>

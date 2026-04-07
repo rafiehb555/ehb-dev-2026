@@ -3,11 +3,11 @@ import { UniversalStructuredAdminBlocks } from "@/components/admin/UniversalStru
 
 export default function AdminAiEcosystemPage() {
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Admin · AI Ecosystem</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Admin Â· AI Ecosystem</p>
             <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">ML, Fraud & NLP Controls</h1>
             <p className="text-ehb-textBody max-w-2xl">
               Configure AI rules for verified outcomes. Keep fraud checks and compliance summaries consistent with STL trust layers.
@@ -18,7 +18,7 @@ export default function AdminAiEcosystemPage() {
               href="/admin"
               className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-3 py-1.5 font-semibold text-white hover:shadow-neon-blue transition-all duration-200"
             >
-              ← Back to Super Admin
+              â† Back to Super Admin
             </Link>
             <Link
               href="/ai-ecosystem"
@@ -35,7 +35,7 @@ export default function AdminAiEcosystemPage() {
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-1">
               <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">AI Admin Links</p>
-              <h2 className="text-lg font-semibold text-white">Phases 81–85</h2>
+              <h2 className="text-lg font-semibold text-white">Phases 81â€“85</h2>
               <p className="text-ehb-textBody text-[10px]">
                 Fraud detection, analytics, location insights, automation and data pipeline. (UI links)
               </p>
@@ -58,7 +58,7 @@ export default function AdminAiEcosystemPage() {
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-[11px] font-semibold text-white">{p.title}</span>
                   <span aria-hidden className="text-[13px]">
-                    ↗
+                    â†—
                   </span>
                 </div>
                 <div className="text-[10px] text-ehb-textMuted mt-2 leading-relaxed">{p.subtitle}</div>

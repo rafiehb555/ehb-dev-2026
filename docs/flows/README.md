@@ -22,4 +22,4 @@ The Next.js app lives in [`EHB landing-2026/`](../../EHB%20landing-2026/).
 | **Stale `.next` / missing chunk** | From `EHB landing-2026/`: **`npm run build:clean`** (`clean` + `build`) |
 | **Implementation index** | [docs/INDEX.md](../INDEX.md) — health smoke, Stripe, OLS law reference, Tailwind `content` globs |
 
-Design tokens and text colors: [FLOW-P1-foundation-ui.md](FLOW-P1-foundation-ui.md).
+Design tokens and text colors: [FLOW-P1-foundation-ui.md](FLOW-P1-foundation-ui.md). **P1 text-token example paths** (landing): [TRACEABILITY_MATRIX.md](TRACEABILITY_MATRIX.md) — `development`, `dmo/home`, `dmo/Toast`.

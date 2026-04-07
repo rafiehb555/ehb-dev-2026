@@ -81,7 +81,7 @@ function Card({
 
 export default function DmoHomePage() {
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-8 space-y-6">
         <motion.section
           initial={{ opacity: 0, y: 8 }}
@@ -101,7 +101,7 @@ export default function DmoHomePage() {
               <Link href="/dmo" className="rounded-full bg-gradient-to-r from-[#00eaff] to-[#3b82f6] px-4 py-2 text-xs font-semibold text-slate-950 btn-glow">
                 Open Dashboard
               </Link>
-              <Link href="/home" className="rounded-full glass-panel border border-white/15 px-4 py-2 text-xs font-semibold text-slate-200 hover:bg-white/5">
+              <Link href="/home" className="rounded-full glass-panel border border-white/15 px-4 py-2 text-xs font-semibold text-ehb-textBody hover:bg-white/5">
                 Back to EHB Home
               </Link>
             </div>
@@ -133,7 +133,7 @@ export default function DmoHomePage() {
                   <p className="text-xs text-ehb-textBody mt-1">{d.desc}</p>
                   <Link
                     href={d.href}
-                    className="mt-3 inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-100 hover:bg-white/10 transition-colors"
+                    className="mt-3 inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/10 transition-colors"
                   >
                     {d.cta}
                   </Link>
@@ -196,7 +196,7 @@ export default function DmoHomePage() {
                       ? "bg-gradient-to-r from-[#00eaff] to-[#3b82f6] text-slate-950 btn-glow"
                       : a.tone === "danger"
                         ? "bg-gradient-to-r from-rose-400 to-rose-500 text-slate-950"
-                        : "glass-panel border border-white/15 text-slate-200 hover:bg-white/5",
+                        : "glass-panel border border-white/15 text-ehb-textBody hover:bg-white/5",
                   ].join(" ")}
                 >
                   {a.label}

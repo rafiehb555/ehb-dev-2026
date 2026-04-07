@@ -200,11 +200,11 @@ export default function AdminJpsImportPage() {
   }
 
   return (
-    <main className="min-h-screen text-slate-100">
+    <main className="min-h-screen text-white">
       <div className="container-ehb py-6 space-y-5">
         <header className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Super Admin · JPS Import</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Super Admin Â· JPS Import</p>
             <h1 className="text-xl font-semibold gradient-text">JPS Data Import Manager</h1>
             <p className="max-w-3xl text-sm text-ehb-textBody">
               Validate and save real `JPS` profiles, skills, designation ladders, and notes from this screen.
@@ -307,7 +307,7 @@ export default function AdminJpsImportPage() {
               value={jsonText}
               onChange={(event) => setJsonText(event.target.value)}
               spellCheck={false}
-              className="min-h-[560px] w-full rounded-2xl border border-white/10 bg-[#050b14] p-4 font-mono text-xs text-slate-100 outline-none focus:border-cyan-400/50"
+              className="min-h-[560px] w-full rounded-2xl border border-white/10 bg-[#050b14] p-4 font-mono text-xs text-white outline-none focus:border-cyan-400/50"
             />
 
             {message ? (
@@ -430,10 +430,10 @@ export default function AdminJpsImportPage() {
                         <div className="space-y-1">
                           <div className="font-medium text-white">{backup.fileName}</div>
                           <div className="text-ehb-textMuted">
-                            {backup.createdAt} · reason: {backup.reason}
+                            {backup.createdAt} Â· reason: {backup.reason}
                           </div>
                           <div className="text-ehb-textMuted">
-                            profiles: {backup.profiles} · skills: {backup.skillCategories} · ladders: {backup.designationLadders}
+                            profiles: {backup.profiles} Â· skills: {backup.skillCategories} Â· ladders: {backup.designationLadders}
                           </div>
                         </div>
                         <button
