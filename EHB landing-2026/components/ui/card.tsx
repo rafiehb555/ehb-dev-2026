@@ -1,6 +1,14 @@
 import type { HTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/utils/cn";
 
+type CardSize = "small" | "medium" | "large";
+
+const sizeClass: Record<CardSize, string> = {
+  small: "p-3 rounded-xl",
+  medium: "p-4 rounded-xl",
+  large: "p-5 rounded-2xl",
+};
+
 export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
@@ -10,6 +18,22 @@ export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
       )}
       {...props}
     />
+  );
+}
+
+export default function EhbCard({
+  children,
+  size = "medium",
+  className = "",
+}: {
+  children: ReactNode;
+  size?: CardSize;
+  className?: string;
+}) {
+  return (
+    <Card className={cn("border-gray-800 bg-[#111827]", sizeClass[size], className)}>
+      {children}
+    </Card>
   );
 }
 

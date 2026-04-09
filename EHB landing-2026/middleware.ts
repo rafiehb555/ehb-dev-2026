@@ -4,8 +4,9 @@ import { checkRateLimit } from "@/lib/rateLimitMemory";
 
 const SESSION_COOKIE = "ehb_session";
 
-/** Stricter caps for abuse-prone JSON APIs (per IP, per minute). */
-const API_RATE = { max: 120, windowMs: 60_000 };
+/** Global API caps (per IP, per minute) + stricter sensitive route caps. */
+const API_RATE = { max: 300, windowMs: 60_000 };
+const SENSITIVE_API_RATE = { max: 80, windowMs: 60_000 };
 
 function getKey() {
   const secret = process.env.EHB_AUTH_SECRET;
@@ -75,12 +76,47 @@ function isProtectedPath(pathname: string) {
   return (
     pathname.startsWith("/dmo") ||
     pathname.startsWith("/admin") ||
-    pathname.startsWith("/api/dmo")
+    pathname.startsWith("/api/dmo") ||
+    pathname.startsWith("/api/admin")
   );
 }
 
 function isRateLimitedApi(pathname: string) {
-  return pathname.startsWith("/api/fraud") || pathname.startsWith("/api/ai");
+  return pathname.startsWith("/api/");
+}
+
+function isSensitiveApi(pathname: string) {
+  return (
+    pathname.startsWith("/api/fraud") ||
+    pathname.startsWith("/api/ai") ||
+    pathname.startsWith("/api/auth") ||
+    pathname.startsWith("/api/payment") ||
+    pathname.startsWith("/api/dmo") ||
+    pathname.startsWith("/api/admin")
+  );
+}
+
+function isRateLimitExempt(pathname: string) {
+  return pathname.startsWith("/api/webhooks/");
+}
+
+function withSecurityHeaders(res: NextResponse) {
+  res.headers.set("X-Content-Type-Options", "nosniff");
+  res.headers.set("X-Frame-Options", "DENY");
+  res.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+  if (process.env.NODE_ENV === "production") {
+    res.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+  }
+  return res;
+}
+
+function isMiddlewareBypassEnabled() {
+  // Production is always strict.
+  if (process.env.NODE_ENV === "production") return false;
+  // In local/dev, default to bypass so pages remain usable without session bootstrap.
+  // Set EHB_MIDDLEWARE_DEV_BYPASS=false to test strict auth/rate behavior locally.
+  return process.env.EHB_MIDDLEWARE_DEV_BYPASS !== "false";
 }
 
 function clientIp(req: NextRequest) {
@@ -101,42 +137,60 @@ function roleAllowedForPath(pathname: string, role: string) {
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  if (isRateLimitedApi(pathname)) {
+  if (isRateLimitedApi(pathname) && !isRateLimitExempt(pathname)) {
     const ip = clientIp(req);
-    const key = `${ip}:${pathname.split("/").slice(0, 4).join("/")}`;
-    const rl = checkRateLimit(key, API_RATE.max, API_RATE.windowMs);
-    if (!rl.ok) {
-      return NextResponse.json(
-        { success: false, error: { code: "RATE_LIMIT", message: "Too many requests" } },
-        { status: 429, headers: { "Retry-After": String(rl.retryAfterSec) } }
+    const apiGroup = pathname.split("/").slice(0, 4).join("/");
+    const baseKey = `${ip}:${apiGroup}`;
+    const base = checkRateLimit(baseKey, API_RATE.max, API_RATE.windowMs);
+    if (!base.ok) {
+      return withSecurityHeaders(
+        NextResponse.json(
+          { success: false, error: { code: "RATE_LIMIT", message: "Too many requests" } },
+          { status: 429, headers: { "Retry-After": String(base.retryAfterSec) } }
+        )
       );
+    }
+    if (isSensitiveApi(pathname)) {
+      const sensitiveKey = `${ip}:sensitive:${apiGroup}`;
+      const strict = checkRateLimit(sensitiveKey, SENSITIVE_API_RATE.max, SENSITIVE_API_RATE.windowMs);
+      if (!strict.ok) {
+        return withSecurityHeaders(
+          NextResponse.json(
+            { success: false, error: { code: "RATE_LIMIT", message: "Too many requests" } },
+            { status: 429, headers: { "Retry-After": String(strict.retryAfterSec) } }
+          )
+        );
+      }
     }
   }
 
-  if (!isProtectedPath(pathname)) return NextResponse.next();
+  if (!isProtectedPath(pathname)) return withSecurityHeaders(NextResponse.next());
 
-  // Local demo mode: keep protected pages usable during product demos
-  // even when auth/session is not fully wired in browser.
-  if (process.env.NODE_ENV !== "production") {
-    return NextResponse.next();
+  if (isMiddlewareBypassEnabled()) {
+    return withSecurityHeaders(NextResponse.next());
   }
 
   const key = getKey();
-  if (!key) return NextResponse.json({ error: "Server misconfigured" }, { status: 500 });
+  if (!key) return withSecurityHeaders(NextResponse.json({ error: "Server misconfigured" }, { status: 500 }));
 
-  const token = req.cookies.get(SESSION_COOKIE)?.value;
-  if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const authHeader = req.headers.get("authorization");
+  const bearerToken =
+    authHeader && authHeader.toLowerCase().startsWith("bearer ")
+      ? authHeader.slice("bearer ".length).trim()
+      : null;
+  const token = req.cookies.get(SESSION_COOKIE)?.value || bearerToken;
+  if (!token) return withSecurityHeaders(NextResponse.json({ error: "Unauthorized" }, { status: 401 }));
 
   try {
     const payload = await verifyHs256Jwt(token, key);
-    if (!payload) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!payload) return withSecurityHeaders(NextResponse.json({ error: "Unauthorized" }, { status: 401 }));
     const role = typeof payload.role === "string" ? payload.role : "";
     if (!roleAllowedForPath(pathname, role)) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+      return withSecurityHeaders(NextResponse.json({ error: "Forbidden" }, { status: 403 }));
     }
-    return NextResponse.next();
+    return withSecurityHeaders(NextResponse.next());
   } catch {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return withSecurityHeaders(NextResponse.json({ error: "Unauthorized" }, { status: 401 }));
   }
 }
 
@@ -145,8 +199,12 @@ export const config = {
     "/dmo/:path*",
     "/admin/:path*",
     "/api/dmo/:path*",
+    "/api/admin/:path*",
+    "/api/auth/:path*",
+    "/api/payment/:path*",
     "/api/fraud/:path*",
     "/api/ai/:path*",
+    "/api/:path*",
   ],
 };
 

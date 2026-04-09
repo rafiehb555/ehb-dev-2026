@@ -4,19 +4,19 @@ import { useMemo, useState } from "react";
 import {
   PSS_CAPABILITY_CATEGORIES,
   PSS_CAPABILITIES,
+  type PssCapability,
   type PssCapabilityCategory,
 } from "@/lib/pss/pssCapabilities";
 
-const CAT_ORDER: PssCapabilityCategory[] = [
-  "identity",
-  "aml",
-  "monitoring",
-  "business",
-  "risk_signals",
-  "operations",
-];
+const CAT_ORDER: PssCapabilityCategory[] = ["identity", "aml", "monitoring", "business", "risk_signals", "operations"];
 
-export function PssCapabilitiesSection() {
+type Props = {
+  selectedCapabilityId?: string;
+  onSelectCapability?: (capability: PssCapability) => void;
+  getCapabilityStatus?: (id: string) => { enabled: boolean; mode: "live" | "pilot" | "planned" };
+};
+
+export function PssCapabilitiesSection({ selectedCapabilityId, onSelectCapability, getCapabilityStatus }: Props) {
   const [query, setQuery] = useState("");
   const [cat, setCat] = useState<PssCapabilityCategory | "all">("all");
 
@@ -41,8 +41,7 @@ export function PssCapabilitiesSection() {
             KYC · AML · Monitoring stack
           </h2>
           <p className="mt-1 max-w-3xl text-sm text-ehb-textBody">
-            Har module ka purpose aur typical use-case — baad mein vendor integration / feature flags se enable/disable
-            kiya ja sakta hai.
+            Har module ka purpose aur typical use-case — cards select karke detail panel se module controls chala sakte hain.
           </p>
         </div>
         <div className="flex w-full max-w-md flex-col gap-2 sm:flex-row sm:items-center">
@@ -86,30 +85,57 @@ export function PssCapabilitiesSection() {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {filtered.map((c) => (
-          <article
-            key={c.id}
-            className="group flex flex-col rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-[#0a0f14]/90 p-4 shadow-[0_0_0_1px_rgba(255,255,255,0.03)] transition hover:border-cyan-400/25 hover:shadow-[0_0_32px_rgba(34,211,238,0.08)]"
-          >
-            <div className="flex items-start justify-between gap-2">
-              <h3 className="text-sm font-semibold text-white">{c.title}</h3>
-              <span className="shrink-0 rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium text-cyan-200/90">
-                {c.short}
-              </span>
-            </div>
-            <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-ehb-textMuted">
-              {PSS_CAPABILITY_CATEGORIES[c.category].label}
-            </p>
-            <p className="mt-3 flex-1 text-xs leading-relaxed text-ehb-textBody">
-              <span className="text-white/80">Purpose: </span>
-              {c.purpose}
-            </p>
-            <p className="mt-2 border-t border-white/5 pt-2 text-xs leading-relaxed text-ehb-textMuted">
-              <span className="text-cyan-200/80">Use case: </span>
-              {c.useCase}
-            </p>
-          </article>
-        ))}
+        {filtered.map((c) => {
+          const isSelected = selectedCapabilityId === c.id;
+          const status = getCapabilityStatus?.(c.id);
+          return (
+            <button
+              type="button"
+              key={c.id}
+              onClick={() => onSelectCapability?.(c)}
+              className={[
+                "group flex flex-col rounded-2xl border bg-gradient-to-b from-white/[0.06] to-[#0a0f14]/90 p-4 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.03)] transition",
+                isSelected
+                  ? "border-cyan-400/45 shadow-[0_0_30px_rgba(34,211,238,0.12)]"
+                  : "border-white/10 hover:border-cyan-400/25 hover:shadow-[0_0_32px_rgba(34,211,238,0.08)]",
+              ].join(" ")}
+            >
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="text-sm font-semibold text-white">{c.title}</h3>
+                <span className="shrink-0 rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium text-cyan-200/90">
+                  {c.short}
+                </span>
+              </div>
+              <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-ehb-textMuted">
+                {PSS_CAPABILITY_CATEGORIES[c.category].label}
+              </p>
+              <p className="mt-3 flex-1 text-xs leading-relaxed text-ehb-textBody">
+                <span className="text-white/80">Purpose: </span>
+                {c.purpose}
+              </p>
+              <p className="mt-2 border-t border-white/5 pt-2 text-xs leading-relaxed text-ehb-textMuted">
+                <span className="text-cyan-200/80">Use case: </span>
+                {c.useCase}
+              </p>
+              {status ? (
+                <div className="mt-2 flex items-center gap-2">
+                  <span
+                    className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase ${
+                      status.enabled
+                        ? "border-emerald-400/35 bg-emerald-500/15 text-emerald-100"
+                        : "border-rose-400/35 bg-rose-500/10 text-rose-100"
+                    }`}
+                  >
+                    {status.enabled ? "Enabled" : "Disabled"}
+                  </span>
+                  <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] uppercase text-ehb-textMuted">
+                    {status.mode}
+                  </span>
+                </div>
+              ) : null}
+            </button>
+          );
+        })}
       </div>
 
       {filtered.length === 0 ? (

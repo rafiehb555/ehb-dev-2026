@@ -199,3 +199,41 @@ export const DMO_NAV_SECTIONS: DmoNavSection[] = [
   },
 ];
 
+function normalizePathname(pathname: string): string {
+  if (pathname.length > 1 && pathname.endsWith("/")) return pathname.slice(0, -1);
+  return pathname;
+}
+
+/** Active link match for DMO routes (supports nested paths). */
+export function isDmoPathActive(pathname: string, href: string): boolean {
+  const p = normalizePathname(pathname);
+  const h = normalizePathname(href);
+  return p === h || p.startsWith(`${h}/`);
+}
+
+/**
+ * Resolves which DMO module owns the current URL. Uses longest-prefix wins so `/dmo/pss/...`
+ * does not incorrectly match the dashboard base `/dmo`.
+ */
+export function getDmoSectionKeyFromPathname(pathname: string | null): string | null {
+  if (!pathname) return DMO_NAV_SECTIONS[0]?.key ?? null;
+  const normalized = normalizePathname(pathname);
+
+  const candidates: { key: string; prefix: string }[] = [];
+  for (const section of DMO_NAV_SECTIONS) {
+    candidates.push({ key: section.key, prefix: section.href });
+    for (const item of section.items) {
+      candidates.push({ key: section.key, prefix: item.href });
+    }
+  }
+  candidates.sort((a, b) => b.prefix.length - a.prefix.length);
+
+  for (const { key, prefix } of candidates) {
+    const pref = normalizePathname(prefix);
+    if (normalized === pref || normalized.startsWith(`${pref}/`)) {
+      return key;
+    }
+  }
+  return DMO_NAV_SECTIONS[0]?.key ?? null;
+}
+

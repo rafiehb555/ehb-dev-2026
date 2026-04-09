@@ -1,33 +1,30 @@
+import { z } from "zod";
 import { requireSession } from "@/lib/rbac";
-import { fail, ok } from "@/lib/apiResponse";
+import { fail, okCompressed } from "@/lib/apiResponse";
 import { handleRouteError } from "@/lib/apiErrors";
-import { prisma } from "@/lib/prisma";
-import { computeUserStl, recalcUserStl } from "@/lib/stl/engine";
+import { getStlMePayloadForUser } from "@/services/stl";
+import { enforceRateLimit } from "@/lib/api/rateLimit";
+import { monitorApiRequest } from "@/monitoring/api";
 
-export async function GET() {
-  const auth = await requireSession(["USER", "FRANCHISE", "ADMIN", "SUPER_ADMIN"]);
-  if (!auth.ok) return fail(auth.status, "AUTH", auth.error);
+const QuerySchema = z.object({
+  fresh: z.enum(["1", "true"]).optional(),
+});
 
-  try {
-    // Ensure we always return a fresh breakdown (no static scores).
-    const breakdown = await computeUserStl(auth.user.userId);
-    const persisted = await prisma.sTLScore.findUnique({
-      where: { entityType_entityId: { entityType: "USER", entityId: auth.user.userId } },
-      select: { score: true, level: true, breakdown: true, lastUpdated: true },
-    });
+export async function GET(req: Request) {
+  const limited = enforceRateLimit(req, { route: "api:stl:me", maxRequests: 80, windowMs: 60_000 });
+  if (!limited.ok) return limited.response;
 
-    // Optionally persist if missing or drifted.
-    if (!persisted || Number(persisted.score) !== breakdown.total || persisted.level !== breakdown.level) {
-      await recalcUserStl({
-        userId: auth.user.userId,
-        actorId: auth.user.userId,
-        reason: "STL_ME_READ_RECALC",
-      }).catch(() => undefined);
+  return monitorApiRequest(req, "api:stl:me", async () => {
+    QuerySchema.parse(Object.fromEntries(new URL(req.url).searchParams.entries()));
+
+    const auth = await requireSession(["USER", "SELLER", "PROVIDER", "FRANCHISE", "FRANCHISE_OWNER", "ADMIN", "SUPER_ADMIN"]);
+    if (!auth.ok) return fail(auth.status, "AUTH", auth.error);
+
+    try {
+      const payload = await getStlMePayloadForUser(auth.user.userId);
+      return okCompressed(req, payload);
+    } catch (err) {
+      return handleRouteError(err);
     }
-
-    return ok({ breakdown, persisted });
-  } catch (err) {
-    return handleRouteError(err);
-  }
+  });
 }
-

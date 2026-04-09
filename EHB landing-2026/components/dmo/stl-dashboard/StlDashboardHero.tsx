@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { AlertTriangle, Check, ChevronRight } from "lucide-react";
+import { AlertTriangle, Check, ChevronRight, Zap } from "lucide-react";
 import type { StlDashboardDemo } from "@/lib/dmo/stlDashboardDemo";
+import { StlTrustScoreRing } from "@/components/dmo/stl-dashboard/StlTrustScoreRing";
 
 type Props = {
   data: StlDashboardDemo;
@@ -11,23 +12,16 @@ type Props = {
 };
 
 export function StlDashboardHero({ data: d, modelScore, upgradeBlocked }: Props) {
+  const crbLeft = Math.max(0, d.pending.crb.target - d.pending.crb.current);
+  const examLeft = Math.max(0, d.pending.exams.target - d.pending.exams.current);
+
   return (
     <section
       className="xl:col-span-2 space-y-5 rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_40px_rgba(14,165,233,0.08)] backdrop-blur-md sm:p-6"
       aria-labelledby="stl-hero-title"
     >
-      {upgradeBlocked ? (
-        <div className="flex items-center gap-3 rounded-xl border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-100">
-          <AlertTriangle className="h-5 w-5 shrink-0 text-rose-300" aria-hidden />
-          <div>
-            <p className="font-semibold">Upgrade blocked</p>
-            <p className="text-xs text-rose-200/80">Complaints threshold reached — clear cases in PSS before STL can rise.</p>
-          </div>
-        </div>
-      ) : null}
-
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex gap-4">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex flex-wrap items-start gap-4">
           <div className="relative shrink-0">
             <div className="absolute -inset-0.5 rounded-full bg-gradient-to-br from-cyan-400 via-blue-500 to-violet-600 opacity-80 blur-[2px]" />
             <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-gradient-to-br from-slate-800 to-slate-950 text-lg font-bold text-white shadow-inner ring-2 ring-cyan-400/20 transition-transform duration-300 hover:scale-[1.02]">
@@ -38,21 +32,21 @@ export function StlDashboardHero({ data: d, modelScore, upgradeBlocked }: Props)
                 .slice(0, 2)}
             </div>
           </div>
+          <StlTrustScoreRing value={d.trustScore} size={76} className="stl-ring-glow" />
           <div>
             <h2 id="stl-hero-title" className="text-xl font-semibold tracking-tight text-white">
               {d.displayName}
             </h2>
             <p className="mt-0.5 text-xs text-ehb-textMuted">{d.roleLabel}</p>
             <p className="mt-2 text-sm">
-              <span className="font-semibold text-emerald-400">STL Level: {d.stlLevel} (HIGH)</span>
+              <span className="font-semibold text-emerald-400">STL Level: {d.stlLevel} ({d.nextLevelShort === "SUPREME" ? "TOP" : "ACTIVE"})</span>
               <span className="mx-2 text-white/25">·</span>
               <span className="text-ehb-textBody">
                 Trust Score: <span className="font-mono text-white">{d.trustScore}%</span>
               </span>
             </p>
             <p className="mt-1 text-[10px] text-ehb-textMuted">
-              Model preview: <span className="font-mono text-cyan-200/90">{modelScore}%</span> (reference engine — see{" "}
-              <code className="rounded bg-white/10 px-1">stlDemoEngine.ts</code>)
+              Engine score signal: <span className="font-mono text-cyan-200/90">{modelScore}%</span>
             </p>
           </div>
         </div>
@@ -60,15 +54,45 @@ export function StlDashboardHero({ data: d, modelScore, upgradeBlocked }: Props)
           href="/dmo/stl"
           aria-disabled={upgradeBlocked}
           className={[
-            "inline-flex shrink-0 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition",
+            "ehb-press inline-flex shrink-0 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition",
             upgradeBlocked
               ? "cursor-not-allowed border border-white/10 bg-white/5 text-white/40"
-              : "bg-gradient-to-r from-orange-500 via-rose-500 to-red-600 shadow-[0_0_28px_rgba(249,115,22,0.45)] hover:brightness-110 hover:shadow-[0_0_36px_rgba(249,115,22,0.55)]",
+              : "stl-cta-pulse bg-gradient-to-r from-orange-500 via-rose-500 to-red-600 hover:brightness-110",
           ].join(" ")}
         >
+          <Zap className="h-4 w-4 opacity-90" aria-hidden />
           Upgrade Now
           <ChevronRight className="h-4 w-4" aria-hidden />
         </Link>
+      </div>
+
+      <div className="rounded-xl border border-amber-500/25 bg-gradient-to-r from-amber-500/[0.07] to-transparent p-4">
+        <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-amber-200/90">
+          <AlertTriangle className="h-4 w-4" aria-hidden />
+          Blockers
+        </p>
+        <ul className="mt-2 space-y-1.5 text-sm text-ehb-textBody">
+          <li>
+            <span className="text-white/90">CRB:</span>{" "}
+            {crbLeft === 0 ? (
+              <span className="text-emerald-400 font-medium">clear</span>
+            ) : (
+              <span>
+                <span className="font-mono text-amber-200">{crbLeft}</span> pending verification{crbLeft === 1 ? "" : "s"}
+              </span>
+            )}
+          </li>
+          <li>
+            <span className="text-white/90">Exams:</span>{" "}
+            {examLeft === 0 ? (
+              <span className="text-emerald-400 font-medium">clear</span>
+            ) : (
+              <span>
+                <span className="font-mono text-amber-200">{examLeft}</span> exam{examLeft === 1 ? "" : "s"} remaining
+              </span>
+            )}
+          </li>
+        </ul>
       </div>
 
       <div className="rounded-xl border border-cyan-500/20 bg-black/25 p-4">
@@ -87,18 +111,18 @@ export function StlDashboardHero({ data: d, modelScore, upgradeBlocked }: Props)
         </div>
         <div className="mt-4 space-y-2">
           <div className="flex justify-between text-[11px] text-ehb-textMuted">
-            <span>Progress toward VIP</span>
+            <span>Progress toward next level</span>
             <span className="font-mono text-cyan-200">{d.progressToNext}%</span>
           </div>
-          <div
-            className="h-3 w-full overflow-hidden rounded-full bg-slate-900 ring-1 ring-cyan-500/20"
-            role="progressbar"
-            aria-valuenow={d.progressToNext}
-            aria-valuemin={0}
-            aria-valuemax={100}
-          >
             <div
-              className="h-full rounded-full bg-gradient-to-r from-cyan-400 via-sky-300 to-white shadow-[0_0_16px_rgba(34,211,238,0.6)] transition-[width] duration-700 ease-out"
+              className="h-3 w-full overflow-hidden rounded-full bg-slate-900 ring-1 ring-cyan-500/20"
+              role="progressbar"
+              aria-valuenow={d.progressToNext}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            >
+            <div
+              className="stl-progress-bar h-full rounded-full bg-gradient-to-r from-cyan-400 via-sky-300 to-white shadow-[0_0_16px_rgba(34,211,238,0.6)] transition-[width] duration-700 ease-out"
               style={{ width: `${d.progressToNext}%` }}
             />
           </div>

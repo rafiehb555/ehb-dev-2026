@@ -4,12 +4,14 @@ import { prisma } from "@/lib/prisma";
 import { createSessionCookie } from "@/lib/auth";
 import { handleRouteError } from "@/lib/apiErrors";
 import { fail, ok } from "@/lib/apiResponse";
+import { buildReferralCode, readAffiliateStore, writeAffiliateStore } from "@/lib/affiliate/store";
 
 const RegisterSchema = z.object({
   name: z.string().min(2).max(80),
   email: z.string().email().max(120),
   password: z.string().min(8).max(200),
   role: z.enum(["USER", "ADMIN", "SUPER_ADMIN", "FRANCHISE"]).optional(),
+  referralCode: z.string().min(3).max(32).optional(),
 });
 
 export async function POST(req: Request) {
@@ -28,6 +30,18 @@ export async function POST(req: Request) {
       },
       select: { id: true, role: true, email: true, name: true },
     });
+
+    const store = await readAffiliateStore();
+    const ownCode = buildReferralCode(user.name, user.id);
+    store.referralCodes[user.id] = ownCode;
+    if (body.referralCode) {
+      const code = body.referralCode.trim().toUpperCase();
+      const referrerUserId = Object.entries(store.referralCodes).find(([, v]) => v.toUpperCase() === code)?.[0];
+      if (referrerUserId && referrerUserId !== user.id) {
+        store.referredBy[user.id] = referrerUserId;
+      }
+    }
+    await writeAffiliateStore(store, user.id);
 
     await createSessionCookie({ userId: user.id, role: user.role });
     return ok({ user });

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getStripe } from "@/lib/stripe";
 import { writeAuditLog } from "@/lib/audit";
+import { runDmoTrustEngine } from "@/lib/stl/dmoTrustEngine";
 
 export const runtime = "nodejs";
 
@@ -14,6 +15,42 @@ type StripeCheckoutSessionPayload = {
   amount_total?: number | null;
   payment_intent?: string | { id?: string } | null;
 };
+
+async function applyPaymentWebhook(session: StripeCheckoutSessionPayload) {
+  const paymentId = session.metadata?.paymentId;
+  const paymentType = session.metadata?.paymentType;
+  const userId = session.metadata?.userId;
+  if (!paymentId || !paymentType || !userId) return false;
+
+  const tx = await prisma.transaction.findFirst({
+    where: {
+      userId,
+      referenceId: { startsWith: paymentId },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+  if (!tx || tx.status === "COMPLETED") return true;
+
+  const paidAmount = Number(((session.amount_total ?? 0) / 100).toFixed(2));
+  if (paidAmount !== Number(tx.amount.toFixed(2))) return false;
+
+  await prisma.transaction.update({ where: { id: tx.id }, data: { status: "COMPLETED" } });
+  if (paymentType === "STL_UPGRADE") {
+    await runDmoTrustEngine({ userId, actorId: userId, reason: "VERIFICATION_UPDATE" }).catch(() => undefined);
+  } else if (paymentType === "CRB_EXAM") {
+    await runDmoTrustEngine({ userId, actorId: userId, reason: "EXAM_RESULT" }).catch(() => undefined);
+  } else if (paymentType === "DMO_REFILL") {
+    await runDmoTrustEngine({ userId, actorId: userId, reason: "REFILL_UPDATE" }).catch(() => undefined);
+  }
+  await writeAuditLog({
+    actorId: userId,
+    action: "PAYMENT_VERIFIED",
+    targetType: "OTHER",
+    targetId: paymentId,
+    metadata: { paymentType, source: "stripe_webhook", amount: tx.amount },
+  });
+  return true;
+}
 
 /**
  * Stripe webhook: verify signature, idempotent by event id, mark order PAID on checkout.session.completed.
@@ -51,6 +88,14 @@ export async function POST(req: Request) {
   }
 
   const session = event.data.object;
+  const handledPayment = await applyPaymentWebhook(session);
+  if (handledPayment && !session.client_reference_id && !session.metadata?.orderId) {
+    await prisma.processedStripeEvent.create({
+      data: { stripeEventId: event.id, eventType: `${event.type}_PAYMENT` },
+    });
+    return NextResponse.json({ received: true, paymentHandled: true });
+  }
+
   const orderId = session.client_reference_id ?? session.metadata?.orderId;
   if (!orderId || typeof orderId !== "string") {
     await prisma.processedStripeEvent.create({

@@ -1,9 +1,16 @@
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { ok } from "@/lib/apiResponse";
+import { okCompressed } from "@/lib/apiResponse";
 import { requireSession } from "@/lib/rbac";
 import { isDmoDemoMode } from "@/lib/dmo/demoStore";
+import { buildStlFullSnapshot } from "@/lib/stl/fullSnapshot";
+import { enforceRateLimit } from "@/lib/api/rateLimit";
 
 const db = prisma as any;
+
+const QuerySchema = z.object({
+  refresh: z.enum(["1", "true"]).optional(),
+});
 
 function demoPayload() {
   return {
@@ -40,19 +47,24 @@ function demoPayload() {
   };
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  const limited = enforceRateLimit(req, { route: "api:automation", maxRequests: 50, windowMs: 60_000 });
+  if (!limited.ok) return limited.response;
+
+  QuerySchema.parse(Object.fromEntries(new URL(req.url).searchParams.entries()));
+
   const auth = await requireSession(["ADMIN", "SUPER_ADMIN"]);
-  if (!auth.ok) return ok(demoPayload());
+  if (!auth.ok) return okCompressed(req, demoPayload());
 
   if (!process.env.DATABASE_URL || isDmoDemoMode()) {
-    return ok(demoPayload());
+    return okCompressed(req, demoPayload());
   }
 
   try {
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
 
-    const [rules, events, fraudAlerts] = await Promise.all([
+    const [rules, events, fraudAlerts, aiSnapshot] = await Promise.all([
       db.automationRule.findMany({
         orderBy: [{ isActive: "desc" }, { priority: "asc" }],
         take: 100,
@@ -71,13 +83,14 @@ export async function GET() {
           ],
         },
       }),
+      buildStlFullSnapshot(auth.user.userId).catch(() => null),
     ]);
 
     const activeRules = rules.filter((r: any) => r.isActive).length;
     const triggersToday = events.length;
     const autoDecisions = events.filter((e: any) => e.status === "DONE").length;
 
-    return ok({
+    return okCompressed(req, {
       stats: {
         activeRules,
         triggersToday,
@@ -91,12 +104,12 @@ export async function GET() {
         active: Boolean(r.isActive),
       })),
       suggestions: [
-        "Auto-approve only low-risk flows and escalate repeated failures.",
+        aiSnapshot?.ai.guide ?? "Auto-approve only low-risk flows and escalate repeated failures.",
+        ...(aiSnapshot?.ai.recommendations ?? []),
         "Keep refill-expired penalties active to protect marketplace trust.",
       ],
     });
   } catch {
-    return ok(demoPayload());
+    return okCompressed(req, demoPayload());
   }
 }
-

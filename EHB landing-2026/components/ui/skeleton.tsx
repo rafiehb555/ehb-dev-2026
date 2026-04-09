@@ -1,5 +1,4 @@
-import { cn } from "@/lib/utils/cn";
-
-export function Skeleton({ className }: { className?: string }) {
-  return <div className={cn("animate-pulse rounded-md bg-slate-800/80", className)} aria-hidden />;
+export default function Skeleton() {
+  return <div className="h-20 animate-pulse rounded-lg bg-gray-700" />;
 }
+

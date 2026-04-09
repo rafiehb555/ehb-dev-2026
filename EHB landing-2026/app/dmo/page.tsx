@@ -128,6 +128,12 @@ export default function DmoPage() {
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
+              href="/dmo/super-admin"
+              className="inline-flex items-center gap-2 rounded-full border border-amber-500/35 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-100 hover:bg-amber-500/20 transition-colors"
+            >
+              <span aria-hidden>🛡️</span> DMO-ADMIN
+            </Link>
+            <Link
               href="/dmo/queue"
               className="inline-flex items-center gap-2 rounded-full border border-cyan-500/35 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-100 hover:bg-cyan-500/20 transition-colors"
             >

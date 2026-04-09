@@ -1,0 +1,106 @@
+import mongoose from "mongoose";
+
+const userSchema = new mongoose.Schema(
+  {
+    userId: String,
+    email: {
+      type: String,
+      unique: true,
+      sparse: true,
+      lowercase: true,
+      trim: true,
+    },
+    passwordHash: {
+      type: String,
+      select: false,
+    },
+    role: {
+      type: String,
+      default: "user",
+    },
+    type: {
+      type: String,
+      default: "seller",
+    },
+    source: {
+      type: String,
+      default: "signup",
+    },
+    stlScore: Number,
+    stlLevel: String,
+    modules: {
+      pss: {
+        kycVerified: Boolean,
+        idVerified: Boolean,
+        addressVerified: Boolean,
+        amlChecked: Boolean,
+        livenessPassed: Boolean,
+        complaints: Number,
+        verificationPending: Number,
+        trustScore: Number,
+        score: Number,
+      },
+      crb: {
+        examsPassed: Number,
+        examsFailed: Number,
+        visitsCompleted: Number,
+        score: Number,
+        application: {
+          status: String,
+          currentStage: String,
+          documents: [String],
+          submittedAt: Date,
+          updatedAt: Date,
+          lastEscalatedAt: Date,
+          timeline: [
+            {
+              stage: String,
+              status: String,
+              timestamp: Date,
+              note: String,
+            },
+          ],
+          escalationHistory: [
+            {
+              fromStage: String,
+              toStage: String,
+              timestamp: Date,
+              reason: String,
+            },
+          ],
+          approvalTimes: {
+            sub: Date,
+            master: Date,
+            corporate: Date,
+            company: Date,
+          },
+        },
+      },
+      dmo: {
+        activityLevel: String,
+        orders: Number,
+        refills: Number,
+        behaviorScore: Number,
+        score: Number,
+      },
+      franchise: {
+        connected: Boolean,
+        coverage: String,
+        score: Number,
+      },
+    },
+    earnings: {
+      today: Number,
+      monthly: Number,
+      total: Number,
+    },
+    growth: {
+      referrals: Number,
+      earnings: Number,
+    },
+  },
+  { timestamps: true },
+);
+
+export default mongoose.model("User", userSchema);
+

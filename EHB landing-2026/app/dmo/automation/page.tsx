@@ -20,6 +20,15 @@ type AutomationPayload = {
   suggestions?: string[];
 };
 
+type AiSuggestionsPayload = {
+  readinessPercent: number;
+  guide: string;
+  suggestions: string[];
+  recommendations: string[];
+  fraud: { flagged: boolean; reasons: string[]; risk: "LOW" | "MEDIUM" | "HIGH" };
+  autoDecision: { recommendUpgrade: boolean; escalateToDmo: boolean; reason: string };
+};
+
 function Card({ title, value }: { title: string; value: number }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -35,6 +44,7 @@ function StatusBadge({ active }: { active: boolean }) {
 
 export default function AutomationPage() {
   const [data, setData] = useState<AutomationPayload | null>(null);
+  const [aiData, setAiData] = useState<AiSuggestionsPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -45,6 +55,12 @@ export default function AutomationPage() {
         const json = await res.json();
         if (!res.ok) throw new Error(json?.error?.message ?? `Failed: ${res.status}`);
         setData((json?.data ?? json) as AutomationPayload);
+
+        const aiRes = await fetch("/api/ai/suggestions", { cache: "no-store" });
+        const aiJson = await aiRes.json();
+        if (aiRes.ok && aiJson?.success !== false) {
+          setAiData((aiJson?.data ?? aiJson) as AiSuggestionsPayload);
+        }
       } catch (e) {
         setError(e instanceof Error ? e.message : "Failed to load automation data");
       }
@@ -65,6 +81,20 @@ export default function AutomationPage() {
       <div className="container-ehb py-6 space-y-6">
         <h2 className="text-2xl font-semibold">AI Automation Panel</h2>
 
+        {aiData ? (
+          <div className="rounded-2xl border border-fuchsia-400/20 bg-fuchsia-500/10 p-4">
+            <p className="text-sm font-semibold text-fuchsia-100">AI Brain 2.0</p>
+            <p className="mt-1 text-sm text-fuchsia-50/90">{aiData.guide}</p>
+            <div className="mt-2 flex flex-wrap gap-2 text-xs">
+              <span className="rounded-full border border-white/20 px-2 py-0.5">Readiness: {aiData.readinessPercent}%</span>
+              <span className="rounded-full border border-white/20 px-2 py-0.5">Fraud risk: {aiData.fraud.risk}</span>
+              <span className="rounded-full border border-white/20 px-2 py-0.5">
+                Auto decision: {aiData.autoDecision.recommendUpgrade ? "Recommend upgrade" : aiData.autoDecision.reason}
+              </span>
+            </div>
+          </div>
+        ) : null}
+
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <Card title="Active Rules" value={data.stats.activeRules} />
           <Card title="Triggers Today" value={data.stats.triggersToday} />
@@ -77,6 +107,17 @@ export default function AutomationPage() {
             <p className="mb-2 text-sm font-semibold text-cyan-200">AI Suggestions</p>
             <div className="space-y-1 text-sm text-cyan-100">
               {data.suggestions.map((s) => (
+                <p key={s}>• {s}</p>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        {aiData?.suggestions && aiData.suggestions.length > 0 ? (
+          <div className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 p-4">
+            <p className="mb-2 text-sm font-semibold text-emerald-200">AI User Guide Tasks</p>
+            <div className="space-y-1 text-sm text-emerald-100">
+              {aiData.suggestions.map((s) => (
                 <p key={s}>• {s}</p>
               ))}
             </div>

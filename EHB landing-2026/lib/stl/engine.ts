@@ -1,16 +1,17 @@
 import { prisma } from "@/lib/prisma";
 import type { STLEntityType } from "@prisma/client";
 import { syncLowTrustUserSignal } from "@/lib/fraud/orchestration";
+import { getLevelMetaForScore, getProgressToNextLevel } from "@/lib/stl/levels";
 
 export type StlBreakdown = {
-  pss: number; // 0..40
-  crb: number; // 0..20 (v1=0 until CRB exists)
-  performance: number; // 0..20 (v1 minimal)
-  behavior: number; // -50..20 (v1 includes franchise inspection signals)
-  industries: number; // 0..20 (multi-industry verification boost)
-  refilling: number; // -40..10
+  pss: number; // weighted 30%
+  crb: number; // weighted 30%
+  performance: number; // weighted 20% (DMO)
+  behavior: number; // penalty component (complaints/risk)
+  industries: number; // weighted 10% (franchise)
+  refilling: number; // reserved/compat
   total: number; // 0..100
-  level: number; // 1..5
+  level: number; // 1..8
   label: string;
 };
 
@@ -27,12 +28,9 @@ function isMongoObjectId(value: string) {
   return /^[a-f0-9]{24}$/i.test(value);
 }
 
-export function levelForScore(score: number) {
-  if (score >= 90) return { level: 5, label: "Elite Verified" };
-  if (score >= 75) return { level: 4, label: "Highly Trusted" };
-  if (score >= 60) return { level: 3, label: "Trusted" };
-  if (score >= 40) return { level: 2, label: "Basic Verified" };
-  return { level: 1, label: "Low Trust" };
+export function levelForScore(score: number, supremeApproved = false) {
+  const meta = getLevelMetaForScore(score, supremeApproved);
+  return { level: meta.level, label: meta.name };
 }
 
 /** Prefer DB level when set; if score exists but level is missing (legacy rows), derive from score. */
@@ -42,7 +40,7 @@ export function resolveStlLevelFromScoreAndDb(
 ): number | null {
   if (score == null || !Number.isFinite(Number(score))) return null;
   const s = Number(score);
-  if (level != null && Number.isFinite(level) && level >= 1 && level <= 5) return Math.floor(level);
+  if (level != null && Number.isFinite(level) && level >= 1 && level <= 8) return Math.floor(level);
   return levelForScore(s).level;
 }
 
@@ -295,9 +293,61 @@ async function refillingScoreForEntity(entityType: "SERVICE" | "PRODUCT", entity
   return clamp(score, -40, 10);
 }
 
-function buildBreakdown(parts: Omit<StlBreakdown, "total" | "level" | "label">): StlBreakdown {
+async function isSupremeApprovedForUser(
+  userId: string,
+  profileApproval: "NONE" | "PENDING" | "APPROVED" | "REJECTED" | null | undefined
+): Promise<boolean> {
+  if (!isMongoObjectId(userId)) return false;
+  if (profileApproval === "APPROVED") return true;
+  const rec = await prisma.registryRecord.findFirst({
+    where: {
+      entityType: "USER",
+      entityId: userId,
+      verificationSource: "MANUAL",
+      status: "VERIFIED",
+    },
+    select: { id: true },
+  });
+  return Boolean(rec);
+}
+
+/** After score write: eligible for L8 → mark PENDING; score dropped → clear PENDING (not REJECTED/APPROVED). */
+export async function syncSupremeApprovalState(userId: string) {
+  if (!isMongoObjectId(userId)) return;
+  const [profile, scoreRow] = await Promise.all([
+    prisma.profile.findUnique({
+      where: { userId },
+      select: { stlSupremeApproval: true },
+    }),
+    prisma.sTLScore.findUnique({
+      where: { entityType_entityId: { entityType: "USER", entityId: userId } },
+      select: { score: true },
+    }),
+  ]);
+  if (!profile || !scoreRow) return;
+  const score = Number(scoreRow.score);
+  const a = profile.stlSupremeApproval;
+  if (a === "APPROVED") return;
+  if (a === "REJECTED") return;
+
+  if (score >= 96 && a === "NONE") {
+    await prisma.profile.update({
+      where: { userId },
+      data: { stlSupremeApproval: "PENDING" },
+    });
+    return;
+  }
+  if (score < 96 && a === "PENDING") {
+    await prisma.profile.update({
+      where: { userId },
+      data: { stlSupremeApproval: "NONE" },
+    });
+  }
+}
+
+function buildBreakdown(parts: Omit<StlBreakdown, "total" | "level" | "label">, supremeApproved = false): StlBreakdown {
   const total = clamp(parts.pss + parts.crb + parts.performance + parts.behavior + parts.industries + parts.refilling, 0, 100);
-  const lvl = levelForScore(total);
+  const lvl = levelForScore(total, supremeApproved);
   return {
     ...parts,
     total,
@@ -320,21 +370,91 @@ function demoBreakdown(): StlBreakdown {
 export async function computeUserStl(userId: string): Promise<StlBreakdown> {
   if (!isMongoObjectId(userId)) return demoBreakdown();
 
-  const owner = await ownerTrustSnapshot(userId);
-  const crb = await crbScoreForUser(userId);
-  const performance = await performanceScoreForUser(userId);
-  const behavior = owner.behavior;
-  const industries = await industryBoostForUser(userId);
-  const refilling = owner.refilling;
+  const [profile, verification, complaintsCount, crbCertificates, crbPassedExams, refills, franchiseSummary] =
+    await Promise.all([
+      prisma.profile.findUnique({
+        where: { userId },
+        select: { verificationStatus: true, stlSupremeApproval: true },
+      }),
+      prisma.pSSVerification.findUnique({
+        where: { userId },
+        select: { phaseCompleted: true, status: true },
+      }),
+      prisma.complaint.count({
+        where: {
+          targetId: userId,
+          status: { in: ["PENDING", "AI_REVIEW", "HUMAN_REVIEW"] },
+        } as any,
+      }),
+      prisma.cRBCertificate.count({
+        where: {
+          entityId: userId,
+          status: "ACTIVE",
+        },
+      }),
+      prisma.inspectionReport.count({
+        where: {
+          task: { crbApplication: { applicantId: userId } },
+          fraudSuspected: false,
+          score: { gte: 70 },
+        },
+      }),
+      prisma.pSSRefill.findMany({
+        where: { verification: { userId } },
+        orderBy: { createdAt: "desc" },
+        take: 12,
+        select: { id: true, status: true, dueDate: true, createdAt: true },
+      }),
+      prisma.inspectionTask.groupBy({
+        by: ["status"],
+        where: { inspectorId: userId },
+        _count: { _all: true },
+      }),
+    ]);
 
-  return buildBreakdown({
-    pss: owner.pss,
-    crb,
-    performance,
-    behavior,
-    industries,
-    refilling,
-  });
+  const supremeApproved = await isSupremeApprovedForUser(userId, profile?.stlSupremeApproval ?? undefined);
+
+  const complaintLimit = 8;
+  const pssLevel = verification?.phaseCompleted ?? 0;
+  const pssKycDone = profile?.verificationStatus === "VERIFIED" || verification?.status === "VERIFIED";
+  const pssNormalized = clamp((pssKycDone ? 60 : 0) + (clamp(pssLevel, 0, 6) / 6) * 40, 0, 100);
+  const pssWeighted = (pssNormalized / 100) * 30;
+
+  const requiredVerifications = 4;
+  const requiredExams = 4;
+  const verificationsRatio = clamp(crbCertificates / requiredVerifications, 0, 1);
+  const examsRatio = clamp(crbPassedExams / requiredExams, 0, 1);
+  const crbNormalized = verificationsRatio * 60 + examsRatio * 40;
+  const crbWeighted = (crbNormalized / 100) * 30;
+
+  const requiredRefills = 4;
+  const refillDoneCount = refills.filter((r) => r.status === "COMPLETED").length;
+  const dmoNormalized = clamp((refillDoneCount / requiredRefills) * 100, 0, 100);
+  const dmoWeighted = (dmoNormalized / 100) * 20;
+
+  const verifiedLocations = franchiseSummary.find((x) => x.status === "COMPLETED")?._count._all ?? 0;
+  const pendingLocations = franchiseSummary
+    .filter((x) => x.status === "ASSIGNED" || x.status === "IN_PROGRESS")
+    .reduce((sum, x) => sum + x._count._all, 0);
+  const franchiseTotal = verifiedLocations + pendingLocations;
+  const franchiseNormalized = franchiseTotal > 0 ? (verifiedLocations / franchiseTotal) * 100 : 0;
+  const franchiseWeighted = (franchiseNormalized / 100) * 10;
+
+  const complaintPenalty = complaintsCount >= complaintLimit ? 20 : (complaintsCount / complaintLimit) * 10;
+  const canUpgrade = complaintsCount < complaintLimit;
+  const penaltyWeighted = canUpgrade ? -complaintPenalty : -25;
+
+  return buildBreakdown(
+    {
+      pss: Math.round(pssWeighted),
+      crb: Math.round(crbWeighted),
+      performance: Math.round(dmoWeighted),
+      behavior: Math.round(penaltyWeighted),
+      industries: Math.round(franchiseWeighted),
+      refilling: 0,
+    },
+    supremeApproved
+  );
 }
 
 export async function computeServiceStl(serviceId: string): Promise<StlBreakdown> {
@@ -513,6 +633,7 @@ export async function recalcUserStl(args: { userId: string; reason: string; acto
     reason: args.reason,
     actorId: args.actorId ?? null,
   });
+  await syncSupremeApprovalState(args.userId);
   await syncLowTrustUserSignal({
     userId: args.userId,
     stlScore: result.nextScore,

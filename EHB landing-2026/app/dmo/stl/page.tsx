@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { StlWidget } from "@/components/stl/StlWidget";
+import { StlWidget } from "@/components/features/stl/StlWidget";
+import STLDashboard from "@/components/dmo/STLDashboard";
 
 type StlScoreRow = {
   id: string;
@@ -31,6 +32,8 @@ function fmt(v: string) {
 }
 
 function levelTone(level: number) {
+  if (level >= 8) return "border-amber-300/50 bg-amber-500/20 text-amber-50";
+  if (level >= 7) return "border-fuchsia-400/40 bg-fuchsia-500/10 text-fuchsia-100";
   if (level >= 5) return "border-emerald-400/40 bg-emerald-500/10 text-emerald-100";
   if (level === 4) return "border-cyan-400/40 bg-cyan-500/10 text-cyan-100";
   if (level === 3) return "border-violet-400/40 bg-violet-500/10 text-violet-100";
@@ -46,6 +49,13 @@ export default function DmoStlPage() {
   const [calcEntityType, setCalcEntityType] = useState<"USER" | "SERVICE" | "PRODUCT">("USER");
   const [calcEntityId, setCalcEntityId] = useState("");
   const [calcRunning, setCalcRunning] = useState(false);
+  const [paymentType, setPaymentType] = useState<"STL_UPGRADE" | "CRB_EXAM" | "DMO_REFILL" | "FRANCHISE_FEE">("STL_UPGRADE");
+  const [provider, setProvider] = useState<"EASYPAISA" | "JAZZCASH" | "STRIPE" | "PAYPAL">("STRIPE");
+  const [amount, setAmount] = useState(50);
+  const [paymentId, setPaymentId] = useState("");
+  const [providerReference, setProviderReference] = useState("");
+  const [paymentLoading, setPaymentLoading] = useState(false);
+  const [paymentMsg, setPaymentMsg] = useState<string | null>(null);
 
   async function load() {
     setLoading(true);
@@ -89,9 +99,63 @@ export default function DmoStlPage() {
     void load();
   }, []);
 
+  async function createPayment() {
+    setPaymentLoading(true);
+    setPaymentMsg(null);
+    try {
+      const res = await fetch("/api/payment/create", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ type: paymentType, provider, amount }),
+      });
+      const json = await res.json();
+      if (!res.ok || json?.success === false) throw new Error(json?.error?.message ?? "Payment create failed");
+      const data = json?.data ?? {};
+      setPaymentId(data.paymentId ?? "");
+      if (provider === "STRIPE" && data.checkoutUrl) {
+        window.location.href = data.checkoutUrl as string;
+        return;
+      }
+      setPaymentMsg(`Payment intent created: ${data.paymentId}`);
+    } catch (e) {
+      setPaymentMsg(e instanceof Error ? e.message : "Payment create failed");
+    } finally {
+      setPaymentLoading(false);
+    }
+  }
+
+  async function verifyPayment() {
+    if (!paymentId.trim()) {
+      setPaymentMsg("paymentId required for verification");
+      return;
+    }
+    setPaymentLoading(true);
+    setPaymentMsg(null);
+    try {
+      const res = await fetch("/api/payment/verify", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          paymentId: paymentId.trim(),
+          ...(provider === "STRIPE"
+            ? { sessionId: new URLSearchParams(window.location.search).get("session_id") ?? undefined }
+            : { providerReference: providerReference.trim() || undefined }),
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok || json?.success === false) throw new Error(json?.error?.message ?? "Payment verify failed");
+      setPaymentMsg(json?.data?.message ?? "Payment successful");
+      await load();
+    } catch (e) {
+      setPaymentMsg(e instanceof Error ? e.message : "Payment verify failed");
+    } finally {
+      setPaymentLoading(false);
+    }
+  }
+
   const stats = useMemo(() => {
     const total = scores.length;
-    const elite = scores.filter((s) => s.level >= 5).length;
+    const elite = scores.filter((s) => s.level >= 7).length;
     const low = scores.filter((s) => s.level <= 2).length;
     const avg = total > 0 ? Math.round(scores.reduce((sum, s) => sum + Number(s.score), 0) / total) : 0;
     return { total, elite, low, avg };
@@ -127,12 +191,51 @@ export default function DmoStlPage() {
 
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">Tracked Entities</div><div className="text-2xl font-semibold">{stats.total}</div></div>
-              <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">Elite (L5)</div><div className="text-2xl font-semibold text-emerald-200">{stats.elite}</div></div>
+              <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">VIP+ (L7-L8)</div><div className="text-2xl font-semibold text-emerald-200">{stats.elite}</div></div>
               <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">Low Trust (L1-L2)</div><div className="text-2xl font-semibold text-rose-200">{stats.low}</div></div>
               <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">Average Score</div><div className="text-2xl font-semibold text-cyan-200">{stats.avg}</div></div>
             </section>
 
             <StlWidget />
+            <STLDashboard />
+
+            <section className="ehb-card-elevated space-y-3">
+              <div className="text-xs font-semibold">Payment System (Real Money Flow)</div>
+              <div className="grid gap-2 md:grid-cols-4">
+                <select value={paymentType} onChange={(e) => setPaymentType(e.target.value as "STL_UPGRADE" | "CRB_EXAM" | "DMO_REFILL" | "FRANCHISE_FEE")} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody">
+                  <option value="STL_UPGRADE">STL Upgrade</option>
+                  <option value="CRB_EXAM">CRB Exam</option>
+                  <option value="DMO_REFILL">DMO Refill</option>
+                  <option value="FRANCHISE_FEE">Franchise Fee</option>
+                </select>
+                <select value={provider} onChange={(e) => setProvider(e.target.value as "EASYPAISA" | "JAZZCASH" | "STRIPE" | "PAYPAL")} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody">
+                  <option value="EASYPAISA">Easypaisa</option>
+                  <option value="JAZZCASH">JazzCash</option>
+                  <option value="STRIPE">Stripe</option>
+                  <option value="PAYPAL">PayPal</option>
+                </select>
+                <input type="number" value={amount} onChange={(e) => setAmount(Number(e.target.value || 0))} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody" placeholder="Amount" />
+                <input value={paymentId} onChange={(e) => setPaymentId(e.target.value)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody" placeholder="paymentId (auto after create)" />
+              </div>
+              {provider !== "STRIPE" ? (
+                <input
+                  value={providerReference}
+                  onChange={(e) => setProviderReference(e.target.value)}
+                  className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs w-full text-ehb-textBody"
+                  placeholder="Provider reference / txn id (required for verify)"
+                />
+              ) : null}
+              <div className="flex flex-wrap gap-2">
+                <button onClick={() => void createPayment()} disabled={paymentLoading} className="ehb-btn-primary ehb-press disabled:opacity-60">
+                  {paymentLoading ? "Processing..." : "Create Payment"}
+                </button>
+                <button onClick={() => void verifyPayment()} disabled={paymentLoading} className="ehb-btn-secondary ehb-press disabled:opacity-60">
+                  Verify Payment
+                </button>
+              </div>
+              <p className="text-[11px] text-ehb-textMuted">Flow: create payment → complete with provider → verify payment → STL/DMO updates + affiliate commission if referred.</p>
+              {paymentMsg ? <div className="rounded-xl border border-emerald-400/30 bg-emerald-500/10 p-2 text-xs text-emerald-100">{paymentMsg}</div> : null}
+            </section>
 
             <section className="ehb-card-elevated space-y-3">
               <div className="text-xs font-semibold">Manual STL Calculation</div>

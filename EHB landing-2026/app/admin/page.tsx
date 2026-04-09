@@ -69,6 +69,12 @@ export default function AdminPage() {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
+            <a
+              href="/dmo/super-admin"
+              className="min-h-touch inline-flex items-center justify-center rounded-full border border-amber-500/35 bg-amber-500/10 px-3 py-1.5 font-semibold text-amber-100 hover:bg-amber-500/20 transition-all duration-200"
+            >
+              DMO-ADMIN
+            </a>
             <a href="/" className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-3 py-1.5 font-semibold text-white hover:shadow-neon-blue transition-all duration-200">
               â† Back to Landing
             </a>

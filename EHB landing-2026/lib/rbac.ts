@@ -37,12 +37,8 @@ export async function requireSession(allowedRoles?: UserRole[]): Promise<ApiAuth
   if (!user && isDevSessionFallbackEnabled()) {
     const fallback = await devSessionFallbackUser(allowedRoles);
     if (!fallback) {
-      return {
-        ok: false,
-        status: 401,
-        error:
-          "Unauthorized — database has no users. From the project folder run: npx prisma db seed (MongoDB may need a replica set). Open /local-demo for pages vs APIs.",
-      };
+      // Dev-safe synthetic user fallback keeps demo APIs/pages usable when local DB is empty.
+      return { ok: true, user: { userId: "demo-user", role: "USER" } };
     }
     if (allowedRoles && allowedRoles.length > 0 && !allowedRoles.includes(fallback.role)) {
       return { ok: false, status: 403, error: "Forbidden" };
@@ -54,6 +50,10 @@ export async function requireSession(allowedRoles?: UserRole[]): Promise<ApiAuth
     return { ok: false, status: 403, error: "Forbidden" };
   }
   return { ok: true, user };
+}
+
+export async function requireRole(allowedRoles: UserRole[]): Promise<ApiAuthResult> {
+  return requireSession(allowedRoles);
 }
 
 export function isAdmin(role: UserRole) {

@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { usePathname } from "next/navigation";
-import { DMO_NAV_SECTIONS } from "./navigation";
+import { DMO_NAV_SECTIONS, getDmoSectionKeyFromPathname } from "./navigation";
 
 type DmoSidebarProps = {
   badges?: Record<string, number>;
@@ -11,104 +11,49 @@ type DmoSidebarProps = {
   selectedSectionKey?: string | null;
 };
 
-function isPathActive(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
-
 export function DmoSidebar(props: DmoSidebarProps) {
-  const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
+  const pathname = usePathname() ?? "";
 
-  const autoExpanded = useMemo(() => {
-    const current = DMO_NAV_SECTIONS.find(
-      (section) => isPathActive(pathname, section.href) || section.items.some((item) => isPathActive(pathname, item.href))
-    );
-    return current?.key ?? null;
-  }, [pathname]);
-
-  const activeSection =
-    DMO_NAV_SECTIONS.find((section) => section.key === props.selectedSectionKey) ??
-    DMO_NAV_SECTIONS.find((section) => section.key === autoExpanded) ??
-    DMO_NAV_SECTIONS[0];
-  const sectionBadge = props.badges?.[activeSection.key] ?? 0;
+  const activeModuleKey = useMemo(
+    () => props.selectedSectionKey ?? getDmoSectionKeyFromPathname(pathname),
+    [pathname, props.selectedSectionKey]
+  );
 
   return (
     <aside className={props.className ?? ""}>
-      <div
-        className={[
-          "glass-panel border border-white/10 transition-all duration-200",
-          collapsed ? "p-2" : "p-3",
-          "space-y-3",
-        ].join(" ")}
-      >
-        <div className="flex items-center justify-between gap-2">
-          {!collapsed ? (
-            <div>
-              <div className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted">DMO Panel</div>
-              <div className="text-sm font-semibold text-white">Module Navigation</div>
-            </div>
-          ) : (
-            <div className="text-sm font-semibold text-white">DMO</div>
-          )}
-          <button
-            type="button"
-            className="rounded-lg border border-white/15 bg-white/5 px-2 py-1 text-[11px] text-ehb-textBody hover:bg-white/10"
-            onClick={() => setCollapsed((v) => !v)}
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            {collapsed ? "»" : "«"}
-          </button>
+      <div className="glass-panel flex h-full min-h-0 flex-col space-y-3 border border-white/10 p-3 transition-all duration-200">
+        <div>
+          <div className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted">DMO Panel</div>
+          <div className="text-sm font-semibold text-white">Modules</div>
+          <p className="mt-1 text-[10px] leading-relaxed text-ehb-textBody">
+            Pick a module here. Its sub-pages appear in the top bar.
+          </p>
         </div>
 
-        {!collapsed ? (
-          <div className="rounded-xl border border-cyan-400/20 bg-cyan-500/8 p-3">
-            <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-lg">
-                {activeSection.icon}
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <div className="text-sm font-semibold text-white">{activeSection.label}</div>
-                  {sectionBadge > 0 ? (
-                    <span className="rounded-full border border-amber-400/40 bg-amber-500/15 px-2 py-0.5 text-[10px] text-amber-100">
-                      {sectionBadge}
-                    </span>
-                  ) : null}
-                </div>
-                <p className="mt-1 text-[11px] leading-5 text-ehb-textBody">
-                  Main module upar card se select hota hai. Yahan us module ke andar ke options milenge.
-                </p>
-              </div>
-            </div>
-            <Link
-              href={activeSection.href}
-              className="mt-3 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-[11px] text-ehb-textBody transition-colors hover:bg-white/10"
-            >
-              <span>Open {activeSection.label}</span>
-              <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        ) : null}
-
-        <nav className="space-y-1 max-h-[calc(100vh-16rem)] overflow-y-auto pr-1">
-          {activeSection.items.map((item) => {
-            const itemActive = isPathActive(pathname, item.href);
-            const badge = props.badges?.[item.key] ?? 0;
+        <nav
+          className="min-h-0 flex-1 space-y-1 overflow-y-auto pr-0.5"
+          aria-label="DMO main modules"
+        >
+          {DMO_NAV_SECTIONS.map((section) => {
+            const isActive = section.key === activeModuleKey;
+            const badge = props.badges?.[section.key] ?? 0;
             return (
               <Link
-                key={item.key}
-                href={item.href}
+                key={section.key}
+                href={section.href}
                 className={[
-                  "flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs transition-colors border",
-                  itemActive
-                    ? "border-cyan-400/30 bg-cyan-500/15 text-cyan-100"
-                    : "border-transparent text-ehb-textBody hover:bg-white/5",
+                  "flex items-center gap-2.5 rounded-xl border px-2.5 py-2.5 text-left text-xs transition-colors",
+                  isActive
+                    ? "border-cyan-400/40 bg-cyan-500/15 text-cyan-50 shadow-[0_0_20px_rgba(34,211,238,0.12)]"
+                    : "border-transparent text-ehb-textBody hover:border-white/10 hover:bg-white/[0.05]",
                 ].join(" ")}
               >
-                <span className="h-2 w-2 rounded-full bg-slate-500/70" />
-                {!collapsed ? <span className="flex-1">{item.label}</span> : null}
+                <span className="text-lg leading-none" aria-hidden>
+                  {section.icon}
+                </span>
+                <span className="min-w-0 flex-1 font-medium leading-snug">{section.label}</span>
                 {badge > 0 ? (
-                  <span className="rounded-full border border-rose-400/40 bg-rose-500/10 px-1.5 py-0.5 text-[10px] text-rose-100">
+                  <span className="shrink-0 rounded-full border border-amber-400/35 bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-100">
                     {badge}
                   </span>
                 ) : null}
@@ -120,4 +65,3 @@ export function DmoSidebar(props: DmoSidebarProps) {
     </aside>
   );
 }
-

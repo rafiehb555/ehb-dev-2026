@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { writeAuditLog } from "@/lib/audit";
 import { recalcUserStl } from "@/lib/stl/engine";
 import { triggerAutomationEvent } from "@/lib/automation/engine";
+import { runDmoTrustEngine } from "@/lib/stl/dmoTrustEngine";
 
 export type PssPhase = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -83,6 +84,11 @@ export async function completeVerificationPhase(args: {
   });
 
   await recalcUserStl({ userId: args.userId, actorId: args.actorUserId, reason: "PSS_PHASE_COMPLETED" });
+  await runDmoTrustEngine({
+    userId: args.userId,
+    actorId: args.actorUserId,
+    reason: "REFILL_UPDATE",
+  }).catch(() => undefined);
 
   return { verification, refill };
 }
@@ -209,6 +215,11 @@ export async function scanRefillsAndEnforce(args: { actorUserId: string }) {
   const touchedUsers = Array.from(new Set([...dueSoonUserIds, ...inGraceUserIds, ...expiredUserIds]));
   for (const userId of touchedUsers) {
     await recalcUserStl({ userId, actorId: args.actorUserId, reason: "PSS_REFILL_SCAN" });
+    await runDmoTrustEngine({
+      userId,
+      actorId: args.actorUserId,
+      reason: "REFILL_UPDATE",
+    }).catch(() => undefined);
   }
 
   for (const userId of expiredUserIds) {

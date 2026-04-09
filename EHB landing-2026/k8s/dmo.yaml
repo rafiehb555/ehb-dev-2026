@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dmo-realtime
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dmo-realtime
+  template:
+    metadata:
+      labels:
+        app: dmo-realtime
+    spec:
+      containers:
+        - name: dmo-realtime
+          image: ehb-web:latest
+          imagePullPolicy: IfNotPresent
+          command: ["npx", "tsx", "scripts/dmo-realtime.ts"]
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: ehb-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dmo-realtime
+spec:
+  selector:
+    app: dmo-realtime
+  ports:
+    - port: 5000
+      targetPort: 5000
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: dmo-realtime-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: dmo-realtime
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 55

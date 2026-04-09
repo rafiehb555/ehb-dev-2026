@@ -3,6 +3,7 @@ import { fail, ok } from "@/lib/apiResponse";
 import { handleRouteError } from "@/lib/apiErrors";
 import { prisma } from "@/lib/prisma";
 import { computeStlByEntity, recalcStlByEntity } from "@/lib/stl/engine";
+import { getLevelMeta } from "@/lib/stl/levels";
 import { z } from "zod";
 import { isMongoObjectId } from "@/lib/mongoId";
 
@@ -21,14 +22,17 @@ const QuerySchema = z.object({
 
 function demoScores() {
   const now = Date.now();
+  const b1 = { pss: 26, crb: 24, performance: 18, behavior: -4, industries: 8, refilling: 0, total: 86, level: 7, label: getLevelMeta(7).name };
+  const b2 = { pss: 22, crb: 18, performance: 14, behavior: -2, industries: 6, refilling: 0, total: 72, level: 5, label: getLevelMeta(5).name };
+  const b3 = { pss: 14, crb: 10, performance: 10, behavior: -2, industries: 4, refilling: 0, total: 48, level: 3, label: getLevelMeta(3).name };
   return [
     {
       id: "stl-score-1",
       entityId: "Ali Khan",
       entityType: "USER",
       score: 86,
-      level: 4,
-      breakdown: { pss: 30, crb: 16, performance: 18, behavior: 12, industries: 6, refilling: 4, total: 86, level: 4, label: "Highly Trusted" },
+      level: 7,
+      breakdown: b1,
       lastUpdated: new Date(now - 60 * 60 * 1000).toISOString(),
     },
     {
@@ -36,8 +40,8 @@ function demoScores() {
       entityId: "Sara Noor",
       entityType: "USER",
       score: 72,
-      level: 3,
-      breakdown: { pss: 28, crb: 10, performance: 16, behavior: 8, industries: 5, refilling: 5, total: 72, level: 3, label: "Trusted" },
+      level: 5,
+      breakdown: b2,
       lastUpdated: new Date(now - 3 * 60 * 60 * 1000).toISOString(),
     },
     {
@@ -45,8 +49,8 @@ function demoScores() {
       entityId: "Usman Raza",
       entityType: "USER",
       score: 48,
-      level: 2,
-      breakdown: { pss: 20, crb: 4, performance: 12, behavior: 4, industries: 3, refilling: 5, total: 48, level: 2, label: "Basic Verified" },
+      level: 3,
+      breakdown: b3,
       lastUpdated: new Date(now - 5 * 60 * 60 * 1000).toISOString(),
     },
   ];

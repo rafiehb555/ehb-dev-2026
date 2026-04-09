@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { ok } from "@/lib/apiResponse";
 import { requireSession } from "@/lib/rbac";
+import { enqueueNotificationDispatch } from "@/jobs/enqueue";
+import { enforceRateLimit } from "@/lib/api/rateLimit";
 
 type NotificationType = "CRITICAL" | "WARNING" | "INFO" | "FRAUD_ALERT";
 
@@ -42,9 +44,14 @@ function actionFromType(type: NotificationType) {
   return "No urgent action required";
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  const limited = enforceRateLimit(req, { route: "api:notifications", maxRequests: 120, windowMs: 60_000 });
+  if (!limited.ok) return limited.response;
+
   const auth = await requireSession(["USER", "FRANCHISE", "ADMIN", "SUPER_ADMIN"]);
   if (!auth.ok) return ok(fallbackNotifications());
+
+  enqueueNotificationDispatch({ userId: auth.user.userId });
 
   if (!process.env.DATABASE_URL) return ok(fallbackNotifications());
 
@@ -223,4 +230,6 @@ export async function GET() {
     return ok(fallbackNotifications());
   }
 }
+
+
 

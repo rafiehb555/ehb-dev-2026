@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { createSessionCookie } from "@/lib/auth";
 import { handleRouteError } from "@/lib/apiErrors";
 import { fail, ok } from "@/lib/apiResponse";
+import { runDmoTrustEngine } from "@/lib/stl/dmoTrustEngine";
 
 const LoginSchema = z.object({
   email: z.string().email().max(120),
@@ -89,6 +90,7 @@ export async function POST(req: Request) {
 
     clearAttempts(key);
     await createSessionCookie({ userId: user.id, role: user.role });
+    await runDmoTrustEngine({ userId: user.id, actorId: user.id, reason: "USER_LOGIN" }).catch(() => undefined);
     return ok({ user: { id: user.id, role: user.role, email: user.email, name: user.name } });
   } catch (err) {
     return handleRouteError(err);

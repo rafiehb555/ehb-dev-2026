@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { writeFraudSignal } from "@/lib/fraud/riskEngine";
 import { writeAuditLog } from "@/lib/audit";
 import { z } from "zod";
+import { runDmoTrustEngine } from "@/lib/stl/dmoTrustEngine";
 
 const db = prisma as any;
 
@@ -58,6 +59,13 @@ export async function POST(req: Request) {
       targetId:   complaint.id,
       metadata:   { targetId: body.targetId, type: body.type } as any,
     });
+    if (body.targetType.toUpperCase() === "USER") {
+      await runDmoTrustEngine({
+        userId: body.targetId,
+        actorId: auth.user.userId,
+        reason: "COMPLAINT_UPDATE",
+      }).catch(() => undefined);
+    }
 
     return ok({ complaint, message: "Complaint submitted. Review within 72 hours." });
   } catch (err) {

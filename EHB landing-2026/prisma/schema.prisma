@@ -83,6 +83,7 @@ model Profile {
   verificationStatus VerificationStatus @default(PENDING) @map("verification_status")
   stlStatus          StlStatus          @default(SUSPENDED) @map("stl_status")
   stlScore           Int                @default(0) @map("stl_score")
+  stlSupremeApproval StlSupremeApproval @default(NONE) @map("stl_supreme_approval")
   stlUpdatedAt       DateTime           @default(now()) @map("stl_updated_at")
   skills             String[]
   rating             Float?
@@ -107,6 +108,14 @@ enum StlStatus {
   LIMITED
   SUSPENDED
   DOWNGRADED
+}
+
+/** L8 SUPREME is never auto-assigned; DMO uses this + registry MANUAL record. */
+enum StlSupremeApproval {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 // ---------------------------------------------------------------------------
@@ -386,6 +395,9 @@ model Application {
   @@index([type])
   @@index([status])
   @@index([applicantId])
+  @@index([applicantId, updatedAt])
+  @@index([status, updatedAt])
+  @@index([assignedToId, status])
   @@map("applications")
 }
 
@@ -590,6 +602,8 @@ model AutomationEvent {
 
   @@index([eventType])
   @@index([status])
+  @@index([status, createdAt])
+  @@index([createdAt])
   @@map("automation_events")
 }
 
@@ -822,6 +836,9 @@ model Order {
   @@index([buyerId])
   @@index([sellerId])
   @@index([status])
+  @@index([buyerId, updatedAt])
+  @@index([sellerId, updatedAt])
+  @@index([status, updatedAt])
 }
 
 /// Idempotency for Stripe webhooks (evt_… processed once).
@@ -958,6 +975,8 @@ model InspectionTask {
   @@index([crbApplicationId])
   @@index([franchiseId])
   @@index([status])
+  @@index([inspectorId, status])
+  @@index([franchiseId, updatedAt])
   @@map("inspection_tasks")
 }
 
@@ -1033,6 +1052,8 @@ model Transaction {
   @@index([userId])
   @@index([type])
   @@index([createdAt])
+  @@index([userId, createdAt])
+  @@index([userId, status])
   @@map("transactions")
 }
 
@@ -1168,6 +1189,7 @@ model UserEvent {
   @@index([userId])
   @@index([eventType])
   @@index([createdAt])
+  @@index([userId, createdAt])
   @@map("user_events")
 }
 
@@ -1204,6 +1226,7 @@ model Complaint {
   @@index([targetId])
   @@index([status])
   @@index([createdAt])
+  @@index([targetId, status])
   @@map("complaints")
 }
 

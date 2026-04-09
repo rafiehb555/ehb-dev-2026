@@ -4,6 +4,7 @@ import { ok, fail } from "@/lib/apiResponse";
 import { handleRouteError } from "@/lib/apiErrors";
 import { prisma } from "@/lib/prisma";
 import { writeAuditLog } from "@/lib/audit";
+import { runDmoTrustEngine } from "@/lib/stl/dmoTrustEngine";
 
 const ParamsSchema = z.object({ id: z.string().min(1) });
 const PatchSchema = z.object({
@@ -47,6 +48,13 @@ export async function PATCH(req: Request, ctx: { params: { id: string } }) {
         note: body.note ?? null,
       },
     });
+    if (complaint.targetType.toUpperCase() === "USER") {
+      await runDmoTrustEngine({
+        userId: complaint.targetId,
+        actorId: auth.user.userId,
+        reason: "COMPLAINT_UPDATE",
+      }).catch(() => undefined);
+    }
 
     return ok({ complaint });
   } catch (err) {

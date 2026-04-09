@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
 import type { UserRole } from "@prisma/client";
 
@@ -49,7 +49,13 @@ export function clearSessionCookie() {
 }
 
 export async function getSessionUser(): Promise<SessionUser | null> {
-  const token = cookies().get(SESSION_COOKIE)?.value;
+  const cookieToken = cookies().get(SESSION_COOKIE)?.value;
+  const authHeader = headers().get("authorization");
+  const bearerToken =
+    authHeader && authHeader.toLowerCase().startsWith("bearer ")
+      ? authHeader.slice("bearer ".length).trim()
+      : null;
+  const token = cookieToken || bearerToken;
   if (!token) return null;
   try {
     const { payload } = await jwtVerify(token, getKey());

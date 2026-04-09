@@ -6,6 +6,7 @@ import PSSDrawer from "@/components/dmo/PSSDrawer";
 import { PssCapabilitiesSection } from "@/components/dmo/PssCapabilitiesSection";
 import { RiskBadge } from "@/components/dmo/RiskBadge";
 import { getPssDemoCases } from "@/lib/pss/pssDemoCases";
+import { PSS_CAPABILITIES, PSS_CAPABILITY_CATEGORIES, type PssCapability } from "@/lib/pss/pssCapabilities";
 
 type PssCase = {
   id: string;
@@ -18,6 +19,21 @@ type PssCase = {
 };
 
 export default function PSSPage() {
+  const [selectedCapability, setSelectedCapability] = useState<PssCapability>(PSS_CAPABILITIES[0]);
+  const [capabilityStatus, setCapabilityStatus] = useState<
+    Record<string, { enabled: boolean; mode: "live" | "pilot" | "planned"; lastRunAt?: string; incidents: number }>
+  >(() =>
+    Object.fromEntries(
+      PSS_CAPABILITIES.map((c) => [
+        c.id,
+        {
+          enabled: c.category !== "operations",
+          mode: c.category === "risk_signals" ? "pilot" : c.category === "operations" ? "planned" : "live",
+          incidents: 0,
+        },
+      ])
+    )
+  );
   const [cases, setCases] = useState<PssCase[]>([]);
   const [selected, setSelected] = useState<PssCase | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -92,6 +108,35 @@ export default function PSSPage() {
     void loadCases();
   }, [loadCases]);
 
+  const enabledCount = Object.values(capabilityStatus).filter((x) => x.enabled).length;
+  const liveCount = Object.values(capabilityStatus).filter((x) => x.mode === "live").length;
+  const incidentCount = Object.values(capabilityStatus).reduce((sum, x) => sum + x.incidents, 0);
+
+  const selectedState = capabilityStatus[selectedCapability.id];
+
+  function toggleCapability(id: string) {
+    setCapabilityStatus((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        enabled: !prev[id].enabled,
+      },
+    }));
+    setInfo("Capability status updated locally (demo control mode).");
+  }
+
+  function runCapabilityCheck(id: string) {
+    setCapabilityStatus((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        lastRunAt: new Date().toISOString(),
+        incidents: prev[id].incidents + (prev[id].enabled ? 1 : 0),
+      },
+    }));
+    setInfo("Capability test run completed (demo).");
+  }
+
   return (
     <main className="min-h-screen text-white">
       <div className="container-ehb py-6 space-y-10">
@@ -120,7 +165,95 @@ export default function PSSPage() {
           </div>
         </header>
 
-        <PssCapabilitiesSection />
+        <section className="grid gap-3 sm:grid-cols-3">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+            <p className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted">Modules enabled</p>
+            <p className="mt-1 text-2xl font-semibold text-white">
+              {enabledCount} <span className="text-sm text-ehb-textMuted">/ {PSS_CAPABILITIES.length}</span>
+            </p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+            <p className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted">Live integrations</p>
+            <p className="mt-1 text-2xl font-semibold text-cyan-100">{liveCount}</p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+            <p className="text-[11px] uppercase tracking-[0.18em] text-ehb-textMuted">Alerts (demo)</p>
+            <p className="mt-1 text-2xl font-semibold text-amber-100">{incidentCount}</p>
+          </div>
+        </section>
+
+        <PssCapabilitiesSection
+          selectedCapabilityId={selectedCapability.id}
+          onSelectCapability={setSelectedCapability}
+          getCapabilityStatus={(id) => {
+            const s = capabilityStatus[id];
+            return s ? { enabled: s.enabled, mode: s.mode } : { enabled: false, mode: "planned" };
+          }}
+        />
+
+        <section className="rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-[#06152b]/95 to-[#040b16]/95 p-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-cyan-300">Capability details</p>
+              <h3 className="mt-1 text-xl font-semibold text-white">{selectedCapability.title}</h3>
+              <p className="mt-1 text-xs uppercase tracking-wide text-ehb-textMuted">
+                {PSS_CAPABILITY_CATEGORIES[selectedCapability.category].label}
+              </p>
+              <p className="mt-3 text-sm text-ehb-textBody">
+                <span className="text-white/90 font-medium">Purpose: </span>
+                {selectedCapability.purpose}
+              </p>
+              <p className="mt-2 text-sm text-ehb-textBody">
+                <span className="text-cyan-100/90 font-medium">Use case: </span>
+                {selectedCapability.useCase}
+              </p>
+            </div>
+            <div className="w-full max-w-sm space-y-2 rounded-xl border border-white/10 bg-black/20 p-3">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-ehb-textMuted">State</span>
+                <span
+                  className={`rounded-full border px-2 py-0.5 font-semibold ${
+                    selectedState?.enabled
+                      ? "border-emerald-400/35 bg-emerald-500/15 text-emerald-100"
+                      : "border-rose-400/35 bg-rose-500/10 text-rose-100"
+                  }`}
+                >
+                  {selectedState?.enabled ? "Enabled" : "Disabled"}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-ehb-textMuted">Mode</span>
+                <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 uppercase text-ehb-textBody">
+                  {selectedState?.mode ?? "planned"}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-ehb-textMuted">Last run</span>
+                <span className="text-ehb-textBody">
+                  {selectedState?.lastRunAt
+                    ? new Date(selectedState.lastRunAt).toLocaleTimeString()
+                    : "Not yet"}
+                </span>
+              </div>
+              <div className="pt-2 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  className="ehb-btn-secondary ehb-press text-xs"
+                  onClick={() => toggleCapability(selectedCapability.id)}
+                >
+                  {selectedState?.enabled ? "Disable module" : "Enable module"}
+                </button>
+                <button
+                  type="button"
+                  className="ehb-btn-primary ehb-press text-xs"
+                  onClick={() => runCapabilityCheck(selectedCapability.id)}
+                >
+                  Run test check
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section className="space-y-4" aria-labelledby="pss-queue-title">
           <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">

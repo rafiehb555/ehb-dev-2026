@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { ok } from "@/lib/apiResponse";
 import { requireSession } from "@/lib/rbac";
+import { z } from "zod";
+import { buildReferralCode, readAffiliateStore, writeAffiliateStore } from "@/lib/affiliate/store";
 
 type AffiliateUser = {
   id: string;
@@ -33,7 +35,7 @@ export async function GET() {
   if (!process.env.DATABASE_URL) return ok(demoResponse());
 
   try {
-    const [wallet, txns] = await Promise.all([
+    const [wallet, txns, store, user, stlScore] = await Promise.all([
       prisma.wallet.findUnique({
         where: { userId: auth.user.userId },
         select: { affiliateIncome: true },
@@ -44,12 +46,22 @@ export async function GET() {
         take: 300,
         select: { id: true, amount: true, status: true, createdAt: true, referenceId: true },
       }),
+      readAffiliateStore(),
+      prisma.user.findUnique({ where: { id: auth.user.userId }, select: { name: true } }),
+      prisma.sTLScore.findUnique({
+        where: { entityType_entityId: { entityType: "USER", entityId: auth.user.userId } },
+        select: { level: true },
+      }),
     ]);
 
     const total = Number(wallet?.affiliateIncome ?? 0);
     const todayKey = new Date().toISOString().slice(0, 10);
+    const monthKey = new Date().toISOString().slice(0, 7);
     const today = txns
       .filter((t) => t.status === "COMPLETED" && t.createdAt.toISOString().slice(0, 10) === todayKey)
+      .reduce((sum, t) => sum + Number(t.amount), 0);
+    const month = txns
+      .filter((t) => t.status === "COMPLETED" && t.createdAt.toISOString().slice(0, 7) === monthKey)
       .reduce((sum, t) => sum + Number(t.amount), 0);
 
     const grouped = new Map<string, AffiliateUser>();
@@ -75,15 +87,26 @@ export async function GET() {
     const users = Array.from(grouped.values())
       .sort((a, b) => b.earnings - a.earnings)
       .slice(0, 30);
-    const referrals = users.length;
+    const directReferrals = Object.entries(store.referredBy)
+      .filter(([, referrerId]) => referrerId === auth.user.userId)
+      .map(([uid]) => uid);
+    const referrals = directReferrals.length;
     const active = users.filter((u) => u.status === "Active").length;
+    const code = store.referralCodes[auth.user.userId] ?? buildReferralCode(user?.name ?? "EHB", auth.user.userId);
+    const level = Number(stlScore?.level ?? 1);
+    const commissionRate = level >= 7 ? 15 : level >= 6 ? 12 : level >= 5 ? 10 : 8;
 
     return ok({
       total: Number(total.toFixed(2)),
       today: Number(today.toFixed(2)),
+      month: Number(month.toFixed(2)),
+      stlLevel: level,
+      commissionRate,
       referrals,
       active,
-      link: `https://ehb.com/ref/${auth.user.userId}`,
+      referralCode: code,
+      referredBy: store.referredBy[auth.user.userId] ?? null,
+      link: `https://ehb.com/signup?ref=${code}`,
       users,
       suggestions: [
         "Invite 5 more users to unlock +$50 bonus",
@@ -92,6 +115,58 @@ export async function GET() {
     });
   } catch {
     return ok(demoResponse());
+  }
+}
+
+const BodySchema = z.object({
+  action: z.enum(["GENERATE_LINK", "RECORD_COMMISSION"]),
+  fromUser: z.string().optional(),
+  amount: z.number().positive().optional(),
+  type: z.string().optional(),
+});
+
+export async function POST(req: Request) {
+  const auth = await requireSession(["USER", "FRANCHISE", "ADMIN", "SUPER_ADMIN"]);
+  if (!auth.ok) return ok({ success: false, message: auth.error });
+
+  try {
+    const body = BodySchema.parse(await req.json());
+    const store = await readAffiliateStore();
+    const me = await prisma.user.findUnique({ where: { id: auth.user.userId }, select: { name: true } });
+    const code = buildReferralCode(me?.name ?? "EHB", auth.user.userId);
+    store.referralCodes[auth.user.userId] = code;
+
+    if (body.action === "RECORD_COMMISSION" && body.fromUser && body.amount && body.type) {
+      const canRecord = auth.user.role === "ADMIN" || auth.user.role === "SUPER_ADMIN";
+      if (!canRecord) return ok({ success: false, message: "Only admin can record commissions" });
+      store.commissions.push({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        userId: auth.user.userId,
+        fromUser: body.fromUser,
+        amount: body.amount,
+        type: body.type,
+        createdAt: new Date().toISOString(),
+      });
+      await prisma.wallet.upsert({
+        where: { userId: auth.user.userId },
+        create: { userId: auth.user.userId, affiliateIncome: body.amount },
+        update: { affiliateIncome: { increment: body.amount } },
+      });
+      await prisma.transaction.create({
+        data: {
+          userId: auth.user.userId,
+          amount: body.amount,
+          type: "AFFILIATE",
+          status: "COMPLETED",
+          referenceId: body.fromUser,
+        },
+      });
+    }
+
+    await writeAffiliateStore(store, auth.user.userId);
+    return ok({ success: true, referralCode: code, link: `https://ehb.com/signup?ref=${code}` });
+  } catch (err) {
+    return ok({ success: false, message: err instanceof Error ? err.message : "Failed to process affiliate action" });
   }
 }
 

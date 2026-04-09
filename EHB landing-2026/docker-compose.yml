@@ -1,0 +1,116 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      REDIS_URL: redis://redis:6379
+      EHB_MONITORING_ENABLED: "true"
+      EHB_MONITORING_SAMPLE_RATE: "0.1"
+      EHB_MIDDLEWARE_DEV_BYPASS: "false"
+    depends_on:
+      redis:
+        condition: service_started
+      postgres:
+        condition: service_started
+      mongo:
+        condition: service_started
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deps
+    working_dir: /app
+    command: ["npx", "tsx", "scripts/dmo-worker.ts"]
+    environment:
+      NODE_ENV: production
+      REDIS_URL: redis://redis:6379
+      EHB_MONITORING_ENABLED: "true"
+    depends_on:
+      redis:
+        condition: service_started
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  dmo-realtime:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deps
+    working_dir: /app
+    command: ["npx", "tsx", "scripts/dmo-realtime.ts"]
+    environment:
+      NODE_ENV: production
+      REDIS_URL: redis://redis:6379
+      DMO_REALTIME_PORT: "5000"
+      DMO_REALTIME_CORS_ORIGIN: "*"
+    ports:
+      - "5000:5000"
+    depends_on:
+      redis:
+        condition: service_started
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ehb
+      POSTGRES_PASSWORD: ehb123
+      POSTGRES_DB: ehb_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infrastructure/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      web:
+        condition: service_started
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      prometheus:
+        condition: service_started
+
+volumes:
+  postgres_data:
+  mongo_data:
+  grafana_data:
+

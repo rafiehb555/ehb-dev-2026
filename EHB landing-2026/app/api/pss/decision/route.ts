@@ -8,6 +8,7 @@ import { PssDecisionSchema } from "@/lib/pss/schemas";
 import { triggerAutomationEvent } from "@/lib/automation/engine";
 import { calculateRiskForCase } from "@/lib/pss/intelligence";
 import { syncApplicantRiskApplications, syncPssFraudSignals } from "@/lib/fraud/orchestration";
+import { runDmoTrustEngine } from "@/lib/stl/dmoTrustEngine";
 
 function addMonths(d: Date, months: number) {
   const out = new Date(d);
@@ -78,6 +79,11 @@ export async function POST(req: Request) {
         actorId: auth.user.userId,
         reason: "PSS_FINAL_REJECTED",
       });
+      await runDmoTrustEngine({
+        userId: verification.userId,
+        actorId: auth.user.userId,
+        reason: "VERIFICATION_UPDATE",
+      }).catch(() => undefined);
 
       await triggerAutomationEvent({
         event: "STL_UPDATED",
@@ -189,6 +195,11 @@ export async function POST(req: Request) {
       actorId: auth.user.userId,
       reason: "PSS_FINAL_APPROVED",
     });
+    await runDmoTrustEngine({
+      userId: verification.userId,
+      actorId: auth.user.userId,
+      reason: "VERIFICATION_UPDATE",
+    }).catch(() => undefined);
 
     await triggerAutomationEvent({
       event: "STL_UPDATED",

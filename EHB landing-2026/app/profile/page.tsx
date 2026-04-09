@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ProfileStlBadge } from "@/components/stl/ProfileStlBadge";
+import { ProfileStlBadge } from "@/components/features/stl/ProfileStlBadge";
 import { fetchJson } from "@/lib/fetchJson";
 import { getJpsOverview, type JpsOverview } from "@/lib/jps/data";
 

@@ -15,7 +15,7 @@ describe("GET /api/gosellr/trust", () => {
     expect(json.success).toBe(true);
     expect(json.data.stl).toBeDefined();
     expect(json.data.stl.level).toBeGreaterThanOrEqual(1);
-    expect(json.data.stl.level).toBeLessThanOrEqual(5);
+    expect(json.data.stl.level).toBeLessThanOrEqual(8);
     expect(json.data.stl.score).toBeGreaterThanOrEqual(0);
     expect(json.data.stl.score).toBeLessThanOrEqual(100);
     expect(json.data.stl.label.length).toBeGreaterThan(0);

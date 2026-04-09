@@ -59,11 +59,14 @@ export function calculateSTL(user: StlDemoUserShape): number {
   return Math.max(0, Math.min(100, Math.round(score)));
 }
 
-export function getSTLLevelFromScore(score: number): 1 | 2 | 3 | 4 | 5 {
-  if (score >= 90) return 5;
-  if (score >= 75) return 4;
-  if (score >= 60) return 3;
-  if (score >= 40) return 2;
+export function getSTLLevelFromScore(score: number): 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 {
+  if (score >= 96) return 8;
+  if (score >= 86) return 7;
+  if (score >= 76) return 6;
+  if (score >= 66) return 5;
+  if (score >= 56) return 4;
+  if (score >= 41) return 3;
+  if (score >= 21) return 2;
   return 1;
 }
 

@@ -6,6 +6,7 @@ import { z } from "zod";
 import { writeAuditLog } from "@/lib/audit";
 import { recalcUserStl } from "@/lib/stl/engine";
 import { syncApplicantRiskApplications, syncCrbFraudSignals } from "@/lib/fraud/orchestration";
+import { runDmoTrustEngine } from "@/lib/stl/dmoTrustEngine";
 
 const DecisionSchema = z.object({
   applicationId: z.string().cuid(),
@@ -135,6 +136,11 @@ export async function POST(req: Request) {
       actorId: auth.user.userId,
       reason: `CRB_DECISION_${result.kind.toUpperCase()}`,
     });
+    await runDmoTrustEngine({
+      userId: result.app.applicantId,
+      actorId: auth.user.userId,
+      reason: "EXAM_RESULT",
+    }).catch(() => undefined);
 
     await syncApplicantRiskApplications(result.app.applicantId, auth.user.userId);
 
