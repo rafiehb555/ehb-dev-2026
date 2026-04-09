@@ -1,21 +1,31 @@
+import { getLevelFromScore, getLockLevel } from "../utils/level.utils.js";
+import { analyzeUser } from "./ai.service.js";
+
+function clampScore(value) {
+  return Math.max(0, Math.min(100, Number(value || 0)));
+}
+
+function deriveFlatScores(user) {
+  const pssScore = clampScore(user.pssScore ?? user.modules?.pss?.score);
+  const crbScore = clampScore(user.crbScore ?? user.modules?.crb?.score);
+  const dmoScore = clampScore(user.dmoScore ?? user.modules?.dmo?.score);
+  const lockAmount = Math.max(0, Number(user.lockAmount || 0));
+  return { pssScore, crbScore, dmoScore, lockAmount };
+}
+
 export function calculateSTL(user) {
-  const pss = user.modules?.pss?.score || 0;
-  const crb = user.modules?.crb?.score || 0;
-  const dmo = user.modules?.dmo?.score || 0;
-  const franchise = user.modules?.franchise?.score || 0;
+  const { pssScore, crbScore, dmoScore, lockAmount } = deriveFlatScores(user);
+  const avgScore = (pssScore + crbScore + dmoScore) / 3;
 
-  const activityBonus = user.modules?.dmo?.activityLevel === "high" ? 10 : 5;
-  const trustBonus = user.modules?.pss?.kycVerified ? 10 : 0;
+  const scoreLevel = getLevelFromScore(avgScore);
+  const lockLevel = getLockLevel(lockAmount);
+  const pssLevel = getLevelFromScore(pssScore);
+  const crbLevel = getLevelFromScore(crbScore);
+  const dmoLevel = getLevelFromScore(dmoScore);
 
-  const score =
-    pss * 0.25 +
-    crb * 0.25 +
-    dmo * 0.2 +
-    franchise * 0.15 +
-    activityBonus * 0.1 +
-    trustBonus * 0.05;
-
-  return Math.round(score);
+  const finalLevel = Math.min(scoreLevel, lockLevel, pssLevel, crbLevel, dmoLevel);
+  const finalScore = Math.round((finalLevel / 8) * 100);
+  return finalScore;
 }
 
 export function explainSTL(user) {
@@ -30,15 +40,7 @@ export function explainSTL(user) {
 }
 
 export function getLevel(score) {
-  if (score >= 85) return "L5";
-  if (score >= 70) return "L4";
-  if (score >= 50) return "L3";
-  if (score >= 30) return "L2";
-  return "L1";
-}
-
-function clampScore(value) {
-  return Math.max(0, Math.min(100, Number(value || 0)));
+  return `L${getLevelFromScore(score)}`;
 }
 
 function getPssLevel(pss = {}) {
@@ -63,9 +65,7 @@ function getDmoLevel(dmo = {}) {
 }
 
 export function getStlBreakdown(user) {
-  const pssScore = clampScore(user.modules?.pss?.score);
-  const crbScore = clampScore(user.modules?.crb?.score);
-  const dmoScore = clampScore(user.modules?.dmo?.score);
+  const { pssScore, crbScore, dmoScore, lockAmount } = deriveFlatScores(user);
   const franchiseScore = clampScore(user.modules?.franchise?.score);
 
   const modules = {
@@ -73,21 +73,61 @@ export function getStlBreakdown(user) {
     crb: { score: crbScore, ...getCrbLevel(user.modules?.crb) },
     dmo: { score: dmoScore, ...getDmoLevel(user.modules?.dmo) },
     franchise: { score: franchiseScore },
+    lock: { amount: lockAmount, level: `L${getLockLevel(lockAmount)}` },
   };
 
   const weakArea = ["pss", "crb", "dmo"].reduce((a, b) => (modules[a].score <= modules[b].score ? a : b));
   return { modules, weakArea: weakArea.toUpperCase() };
 }
 
-export function recalculateUserStl(user) {
-  const stlScore = calculateSTL(user);
+function shouldRunAi(reason) {
+  return ["pss_update", "crb_update", "dmo_update", "suspicious_activity"].includes(reason);
+}
+
+export async function recalculateUserStl(user, options = {}) {
+  const reason = options.reason || "module_update";
+  const previous = Number(user.stlScore || 0);
+  const { pssScore, crbScore, dmoScore } = deriveFlatScores(user);
+  user.pssScore = pssScore;
+  user.crbScore = crbScore;
+  user.dmoScore = dmoScore;
+
+  let ai = null;
+  let aiAdjustedPss = pssScore;
+  if (shouldRunAi(reason)) {
+    ai = await analyzeUser({
+      pss: pssScore,
+      crb: crbScore,
+      dmo: dmoScore,
+      lock: Number(user.lockAmount || 0),
+    });
+    aiAdjustedPss = clampScore(pssScore + Number(ai?.trustAdjustment || 0));
+  }
+
+  const calcUser = { ...user.toObject?.(), ...user, pssScore: aiAdjustedPss };
+  const stlScore = calculateSTL(calcUser);
   const stlLevel = getLevel(stlScore);
-  const reasons = explainSTL(user);
-  const breakdown = getStlBreakdown(user);
+  const reasons = explainSTL(calcUser);
+  const breakdown = getStlBreakdown(calcUser);
 
   user.stlScore = stlScore;
   user.stlLevel = stlLevel;
+  user.stlLogs = user.stlLogs || [];
+  user.stlLogs.push({
+    action: "STL_RECALCULATE_AI",
+    before: previous,
+    after: stlScore,
+    reason: reasons.length ? reasons.join(", ") : reason,
+  });
+  if (ai) {
+    user.aiInsight = {
+      risk: ai.risk,
+      trustAdjustment: ai.trustAdjustment,
+      reason: ai.reason,
+      updatedAt: new Date(),
+    };
+  }
 
-  return { stlScore, stlLevel, reasons, breakdown };
+  return { stlScore, stlLevel, reasons, breakdown, ai };
 }
 

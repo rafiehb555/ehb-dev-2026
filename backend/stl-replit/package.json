@@ -9,6 +9,7 @@
     "start:prod": "node server.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.86.1",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",

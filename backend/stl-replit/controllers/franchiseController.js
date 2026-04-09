@@ -57,7 +57,7 @@ export const approveFranchiseRequest = async (req, res) => {
 
     if (user.modules.crb.application.currentStage === "company") {
       user.modules.crb.score = Math.min(100, (user.modules.crb.score || 0) + 20);
-      recalculateUserStl(user);
+      await recalculateUserStl(user, { reason: "crb_update" });
     }
 
     franchise.approvals = (franchise.approvals || 0) + 1;

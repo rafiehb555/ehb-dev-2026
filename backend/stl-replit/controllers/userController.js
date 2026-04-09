@@ -29,7 +29,7 @@ export const updateUser = async (req, res) => {
     if (type) user.type = type;
     if (source) user.source = source;
 
-    const stl = recalculateUserStl(user);
+    const stl = await recalculateUserStl(user, { reason: "user_update" });
     await user.save();
     await logEvent({ userId: user.userId, event: "STL_UPDATED", entity: "stl", meta: { stlScore: user.stlScore, stlLevel: user.stlLevel, source: "user_update" } });
 

@@ -26,8 +26,39 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "signup",
     },
+    pssScore: {
+      type: Number,
+      default: 0,
+    },
+    crbScore: {
+      type: Number,
+      default: 0,
+    },
+    dmoScore: {
+      type: Number,
+      default: 0,
+    },
+    lockAmount: {
+      type: Number,
+      default: 0,
+    },
     stlScore: Number,
     stlLevel: String,
+    aiInsight: {
+      risk: String,
+      trustAdjustment: Number,
+      reason: String,
+      updatedAt: Date,
+    },
+    stlLogs: [
+      {
+        action: String,
+        before: Number,
+        after: Number,
+        reason: String,
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
     modules: {
       pss: {
         kycVerified: Boolean,
@@ -94,6 +125,40 @@ const userSchema = new mongoose.Schema(
       monthly: Number,
       total: Number,
     },
+    wallet: {
+      mainBalance: {
+        type: Number,
+        default: 0,
+      },
+      earningBalance: {
+        type: Number,
+        default: 0,
+      },
+      lockWallet: {
+        type: Number,
+        default: 0,
+      },
+      frozen: {
+        type: Boolean,
+        default: false,
+      },
+    },
+    earningsLogs: [
+      {
+        orderAmount: Number,
+        userLevel: Number,
+        commissionPercent: Number,
+        commissionAmount: Number,
+        distribution: {
+          platform: Number,
+          seller: Number,
+          franchise: Number,
+          referral: Number,
+        },
+        reason: String,
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
     growth: {
       referrals: Number,
       earnings: Number,

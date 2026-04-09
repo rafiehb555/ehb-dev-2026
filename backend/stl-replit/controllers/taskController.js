@@ -1,6 +1,6 @@
 import Task from "../models/Task.js";
 import User from "../models/User.js";
-import { calculateSTL, getLevel } from "../services/stlService.js";
+import { recalculateUserStl } from "../services/stlService.js";
 import { logEvent } from "../services/logService.js";
 import { notifyUser } from "../services/notificationService.js";
 
@@ -41,8 +41,7 @@ export const completeTask = async (req, res) => {
         break;
     }
 
-    user.stlScore = calculateSTL(user);
-    user.stlLevel = getLevel(user.stlScore);
+    const stl = await recalculateUserStl(user, { reason: "task_update" });
     await user.save();
 
     await logEvent({ userId: user.userId, event: "TASK_COMPLETED", entity: "task", meta: { taskId: task._id, type: task.type } });
@@ -56,8 +55,8 @@ export const completeTask = async (req, res) => {
 
     return res.json({
       message: "Task completed",
-      newSTL: user.stlScore,
-      level: user.stlLevel,
+      newSTL: stl.stlScore,
+      level: stl.stlLevel,
     });
   } catch (error) {
     return res.status(500).json({ msg: "Task completion error", error: error.message });

@@ -23,7 +23,7 @@ export const trackDmoActivity = async (req, res) => {
     user.modules.dmo.activityLevel = getActivityLevel(user.modules.dmo.orders);
     user.modules.dmo.score = Math.max(0, Math.min(100, user.modules.dmo.behaviorScore * 0.6 + user.modules.dmo.orders * 2));
 
-    const stl = recalculateUserStl(user);
+    const stl = await recalculateUserStl(user, { reason: "dmo_update" });
     await user.save();
     await logEvent({
       userId: user.userId,

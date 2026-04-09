@@ -27,8 +27,13 @@ export const signup = async (req, res) => {
     role,
     type,
     source,
+    pssScore: 20,
+    crbScore: 10,
+    dmoScore: 20,
+    lockAmount: 0,
     stlScore: 0,
     stlLevel: "L1",
+    stlLogs: [],
     modules: {
       pss: {
         kycVerified: false,
@@ -61,6 +66,8 @@ export const signup = async (req, res) => {
       franchise: { connected: false, coverage: "none", score: 0 },
     },
     earnings: { today: 0, monthly: 0, total: 0 },
+    wallet: { mainBalance: 0, earningBalance: 0, lockWallet: 0, frozen: false },
+    earningsLogs: [],
     growth: { referrals: 0, earnings: 0 },
   });
 

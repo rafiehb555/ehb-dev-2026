@@ -18,6 +18,8 @@ import logRoutes from "./routes/logRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import franchiseRoutes from "./routes/franchiseRoutes.js";
 import systemRoutes from "./routes/systemRoutes.js";
+import earningRoutes from "./routes/earningRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import { notFound, errorHandler } from "./middleware/error.js";
 import { sanitizeRequest } from "./middleware/sanitize.js";
 import { startCrbEscalationWorker } from "./jobs/crbEscalationWorker.js";
@@ -67,6 +69,8 @@ app.use("/api", logRoutes);
 app.use("/api", notificationRoutes);
 app.use("/api", franchiseRoutes);
 app.use("/api", systemRoutes);
+app.use("/api", earningRoutes);
+app.use("/api", adminRoutes);
 
 app.get("/", (_req, res) => {
   res.send("EHB STL Backend Running");

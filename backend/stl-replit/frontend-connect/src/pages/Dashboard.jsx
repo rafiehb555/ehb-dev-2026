@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { getSTL } from "../services/api";
 
 import STLCard from "../components/STLCard";
+import STLBreakdown from "../components/STLBreakdown";
+import AIInsight from "../components/AIInsight";
 import AIExplanation from "../components/AIExplanation";
 import UpgradeBox from "../components/UpgradeBox";
 import Earnings from "../components/Earnings";
@@ -29,6 +31,8 @@ export default function Dashboard({ userId }) {
       <h1>EHB STL Dashboard</h1>
 
       <STLCard score={data.stlScore} level={data.stlLevel} />
+      <STLBreakdown breakdown={data.breakdown} />
+      <AIInsight ai={data.ai} warning={data.warning} />
       <AIExplanation reasons={data.reasons} />
       <UpgradeBox score={data.stlScore} />
       <Earnings earnings={data.user?.earnings} />

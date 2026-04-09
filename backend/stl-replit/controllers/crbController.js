@@ -112,7 +112,7 @@ export const updateCrbApproval = async (req, res) => {
       Math.min(100, (user.modules.crb.examsPassed || 0) * 20 - (user.modules.crb.examsFailed || 0) * 10 + (approved ? 20 : 0)),
     );
 
-    const stl = recalculateUserStl(user);
+    const stl = await recalculateUserStl(user, { reason: "crb_update" });
     await user.save();
     await logEvent({
       userId: user.userId,

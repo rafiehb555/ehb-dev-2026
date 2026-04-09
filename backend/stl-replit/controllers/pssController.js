@@ -64,7 +64,7 @@ export const updatePssVerification = async (req, res) => {
     user.modules.pss.trustScore = trustScore;
     user.modules.pss.score = trustScore;
 
-    const stl = recalculateUserStl(user);
+    const stl = await recalculateUserStl(user, { reason: "pss_update" });
     await user.save();
     await logEvent({ userId: user.userId, event: "PSS_UPDATED", entity: "pss", meta: { riskLevel: computeRiskBand(user.modules.pss) } });
     await notifyUser({

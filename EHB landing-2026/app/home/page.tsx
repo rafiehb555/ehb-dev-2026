@@ -71,10 +71,10 @@ const CORE_DEPTS = [
   {
     code: "CRB",
     name: "Certification & Registry Board",
-    desc: "Physical office verification, professional certification, product/service authentication board.",
+    desc: "Physical office verification, professional certification, document authenticity review, compliance enforcement, legal verification, and product/service authentication.",
     icon: "📋",
     color: "purple",
-    sub: "Physical Certification",
+    sub: "Certification & Enforcement",
   },
   {
     code: "DMO",
@@ -91,14 +91,6 @@ const CORE_DEPTS = [
     icon: "💼",
     color: "orange",
     sub: "Employment Engine",
-  },
-  {
-    code: "EDR",
-    name: "Enforcement & Document Review",
-    desc: "Document authenticity review, compliance enforcement, legal verification operations.",
-    icon: "📁",
-    color: "cyan",
-    sub: "Compliance System",
   },
 ];
 
