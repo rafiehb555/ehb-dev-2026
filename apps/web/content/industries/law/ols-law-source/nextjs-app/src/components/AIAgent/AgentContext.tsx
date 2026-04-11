@@ -395,7 +395,7 @@ export interface MatchedLawyer {
   specialization: string;
   experience: string;
   rating: number;
-  sqlLevel: string;
+  stlLevel: string;
   fee: number;
   city: string;
   image?: string;

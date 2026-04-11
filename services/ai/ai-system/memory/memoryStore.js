@@ -4,9 +4,13 @@ const Memory = require("./memoryModel");
 async function connectDb() {
   const mongoUri = process.env.MONGODB_URI;
   if (!mongoUri) {
-    throw new Error("MONGODB_URI is missing in .env");
+    throw new Error("MONGODB_URI is missing in services/ai/.env");
   }
-  await mongoose.connect(mongoUri);
+  // Short timeout so a down Mongo surfaces quickly instead of hanging the boot.
+  await mongoose.connect(mongoUri, {
+    serverSelectionTimeoutMS: 3000,
+    connectTimeoutMS: 3000,
+  });
 }
 
 async function upsertMemory(item) {

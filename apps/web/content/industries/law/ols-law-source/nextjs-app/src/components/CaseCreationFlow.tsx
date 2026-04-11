@@ -8,7 +8,7 @@ import {
   Video, Users, Building, Star, Upload, Loader2, Globe, ChevronRight,
   Sparkles, Bot, Scale, Heart, Briefcase, ArrowRight, Crown, Zap, Mic
 } from 'lucide-react';
-import { SQLLevel, SQL_LEVELS } from '@/data/sqlLevels';
+import { STLLevel, STL_LEVELS } from '@/data/stlLevels';
 
 interface Lawyer {
   id: string;
@@ -17,17 +17,17 @@ interface Lawyer {
   experience: string;
   rating: number;
   reviews: number;
-  sqlLevel: SQLLevel;
+  stlLevel: STLLevel;
   photo: string;
   location: string;
   fee: string;
 }
 
 const MOCK_LAWYERS: Lawyer[] = [
-  { id: '1', name: 'Ahmed Khan', specialization: 'Property Law', experience: '10 years', rating: 4.9, reviews: 156, sqlLevel: SQLLevel.HIGH, photo: '👨‍⚖️', location: 'Dubai', fee: '$200/hr' },
-  { id: '2', name: 'Sara Malik', specialization: 'Family Law', experience: '12 years', rating: 5.0, reviews: 234, sqlLevel: SQLLevel.VIP, photo: '👩‍⚖️', location: 'Lahore', fee: '$175/hr' },
-  { id: '3', name: 'Zainab Qureshi', specialization: 'Family Law', experience: '8 years', rating: 4.8, reviews: 89, sqlLevel: SQLLevel.HIGH, photo: '👩‍⚖️', location: 'London', fee: '$150/hr' },
-  { id: '4', name: 'Bilal Ahmed', specialization: 'Business Law', experience: '15 years', rating: 4.7, reviews: 312, sqlLevel: SQLLevel.VIP, photo: '👨‍⚖️', location: 'Karachi', fee: '$225/hr' },
+  { id: '1', name: 'Ahmed Khan', specialization: 'Property Law', experience: '10 years', rating: 4.9, reviews: 156, stlLevel: STLLevel.HIGH, photo: '👨‍⚖️', location: 'Dubai', fee: '$200/hr' },
+  { id: '2', name: 'Sara Malik', specialization: 'Family Law', experience: '12 years', rating: 5.0, reviews: 234, stlLevel: STLLevel.VIP, photo: '👩‍⚖️', location: 'Lahore', fee: '$175/hr' },
+  { id: '3', name: 'Zainab Qureshi', specialization: 'Family Law', experience: '8 years', rating: 4.8, reviews: 89, stlLevel: STLLevel.HIGH, photo: '👩‍⚖️', location: 'London', fee: '$150/hr' },
+  { id: '4', name: 'Bilal Ahmed', specialization: 'Business Law', experience: '15 years', rating: 4.7, reviews: 312, stlLevel: STLLevel.VIP, photo: '👨‍⚖️', location: 'Karachi', fee: '$225/hr' },
 ];
 
 // Case Types

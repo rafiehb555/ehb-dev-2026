@@ -79,7 +79,7 @@ model Profile {
   username           String             @unique
   profilePhoto       String?            @map("profile_photo")
   frame              String?
-  sqlLevel           String?            @map("sql_level")
+  stlLevel           String?            @map("stl_level")
   verificationStatus VerificationStatus @default(PENDING) @map("verification_status")
   stlStatus          StlStatus          @default(SUSPENDED) @map("stl_status")
   stlScore           Int                @default(0) @map("stl_score")

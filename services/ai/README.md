@@ -111,7 +111,7 @@ Request:
   "category": "vision",
   "value": {
     "mission": "Build unified multi-industry trust ecosystem",
-    "platforms": ["PSS", "EDR", "EMO", "GoSellr", "Franchise"]
+    "platforms": ["PSS", "CRB", "EMO", "GoSellr", "Franchise"]
   },
   "tags": ["ehb", "vision"],
   "importance": 5,
@@ -128,7 +128,7 @@ Request:
     "category": "vision",
     "value": {
       "mission": "Create complete EHB trust ecosystem",
-      "departments": ["PSS", "EDR", "EMO", "GoSellr", "Franchise"]
+      "departments": ["PSS", "CRB", "EMO", "GoSellr", "Franchise"]
     },
     "tags": ["ehb", "ecosystem", "vision"],
     "importance": 5

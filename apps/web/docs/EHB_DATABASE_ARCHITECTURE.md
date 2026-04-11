@@ -58,7 +58,7 @@ EHB CORE DATABASE
 | username | varchar(100) UNIQUE | For /profile/[username] |
 | profile_photo | varchar(500) | URL |
 | frame | varchar(100) | Profile frame/badge style |
-| sql_level | varchar(50) | Basic, Intermediate, Advanced, Expert |
+| stl_level | varchar(50) | Basic, Intermediate, Advanced, Expert |
 | verification_status | enum | pending, verified, rejected |
 | skills | jsonb / text[] | Array of skills |
 | rating | decimal(3,2) | 0–5 |
@@ -67,7 +67,7 @@ EHB CORE DATABASE
 | created_at | timestamp | |
 | updated_at | timestamp | |
 
-**Example row:** Name: Rafi, SQL Level: Basic, Skills: Web Development, Rating: 4.8.
+**Example row:** Name: Rafi, STL Level: Basic, Skills: Web Development, Rating: 4.8.
 
 **Indexes:** user_id, username, verification_status, rating.
 

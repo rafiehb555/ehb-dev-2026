@@ -42,7 +42,7 @@
 | `/home` or `/dashboard` | Main dashboard (post-login) | Welcome card, AI suggestions, notifications, stats row, AI recommendation panel, widgets |
 | `/ai-marketplace` | AI Marketplace | Search, AI filter, category cards, service providers, trending/free tools |
 | `/gosellr` | GoSellr Marketplace | Trending products, nearby sellers, AI recommended, flash deals |
-| `/jps` | JPS Profile System | Profile card (picture, frame, SQL level, verification, skills, rating), services, jobs |
+| `/jps` | JPS Profile System | Profile card (picture, frame, STL level, verification, skills, rating), services, jobs |
 | `/wallet` | Wallet + Earnings | Balance, affiliate income, service earnings, pending withdraw, locked tokens, charts (neon line / animated bars) |
 | `/franchise` | Franchise Dashboard | City performance, active sellers, orders volume, commission earnings |
 | `/services` | Services hub | Service categories, my services, bookings |
@@ -123,7 +123,7 @@ Product card: image, price, rating, seller, Add to cart; hover scale + neon + qu
 
 ## 7. JPS Profile – Sections
 
-- **Profile card:** Picture, frame, SQL level badge, verification badge (e.g. PSS), skills tags, rating.
+- **Profile card:** Picture, frame, STL level badge, verification badge (e.g. PSS), skills tags, rating.
 - **Service line:** e.g. “Web Developer”
 - **Secondary:** Jobs applied, services offered, reviews (can be separate sections).
 

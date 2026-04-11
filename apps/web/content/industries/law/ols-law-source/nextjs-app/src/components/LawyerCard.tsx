@@ -14,7 +14,7 @@ interface LawyerCardProps {
   rating: number;
   photo: string;
   successRate: string;
-  sqlLevel: string;
+  stlLevel: string;
   onBookConsultation?: () => void;
 }
 
@@ -31,7 +31,7 @@ const getSpecializationIcon = (specialization: string) => {
 
 export default function LawyerCard({ 
   name, specialization, experience, rating, photo, 
-  successRate, sqlLevel, onBookConsultation 
+  successRate, stlLevel, onBookConsultation 
 }: LawyerCardProps) {
   const SpecIcon = getSpecializationIcon(specialization);
   const [showProfile, setShowProfile] = useState(false);
@@ -74,10 +74,10 @@ export default function LawyerCard({
             <p className="text-[9px] sm:text-[10px] font-bold text-emerald-500">{successRate}</p>
           </div>
           <div className="text-center">
-            <p className="text-[6px] sm:text-[7px] uppercase tracking-widest text-ehb-textMuted font-black">SQL Level</p>
+            <p className="text-[6px] sm:text-[7px] uppercase tracking-widest text-ehb-textMuted font-black">STL Level</p>
             <div className="flex items-center justify-center gap-1">
               <Database size={10} className="text-brand-primary" />
-              <p className="text-[9px] sm:text-[10px] font-bold text-brand-primary">{sqlLevel}</p>
+              <p className="text-[9px] sm:text-[10px] font-bold text-brand-primary">{stlLevel}</p>
             </div>
           </div>
         </div>
@@ -134,8 +134,8 @@ export default function LawyerCard({
                 <p className="text-base sm:text-lg font-bold text-white">{experience}</p>
               </div>
               <div className="text-center p-2 sm:p-3 bg-slate-800/50 rounded-xl">
-                <p className="text-[8px] sm:text-[10px] uppercase tracking-widest text-ehb-textMuted font-bold">SQL Level</p>
-                <p className="text-base sm:text-lg font-bold text-brand-primary">{sqlLevel}</p>
+                <p className="text-[8px] sm:text-[10px] uppercase tracking-widest text-ehb-textMuted font-bold">STL Level</p>
+                <p className="text-base sm:text-lg font-bold text-brand-primary">{stlLevel}</p>
               </div>
               <div className="text-center p-2 sm:p-3 bg-slate-800/50 rounded-xl">
                 <p className="text-[8px] sm:text-[10px] uppercase tracking-widest text-ehb-textMuted font-bold">Cases</p>

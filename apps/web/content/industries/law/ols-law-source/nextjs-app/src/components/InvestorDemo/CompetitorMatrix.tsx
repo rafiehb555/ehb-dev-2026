@@ -38,7 +38,7 @@ const FEATURE_MATRIX: FeatureRow[] = [
   { category: 'Marketplace', feature: 'Lawyer Marketplace', featureUrdu: 'وکیل مارکیٹ پلیس', ehb: 'yes', legalZoom: 'partial', rocketLawyer: 'yes', avvo: 'yes', lawDepot: 'no', importance: 'high' },
   { category: 'Marketplace', feature: 'Verified Lawyer Profiles', featureUrdu: 'تصدیق شدہ وکیل پروفائلز', ehb: 'yes', legalZoom: 'partial', rocketLawyer: 'yes', avvo: 'yes', lawDepot: 'no', importance: 'high' },
   { category: 'Marketplace', feature: 'Multiple Hiring Models', featureUrdu: 'متعدد ہائرنگ ماڈلز', ehb: 'yes', legalZoom: 'no', rocketLawyer: 'partial', avvo: 'partial', lawDepot: 'no', importance: 'medium' },
-  { category: 'Marketplace', feature: 'SQL Verification System', featureUrdu: 'SQL تصدیقی نظام', ehb: 'unique', legalZoom: 'no', rocketLawyer: 'no', avvo: 'no', lawDepot: 'no', importance: 'medium' },
+  { category: 'Marketplace', feature: 'STL Verification System', featureUrdu: 'STL تصدیقی نظام', ehb: 'unique', legalZoom: 'no', rocketLawyer: 'no', avvo: 'no', lawDepot: 'no', importance: 'medium' },
   
   // Services
   { category: 'Services', feature: 'Full Case Management', featureUrdu: 'مکمل کیس مینجمنٹ', ehb: 'yes', legalZoom: 'no', rocketLawyer: 'partial', avvo: 'no', lawDepot: 'no', importance: 'high' },

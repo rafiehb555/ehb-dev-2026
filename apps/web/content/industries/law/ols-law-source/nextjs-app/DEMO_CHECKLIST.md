@@ -78,7 +78,7 @@ Open these tabs in order:
 ### Section C: Lawyer Experience (3 min)
 ```
 9. Lawyer Dashboard       [60 sec] → Show earnings, cases
-10. SQL Verification      [45 sec] → Explain trust system
+10. STL Verification      [45 sec] → Explain trust system
 11. Lawyer Marketplace    [45 sec] → Show lawyer cards
 12. Hire Lawyer Flow      [60 sec] → Click through hire
 ```

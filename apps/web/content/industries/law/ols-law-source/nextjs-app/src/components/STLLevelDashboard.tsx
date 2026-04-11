@@ -6,19 +6,19 @@ import {
   CheckCircle2, ArrowUpCircle, AlertCircle, 
   ChevronRight, Lock, Play, FileText
 } from 'lucide-react';
-import { SQLLevel, SQL_LEVELS } from '@/data/sqlLevels';
+import { STLLevel, STL_LEVELS } from '@/data/stlLevels';
 import { motion, AnimatePresence } from 'motion/react';
 
-export default function SQLLevelDashboard() {
-  const [currentLevel, setCurrentLevel] = useState<SQLLevel>(SQLLevel.BASIC);
+export default function STLLevelDashboard() {
+  const [currentLevel, setCurrentLevel] = useState<STLLevel>(STLLevel.BASIC);
   const [isUpgrading, setIsUpgrading] = useState(false);
   
-  const currentInfo = SQL_LEVELS[currentLevel];
+  const currentInfo = STL_LEVELS[currentLevel];
   const nextLevel = getNextLevel(currentLevel);
-  const nextInfo = nextLevel ? SQL_LEVELS[nextLevel] : null;
+  const nextInfo = nextLevel ? STL_LEVELS[nextLevel] : null;
 
-  function getNextLevel(level: SQLLevel): SQLLevel | null {
-    const levels = Object.values(SQLLevel);
+  function getNextLevel(level: STLLevel): STLLevel | null {
+    const levels = Object.values(STLLevel);
     const currentIndex = levels.indexOf(level);
     return currentIndex < levels.length - 1 ? levels[currentIndex + 1] : null;
   }
@@ -36,7 +36,7 @@ export default function SQLLevelDashboard() {
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <h2 className="text-lg sm:text-2xl font-bold">SQL Level: {currentLevel}</h2>
+                <h2 className="text-lg sm:text-2xl font-bold">STL Level: {currentLevel}</h2>
                 <span className="px-2 py-0.5 bg-brand-primary text-[8px] sm:text-[10px] font-black uppercase tracking-widest rounded-full">Active</span>
               </div>
               <p className="text-zinc-400 text-[10px] sm:text-xs max-w-md">{currentInfo.description}</p>
@@ -105,20 +105,20 @@ export default function SQLLevelDashboard() {
               <div className="p-8 sm:p-12 text-center">
                 <Star size={40} className="sm:w-12 sm:h-12 text-yellow-500 mx-auto mb-3 sm:mb-4" />
                 <h4 className="font-bold text-base sm:text-lg mb-2">You are at the Top!</h4>
-                <p className="text-zinc-500 text-xs sm:text-sm">You have reached the VIP SQL Level.</p>
+                <p className="text-zinc-500 text-xs sm:text-sm">You have reached the VIP STL Level.</p>
               </div>
             )}
           </div>
         </div>
 
-        {/* SQL Level Map */}
+        {/* STL Level Map */}
         <div className="ms-card p-4 sm:p-6">
           <h3 className="font-bold mb-4 sm:mb-6 flex items-center gap-2 text-sm sm:text-base">
             <Award size={18} className="sm:w-5 sm:h-5 text-brand-primary" />
-            SQL Level Roadmap
+            STL Level Roadmap
           </h3>
           <div className="space-y-3 sm:space-y-4">
-            {Object.values(SQL_LEVELS).map((lvl) => {
+            {Object.values(STL_LEVELS).map((lvl) => {
               const isCurrent = lvl.level === currentLevel;
               const isLocked = lvl.rank > currentInfo.rank;
               
@@ -163,7 +163,7 @@ export default function SQLLevelDashboard() {
               className="bg-white dark:bg-zinc-900 w-full max-w-2xl rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
             >
               <div className="p-4 sm:p-6 border-b border-black/5 dark:border-white/5 flex justify-between items-center">
-                <h3 className="font-bold text-base sm:text-lg">Apply for SQL Upgrade</h3>
+                <h3 className="font-bold text-base sm:text-lg">Apply for STL Upgrade</h3>
                 <button onClick={() => setIsUpgrading(false)} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition-colors">
                   <Lock size={18} className="sm:w-5 sm:h-5" />
                 </button>

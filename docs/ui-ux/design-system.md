@@ -81,7 +81,7 @@ font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-
 6. Orders
 7. Franchise
 8. Trusty Wallet
-9. Verification (SQL)
+9. Verification (STL)
 10. Analytics
 11. Settings
 

@@ -1,0 +1,29 @@
+---
+description: EHB UI/UX — living design system is mandatory before any user-visible UI work (Cursor always loads this)
+alwaysApply: true
+---
+
+# EHB UI/UX — mandatory design system (auto)
+
+This rule is **always on** so every Cursor session inherits the same bar as Claude / Copilot mirrors.
+
+## When this applies
+
+Whenever the task **adds or changes user-visible UI** — including pages, layouts, components, Tailwind/CSS, motion, icons, cards, dashboards, marketing sections, admin/DMO/franchise surfaces, or shared UI under `packages/ui`.
+
+Pure backend-only work (Express routes with no UI, DB-only scripts) does **not** need visual tokens from the design file, but must not contradict trust/verification semantics documented there if responses shape user-facing copy.
+
+## Hard rule (read before UI code)
+
+1. Read **`design-system/EHB-UIUX-SYSTEM.md`** (top → relevant sections for your change).
+2. Read **`design-system/ai-behavior.md`** (agent mindset, auto-upgrade, forbidden patterns).
+3. Implement using those tokens, motion, hierarchy, and verified-vs-unverified visuals — **not** generic “template dashboard” defaults.
+4. If you introduce a **new** pattern, token, component contract, or timing value, **append** it to `EHB-UIUX-SYSTEM.md` and add a **Changelog** line there (living doc protocol in that file).
+
+## If another doc disagrees
+
+**`design-system/EHB-UIUX-SYSTEM.md` wins** over older quick references (e.g. legacy palette notes in `.cursor/rules/ui-design-system.md` or `docs/ui-ux/design-system.md`) when there is a conflict.
+
+## Portable copies
+
+Root **`AGENTS.md`** §6.1 mirrors this policy; **`CLAUDE.md`**, **`.cursorrules`**, and **`.github/copilot-instructions.md`** are generated from `AGENTS.md` via `node scripts/sync-agent-context.mjs`.

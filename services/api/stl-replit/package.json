@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "start:prod": "node server.js"
+    "start:prod": "node server.js",
+    "test": "node --test tests/",
+    "test:stl": "node --test tests/stl/stlService.node.test.js",
+    "test:jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.86.1",

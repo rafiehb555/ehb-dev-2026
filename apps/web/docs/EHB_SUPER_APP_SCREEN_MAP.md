@@ -14,7 +14,7 @@ User login se pehle yeh screens.
 | 2 | Industry Landing Page | `/landing/[industry]` | Universal landing per industry (same UI, content change) |
 | 3 | Industry Home Page | `/industry/[industry]` | Industry hub – services, providers, jobs, AI suggestions |
 | 4 | Marketplace Page | `/ai-marketplace`, `/services`, `/gosellr` | Services + Products + Jobs marketplaces |
-| 5 | Service Provider Profile | `/profile/[userId]` or `/provider/[slug]` | JPS profile – name, picture, SQL level, verification, skills, rating |
+| 5 | Service Provider Profile | `/profile/[userId]` or `/provider/[slug]` | JPS profile – name, picture, STL level, verification, skills, rating |
 | 6 | Product Page | `/product/[productId]` | Single product (GoSellr) – image, price, seller, cart |
 | 7 | Job Page | `/job/[jobId]` | Single job – title, company, location, apply |
 | 8 | Franchise Page | `/franchise` | Franchise opportunities, city dashboard, apply |
@@ -51,13 +51,13 @@ Sab users **JPS (Job Profile & Skill)** se.
 | Screen | Route | Purpose |
 |--------|--------|---------|
 | Profile Overview | `/profile/[id]` | Name, picture, headline, location |
-| Skills | `/profile/[id]/skills` | Skills, SQL level, endorsements |
+| Skills | `/profile/[id]/skills` | Skills, STL level, endorsements |
 | Services | `/profile/[id]/services` | Services offered by this provider |
 | Portfolio | `/profile/[id]/portfolio` | Work samples, projects |
 | Verification | `/profile/[id]/verification` | PSS/CRB/STL badges |
 | Reviews | `/profile/[id]/reviews` | Ratings and reviews |
 
-**Profile card (reusable):** Name, Profile picture, SQL level, Verification badge, Skills, Rating.
+**Profile card (reusable):** Name, Profile picture, STL level, Verification badge, Skills, Rating.
 
 ---
 

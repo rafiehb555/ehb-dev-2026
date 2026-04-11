@@ -36,11 +36,11 @@ const INTENT_KEYWORDS: Record<CaseType, string[]> = {
 };
 
 const MOCK_LAWYERS: MatchedLawyer[] = [
-  { id: '1', name: 'Adv. Ahmed Khan', specialization: 'Family Law', experience: '15 years', rating: 4.8, sqlLevel: 'SQL-5', fee: 500, city: 'Karachi', image: '' },
-  { id: '2', name: 'Adv. Sarah Malik', specialization: 'Family Law', experience: '12 years', rating: 4.9, sqlLevel: 'SQL-4', fee: 450, city: 'Lahore', image: '' },
-  { id: '3', name: 'Adv. Imran Ali', specialization: 'Criminal Law', experience: '20 years', rating: 4.7, sqlLevel: 'SQL-5', fee: 600, city: 'Islamabad', image: '' },
-  { id: '4', name: 'Adv. Fatima Hassan', specialization: 'Property Law', experience: '10 years', rating: 4.6, sqlLevel: 'SQL-3', fee: 400, city: 'Rawalpindi', image: '' },
-  { id: '5', name: 'Adv. Zainab Shah', specialization: 'Business Law', experience: '8 years', rating: 4.5, sqlLevel: 'SQL-3', fee: 350, city: 'Multan', image: '' },
+  { id: '1', name: 'Adv. Ahmed Khan', specialization: 'Family Law', experience: '15 years', rating: 4.8, stlLevel: 'STL-5', fee: 500, city: 'Karachi', image: '' },
+  { id: '2', name: 'Adv. Sarah Malik', specialization: 'Family Law', experience: '12 years', rating: 4.9, stlLevel: 'STL-4', fee: 450, city: 'Lahore', image: '' },
+  { id: '3', name: 'Adv. Imran Ali', specialization: 'Criminal Law', experience: '20 years', rating: 4.7, stlLevel: 'STL-5', fee: 600, city: 'Islamabad', image: '' },
+  { id: '4', name: 'Adv. Fatima Hassan', specialization: 'Property Law', experience: '10 years', rating: 4.6, stlLevel: 'STL-3', fee: 400, city: 'Rawalpindi', image: '' },
+  { id: '5', name: 'Adv. Zainab Shah', specialization: 'Business Law', experience: '8 years', rating: 4.5, stlLevel: 'STL-3', fee: 350, city: 'Multan', image: '' },
 ];
 
 export default function AIAgentPanel() {
@@ -379,7 +379,7 @@ export default function AIAgentPanel() {
                         {lawyer.rating}
                       </span>
                       <span className="text-xs bg-brand-primary/30 text-brand-primary px-2 py-0.5 rounded">
-                        {lawyer.sqlLevel}
+                        {lawyer.stlLevel}
                       </span>
                       <span className="text-green-400 text-sm font-bold">${lawyer.fee}</span>
                     </div>

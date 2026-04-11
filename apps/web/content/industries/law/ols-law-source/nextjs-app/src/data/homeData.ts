@@ -29,7 +29,7 @@ export const CATEGORIES = [
   "Immigration Law", "Tax Law", "Technology Law", "International Law", "Human Rights Law"
 ];
 
-export const SQL_LEVELS = [
+export const STL_LEVELS = [
   { level: "Free Level", description: "Open category service provider.", color: "#94a3b8", icon: ShieldAlert },
   { level: "Basic Level", description: "Identity verified provider.", color: "#3b82f6", icon: ShieldCheck },
   { level: "Normal Level", description: "Skill tested provider.", color: "#10b981", icon: Zap },
@@ -38,12 +38,12 @@ export const SQL_LEVELS = [
 ];
 
 export const LAWYERS = [
-  { name: "Ahmed Khan", specialization: "Criminal Lawyer", experience: "10Y", rating: 4.9, photo: "https://i.pravatar.cc/150?u=ahmed", successRate: "98%", sqlLevel: "VIP" },
-  { name: "Sara Malik", specialization: "Family Lawyer", experience: "8Y", rating: 4.8, photo: "https://i.pravatar.cc/150?u=sara", successRate: "96%", sqlLevel: "HIGH" },
-  { name: "Ali Raza", specialization: "Corporate Lawyer", experience: "12Y", rating: 5.0, photo: "https://i.pravatar.cc/150?u=ali", successRate: "99%", sqlLevel: "VIP" },
-  { name: "Fatima Noor", specialization: "Immigration Lawyer", experience: "7Y", rating: 4.7, photo: "https://i.pravatar.cc/150?u=fatima", successRate: "94%", sqlLevel: "NORMAL" },
-  { name: "Usman Tariq", specialization: "Property Lawyer", experience: "15Y", rating: 4.9, photo: "https://i.pravatar.cc/150?u=usman", successRate: "97%", sqlLevel: "HIGH" },
-  { name: "Hamza Sheikh", specialization: "Tax Lawyer", experience: "9Y", rating: 4.8, photo: "https://i.pravatar.cc/150?u=hamza", successRate: "95%", sqlLevel: "NORMAL" },
+  { name: "Ahmed Khan", specialization: "Criminal Lawyer", experience: "10Y", rating: 4.9, photo: "https://i.pravatar.cc/150?u=ahmed", successRate: "98%", stlLevel: "VIP" },
+  { name: "Sara Malik", specialization: "Family Lawyer", experience: "8Y", rating: 4.8, photo: "https://i.pravatar.cc/150?u=sara", successRate: "96%", stlLevel: "HIGH" },
+  { name: "Ali Raza", specialization: "Corporate Lawyer", experience: "12Y", rating: 5.0, photo: "https://i.pravatar.cc/150?u=ali", successRate: "99%", stlLevel: "VIP" },
+  { name: "Fatima Noor", specialization: "Immigration Lawyer", experience: "7Y", rating: 4.7, photo: "https://i.pravatar.cc/150?u=fatima", successRate: "94%", stlLevel: "NORMAL" },
+  { name: "Usman Tariq", specialization: "Property Lawyer", experience: "15Y", rating: 4.9, photo: "https://i.pravatar.cc/150?u=usman", successRate: "97%", stlLevel: "HIGH" },
+  { name: "Hamza Sheikh", specialization: "Tax Lawyer", experience: "9Y", rating: 4.8, photo: "https://i.pravatar.cc/150?u=hamza", successRate: "95%", stlLevel: "NORMAL" },
 ];
 
 export const DOCUMENT_SERVICES = [

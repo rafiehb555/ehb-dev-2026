@@ -1,4 +1,4 @@
-import Card from "@/components/ui/Card";
+import Card from "@/components/ui/card";
 
 const levels = ["L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8"];
 const current = "L6";

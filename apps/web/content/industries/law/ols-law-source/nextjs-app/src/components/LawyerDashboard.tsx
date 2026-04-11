@@ -8,8 +8,8 @@ import {
   DollarSign, Star, Cpu, CheckCircle2, Clock, 
   Plus, BarChart3, ShieldCheck, Loader2
 } from 'lucide-react';
-import SQLLevelDashboard from './SQLLevelDashboard';
-import { SQLLevel, SQL_LEVELS } from '@/data/sqlLevels';
+import STLLevelDashboard from './STLLevelDashboard';
+import { STLLevel, STL_LEVELS } from '@/data/stlLevels';
 
 export default function LawyerDashboard() {
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function LawyerDashboard() {
     name: "Ahmed Khan",
     specialization: "Criminal Lawyer",
     experience: "10 years",
-    sqlLevel: SQLLevel.HIGH,
+    stlLevel: STLLevel.HIGH,
     rating: 4.9
   };
 
@@ -36,8 +36,8 @@ export default function LawyerDashboard() {
     }, 1000);
   }, []);
 
-  const sqlInfo = SQL_LEVELS[lawyer.sqlLevel];
-  const SQLIcon = sqlInfo.icon;
+  const stlInfo = STL_LEVELS[lawyer.stlLevel];
+  const SQLIcon = stlInfo.icon;
 
   return (
     <div className="w-full max-w-[1800px] 2xl:max-w-[2200px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
@@ -69,9 +69,9 @@ export default function LawyerDashboard() {
             <h3 className="text-base sm:text-lg font-bold text-white">{lawyer.name}</h3>
             <p className="text-[10px] sm:text-xs text-ehb-textMuted mb-3 sm:mb-4">{lawyer.specialization}</p>
             <div className="flex items-center justify-center gap-2 mb-4 sm:mb-6">
-              <div className={`flex items-center gap-1.5 px-2 sm:px-3 py-1 rounded-full bg-slate-800 border border-slate-700 ${sqlInfo.color}`}>
+              <div className={`flex items-center gap-1.5 px-2 sm:px-3 py-1 rounded-full bg-slate-800 border border-slate-700 ${stlInfo.color}`}>
                 <SQLIcon size={12} className="sm:w-3.5 sm:h-3.5" />
-                <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest">SQL: {lawyer.sqlLevel}</span>
+                <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest">STL: {lawyer.stlLevel}</span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -93,7 +93,7 @@ export default function LawyerDashboard() {
             <h4 className="text-[8px] sm:text-[10px] font-black text-ehb-textMuted uppercase tracking-widest px-2 mb-2">Quick Navigation</h4>
             {[
               { id: 'overview', label: 'Dashboard', icon: BarChart3, count: null },
-              { id: 'sql', label: 'SQL Level', icon: ShieldCheck, count: 'Upgrade' },
+              { id: 'sql', label: 'STL Level', icon: ShieldCheck, count: 'Upgrade' },
               { id: 'cases', label: 'Cases', icon: Briefcase, count: cases.length || null },
               { id: 'requests', label: 'Requests', icon: MessageSquare, count: 5 },
               { id: 'docs', label: 'Documents', icon: FileText, count: 24 },
@@ -203,7 +203,7 @@ export default function LawyerDashboard() {
               </div>
             </>
           ) : (
-            <SQLLevelDashboard />
+            <STLLevelDashboard />
           )}
         </div>
       </div>

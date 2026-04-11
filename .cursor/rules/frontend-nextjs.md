@@ -17,7 +17,8 @@
 
 ## Default Theme
 - **Theme:** Dark Blue (see `assets/ui-default-theme-dark.png`)
-- **Design System:** `docs/ui-ux/design-system.md`
+- **Living design system (mandatory for UI):** `design-system/EHB-UIUX-SYSTEM.md` and `design-system/ai-behavior.md`
+- **Legacy / extra notes:** `docs/ui-ux/design-system.md` (do not override the living file)
 - User can change theme in Settings
 - Dark Blue auto-selected by default
 

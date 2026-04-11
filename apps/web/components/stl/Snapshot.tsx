@@ -2,7 +2,7 @@
 
 import { BadgeCheck, Building2, ShieldCheck, Target } from "lucide-react";
 import { motion } from "framer-motion";
-import Card from "@/components/ui/Card";
+import Card from "@/components/ui/card";
 
 const data = [
   { name: "PSS", value: "80%", icon: ShieldCheck, tone: "text-emerald-300", status: "Good" },

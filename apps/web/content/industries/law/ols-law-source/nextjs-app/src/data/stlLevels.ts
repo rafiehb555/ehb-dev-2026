@@ -1,6 +1,6 @@
 import { Shield, ShieldCheck, CheckCircle2, Star, Award } from 'lucide-react';
 
-export enum SQLLevel {
+export enum STLLevel {
   FREE = 'Free',
   BASIC = 'Basic',
   NORMAL = 'Normal',
@@ -11,12 +11,12 @@ export enum SQLLevel {
 export interface SQLRequirement {
   id: string;
   label: string;
-  department: 'PSS' | 'EDR' | 'EMO';
+  department: 'PSS' | 'CRB' | 'EMO';
   isCompleted: boolean;
 }
 
-export interface SQLLevelInfo {
-  level: SQLLevel;
+export interface STLLevelInfo {
+  level: STLLevel;
   rank: number;
   description: string;
   icon: any;
@@ -25,9 +25,9 @@ export interface SQLLevelInfo {
   requirements: SQLRequirement[];
 }
 
-export const SQL_LEVELS: Record<SQLLevel, SQLLevelInfo> = {
-  [SQLLevel.FREE]: {
-    level: SQLLevel.FREE,
+export const STL_LEVELS: Record<STLLevel, STLLevelInfo> = {
+  [STLLevel.FREE]: {
+    level: STLLevel.FREE,
     rank: 1,
     description: "Open category for new users. No verification required.",
     icon: Shield,
@@ -35,8 +35,8 @@ export const SQL_LEVELS: Record<SQLLevel, SQLLevelInfo> = {
     benefits: ["Entry level listing"],
     requirements: []
   },
-  [SQLLevel.BASIC]: {
-    level: SQLLevel.BASIC,
+  [STLLevel.BASIC]: {
+    level: STLLevel.BASIC,
     rank: 2,
     description: "Identity and license verified by PSS department.",
     icon: ShieldCheck,
@@ -48,21 +48,21 @@ export const SQL_LEVELS: Record<SQLLevel, SQLLevelInfo> = {
       { id: 'pss-contact', label: 'Contact Verification', department: 'PSS', isCompleted: true }
     ]
   },
-  [SQLLevel.NORMAL]: {
-    level: SQLLevel.NORMAL,
+  [STLLevel.NORMAL]: {
+    level: STLLevel.NORMAL,
     rank: 3,
-    description: "Professional skills verified by EDR department through testing.",
+    description: "Professional skills verified by CRB department through testing.",
     icon: CheckCircle2,
     color: "text-emerald-500",
     benefits: ["Higher ranking in search", "Access to more cases", "Skill verified badge"],
     requirements: [
-      { id: 'edr-knowledge', label: 'Professional Knowledge Test', department: 'EDR', isCompleted: false },
-      { id: 'edr-scenario', label: 'Case Scenario Test', department: 'EDR', isCompleted: false },
-      { id: 'edr-drafting', label: 'Document Drafting Test', department: 'EDR', isCompleted: false }
+      { id: 'edr-knowledge', label: 'Professional Knowledge Test', department: 'CRB', isCompleted: false },
+      { id: 'edr-scenario', label: 'Case Scenario Test', department: 'CRB', isCompleted: false },
+      { id: 'edr-drafting', label: 'Document Drafting Test', department: 'CRB', isCompleted: false }
     ]
   },
-  [SQLLevel.HIGH]: {
-    level: SQLLevel.HIGH,
+  [STLLevel.HIGH]: {
+    level: STLLevel.HIGH,
     rank: 4,
     description: "Advanced professional testing and high performance review.",
     icon: Award,
@@ -74,8 +74,8 @@ export const SQL_LEVELS: Record<SQLLevel, SQLLevelInfo> = {
       { id: 'emo-performance', label: 'Case Performance Review', department: 'EMO', isCompleted: false }
     ]
   },
-  [SQLLevel.VIP]: {
-    level: SQLLevel.VIP,
+  [STLLevel.VIP]: {
+    level: STLLevel.VIP,
     rank: 5,
     description: "Highest trust level for top-tier trusted professionals.",
     icon: Star,

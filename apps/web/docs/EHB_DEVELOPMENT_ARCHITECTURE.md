@@ -125,7 +125,7 @@ ehb-landing-demo/
 | `KpiCard` | Landing, Dashboard, Industry | Label, value, detail |
 | `EhbHomeCard` | Home, Development | EHB modules |
 | `IndustriesBar` | Layout | 32 industries + EHB Home |
-| `ProfileCard` (to add) | Phase 21 | Name, picture, SQL, verification, skills, rating |
+| `ProfileCard` (to add) | Phase 21 | Name, picture, STL, verification, skills, rating |
 | `AIInsightCard` (to add) | Phase 24 | Message + CTA |
 | `ServiceCard` | Marketplace, Industry | Service tile |
 | `ProductCard` | GoSellr | Image, price, seller, cart |

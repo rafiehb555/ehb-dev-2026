@@ -25,13 +25,16 @@ This agent owns reusable visual patterns and cross-page design consistency.
 
 ## Main references
 
-- `ehb-landing-demo/components/`
-- `ehb-landing-demo/app/page.tsx`
-- `ehb-landing-demo/app/home/page.tsx`
-- `ehb-landing-demo/app/dmo/layout.tsx`
-- `ehb-landing-demo/app/admin/page.tsx`
-- `ehb-landing-demo/app/franchise/layout.tsx`
-- `.cursor/rules/ui-design-system.md`
+- **`design-system/EHB-UIUX-SYSTEM.md`** — single source of truth (tokens, motion, patterns)
+- **`design-system/ai-behavior.md`** — how to think before shipping UI
+- `.cursor/rules/ehb-uiux-system-mandatory.mdc` — Cursor always-on enforcement
+- `apps/web/components/`
+- `apps/web/app/page.tsx`
+- `apps/web/app/home/page.tsx`
+- `apps/web/app/dmo/layout.tsx`
+- `apps/web/app/admin/page.tsx`
+- `apps/web/app/franchise/layout.tsx`
+- `.cursor/rules/ui-design-system.md` (quick reference only)
 - `.cursor/rules/frontend-nextjs.md`
 
 ## Design rules

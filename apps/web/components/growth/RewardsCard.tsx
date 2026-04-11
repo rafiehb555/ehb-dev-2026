@@ -1,5 +1,5 @@
 import { Gift } from "lucide-react";
-import Card from "@/components/ui/Card";
+import Card from "@/components/ui/card";
 
 const rewards = ["Invite 5 -> $10 bonus", "Invite 10 -> STL boost", "Invite 20 -> VIP unlock"];
 

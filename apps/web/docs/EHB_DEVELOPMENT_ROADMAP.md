@@ -2,7 +2,7 @@
 
 **Phase 61–75 · Replit + Cursor AI + Next.js + Node.js · Step-by-step**
 
-Yeh roadmap **realistic launch order** follow karta hai: GoSellr base, franchise earnings, JPS, SQL levels, dashboard cards, AI marketplace.
+Yeh roadmap **realistic launch order** follow karta hai: GoSellr base, franchise earnings, JPS, STL levels, dashboard cards, AI marketplace.
 
 ---
 
@@ -59,9 +59,9 @@ Yeh roadmap **realistic launch order** follow karta hai: GoSellr base, franchise
 
 **To do:**
 
-- Profile fields: name, photo, skills, sql_level, verification_status, rating, bio.
+- Profile fields: name, photo, skills, stl_level, verification_status, rating, bio.
 - Route: `/profile/[username]` or `/profile/[id]`.
-- Component: `ProfileCard` (name, photo, SQL level, verification badge, skills, rating).
+- Component: `ProfileCard` (name, photo, STL level, verification badge, skills, rating).
 - Pages: Overview, Skills, Services, Portfolio, Verification, Reviews (see Screen Map).
 
 **Backend:** profiles table + GET /api/profiles/:username.

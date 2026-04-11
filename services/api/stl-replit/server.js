@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
-import connectDB from "./config/db.js";
+import connectDB, { dbState } from "./config/db.js";
 import stlRoutes from "./routes/stlRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
@@ -74,6 +74,20 @@ app.use("/api", adminRoutes);
 
 app.get("/", (_req, res) => {
   res.send("EHB STL Backend Running");
+});
+
+app.get("/api/health", (_req, res) => {
+  res.json({
+    ok: true,
+    service: "stl-replit-api",
+    port: Number(process.env.PORT || 5000),
+    db: {
+      connected: dbState.connected,
+      error: dbState.error,
+      lastAttempt: dbState.lastAttempt,
+    },
+    uptimeSeconds: Math.round(process.uptime()),
+  });
 });
 
 app.use(notFound);

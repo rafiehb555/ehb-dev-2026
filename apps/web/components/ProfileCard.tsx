@@ -25,7 +25,7 @@ export function ProfileCard({ profile }: { profile: JpsProfile }) {
               @{profile.username}
             </span>
             <span className="inline-flex items-center rounded-full bg-emerald-500/10 border border-emerald-400/30 px-3 py-[2px]">
-              {profile.sqlLevel}
+              {profile.stlLevel}
             </span>
           </div>
         </div>

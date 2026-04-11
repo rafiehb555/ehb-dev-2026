@@ -23,7 +23,7 @@ interface Lawyer {
   languages: string[];
   verified: boolean;
   available: boolean;
-  sqlLevel: number;
+  stlLevel: number;
   casesWon: number;
   totalCases: number;
   responseTime: string;
@@ -91,7 +91,7 @@ const MOCK_LAWYERS: Lawyer[] = [
     languages: ['English', 'Urdu', 'Punjabi'],
     verified: true,
     available: true,
-    sqlLevel: 5,
+    stlLevel: 5,
     casesWon: 189,
     totalCases: 210,
     responseTime: '< 1 hour',
@@ -111,7 +111,7 @@ const MOCK_LAWYERS: Lawyer[] = [
     languages: ['English', 'Urdu', 'Sindhi'],
     verified: true,
     available: true,
-    sqlLevel: 4,
+    stlLevel: 4,
     casesWon: 156,
     totalCases: 178,
     responseTime: '< 2 hours',
@@ -131,7 +131,7 @@ const MOCK_LAWYERS: Lawyer[] = [
     languages: ['English', 'Arabic', 'Urdu'],
     verified: true,
     available: true,
-    sqlLevel: 5,
+    stlLevel: 5,
     casesWon: 278,
     totalCases: 295,
     responseTime: '< 30 min',
@@ -151,7 +151,7 @@ const MOCK_LAWYERS: Lawyer[] = [
     languages: ['English', 'Urdu'],
     verified: true,
     available: false,
-    sqlLevel: 4,
+    stlLevel: 4,
     casesWon: 120,
     totalCases: 145,
     responseTime: '< 3 hours',
@@ -171,7 +171,7 @@ const MOCK_LAWYERS: Lawyer[] = [
     languages: ['English', 'French'],
     verified: true,
     available: true,
-    sqlLevel: 5,
+    stlLevel: 5,
     casesWon: 412,
     totalCases: 445,
     responseTime: '< 1 hour',

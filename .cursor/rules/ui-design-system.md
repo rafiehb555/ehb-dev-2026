@@ -1,5 +1,7 @@
 # EHB UI/UX Quick Reference
 
+> **Canonical UI/UX source of truth:** `design-system/EHB-UIUX-SYSTEM.md` (+ `design-system/ai-behavior.md`). If anything here conflicts, the design-system files win. Cursor always loads `ehb-uiux-system-mandatory.mdc`.
+
 > Default Theme: Dark Blue
 
 ## Theme Reference

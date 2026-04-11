@@ -231,7 +231,7 @@ This document outlines the **Investor Demo Strategy** for EHB AI Legal Platform.
 - Earnings display
 - Client queue
 - Calendar integration
-- SQL Level badge
+- STL Level badge
 
 **Demo Script:**
 > "Lawyers get a complete practice management dashboard. They can manage cases, 
@@ -241,25 +241,25 @@ This document outlines the **Investor Demo Strategy** for EHB AI Legal Platform.
 **Highlight Points:**
 - [ ] "12 Active Cases" indicator
 - [ ] "PKR 850,000 This Month" earnings
-- [ ] "SQL Level 4" verification badge
+- [ ] "STL Level 4" verification badge
 - [ ] "4.9★ Rating" display
 
 ---
 
-#### Screen 10: SQL Verification System
-**URL:** `/lawyer-dashboard` (SQL section)  
+#### Screen 10: STL Verification System
+**URL:** `/lawyer-dashboard` (STL section)  
 **Duration:** 45 seconds  
 **Key Message:** "Lawyer Trust & Verification"
 
 **What Investor Sees:**
-- SQL Level explanation (1-5)
+- STL Level explanation (1-5)
 - Verification requirements
 - Trust indicators
 - Badge display
 
 **Demo Script:**
-> "Our unique SQL - Service Quality Level system verifies lawyers at 5 levels. 
-> Higher SQL means more visibility, better matching, and client trust. 
+> "Our unique STL - Service Trust Level system verifies lawyers at 5 levels. 
+> Higher STL means more visibility, better matching, and client trust. 
 > This creates quality competition among lawyers."
 
 ---
@@ -551,7 +551,7 @@ Any questions?"
 | Lawyers | 25,000+ | Screen 1 |
 | Case Types | 32 | Screen 3 |
 | AI Agents | 14 | Screen 19 |
-| SQL Levels | 5 | Screen 10 |
+| STL Levels | 5 | Screen 10 |
 
 ---
 

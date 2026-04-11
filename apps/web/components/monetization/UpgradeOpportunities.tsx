@@ -1,6 +1,6 @@
 import { Rocket } from "lucide-react";
 import Button from "@/components/ui/Button";
-import Card from "@/components/ui/Card";
+import Card from "@/components/ui/card";
 
 const opportunities = [
   "Upgrade to STL-7 (VIP) -> Earn 2x more",

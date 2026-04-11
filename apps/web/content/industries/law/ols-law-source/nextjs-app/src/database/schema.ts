@@ -13,7 +13,7 @@ export type Gender = 'male' | 'female' | 'other' | 'prefer_not_to_say';
 
 export type LawyerStatus = 'active' | 'inactive' | 'suspended' | 'under_review' | 'pending_verification';
 export type LawyerVerificationStatus = 'pending' | 'verified' | 'rejected' | 'expired';
-export type SQLLevel = 1 | 2 | 3 | 4 | 5;
+export type STLLevel = 1 | 2 | 3 | 4 | 5;
 
 export type CaseStatus = 'draft' | 'submitted' | 'assigned' | 'in_progress' | 'hearing_scheduled' | 
                          'awaiting_judgment' | 'completed' | 'closed' | 'cancelled' | 'on_hold';
@@ -146,7 +146,7 @@ export interface Lawyer {
   // Rating
   overall_rating: number;             // 1-5 stars
   total_reviews: number;
-  sql_level: SQLLevel;                // Service Quality Level
+  stl_level: STLLevel;                // Service Trust Level (L0–L8)
   
   // Availability
   is_available: boolean;

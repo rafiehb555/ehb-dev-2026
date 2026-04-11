@@ -1,0 +1,447 @@
+{
+  "schema": "ehb-status/v2",
+  "generatedAt": "2026-04-11T12:27:14.970Z",
+  "generator": "scripts/ehb-status-update.mjs",
+  "company": "EHB Technologies (Pvt.) Ltd.",
+  "repoRoot": "D:\\EHB DEVELOPMENT 2026",
+  "health": {
+    "frontend": {
+      "url": "http://localhost:3000",
+      "lastProbedAt": "2026-04-11T12:27:14.970Z",
+      "status": "down"
+    },
+    "api": {
+      "url": "http://localhost:5000/api/health",
+      "lastProbedAt": "2026-04-11T12:27:14.970Z",
+      "status": "down"
+    },
+    "ai": {
+      "url": "http://localhost:8080/health",
+      "lastProbedAt": "2026-04-11T12:27:14.970Z",
+      "status": "down"
+    },
+    "mongo": {
+      "url": "mongodb://127.0.0.1:27017",
+      "lastProbedAt": "2026-04-11T12:27:14.970Z",
+      "status": "down"
+    }
+  },
+  "build": {
+    "coreSystems": {
+      "ai": 40,
+      "blockchain": 10,
+      "wallet": 35,
+      "affiliate": 20,
+      "franchise": 15,
+      "jps": 30,
+      "verification": 25,
+      "dmo": 35
+    },
+    "phase1Industries": {
+      "ecommerce": 60,
+      "legal": 30,
+      "medical": 20,
+      "education": 15,
+      "jobs": 30,
+      "travel": 10
+    },
+    "phases": {
+      "phase0": 100,
+      "phase1": 75,
+      "phase2": 35,
+      "phase3": 10,
+      "phase4": 5,
+      "phase5": 0
+    }
+  },
+  "priorities": [
+    {
+      "n": 1,
+      "level": "high",
+      "title": "Finalize microservices architecture contracts",
+      "meta": "THIS WEEK"
+    },
+    {
+      "n": 2,
+      "level": "high",
+      "title": "Wire wallet escrow into all booking flows",
+      "meta": "THIS WEEK"
+    },
+    {
+      "n": 3,
+      "level": "high",
+      "title": "AI recommend → marketplace listings",
+      "meta": "THIS WEEK"
+    },
+    {
+      "n": 4,
+      "level": "med",
+      "title": "STL scoring rules per-industry calibration",
+      "meta": "NEXT"
+    },
+    {
+      "n": 5,
+      "level": "med",
+      "title": "Identity + verification service first pass",
+      "meta": "NEXT"
+    }
+  ],
+  "warnings": [
+    {
+      "level": "high",
+      "text": "AI recommend not yet wired to marketplace listings"
+    },
+    {
+      "level": "high",
+      "text": "Wallet escrow not fully linked to all booking flows"
+    },
+    {
+      "level": "med",
+      "text": "STL scoring rules pending final per-industry calibration"
+    },
+    {
+      "level": "med",
+      "text": "CRB blockchain hash storage pending Polkadot contract"
+    },
+    {
+      "level": "low",
+      "text": "Live industry stats — only 2/32 wired to real data"
+    }
+  ],
+  "urgentFixes": [
+    {
+      "id": "UF-001",
+      "level": "high",
+      "title": "Wallet escrow route not wired",
+      "where": "services/api/stl-replit/routes/bookingRoutes.js",
+      "impact": "Blocks ALL paid Phase-1 bookings (6 industries)",
+      "eta": "2 days",
+      "owner": "backend team"
+    },
+    {
+      "id": "UF-002",
+      "level": "high",
+      "title": "CRB → Polkadot hash storage missing",
+      "where": "services/api/stl-replit/services/crbService.js",
+      "impact": "Blocks STL L5+ trust level. No on-chain proof.",
+      "eta": "1 week",
+      "owner": "blockchain team"
+    },
+    {
+      "id": "UF-003",
+      "level": "high",
+      "title": "AI recommend → marketplace not connected",
+      "where": "apps/web/app/ai-marketplace/page.tsx",
+      "impact": "Users cannot discover services via AI. Core feature missing.",
+      "eta": "3 days",
+      "owner": "frontend + AI team"
+    },
+    {
+      "id": "UF-004",
+      "level": "med",
+      "title": "Franchise dashboard UI missing",
+      "where": "apps/web/app/franchise/",
+      "impact": "Country/Corporate franchises cannot operate the platform.",
+      "eta": "2 weeks",
+      "owner": "frontend team"
+    },
+    {
+      "id": "UF-005",
+      "level": "med",
+      "title": "PSS liveness detection is placeholder",
+      "where": "services/api/stl-replit/services/pssService.js",
+      "impact": "KYC can be spoofed by photos. Needs real anti-spoof.",
+      "eta": "1 week",
+      "owner": "AI team"
+    }
+  ],
+  "bugs": [
+    {
+      "id": "BUG-001",
+      "severity": "high",
+      "type": "Runtime",
+      "message": "MongoDB connection drops silently on long idle — no reconnect hooked",
+      "file": "services/api/stl-replit/config/db.js",
+      "line": 42,
+      "status": "open"
+    },
+    {
+      "id": "BUG-002",
+      "severity": "high",
+      "type": "Logic",
+      "message": "STL score not recalculated after CRB approval",
+      "file": "services/api/stl-replit/services/stlService.js",
+      "line": 178,
+      "status": "open"
+    },
+    {
+      "id": "BUG-003",
+      "severity": "med",
+      "type": "TS / Type",
+      "message": "Industry type map uses any[] — lost type safety",
+      "file": "apps/web/lib/industry/config.ts",
+      "line": 27,
+      "status": "open"
+    },
+    {
+      "id": "BUG-004",
+      "severity": "med",
+      "type": "UI",
+      "message": "Mobile nav drawer flickers on first render (hydration mismatch)",
+      "file": "apps/web/components/TopNavTabs.tsx",
+      "line": 18,
+      "status": "open"
+    },
+    {
+      "id": "BUG-005",
+      "severity": "low",
+      "type": "Perf",
+      "message": "home page re-renders industries grid 6x on mount",
+      "file": "apps/web/app/home/page.tsx",
+      "line": 412,
+      "status": "open"
+    }
+  ],
+  "duplicates": [
+    {
+      "what": "Two backend folders (backend/ + services/api/src/)",
+      "locations": [
+        "backup/consolidation-2026-04-11/ (archived)"
+      ],
+      "action": "RESOLVED — services/api/stl-replit/ is the single source of truth",
+      "status": "fixed"
+    },
+    {
+      "what": "Card component referenced as uppercase Card.tsx (16 files)",
+      "locations": [
+        "backup/casing-fix-2026-04-11/ (archived)"
+      ],
+      "action": "RESOLVED — all imports now use @/components/ui/card (lowercase)",
+      "status": "fixed"
+    },
+    {
+      "what": "Industry list hardcoded in 3 places",
+      "locations": [
+        "apps/web/lib/industry/config.ts",
+        "apps/web/app/home/page.tsx (INDUSTRY_CHIPS)",
+        "apps/web/app/development/page.tsx (DATA.industries)"
+      ],
+      "action": "Extract to packages/types/industries.ts — single source",
+      "status": "open"
+    },
+    {
+      "what": "STL level definitions duplicated",
+      "locations": [
+        "services/api/stl-replit/constants/stlLevels.js",
+        "apps/web/lib/stl/levels.ts"
+      ],
+      "action": "Share via packages/types/stl.ts",
+      "status": "open"
+    }
+  ],
+  "missingInfo": [
+    {
+      "field": "Polkadot contract address",
+      "needFrom": "Blockchain team",
+      "blocks": "CRB on-chain hash storage (blocks STL L5+)",
+      "priority": "high"
+    },
+    {
+      "field": "Production MongoDB URI",
+      "needFrom": "Ops / DevOps",
+      "blocks": "Staging + production deployment",
+      "priority": "high"
+    },
+    {
+      "field": "JWT_SECRET (production)",
+      "needFrom": "Security team",
+      "blocks": "Production auth — currently only local-dev secret exists",
+      "priority": "high"
+    },
+    {
+      "field": "OPENAI_API_KEY (production)",
+      "needFrom": "Finance / Ops",
+      "blocks": "AI Lawyer, Diagnosis, Tutor in production",
+      "priority": "high"
+    },
+    {
+      "field": "ANTHROPIC_API_KEY (production)",
+      "needFrom": "Finance / Ops",
+      "blocks": "Claude-based AI assistant in production",
+      "priority": "med"
+    },
+    {
+      "field": "Payment gateway credentials (Stripe / local)",
+      "needFrom": "Finance team",
+      "blocks": "Wallet top-up + escrow payouts",
+      "priority": "high"
+    },
+    {
+      "field": "SMTP server credentials",
+      "needFrom": "Ops",
+      "blocks": "User email notifications, receipts, password reset",
+      "priority": "med"
+    },
+    {
+      "field": "Company logo (high-res SVG)",
+      "needFrom": "Design team",
+      "blocks": "Final production branding across all pages",
+      "priority": "low"
+    },
+    {
+      "field": "Terms of Service + Privacy Policy text",
+      "needFrom": "Legal team",
+      "blocks": "Production launch (regulatory requirement)",
+      "priority": "high"
+    }
+  ],
+  "emptyFiles": [
+    {
+      "path": "services/ai/src/prompts/",
+      "kind": "folder",
+      "reason": "No seed prompts for AI Lawyer / Diagnosis / Tutor",
+      "level": "high"
+    },
+    {
+      "path": "apps/web/app/medical/",
+      "kind": "folder",
+      "reason": "Medical module pages not created yet",
+      "level": "high"
+    },
+    {
+      "path": "apps/web/app/onboarding/",
+      "kind": "folder",
+      "reason": "First-run onboarding tour pages missing",
+      "level": "med"
+    },
+    {
+      "path": "apps/web/app/gosellr/cart/checkout/",
+      "kind": "folder",
+      "reason": "Checkout flow not implemented",
+      "level": "high"
+    },
+    {
+      "path": "services/api/stl-replit/routes/walletRoutes.js",
+      "kind": "file",
+      "reason": "Wallet route file does not exist",
+      "level": "high"
+    },
+    {
+      "path": "services/api/stl-replit/routes/franchiseRoutes.js",
+      "kind": "file",
+      "reason": "Franchise route file does not exist",
+      "level": "med"
+    },
+    {
+      "path": "docs/API_REFERENCE.md",
+      "kind": "file",
+      "reason": "API reference documentation missing",
+      "level": "low"
+    },
+    {
+      "path": "packages/types/",
+      "kind": "folder",
+      "reason": "Shared types package is empty",
+      "level": "med"
+    }
+  ],
+  "missingFiles": [
+    {
+      "path": "apps/web/app/gosellr/cart/",
+      "level": "high"
+    },
+    {
+      "path": "apps/web/app/medical/",
+      "level": "high"
+    },
+    {
+      "path": "services/api/stl-replit/routes/walletRoutes.js",
+      "level": "high"
+    },
+    {
+      "path": "apps/web/app/onboarding/",
+      "level": "med"
+    },
+    {
+      "path": "services/ai/src/prompts/",
+      "level": "med"
+    }
+  ],
+  "recentChanges": [
+    {
+      "ts": "2026-04-11T12:27:14.926Z",
+      "msg": "feat(web): /development v5.0 Cinematic Hero + design-system §7.12 pattern",
+      "status": "live",
+      "by": "great-stoic-turing",
+      "cwd": "/sessions/great-stoic-turing/mnt/EHB DEVELOPMENT 2026"
+    },
+    {
+      "ts": "2026-04-11T12:12:45.067Z",
+      "msg": "refactor(naming): SQL->STL and EDR->CRB platform-wide rename + auto-correction rule in AGENTS.md §6.2 + ai-behavior.md §9.1 (32 files, 112 edits, 2 file renames)",
+      "status": "live",
+      "by": "great-stoic-turing",
+      "cwd": "/sessions/great-stoic-turing/mnt/EHB DEVELOPMENT 2026"
+    },
+    {
+      "ts": "2026-04-11T11:18:19.607Z",
+      "msg": "feat(development): v4.4 Bento polish pass — mobile collapse, stagger fade-up, critical pulse, Esc-key drawer, focus-visible, reduced-motion",
+      "status": "live",
+      "by": "great-stoic-turing",
+      "cwd": "/sessions/great-stoic-turing/mnt/EHB DEVELOPMENT 2026"
+    },
+    {
+      "ts": "2026-04-11T10:46:15.395Z",
+      "msg": "feat(development): v4.3 Bento Mission Control \\u2014 priority queue + HealthRing SVG + stats mini-grid in single bento grid; design-system \\u00a77.11 added",
+      "status": "live",
+      "by": "loving-wonderful-hamilton",
+      "cwd": "/sessions/loving-wonderful-hamilton/mnt/EHB DEVELOPMENT 2026"
+    },
+    {
+      "ts": "2026-04-11T10:18:26.335Z",
+      "msg": "feat(design): EHB-UIUX-SYSTEM.md + ai-behavior.md living design system; AGENTS.md §6.1 mandates read-first rule; synced to CLAUDE.md/.cursorrules/copilot",
+      "status": "live",
+      "by": "loving-wonderful-hamilton",
+      "cwd": "/sessions/loving-wonderful-hamilton/mnt/EHB DEVELOPMENT 2026"
+    },
+    {
+      "ts": "2026-04-11T09:57:37.514Z",
+      "msg": "feat(development): v4.2 — silver 3D bg + glassmorphism + icons + stats moved to bottom + responsive",
+      "status": "live",
+      "by": "loving-wonderful-hamilton",
+      "cwd": "/sessions/loving-wonderful-hamilton/mnt/EHB DEVELOPMENT 2026"
+    },
+    {
+      "ts": "2026-04-11T09:46:17.794Z",
+      "msg": "feat(development): v4.1 page — Quick Action banner + click-to-view DetailDrawer + red-critical theme",
+      "status": "live",
+      "by": "loving-wonderful-hamilton",
+      "cwd": "/sessions/loving-wonderful-hamilton/mnt/EHB DEVELOPMENT 2026"
+    },
+    {
+      "ts": "2026-04-11T09:27:52.398Z",
+      "msg": "feat(development): v4.0 page — 5 quality cards + /api/dev-status real-time fetch (Phase B)",
+      "status": "live",
+      "by": "loving-wonderful-hamilton",
+      "cwd": "/sessions/loving-wonderful-hamilton/mnt/EHB DEVELOPMENT 2026"
+    },
+    {
+      "ts": "2026-04-11T09:08:49.849Z",
+      "msg": "feat(development): add 5 quality cards (urgent, bugs, duplicates, missing, empty)",
+      "status": "live",
+      "by": "claude-agent"
+    },
+    {
+      "ts": "2026-04-11T00:00:00.000Z",
+      "msg": "docs(agents): add portable AGENTS.md + EHB_CONTEXT.md + ehb-status.json pipeline",
+      "status": "live",
+      "by": "claude-agent"
+    },
+    {
+      "ts": "2026-04-11T00:00:00.000Z",
+      "msg": "feat(development): rebuild /development page with 11-tab real control panel",
+      "status": "live",
+      "by": "claude-agent"
+    }
+  ],
+  "notes": "This file is machine-written by scripts/ehb-status-update.mjs. To log a change, run: node scripts/ehb-log-change.mjs \"<message>\" \"<live|partial|pending>\""
+}

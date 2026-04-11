@@ -24,7 +24,7 @@ Order of sections **top to bottom**:
 1. Top Navbar (glass, search, wallet, profile)
 2. Hero AI Banner (full-width, rotating / slider)
 3. Trending Services
-4. Departments (PSS, EDR, EMO, JPS, WMS, EHB Aid…)
+4. Departments (PSS, CRB, EMO, JPS, WMS, EHB Aid…)
 5. AI Marketplace
 6. GoSellr Marketplace
 7. JPS Profiles
@@ -61,7 +61,7 @@ Order of sections **top to bottom**:
 EHB departments as **cards** (icon + description + “Open dashboard”):
 
 - **PSS** – Proof & Security System  
-- **EDR** – (define in product)  
+- **CRB** – (define in product)  
 - **EMO** – (define in product)  
 - **JPS** – Jobs & Profile System  
 - **WMS** – (e.g. Medical/Health)  
@@ -91,7 +91,7 @@ Each card: icon, one-line description, button → department dashboard.
 ### 2.6 JPS Profiles Section
 
 - **Top freelancers** | **Nearby service providers** | **Verified experts**.
-- **Profile card:** Photo, SQL level, skills, rating, verification badge (e.g. PSS).
+- **Profile card:** Photo, STL level, skills, rating, verification badge (e.g. PSS).
 - Same glass + hover system.
 
 ---
@@ -188,7 +188,7 @@ Module
 | 25 | `/admin` | Super Admin (existing) |
 | 26 | `/development` | Development map (existing) |
 
-*(Add more as needed: EDR, EMO, EHB Aid dashboards, etc.)*
+*(Add more as needed: CRB, EMO, EHB Aid dashboards, etc.)*
 
 ---
 

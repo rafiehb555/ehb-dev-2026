@@ -10,7 +10,7 @@ export function decideDepartmentFromText(message = "") {
   }
 
   if (containsAny(text, ["exam", "test", "retry", "assessment", "failed"])) {
-    return "EDR";
+    return "CRB";
   }
 
   if (containsAny(text, ["job", "office", "task", "operation", "work"])) {
@@ -24,7 +24,7 @@ export function actionFromDepartment(department) {
   switch (department) {
     case "PSS":
       return "Create verification task and guide KYC completion.";
-    case "EDR":
+    case "CRB":
       return "Create exam retry task and prepare exam support.";
     default:
       return "Create operational follow-up task for user activity.";

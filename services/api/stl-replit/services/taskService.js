@@ -29,7 +29,7 @@ export async function createTaskFromDepartment(userId, department) {
       type: "KYC",
       reward: 10,
     },
-    EDR: {
+    CRB: {
       title: "Retake Failed Exam",
       description: "Voice/AI detected exam retry intent.",
       type: "EXAM",

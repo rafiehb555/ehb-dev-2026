@@ -1,5 +1,5 @@
 import { BadgeDollarSign, BriefcaseBusiness, Network, WalletCards } from "lucide-react";
-import Card from "@/components/ui/Card";
+import Card from "@/components/ui/card";
 
 const sources = [
   { title: "STL Income", value: "Daily: $5", icon: BadgeDollarSign, tone: "text-emerald-300" },

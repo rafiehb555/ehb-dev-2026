@@ -148,7 +148,7 @@ export default function AIMarketplacePage({
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   Live AI Products
                 </span>
-                <span className="text-ehb-textMuted">EHB SQL & STL Engine</span>
+                <span className="text-ehb-textMuted">EHB STL & STL Engine</span>
               </div>
               <div className="relative h-40 md:h-44 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900/40 to-slate-800 border border-white/10 flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(34,211,238,0.25),transparent_55%),radial-gradient(circle_at_85%_100%,rgba(139,92,246,0.28),transparent_60%)] opacity-80" />
@@ -160,7 +160,7 @@ export default function AIMarketplacePage({
                     QuantumForge Laptop
                   </div>
                   <p className="text-[11px] text-ehb-textBody">
-                    Optimized for AI terminals, EHB SQL, and STL dashboards.
+                    Optimized for AI terminals, EHB STL, and STL dashboards.
                   </p>
                 </div>
               </div>
@@ -347,7 +347,7 @@ export default function AIMarketplacePage({
               </p>
               <h2 className="text-lg md:text-xl font-semibold text-white">Top Trusted Free Tools</h2>
               <p className="text-[12px] text-ehb-textMuted">
-                Launch‑ready AI utilities that plug directly into EHB Home, SQL verification and STL flows.
+                Launch‑ready AI utilities that plug directly into EHB Home, STL verification and STL flows.
               </p>
             </div>
             <Link

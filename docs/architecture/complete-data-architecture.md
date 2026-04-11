@@ -209,7 +209,7 @@ EHB requires **multi-layer data architecture** for:
 - Columnar storage
 - Fast aggregations
 - Petabyte scale
-- SQL interface
+- STL interface
 
 ---
 

@@ -1,5 +1,5 @@
 import { Trophy } from "lucide-react";
-import Card from "@/components/ui/Card";
+import Card from "@/components/ui/card";
 
 const leaders = [
   { name: "Ali", invites: 120 },

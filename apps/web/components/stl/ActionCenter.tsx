@@ -1,6 +1,6 @@
 import { Zap } from "lucide-react";
 import Button from "@/components/ui/Button";
-import Card from "@/components/ui/Card";
+import Card from "@/components/ui/card";
 
 export default function ActionCenter() {
   return (

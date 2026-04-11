@@ -14,7 +14,7 @@ interface LawyerMetrics {
   name: string;
   image?: string;
   specialization: string;
-  sqlLevel: string;
+  stlLevel: string;
   city: string;
   performanceScore: number;
   caseSuccessRate: number;
@@ -43,7 +43,7 @@ const MOCK_LAWYERS: LawyerMetrics[] = [
     id: '1',
     name: 'Adv. Ahmed Khan',
     specialization: 'Family Law',
-    sqlLevel: 'SQL-5',
+    stlLevel: 'STL-5',
     city: 'Karachi',
     performanceScore: 94,
     caseSuccessRate: 87,
@@ -62,7 +62,7 @@ const MOCK_LAWYERS: LawyerMetrics[] = [
     id: '2',
     name: 'Adv. Sarah Malik',
     specialization: 'Property Law',
-    sqlLevel: 'SQL-4',
+    stlLevel: 'STL-4',
     city: 'Lahore',
     performanceScore: 91,
     caseSuccessRate: 82,
@@ -81,7 +81,7 @@ const MOCK_LAWYERS: LawyerMetrics[] = [
     id: '3',
     name: 'Adv. Imran Ali',
     specialization: 'Criminal Law',
-    sqlLevel: 'SQL-5',
+    stlLevel: 'STL-5',
     city: 'Islamabad',
     performanceScore: 88,
     caseSuccessRate: 79,
@@ -100,7 +100,7 @@ const MOCK_LAWYERS: LawyerMetrics[] = [
     id: '4',
     name: 'Adv. Fatima Hassan',
     specialization: 'Business Law',
-    sqlLevel: 'SQL-3',
+    stlLevel: 'STL-3',
     city: 'Multan',
     performanceScore: 82,
     caseSuccessRate: 75,
@@ -119,7 +119,7 @@ const MOCK_LAWYERS: LawyerMetrics[] = [
     id: '5',
     name: 'Adv. Zainab Shah',
     specialization: 'Immigration',
-    sqlLevel: 'SQL-4',
+    stlLevel: 'STL-4',
     city: 'Rawalpindi',
     performanceScore: 85,
     caseSuccessRate: 80,
@@ -400,7 +400,7 @@ export default function LawyerPerformance({ language = 'en' }: LawyerPerformance
                   <div className="flex items-center gap-2">
                     <h4 className="text-white font-bold truncate">{lawyer.name}</h4>
                     <span className="text-xs bg-brand-primary/30 text-brand-primary px-2 py-0.5 rounded">
-                      {lawyer.sqlLevel}
+                      {lawyer.stlLevel}
                     </span>
                     {getTrendIcon(lawyer.trend)}
                     {lawyer.weeklyChange !== 0 && (

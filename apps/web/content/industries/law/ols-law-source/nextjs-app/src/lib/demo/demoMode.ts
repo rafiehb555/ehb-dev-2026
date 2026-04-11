@@ -283,7 +283,7 @@ export const PRESENTATION_HELPERS = {
     ],
     lawyerDashboard: [
       "Complete practice management for lawyers",
-      "SQL verification ensures quality",
+      "STL verification ensures quality",
       "Revenue tracking and analytics",
     ],
     payments: [

@@ -1,7 +1,7 @@
 "use client";
 
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
-import Card from "@/components/ui/Card";
+import Card from "@/components/ui/card";
 
 const points = [
   { day: "Mon", earnings: 12 },
