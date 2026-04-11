@@ -22,6 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 logs/
+infrastructure/logs/*.log
 _git-push.log
 _git-push-run.log
 
@@ -34,6 +35,10 @@ Thumbs.db
 
 # Local bulk / installers (too large for GitHub; keep outside git)
 ehb data/
+data/ehb-data/
+
+# Backup folder (pre-restructure snapshot — keep locally, not in git)
+backup/
 
 # TypeScript
 *.tsbuildinfo

@@ -1,19 +1,19 @@
-# CI for the Next.js app in `EHB landing-2026/`
-name: EHB Landing CI
+# CI for the Next.js app in `apps/web/` (formerly `EHB landing-2026/`)
+name: EHB Web CI
 
 on:
   push:
     paths:
-      - "EHB landing-2026/**"
+      - "apps/web/**"
       - ".github/workflows/ehb-landing-ci.yml"
   pull_request:
     paths:
-      - "EHB landing-2026/**"
+      - "apps/web/**"
       - ".github/workflows/ehb-landing-ci.yml"
 
 defaults:
   run:
-    working-directory: "EHB landing-2026"
+    working-directory: "apps/web"
 
 jobs:
   check:
@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-          cache-dependency-path: "EHB landing-2026/package-lock.json"
+          cache-dependency-path: "apps/web/package-lock.json"
 
       - name: Install
         run: npm ci
