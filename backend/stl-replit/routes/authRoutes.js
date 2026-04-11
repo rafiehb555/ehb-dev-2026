@@ -9,7 +9,7 @@ const signupSchema = z.object({
   userId: z.string().min(3),
   email: z.string().email(),
   password: z.string().min(6),
-  role: z.enum(["user", "seller", "franchise", "admin"]).optional(),
+  role: z.enum(["user", "seller", "franchise", "service_provider", "admin_viewer", "admin_moderator", "admin", "super_admin"]).optional(),
   type: z.string().optional(),
   source: z.string().optional(),
 });

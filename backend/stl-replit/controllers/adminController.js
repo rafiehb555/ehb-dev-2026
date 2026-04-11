@@ -1,8 +1,16 @@
 import Log from "../models/Log.js";
 import Franchise from "../models/Franchise.js";
 import User from "../models/User.js";
-import { logEvent } from "../services/logService.js";
-import { recalculateUserStl } from "../services/stlService.js";
+import {
+  approveAdminActionRequest,
+  createAdminActionRequest,
+  getAdminActionTimeline,
+  getAdminSecurityStats,
+  getPendingAdminActions,
+  rejectAdminActionRequest,
+  rollbackAdminActionRequest,
+} from "../services/adminActionService.js";
+import { getClientIp } from "../middleware/adminSecurity.js";
 
 export const getAdminDashboard = async (_req, res) => {
   try {
@@ -63,51 +71,151 @@ export const getAdminUsers = async (req, res) => {
 export const adminUpdateStl = async (req, res) => {
   try {
     const { userId, pssScore, crbScore, dmoScore, lockAmount, reason = "admin_manual_adjustment" } = req.body || {};
-    const user = await User.findOne({ userId });
-    if (!user) return res.status(404).json({ msg: "User not found" });
-
-    if (typeof pssScore === "number") user.pssScore = pssScore;
-    if (typeof crbScore === "number") user.crbScore = crbScore;
-    if (typeof dmoScore === "number") user.dmoScore = dmoScore;
-    if (typeof lockAmount === "number") user.lockAmount = lockAmount;
-
-    const before = { stlScore: user.stlScore, stlLevel: user.stlLevel };
-    const stl = await recalculateUserStl(user, { reason: "admin_manual_update" });
-    await user.save();
-
-    await logEvent({
-      userId,
-      event: "ADMIN_STL_UPDATED",
-      entity: "admin",
-      meta: { admin: req.auth?.userId, before, after: { stlScore: stl.stlScore, stlLevel: stl.stlLevel }, reason },
+    const request = await createAdminActionRequest({
+      actionType: "STL_UPDATE",
+      targetUserId: userId,
+      payload: { pssScore, crbScore, dmoScore, lockAmount },
+      reason,
+      requestedBy: req.auth?.userId,
+      requestIp: getClientIp(req),
+      userAgent: req.headers["user-agent"],
     });
-
-    return res.json({ message: "STL updated by admin", userId, stl, before });
+    return res.status(202).json({
+      message: "STL update request created, pending second admin approval",
+      requestId: request._id,
+      status: request.status,
+    });
   } catch (error) {
-    return res.status(500).json({ msg: "Admin STL update error", error: error.message });
+    return res.status(400).json({ msg: "Admin STL update request error", error: error.message });
   }
 };
 
 export const adminFreezeUser = async (req, res) => {
   try {
     const { userId, freeze = true, reason = "admin_action" } = req.body || {};
-    const user = await User.findOne({ userId });
-    if (!user) return res.status(404).json({ msg: "User not found" });
-
-    user.wallet = user.wallet || { mainBalance: 0, earningBalance: 0, lockWallet: 0, frozen: false };
-    user.wallet.frozen = Boolean(freeze);
-    await user.save();
-
-    await logEvent({
-      userId,
-      event: freeze ? "ADMIN_USER_FROZEN" : "ADMIN_USER_UNFROZEN",
-      entity: "admin",
-      meta: { admin: req.auth?.userId, reason },
+    const request = await createAdminActionRequest({
+      actionType: "FREEZE_USER",
+      targetUserId: userId,
+      payload: { freeze },
+      reason,
+      requestedBy: req.auth?.userId,
+      requestIp: getClientIp(req),
+      userAgent: req.headers["user-agent"],
     });
-
-    return res.json({ message: freeze ? "User frozen" : "User unfrozen", userId, frozen: user.wallet.frozen });
+    return res.status(202).json({
+      message: "Freeze action request created, pending second admin approval",
+      requestId: request._id,
+      status: request.status,
+    });
   } catch (error) {
-    return res.status(500).json({ msg: "Admin freeze error", error: error.message });
+    return res.status(400).json({ msg: "Admin freeze request error", error: error.message });
+  }
+};
+
+export const createWalletAdjustmentRequest = async (req, res) => {
+  try {
+    const { userId, amount, reason = "wallet_adjustment" } = req.body || {};
+    const request = await createAdminActionRequest({
+      actionType: "WALLET_ADJUST",
+      targetUserId: userId,
+      payload: { amount },
+      reason,
+      requestedBy: req.auth?.userId,
+      requestIp: getClientIp(req),
+      userAgent: req.headers["user-agent"],
+    });
+    return res.status(202).json({
+      message: "Wallet adjustment request created, pending second admin approval",
+      requestId: request._id,
+      status: request.status,
+    });
+  } catch (error) {
+    return res.status(400).json({ msg: "Wallet adjustment request error", error: error.message });
+  }
+};
+
+export const approveAdminAction = async (req, res) => {
+  try {
+    const { requestId } = req.body || {};
+    const { requestDoc, beforeSnapshot, afterSnapshot } = await approveAdminActionRequest({
+      requestId,
+      approverId: req.auth?.userId,
+      approvalIp: getClientIp(req),
+    });
+    return res.json({
+      message: "Admin action approved and executed",
+      requestId: requestDoc._id,
+      actionType: requestDoc.actionType,
+      beforeSnapshot,
+      afterSnapshot,
+    });
+  } catch (error) {
+    return res.status(400).json({ msg: "Admin action approval failed", error: error.message });
+  }
+};
+
+export const rejectAdminAction = async (req, res) => {
+  try {
+    const { requestId, reason } = req.body || {};
+    const request = await rejectAdminActionRequest({
+      requestId,
+      rejectorId: req.auth?.userId,
+      rejectReason: reason,
+    });
+    return res.json({
+      message: "Admin action rejected",
+      requestId: request._id,
+      status: request.status,
+    });
+  } catch (error) {
+    return res.status(400).json({ msg: "Admin action rejection failed", error: error.message });
+  }
+};
+
+export const rollbackAdminAction = async (req, res) => {
+  try {
+    const { requestId, reason } = req.body || {};
+    const request = await rollbackAdminActionRequest({
+      requestId,
+      rollbackBy: req.auth?.userId,
+      reason,
+    });
+    return res.json({
+      message: "Admin action rolled back",
+      requestId: request._id,
+      status: request.status,
+    });
+  } catch (error) {
+    return res.status(400).json({ msg: "Admin action rollback failed", error: error.message });
+  }
+};
+
+export const getPendingAdminActionQueue = async (_req, res) => {
+  try {
+    const items = await getPendingAdminActions();
+    return res.json({ items });
+  } catch (error) {
+    return res.status(500).json({ msg: "Pending admin actions error", error: error.message });
+  }
+};
+
+export const getAdminActionHistory = async (req, res) => {
+  try {
+    const page = Math.max(1, Number(req.query.page || 1));
+    const limit = Math.min(100, Math.max(1, Number(req.query.limit || 20)));
+    const data = await getAdminActionTimeline({ page, limit });
+    return res.json(data);
+  } catch (error) {
+    return res.status(500).json({ msg: "Admin action history error", error: error.message });
+  }
+};
+
+export const getAdminSecurityOverview = async (_req, res) => {
+  try {
+    const stats = await getAdminSecurityStats();
+    return res.json(stats);
+  } catch (error) {
+    return res.status(500).json({ msg: "Admin security overview error", error: error.message });
   }
 };
 
