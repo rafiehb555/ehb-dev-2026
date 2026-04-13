@@ -12,7 +12,7 @@ export function StlVerificationStepper({ steps = [] }: Props) {
     return (
       <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur-md sm:p-4">
         <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-300/90">Ongoing verification</p>
-        <p className="mt-1 text-xs text-ehb-textBody">Waiting for live verification data...</p>
+        <p className="mt-1 text-xs text-white/70">Waiting for live verification data...</p>
       </section>
     );
   }
@@ -22,7 +22,7 @@ export function StlVerificationStepper({ steps = [] }: Props) {
       aria-label="Verification pipeline"
     >
       <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-300/90">Ongoing verification</p>
-      <p className="mt-1 text-xs text-ehb-textBody">Horizontal stepper — same structure as franchise & DMO approval UIs.</p>
+      <p className="mt-1 text-xs text-white/70">Horizontal stepper — same structure as franchise & DMO approval UIs.</p>
       <ol className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
         {steps.map((step, i) => (
           <li key={step.id} className="min-w-0">
@@ -37,14 +37,14 @@ export function StlVerificationStepper({ steps = [] }: Props) {
                     <Circle className="h-4 w-4 fill-current" aria-hidden />
                   </span>
                 ) : (
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-ehb-textMuted">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/50">
                     <span className="text-[11px] font-mono">{i + 1}</span>
                   </span>
                 )}
                 <div className="min-w-0">
                   <p className="text-[11px] font-semibold text-white">{step.title}</p>
                   {step.detail ? (
-                    <p className="mt-0.5 text-[11px] text-ehb-textMuted leading-snug">{step.detail}</p>
+                    <p className="mt-0.5 text-[11px] text-white/50 leading-snug">{step.detail}</p>
                   ) : null}
                 </div>
               </div>

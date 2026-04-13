@@ -10,7 +10,7 @@ import {
 function statusLabel(s: PendingWorkPhase["status"]) {
   if (s === "ui_ready") return { text: "UI ready", className: "border-emerald-400/40 bg-emerald-500/15 text-emerald-100" };
   if (s === "ui_partial") return { text: "UI in progress", className: "border-amber-400/40 bg-amber-500/15 text-amber-100" };
-  return { text: "Planned", className: "border-white/20 bg-white/5 text-ehb-textMuted" };
+  return { text: "Planned", className: "border-white/20 bg-white/5 text-white/50" };
 }
 
 type Props = {
@@ -29,18 +29,18 @@ export function PendingWorkRoadmap({ compact = false }: Props) {
             <div>
               <p className="text-[11px] uppercase tracking-[0.22em] text-violet-200">Phase 11–30 · Pending work</p>
               <h2 className="mt-1 text-xl md:text-2xl font-semibold text-white">Growth plan — UI coverage</h2>
-              <p className="mt-2 max-w-2xl text-sm text-ehb-textBody">
+              <p className="mt-2 max-w-2xl text-sm text-white/70">
                 Four tracks mirror the roadmap: fraud & risk, AI recommendations, GoSellr + DMO, and the unified queue.
                 Screens are wired for operators; APIs marked in checklists may still use demo data.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
               <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center min-w-[120px]">
-                <div className="text-[11px] text-ehb-textMuted">Avg UI</div>
+                <div className="text-[11px] text-white/50">Avg UI</div>
                 <div className="text-2xl font-bold text-white">{stats.uiAveragePercent}%</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center min-w-[120px]">
-                <div className="text-[11px] text-ehb-textMuted">Checklist (UI done)</div>
+                <div className="text-[11px] text-white/50">Checklist (UI done)</div>
                 <div className="text-2xl font-bold text-cyan-200">
                   {stats.checklistUiDone}/{stats.checklistTotal}
                 </div>
@@ -56,7 +56,7 @@ export function PendingWorkRoadmap({ compact = false }: Props) {
             </Link>
             <Link
               href="/dmo/queue"
-              className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-ehb-textBody hover:bg-white/10"
+              className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white/70 hover:bg-white/10"
             >
               Unified queue
             </Link>
@@ -76,7 +76,7 @@ export function PendingWorkRoadmap({ compact = false }: Props) {
                 <div>
                   <p className="text-[11px] font-medium uppercase tracking-wider text-cyan-300/90">{phase.rangeLabel}</p>
                   <h3 className="mt-1 text-lg font-semibold text-white">{phase.title}</h3>
-                  <p className="mt-1 text-sm text-ehb-textBody">{phase.summary}</p>
+                  <p className="mt-1 text-sm text-white/70">{phase.summary}</p>
                 </div>
                 <span className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-semibold ${st.className}`}>
                   {st.text}
@@ -84,7 +84,7 @@ export function PendingWorkRoadmap({ compact = false }: Props) {
               </div>
 
               <div className="mt-3">
-                <div className="mb-1 flex items-center justify-between text-[11px] text-ehb-textMuted">
+                <div className="mb-1 flex items-center justify-between text-[11px] text-white/50">
                   <span>UI polish & screens</span>
                   <span className="text-cyan-200">{phase.uiPercent}%</span>
                 </div>
@@ -97,7 +97,7 @@ export function PendingWorkRoadmap({ compact = false }: Props) {
               </div>
 
               <div className="mt-4 space-y-2">
-                <p className="text-[11px] uppercase tracking-wider text-ehb-textMuted">Primary routes</p>
+                <p className="text-[11px] uppercase tracking-wider text-white/50">Primary routes</p>
                 <ul className="space-y-2">
                   {phase.routes.map((r) => (
                     <li key={r.href + r.label}>
@@ -106,7 +106,7 @@ export function PendingWorkRoadmap({ compact = false }: Props) {
                         className="group flex flex-col rounded-xl border border-white/10 bg-[#0B0F14]/80 px-3 py-2 transition-colors hover:border-cyan-400/30 hover:bg-white/5"
                       >
                         <span className="text-sm font-medium text-white group-hover:text-cyan-100">{r.label}</span>
-                        <span className="text-[11px] text-ehb-textMuted">{r.note}</span>
+                        <span className="text-[11px] text-white/50">{r.note}</span>
                       </Link>
                     </li>
                   ))}
@@ -115,12 +115,12 @@ export function PendingWorkRoadmap({ compact = false }: Props) {
 
               {!compact ? (
                 <div className="mt-4 border-t border-white/10 pt-3">
-                  <p className="text-[11px] uppercase tracking-wider text-ehb-textMuted">Checklist</p>
+                  <p className="text-[11px] uppercase tracking-wider text-white/50">Checklist</p>
                   <ul className="mt-2 space-y-1.5">
                     {phase.checklist.map((c) => (
-                      <li key={c.label} className="flex items-start gap-2 text-xs text-ehb-textBody">
+                      <li key={c.label} className="flex items-start gap-2 text-xs text-white/70">
                         <span className={c.uiDone ? "text-emerald-400" : "text-white/35"} aria-hidden>
-                          {c.uiDone ? "✓" : "○"}
+                          {c.uiDone ? <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l5 5L20 7" /></svg> : <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="8" /></svg>}
                         </span>
                         <span>
                           {c.label}

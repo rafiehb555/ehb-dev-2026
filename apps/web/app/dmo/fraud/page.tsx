@@ -1,298 +1,258 @@
 "use client";
 
+/**
+ * DMO — AI Fraud Detection Queue
+ *   - VerificationUI primitives only (no emojis, no local styles)
+ *   - In-file demo data (prototype only, no fetch)
+ */
+
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
+import { useMemo, useState } from "react";
+import {
+  VerificationStatCard,
+  VerificationRowGrid,
+  VerificationDrawer,
+  VerificationChip,
+  SectionHeader,
+  FilterChipRow,
+  SeverityMeter,
+  type RowColumn,
+  type VerificationTone,
+} from "@/components/dmo/verification/VerificationUI";
 
-type RiskTier = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+type RiskTier = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
 
-interface FraudEntry {
-  entityId:   string;
+type FraudSignal = { type: string; weight: number; count: number };
+
+type FraudEntry = {
+  id: string;
+  entityId: string;
   entityType: string;
-  score:      number;
-  tier:       RiskTier;
-  autoBlock:  boolean;
-  signals:    { type: string; weight: number; count: number }[];
-}
-
-interface FraudAnalytics {
-  unresolvedCount: number;
-  falsePositiveCount: number;
-  penaltiesIssued: number;
-  signalsPerDay: { day: string; count: number }[];
-  riskDistribution: Record<RiskTier, number>;
-  topFlagged: { entityId: string; entityType: string; count: number }[];
-}
-
-const TIER_STYLES: Record<RiskTier, { badge: string; row: string; icon: string }> = {
-  CRITICAL: { badge: "bg-red-600/20 text-red-300 border-red-500/40",    row: "border-red-500/30 bg-red-950/10",    icon: "🚨" },
-  HIGH:     { badge: "bg-orange-600/20 text-orange-300 border-orange-500/40", row: "border-orange-500/30 bg-orange-950/10", icon: "⚠️" },
-  MEDIUM:   { badge: "bg-yellow-600/20 text-yellow-300 border-yellow-500/40", row: "border-yellow-500/30 bg-yellow-950/10", icon: "🔔" },
-  LOW:      { badge: "bg-green-600/20 text-green-300 border-green-500/40",    row: "border-green-500/30 bg-green-950/10",   icon: "✅" },
+  score: number;
+  tier: RiskTier;
+  autoBlock: boolean;
+  signals: FraudSignal[];
 };
 
 const SIGNAL_LABELS: Record<string, string> = {
-  FAILED_VERIFICATION:  "Failed Verification",
-  RAPID_SUBMISSION:     "Rapid Submission",
-  LOCATION_MISMATCH:    "Location Mismatch",
-  INCOMPLETE_PROFILE:   "Incomplete Profile",
-  LOW_CRB_BADGE:        "Low CRB Badge",
-  MULTIPLE_ACCOUNTS:    "Multiple Accounts",
-  SUSPICIOUS_ACTIVITY:  "Suspicious Activity",
-  FAKE_REVIEW:          "Fake Review",
-  COMPLAINT_RECEIVED:   "Complaint Received",
+  FAILED_VERIFICATION: "Failed Verification",
+  RAPID_SUBMISSION: "Rapid Submission",
+  LOCATION_MISMATCH: "Location Mismatch",
+  INCOMPLETE_PROFILE: "Incomplete Profile",
+  LOW_CRB_BADGE: "Low CRB Badge",
+  MULTIPLE_ACCOUNTS: "Multiple Accounts",
+  SUSPICIOUS_ACTIVITY: "Suspicious Activity",
+  FAKE_REVIEW: "Fake Review",
+  COMPLAINT_RECEIVED: "Complaint Received",
 };
 
+const DEMO: FraudEntry[] = [
+  { id: "FQ-001", entityId: "app-goselr-pk-01", entityType: "APPLICATION", score: 92, tier: "CRITICAL", autoBlock: true, signals: [{ type: "FAKE_REVIEW", weight: 15, count: 3 }, { type: "SUSPICIOUS_ACTIVITY", weight: 20, count: 2 }, { type: "LOCATION_MISMATCH", weight: 7, count: 1 }] },
+  { id: "FQ-002", entityId: "ord-wms-isb-44", entityType: "ORDER", score: 78, tier: "HIGH", autoBlock: false, signals: [{ type: "RAPID_SUBMISSION", weight: 12, count: 4 }, { type: "INCOMPLETE_PROFILE", weight: 8, count: 2 }] },
+  { id: "FQ-003", entityId: "app-ols-lhr-09", entityType: "APPLICATION", score: 55, tier: "MEDIUM", autoBlock: false, signals: [{ type: "FAILED_VERIFICATION", weight: 10, count: 2 }, { type: "LOW_CRB_BADGE", weight: 5, count: 3 }] },
+  { id: "FQ-004", entityId: "usr-hps-khi-17", entityType: "USER", score: 88, tier: "CRITICAL", autoBlock: true, signals: [{ type: "MULTIPLE_ACCOUNTS", weight: 25, count: 1 }, { type: "FAKE_REVIEW", weight: 15, count: 2 }, { type: "COMPLAINT_RECEIVED", weight: 8, count: 3 }] },
+  { id: "FQ-005", entityId: "ord-agts-mul-22", entityType: "ORDER", score: 42, tier: "MEDIUM", autoBlock: false, signals: [{ type: "LOCATION_MISMATCH", weight: 7, count: 3 }, { type: "RAPID_SUBMISSION", weight: 12, count: 1 }] },
+  { id: "FQ-006", entityId: "app-jps-01", entityType: "APPLICATION", score: 23, tier: "LOW", autoBlock: false, signals: [{ type: "INCOMPLETE_PROFILE", weight: 8, count: 2 }] },
+];
+
+const TIER_TONE: Record<RiskTier, VerificationTone> = {
+  CRITICAL: "red",
+  HIGH: "amber",
+  MEDIUM: "purple",
+  LOW: "green",
+};
+
+function InfoCell({ label, value, mono }: { label: string; value: React.ReactNode; mono?: boolean }) {
+  return (
+    <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
+      <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">{label}</p>
+      <p className={`mt-1 text-sm text-white/90 ${mono ? "font-mono" : ""}`}>{value}</p>
+    </div>
+  );
+}
+
 export default function DmoFraudPage() {
-  const [queue, setQueue]         = useState<FraudEntry[]>([]);
-  const [loading, setLoading]     = useState(true);
-  const [filterTier, setFilter]   = useState<RiskTier | "ALL">("ALL");
-  const [expanded, setExpanded]   = useState<string | null>(null);
-  const [resolving, setResolving] = useState<string | null>(null);
-  const [blocking, setBlocking]   = useState<string | null>(null);
-  const [stats, setStats]         = useState({ critical: 0, high: 0, medium: 0, low: 0 });
-  const [analytics, setAnalytics] = useState<FraudAnalytics | null>(null);
+  const [rows] = useState<FraudEntry[]>(DEMO);
+  const [tierFilter, setTierFilter] = useState<"ALL" | RiskTier>("ALL");
+  const [active, setActive] = useState<FraudEntry | null>(null);
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      const [queueRes, analyticsRes] = await Promise.all([
-        fetch("/api/fraud/queue?limit=100"),
-        fetch("/api/fraud/analytics"),
-      ]);
-      const [queueJson, analyticsJson] = await Promise.all([queueRes.json(), analyticsRes.json()]);
-      if (queueJson.success) {
-        const items: FraudEntry[] = queueJson.data.queue;
-        setQueue(items);
-        setStats({
-          critical: items.filter((i) => i.tier === "CRITICAL").length,
-          high:     items.filter((i) => i.tier === "HIGH").length,
-          medium:   items.filter((i) => i.tier === "MEDIUM").length,
-          low:      items.filter((i) => i.tier === "LOW").length,
-        });
-      }
-      if (analyticsJson.success) setAnalytics(analyticsJson.data);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const stats = useMemo(() => ({
+    critical: rows.filter((e) => e.tier === "CRITICAL").length,
+    high: rows.filter((e) => e.tier === "HIGH").length,
+    medium: rows.filter((e) => e.tier === "MEDIUM").length,
+    low: rows.filter((e) => e.tier === "LOW").length,
+  }), [rows]);
 
-  useEffect(() => { load(); }, [load]);
+  const visible = tierFilter === "ALL" ? rows : rows.filter((e) => e.tier === tierFilter);
 
-  async function handleResolve(entityId: string) {
-    setResolving(entityId);
-    await fetch("/api/fraud/resolve", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ entityId }),
-    });
-    await load();
-    setResolving(null);
-  }
-
-  async function handleBlock(entry: FraudEntry) {
-    setBlocking(entry.entityId);
-    await fetch("/api/fraud/block", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        entityId: entry.entityId,
-        entityType: entry.entityType,
-        reason: `Blocked from DMO fraud queue at ${entry.score}/100`,
-      }),
-    });
-    await load();
-    setBlocking(null);
-  }
-
-  function getProfileHref(entry: FraudEntry) {
-    if (entry.entityType === "APPLICATION") return `/dmo/applications?search=${entry.entityId}`;
-    if (entry.entityType === "ORDER") return "/orders";
-    return "/dmo/queue";
-  }
-
-  const filtered = filterTier === "ALL" ? queue : queue.filter((e) => e.tier === filterTier);
+  const columns: RowColumn<FraudEntry>[] = [
+    {
+      key: "entity",
+      header: "Entity",
+      width: "minmax(0,2fr)",
+      render: (r) => (
+        <div className="min-w-0">
+          <div className="font-mono text-[10px] text-white/45">{r.entityId}</div>
+          <div className="text-sm font-semibold text-white">{r.entityType}</div>
+          <div className="text-[10px] text-white/50">{r.signals.length} signal(s){r.autoBlock ? " · Auto-blocked" : ""}</div>
+        </div>
+      ),
+    },
+    {
+      key: "tier",
+      header: "Tier",
+      width: "minmax(0,0.8fr)",
+      render: (r) => <VerificationChip tone={TIER_TONE[r.tier]}>{r.tier}</VerificationChip>,
+    },
+    {
+      key: "score",
+      header: "Score",
+      width: "minmax(0,0.8fr)",
+      align: "right",
+      render: (r) => (
+        <div className="flex items-center justify-end gap-2">
+          <div className="h-1.5 w-14 overflow-hidden rounded-full bg-white/[0.08]">
+            <div className="h-full rounded-full" style={{ width: `${r.score}%`, background: r.tier === "CRITICAL" ? "#F05858" : r.tier === "HIGH" ? "#F0A030" : r.tier === "MEDIUM" ? "#A098F8" : "#38C878" }} />
+          </div>
+          <span className="font-mono text-sm text-white/80">{r.score}</span>
+        </div>
+      ),
+    },
+    {
+      key: "block",
+      header: "Block",
+      width: "minmax(0,0.6fr)",
+      align: "right",
+      render: (r) => r.autoBlock
+        ? <VerificationChip tone="red" size="xs">BLOCKED</VerificationChip>
+        : <span className="text-[10px] text-white/35">—</span>,
+    },
+  ];
 
   return (
-    <main className="min-h-screen bg-[#05050f] text-white p-6">
-      {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center gap-3 mb-1">
-          <span className="text-2xl">🛡️</span>
-          <h1 className="text-2xl font-black">AI Fraud Detection Queue</h1>
-        </div>
-        <p className="text-white/40 text-sm">Real-time fraud signals and risk scores — AI-powered triage</p>
-      </div>
-
-      {/* Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-        {(["CRITICAL", "HIGH", "MEDIUM", "LOW"] as RiskTier[]).map((tier) => {
-          const s   = TIER_STYLES[tier];
-          const cnt = stats[tier.toLowerCase() as keyof typeof stats];
-          return (
-            <button
-              key={tier}
-              onClick={() => setFilter(filterTier === tier ? "ALL" : tier)}
-              className={`rounded-xl border p-4 text-left transition-all hover:scale-[1.02] ${s.row} ${filterTier === tier ? "ring-2 ring-white/20" : ""}`}
-            >
-              <div className="text-3xl mb-1">{s.icon}</div>
-              <div className="text-2xl font-black text-white">{cnt}</div>
-              <div className={`text-xs font-bold px-2 py-0.5 rounded-full border inline-block mt-1 ${s.badge}`}>{tier}</div>
-            </button>
-          );
-        })}
-      </div>
-
-      {analytics && (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Unresolved</p>
-            <p className="text-2xl font-black text-white">{analytics.unresolvedCount}</p>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-xs text-white/40 uppercase tracking-wider mb-1">False Positives</p>
-            <p className="text-2xl font-black text-white">{analytics.falsePositiveCount}</p>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Penalties (7d)</p>
-            <p className="text-2xl font-black text-white">{analytics.penaltiesIssued}</p>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Top Flagged</p>
-            <p className="text-sm text-white/70 line-clamp-2">
-              {analytics.topFlagged[0]
-                ? `${analytics.topFlagged[0].entityType} ${analytics.topFlagged[0].entityId.slice(0, 10)}...`
-                : "No entities yet"}
+    <div className="space-y-6">
+      <header className="relative overflow-hidden rounded-2xl border border-[#F05858]/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #F05858 25%, #F0A030 50%, #7B6EF6 75%, transparent 100%)" }} />
+        <div className="pointer-events-none absolute left-3 top-3 h-6 w-6 border-l-[1.5px] border-t-[1.5px] border-[#F05858]/50" />
+        <div className="pointer-events-none absolute bottom-3 right-3 h-6 w-6 border-b-[1.5px] border-r-[1.5px] border-[#F0A030]/45" />
+        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br from-[#F05858]/18 via-[#F0A030]/12 to-transparent blur-3xl" />
+        <div className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="min-w-0 space-y-2">
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em]">
+              <Link href="/dmo" className="text-white/40 hover:text-white/70 transition-colors">DMO</Link>
+              <span className="text-white/25">/</span>
+              <span className="text-[#F05858]">Fraud</span>
+            </div>
+            <h1 className="text-2xl font-bold text-white md:text-3xl">AI Fraud Detection Queue</h1>
+            <p className="max-w-2xl text-sm text-white/65">
+              Real-time fraud signals aur risk scores — AI-powered triage. Critical tier
+              auto-blocked hota hai, baaki manual review ke liye queue mein.
             </p>
           </div>
         </div>
-      )}
+      </header>
 
-      {/* Filter bar */}
-      <div className="flex gap-2 mb-4 flex-wrap">
-        {(["ALL", "CRITICAL", "HIGH", "MEDIUM", "LOW"] as const).map((t) => (
-          <button
-            key={t}
-            onClick={() => setFilter(t)}
-            className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition-all ${
-              filterTier === t
-                ? "bg-blue-600 border-blue-500 text-white"
-                : "bg-white/5 border-white/10 text-white/50 hover:text-white"
-            }`}
-          >
-            {t === "ALL" ? `All (${queue.length})` : `${t} (${stats[t.toLowerCase() as keyof typeof stats]})`}
-          </button>
-        ))}
-        <button
-          onClick={load}
-          className="ml-auto px-4 py-1.5 rounded-full text-sm bg-white/5 border border-white/10 text-white/50 hover:text-white transition-all"
-        >
-          🔄 Refresh
-        </button>
-      </div>
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <VerificationStatCard tone="red" label="Critical" value={stats.critical} sub="auto-blocked" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 8v4m0 4h.01" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="1.4" /></svg>} />
+        <VerificationStatCard tone="amber" label="High" value={stats.high} sub="needs review" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" /><path d="M12 7v5l3 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
+        <VerificationStatCard tone="purple" label="Medium" value={stats.medium} sub="monitoring" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /></svg>} />
+        <VerificationStatCard tone="green" label="Low" value={stats.low} sub="cleared soon" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M5 12l4 4L19 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>} />
+      </section>
 
-      {/* Queue */}
-      {loading ? (
-        <div className="text-center py-20 text-white/30">
-          <div className="text-4xl mb-3 animate-pulse">🔍</div>
-          <p>Scanning fraud signals...</p>
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader title="Risk distribution" hint="By tier" />
+        <SeverityMeter segments={[
+          { label: "Critical", value: stats.critical, tone: "red" },
+          { label: "High", value: stats.high, tone: "amber" },
+          { label: "Medium", value: stats.medium, tone: "purple" },
+          { label: "Low", value: stats.low, tone: "green" },
+        ]} />
+      </section>
+
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader eyebrow="AI triage" title="Fraud queue" hint="Click row for signal breakdown" right={<span className="text-[10px] text-white/45">{visible.length} item(s)</span>} />
+        <div className="mt-3">
+          <FilterChipRow<"ALL" | RiskTier>
+            options={[
+              { value: "ALL" as const, label: `All · ${rows.length}` },
+              { value: "CRITICAL" as const, label: `Critical · ${stats.critical}` },
+              { value: "HIGH" as const, label: `High · ${stats.high}` },
+              { value: "MEDIUM" as const, label: `Medium · ${stats.medium}` },
+              { value: "LOW" as const, label: `Low · ${stats.low}` },
+            ]}
+            value={tierFilter}
+            onChange={setTierFilter}
+          />
         </div>
-      ) : filtered.length === 0 ? (
-        <div className="text-center py-20 text-white/30">
-          <div className="text-4xl mb-3">✅</div>
-          <p>No fraud signals in this tier</p>
+        <div className="mt-4">
+          <VerificationRowGrid<FraudEntry>
+            rows={visible}
+            columns={columns}
+            onRowClick={(r) => setActive(r)}
+            getRowTone={(r) => TIER_TONE[r.tier]}
+            emptyTitle="No fraud signals in this tier"
+            emptyHint="Adjust filter to see entries."
+          />
         </div>
-      ) : (
-        <div className="space-y-3">
-          {filtered.map((entry) => {
-            const s    = TIER_STYLES[entry.tier];
-            const isEx = expanded === entry.entityId;
-            return (
-              <div key={entry.entityId} className={`rounded-2xl border ${s.row} overflow-hidden`}>
-                {/* Row header */}
-                <div
-                  className="flex items-center gap-4 p-4 cursor-pointer hover:bg-white/5 transition-all"
-                  onClick={() => setExpanded(isEx ? null : entry.entityId)}
-                >
-                  <div className="text-2xl">{s.icon}</div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono text-white/70 text-sm truncate">{entry.entityId}</span>
-                      <span className="text-xs text-white/30 bg-white/5 px-2 py-0.5 rounded-full border border-white/10">{entry.entityType}</span>
-                    </div>
-                    <div className="flex items-center gap-3 mt-1">
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${s.badge}`}>{entry.tier}</span>
-                      <span className="text-white/40 text-xs">{entry.signals.length} signal{entry.signals.length !== 1 ? "s" : ""}</span>
-                      {entry.autoBlock && (
-                        <span className="text-xs text-red-400 font-bold">⛔ Auto-blocked</span>
-                      )}
-                    </div>
-                  </div>
+      </section>
 
-                  {/* Score gauge */}
-                  <div className="text-right flex-shrink-0">
-                    <div className="text-3xl font-black text-white">{entry.score}</div>
-                    <div className="text-xs text-white/30">/ 100</div>
-                    <div className="w-20 h-1.5 bg-white/10 rounded-full mt-1 overflow-hidden">
-                      <div
-                        className={`h-full rounded-full ${
-                          entry.tier === "CRITICAL" ? "bg-red-500" :
-                          entry.tier === "HIGH" ? "bg-orange-500" :
-                          entry.tier === "MEDIUM" ? "bg-yellow-500" : "bg-green-500"
-                        }`}
-                        style={{ width: `${entry.score}%` }}
-                      />
-                    </div>
-                  </div>
+      <VerificationDrawer
+        open={Boolean(active)}
+        onClose={() => setActive(null)}
+        title={active ? `${active.entityType} · ${active.entityId}` : "Fraud detail"}
+        subtitle={active ? `${active.id} · Score ${active.score}/100` : undefined}
+        severity={active?.tier === "CRITICAL" ? "critical" : active?.tier === "HIGH" ? "high" : "warning"}
+      >
+        {active ? (
+          <div className="space-y-4">
+            <div className="flex flex-wrap gap-2">
+              <VerificationChip tone={TIER_TONE[active.tier]}>{active.tier}</VerificationChip>
+              {active.autoBlock ? <VerificationChip tone="red">AUTO-BLOCKED</VerificationChip> : null}
+              <VerificationChip tone="cyan">{active.entityType}</VerificationChip>
+            </div>
 
-                  <div className="text-white/30 text-sm ml-2">{isEx ? "▲" : "▼"}</div>
-                </div>
-
-                {/* Expanded detail */}
-                {isEx && (
-                  <div className="border-t border-white/5 p-4 bg-black/20">
-                    <p className="text-xs text-white/40 uppercase tracking-wider mb-3">Signal Breakdown</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
-                      {entry.signals.map((sig) => (
-                        <div key={sig.type} className="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
-                          <span className="text-sm text-white/70">{SIGNAL_LABELS[sig.type] ?? sig.type}</span>
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs text-white/40">×{sig.count}</span>
-                            <span className="text-xs font-bold text-white/60">+{sig.weight * sig.count}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex gap-2 flex-wrap">
-                      <button
-                        onClick={() => handleResolve(entry.entityId)}
-                        disabled={resolving === entry.entityId}
-                        className="px-4 py-2 bg-green-600/20 hover:bg-green-600/40 border border-green-500/30 text-green-300 text-sm font-semibold rounded-xl transition-all disabled:opacity-50"
-                      >
-                        {resolving === entry.entityId ? "Clearing..." : "✅ Clear Signals"}
-                      </button>
-                      <button
-                        onClick={() => handleBlock(entry)}
-                        disabled={blocking === entry.entityId}
-                        className="px-4 py-2 bg-red-600/20 hover:bg-red-600/40 border border-red-500/30 text-red-300 text-sm font-semibold rounded-xl transition-all disabled:opacity-50"
-                      >
-                        {blocking === entry.entityId ? "Blocking..." : "🚫 Block Entity"}
-                      </button>
-                      <Link
-                        href={getProfileHref(entry)}
-                        className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white/60 text-sm font-semibold rounded-xl transition-all"
-                      >
-                        📋 View Profile
-                      </Link>
-                    </div>
-                  </div>
-                )}
+            {/* Score gauge */}
+            <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">Risk score</span>
+                <span className="text-2xl font-black text-white">{active.score}<span className="text-sm text-white/40">/100</span></span>
               </div>
-            );
-          })}
-        </div>
-      )}
-    </main>
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/[0.08]">
+                <div className="h-full rounded-full" style={{ width: `${active.score}%`, background: active.tier === "CRITICAL" ? "#F05858" : active.tier === "HIGH" ? "#F0A030" : active.tier === "MEDIUM" ? "#A098F8" : "#38C878" }} />
+              </div>
+            </div>
+
+            {/* Signal breakdown */}
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45 mb-2">Signal breakdown</p>
+              <div className="space-y-1.5">
+                {active.signals.map((sig) => (
+                  <div key={sig.type} className="flex items-center justify-between rounded-xl border border-white/8 bg-white/[0.03] px-3 py-2">
+                    <span className="text-[12px] text-white/70">{SIGNAL_LABELS[sig.type] ?? sig.type}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] text-white/40">x{sig.count}</span>
+                      <span className="font-mono text-[11px] text-[#F0A030]">+{sig.weight * sig.count}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <InfoCell label="Entity ID" value={active.entityId} mono />
+              <InfoCell label="Entity type" value={active.entityType} />
+              <InfoCell label="Total signals" value={active.signals.length} />
+              <InfoCell label="Auto-block" value={active.autoBlock ? "Yes" : "No"} />
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 pt-2">
+              <button type="button" className="rounded-xl border border-[#38C878]/40 bg-[#38C878]/12 px-3 py-2 text-[11px] font-semibold text-[#38C878] transition-colors hover:border-[#38C878]/70 hover:bg-[#38C878]/20">Clear signals</button>
+              <button type="button" className="rounded-xl border border-[#F05858]/40 bg-[#F05858]/12 px-3 py-2 text-[11px] font-semibold text-[#F05858] transition-colors hover:border-[#F05858]/70 hover:bg-[#F05858]/20">Block entity</button>
+              <button type="button" className="rounded-xl border border-[#7B6EF6]/40 bg-[#7B6EF6]/12 px-3 py-2 text-[11px] font-semibold text-[#A098F8] transition-colors hover:border-[#A098F8]/70 hover:bg-[#7B6EF6]/20">View profile</button>
+            </div>
+          </div>
+        ) : null}
+      </VerificationDrawer>
+    </div>
   );
 }

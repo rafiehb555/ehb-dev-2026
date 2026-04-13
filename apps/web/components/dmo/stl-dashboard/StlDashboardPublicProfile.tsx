@@ -36,9 +36,9 @@ export function StlDashboardPublicProfile({
             Public Trust Profile
           </h2>
         </div>
-        <span className="text-[10px] text-ehb-textMuted">Marketplace preview</span>
+        <span className="text-[10px] text-white/50">Marketplace preview</span>
       </div>
-      <div className="mx-auto mt-6 max-w-2xl space-y-3 text-center text-sm text-ehb-textBody">
+      <div className="mx-auto mt-6 max-w-2xl space-y-3 text-center text-sm text-white/70">
         <p className="text-base font-semibold text-emerald-300">{d.publicProfile.stlLine}</p>
         {d.publicProfile.summaryLines.map((line) => (
           <p key={line}>{line}</p>
@@ -46,7 +46,7 @@ export function StlDashboardPublicProfile({
       </div>
 
       <div className="mx-auto mt-6 max-w-md rounded-xl border border-white/10 bg-black/30 p-4">
-        <p className="text-center text-[10px] font-semibold uppercase tracking-wider text-ehb-textMuted">Trust score trend</p>
+        <p className="text-center text-[10px] font-semibold uppercase tracking-wider text-white/50">Trust score trend</p>
         <div className="mt-3 flex h-24 items-end justify-between gap-1">
           {bars.map((h, i) => (
             <div

@@ -54,7 +54,7 @@ export function StlDashboardAnalytics({ snapshot }: { snapshot?: StlFullSnapshot
           <BarChart3 className="h-5 w-5 text-violet-400" aria-hidden />
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-300/90">Performance</p>
-            <p className="text-sm text-ehb-textBody">Trust performance, completion, and complaint ratio</p>
+            <p className="text-sm text-white/70">Trust performance, completion, and complaint ratio</p>
           </div>
         </div>
         <span className="inline-flex items-center gap-1 self-start rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-300">
@@ -64,21 +64,21 @@ export function StlDashboardAnalytics({ snapshot }: { snapshot?: StlFullSnapshot
       </div>
       <div className="mt-4 grid grid-cols-3 gap-3">
         <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-center">
-          <p className="text-[10px] uppercase text-ehb-textMuted">Orders</p>
+          <p className="text-[10px] uppercase text-white/50">Orders</p>
           <p className="text-lg font-bold text-white">{snapshot ? snapshot.trustScore : 128}</p>
         </div>
         <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-center">
-          <p className="text-[10px] uppercase text-ehb-textMuted">Success</p>
+          <p className="text-[10px] uppercase text-white/50">Success</p>
           <p className="text-lg font-bold text-emerald-300">{successPct}%</p>
         </div>
         <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-center">
-          <p className="text-[10px] uppercase text-ehb-textMuted">Complaints</p>
+          <p className="text-[10px] uppercase text-white/50">Complaints</p>
           <p className="text-lg font-bold text-amber-200">{complaintsPct}%</p>
         </div>
       </div>
       <div className="mt-4 rounded-xl border border-cyan-500/15 bg-black/30 p-2">
         <SparkArea values={spark} />
-        <p className="mt-1 text-center text-[10px] text-ehb-textMuted">Trust activity</p>
+        <p className="mt-1 text-center text-[10px] text-white/50">Trust activity</p>
       </div>
     </section>
   );

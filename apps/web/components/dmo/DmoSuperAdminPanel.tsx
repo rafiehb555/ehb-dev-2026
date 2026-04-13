@@ -34,21 +34,21 @@ export function DmoSuperAdminPanel() {
 
   return (
     <div className="space-y-6">
-      <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
+      <section className="bg-white/[0.04] hover:bg-white/[0.06] transition-colors p-4 space-y-3 border border-white/5">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
             <h2 className="text-sm font-semibold text-white">Super Admin · Global DMO Operations</h2>
-            <p className="text-[10px] text-ehb-textMuted">
+            <p className="text-[10px] text-white/50">
               EHB head office controls: queue routing, STL thresholds, approval consistency. (UI mock)
             </p>
           </div>
 
           <div className="flex flex-wrap gap-2 items-center">
-            <label className="text-[10px] text-ehb-textMuted">Industry</label>
+            <label className="text-[10px] text-white/50">Industry</label>
             <select
               value={industrySlug}
               onChange={(e) => setIndustrySlug(e.target.value)}
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white focus:outline-none"
+              className="h-9 rounded-xl bg-white/[0.04] border border-white/10 px-3 text-[11px] text-white focus:outline-none"
             >
               {INDUSTRIES.map((i) => (
                 <option key={i.slug} value={i.slug}>
@@ -59,7 +59,7 @@ export function DmoSuperAdminPanel() {
 
             <Link
               href={`/dmo/applications${industrySlug ? `?industry=${encodeURIComponent(industrySlug)}` : ""}`}
-              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+              className="min-h-[44px] inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-[11px] font-semibold text-slate-950 shadow-lg hover:opacity-95 transition-all"
             >
               Open Workflow Queue
             </Link>
@@ -74,14 +74,14 @@ export function DmoSuperAdminPanel() {
         <KpiCard label="Operations Mode" value={summary.opsMode} detail={`Industry accent: ${accent}`} />
       </section>
 
-      <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
+      <section className="bg-white/[0.04] hover:bg-white/[0.06] transition-colors p-4 space-y-3 border border-white/5">
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">
             <h3 className="text-sm font-semibold text-white">Country-wise DMO Activity</h3>
-            <p className="text-[10px] text-ehb-textMuted">To be connected with Phase 72–85 data pipeline later.</p>
+            <p className="text-[10px] text-white/50">To be connected with Phase 72–85 data pipeline later.</p>
           </div>
           <span
-            className="inline-flex items-center rounded-full px-3 py-1 border border-white/10 bg-white/5 text-[10px] text-ehb-textBody"
+            className="inline-flex items-center rounded-full px-3 py-1 border border-white/10 bg-white/5 text-[10px] text-white/70"
             style={{ borderColor: `${accent}55` }}
           >
             Global view
@@ -90,7 +90,7 @@ export function DmoSuperAdminPanel() {
 
         <div className="overflow-x-auto">
           <div className="min-w-[760px] space-y-2">
-            <div className="grid grid-cols-12 text-[10px] text-ehb-textMuted px-2">
+            <div className="grid grid-cols-12 text-[10px] text-white/50 px-2">
               <div className="col-span-4">Region</div>
               <div className="col-span-3">Active Franchises</div>
               <div className="col-span-2">Pending Approvals</div>
@@ -98,23 +98,23 @@ export function DmoSuperAdminPanel() {
             </div>
 
             {COUNTRIES.map((c) => (
-              <div key={c.id} className="grid grid-cols-12 items-center rounded-2xl glass-card border p-3 card-hover">
+              <div key={c.id} className="grid grid-cols-12 items-center rounded-2xl bg-white/[0.03] border p-3 hover:bg-white/[0.06] transition-colors">
                 <div className="col-span-4 min-w-0">
                   <div className="text-[11px] font-semibold text-white truncate">{c.name}</div>
-                  <div className="text-[10px] text-ehb-textMuted truncate mt-0.5">Accent: {c.accent}</div>
+                  <div className="text-[10px] text-white/50 truncate mt-0.5">Accent: {c.accent}</div>
                 </div>
-                <div className="col-span-3 text-[11px] text-ehb-textBody font-semibold">{c.activeFranchises}</div>
-                <div className="col-span-2 text-[11px] text-ehb-textBody font-semibold">{c.pendingApprovals}</div>
+                <div className="col-span-3 text-[11px] text-white/70 font-semibold">{c.activeFranchises}</div>
+                <div className="col-span-2 text-[11px] text-white/70 font-semibold">{c.pendingApprovals}</div>
                 <div className="col-span-3 flex items-center justify-end gap-2">
                   <Link
                     href={`/dmo/applications?country=${encodeURIComponent(c.id.includes("PK-") ? "PK" : "UAE")}&industry=${encodeURIComponent(industrySlug)}`}
-                    className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-ehb-textBody hover:bg-white/5 transition-all inline-flex items-center justify-center"
+                    className="h-9 rounded-xl bg-white/[0.04] border border-white/10 px-3 text-[11px] text-white/70 hover:bg-white/5 transition-all inline-flex items-center justify-center"
                   >
                     Route queue
                   </Link>
                   <button
                     type="button"
-                    className="h-9 rounded-xl bg-white/5 border border-white/10 px-3 text-[11px] text-ehb-textBody hover:bg-white/10 transition-all inline-flex items-center justify-center"
+                    className="h-9 rounded-xl bg-white/5 border border-white/10 px-3 text-[11px] text-white/70 hover:bg-white/10 transition-all inline-flex items-center justify-center"
                     onClick={() => window.alert(`Mock: updated routing policy for ${c.name} (later: backend)`) }
                   >
                     Adjust policy

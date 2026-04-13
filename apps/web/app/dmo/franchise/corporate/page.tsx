@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { DmoTopNav } from "@/components/dmo/DmoTopNav";
 import { DmoFranchiseDashboard } from "@/components/dmo/DmoFranchiseDashboard";
@@ -31,11 +33,11 @@ export default function CorporateFranchisePage({
 
   return (
     <main className="min-h-screen text-white">
-      <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="space-y-1">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">DMO · Corporate Franchise</p>
-          <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">Corporate batch control</h1>
-          <p className="text-ehb-textBody max-w-2xl">Track corporate-level franchise batches, operational load, and review focus by industry and region.</p>
+          <p className="text-[11px] uppercase tracking-[0.2em] text-white/50">DMO · Corporate Franchise</p>
+          <h1 className="text-lg sm:text-xl font-semibold leading-tight text-white">Corporate batch control</h1>
+          <p className="text-white/70 max-w-2xl">Track corporate-level franchise batches, operational load, and review focus by industry and region.</p>
         </header>
 
         <DmoTopNav />
@@ -45,7 +47,7 @@ export default function CorporateFranchisePage({
         <div className="pt-2 flex flex-wrap gap-2">
           <Link
             href="/dmo/applications"
-            className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-3 py-1.5 text-[11px] font-semibold text-ehb-textBody border border-white/10 hover:bg-white/5 transition-all"
+            className="min-h-[44px] inline-flex items-center justify-center rounded-xl bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold text-white/70 border border-white/10 hover:bg-white/[0.07] hover:border-white/20 transition-all"
           >
             Open queue without filters
           </Link>

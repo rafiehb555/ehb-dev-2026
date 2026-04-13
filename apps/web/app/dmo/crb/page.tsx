@@ -1,8 +1,24 @@
 "use client";
 
+/**
+ * DMO — CRB (Certification & Registry Board)
+ *   - VerificationUI primitives (no framer-motion, no emojis, no legacy classes)
+ *   - In-file demo data (prototype only, no fetch)
+ */
+
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useMemo, useState } from "react";
+import {
+  VerificationStatCard,
+  VerificationRowGrid,
+  VerificationDrawer,
+  VerificationChip,
+  SectionHeader,
+  FilterChipRow,
+  SeverityMeter,
+  type RowColumn,
+  type VerificationTone,
+} from "@/components/dmo/verification/VerificationUI";
 
 type CrbType = "SKILL" | "SERVICE" | "PRODUCT" | "COMPANY";
 type CrbStatus = "SUBMITTED" | "REVIEW" | "INSPECTION" | "APPROVED" | "REJECTED";
@@ -15,293 +31,448 @@ type CrbRow = {
   notes: string | null;
   dmoTaskId: string | null;
   createdAt: string;
-  applicant: { id: string; name: string; email: string; role: string };
+  applicant: { name: string; email: string; role: string };
   documents: Array<{ id: string; type: string; fileUrl: string }>;
   inspection: { id: string; status: string; score: number | null; report: string | null; inspectorId: string } | null;
   certificate: { id: string; status: string; issuedAt: string; expiryDate: string } | null;
 };
 
-function fmt(v: string) {
-  const d = new Date(v);
-  return Number.isNaN(d.getTime()) ? v : d.toLocaleString();
+/* ── Demo data ── */
+const DEMO: CrbRow[] = [
+  {
+    id: "CRB-001", type: "SERVICE", industry: "E-commerce", status: "INSPECTION",
+    notes: "GoSellr PK marketplace service — on-site inspection scheduled Karachi.",
+    dmoTaskId: "T-8801", createdAt: "2026-04-10T09:00:00Z",
+    applicant: { name: "Ali Hussain", email: "ali@gosellr.pk", role: "Seller" },
+    documents: [{ id: "D-01", type: "Trade License", fileUrl: "#" }, { id: "D-02", type: "NTN Certificate", fileUrl: "#" }],
+    inspection: { id: "INS-101", status: "SCHEDULED", score: null, report: null, inspectorId: "INS-KHI-04" },
+    certificate: null,
+  },
+  {
+    id: "CRB-002", type: "COMPANY", industry: "Medical", status: "APPROVED",
+    notes: "WMS Islamabad — full compliance verified.",
+    dmoTaskId: "T-8734", createdAt: "2026-04-08T14:30:00Z",
+    applicant: { name: "Dr. Sara Malik", email: "sara@wms.pk", role: "Provider" },
+    documents: [{ id: "D-03", type: "PMDC Registration", fileUrl: "#" }, { id: "D-04", type: "Clinic License", fileUrl: "#" }],
+    inspection: { id: "INS-102", status: "COMPLETED", score: 94, report: "All standards met. Minor signage update needed.", inspectorId: "INS-ISB-02" },
+    certificate: { id: "CERT-201", status: "ACTIVE", issuedAt: "2026-04-09T00:00:00Z", expiryDate: "2027-04-09T00:00:00Z" },
+  },
+  {
+    id: "CRB-003", type: "SKILL", industry: "Legal", status: "REVIEW",
+    notes: "OLS Lahore — skill certification for corporate law advisory.",
+    dmoTaskId: null, createdAt: "2026-04-11T11:00:00Z",
+    applicant: { name: "Barrister Usman Qazi", email: "usman@ols.pk", role: "Lawyer" },
+    documents: [{ id: "D-05", type: "Bar Council License", fileUrl: "#" }],
+    inspection: null, certificate: null,
+  },
+  {
+    id: "CRB-004", type: "SERVICE", industry: "Education", status: "SUBMITTED",
+    notes: "HPS Faisalabad — tutor certification application.",
+    dmoTaskId: null, createdAt: "2026-04-12T08:00:00Z",
+    applicant: { name: "Fatima Noor", email: "fatima@hps.pk", role: "Tutor" },
+    documents: [{ id: "D-06", type: "Degree Certificate", fileUrl: "#" }],
+    inspection: null, certificate: null,
+  },
+  {
+    id: "CRB-005", type: "PRODUCT", industry: "E-commerce", status: "REJECTED",
+    notes: "GoSellr counterfeit concern — product authenticity failed.",
+    dmoTaskId: "T-8790", createdAt: "2026-04-07T16:00:00Z",
+    applicant: { name: "Zain Electronics", email: "zain@gosellr.pk", role: "Seller" },
+    documents: [{ id: "D-07", type: "Product Invoice", fileUrl: "#" }, { id: "D-08", type: "Import Certificate", fileUrl: "#" }],
+    inspection: { id: "INS-103", status: "COMPLETED", score: 28, report: "Product labeling mismatch. Invoice origin disputed.", inspectorId: "INS-LHR-01" },
+    certificate: null,
+  },
+  {
+    id: "CRB-006", type: "COMPANY", industry: "Travel", status: "INSPECTION",
+    notes: "AGTS Dubai — franchise-level company certification.",
+    dmoTaskId: "T-8812", createdAt: "2026-04-09T13:00:00Z",
+    applicant: { name: "AGTS Dubai LLC", email: "ops@agts.ae", role: "Franchise" },
+    documents: [{ id: "D-09", type: "Trade License UAE", fileUrl: "#" }, { id: "D-10", type: "Tax Registration", fileUrl: "#" }],
+    inspection: { id: "INS-104", status: "IN_PROGRESS", score: null, report: null, inspectorId: "INS-DXB-01" },
+    certificate: null,
+  },
+];
+
+const STATUS_TONE: Record<CrbStatus, VerificationTone> = {
+  SUBMITTED: "purple",
+  REVIEW: "cyan",
+  INSPECTION: "amber",
+  APPROVED: "green",
+  REJECTED: "red",
+};
+
+const TYPE_TONE: Record<CrbType, VerificationTone> = {
+  SKILL: "teal",
+  SERVICE: "cyan",
+  PRODUCT: "amber",
+  COMPANY: "purple",
+};
+
+function fmtTime(iso: string) {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? iso : d.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+}
+
+function InfoCell({ label, value, mono }: { label: string; value: React.ReactNode; mono?: boolean }) {
+  return (
+    <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
+      <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">{label}</p>
+      <p className={`mt-1 text-sm text-white/90 ${mono ? "font-mono" : ""}`}>{value}</p>
+    </div>
+  );
 }
 
 export default function DmoCrbPage() {
-  const [rows, setRows] = useState<CrbRow[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [query, setQuery] = useState("");
-  const [status, setStatus] = useState<"ALL" | CrbStatus>("ALL");
-  const [type, setType] = useState<"ALL" | CrbType>("ALL");
+  const [rows] = useState<CrbRow[]>(DEMO);
+  const [statusFilter, setStatusFilter] = useState<"ALL" | CrbStatus>("ALL");
+  const [typeFilter, setTypeFilter] = useState<"ALL" | CrbType>("ALL");
   const [selected, setSelected] = useState<CrbRow | null>(null);
+  const [toast, setToast] = useState<{ open: boolean; kind: "ok" | "err"; text: string }>({ open: false, kind: "ok", text: "" });
+
+  /* Form state for prototype actions */
   const [assignInspectorId, setAssignInspectorId] = useState("");
   const [reportScore, setReportScore] = useState("");
   const [reportText, setReportText] = useState("");
   const [decisionNotes, setDecisionNotes] = useState("");
-  const [toast, setToast] = useState<{ open: boolean; kind: "ok" | "err"; text: string }>({ open: false, kind: "ok", text: "" });
 
-  const stats = useMemo(() => {
-    const total = rows.length;
-    const inInspection = rows.filter((r) => r.status === "INSPECTION").length;
-    const approved = rows.filter((r) => r.status === "APPROVED").length;
-    const rejected = rows.filter((r) => r.status === "REJECTED").length;
-    return { total, inInspection, approved, rejected };
-  }, [rows]);
+  const stats = useMemo(() => ({
+    total: rows.length,
+    submitted: rows.filter((r) => r.status === "SUBMITTED").length,
+    review: rows.filter((r) => r.status === "REVIEW").length,
+    inspection: rows.filter((r) => r.status === "INSPECTION").length,
+    approved: rows.filter((r) => r.status === "APPROVED").length,
+    rejected: rows.filter((r) => r.status === "REJECTED").length,
+  }), [rows]);
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const qs = new URLSearchParams();
-      if (status !== "ALL") qs.set("status", status);
-      if (type !== "ALL") qs.set("type", type);
-      if (query.trim()) qs.set("query", query.trim());
-      qs.set("take", "100");
-      const res = await fetch(`/api/crb/applications?${qs.toString()}`, { cache: "no-store" });
-      const json = await res.json();
-      if (!res.ok || json?.success === false || json?.ok === false) {
-        throw new Error(json?.error?.message ?? `Failed: ${res.status}`);
-      }
-      const items = (json?.data?.items ?? json?.data ?? json?.items ?? []) as CrbRow[];
-      setRows(items);
-      if (selected) {
-        const latest = items.find((x) => x.id === selected.id) ?? null;
-        setSelected(latest);
-      }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load CRB applications");
-    } finally {
-      setLoading(false);
-    }
-  }, [status, type, query, selected]);
+  const visible = rows.filter((r) => {
+    if (statusFilter !== "ALL" && r.status !== statusFilter) return false;
+    if (typeFilter !== "ALL" && r.type !== typeFilter) return false;
+    return true;
+  });
 
-  useEffect(() => {
-    void load();
-  }, [load]);
+  function showToast(kind: "ok" | "err", text: string) {
+    setToast({ open: true, kind, text });
+    setTimeout(() => setToast((t) => ({ ...t, open: false })), 3500);
+  }
 
-  async function assignInspection() {
+  function handleAssign() {
     if (!selected || !assignInspectorId.trim()) return;
-    try {
-      const res = await fetch("/api/crb/assign-inspection", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ applicationId: selected.id, inspectorId: assignInspectorId.trim() }),
-      });
-      const json = await res.json().catch(() => null);
-      if (!res.ok) throw new Error(json?.error?.message ?? `Assign failed: ${res.status}`);
-      setToast({ open: true, kind: "ok", text: "Inspection assigned." });
-      await load();
-    } catch (e) {
-      setToast({ open: true, kind: "err", text: e instanceof Error ? e.message : "Assign failed" });
-    }
+    showToast("ok", `Inspection assigned to ${assignInspectorId.trim()} for ${selected.id}.`);
+    setAssignInspectorId("");
   }
 
-  async function submitReport() {
+  function handleReport() {
     if (!selected?.inspection?.id || !reportScore.trim() || !reportText.trim()) return;
-    try {
-      const res = await fetch("/api/crb/report", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          inspectionId: selected.inspection.id,
-          score: Number(reportScore),
-          report: reportText.trim(),
-          media: [],
-        }),
-      });
-      const json = await res.json().catch(() => null);
-      if (!res.ok) throw new Error(json?.error?.message ?? `Report failed: ${res.status}`);
-      setToast({ open: true, kind: "ok", text: "Inspection report submitted." });
-      setReportScore("");
-      setReportText("");
-      await load();
-    } catch (e) {
-      setToast({ open: true, kind: "err", text: e instanceof Error ? e.message : "Report failed" });
-    }
+    showToast("ok", `Report submitted — score ${reportScore}/100 for ${selected.id}.`);
+    setReportScore("");
+    setReportText("");
   }
 
-  async function finalDecision(decision: "APPROVED" | "REJECTED") {
+  function handleDecision(decision: "APPROVED" | "REJECTED") {
     if (!selected) return;
-    try {
-      const res = await fetch("/api/crb/decision", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          applicationId: selected.id,
-          decision,
-          notes: decisionNotes.trim() ? decisionNotes.trim() : undefined,
-        }),
-      });
-      const json = await res.json().catch(() => null);
-      if (!res.ok) throw new Error(json?.error?.message ?? `Decision failed: ${res.status}`);
-      setToast({ open: true, kind: "ok", text: decision === "APPROVED" ? "CRB approved + certificate issued." : "CRB rejected." });
-      await load();
-    } catch (e) {
-      setToast({ open: true, kind: "err", text: e instanceof Error ? e.message : "Decision failed" });
-    }
+    showToast("ok", decision === "APPROVED" ? `${selected.id} approved — certificate issued.` : `${selected.id} rejected.`);
+    setDecisionNotes("");
   }
+
+  const columns: RowColumn<CrbRow>[] = [
+    {
+      key: "applicant", header: "Applicant", width: "minmax(0,1.8fr)",
+      render: (r) => (
+        <div className="min-w-0">
+          <div className="truncate text-sm font-semibold text-white">{r.applicant.name}</div>
+          <div className="truncate text-[10px] text-white/45">{r.applicant.email}</div>
+        </div>
+      ),
+    },
+    { key: "type", header: "Type", width: "minmax(0,0.7fr)", render: (r) => <VerificationChip tone={TYPE_TONE[r.type]} size="xs">{r.type}</VerificationChip> },
+    { key: "industry", header: "Industry", width: "minmax(0,1fr)", render: (r) => <span className="text-[11px] text-white/70">{r.industry}</span> },
+    { key: "status", header: "Status", width: "minmax(0,0.9fr)", render: (r) => <VerificationChip tone={STATUS_TONE[r.status]}>{r.status}</VerificationChip> },
+    { key: "created", header: "Created", width: "minmax(0,1.1fr)", align: "right", render: (r) => <span className="text-[10px] text-white/45">{fmtTime(r.createdAt)}</span> },
+  ];
 
   return (
-    <main className="min-h-screen text-white">
-      <div className="container-ehb py-6">
-        <div className="space-y-4">
-          <section className="space-y-4">
-            <section className="rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-[#031222]/95 to-[#020b18]/95 p-5">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">CRB Module</p>
-                  <h1 className="mt-1 text-2xl font-semibold gradient-text">Certification & Registry Board</h1>
-                  <p className="mt-1 text-xs text-ehb-textBody">Real workflow: apply -&gt; document review -&gt; inspection -&gt; decision -&gt; certificate + DMO integration.</p>
-                </div>
-                <div className="flex gap-2">
-                  <Link href="/dmo" className="ehb-btn-secondary ehb-press">Back to DMO</Link>
-                  <button type="button" onClick={() => void load()} className="ehb-btn-primary ehb-press">Refresh</button>
-                </div>
-              </div>
-            </section>
+    <div className="space-y-6">
+      {/* Hero header */}
+      <header className="relative overflow-hidden rounded-2xl border border-cyan-400/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #67E8F9 20%, #2BBFA0 40%, #7B6EF6 60%, #F0A030 80%, transparent 100%)" }} />
+        <div className="pointer-events-none absolute left-3 top-3 h-6 w-6 border-l-[1.5px] border-t-[1.5px] border-cyan-400/50" />
+        <div className="pointer-events-none absolute bottom-3 right-3 h-6 w-6 border-b-[1.5px] border-r-[1.5px] border-[#7B6EF6]/45" />
+        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br from-cyan-400/18 via-[#2BBFA0]/12 to-transparent blur-3xl" />
+        <div className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="min-w-0 space-y-2">
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em]">
+              <Link href="/dmo" className="text-white/40 hover:text-white/70 transition-colors">DMO</Link>
+              <span className="text-white/25">/</span>
+              <span className="text-cyan-300">CRB</span>
+            </div>
+            <h1 className="text-2xl font-bold text-white md:text-3xl">Certification & Registry Board</h1>
+            <p className="max-w-2xl text-sm text-white/65">
+              Physical + legal verification workflow — apply, document review, inspection,
+              decision, certificate. DMO tasks aur franchise inspectors sa tightly integrated.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Link href="/dmo/queue" className="rounded-xl border border-[#7B6EF6]/50 bg-[#7B6EF6]/15 px-3 py-1.5 text-xs font-semibold text-[#A098F8] transition-colors hover:bg-[#7B6EF6]/25">Operations Queue</Link>
+          </div>
+        </div>
+      </header>
 
-            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">Total</div><div className="text-2xl font-semibold">{stats.total}</div></div>
-              <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">In Inspection</div><div className="text-2xl font-semibold text-amber-200">{stats.inInspection}</div></div>
-              <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">Approved</div><div className="text-2xl font-semibold text-emerald-200">{stats.approved}</div></div>
-              <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">Rejected</div><div className="text-2xl font-semibold text-rose-200">{stats.rejected}</div></div>
-            </section>
+      {/* Stats */}
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <VerificationStatCard tone="purple" label="Total applications" value={stats.total} sub="All CRB submissions" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" strokeWidth="1.4" /><polyline points="14 2 14 8 20 8" stroke="currentColor" strokeWidth="1.4" /></svg>} />
+        <VerificationStatCard tone="amber" label="In inspection" value={stats.inspection} sub="Awaiting inspector report" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="1.6" /><path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
+        <VerificationStatCard tone="green" label="Approved" value={stats.approved} sub="Certificate issued" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M5 12l4 4L19 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>} />
+        <VerificationStatCard tone="red" label="Rejected" value={stats.rejected} sub="Needs re-submission" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.4" /><path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
+      </section>
 
-            <section className="ehb-card-elevated space-y-3">
-              <div className="flex flex-wrap items-center gap-2">
-                <select value={status} onChange={(e) => setStatus(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody">
-                  <option value="ALL">All status</option>
-                  <option value="SUBMITTED">SUBMITTED</option>
-                  <option value="REVIEW">REVIEW</option>
-                  <option value="INSPECTION">INSPECTION</option>
-                  <option value="APPROVED">APPROVED</option>
-                  <option value="REJECTED">REJECTED</option>
-                </select>
-                <select value={type} onChange={(e) => setType(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody">
-                  <option value="ALL">All type</option>
-                  <option value="SKILL">SKILL</option>
-                  <option value="SERVICE">SERVICE</option>
-                  <option value="PRODUCT">PRODUCT</option>
-                  <option value="COMPANY">COMPANY</option>
-                </select>
-                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search name/email/industry" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs min-w-[220px] text-ehb-textBody placeholder:text-ehb-textMuted" />
-              </div>
+      {/* Pipeline distribution */}
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader title="CRB pipeline" hint="Application lifecycle distribution" />
+        <SeverityMeter segments={[
+          { label: "Submitted", value: stats.submitted, tone: "purple" },
+          { label: "Review", value: stats.review, tone: "cyan" },
+          { label: "Inspection", value: stats.inspection, tone: "amber" },
+          { label: "Approved", value: stats.approved, tone: "green" },
+          { label: "Rejected", value: stats.rejected, tone: "red" },
+        ]} />
+      </section>
 
-              {loading ? <div className="text-xs text-ehb-textMuted">Loading applications...</div> : null}
-              {error ? <div className="rounded-xl border border-rose-400/40 bg-rose-500/10 p-3 text-xs text-rose-100">{error}</div> : null}
+      {/* Application queue */}
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader eyebrow="Verification · Applications" title="CRB application queue" hint="Click any row for full review" right={<span className="text-[10px] text-white/45">{visible.length} item(s)</span>} />
 
-              <div className="overflow-auto rounded-xl border border-white/10">
-                <table className="min-w-full text-xs">
-                  <thead className="bg-white/5 text-ehb-textBody">
-                    <tr>
-                      <th className="px-3 py-2 text-left">Applicant</th>
-                      <th className="px-3 py-2 text-left">Type</th>
-                      <th className="px-3 py-2 text-left">Industry</th>
-                      <th className="px-3 py-2 text-left">Status</th>
-                      <th className="px-3 py-2 text-left">Created</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {!loading
-                      ? rows.map((r) => (
-                          <tr key={r.id} className="border-t border-white/10 hover:bg-white/5 cursor-pointer" onClick={() => setSelected(r)}>
-                            <td className="px-3 py-2">
-                              <div className="font-semibold">{r.applicant?.name ?? "Unknown"}</div>
-                              <div className="text-[11px] text-ehb-textMuted">{r.applicant?.email ?? "-"}</div>
-                            </td>
-                            <td className="px-3 py-2">{r.type}</td>
-                            <td className="px-3 py-2">{r.industry}</td>
-                            <td className="px-3 py-2">{r.status}</td>
-                            <td className="px-3 py-2 text-ehb-textMuted">{fmt(r.createdAt)}</td>
-                          </tr>
-                        ))
-                      : null}
-                    {!loading && rows.length === 0 ? (
-                      <tr><td colSpan={5} className="px-3 py-8 text-center text-ehb-textMuted">No CRB applications found.</td></tr>
-                    ) : null}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          </section>
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <FilterChipRow<"ALL" | CrbStatus>
+            options={[
+              { value: "ALL" as const, label: `All · ${rows.length}` },
+              { value: "SUBMITTED" as const, label: `Submitted · ${stats.submitted}` },
+              { value: "REVIEW" as const, label: `Review · ${stats.review}` },
+              { value: "INSPECTION" as const, label: `Inspection · ${stats.inspection}` },
+              { value: "APPROVED" as const, label: `Approved · ${stats.approved}` },
+              { value: "REJECTED" as const, label: `Rejected · ${stats.rejected}` },
+            ]}
+            value={statusFilter}
+            onChange={setStatusFilter}
+          />
+          <FilterChipRow<"ALL" | CrbType>
+            options={[
+              { value: "ALL" as const, label: "All types" },
+              { value: "SKILL" as const, label: "Skill" },
+              { value: "SERVICE" as const, label: "Service" },
+              { value: "PRODUCT" as const, label: "Product" },
+              { value: "COMPANY" as const, label: "Company" },
+            ]}
+            value={typeFilter}
+            onChange={setTypeFilter}
+          />
         </div>
 
-        <AnimatePresence>
-          {selected ? (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[70]">
-              <div className="absolute inset-0 bg-black/60" onClick={() => setSelected(null)} />
-              <motion.section initial={{ x: 24, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: 20, opacity: 0 }} className="absolute right-0 top-0 h-full w-full sm:w-[620px] bg-[#020c1b]/95 border-l border-white/10 backdrop-blur-xl p-4 overflow-auto space-y-3">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-sm font-semibold">CRB Application Review</h2>
-                  <button className="ehb-btn-secondary ehb-press" onClick={() => setSelected(null)}>Close</button>
-                </div>
+        <div className="mt-4">
+          <VerificationRowGrid<CrbRow>
+            rows={visible}
+            columns={columns}
+            onRowClick={(r) => setSelected(r)}
+            getRowTone={(r) => STATUS_TONE[r.status]}
+            emptyTitle="No CRB applications"
+            emptyHint="Adjust filters or submit a new application."
+          />
+        </div>
+      </section>
 
-                <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-xs space-y-1">
-                  <div><span className="text-ehb-textMuted">Applicant:</span> {selected.applicant?.name} ({selected.applicant?.email})</div>
-                  <div><span className="text-ehb-textMuted">Type:</span> {selected.type}</div>
-                  <div><span className="text-ehb-textMuted">Industry:</span> {selected.industry}</div>
-                  <div><span className="text-ehb-textMuted">Status:</span> {selected.status}</div>
-                  <div><span className="text-ehb-textMuted">DMO Task:</span> {selected.dmoTaskId ?? "Not linked yet"}</div>
-                </div>
+      {/* Detail drawer */}
+      <VerificationDrawer
+        open={Boolean(selected)}
+        onClose={() => setSelected(null)}
+        title="CRB Application Review"
+        subtitle={selected ? `${selected.id} · ${selected.type} · ${selected.industry}` : undefined}
+        severity={selected?.status === "REJECTED" ? "critical" : selected?.status === "INSPECTION" ? "high" : selected?.status === "APPROVED" ? "info" : "warning"}
+      >
+        {selected ? (
+          <div className="space-y-4">
+            {/* Status + type chips */}
+            <div className="flex flex-wrap gap-2">
+              <VerificationChip tone={STATUS_TONE[selected.status]}>{selected.status}</VerificationChip>
+              <VerificationChip tone={TYPE_TONE[selected.type]}>{selected.type}</VerificationChip>
+            </div>
 
-                <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-2">
-                  <div className="text-xs font-semibold">Documents</div>
-                  {selected.documents.length === 0 ? (
-                    <div className="text-[11px] text-ehb-textMuted">No documents.</div>
-                  ) : (
-                    selected.documents.map((d) => (
-                      <div key={d.id} className="rounded-lg border border-white/10 bg-black/20 p-2 text-[11px]">
-                        <div className="font-semibold">{d.type}</div>
-                        <a className="text-cyan-300 underline" href={d.fileUrl} target="_blank" rel="noreferrer">Open document</a>
-                      </div>
-                    ))
-                  )}
-                </div>
+            {/* Applicant details */}
+            <div className="grid gap-3 sm:grid-cols-2">
+              <InfoCell label="Applicant" value={selected.applicant.name} />
+              <InfoCell label="Email" value={selected.applicant.email} mono />
+              <InfoCell label="Role" value={selected.applicant.role} />
+              <InfoCell label="Industry" value={selected.industry} />
+              <InfoCell label="Created" value={fmtTime(selected.createdAt)} />
+              <InfoCell label="DMO Task" value={selected.dmoTaskId ?? "Not linked"} mono />
+            </div>
 
-                <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-2">
-                  <div className="text-xs font-semibold">Inspection Assignment</div>
-                  <div className="text-[11px] text-ehb-textBody">Inspector ID</div>
-                  <input value={assignInspectorId} onChange={(e) => setAssignInspectorId(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" placeholder="Enter franchise inspector userId (cuid)" />
-                  <button className="ehb-btn-primary ehb-press" onClick={() => void assignInspection()}>Assign Inspection</button>
-                </div>
+            {/* Notes */}
+            {selected.notes ? (
+              <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 text-[13px] leading-relaxed text-white/75">
+                {selected.notes}
+              </div>
+            ) : null}
 
-                <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-2">
-                  <div className="text-xs font-semibold">Inspection Report</div>
-                  <div className="text-[11px] text-ehb-textBody">Current inspection: {selected.inspection?.id ?? "Not assigned"}</div>
-                  <input value={reportScore} onChange={(e) => setReportScore(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" placeholder="Score (0-100)" />
-                  <textarea value={reportText} onChange={(e) => setReportText(e.target.value)} className="w-full h-24 rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" placeholder="Inspection report..." />
-                  <button className="ehb-btn-secondary ehb-press" onClick={() => void submitReport()} disabled={!selected.inspection}>Submit Report</button>
-                </div>
-
-                <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-2">
-                  <div className="text-xs font-semibold">Final Decision</div>
-                  <textarea value={decisionNotes} onChange={(e) => setDecisionNotes(e.target.value)} className="w-full h-20 rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" placeholder="Decision notes..." />
-                  <div className="flex gap-2">
-                    <button className="ehb-btn-primary ehb-press" onClick={() => void finalDecision("APPROVED")}>Approve + Issue Certificate</button>
-                    <button className="ehb-btn-danger ehb-press" onClick={() => void finalDecision("REJECTED")}>Reject</button>
-                  </div>
-                  {selected.certificate ? (
-                    <div className="rounded-lg border border-emerald-400/25 bg-emerald-500/10 p-2 text-[11px] text-emerald-100">
-                      Certificate: {selected.certificate.id} ({selected.certificate.status}) • exp {new Date(selected.certificate.expiryDate).toLocaleDateString()}
+            {/* Documents */}
+            <div className="rounded-xl border border-white/10 bg-[#1A1D33]/80 p-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">Documents ({selected.documents.length})</p>
+              {selected.documents.length === 0 ? (
+                <p className="mt-2 text-[11px] text-white/40">No documents uploaded.</p>
+              ) : (
+                <div className="mt-2 grid gap-2">
+                  {selected.documents.map((d) => (
+                    <div key={d.id} className="flex items-center justify-between rounded-xl border border-white/8 bg-white/[0.03] px-3 py-2">
+                      <span className="text-[11px] font-semibold text-white/75">{d.type}</span>
+                      <span className="text-[10px] font-semibold text-cyan-300 hover:text-white cursor-pointer">View</span>
                     </div>
-                  ) : null}
+                  ))}
                 </div>
-              </motion.section>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
+              )}
+            </div>
 
-        <AnimatePresence>
-          {toast.open ? (
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} className={`fixed bottom-6 right-6 z-[80] rounded-xl border px-4 py-3 text-xs ${toast.kind === "ok" ? "border-emerald-400/40 bg-emerald-500/10 text-emerald-100" : "border-rose-400/40 bg-rose-500/10 text-rose-100"}`}>
-              <div className="font-semibold">{toast.kind === "ok" ? "Success" : "Error"}</div>
-              <div>{toast.text}</div>
-              <button className="mt-2 underline" onClick={() => setToast((t) => ({ ...t, open: false }))}>Close</button>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
+            {/* Inspection info */}
+            <div className="rounded-xl border border-white/10 bg-[#1A1D33]/80 p-4 space-y-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">Inspection</p>
+              {selected.inspection ? (
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <InfoCell label="Inspection ID" value={selected.inspection.id} mono />
+                  <InfoCell label="Status" value={selected.inspection.status} />
+                  <InfoCell label="Inspector" value={selected.inspection.inspectorId} mono />
+                  <InfoCell label="Score" value={selected.inspection.score !== null ? `${selected.inspection.score}/100` : "Pending"} />
+                </div>
+              ) : (
+                <p className="text-[11px] text-white/40">No inspection assigned yet.</p>
+              )}
+
+              {/* Score gauge bar */}
+              {selected.inspection?.score !== null && selected.inspection?.score !== undefined ? (
+                <div className="mt-1">
+                  <div className="flex items-center justify-between text-[10px] text-white/50">
+                    <span>Score</span>
+                    <span className={selected.inspection.score >= 70 ? "text-[#38C878]" : selected.inspection.score >= 40 ? "text-[#F0A030]" : "text-[#F05858]"}>{selected.inspection.score}/100</span>
+                  </div>
+                  <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-white/10">
+                    <div
+                      className="h-full rounded-full transition-all duration-500"
+                      style={{
+                        width: `${selected.inspection.score}%`,
+                        background: selected.inspection.score >= 70 ? "#38C878" : selected.inspection.score >= 40 ? "#F0A030" : "#F05858",
+                      }}
+                    />
+                  </div>
+                </div>
+              ) : null}
+
+              {/* Report text */}
+              {selected.inspection?.report ? (
+                <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3 text-[11px] text-white/60 italic">
+                  {selected.inspection.report}
+                </div>
+              ) : null}
+            </div>
+
+            {/* Certificate */}
+            {selected.certificate ? (
+              <div className="rounded-xl border border-[#38C878]/30 bg-[#38C878]/8 p-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#38C878]/80">Certificate Active</p>
+                <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                  <InfoCell label="Certificate ID" value={selected.certificate.id} mono />
+                  <InfoCell label="Status" value={selected.certificate.status} />
+                  <InfoCell label="Issued" value={fmtTime(selected.certificate.issuedAt)} />
+                  <InfoCell label="Expires" value={fmtTime(selected.certificate.expiryDate)} />
+                </div>
+              </div>
+            ) : null}
+
+            {/* Action forms — prototype */}
+            <div className="space-y-3 border-t border-white/10 pt-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">Actions (Prototype)</p>
+
+              {/* Assign inspection */}
+              <div className="rounded-xl border border-white/10 bg-[#1A1D33]/80 p-3 space-y-2">
+                <p className="text-[11px] font-semibold text-white/70">Assign Inspection</p>
+                <input
+                  value={assignInspectorId}
+                  onChange={(e) => setAssignInspectorId(e.target.value)}
+                  placeholder="Inspector ID (e.g. INS-KHI-04)"
+                  className="w-full rounded-xl border border-white/10 bg-[#0C0E1A]/80 px-3 py-2 text-xs text-white placeholder:text-white/35 outline-none focus:border-[#7B6EF6]/55"
+                />
+                <button
+                  type="button"
+                  onClick={handleAssign}
+                  className="rounded-xl border border-[#2BBFA0]/50 bg-[#2BBFA0]/15 px-4 py-2 text-[11px] font-semibold text-[#2BBFA0] transition-colors hover:bg-[#2BBFA0]/25 hover:text-white"
+                >
+                  Assign
+                </button>
+              </div>
+
+              {/* Submit report */}
+              <div className="rounded-xl border border-white/10 bg-[#1A1D33]/80 p-3 space-y-2">
+                <p className="text-[11px] font-semibold text-white/70">Submit Inspection Report</p>
+                <input
+                  value={reportScore}
+                  onChange={(e) => setReportScore(e.target.value)}
+                  placeholder="Score (0-100)"
+                  className="w-full rounded-xl border border-white/10 bg-[#0C0E1A]/80 px-3 py-2 text-xs text-white placeholder:text-white/35 outline-none focus:border-[#7B6EF6]/55"
+                />
+                <textarea
+                  value={reportText}
+                  onChange={(e) => setReportText(e.target.value)}
+                  placeholder="Inspection findings..."
+                  className="h-20 w-full rounded-xl border border-white/10 bg-[#0C0E1A]/80 px-3 py-2 text-xs text-white placeholder:text-white/35 outline-none focus:border-[#7B6EF6]/55 resize-none"
+                />
+                <button
+                  type="button"
+                  onClick={handleReport}
+                  className="rounded-xl border border-cyan-400/50 bg-cyan-400/15 px-4 py-2 text-[11px] font-semibold text-cyan-200 transition-colors hover:bg-cyan-400/25 hover:text-white"
+                >
+                  Submit Report
+                </button>
+              </div>
+
+              {/* Final decision */}
+              <div className="rounded-xl border border-white/10 bg-[#1A1D33]/80 p-3 space-y-2">
+                <p className="text-[11px] font-semibold text-white/70">Final Decision</p>
+                <textarea
+                  value={decisionNotes}
+                  onChange={(e) => setDecisionNotes(e.target.value)}
+                  placeholder="Decision notes (optional)..."
+                  className="h-16 w-full rounded-xl border border-white/10 bg-[#0C0E1A]/80 px-3 py-2 text-xs text-white placeholder:text-white/35 outline-none focus:border-[#7B6EF6]/55 resize-none"
+                />
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleDecision("APPROVED")}
+                    className="flex-1 rounded-xl border border-[#38C878]/50 bg-[#38C878]/15 px-4 py-2.5 text-[11px] font-semibold text-[#38C878] transition-colors hover:bg-[#38C878]/25 hover:text-white"
+                  >
+                    Approve + Issue Certificate
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDecision("REJECTED")}
+                    className="flex-1 rounded-xl border border-[#F05858]/50 bg-[#F05858]/15 px-4 py-2.5 text-[11px] font-semibold text-[#F05858] transition-colors hover:bg-[#F05858]/25 hover:text-white"
+                  >
+                    Reject
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
+      </VerificationDrawer>
+
+      {/* CSS-animated toast */}
+      <div
+        className={`fixed bottom-6 right-6 z-[80] rounded-xl border px-4 py-3 text-xs transition-all duration-300 ${
+          toast.open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0 pointer-events-none"
+        } ${
+          toast.kind === "ok"
+            ? "border-[#38C878]/40 bg-[#38C878]/15 text-[#38C878]"
+            : "border-[#F05858]/40 bg-[#F05858]/15 text-[#F05858]"
+        }`}
+      >
+        <p className="font-semibold">{toast.kind === "ok" ? "Success" : "Error"}</p>
+        <p className="mt-0.5 text-white/70">{toast.text}</p>
       </div>
-    </main>
+    </div>
   );
 }
-

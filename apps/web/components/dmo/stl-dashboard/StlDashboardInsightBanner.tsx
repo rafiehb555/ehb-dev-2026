@@ -63,7 +63,7 @@ export function StlDashboardInsightBanner({
           <Crown className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" aria-hidden />
           <div>
             <p className="text-sm font-semibold text-amber-100">SUPREME — Pending DMO approval</p>
-            <p className="mt-0.5 text-xs text-ehb-textBody">
+            <p className="mt-0.5 text-xs text-white/70">
               Score eligibility met; L8 activates only after admin approval.
             </p>
           </div>
@@ -75,7 +75,7 @@ export function StlDashboardInsightBanner({
           <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-400" aria-hidden />
           <div>
             <p className="text-sm font-semibold text-amber-100">Complaint limit warning</p>
-            <p className="mt-0.5 text-xs text-ehb-textBody">
+            <p className="mt-0.5 text-xs text-white/70">
               You are close to the complaint cap — upgrades may block soon ({d.pss.complaintsOpen}/{d.pss.complaintsMax}).
             </p>
           </div>
@@ -89,7 +89,7 @@ export function StlDashboardInsightBanner({
         />
         <div>
           <p className="text-sm font-semibold text-white">{risk.label}</p>
-          <p className="mt-0.5 text-xs text-ehb-textBody">
+          <p className="mt-0.5 text-xs text-white/70">
             {remaining} complaint slots left before automatic limit · PSS {d.pss.complaintsOpen}/{d.pss.complaintsMax}
           </p>
         </div>
@@ -98,7 +98,7 @@ export function StlDashboardInsightBanner({
         <Bot className="mt-0.5 h-5 w-5 shrink-0 text-fuchsia-300" aria-hidden />
         <div>
           <p className="text-sm font-semibold text-fuchsia-100">AI insight</p>
-          <p className="mt-0.5 text-xs text-ehb-textBody">
+          <p className="mt-0.5 text-xs text-white/70">
             ~{d.progressToNext}% toward {d.nextLevelShort}. Model score {modelScore}% — align CRB, DMO refills, and complaints.
           </p>
         </div>

@@ -21,22 +21,47 @@ function isExpired(entry: CacheEntry): boolean {
   return Date.now() >= entry.expiresAt;
 }
 
+/**
+ * Hard-cap the time we're willing to wait on an Upstash / Redis REST round-trip.
+ * If the token is set but the host is unreachable, raw `fetch` would block the
+ * entire API route. 300ms is plenty for healthy Redis and cheap to give up on.
+ */
+const REDIS_TIMEOUT_MS = 300;
+
+function redisAbortSignal(): AbortSignal {
+  // `AbortSignal.timeout` is available in Node 18+ and the Next.js runtime.
+  // Fallback to a manual controller if for some reason it's missing.
+  const anySignal = (AbortSignal as unknown as { timeout?: (ms: number) => AbortSignal });
+  if (typeof anySignal.timeout === "function") {
+    return anySignal.timeout(REDIS_TIMEOUT_MS);
+  }
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), REDIS_TIMEOUT_MS);
+  return controller.signal;
+}
+
 async function getFromRedis<T>(key: string): Promise<T | null> {
   const cfg = getRedisRestConfig();
   if (!cfg) return null;
 
-  const res = await fetch(`${cfg.baseUrl}/get/${encodeURIComponent(key)}`, {
-    headers: { Authorization: `Bearer ${cfg.token}` },
-    cache: "no-store",
-  });
-  if (!res.ok) return null;
-
-  const json = (await res.json()) as { result?: string | null };
-  if (!json?.result) return null;
-
   try {
-    return JSON.parse(json.result) as T;
+    const res = await fetch(`${cfg.baseUrl}/get/${encodeURIComponent(key)}`, {
+      headers: { Authorization: `Bearer ${cfg.token}` },
+      cache: "no-store",
+      signal: redisAbortSignal(),
+    });
+    if (!res.ok) return null;
+
+    const json = (await res.json()) as { result?: string | null };
+    if (!json?.result) return null;
+
+    try {
+      return JSON.parse(json.result) as T;
+    } catch {
+      return null;
+    }
   } catch {
+    // Timeouts, network errors, DNS failures → fall back silently.
     return null;
   }
 }
@@ -49,6 +74,7 @@ async function setToRedis(key: string, rawValue: string, ttlSeconds: number): Pr
     method: "POST",
     headers: { Authorization: `Bearer ${cfg.token}` },
     cache: "no-store",
+    signal: redisAbortSignal(),
   }).catch(() => undefined);
 }
 

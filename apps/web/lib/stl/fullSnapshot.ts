@@ -3,6 +3,13 @@ import { computeUserStl, type StlBreakdown } from "@/lib/stl/engine";
 import { EHB_STL_LEVELS, getLevelMeta, getProgressToNextLevel, type EhbStlLevelMeta } from "@/lib/stl/levels";
 import { isMongoObjectId } from "@/lib/mongoId";
 import { evaluateAiAutomation } from "@/lib/ai/automationBrain";
+import {
+  getDemoStlSnapshot,
+  REQUIRED_VERIFICATIONS as DEMO_REQUIRED_VERIFICATIONS,
+  REQUIRED_EXAMS as DEMO_REQUIRED_EXAMS,
+  REQUIRED_REFILLS as DEMO_REQUIRED_REFILLS,
+  COMPLAINT_LIMIT as DEMO_COMPLAINT_LIMIT,
+} from "@/lib/stl/demoSnapshot";
 
 export type StlFullSnapshot = {
   name: string;
@@ -86,77 +93,13 @@ export type StlFullSnapshot = {
   dataSource: "live" | "demo";
 };
 
-const REQUIRED_VERIFICATIONS = 4;
-const REQUIRED_EXAMS = 4;
-const REQUIRED_REFILLS = 4;
-const COMPLAINT_LIMIT = 8;
+const REQUIRED_VERIFICATIONS = DEMO_REQUIRED_VERIFICATIONS;
+const REQUIRED_EXAMS = DEMO_REQUIRED_EXAMS;
+const REQUIRED_REFILLS = DEMO_REQUIRED_REFILLS;
+const COMPLAINT_LIMIT = DEMO_COMPLAINT_LIMIT;
 
 function demoSnapshot(): StlFullSnapshot {
-  const breakdown = {
-    pss: 18,
-    crb: 15,
-    performance: 12,
-    behavior: -4,
-    industries: 8,
-    refilling: 0,
-    total: 49,
-    level: 3,
-    label: "NORMAL",
-  };
-  return {
-    name: "Demo User",
-    stlLevel: 3,
-    levels: EHB_STL_LEVELS,
-    trustScore: 49,
-    progressPercent: 45,
-    levelName: "NORMAL",
-    pss: {
-      kycStatus: "PENDING",
-      kyc: false,
-      level: 2,
-      complaintsCount: 1,
-      complaints: 1,
-      complaintLimit: COMPLAINT_LIMIT,
-    },
-    crb: {
-      verifications: 1,
-      totalVerifications: 1,
-      required: REQUIRED_VERIFICATIONS,
-      requiredVerifications: REQUIRED_VERIFICATIONS,
-      examsPassed: 0,
-      requiredExams: REQUIRED_EXAMS,
-      history: [],
-    },
-    dmo: {
-      refills: 1,
-      refillCount: 1,
-      requiredRefills: REQUIRED_REFILLS,
-      requiredRefillCount: REQUIRED_REFILLS,
-      refillHistory: [],
-    },
-    franchise: { verified: [], pending: [], verifiedLocations: 0, pendingLocations: 0 },
-    complaints: { count: 1, limit: COMPLAINT_LIMIT, nearLimit: false },
-    progress: { percent: 45, nextLevelName: "STANDARD" },
-    nextLevel: { level: 4, name: "STANDARD", minScore: 56 },
-    nextLevelName: "STANDARD",
-    nextLevelLevel: 4,
-    missingRequirements: ["Complete KYC verification", "Finish PSS phase progress"],
-    supreme: { eligible: false, pendingApproval: false, approved: false, rejected: false },
-    upgradeBlocked: false,
-    blocked: false,
-    canUpgrade: true,
-    aiSuggestions: ["Complete KYC verification"],
-    ai: {
-      readinessPercent: 45,
-      guide: "Complete core trust tasks to improve STL.",
-      tasks: ["Complete KYC verification", "Finish PSS phase progress"],
-      recommendations: ["Focus on pending trust tasks before upgrade request"],
-      fraud: { flagged: false, reasons: [], risk: "LOW" },
-      autoDecision: { recommendUpgrade: false, escalateToDmo: false, reason: "More trust steps required" },
-    },
-    breakdown,
-    dataSource: "demo",
-  };
+  return getDemoStlSnapshot();
 }
 
 /**

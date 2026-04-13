@@ -1,318 +1,209 @@
 "use client";
 
-import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+/**
+ * DMO — Multi-Industry Verification
+ *   - VerificationUI primitives only (no <table>, no framer-motion)
+ *   - In-file demo data (prototype only, no fetch)
+ */
 
-type Industry = { id: string; name: string; description: string | null; slug?: string };
-type Verification = {
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import {
+  VerificationStatCard,
+  VerificationRowGrid,
+  VerificationDrawer,
+  VerificationChip,
+  SectionHeader,
+  FilterChipRow,
+  SeverityMeter,
+  type RowColumn,
+  type VerificationTone,
+} from "@/components/dmo/verification/VerificationUI";
+
+type VerifStatus = "PENDING" | "VERIFIED" | "REJECTED" | "EXPIRED";
+type EntityType = "COMPANY" | "SERVICE" | "PRODUCT";
+
+type IndustryVerification = {
   id: string;
-  entityType: "SERVICE" | "PRODUCT" | "COMPANY";
+  industryName: string;
+  industrySlug: string;
+  entityType: EntityType;
   entityId: string;
-  industryId: string;
-  industry: Industry;
-  status: "PENDING" | "VERIFIED" | "REJECTED" | "EXPIRED";
+  entityName: string;
+  status: VerifStatus;
   score: number | null;
   weight: number;
-  expiryDate: string | null;
-  issuedAt: string | null;
-  dmoTaskId: string | null;
   updatedAt: string;
+  dmoTaskId: string | null;
 };
 
-function fmt(v: string | null) {
-  if (!v) return "—";
-  const d = new Date(v);
-  return Number.isNaN(d.getTime()) ? v : d.toLocaleString();
+const DEMO: IndustryVerification[] = [
+  { id: "IV-001", industryName: "E-commerce", industrySlug: "ecommerce", entityType: "COMPANY", entityId: "cmp-goselr", entityName: "GoSellr PK", status: "VERIFIED", score: 88, weight: 1.2, updatedAt: "2026-04-11T09:00:00Z", dmoTaskId: "T-4400" },
+  { id: "IV-002", industryName: "Legal", industrySlug: "legal", entityType: "SERVICE", entityId: "svc-ols-lhr", entityName: "OLS Lahore", status: "VERIFIED", score: 92, weight: 1.5, updatedAt: "2026-04-10T14:30:00Z", dmoTaskId: "T-4395" },
+  { id: "IV-003", industryName: "Medical", industrySlug: "medical", entityType: "COMPANY", entityId: "cmp-wms-isb", entityName: "WMS Islamabad", status: "PENDING", score: null, weight: 1.0, updatedAt: "2026-04-11T11:00:00Z", dmoTaskId: "T-4410" },
+  { id: "IV-004", industryName: "Education", industrySlug: "education", entityType: "SERVICE", entityId: "svc-hps-khi", entityName: "HPS Karachi", status: "PENDING", score: null, weight: 0.8, updatedAt: "2026-04-12T06:00:00Z", dmoTaskId: null },
+  { id: "IV-005", industryName: "Travel", industrySlug: "travel", entityType: "COMPANY", entityId: "cmp-agts-mul", entityName: "AGTS Multan", status: "REJECTED", score: 34, weight: 1.0, updatedAt: "2026-04-09T16:20:00Z", dmoTaskId: "T-4388" },
+  { id: "IV-006", industryName: "Jobs", industrySlug: "jobs", entityType: "PRODUCT", entityId: "prd-jps-01", entityName: "JPS Matching Engine", status: "VERIFIED", score: 79, weight: 1.3, updatedAt: "2026-04-08T12:00:00Z", dmoTaskId: "T-4375" },
+  { id: "IV-007", industryName: "E-commerce", industrySlug: "ecommerce", entityType: "PRODUCT", entityId: "prd-gs-track", entityName: "GoSellr Tracking API", status: "EXPIRED", score: 65, weight: 0.9, updatedAt: "2026-03-15T10:00:00Z", dmoTaskId: "T-4210" },
+];
+
+const STATUS_TONE: Record<VerifStatus, VerificationTone> = {
+  PENDING: "amber",
+  VERIFIED: "green",
+  REJECTED: "red",
+  EXPIRED: "purple",
+};
+
+const ENTITY_TONE: Record<EntityType, VerificationTone> = {
+  COMPANY: "purple",
+  SERVICE: "teal",
+  PRODUCT: "cyan",
+};
+
+function fmtTime(iso: string) {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? iso : d.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
 }
 
-export default function DmoIndustryPage() {
-  const [industries, setIndustries] = useState<Industry[]>([]);
-  const [verifications, setVerifications] = useState<Verification[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [entityType, setEntityType] = useState<"SERVICE" | "PRODUCT" | "COMPANY">("COMPANY");
-  const [entityId, setEntityId] = useState("");
-  const [industryId, setIndustryId] = useState("");
-  const [weight, setWeight] = useState("1");
-  const [status, setStatus] = useState<"ALL" | Verification["status"]>("ALL");
-  const [selected, setSelected] = useState<Verification | null>(null);
-  const [decisionScore, setDecisionScore] = useState("");
-  const [attachIds, setAttachIds] = useState("");
-  const [toast, setToast] = useState<{ open: boolean; kind: "ok" | "err"; text: string }>({ open: false, kind: "ok", text: "" });
-
-  const stats = useMemo(() => {
-    const total = verifications.length;
-    const verified = verifications.filter((v) => v.status === "VERIFIED").length;
-    const pending = verifications.filter((v) => v.status === "PENDING").length;
-    const avgScore = verified > 0 ? Math.round(verifications.filter((v) => v.status === "VERIFIED").reduce((s, v) => s + (v.score ?? 0), 0) / verified) : 0;
-    return { total, verified, pending, avgScore };
-  }, [verifications]);
-
-  const loadIndustries = useCallback(async () => {
-    const res = await fetch("/api/industries?take=64&skip=0", { cache: "no-store" });
-    const json = await res.json();
-    if (!res.ok || json?.success === false) throw new Error(json?.error?.message ?? "Industries load failed");
-    const items = (json?.data?.items ?? []) as Industry[];
-    setIndustries(items);
-    setIndustryId((prev) => prev || (items[0]?.id ?? ""));
-  }, []);
-
-  const loadVerifications = useCallback(async () => {
-    const qs = new URLSearchParams();
-    qs.set("take", "100");
-    if (status !== "ALL") qs.set("status", status);
-    const res = await fetch(`/api/industry/verifications?${qs.toString()}`, { cache: "no-store" });
-    const json = await res.json();
-    if (!res.ok || json?.success === false) throw new Error(json?.error?.message ?? "Verifications load failed");
-    setVerifications((json?.data?.items ?? []) as Verification[]);
-  }, [status]);
-
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      await Promise.all([loadIndustries(), loadVerifications()]);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load industry data");
-    } finally {
-      setLoading(false);
-    }
-  }, [loadIndustries, loadVerifications]);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
-
-  async function requestVerification() {
-    if (!entityId.trim() || !industryId) return;
-    try {
-      const res = await fetch("/api/industry/verify", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          mode: "REQUEST",
-          entityType,
-          entityId: entityId.trim(),
-          industryId,
-          weight: Number(weight),
-        }),
-      });
-      const json = await res.json().catch(() => null);
-      if (!res.ok) throw new Error(json?.error?.message ?? `Request failed: ${res.status}`);
-      setToast({ open: true, kind: "ok", text: "Industry verification requested and DMO task created." });
-      await loadVerifications();
-    } catch (e) {
-      setToast({ open: true, kind: "err", text: e instanceof Error ? e.message : "Request failed" });
-    }
-  }
-
-  async function decide(status: "VERIFIED" | "REJECTED") {
-    if (!selected) return;
-    try {
-      const res = await fetch("/api/industry/verify", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          mode: "DECISION",
-          verificationId: selected.id,
-          status,
-          score: decisionScore.trim() ? Number(decisionScore) : undefined,
-        }),
-      });
-      const json = await res.json().catch(() => null);
-      if (!res.ok) throw new Error(json?.error?.message ?? `Decision failed: ${res.status}`);
-      setToast({ open: true, kind: "ok", text: status === "VERIFIED" ? "Verification approved." : "Verification rejected." });
-      setDecisionScore("");
-      await loadVerifications();
-    } catch (e) {
-      setToast({ open: true, kind: "err", text: e instanceof Error ? e.message : "Decision failed" });
-    }
-  }
-
-  async function attachIndustries() {
-    if (!entityId.trim() || !attachIds.trim()) return;
-    const ids = attachIds.split(",").map((x) => x.trim()).filter(Boolean);
-    if (ids.length === 0) return;
-    try {
-      const res = await fetch("/api/industry/attach", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          entityType,
-          entityId: entityId.trim(),
-          industryIds: ids,
-        }),
-      });
-      const json = await res.json().catch(() => null);
-      if (!res.ok) throw new Error(json?.error?.message ?? `Attach failed: ${res.status}`);
-      setToast({ open: true, kind: "ok", text: "Entity industries mapping updated." });
-    } catch (e) {
-      setToast({ open: true, kind: "err", text: e instanceof Error ? e.message : "Attach failed" });
-    }
-  }
-
+function InfoCell({ label, value, mono }: { label: string; value: React.ReactNode; mono?: boolean }) {
   return (
-    <main className="min-h-screen text-white">
-      <div className="container-ehb py-6">
-        <div className="space-y-4">
-          <section className="space-y-4">
-            <section className="rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-[#031222]/95 to-[#020b18]/95 p-5">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.2em] text-cyan-300">Industry Module</p>
-                  <h1 className="mt-1 text-2xl font-semibold gradient-text">Multi-Industry Verification</h1>
-                  <p className="mt-1 text-xs text-ehb-textBody">Global trust layer: verify entity across multiple sectors with weighted score impact.</p>
-                </div>
-                <div className="flex gap-2">
-                  <Link href="/dmo" className="ehb-btn-secondary ehb-press">Back to DMO</Link>
-                  <button type="button" onClick={() => void load()} className="ehb-btn-primary ehb-press">Refresh</button>
-                </div>
-              </div>
-            </section>
-
-            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">Verifications</div><div className="text-2xl font-semibold">{stats.total}</div></div>
-              <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">Verified</div><div className="text-2xl font-semibold text-emerald-200">{stats.verified}</div></div>
-              <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">Pending</div><div className="text-2xl font-semibold text-amber-200">{stats.pending}</div></div>
-              <div className="ehb-card-elevated"><div className="text-xs ehb-text-muted">Avg Score</div><div className="text-2xl font-semibold text-cyan-200">{stats.avgScore}</div></div>
-            </section>
-
-            <section className="ehb-card-elevated space-y-3">
-              <div className="text-xs font-semibold">Request Industry Verification</div>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
-                <select value={entityType} onChange={(e) => setEntityType(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody">
-                  <option value="COMPANY">COMPANY</option>
-                  <option value="SERVICE">SERVICE</option>
-                  <option value="PRODUCT">PRODUCT</option>
-                </select>
-                <input value={entityId} onChange={(e) => setEntityId(e.target.value)} placeholder="Entity ID (cuid)" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" />
-                <select value={industryId} onChange={(e) => setIndustryId(e.target.value)} className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody">
-                  {industries.map((i) => (
-                    <option key={i.id} value={i.id}>
-                      {i.slug ? `${i.name} (${i.slug})` : i.name}
-                    </option>
-                  ))}
-                </select>
-                <input value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="Weight (0.1 - 5)" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" />
-              </div>
-              {(() => {
-                const sel = industries.find((i) => i.id === industryId);
-                if (!sel?.slug) return null;
-                return (
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-cyan-200/90">
-                    <span className="text-ehb-textMuted">EHB surfaces:</span>
-                    <Link className="hover:underline" href={`/landing/${sel.slug}`}>
-                      Landing
-                    </Link>
-                    <span className="text-ehb-textMuted">·</span>
-                    <Link className="hover:underline" href={`/industry/${sel.slug}`}>
-                      Industry home
-                    </Link>
-                    <span className="text-ehb-textMuted">·</span>
-                    <Link className="hover:underline" href={`/ai-marketplace?industry=${sel.slug}`}>
-                      AI marketplace
-                    </Link>
-                  </div>
-                );
-              })()}
-              <div className="flex gap-2">
-                <button className="ehb-btn-primary ehb-press" onClick={() => void requestVerification()}>Request Verification</button>
-              </div>
-            </section>
-
-            <section className="ehb-card-elevated space-y-3">
-              <div className="text-xs font-semibold">Entity Mapping (Multi-Industry)</div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                <input value={entityId} onChange={(e) => setEntityId(e.target.value)} placeholder="Entity ID (cuid)" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" />
-                <input value={attachIds} onChange={(e) => setAttachIds(e.target.value)} placeholder="Industry IDs comma-separated" className="rounded-xl bg-white/5 border border-white/15 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" />
-              </div>
-              <button className="ehb-btn-secondary ehb-press" onClick={() => void attachIndustries()}>Update Mapping</button>
-            </section>
-
-            <section className="ehb-card-elevated space-y-3">
-              <div className="flex items-center gap-2">
-                <div className="text-xs font-semibold">Verification Queue</div>
-                <select value={status} onChange={(e) => setStatus(e.target.value as any)} className="rounded-xl bg-white/5 border border-white/15 px-2 py-1 text-[11px] text-ehb-textBody">
-                  <option value="ALL">All</option>
-                  <option value="PENDING">PENDING</option>
-                  <option value="VERIFIED">VERIFIED</option>
-                  <option value="REJECTED">REJECTED</option>
-                  <option value="EXPIRED">EXPIRED</option>
-                </select>
-              </div>
-              {loading ? <div className="text-xs text-ehb-textMuted">Loading queue...</div> : null}
-              {error ? <div className="rounded-xl border border-rose-400/40 bg-rose-500/10 p-3 text-xs text-rose-100">{error}</div> : null}
-              <div className="overflow-auto rounded-xl border border-white/10">
-                <table className="min-w-full text-xs">
-                  <thead className="bg-white/5 text-ehb-textBody">
-                    <tr>
-                      <th className="px-3 py-2 text-left">Industry</th>
-                      <th className="px-3 py-2 text-left">Entity</th>
-                      <th className="px-3 py-2 text-left">Status</th>
-                      <th className="px-3 py-2 text-left">Score</th>
-                      <th className="px-3 py-2 text-left">Weight</th>
-                      <th className="px-3 py-2 text-left">Updated</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {!loading ? verifications.map((v) => (
-                      <tr key={v.id} className="border-t border-white/10 hover:bg-white/5 cursor-pointer" onClick={() => setSelected(v)}>
-                        <td className="px-3 py-2">{v.industry?.name ?? v.industryId}</td>
-                        <td className="px-3 py-2"><div>{v.entityType}</div><div className="text-[11px] text-ehb-textMuted">{v.entityId}</div></td>
-                        <td className="px-3 py-2">{v.status}</td>
-                        <td className="px-3 py-2">{v.score ?? "—"}</td>
-                        <td className="px-3 py-2">{Number(v.weight).toFixed(2)}</td>
-                        <td className="px-3 py-2 text-ehb-textMuted">{fmt(v.updatedAt)}</td>
-                      </tr>
-                    )) : null}
-                    {!loading && verifications.length === 0 ? <tr><td colSpan={6} className="px-3 py-8 text-center text-ehb-textMuted">No industry verifications found.</td></tr> : null}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          </section>
-        </div>
-
-        <AnimatePresence>
-          {selected ? (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[70]">
-              <div className="absolute inset-0 bg-black/60" onClick={() => setSelected(null)} />
-              <motion.section initial={{ x: 24, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: 20, opacity: 0 }} className="absolute right-0 top-0 h-full w-full sm:w-[560px] bg-[#020c1b]/95 border-l border-white/10 backdrop-blur-xl p-4 overflow-auto space-y-3">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-sm font-semibold">Industry Verification Decision</h2>
-                  <button className="ehb-btn-secondary ehb-press" onClick={() => setSelected(null)}>Close</button>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-xs space-y-1">
-                  <div><span className="text-ehb-textMuted">Industry:</span> {selected.industry?.name ?? selected.industryId}</div>
-                  <div><span className="text-ehb-textMuted">Entity:</span> {selected.entityType} / {selected.entityId}</div>
-                  <div><span className="text-ehb-textMuted">Current Status:</span> {selected.status}</div>
-                  <div><span className="text-ehb-textMuted">DMO Task:</span> {selected.dmoTaskId ?? "—"}</div>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-2">
-                  <div className="text-xs font-semibold">Decision Score</div>
-                  <input value={decisionScore} onChange={(e) => setDecisionScore(e.target.value)} placeholder="0 - 100 (optional)" className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-ehb-textBody placeholder:text-ehb-textMuted" />
-                  <div className="flex gap-2">
-                    <button className="ehb-btn-primary ehb-press" onClick={() => void decide("VERIFIED")}>Approve (Verified)</button>
-                    <button className="ehb-btn-danger ehb-press" onClick={() => void decide("REJECTED")}>Reject</button>
-                  </div>
-                </div>
-              </motion.section>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {toast.open ? (
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} className={`fixed bottom-6 right-6 z-[80] rounded-xl border px-4 py-3 text-xs ${toast.kind === "ok" ? "border-emerald-400/40 bg-emerald-500/10 text-emerald-100" : "border-rose-400/40 bg-rose-500/10 text-rose-100"}`}>
-              <div className="font-semibold">{toast.kind === "ok" ? "Success" : "Error"}</div>
-              <div>{toast.text}</div>
-              <button className="mt-2 underline" onClick={() => setToast((t) => ({ ...t, open: false }))}>Close</button>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
-      </div>
-    </main>
+    <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
+      <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">{label}</p>
+      <p className={`mt-1 text-sm text-white/90 ${mono ? "font-mono" : ""}`}>{value}</p>
+    </div>
   );
 }
 
+export default function DmoIndustryPage() {
+  const [rows] = useState<IndustryVerification[]>(DEMO);
+  const [statusFilter, setStatusFilter] = useState<"ALL" | VerifStatus>("ALL");
+  const [active, setActive] = useState<IndustryVerification | null>(null);
+
+  const stats = useMemo(() => {
+    const total = rows.length;
+    const verified = rows.filter((v) => v.status === "VERIFIED").length;
+    const pending = rows.filter((v) => v.status === "PENDING").length;
+    const avgScore = verified > 0
+      ? Math.round(rows.filter((v) => v.status === "VERIFIED").reduce((s, v) => s + (v.score ?? 0), 0) / verified)
+      : 0;
+    return { total, verified, pending, avgScore };
+  }, [rows]);
+
+  const visible = statusFilter === "ALL" ? rows : rows.filter((r) => r.status === statusFilter);
+
+  const columns: RowColumn<IndustryVerification>[] = [
+    {
+      key: "entity",
+      header: "Entity",
+      width: "minmax(0,2fr)",
+      render: (r) => (
+        <div className="min-w-0">
+          <div className="truncate text-sm font-semibold text-white">{r.entityName}</div>
+          <div className="text-[10px] text-white/50">{r.industryName} · {r.entityType}</div>
+        </div>
+      ),
+    },
+    { key: "type", header: "Type", width: "minmax(0,0.8fr)", render: (r) => <VerificationChip tone={ENTITY_TONE[r.entityType]}>{r.entityType}</VerificationChip> },
+    { key: "status", header: "Status", width: "minmax(0,0.8fr)", render: (r) => <VerificationChip tone={STATUS_TONE[r.status]}>{r.status}</VerificationChip> },
+    { key: "score", header: "Score", width: "minmax(0,0.6fr)", align: "right", render: (r) => <span className="font-mono text-sm text-white/80">{r.score ?? "—"}</span> },
+    { key: "weight", header: "Weight", width: "minmax(0,0.6fr)", align: "right", render: (r) => <span className="font-mono text-sm text-white/70">{r.weight.toFixed(2)}</span> },
+    { key: "updated", header: "Updated", width: "minmax(0,1fr)", align: "right", render: (r) => <span className="text-[10px] text-white/45">{fmtTime(r.updatedAt)}</span> },
+  ];
+
+  return (
+    <div className="space-y-6">
+      <header className="relative overflow-hidden rounded-2xl border border-cyan-400/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #67E8F9 25%, #7B6EF6 50%, #2BBFA0 75%, transparent 100%)" }} />
+        <div className="pointer-events-none absolute left-3 top-3 h-6 w-6 border-l-[1.5px] border-t-[1.5px] border-cyan-400/50" />
+        <div className="pointer-events-none absolute bottom-3 right-3 h-6 w-6 border-b-[1.5px] border-r-[1.5px] border-[#7B6EF6]/45" />
+        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br from-cyan-400/18 via-[#7B6EF6]/12 to-transparent blur-3xl" />
+        <div className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="min-w-0 space-y-2">
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em]">
+              <Link href="/dmo" className="text-white/40 hover:text-white/70 transition-colors">DMO</Link>
+              <span className="text-white/25">/</span>
+              <span className="text-cyan-300">Industry</span>
+            </div>
+            <h1 className="text-2xl font-bold text-white md:text-3xl">Multi-Industry Verification</h1>
+            <p className="max-w-2xl text-sm text-white/65">
+              Global trust layer: verify entity across multiple sectors with weighted score impact.
+              Phase 1 (6 industries) live — Phase 2/3 queue expanding to 32 industries.
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <VerificationStatCard tone="cyan" label="Verifications" value={stats.total} sub="total records" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /></svg>} />
+        <VerificationStatCard tone="green" label="Verified" value={stats.verified} sub="approved entities" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M5 12l4 4L19 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>} />
+        <VerificationStatCard tone="amber" label="Pending" value={stats.pending} sub="awaiting decision" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" /><path d="M12 7v5l3 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
+        <VerificationStatCard tone="purple" label="Avg score" value={stats.avgScore} sub="verified entities" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.2 1 5.9L12 16.5l-5.3 2.8 1-5.9L3.5 9.2l5.9-.9L12 3z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /></svg>} />
+      </section>
+
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader title="Status distribution" />
+        <SeverityMeter segments={[
+          { label: "Verified", value: stats.verified, tone: "green" },
+          { label: "Pending", value: stats.pending, tone: "amber" },
+          { label: "Rejected", value: rows.filter((r) => r.status === "REJECTED").length, tone: "red" },
+          { label: "Expired", value: rows.filter((r) => r.status === "EXPIRED").length, tone: "purple" },
+        ]} />
+      </section>
+
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader eyebrow="Trust layer" title="Verification queue" hint="Click row for detail + decision" right={<span className="text-[10px] text-white/45">{visible.length} row(s)</span>} />
+        <div className="mt-3">
+          <FilterChipRow<"ALL" | VerifStatus> options={[
+            { value: "ALL", label: `All · ${rows.length}` },
+            { value: "PENDING", label: `Pending · ${stats.pending}` },
+            { value: "VERIFIED", label: `Verified · ${stats.verified}` },
+            { value: "REJECTED", label: "Rejected" },
+            { value: "EXPIRED", label: "Expired" },
+          ]} value={statusFilter} onChange={setStatusFilter} />
+        </div>
+        <div className="mt-4">
+          <VerificationRowGrid<IndustryVerification> rows={visible} columns={columns} onRowClick={(r) => setActive(r)} getRowTone={(r) => STATUS_TONE[r.status]} emptyTitle="No verifications in this filter" emptyHint="Adjust filter to see records." />
+        </div>
+      </section>
+
+      {/* Industry links */}
+      <section className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        {["ecommerce", "legal", "medical", "education", "jobs", "travel"].map((slug) => (
+          <Link
+            key={slug}
+            href={`/industry/${slug}`}
+            className="group relative overflow-hidden rounded-xl border border-white/10 bg-[#13162A]/80 p-3 text-center transition-all duration-200 hover:-translate-y-[2px] hover:border-cyan-400/40"
+          >
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/55">{slug}</p>
+            <p className="mt-1 text-[11px] font-semibold text-cyan-200 transition-colors group-hover:text-white">Open →</p>
+          </Link>
+        ))}
+      </section>
+
+      <VerificationDrawer open={Boolean(active)} onClose={() => setActive(null)} title={active ? active.entityName : "Verification detail"} subtitle={active ? `${active.id} · ${active.industryName} · ${active.entityType}` : undefined} severity={active?.status === "REJECTED" ? "high" : active?.status === "PENDING" ? "warning" : "info"}>
+        {active ? (
+          <div className="space-y-4">
+            <div className="flex flex-wrap gap-2">
+              <VerificationChip tone={ENTITY_TONE[active.entityType]}>{active.entityType}</VerificationChip>
+              <VerificationChip tone={STATUS_TONE[active.status]}>{active.status}</VerificationChip>
+              <VerificationChip tone="cyan">{active.industryName}</VerificationChip>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <InfoCell label="Entity" value={active.entityName} />
+              <InfoCell label="Entity ID" value={active.entityId} mono />
+              <InfoCell label="Industry" value={active.industryName} />
+              <InfoCell label="Score" value={active.score ?? "Not scored"} mono />
+              <InfoCell label="Weight" value={active.weight.toFixed(2)} mono />
+              <InfoCell label="DMO task" value={active.dmoTaskId ?? "—"} mono />
+              <InfoCell label="Updated" value={fmtTime(active.updatedAt)} />
+            </div>
+            <div className="grid grid-cols-2 gap-2 pt-2">
+              <button type="button" className="rounded-xl border border-[#38C878]/40 bg-[#38C878]/12 px-3 py-2 text-[11px] font-semibold text-[#38C878] transition-colors hover:border-[#38C878]/70 hover:bg-[#38C878]/20">Approve (verify)</button>
+              <button type="button" className="rounded-xl border border-[#F05858]/40 bg-[#F05858]/12 px-3 py-2 text-[11px] font-semibold text-[#F05858] transition-colors hover:border-[#F05858]/70 hover:bg-[#F05858]/20">Reject</button>
+            </div>
+          </div>
+        ) : null}
+      </VerificationDrawer>
+    </div>
+  );
+}

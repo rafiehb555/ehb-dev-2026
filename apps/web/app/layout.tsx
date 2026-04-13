@@ -8,12 +8,17 @@ import { TopNavTabs } from "@/components/TopNavTabs";
 import { HeaderSearch } from "@/components/HeaderSearch";
 import { NotificationsBell } from "@/components/NotificationsBell";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { GlobalThemeSwitcher } from "@/components/GlobalThemeSwitcher";
+import { ThemeCSSInjector } from "@/components/ThemeCSSInjector";
 
-/** Ships with HTML so base theme applies even if `/_next/static/css/*.css` fails to load. */
+/** Critical CSS — base dark + theme-aware overrides to prevent flash of wrong theme. */
 const EHB_CRITICAL_CSS = `
-html{-webkit-text-size-adjust:100%;background-color:#0d1017!important}
-body{margin:0;min-height:100vh;background-color:#0d1017!important;color:#e5e7eb;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+html{-webkit-text-size-adjust:100%;background-color:#080A14!important}
+body{margin:0;min-height:100vh;background-color:#080A14!important;color:#e5e7eb;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 main{background:transparent!important}
+html[data-ehb-theme="white"],html[data-ehb-theme="white"] body{background-color:#ECEDF6!important;color:#12133A!important}
+html[data-ehb-theme="purple"],html[data-ehb-theme="purple"] body{background-color:#08021E!important;color:#F0E0FF!important}
+html[data-ehb-theme="midnight"],html[data-ehb-theme="midnight"] body{background-color:#010812!important;color:#E0F4FF!important}
 `;
 
 /** EHB_UIUX_DESIGN_PLAN.md — primary UI font Inter */
@@ -46,8 +51,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         <style dangerouslySetInnerHTML={{ __html: EHB_CRITICAL_CSS }} />
+        {/* Prevent theme flash: set data-ehb-theme before first paint */}
+        <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem("ehb-dmo-theme");if(t&&["dark","white","purple","midnight"].includes(t))document.documentElement.setAttribute("data-ehb-theme",t);else document.documentElement.setAttribute("data-ehb-theme","dark")}catch(e){document.documentElement.setAttribute("data-ehb-theme","dark")}` }} />
       </head>
       <body className="min-h-screen font-sans text-white antialiased text-readability">
+        <ThemeCSSInjector />
         <div className="min-h-[100dvh] flex flex-col page-mesh relative">
           {/* Center shine – hero jaisi lighting beech mein */}
           <div className="fixed inset-0 pointer-events-none z-0" aria-hidden style={{
@@ -91,6 +99,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <HeaderSearch />
               <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                 <TopNavTabs />
+                <GlobalThemeSwitcher />
                 <NotificationsBell />
                 <span className="text-xs sm:text-sm font-semibold text-[#33C3FF] whitespace-nowrap">850.00 EHBGC</span>
               </div>

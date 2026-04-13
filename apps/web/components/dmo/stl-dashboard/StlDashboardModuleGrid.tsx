@@ -114,21 +114,21 @@ export function StlDashboardModuleGrid({ data: d, snapshot }: { data: StlDashboa
               <h3 className="text-sm font-semibold text-white">PSS (Virtual Trust)</h3>
             </div>
             <span className="rounded-full border border-emerald-500/35 bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-400">
-              KYC ✓
+              KYC <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="inline-block"><path d="M5 12l5 5L20 7" /></svg>
             </span>
           </div>
           <dl className="mt-4 space-y-3 text-sm">
             <div className="flex justify-between border-b border-white/5 py-1">
-              <dt className="text-ehb-textMuted">Risk</dt>
+              <dt className="text-white/50">Risk</dt>
               <dd className={`font-semibold ${risk.cls}`}>{risk.label}</dd>
             </div>
             <div className="flex justify-between border-b border-white/5 py-1">
-              <dt className="text-ehb-textMuted">Level</dt>
+              <dt className="text-white/50">Level</dt>
               <dd className="text-white">{d.pss.phaseLabel}</dd>
             </div>
             <div>
               <div className="flex justify-between gap-2 py-1">
-                <dt className="text-ehb-textMuted">Complaints</dt>
+                <dt className="text-white/50">Complaints</dt>
                 <dd className="font-mono text-amber-200">
                   {d.pss.complaintsOpen} / {d.pss.complaintsMax}
                 </dd>
@@ -139,7 +139,7 @@ export function StlDashboardModuleGrid({ data: d, snapshot }: { data: StlDashboa
                   style={{ width: `${complaintPct}%` }}
                 />
               </div>
-              <p className="mt-1 text-[10px] text-ehb-textMuted">
+              <p className="mt-1 text-[10px] text-white/50">
                 {remaining} remaining before limit
               </p>
             </div>
@@ -163,7 +163,7 @@ export function StlDashboardModuleGrid({ data: d, snapshot }: { data: StlDashboa
               <dl className="mt-4 space-y-2 text-sm">
                 <div>
                   <div className="flex justify-between">
-                    <dt className="text-ehb-textMuted">Verifications</dt>
+                    <dt className="text-white/50">Verifications</dt>
                     <dd className="font-mono text-white">
                       {d.crb.verifications.current}/{d.crb.verifications.target}
                     </dd>
@@ -177,7 +177,7 @@ export function StlDashboardModuleGrid({ data: d, snapshot }: { data: StlDashboa
                 </div>
                 <div>
                   <div className="flex justify-between">
-                    <dt className="text-ehb-textMuted">Exams passed</dt>
+                    <dt className="text-white/50">Exams passed</dt>
                     <dd className="font-mono text-white">
                       {d.crb.examsPassed.current}/{d.crb.examsPassed.target}
                     </dd>
@@ -206,7 +206,7 @@ export function StlDashboardModuleGrid({ data: d, snapshot }: { data: StlDashboa
                   ) : (
                     <XCircle className="h-4 w-4 shrink-0 text-red-400" aria-hidden />
                   )}
-                  <span className={h.ok ? "text-ehb-textBody" : "text-red-300/90"}>{h.label}</span>
+                  <span className={h.ok ? "text-white/70" : "text-red-300/90"}>{h.label}</span>
                 </div>
               </li>
             ))}
@@ -233,14 +233,14 @@ export function StlDashboardModuleGrid({ data: d, snapshot }: { data: StlDashboa
           </div>
           <div className="mt-3 rounded-lg border border-white/10 bg-black/30 p-2">
             <DmoSparkline pts={sparkPoints} />
-            <p className="text-center text-[10px] text-ehb-textMuted">Refill + trust activity</p>
+            <p className="text-center text-[10px] text-white/50">Refill + trust activity</p>
           </div>
           <dl className="mt-4 space-y-2 text-sm">
             <div className="flex justify-between">
-              <dt className="text-ehb-textMuted">Refills</dt>
+              <dt className="text-white/50">Refills</dt>
               <dd className="font-mono text-amber-100">
                 {d.dmo.refills.current}/{d.dmo.refills.target}{" "}
-                <span className="text-ehb-textMuted">({pct(d.dmo.refills.current, d.dmo.refills.target)}%)</span>
+                <span className="text-white/50">({pct(d.dmo.refills.current, d.dmo.refills.target)}%)</span>
               </dd>
             </div>
             <div className="h-2 overflow-hidden rounded-full bg-black/40">
@@ -250,11 +250,11 @@ export function StlDashboardModuleGrid({ data: d, snapshot }: { data: StlDashboa
               />
             </div>
             <div className="flex justify-between">
-              <dt className="text-ehb-textMuted">Last amount</dt>
+              <dt className="text-white/50">Last amount</dt>
               <dd className="text-white">{d.dmo.lastRefillAmount}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-ehb-textMuted">Status</dt>
+              <dt className="text-white/50">Status</dt>
               <dd className="capitalize text-white">{d.dmo.statusLabel}</dd>
             </div>
           </dl>
@@ -277,7 +277,7 @@ export function StlDashboardModuleGrid({ data: d, snapshot }: { data: StlDashboa
             <h3 className="text-sm font-semibold text-white">Franchise</h3>
           </div>
           <div className="mt-4">
-            <div className="flex justify-between text-[11px] text-ehb-textMuted">
+            <div className="flex justify-between text-[11px] text-white/50">
               <span>Coverage</span>
               <span className="font-mono text-violet-200">{coveragePct}%</span>
             </div>
@@ -291,16 +291,16 @@ export function StlDashboardModuleGrid({ data: d, snapshot }: { data: StlDashboa
           <ul className="mt-4 space-y-3 text-sm">
             {d.franchise.verifications.map((v) => (
               <li key={v.city} className="flex items-center justify-between border-b border-white/5 pb-2 last:border-0">
-                <span className="text-ehb-textBody">{v.city}</span>
+                <span className="text-white/70">{v.city}</span>
                 {v.done ? (
-                  <span className="text-emerald-300">Verified ✓</span>
+                  <span className="inline-flex items-center gap-1 text-emerald-300">Verified <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l5 5L20 7" /></svg></span>
                 ) : (
-                  <span className="text-amber-200/90">Pending ⏳</span>
+                  <span className="inline-flex items-center gap-1 text-amber-200/90">Pending <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg></span>
                 )}
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-xs text-ehb-textMuted">Total verifications: {d.franchise.totalLabel}</p>
+          <p className="mt-2 text-xs text-white/50">Total verifications: {d.franchise.totalLabel}</p>
           <Link
             href="/dmo/franchise"
             className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-violet-400/40 bg-violet-500/15 py-2.5 text-sm font-medium text-violet-100 transition hover:bg-violet-500/25"

@@ -88,13 +88,13 @@ export default function DmoModulePage() {
 
   return (
     <main className="min-h-screen text-white">
-      <div className="container-ehb py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         <div className="space-y-4">
           <section className="space-y-4">
             {!moduleDef ? (
-              <div className="ehb-card-elevated">
+              <div className="rounded-2xl border border-white/10 bg-[#13162A] p-5">
                 <div className="text-sm font-semibold text-rose-200">Module not found</div>
-                <div className="text-xs text-ehb-textMuted mt-1">The selected module is not configured in DMO shell.</div>
+                <div className="text-xs text-white/50 mt-1">The selected module is not configured in DMO shell.</div>
               </div>
             ) : (
               <>
@@ -103,9 +103,9 @@ export default function DmoModulePage() {
                     <div>
                       <div className="text-[11px] uppercase tracking-[0.18em] text-cyan-300">DMO Module View</div>
                       <h1 className="text-lg font-semibold text-white">{moduleDef.title}</h1>
-                      <p className="text-xs text-ehb-textBody mt-1">{moduleDef.description}</p>
+                      <p className="text-xs text-white/70 mt-1">{moduleDef.description}</p>
                     </div>
-                    <Link href={moduleDef.targetPath} className="ehb-btn-secondary ehb-press">
+                    <Link href={moduleDef.targetPath} className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 font-semibold text-white/75 transition-colors hover:border-white/20 hover:bg-white/[0.07] hover:text-white">
                       Open Full Page
                     </Link>
                   </div>

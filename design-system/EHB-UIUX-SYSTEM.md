@@ -737,6 +737,388 @@ This is your spec. If a screen doesn't match it, it's the screen that's wrong.
 
 ## Changelog
 
+- **2026-04-12 · v1.12** — **Inline style elimination — Round 2 (9 module pages).**
+  Converted remaining inline styles in: `earnings-engine/page.tsx`,
+  `wallet-control/page.tsx`, `complaints/page.tsx`, `pss/steps/page.tsx`,
+  `pss/risk/page.tsx`, `stl/page.tsx`, `refill-management/page.tsx`,
+  `franchise/page.tsx`, `activity-engine/last-7d/page.tsx`. Converted
+  `backdropFilter` → Tailwind `backdrop-blur-xl`, static backgrounds →
+  Tailwind card classes. Dynamic tone/color styles (getStlMeta, getStlTone,
+  progress bar widths, textShadow, boxShadow) correctly preserved as inline.
+  46 of 119 pages now have zero inline styles. Remaining ~258 inline styles
+  are exclusively dynamic (computed colors, gradients, progress widths).
+  TSC: 0 errors.
+
+- **2026-04-12 · v1.11** — **Inline style elimination — Round 1 (16 pages rebuilt).**
+  Completely rebuilt 4 notification sub-pages (all, critical, warnings, system)
+  from scratch — removed 72+ inline styles, added breadcrumb navigation, premium
+  headers, InfoCell pattern in drawers. Rebuilt 12 agent-generated sub-pages
+  with full Tailwind conversion: task-system (sla, routing, queues), settings
+  (roles, users, config, permissions), activity-engine (audit, last-24h),
+  ai-assistant (suggestions, recommendations, history). Also fixed 5 files
+  with legacy `gradient-text` CSS class → `text-white`, 5 files with
+  `rounded-full` buttons → `rounded-xl`. TSC: 0 errors. Total: 275+ inline
+  styles eliminated across 16 pages.
+
+- **2026-04-12 · v1.10** — **Full quality sweep & polish.**
+  Fixed: 10 missing "use client" directives (franchise/*, preview, stl-admin,
+  super-admin, applications, ehb-stl-level). Eliminated last emoji/Unicode
+  chars from 9 files (approvals/*, notifications/*, settings/*). Replaced
+  `container-ehb` legacy class in 7 page files with Tailwind
+  `max-w-7xl mx-auto px-4 sm:px-6`. Replaced `ehb-card-elevated` in
+  module/[slug]/page.tsx with design-token card class. Fixed broken
+  template literals in 4 notification files (backtick restoration after
+  Unicode sweep). TSC: 0 errors. DMO ecosystem: 119 pages + 34 components.
+  Grep verification: 0 emoji hits, 0 legacy CSS class hits, 0 TS errors.
+
+- **2026-04-12 · v1.9** — **DMO Intelligence + remaining Operations — 27 new pages.**
+  Refill Management (4): `active/`, `expiring/`, `expired/`, `completed/`.
+  Activity Engine (3): `last-24h/`, `last-7d/`, `audit/` (immutable log).
+  Task System (3): `queues/` (module-grouped), `sla/` (SLA timers with
+  breach tracking), `routing/` (auto-assignment rules).
+  AI Assistant (3): `suggestions/` (action recommendations with confidence),
+  `recommendations/` (strategic AI with ROI), `history/` (interaction log).
+  Analytics (3): `kpis/` (24 KPIs across modules), `trends/` (growth/
+  retention/churn), `segments/` (user segmentation by tier).
+  Blockchain Control (3): `stl-proofs/` (Polkadot on-chain verification),
+  `crb-hashes/` (certificate hash anchoring), `explorer/` (block browser).
+  Notifications (4): `all/`, `critical/`, `warnings/`, `system/`.
+  Settings (4): `users/`, `roles/`, `permissions/`, `config/`.
+  All 27 pages verified — TSC: 0 errors. DMO ecosystem: 119 pages
+  (97 dedicated + 22 catch-all). Every nav sub-route now has a rich page.
+
+- **2026-04-12 · v1.8** — **DMO Operations mega-build — 14 new rich pages.**
+  Wallet Control: `balances/page.tsx` (entity wallets, freeze/unfreeze),
+  `escrow/page.tsx` (buyer/seller escrow tracking, release conditions),
+  `lock/page.tsx` (coin staking with APY, lock periods, early withdrawal).
+  Earnings Engine: `split/page.tsx` (40/25/20/15 revenue split visualization),
+  `payouts/page.tsx` (payout scheduling with bank/wallet methods),
+  `history/page.tsx` (full revenue audit trail across 6 industries).
+  Franchise Control: `tasks/page.tsx` (task management with priorities),
+  `in-progress/page.tsx` (operation progress tracking with milestones),
+  `reports/page.tsx` (territory performance reports),
+  `escalations/page.tsx` (escalation pipeline with severity routing).
+  Complaints: `open/page.tsx` (active complaints with SLA tracking),
+  `ladder/page.tsx` (5-level penalty system: Warning→Fine→Suspension→
+  STL Downgrade→Permanent Ban), `appeals/page.tsx` (appeal decisions
+  with review deadlines), `history/page.tsx` (resolution archive with
+  satisfaction scores). All 14 pages follow hero/stat/grid/drawer pattern,
+  correct VerificationUI API, in-file demo data. TSC: 0 errors.
+  DMO ecosystem: 92 pages (70 dedicated + 22 catch-all).
+
+- **2026-04-12 · v1.7** — **DMO sub-page expansion — 8 new rich pages.**
+  Added dedicated sub-pages across three modules:
+  PSS: `fraud/page.tsx` (fraud detection dashboard with risk scoring,
+  10 alert types, AI accuracy stats), `refilling/page.tsx` (re-verification
+  pipeline with attempt tracking, 5 refill reasons, reviewer assignment).
+  CRB: `docs/page.tsx` (document repository with 6 doc types, verification
+  status, file metadata), `certificates/page.tsx` (issued certs with tier
+  classification, blockchain hashes, STL level badges),
+  `expiry/page.tsx` (expiry tracker with days-left countdown, urgency
+  sorting, auto-renewal status).
+  Approvals: `approved/page.tsx` (approved decisions with turnaround
+  metrics), `rejected/page.tsx` (rejection reasons, appeal eligibility),
+  `history/page.tsx` (full decision audit log with SeverityMeter
+  distribution). Also rewrote `crb/inspection/page.tsx` to fix 17 TS
+  errors from incorrect VerificationUI API usage. All pages use correct
+  VerificationTone values, proper component prop APIs, in-file demo data.
+  TSC pass: `npx tsc --noEmit` → EXIT=0. DMO ecosystem now at 78 pages
+  (56 dedicated + 22 catch-all handlers).
+
+- **2026-04-11 · v1.13** — **Shared neumorphism tokens module.** New
+  file: `apps/web/components/dmo/_shared/neumorphism.ts` (123 lines).
+  Extracted the 7 previously-duplicated design tokens (`Tone` union,
+  `TONE_FG`, `TONE_BG`, `TONE_BORDER`, `TONE_GLOW_HEX`, `NEU_CARD`,
+  `NEU_INSET`, `NEU_SMALL`) into a single source of truth. Both
+  `DmoPrototypeWorkspace.tsx` (2,598 → **2,534 lines**, −64) and
+  `DmoLandingPrototype.tsx` (968 → **907 lines**, −61) now `import`
+  from the shared module instead of redeclaring the constants locally.
+  Context: the v1.12 QA pass caught a real drift in `NEU_SMALL`
+  (landing had heavier 8 px shadows vs canonical 6 px); that was
+  patched manually, but the duplication risk remained. This refactor
+  makes the drift class of bug **mechanically impossible** for all
+  future silver-chrome prototypes. Module ships full JSDoc so the next
+  engineer sees the rules: no local redeclarations, no shadow tweaks
+  without a changelog entry, `Tone` union must stay in lockstep with
+  the chip/accent tables in this doc. TSC pass: `npx tsc --noEmit` in
+  `apps/web` → **EXIT=0**. Zero visual regression — the extracted
+  constants are byte-identical to the canonical StlWidget v1.8 values.
+  Next graduation step: when live pages start migrating off the Phase
+  7 cinematic theme, this module will be promoted into `packages/ui/`
+  or `@/components/ui/theme.ts` as the app-wide canonical theme layer.
+
+- **2026-04-11 · v1.12** — **Phase 9 silver-chrome DMO landing prototype
+  (`/dmo/preview`).** New file:
+  `apps/web/components/dmo/DmoLandingPrototype.tsx` (~750 lines) and new
+  static route `apps/web/app/dmo/preview/page.tsx` that renders it.
+  Non-destructive migration strategy: the live Phase 7 cinematic landing
+  at `/dmo` (with `useSTL` live data) is **intentionally untouched** so the
+  team can compare both entry-points side-by-side before the backend
+  wiring sprint. The new landing is pure silver-chrome + neumorphism and
+  ships five sections: (1) **Hero card** with purple+teal radial glows, a
+  4-up KPI grid (STL level, PSS trust score, CRB verifications, DMO refill
+  progress), an AI copilot ribbon, and an action strip that links back to
+  the live `/dmo` for comparison; (2) **Verification Trinity** — 3
+  neumorphism cards (PSS teal, CRB green, STL purple) each with an 88 px
+  `RingGauge` SVG (per-tone glow) and a 4-row `ChecklistRow` stack; (3)
+  **Intelligence row** — 4 clickable `<Link>` cards (AI Next Steps,
+  Blockchain Proof, Franchise Network, Activity Engine) with hover radial
+  glow; (4) **Earnings + Benefits** — 2-column layout with a 7-day
+  `EarningsBars` gradient chart and an STL benefits ladder (L1–L6, current
+  level highlighted); (5) **Module rail** driven by
+  `groupDmoSections(DMO_NAV_SECTIONS)` so all 18 canonical modules render
+  across the 4 group headers. Design tokens (`Tone`, `TONE_FG/BG/BORDER`,
+  `TONE_GLOW_HEX`, `NEU_CARD`, `NEU_INSET`, `NEU_SMALL`) are
+  **intentionally duplicated inline** to avoid a risky refactor of the
+  tested `DmoPrototypeWorkspace`. **Mock data only** — the component
+  exports a single `MOCK` object (STL L4 PREMIUM, trust 78, 3/4 exams, 3/4
+  refills, 12/15 franchises) with **zero** `useSTL` usage, honouring the
+  design-only constraint. Footer watermark reads
+  `Phase 9 · Silver chrome prototype · DESIGN ONLY · Mock data only — no
+  API wiring`. TSC pass: `npx tsc --noEmit` in `apps/web` → **EXIT=0**.
+
+- **2026-04-11 · v1.11** — **Phase 9 DMO prototype workspace — Iteration 3
+  (interactive row drawers).** File:
+  `apps/web/components/dmo/DmoPrototypeWorkspace.tsx` (2,135 → **2,598
+  lines**). Added a slide-out `DetailDrawer` component (480 px max
+  width, right-anchored, neumorphism shell with accent radial glow,
+  backdrop blur, ESC-to-close, body-scroll lock). Drawer renders four
+  optional sections: 2-column **fields grid** (6 key-value tiles in
+  `NEU_INSET` cards), **timeline** (per-event tone-mapped cards), **evidence**
+  (bordered callouts using `TONE_BG/BORDER`), and **footer actions**
+  (chip-style buttons with a "Prototype · design-only" watermark so
+  nobody accidentally wires them up). New types: `DrawerField`,
+  `DrawerTimelineItem`, `DrawerAction`, `DrawerBlueprint`; `RowTile`
+  now carries an optional `drawer?: DrawerBlueprint`. The main workspace
+  now uses `useState<DrawerBlueprint | null>` + a keyboard-accessible
+  `<tr role="button" tabIndex={0}>` with Enter/Space handlers. When at
+  least one row in a view has a drawer, the table auto-renders an extra
+  chevron column and a `N clickable` chip next to the entries count.
+  Signature drawers wired to 5 marquee rows across the prototype:
+  **up-guard/signals · SIG-0912** (KYC doc mismatch, red accent, 3
+  actions), **wallet-control/escrow · DEAL-9921** (teal accent,
+  release/hold/refund), **complaints/open · CMP-8821** (red accent, SLA
+  countdown, penalty actions), **earnings-engine/payouts · PO-3309**
+  (STL-hold scenario linked to CMP-8821, amber accent), and
+  **blockchain-control/stl-proofs · 0xabc1…4412** (teal accent, chain
+  verification actions). TSC pass: `npx tsc --noEmit` → EXIT=0.
+  **Still design-only** — every drawer action button has
+  `onClick={(e) => e.preventDefault()}` and a "Prototype · design-only"
+  footer label.
+
+- **2026-04-11 · v1.10** — **Phase 9 DMO prototype workspace — Iteration 2
+  (full depth for all 10 modules).** File:
+  `apps/web/components/dmo/DmoPrototypeWorkspace.tsx`. Replaced the
+  `scaffoldView` stubs for the remaining 7 modules (`earnings-engine`,
+  `refill-management`, `activity-engine`, `task-system`, `ai-assistant`,
+  `analytics`, `blockchain-control`) with fully-structured
+  `ViewBlueprint` objects matching the depth of the 3 iteration-1
+  demos (`wallet-control`, `up-guard`, `complaints`). Every module now
+  ships 2–4 complete views with 4 stat cards, 5–6 row main table with
+  tone-mapped `Chip` cells, insight callouts, and an accent visual.
+  Added 7 new reusable SVG/neumorphism accent visuals before the MODULES
+  registry: `LivePulseTimeline` (purple event ticker), `KpiSparkGrid`
+  (4 KPI cards + sparklines), `ChatBubbleMock` (4-message AI chat),
+  `BlockchainExplorerRow` (4 block cards with hash + event count),
+  `RefillCountdownGrid` (4 `RingGauge` countdowns), `SlaRingGrid`
+  (4 SLA timer rings with per-task status tone), `PayoutSparkline`
+  (7-day bar chart). All visuals use the existing `TONE_FG/GLOW_HEX`
+  palette — no new tokens introduced. The no-longer-used `scaffoldView`
+  helper was removed. TSC pass: `npx tsc --noEmit` → EXIT=0. Still
+  **design-only** per user instruction — no API writes, no routing
+  changes beyond the iteration-1 catch-all dispatch.
+
+- **2026-04-11 · v1.9** — **Phase 9 DMO prototype workspace (silver
+  chrome + neumorphism).** New component
+  `apps/web/components/dmo/DmoPrototypeWorkspace.tsx` covers the 10 DMO
+  modules the legacy `DmoSectionWorkspace` never implemented: up-guard,
+  wallet-control, earnings-engine, refill-management, complaints,
+  activity-engine, task-system, ai-assistant, analytics,
+  blockchain-control. Iteration 1 fleshes wallet-control, up-guard, and
+  complaints as direction demos (3 fully styled views each with insights
+  and accent visuals — `PenaltyLadder`, `WalletSplitRing`,
+  `UpGuardRadar`). Remaining 7 modules are scaffolded via `scaffoldView`
+  helper so all sub-routes render the silver chrome shell with mock
+  content. Shared atoms: `Chip`, `StatCard`, `MiniBar`, `RingGauge`
+  (reusable 72 px SVG gauge with per-tone glow, tone-mapped
+  `TONE_FG/BG/BORDER/GLOW_HEX` palette covering purple/teal/amber/red/
+  green/cyan/slate). Neumorphism shared styles `NEU_CARD`, `NEU_INSET`,
+  `NEU_SMALL` mirror the StlWidget v1.8 tokens. The catch-all route
+  `/dmo/[section]/[view]/page.tsx` now dispatches via
+  `isPrototypeSection(section)` to either the new workspace or the
+  legacy `DmoSectionWorkspace` — so existing 14 legacy sections are
+  untouched and the new 10 modules light up ~40 sub-routes that
+  previously rendered a "not configured" error. **Explicitly
+  design-only** (no API, no writes) per the user's instruction that
+  this phase is UI/UX prototype, not frontend wiring.
+
+- **2026-04-11 · v1.8** — **STL Widget neumorphism 3D rebuild** (reference:
+  user-uploaded "UI DASHBOARD" neumorphic mockup with circular RAM USAGE
+  ring gauge and neon pill bars). File:
+  `apps/web/components/features/stl/StlWidget.tsx` — data-fetching logic
+  (`/api/stl/full-snapshot`) preserved bit-for-bit; only the visual shell
+  replaced. **New primitives:** (1) `NEU_BASE` / `NEU_INSET` shared CSS
+  objects that codify the neumorphic dark-raised look: `NEU_BASE` uses a
+  `145°` diagonal gradient (`#1e2131 → #14162a → #0d0f1c`) with a 4-layer
+  box-shadow stack (22 px outer drop + −10 px chrome glow + inset 2 px
+  top highlight + inset −2 px bottom bevel); `NEU_INSET` flips that to
+  a sunken dish (inset 6 px black crevice + inset −4 px rim). (2)
+  `<CircularGauge>` — 220 px diameter dark-inset dish wrapping an SVG
+  ring (`strokeWidth 14`, `strokeLinecap round`) whose stroke is a
+  brand-gradient `#7B6EF6 → #A098F8 → #2BBFA0` run through a
+  `feGaussianBlur stdDeviation 3.5` glow filter, animated via
+  `stroke-dasharray` over `1200 ms cubic-bezier(.2,.8,.2,1)`; the inner
+  embossed disc uses a radial `#262a3f → #15182a → #0c0e1a` with inset
+  shadows and a drop glow, displays the trust score at 38 px font with a
+  text-shadow halo, a "STL" chip badge, and the level name eyebrow.
+  (3) `<NeonPillBar>` — 14 px tall neumorphic pill (inset shadow track)
+  with a gradient fill (per-row color pair) that carries its own 4-layer
+  box-shadow (`0 0 10px` neon glow + `0 0 18px` outer glow + inset
+  highlight + inset shadow) plus a floating `%` tag pill pinned to the
+  end of the fill. **Bar palette:** PSS purple `#7B6EF6→#A098F8`, CRB
+  teal `#2BBFA0→#5FDCBF`, DMO purple→teal, Franchise amber
+  `#F0A030→#F5BB66`, Penalty red `#F05858→#F89090`. Width transition
+  animated over `900 ms`. Deleted the old flat `<Bar>` / `TONES` Tailwind
+  approach. Card shell is a `rounded-[28px]` section with a two-column
+  layout (gauge left 220 px, pill stack right flex-1). TypeScript strict
+  clean (`tsc --noEmit` EXIT=0). STL formula untouched. *Agent:* Claude
+  Opus 4.6.
+- **2026-04-11 · v1.7** — **Silver Chrome 3D rebuild + compact premium DMO.**
+  Two-part response to Rafi's feedback: *"ap thek sa changing or designing
+  nai kr ray han, kindly pory them ko thek krain or background man salver
+  calor man 3d based background lgain, or them b calor k hesab sa set krain
+  ta k sb koch wazia nazar ahy or prime level ki designing dain"* + *"or
+  cards ko is tran ka 3d design dain"* (with a silver chrome ball reference
+  image). **(A) Background — SVG v2:**
+  `apps/web/public/ehb-silver-chrome.svg` rewritten for real 3D relief:
+  brighter base gradient (`#f6f7fa → #dde0e8 → #b4bac6 → #767d8e → #353a49`),
+  displacement `scale` bumped from `140` → `180`, octaves `3` → `4`, new
+  `<feDiffuseLighting>` filter with `surfaceScale 6, diffuseConstant 1.4`
+  and a `315°/62°` distant light to emboss the turbulence into actual
+  shaded relief, plus an `<feSpecularLighting>` pass (`surfaceScale 4,
+  specularConstant 1.1, exponent 22`) for glossy curved-chrome highlights.
+  Highlight ellipses bumped to 0.98 alpha, shadow ellipses to 0.70, brand
+  iridescence to 0.14/0.16. **(B) `.ehb-silver-bg` v1.7:** the heavy 0.68
+  dark radial vignette that was drowning v1.6 has been **removed**; the
+  class now overlays just a subtle 0→0.22 bottom linear haze + two
+  pinpoint corner brand tints (purple at 8% 0%, teal at 92% 6%), so the
+  silver SVG now dominates the canvas. Parallax keyframe kept (22 s,
+  motion-gated). **(C) 3D Chrome `.ehb-glass` (v1.7):** reference silver
+  chrome ball translated to glass cards — fill dropped to 0.82/0.86 so
+  the silver background shimmers through; `backdrop-filter: blur(14px)
+  saturate(1.15)`; multi-layer box-shadow stack (drop 18px + 2px + inset
+  top chrome highlight + inset bottom shadow + inner glow); **a new
+  `::before` chrome rim** draws a 1 px horizontal silver-to-transparent
+  gradient on the top edge simulating the bright horizon of a polished
+  chrome sphere; **a new `::after` shadow cut** draws a matching dark
+  crescent on the bottom edge. Every `.ehb-glass` card now reads as a
+  bevelled silver tile. **(D) DMO topbar:** `apps/web/app/dmo/layout.tsx`
+  switched from `bg-[#070812]/85` to a 0.62→0.45 linear glass so silver
+  peeks through the header, with an inset 0.12 chrome highlight matching
+  the card treatment. **(E) Compact premium widgets (Phase 8):** every
+  card on `apps/web/app/dmo/page.tsx` tightened — `rounded-2xl p-5` →
+  `rounded-xl p-4`, icon boxes 40 px → 32 px, titles 13 px → 11 px,
+  eyebrows 10 px → 9 px, body 12 px → 10 px, chips 9 px → 8 px, spacing
+  `mt-4/space-y-2` → `mt-3/space-y-1.5`, CTAs `px-4 py-2 text-[12px]` →
+  `px-3 py-1.5 text-[10px]`. Applied to: `VerificationCard`,
+  `AiNextStepsCard`, `BlockchainProofCard`, `FranchiseNetworkCard`,
+  `ActivitySummaryCard`, `StatChip`, `EarningsCard`, `DeltaChip`,
+  `BenefitsLadder`, `FraudBanner`, and the 18-module rail cards (icon
+  44 px → 36 px, title 14 px → 12 px). Hero, `ProfileTrustCard`,
+  `StlLevelLadder` retained from v1.6 Phase 8.1/8.2. TypeScript strict
+  clean (`tsc --noEmit` EXIT=0), SQL/EDR audit still zero hits in DMO
+  code. *Agent:* Claude Opus 4.6.
+- **2026-04-11 · v1.6** — **Silver Chrome theme** applied to DMO surfaces.
+  Requested by Rafi with a liquid-silver reference image: *"new theam lgain
+  is picture ko background man use krain"*. Since the reference image was
+  inline-only (not persisted to disk), the theme ships as a **procedural
+  SVG** at `apps/web/public/ehb-silver-chrome.svg` (~3 KB, zero raster
+  assets). Technique: 5-stop vertical silver base gradient + 11 overlapping
+  highlight/shadow/iridescent radial ellipses, all routed through an
+  `<feTurbulence>` + `<feDisplacementMap>` filter (`baseFrequency 0.0065
+  0.011`, `scale 140`) to produce the organic flowing liquid-chrome curves,
+  topped with a second turbulence layer at `baseFrequency 1.2` for
+  micro-grain realism. New `.ehb-silver-bg` utility class in
+  `apps/web/app/globals.css` stacks the SVG under (a) an iridescent
+  purple+teal brand haze, (b) a linear tint, and (c) a radial dark vignette
+  at the bottom so the existing dark glass cards + obsidian cinematic hero
+  remain fully readable over the brighter chrome surface. A 22-second
+  `ehb-silver-drift` parallax keyframe shifts the chrome position by ±2 %
+  for a living feel (gated behind `prefers-reduced-motion: no-preference`).
+  `apps/web/app/dmo/layout.tsx` switched from `.ehb-premium-bg` to
+  `.ehb-silver-bg`; the previous near-black theme is kept in CSS for
+  rollback. TypeScript strict clean (EXIT=0). *Agent:* Claude Opus 4.6.
+- **2026-04-11 · v1.5** — DMO dashboard synthesis rebuild (Phase 7). Shipped
+  on `apps/web/app/dmo/page.tsx` as the reference Tesla-grade (L5) landing
+  surface. Absorbs the dense widget vocabulary from 23 reference EHB
+  dashboards and composes 9 new patterns into a single glance-readable page:
+  (1) §7.12 Cinematic Hero (retained from v1.4); (2) `FraudBanner` —
+  conditional red/amber gradient banner that renders only when
+  `ai.fraud.flagged` or `complaints ≥ complaintLimit − 2`, with tone-mapped
+  severity, reason bullets, and a "Resolve now" CTA; (3) `ProfileTrustCard`
+  — avatar with STL halo ring + level chip + radial SVG trust gauge
+  (`stroke-dasharray` animated to score) + progress-to-next-level bar +
+  gradient upgrade CTA; (4) `StlLevelLadder` — 8-tier horizontal gem/shield
+  progression (🔓🥉🥈🥇💎🏆⭐👑) with current-position halo and full
+  score bar 0→100; (5) `VerificationCard` trinity — PSS / CRB / DMO
+  checkmark-row panels with pass/fail glyph, inline detail, gradient CTA;
+  (6) `AiNextStepsCard` — numbered mission steps pulled from
+  `ai.tasks[]`; (7) `BlockchainProofCard` — deterministic pseudo-hash
+  display with Moonbeam explorer link; (8) `FranchiseNetworkCard` —
+  indented Sub → Master → Corporate node tree with tone-coded dots;
+  (9) `ActivitySummaryCard` — inline SVG sparkline (12-week trend) with
+  3-up StatChip grid; (10) `EarningsCard` — `+$132` hero value with
+  SVG area chart and base / bonus / penalty DeltaChips; (11)
+  `BenefitsLadder` — 6-row STL benefits unlock list with per-level chips.
+  All widgets answer one of the four trust questions within 3 s and use
+  EHB tokens only. TypeScript strict clean (EXIT=0). No new CSS — reuses
+  `.ehb-glass`, `.ehb-num`, `.ehb-cta-primary`, `.ehb-ai-bar`,
+  `.ehb-headline-gradient`, `.ehb-live-dot` from v1.4.
+  *Agent:* Claude Opus 4.6.
+- **2026-04-12 · v1.14** — Breadcrumb navigation added to all 28 module
+  landing pages. Replaced "Back to DMO" pill-link with structured
+  `DMO / Module` clickable breadcrumb using `<Link>` for SPA navigation.
+  Earnings-engine sub-pages use 2-level breadcrumbs (`DMO / Earnings / History`).
+  Each breadcrumb active segment uses the module's theme accent color.
+  *Agent:* Claude Opus 4.6.
+- **2026-04-12 · v1.13** — Multi-theme system shipped. 4 themes: Dark
+  (default), White, Purple, Midnight — each with 24 surface tokens.
+  New files: `lib/dmo/theme.ts` (token definitions), `DmoThemeProvider.tsx`
+  (context + CSS variable injection + global Tailwind override rules),
+  `DmoThemeSwitcher.tsx` (pill-style theme picker with icons in topbar).
+  Layout wrapped with `<DmoThemeProvider>`, topbar/sidebar theme-aware.
+  CSS override strategy uses `[data-ehb-theme]` + `!important` to retheme
+  all 119 DMO pages without touching individual files. localStorage persistence.
+  Inline style audit across all 74 pages with `style={{}}` — converted 12
+  static styles to Tailwind; confirmed remaining ~180 are genuinely dynamic.
+  TS clean (EXIT=0). *Agent:* Claude Opus 4.6.
+- **2026-04-12 · v1.6** — Deep Unicode/emoji purge across DMO components.
+  12 remaining `✓`, `✕`, `⏳`, `○` text-based icons in
+  `VerificationUI.tsx`, `DmoPrototypeWorkspace.tsx`,
+  `DmoLandingPrototype.tsx`, `StlDashboardModuleGrid.tsx`,
+  `PendingWorkRoadmap.tsx`, `page.tsx` (dashboard), `roadmap/page.tsx`
+  replaced with inline SVG check/circle/clock/x icons. Zero Unicode
+  emoji/checkmark characters now remain across all DMO files (verified
+  via regex sweep). TypeScript strict clean (EXIT=0). *Agent:* Claude
+  Opus 4.6.
+- **2026-04-12 · v1.5** — Complete legacy CSS class removal + SVG icon
+  modernization across the entire DMO ecosystem (~35 files). (1) All
+  `ehb-glass`, `glass-panel`, `glass-card`, `card-hover`, `btn-glow`,
+  `text-ehb-textMuted`, `text-ehb-textBody`, `ehb-btn-primary`,
+  `ehb-btn-secondary`, `ehb-press`, `min-h-touch` classes replaced with
+  direct Tailwind equivalents (`bg-white/[0.04]`, `text-white/50`,
+  `text-white/70`, `hover:bg-white/[0.06] transition-colors`,
+  `shadow-lg`, `min-h-[44px]`, `active:scale-[0.97] transition-all`,
+  etc.). (2) 60+ emoji icons (🏠🛡️🔐🏛️📋✅💳💰🔁⚖️🏢📈🗂️🤖📊⛓️🔔⚙️📍
+  and letter abbreviations W/$/ L/X/HQ/CN/CO/SB/A/E/C) replaced with
+  inline stroke-based SVG icons at 14–16 px. (3) `navigation.ts` →
+  `navigation.tsx` with SVG factory pattern `S(d, extra?)` producing
+  16×16 currentColor stroke icons for all 18 modules. (4) TypeScript
+  `string` → `React.ReactNode` migration for icon props across
+  `DmoNavSection`, `VerificationCard`, `InsightCard`, `ModuleBlueprint`,
+  `SectionMeta`, `LadderStep`, `RevenueBucket`, `bucketMeta`.
+  TypeScript strict clean (EXIT=0) verified after every batch.
+  *Agent:* Claude Opus 4.6.
 - **2026-04-11 · v1.4** — Cinematic Hero pattern added as §7.12 (plus
   sub-sections §7.12.1 animated number counter, §7.12.2 live status orb,
   §7.12.3 AI Copilot ribbon, §7.12.4 gradient CTA shimmer, §7.12.5
@@ -800,4 +1182,4 @@ This is your spec. If a screen doesn't match it, it's the screen that's wrong.
 
 ---
 
-*EHB Technologies (Pvt.) Ltd. — Design · v1.4 · 2026-04-11*
+*EHB Technologies (Pvt.) Ltd. — Design · v1.14 · 2026-04-12*

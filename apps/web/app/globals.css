@@ -480,4 +480,296 @@ main {
   .animate-shake {
     animation: shake 0.4s;
   }
+
+  /* ========================================================
+     EHB UI/UX §6 + §7.12 — DMO premium cinematic surface
+     (reference: design-system/EHB-UIUX-SYSTEM.md v1.4)
+     ======================================================== */
+
+  /* Premium ambient page background — near-black with purple + teal haze.
+     Used across DMO surfaces (see apps/web/app/dmo/layout.tsx). */
+  .ehb-premium-bg {
+    background-color: #070812;
+    background-image:
+      radial-gradient(ellipse 60% 55% at 15% 0%, rgba(123, 110, 246, 0.22), transparent 60%),
+      radial-gradient(ellipse 55% 55% at 92% 8%, rgba(43, 191, 160, 0.18), transparent 60%),
+      radial-gradient(ellipse 70% 55% at 50% 100%, rgba(160, 152, 248, 0.14), transparent 65%),
+      linear-gradient(180deg, rgba(8, 10, 22, 0.96) 0%, rgba(12, 14, 28, 0.98) 55%, rgba(8, 10, 22, 0.98) 100%);
+    background-attachment: fixed;
+  }
+
+  /* ------------------------------------------------------------------
+     §6.1 Silver Chrome 3D Theme (v1.7, 2026-04-11)
+     ------------------------------------------------------------------
+     Brighter, more dominant silver chrome surface. v1.6 was drowned under
+     a dark vignette (0.68 alpha) — Rafi said "sb koch wazia nazar ahy" so
+     the silver must READ as silver. v1.7 drops the heavy overlay, keeps a
+     subtle bottom haze for card contrast, and adds brand-color peek-through
+     only at the extreme corners. Pair with 3D chrome `.ehb-glass` below.
+     ------------------------------------------------------------------ */
+  .ehb-silver-bg {
+    background-color: #b4b9c6;
+    background-image:
+      /* Very light bottom haze — just enough to keep bottom text readable */
+      linear-gradient(180deg, rgba(10, 12, 26, 0.0) 0%, rgba(10, 12, 26, 0.08) 55%, rgba(10, 12, 26, 0.22) 100%),
+      /* Corner brand tints — barely-there EHB purple + teal */
+      radial-gradient(ellipse 50% 40% at 8% 0%, rgba(123, 110, 246, 0.20), transparent 65%),
+      radial-gradient(ellipse 45% 40% at 92% 6%, rgba(43, 191, 160, 0.16), transparent 65%),
+      /* The actual silver chrome SVG — now the dominant surface */
+      url("/ehb-silver-chrome.svg");
+    background-size: cover, cover, cover, cover;
+    background-position: center, center, center, center;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+    background-attachment: fixed, fixed, fixed, fixed;
+  }
+  /* Slow parallax drift for the chrome so the theme feels alive */
+  @keyframes ehb-silver-drift {
+    0%, 100% { background-position: center, center, center, 50% 50%; }
+    50%      { background-position: center, center, center, 52% 48%; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .ehb-silver-bg {
+      animation: ehb-silver-drift 22s ease-in-out infinite;
+    }
+  }
+
+  /* Drifting ambient orbs (§7.12) */
+  @keyframes ehb-orb-drift-a {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(3%, 2%) scale(1.04); }
+    66% { transform: translate(-2%, 4%) scale(0.98); }
+  }
+  @keyframes ehb-orb-drift-b {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    40% { transform: translate(-4%, -3%) scale(1.05); }
+    75% { transform: translate(3%, 2%) scale(0.96); }
+  }
+  .ehb-orb {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 9999px;
+    filter: blur(8px);
+    will-change: transform;
+  }
+  .ehb-orb-a {
+    top: -10%;
+    left: -8%;
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, rgba(123, 110, 246, 0.42) 0%, rgba(123, 110, 246, 0) 62%);
+    animation: ehb-orb-drift-a 14s ease-in-out infinite;
+  }
+  .ehb-orb-b {
+    bottom: -12%;
+    right: -10%;
+    width: 560px;
+    height: 560px;
+    background: radial-gradient(circle, rgba(43, 191, 160, 0.36) 0%, rgba(43, 191, 160, 0) 62%);
+    animation: ehb-orb-drift-b 18s ease-in-out infinite;
+  }
+
+  /* Scan line sweep (§7.12 top edge) */
+  @keyframes ehb-scan {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(250%); }
+  }
+  .ehb-scan {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: 40%;
+    background: linear-gradient(90deg, transparent 0%, #7B6EF6 40%, #2BBFA0 60%, transparent 100%);
+    animation: ehb-scan 4.2s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Big-number rise (§7.12.1) */
+  @keyframes ehb-num-rise {
+    0% {
+      opacity: 0;
+      transform: translateY(14px);
+      filter: blur(6px);
+      letter-spacing: 0;
+    }
+    60% {
+      opacity: 1;
+      filter: blur(0);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+      letter-spacing: -0.5px;
+    }
+  }
+  .ehb-num {
+    animation: ehb-num-rise 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+  .ehb-num-d1 { animation-delay: 120ms; }
+  .ehb-num-d2 { animation-delay: 240ms; }
+  .ehb-num-d3 { animation-delay: 360ms; }
+  .ehb-num-d4 { animation-delay: 480ms; }
+
+  /* Headline rise */
+  @keyframes ehb-headline-rise {
+    0% { opacity: 0; transform: translateY(16px); filter: blur(8px); }
+    100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+  .ehb-headline {
+    animation: ehb-headline-rise 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  /* Live status pulse (§7.12.2) */
+  @keyframes ehb-live-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(43, 191, 160, 0.55), 0 0 14px rgba(43, 191, 160, 0.45);
+    }
+    50% {
+      box-shadow: 0 0 0 6px rgba(43, 191, 160, 0), 0 0 22px rgba(43, 191, 160, 0.65);
+    }
+  }
+  .ehb-live-dot {
+    animation: ehb-live-pulse 2200ms ease-in-out infinite;
+  }
+
+  /* Primary CTA shimmer (§7.12.4) */
+  @keyframes ehb-cta-shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  .ehb-cta-primary {
+    background-image: linear-gradient(
+      100deg,
+      #7B6EF6 0%, #A098F8 22%, #2BBFA0 50%, #A098F8 78%, #7B6EF6 100%
+    );
+    background-size: 220% 100%;
+    animation: ehb-cta-shimmer 6s linear infinite;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+      0 14px 34px rgba(123, 110, 246, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    transition: transform 160ms ease-out, filter 160ms ease-out;
+  }
+  .ehb-cta-primary:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+
+  /* AI Copilot ribbon shimmer bar (§7.12.3) */
+  @keyframes ehb-ai-bar {
+    0%, 100% { background-position: 0% 50%; opacity: 0.55; }
+    50% { background-position: 100% 50%; opacity: 1; }
+  }
+  .ehb-ai-bar {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      #A098F8 25%,
+      #2BBFA0 50%,
+      #A098F8 75%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: ehb-ai-bar 5s ease-in-out infinite;
+  }
+
+  /* Gradient clip for 2nd headline line (§7.12 step 2) */
+  .ehb-headline-gradient {
+    background: linear-gradient(100deg, #7B6EF6 0%, #A098F8 45%, #2BBFA0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* ------------------------------------------------------------------
+     §7.1 — 3D Chrome Glass Card (v1.7, 2026-04-11)
+     ------------------------------------------------------------------
+     Reference: silver chrome ball image — a glossy 3D sphere with a
+     bright top highlight, deep shadow below, and a chrome-mirrored rim.
+     Translates to a card as:
+       • Dark translucent fill (0.78) so silver bg shimmers through
+       • Silver-to-transparent top highlight (1px chrome rim)
+       • Inset specular gloss on the top edge (simulated light reflection)
+       • Subtle bottom shadow for depth
+       • Bevel glow via double box-shadow
+     ------------------------------------------------------------------ */
+  .ehb-glass {
+    position: relative;
+    background:
+      /* Inner specular gloss — simulates light hitting curved chrome */
+      linear-gradient(180deg,
+        rgba(255, 255, 255, 0.09) 0%,
+        rgba(255, 255, 255, 0.02) 12%,
+        rgba(255, 255, 255, 0) 35%
+      ),
+      /* Main card fill */
+      linear-gradient(180deg, rgba(22, 25, 46, 0.82) 0%, rgba(14, 16, 32, 0.86) 100%);
+    backdrop-filter: blur(14px) saturate(1.15);
+    -webkit-backdrop-filter: blur(14px) saturate(1.15);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: inherit;
+    box-shadow:
+      /* Drop shadow for depth */
+      0 18px 44px rgba(8, 10, 22, 0.55),
+      0 2px 8px rgba(8, 10, 22, 0.35),
+      /* Inset top chrome highlight */
+      0 1px 0 rgba(255, 255, 255, 0.22) inset,
+      /* Inset bottom shadow for bevel */
+      0 -1px 0 rgba(0, 0, 0, 0.35) inset,
+      /* Subtle inner glow */
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  }
+  /* Chrome rim — thin silver reflection on the top edge (like the
+     bright curved horizon of a chrome ball) */
+  .ehb-glass::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.55) 30%,
+      rgba(255, 255, 255, 0.75) 50%,
+      rgba(255, 255, 255, 0.55) 70%,
+      transparent 100%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+  /* Bottom chrome shadow cut — dark crescent under the card */
+  .ehb-glass::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 18%;
+    right: 18%;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.45) 50%,
+      transparent 100%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* §7.12.5 + §8.4 — reduced motion compliance */
+  @media (prefers-reduced-motion: reduce) {
+    .ehb-orb,
+    .ehb-scan,
+    .ehb-num,
+    .ehb-headline,
+    .ehb-live-dot,
+    .ehb-cta-primary,
+    .ehb-ai-bar {
+      animation: none !important;
+    }
+  }
 }

@@ -5,6 +5,14 @@ import { handleRouteError } from "@/lib/apiErrors";
 import { getStlFullSnapshotForUser } from "@/services/stl.service";
 import { enforceRateLimit } from "@/lib/api/rateLimit";
 
+/**
+ * Served from Node runtime (needs Prisma) but cached downstream via the
+ * `stl:full-snapshot:<userId>` Redis/memory cache in snapshot.service.ts.
+ * We still mark this dynamic because the payload is user-scoped.
+ */
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 const QuerySchema = z.object({
   fresh: z.enum(["1", "true"]).optional(),
 });

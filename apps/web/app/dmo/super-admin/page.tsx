@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { DmoTopNav } from "@/components/dmo/DmoTopNav";
 import { DmoSuperAdminPanel } from "@/components/dmo/DmoSuperAdminPanel";
@@ -6,11 +8,11 @@ import { UniversalStructuredAdminBlocks } from "@/components/admin/UniversalStru
 export default function DmoSuperAdminPage() {
   return (
     <main className="min-h-screen text-white">
-      <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
         <header className="space-y-1">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">DMO · Super Admin</p>
-          <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">Global DMO Operations</h1>
-          <p className="text-ehb-textBody max-w-2xl">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-white/50">DMO · Super Admin</p>
+          <h1 className="text-lg sm:text-xl font-semibold leading-tight text-white">Global DMO Operations</h1>
+          <p className="text-white/70 max-w-2xl">
             EHB head office controls queue routing, STL policy, approval consistency, and cross-region governance operations.
           </p>
         </header>
@@ -26,7 +28,7 @@ export default function DmoSuperAdminPage() {
         <div className="pt-6 flex flex-wrap gap-2">
           <Link
             href="/dmo/applications"
-            className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+            className="rounded-xl border border-[#7B6EF6]/50 bg-[#7B6EF6]/15 px-4 py-2 text-[11px] font-semibold text-[#A098F8] transition-colors hover:bg-[#7B6EF6]/25 hover:text-white"
           >
             Open Applications Board
           </Link>

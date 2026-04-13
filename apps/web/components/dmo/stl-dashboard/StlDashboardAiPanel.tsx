@@ -21,7 +21,7 @@ export function StlDashboardAiPanel({ data: d }: { data: StlDashboardDemo }) {
       <p className="mt-4 text-lg font-semibold leading-snug text-amber-100/95">{d.ai.headline}</p>
       <ul className="mt-4 flex-1 space-y-2.5">
         {d.ai.bullets.map((b) => (
-          <li key={b} className="flex gap-2 text-sm text-ehb-textBody">
+          <li key={b} className="flex gap-2 text-sm text-white/70">
             <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" aria-hidden />
             {b}
           </li>

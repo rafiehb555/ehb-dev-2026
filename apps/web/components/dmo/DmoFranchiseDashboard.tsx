@@ -42,21 +42,21 @@ export function DmoFranchiseDashboard({
 
   return (
     <div className="space-y-6">
-      <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
+      <section className="bg-white/[0.04] hover:bg-white/[0.06] transition-colors p-4 space-y-3 border border-white/5">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
             <h2 className="text-sm font-semibold text-white">{levelMeta.title}</h2>
-            <p className="text-[10px] text-ehb-textMuted">
+            <p className="text-[10px] text-white/50">
               Same design for all franchise levels. Data changes with selected industry and location context. (UI mock)
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <label className="text-[10px] text-ehb-textMuted">Industry</label>
+            <label className="text-[10px] text-white/50">Industry</label>
             <select
               value={industrySlug}
               onChange={(e) => setIndustrySlug(e.target.value)}
-              className="h-9 rounded-xl glass-panel border border-white/10 px-3 text-[11px] text-white focus:outline-none"
+              className="h-9 rounded-xl bg-white/[0.04] border border-white/10 px-3 text-[11px] text-white focus:outline-none"
             >
               {INDUSTRIES.map((i) => (
                 <option key={i.slug} value={i.slug}>
@@ -67,7 +67,7 @@ export function DmoFranchiseDashboard({
 
             <Link
               href={`/dmo/applications${locationQs}${locationQs.includes("?") ? "&" : "?"}industry=${encodeURIComponent(industrySlug)}`}
-              className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-[11px] font-semibold text-slate-950 btn-glow hover:opacity-95 transition-all"
+              className="min-h-[44px] inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-[11px] font-semibold text-slate-950 shadow-lg hover:opacity-95 transition-all"
             >
               Open Queue
             </Link>
@@ -76,10 +76,10 @@ export function DmoFranchiseDashboard({
 
         {locationLabel ? (
           <div
-            className="inline-flex items-center gap-2 rounded-full glass-panel px-3 py-1 text-[11px] text-ehb-textBody border"
+            className="inline-flex items-center gap-2 rounded-full bg-white/[0.04] px-3 py-1 text-[11px] text-white/70 border"
             style={{ borderColor: `${accent}55`, boxShadow: `0 0 28px ${accent}22` }}
           >
-            <span aria-hidden>📍</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <span>
               Near you: <span className="text-white font-semibold">{locationLabel}</span>
             </span>
@@ -94,16 +94,16 @@ export function DmoFranchiseDashboard({
         <KpiCard label="STL Compliance" value={`${mock.stlCompliance}%`} detail="Trust-adjusted approval readiness" />
       </section>
 
-      <section className="glass-panel card-hover p-4 space-y-3 border border-white/5">
+      <section className="bg-white/[0.04] hover:bg-white/[0.06] transition-colors p-4 space-y-3 border border-white/5">
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">
             <h3 className="text-sm font-semibold text-white">Actions</h3>
-            <p className="text-[10px] text-ehb-textMuted">
+            <p className="text-[10px] text-white/50">
               Later backend will connect to DMO workflow and wallet escrow.
             </p>
           </div>
           <span
-            className="inline-flex items-center rounded-full px-3 py-1 border border-white/10 bg-white/5 text-[10px] text-ehb-textBody"
+            className="inline-flex items-center rounded-full px-3 py-1 border border-white/10 bg-white/5 text-[10px] text-white/70"
             style={{ borderColor: `${levelMeta.accent}55` }}
           >
             {levelMeta.action}
@@ -119,9 +119,9 @@ export function DmoFranchiseDashboard({
             { title: "Route trust signals", desc: "Ensure STL engine uses correct policy (mock)." },
             { title: "Manage franchise batch", desc: "Coordinate provider batches for approvals (mock)." },
           ].map((a) => (
-            <div key={a.title} className="rounded-2xl glass-card border p-5 card-hover">
+            <div key={a.title} className="rounded-2xl bg-white/[0.03] border p-5 hover:bg-white/[0.06] transition-colors">
               <p className="text-sm font-semibold text-white">{a.title}</p>
-              <p className="text-[11px] text-ehb-textBody mt-1 leading-relaxed">{a.desc}</p>
+              <p className="text-[11px] text-white/70 mt-1 leading-relaxed">{a.desc}</p>
             </div>
           ))}
         </div>

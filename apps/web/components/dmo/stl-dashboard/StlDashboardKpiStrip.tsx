@@ -35,7 +35,7 @@ export function StlDashboardKpiStrip({ items }: Props) {
       aria-label="Trust overview KPIs"
     >
       <div className="mb-2 flex items-center justify-between gap-2 px-1">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-ehb-textMuted">Trust snapshot</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50">Trust snapshot</p>
         <span
           className={`inline-flex items-center gap-1 text-[10px] ${live ? "text-emerald-400/90" : "text-amber-400/90"}`}
         >
@@ -49,7 +49,7 @@ export function StlDashboardKpiStrip({ items }: Props) {
             key={k.label}
             className={`rounded-lg border px-2.5 py-2 transition duration-200 hover:brightness-110 ${ACCENT[k.accent]}`}
           >
-            <p className="text-[10px] font-medium uppercase tracking-wide text-ehb-textMuted">{k.label}</p>
+            <p className="text-[10px] font-medium uppercase tracking-wide text-white/50">{k.label}</p>
             <p className={`mt-0.5 text-base font-bold tabular-nums sm:text-lg ${VALUE[k.accent]}`}>{k.value}</p>
             {k.hint ? <p className="mt-0.5 text-[10px] text-white/45">{k.hint}</p> : null}
           </div>

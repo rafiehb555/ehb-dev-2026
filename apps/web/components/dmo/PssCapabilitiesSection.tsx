@@ -40,7 +40,7 @@ export function PssCapabilitiesSection({ selectedCapabilityId, onSelectCapabilit
           <h2 id="pss-cap-title" className="mt-1 text-xl font-semibold text-white">
             KYC · AML · Monitoring stack
           </h2>
-          <p className="mt-1 max-w-3xl text-sm text-ehb-textBody">
+          <p className="mt-1 max-w-3xl text-sm text-white/70">
             Har module ka purpose aur typical use-case — cards select karke detail panel se module controls chala sakte hain.
           </p>
         </div>
@@ -50,7 +50,7 @@ export function PssCapabilitiesSection({ selectedCapabilityId, onSelectCapabilit
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search capabilities..."
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-ehb-textMuted outline-none focus:border-cyan-400/40"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/50 outline-none focus:border-cyan-400/40"
             aria-label="Search PSS capabilities"
           />
         </div>
@@ -63,7 +63,7 @@ export function PssCapabilitiesSection({ selectedCapabilityId, onSelectCapabilit
           className={`rounded-full border px-3 py-1 text-[11px] font-semibold transition ${
             cat === "all"
               ? "border-cyan-400/50 bg-cyan-500/20 text-cyan-100"
-              : "border-white/10 bg-white/5 text-ehb-textBody hover:bg-white/10"
+              : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
           }`}
         >
           All ({PSS_CAPABILITIES.length})
@@ -76,7 +76,7 @@ export function PssCapabilitiesSection({ selectedCapabilityId, onSelectCapabilit
             className={`rounded-full border px-3 py-1 text-[11px] font-semibold transition ${
               cat === key
                 ? "border-cyan-400/50 bg-cyan-500/20 text-cyan-100"
-                : "border-white/10 bg-white/5 text-ehb-textBody hover:bg-white/10"
+                : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
             }`}
           >
             {PSS_CAPABILITY_CATEGORIES[key].label}
@@ -106,14 +106,14 @@ export function PssCapabilitiesSection({ selectedCapabilityId, onSelectCapabilit
                   {c.short}
                 </span>
               </div>
-              <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-ehb-textMuted">
+              <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-white/50">
                 {PSS_CAPABILITY_CATEGORIES[c.category].label}
               </p>
-              <p className="mt-3 flex-1 text-xs leading-relaxed text-ehb-textBody">
+              <p className="mt-3 flex-1 text-xs leading-relaxed text-white/70">
                 <span className="text-white/80">Purpose: </span>
                 {c.purpose}
               </p>
-              <p className="mt-2 border-t border-white/5 pt-2 text-xs leading-relaxed text-ehb-textMuted">
+              <p className="mt-2 border-t border-white/5 pt-2 text-xs leading-relaxed text-white/50">
                 <span className="text-cyan-200/80">Use case: </span>
                 {c.useCase}
               </p>
@@ -128,7 +128,7 @@ export function PssCapabilitiesSection({ selectedCapabilityId, onSelectCapabilit
                   >
                     {status.enabled ? "Enabled" : "Disabled"}
                   </span>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] uppercase text-ehb-textMuted">
+                  <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] uppercase text-white/50">
                     {status.mode}
                   </span>
                 </div>
@@ -139,7 +139,7 @@ export function PssCapabilitiesSection({ selectedCapabilityId, onSelectCapabilit
       </div>
 
       {filtered.length === 0 ? (
-        <p className="text-center text-sm text-ehb-textMuted">No capabilities match your search.</p>
+        <p className="text-center text-sm text-white/50">No capabilities match your search.</p>
       ) : null}
     </section>
   );

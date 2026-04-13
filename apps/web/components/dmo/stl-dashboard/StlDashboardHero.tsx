@@ -37,15 +37,15 @@ export function StlDashboardHero({ data: d, modelScore, upgradeBlocked }: Props)
             <h2 id="stl-hero-title" className="text-xl font-semibold tracking-tight text-white">
               {d.displayName}
             </h2>
-            <p className="mt-0.5 text-xs text-ehb-textMuted">{d.roleLabel}</p>
+            <p className="mt-0.5 text-xs text-white/50">{d.roleLabel}</p>
             <p className="mt-2 text-sm">
               <span className="font-semibold text-emerald-400">STL Level: {d.stlLevel} ({d.nextLevelShort === "SUPREME" ? "TOP" : "ACTIVE"})</span>
               <span className="mx-2 text-white/25">·</span>
-              <span className="text-ehb-textBody">
+              <span className="text-white/70">
                 Trust Score: <span className="font-mono text-white">{d.trustScore}%</span>
               </span>
             </p>
-            <p className="mt-1 text-[10px] text-ehb-textMuted">
+            <p className="mt-1 text-[10px] text-white/50">
               Engine score signal: <span className="font-mono text-cyan-200/90">{modelScore}%</span>
             </p>
           </div>
@@ -54,7 +54,7 @@ export function StlDashboardHero({ data: d, modelScore, upgradeBlocked }: Props)
           href="/dmo/stl"
           aria-disabled={upgradeBlocked}
           className={[
-            "ehb-press inline-flex shrink-0 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition",
+            "active:scale-[0.97] transition-all inline-flex shrink-0 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white",
             upgradeBlocked
               ? "cursor-not-allowed border border-white/10 bg-white/5 text-white/40"
               : "stl-cta-pulse bg-gradient-to-r from-orange-500 via-rose-500 to-red-600 hover:brightness-110",
@@ -71,7 +71,7 @@ export function StlDashboardHero({ data: d, modelScore, upgradeBlocked }: Props)
           <AlertTriangle className="h-4 w-4" aria-hidden />
           Blockers
         </p>
-        <ul className="mt-2 space-y-1.5 text-sm text-ehb-textBody">
+        <ul className="mt-2 space-y-1.5 text-sm text-white/70">
           <li>
             <span className="text-white/90">CRB:</span>{" "}
             {crbLeft === 0 ? (
@@ -110,7 +110,7 @@ export function StlDashboardHero({ data: d, modelScore, upgradeBlocked }: Props)
           </Link>
         </div>
         <div className="mt-4 space-y-2">
-          <div className="flex justify-between text-[11px] text-ehb-textMuted">
+          <div className="flex justify-between text-[11px] text-white/50">
             <span>Progress toward next level</span>
             <span className="font-mono text-cyan-200">{d.progressToNext}%</span>
           </div>
@@ -131,33 +131,33 @@ export function StlDashboardHero({ data: d, modelScore, upgradeBlocked }: Props)
           <span className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[11px] text-emerald-200/90">
             <Check className="h-3 w-3" aria-hidden /> PSS Verified
           </span>
-          <span className="rounded-lg border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] text-ehb-textBody">
+          <span className="rounded-lg border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] text-white/70">
             CRB: {d.pending.crb.current}/{d.pending.crb.target}
           </span>
-          <span className="rounded-lg border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] text-ehb-textBody">
+          <span className="rounded-lg border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] text-white/70">
             Exams: {d.pending.exams.current}/{d.pending.exams.target}
           </span>
-          <span className="rounded-lg border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] text-ehb-textBody">
+          <span className="rounded-lg border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] text-white/70">
             Refills: {d.pending.refills.current}/{d.pending.refills.target}
           </span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-2 border-t border-white/10 pt-4 sm:grid-cols-3">
-        <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-center text-[11px] text-ehb-textBody transition hover:border-cyan-400/20">
-          <span className="block text-ehb-textMuted">CRB Verifications</span>
+        <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-center text-[11px] text-white/70 transition hover:border-cyan-400/20">
+          <span className="block text-white/50">CRB Verifications</span>
           <span className="font-mono text-sm text-white">
             {d.pending.crb.current}/{d.pending.crb.target}
           </span>
         </div>
-        <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-center text-[11px] text-ehb-textBody transition hover:border-cyan-400/20">
-          <span className="block text-ehb-textMuted">Exams</span>
+        <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-center text-[11px] text-white/70 transition hover:border-cyan-400/20">
+          <span className="block text-white/50">Exams</span>
           <span className="font-mono text-sm text-white">
             {d.pending.exams.current}/{d.pending.exams.target}
           </span>
         </div>
-        <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-center text-[11px] text-ehb-textBody transition hover:border-cyan-400/20">
-          <span className="block text-ehb-textMuted">Refills</span>
+        <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-center text-[11px] text-white/70 transition hover:border-cyan-400/20">
+          <span className="block text-white/50">Refills</span>
           <span className="font-mono text-sm text-white">
             {d.pending.refills.current}/{d.pending.refills.target}
           </span>

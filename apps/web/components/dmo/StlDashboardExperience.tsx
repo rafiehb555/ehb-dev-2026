@@ -115,7 +115,7 @@ export function StlDashboardExperience({ data }: Props) {
             <p className="text-[10px] uppercase tracking-[0.28em] text-cyan-300/90">EHB STL LEVEL · Service Trust Level</p>
             <div className="flex items-center gap-2">
               {loading ? (
-                <span className="text-[10px] text-ehb-textMuted">Loading trust data…</span>
+                <span className="text-[10px] text-white/50">Loading trust data…</span>
               ) : (
                 <StlLiveDataBadge mode={isLive ? "live" : "demo"} />
               )}
@@ -136,7 +136,7 @@ export function StlDashboardExperience({ data }: Props) {
               <section className="h-full rounded-2xl border border-cyan-400/20 bg-gradient-to-b from-cyan-500/[0.08] to-black/40 p-4 shadow-[0_0_30px_rgba(34,211,238,0.14)]">
                 <p className="text-[11px] uppercase tracking-[0.18em] text-cyan-200/90">Action center</p>
                 <h3 className="mt-1 text-base font-semibold text-white">What to do next</h3>
-                <ul className="mt-3 space-y-2 text-sm text-ehb-textBody">
+                <ul className="mt-3 space-y-2 text-sm text-white/70">
                   {nextActions.length > 0 ? (
                     nextActions.map((step) => (
                       <li key={step} className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2">
@@ -149,7 +149,7 @@ export function StlDashboardExperience({ data }: Props) {
                     </li>
                   )}
                 </ul>
-                <Link href="/dmo/stl" className="ehb-press mt-4 inline-flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-orange-500 to-rose-500 px-3 py-2 text-sm font-semibold text-white">
+                <Link href="/dmo/stl" className="active:scale-[0.97] transition-all mt-4 inline-flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-orange-500 to-rose-500 px-3 py-2 text-sm font-semibold text-white">
                   Start now
                 </Link>
               </section>
@@ -164,7 +164,7 @@ export function StlDashboardExperience({ data }: Props) {
               { label: "Franchise", value: franchisePct, tone: "text-violet-200" },
             ].map((card) => (
               <article key={card.label} className="rounded-xl border border-white/12 bg-white/[0.03] px-3 py-2 transition hover:border-cyan-400/40 hover:bg-white/[0.06]">
-                <p className="text-[10px] uppercase tracking-[0.16em] text-ehb-textMuted">{card.label}</p>
+                <p className="text-[10px] uppercase tracking-[0.16em] text-white/50">{card.label}</p>
                 <p className={`mt-1 text-lg font-semibold ${card.tone}`}>{card.value}%</p>
               </article>
             ))}
@@ -177,13 +177,13 @@ export function StlDashboardExperience({ data }: Props) {
           <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
             <div className="mb-3 flex items-center justify-between gap-2">
               <h3 className="text-sm font-semibold text-white">Score factors (why up/down)</h3>
-              <span className="text-[10px] uppercase tracking-[0.18em] text-ehb-textMuted">Live influence</span>
+              <span className="text-[10px] uppercase tracking-[0.18em] text-white/50">Live influence</span>
             </div>
             <div className="space-y-2.5">
               {factorRows.map((row) => (
                 <div key={row.label}>
                   <div className="mb-1 flex items-center justify-between text-xs">
-                    <span className="text-ehb-textBody">{row.label}</span>
+                    <span className="text-white/70">{row.label}</span>
                     <span className={row.negative ? "text-rose-200" : "text-white"}>{row.negative ? `-${row.value}%` : `${row.value}%`}</span>
                   </div>
                   <div className="h-2 overflow-hidden rounded-full bg-black/35 ring-1 ring-white/10">
@@ -220,7 +220,7 @@ export function StlDashboardExperience({ data }: Props) {
             </div>
           </details>
 
-          <p className="text-center text-[11px] text-ehb-textMuted">
+          <p className="text-center text-[11px] text-white/50">
             Unified Trust Engine · <code className="rounded bg-white/10 px-1">GET /api/stl/full-snapshot</code> ·{" "}
             <code className="rounded bg-white/10 px-1">GET /api/stl/me</code>
           </p>
@@ -234,7 +234,7 @@ export function StlDashboardExperience({ data }: Props) {
                   key={item.href}
                   href={item.href}
                   className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] ${
-                    active ? "bg-cyan-500/20 text-cyan-100" : "text-ehb-textMuted"
+                    active ? "bg-cyan-500/20 text-cyan-100" : "text-white/50"
                   }`}
                 >
                   <Icon className="h-3 w-3" aria-hidden />

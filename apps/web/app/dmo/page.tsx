@@ -1,453 +1,1696 @@
 "use client";
 
-import { useState } from "react";
+/**
+ * DMO landing dashboard — Phase 7 synthesis rebuild (2026-04-11).
+ *
+ * Goal (per Rafi): "ek nazar man dakhte he sub samj jay".
+ *
+ * This rebuild absorbs the dense widget vocabulary from the 23 reference
+ * dashboards (EHB-STL profile cards, STL1–STL5 gem ladder, trust gauge,
+ * PSS/CRB/DMO checkmark panels, blockchain hash + Moonbeam explorer card,
+ * franchise verification network, AI assistant next-steps, fraud detection
+ * banner, activity summary, earnings ±deltas) and maps them onto the canonical
+ * Batch-2 naming + EHB design tokens.
+ *
+ * Anatomy (top → bottom):
+ *
+ *   1. §7.12 Cinematic Hero
+ *      (eyebrow · gradient headline · subhead · 4-up counters · AI ribbon · CTA)
+ *   2. FraudBanner           — conditional red banner (complaints ≥ limit − 2
+ *                               OR AI fraud flag MED/HIGH)
+ *   3. Profile + STL Ladder  — 2-column (profile w/ trust gauge · 8-tier ladder)
+ *   4. VerificationTrinity   — 3-up PSS / CRB / DMO checkmark panels
+ *   5. Intelligence row      — 4-up: AI Next-Steps · Blockchain · Franchise · Activity
+ *   6. Earnings + Benefits   — 2-column earnings chart + STL benefits unlocks
+ *   7. Module rail           — 18-module bento grouped by section
+ *
+ * Target level: §7 ai-behavior.md "Tesla-grade (L5)" for landing surface.
+ * Every widget answers one of the four trust questions
+ * (Who / Trust / Cost / Verified) within 3 seconds of scanning.
+ *
+ * Canonical naming (CLAUDE.md §6.2):
+ *   STL = Service Trust Level              (L1 FREE → L8 SUPREME)
+ *   PSS = Personal Security System         (KYC, liveness, AML, complaints)
+ *   CRB = Certification & Registry Board   (documents, exams, inspections)
+ */
+
 import Link from "next/link";
-import { DMO_CURRENT_PHASE_MARKER, DMO_PHASE_PROGRESS, DMO_ROADMAP_PHASES } from "@/lib/dmo/phases";
+import React, { useMemo } from "react";
+import useSTL from "@/hooks/useSTL";
+import { useEhbTheme } from "@/components/dmo/DmoThemeProvider";
+import {
+  DMO_NAV_SECTIONS,
+  DMO_NAV_GROUPS,
+  groupDmoSections,
+} from "@/components/dmo/navigation";
 
-const DMO_MODULES = [
-  {
-    id: "identity", icon: "🪪", name: "Identity & JPS Profile", shortName: "Identity",
-    color: "from-blue-600 to-blue-800", borderColor: "border-blue-500/40",
-    tagline: "Your verified and secure digital identity",
-    description: "EHB's digital identity system gives every user a unique verified profile with a Job Placement Score (JPS). The score reflects trust, activity, and platform participation.",
-    features: ["🪪 Verified digital ID card", "⭐ JPS Score (0–1000) — trust indicator", "📊 Activity history and performance", "🔐 Blockchain-secured identity", "🌍 Works in all 50+ countries"],
-    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
-    useCases: ["For job seekers", "For franchise partners", "For service providers"],
-  },
-  {
-    id: "pss", icon: "🛡️", name: "PSS — Platform Security System", shortName: "Security",
-    color: "from-red-600 to-red-800", borderColor: "border-red-500/40",
-    tagline: "Your data and funds stay protected",
-    description: "The Platform Security System (PSS) is the security core of EHB. It handles fraud detection, data encryption, and unauthorized access prevention while verifying every major action and transaction.",
-    features: ["🔒 End-to-end encryption", "🤖 AI-powered fraud detection", "📱 2-Factor Authentication (2FA)", "🚨 Real-time threat alerts", "🗂️ Audit logs for all actions"],
-    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
-    useCases: ["Transaction security", "Account protection", "Data privacy"],
-  },
-  {
-    id: "crb", icon: "⭐", name: "CRB — Credit & Reputation Badge", shortName: "Reputation",
-    color: "from-yellow-600 to-amber-700", borderColor: "border-yellow-500/40",
-    tagline: "A visible signal of your market reputation",
-    description: "The Credit & Reputation Badge (CRB) is a visual scoring system. More completed work unlocks stronger badge levels and better business opportunities, from Bronze to Platinum.",
-    features: ["🏅 Visual badge (Bronze → Silver → Gold → Platinum)", "📈 Auto-updating score", "🤝 Higher badge = stronger client trust", "💼 Useful for jobs and franchise approval", "📣 Shown on the public profile"],
-    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
-    useCases: ["For freelancers", "For businesses", "For franchise applicants"],
-  },
-  {
-    id: "stl", icon: "📦", name: "STL — Smart Tracking & Logistics", shortName: "Logistics",
-    color: "from-cyan-600 to-teal-700", borderColor: "border-cyan-500/40",
-    tagline: "Real-time tracking for every parcel",
-    description: "Smart Tracking & Logistics (STL) powers EHB's delivery network. AI assigns orders to the nearest delivery partner and gives customers live tracking with location and estimated arrival time.",
-    features: ["📍 Live GPS tracking on map", "🤖 AI-powered route optimization", "🔔 Automatic status notifications", "⚡ Same-day delivery support", "📊 Delivery analytics dashboard"],
-    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
-    useCases: ["For customers", "For delivery partners", "For franchise owners"],
-  },  {
-    id: "wallet", icon: "💳", name: "EHB Wallet", shortName: "Wallet",
-    color: "from-green-600 to-emerald-700", borderColor: "border-green-500/40",
-    tagline: "Your digital wallet for instant payments",
-    description: "EHB Wallet is a secure digital wallet for earning, storing, and transferring money. Franchise income, service payments, and referral bonuses stay in one place, with bank transfer support included.",
-    features: ["💰 Instant income deposits", "🏦 Bank withdrawal (24–48 hrs)", "💸 P2P transfers free", "📊 Full transaction history", "🌐 Multi-currency (USD, PKR, AED)"],
-    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
-    useCases: ["Receive income", "Pay bills", "Send money to family"],
-  },
-  {
-    id: "applications", icon: "📝", name: "Applications & Approvals", shortName: "Applications",
-    color: "from-violet-600 to-purple-700", borderColor: "border-violet-500/40",
-    tagline: "Every application handled online",
-    description: "EHB's digital application system lets you apply for franchises, register services, and publish job posts online. There are no paper forms or queues, and approval status is tracked in real time.",
-    features: ["📋 Digital application forms", "⏱️ Real-time approval status", "🔔 Email/SMS notifications", "📁 Document upload support", "✅ Digital signature system"],
-    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
-    useCases: ["Apply for franchise", "Post jobs", "Register services"],
-  },
-  {
-    id: "certificates", icon: "🏆", name: "Certificates & Registry", shortName: "Certificates",
-    color: "from-orange-600 to-amber-700", borderColor: "border-orange-500/40",
-    tagline: "Digital certificates — blockchain verified",
-    description: "EHB's digital certificate system issues certificates after training and licenses after franchise approval. Every certificate is registered on-chain for trusted verification.",
-    features: ["🎓 Training completion certificates", "📜 Franchise license (digital)", "🔗 Blockchain verification", "🖨️ PDF download & print", "🌐 Shareable online (LinkedIn etc.)"],
-    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
-    useCases: ["After training", "For franchise registration", "For professional profiles"],
-  },
-  {
-    id: "notifications", icon: "🔔", name: "Notifications & Compliance", shortName: "Notifications",
-    color: "from-pink-600 to-rose-700", borderColor: "border-pink-500/40",
-    tagline: "All critical updates in one place",
-    description: "EHB's notification system brings order updates, payment alerts, compliance reminders, and major announcements into one inbox. Users can choose push, SMS, or email delivery.",
-    features: ["📱 Push notifications (mobile)", "📧 Email alerts", "💬 SMS notifications", "⚠️ Compliance deadline reminders", "📢 Platform announcements"],
-    status: "Live", statusColor: "bg-green-500/20 text-green-300 border-green-500/30",
-    useCases: ["Order updates", "Payment alerts", "Rule changes"],
-  },
-  {
-    id: "blockchain", icon: "⛓️", name: "Blockchain Anchoring", shortName: "Blockchain",
-    color: "from-slate-600 to-slate-800", borderColor: "border-slate-400/40",
-    tagline: "Every critical record stays tamper-proof",
-    description: "EHB's blockchain layer permanently anchors key records. Transactions, certificates, and identity changes are written to a trusted ledger so they cannot be silently altered.",
-    features: ["🔗 Immutable transaction records", "📋 Smart contract automation", "🔍 Public verification available", "⚡ Fast (no mining delays)", "🌐 Cross-chain compatibility"],
-    status: "Active", statusColor: "bg-blue-500/20 text-blue-300 border-blue-500/30",
-    useCases: ["Identity verification", "Contract execution", "Audit trails"],
-  },
-];
+/**
+ * White-theme accent color mapping: pastel → darker readable versions.
+ * On dark bg the pastels work; on white bg they need darkening.
+ */
+const WHITE_ACCENT_MAP: Record<string, string> = {
+  "#A098F8": "#5B4ED6",
+  "#7B6EF6": "#5B4ED6",
+  "#C3BCFC": "#5B4ED6",
+  "#2BBFA0": "#0D8A72",
+  "#5FDCBF": "#0D8A72",
+  "#38C878": "#1A8F54",
+  "#F0A030": "#B87514",
+  "#F5BB66": "#B87514",
+  "#F05858": "#CC3333",
+  "#67E8F9": "#0891B2",
+};
 
-export default function DmoPage() {
-  const [activeModule, setActiveModule] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState("modules");
-  const selectedModule = DMO_MODULES.find((m) => m.id === activeModule);
+/** Returns theme-safe accent color for TEXT on current theme bg. */
+function useThemeAccent(color: string): string {
+  try {
+    const { theme } = useEhbTheme();
+    if (theme === "white") return WHITE_ACCENT_MAP[color] ?? color;
+    return color;
+  } catch {
+    return color;
+  }
+}
+
+/** Hook: returns a function that maps colors to White-safe versions. */
+function useSafeColor(): (color: string) => string {
+  try {
+    const { theme } = useEhbTheme();
+    if (theme === "white") return (c: string) => WHITE_ACCENT_MAP[c] ?? c;
+    return (c: string) => c;
+  } catch {
+    return (c: string) => c;
+  }
+}
+
+/* ========================================================================
+   Page
+   ======================================================================== */
+
+export default function DmoDashboardPage() {
+  const { data } = useSTL();
+
+  // ---- derive everything once ----
+  const name = data?.name ?? "EHB Operator";
+  const trustScore = clamp(Math.round(data?.trustScore ?? 0), 0, 100);
+  const level = (data?.stlLevel ?? 1) as number;
+  const levelName = data?.levelName ?? "FREE";
+  const nextLevelName = data?.nextLevelName ?? "—";
+  const progressPct = clamp(Math.round(data?.progress?.percent ?? 0), 0, 100);
+
+  const kycStatus = data?.pss?.kycStatus ?? "PENDING";
+  const kycVerified = kycStatus === "APPROVED" || kycStatus === "VERIFIED";
+  const complaints = data?.complaints?.count ?? data?.pss?.complaintsCount ?? 0;
+  const complaintLimit = data?.complaints?.limit ?? data?.pss?.complaintLimit ?? 8;
+
+  const crbVerifications = data?.crb?.verifications ?? 0;
+  const requiredVerifications = data?.crb?.requiredVerifications ?? 4;
+  const examsPassed = data?.crb?.examsPassed ?? 0;
+  const requiredExams = data?.crb?.requiredExams ?? 4;
+
+  const refills = data?.dmo?.refillCount ?? data?.dmo?.refills ?? 0;
+  const requiredRefills = data?.dmo?.requiredRefillCount ?? data?.dmo?.requiredRefills ?? 4;
+
+  const franchiseVerified = data?.franchise?.verifiedLocations ?? 0;
+  const franchisePending = data?.franchise?.pendingLocations ?? 0;
+
+  const aiGuide =
+    data?.ai?.guide ??
+    "Trust tasks complete karen — PSS liveness, CRB documents, aur refill schedule on-time rakhen.";
+  const aiTasks = (data?.ai?.tasks ?? data?.aiSuggestions ?? []).slice(0, 3);
+  const fraudRisk = data?.ai?.fraud?.risk ?? "LOW";
+  const fraudFlagged = Boolean(data?.ai?.fraud?.flagged);
+  const fraudReasons = data?.ai?.fraud?.reasons ?? [];
+
+  const hasCritical = !kycVerified || complaints >= complaintLimit - 2 || fraudFlagged;
+
+  const grouped = useMemo(() => groupDmoSections(DMO_NAV_SECTIONS), []);
 
   return (
-    <main className="min-h-screen bg-[#05050f] text-white overflow-x-hidden">
+    <div className="relative z-10 space-y-4">
+      {/* ======================================================
+          §7.12 CINEMATIC HERO — v1.7 Premium / Compact
+          ====================================================== */}
+      <section
+        className="relative isolate overflow-hidden rounded-[16px] border border-white/[0.08]"
+        style={{
+          background:
+            "radial-gradient(ellipse 55% 60% at 18% 0%, rgba(123,110,246,0.14), transparent 60%), radial-gradient(ellipse 50% 55% at 92% 10%, rgba(43,191,160,0.12), transparent 60%), linear-gradient(180deg, rgba(8,10,22,0.96) 0%, rgba(12,14,28,0.98) 55%, rgba(10,12,26,0.98) 100%)",
+          boxShadow:
+            "0 20px 50px rgba(10,12,24,0.45), 0 1px 0 rgba(255,255,255,0.08) inset",
+          padding: "clamp(18px, 2.2vw, 28px) clamp(20px, 2.4vw, 32px)",
+          paddingTop: "clamp(22px, 2.6vw, 32px)",
+        }}
+      >
+        {/* Gradient accent bar */}
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #7B6EF6 20%, #2BBFA0 40%, #F0A030 60%, #67E8F9 80%, transparent 100%)" }} />
+        {/* L-shape corner decorations */}
+        <div className="pointer-events-none absolute left-3 top-3 h-6 w-6 border-l-[1.5px] border-t-[1.5px] border-[#7B6EF6]/50" />
+        <div className="pointer-events-none absolute bottom-3 right-3 h-6 w-6 border-b-[1.5px] border-r-[1.5px] border-[#2BBFA0]/45" />
+        <div className="ehb-scan" />
 
-      <section className="relative py-16 px-4 text-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/50 via-blue-900/20 to-[#05050f]" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-blue-600/8 rounded-full blur-3xl" />
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-sm font-medium mb-6">
-            <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-            DMO — Digital Management & Operations
+        <div className="relative z-[2]">
+          {/* Eyebrow row */}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p
+              className="text-[9px] font-semibold uppercase text-[#A098F8]"
+              style={{ letterSpacing: "0.22em" }}
+            >
+              DMO · Decentralized Management Office · EHB Technologies (Pvt.) Ltd.
+            </p>
+            <div
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#2BBFA0]/35 bg-[#2BBFA0]/10 px-2.5 py-0.5"
+              style={{ letterSpacing: "0.1em" }}
+            >
+              <span className="ehb-live-dot h-1 w-1 rounded-full bg-[#2BBFA0]" />
+              <span className="text-[9px] font-semibold uppercase text-[#2BBFA0]">
+                Live · v7.0
+              </span>
+            </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-black mb-4 leading-tight">
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-300 to-purple-400 bg-clip-text text-transparent">The Engine of EHB</span>
-            <br /><span className="text-white">Behind the Platform</span>
+
+          {/* Headline */}
+          <h1
+            className="ehb-headline mt-3 font-bold text-white"
+            style={{
+              fontSize: "clamp(22px, 2.6vw, 36px)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.6px",
+              fontFamily: "'DM Sans', system-ui, sans-serif",
+            }}
+          >
+            Mission control for{" "}
+            <span className="ehb-headline-gradient">EHB&apos;s 32 industries.</span>
           </h1>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto mb-8">
-            Nine powerful modules keep the EHB platform running, from identity to blockchain.
-            <br /><span className="text-white/30 text-base">Everything is designed to be automated, secure, and transparent.</span>
+
+          {/* Subhead */}
+          <p
+            className="mt-2 max-w-[620px] text-white/60"
+            style={{ fontSize: "12px", lineHeight: 1.6 }}
+          >
+            Service Trust Level L{level} {levelName} · PSS KYC {kycStatus} · CRB{" "}
+            {crbVerifications}/{requiredVerifications} verified. Anti-fraud MIN rule
+            enforces truth across product, seller, company, aur owner scores.
           </p>
-          <div className="flex flex-wrap justify-center gap-8">
-            {[
-              { icon: "⚙️", val: "9", label: "Core Modules" },
-              { icon: "🔒", val: "100%", label: "Secured" },
-              { icon: "⛓️", val: "Blockchain", label: "Verified" },
-              { icon: "🌍", val: "50+", label: "Countries" },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="text-3xl mb-1">{s.icon}</div>
-                <div className="text-2xl font-black text-white">{s.val}</div>
-                <div className="text-xs text-white/40 uppercase tracking-wider">{s.label}</div>
-              </div>
-            ))}
+
+          {/* 4-up animated metric row */}
+          <div
+            className="mt-5 grid gap-y-4 gap-x-4"
+            style={{
+              gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
+            }}
+          >
+            <Metric
+              delay={1}
+              value={trustScore}
+              suffix="/100"
+              label="STL Trust Score"
+              sub={`L${level} ${levelName} · next → ${nextLevelName}`}
+              accent="#A098F8"
+            />
+            <Metric
+              delay={2}
+              value={kycVerified ? 100 : kycStatus === "PENDING" ? 50 : 0}
+              suffix="%"
+              label="PSS KYC Progress"
+              sub={`Liveness · AML · ${String(kycStatus).toLowerCase()}`}
+              accent="#2BBFA0"
+            />
+            <Metric
+              delay={3}
+              value={crbVerifications}
+              suffix={`/${requiredVerifications}`}
+              label="CRB Verifications"
+              sub={`Docs · exam ${examsPassed}/${requiredExams}`}
+              accent="#38C878"
+            />
+            <Metric
+              delay={4}
+              value={refills}
+              suffix={`/${requiredRefills}`}
+              label="DMO Refill Progress"
+              sub={`${complaints} active complaints`}
+              accent="#F0A030"
+            />
           </div>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/dmo/super-admin"
-              className="inline-flex items-center gap-2 rounded-full border border-amber-500/35 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-100 hover:bg-amber-500/20 transition-colors"
-            >
-              <span aria-hidden>🛡️</span> DMO-ADMIN
-            </Link>
-            <Link
-              href="/dmo/queue"
-              className="inline-flex items-center gap-2 rounded-full border border-cyan-500/35 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-100 hover:bg-cyan-500/20 transition-colors"
-            >
-              <span aria-hidden>📋</span> Operations queue
-            </Link>
-            <Link
-              href="/dmo/analytics"
-              className="inline-flex items-center gap-2 rounded-full border border-violet-500/35 bg-violet-500/10 px-4 py-2 text-sm font-semibold text-violet-100 hover:bg-violet-500/20 transition-colors"
-            >
-              <span aria-hidden>📊</span> Marketplace analytics
-            </Link>
-            <Link
-              href="/dmo/applications"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white/90 hover:bg-white/10 transition-colors"
-            >
-              <span aria-hidden>📝</span> Applications
-            </Link>
+          {/* AI Copilot ribbon */}
+          <Link
+            href="/dmo/ai-assistant"
+            className="mt-5 block overflow-hidden rounded-lg border transition-colors hover:border-[#A098F8]/45"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(160,152,248,0.08), rgba(43,191,160,0.08))",
+              borderColor: "rgba(160,152,248,0.22)",
+            }}
+          >
+            <div className="flex items-center gap-3 px-4 py-2.5">
+              <span
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[13px]"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #A098F8 0%, #7B6EF6 50%, #2BBFA0 100%)",
+                }}
+              >
+                AI
+              </span>
+              <div className="min-w-0 flex-1">
+                <p
+                  className="text-[9px] font-semibold uppercase text-[#A098F8]"
+                  style={{ letterSpacing: "0.18em" }}
+                >
+                  AI Copilot · Mission Brief
+                </p>
+                <p className="mt-0.5 truncate text-[11px] text-white/80">{aiGuide}</p>
+              </div>
+              <span className="shrink-0 rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-0.5 text-[10px] font-semibold text-white/75">
+                Open →
+              </span>
+            </div>
+            <div className="ehb-ai-bar" />
+          </Link>
+
+          {/* Gradient action strip */}
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href="/dmo/stl"
+                className="ehb-cta-primary inline-flex items-center gap-1.5 rounded-lg px-4 py-1.5 text-[11px] font-semibold text-white"
+              >
+                Open STL Management →
+              </Link>
+              <Link
+                href="/dmo/ehb-stl-level"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/[0.04] px-4 py-1.5 text-[11px] font-semibold text-white/75 transition-colors hover:border-white/30 hover:bg-white/[0.08] hover:text-white"
+              >
+                STL L1–L8 reference
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              <span
+                className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[9px] font-semibold uppercase ${
+                  hasCritical
+                    ? "border-[#F05858]/45 bg-[#F05858]/12 text-[#F05858]"
+                    : "border-[#38C878]/40 bg-[#38C878]/12 text-[#38C878]"
+                }`}
+                style={{ letterSpacing: "0.12em" }}
+              >
+                <span className="h-1 w-1 rounded-full bg-current" />
+                {hasCritical ? "Attention needed" : "All systems nominal"}
+              </span>
+              <span
+                className="rounded-full border border-[#7B6EF6]/35 bg-[#7B6EF6]/10 px-2.5 py-0.5 text-[9px] font-semibold uppercase text-[#A098F8]"
+                style={{ letterSpacing: "0.12em" }}
+              >
+                Phase 7 · Cinematic
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="py-4 px-4 sticky top-0 z-30 bg-[#05050f]/90 backdrop-blur-md border-b border-white/5">
-        <div className="max-w-5xl mx-auto flex gap-2 flex-wrap justify-center">
-          {[
-            { key: "modules", icon: "⚙️", label: "9 Core Modules" },
-            { key: "phases",  icon: "🗺️", label: "Dev Phases" },
-            { key: "governance", icon: "🏛️", label: "Governance" },
-          ].map((tab) => (
-            <button key={tab.key} onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold border transition-all ${
-                activeTab === tab.key ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/30" : "bg-white/5 border-white/10 text-white/60 hover:text-white"
-              }`}>
-              {tab.icon} {tab.label}
-            </button>
-          ))}
+      {/* ======================================================
+          FRAUD BANNER (conditional)
+          ====================================================== */}
+      {(fraudFlagged || complaints >= complaintLimit - 2) && (
+        <FraudBanner
+          risk={fraudRisk}
+          reasons={fraudReasons}
+          complaints={complaints}
+          complaintLimit={complaintLimit}
+        />
+      )}
+
+      {/* ======================================================
+          PROFILE + STL LADDER (2-column)
+          ====================================================== */}
+      <section
+        className="grid gap-4"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}
+      >
+        <ProfileTrustCard
+          name={name}
+          level={level}
+          levelName={levelName}
+          trustScore={trustScore}
+          progressPct={progressPct}
+          nextLevelName={nextLevelName}
+        />
+        <StlLevelLadder currentLevel={level} trustScore={trustScore} />
+      </section>
+
+      {/* ======================================================
+          VERIFICATION TRINITY (PSS / CRB / DMO)
+          ====================================================== */}
+      <section
+        className="grid gap-4"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}
+      >
+        <VerificationCard
+          title="PSS · Personal Security"
+          accent="#2BBFA0"
+          icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>}
+          rows={[
+            { label: "KYC liveness", ok: kycVerified, detail: String(kycStatus) },
+            { label: "AML screening", ok: kycVerified, detail: kycVerified ? "Clear" : "Pending" },
+            {
+              label: "Complaint limit",
+              ok: complaints < complaintLimit - 1,
+              detail: `${complaints}/${complaintLimit}`,
+            },
+            {
+              label: "Fraud flag",
+              ok: !fraudFlagged,
+              detail: fraudFlagged ? String(fraudRisk) : "LOW",
+            },
+          ]}
+          href="/dmo/pss"
+          cta="Open PSS →"
+        />
+        <VerificationCard
+          title="CRB · Certification & Registry"
+          accent="#38C878"
+          icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>}
+          rows={[
+            {
+              label: "Documents verified",
+              ok: crbVerifications >= requiredVerifications,
+              detail: `${crbVerifications}/${requiredVerifications}`,
+            },
+            {
+              label: "Exams passed",
+              ok: examsPassed >= requiredExams,
+              detail: `${examsPassed}/${requiredExams}`,
+            },
+            {
+              label: "Inspection reports",
+              ok: crbVerifications >= 2,
+              detail: crbVerifications >= 2 ? "Active" : "Missing",
+            },
+            {
+              label: "Certificate hash",
+              ok: crbVerifications > 0,
+              detail: crbVerifications > 0 ? "On-chain" : "Not anchored",
+            },
+          ]}
+          href="/dmo/crb"
+          cta="Open CRB →"
+        />
+        <VerificationCard
+          title="DMO · Operations Office"
+          accent="#F0A030"
+          icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>}
+          rows={[
+            {
+              label: "Refill cycle",
+              ok: refills >= requiredRefills,
+              detail: `${refills}/${requiredRefills}`,
+            },
+            {
+              label: "Complaints resolved",
+              ok: complaints < 2,
+              detail: `${complaints} open`,
+            },
+            {
+              label: "Franchise network",
+              ok: franchiseVerified > 0,
+              detail: `${franchiseVerified} verified · ${franchisePending} pending`,
+            },
+            {
+              label: "Approval queue",
+              ok: true,
+              detail: "Live",
+            },
+          ]}
+          href="/dmo/approvals"
+          cta="Open DMO →"
+        />
+      </section>
+
+      {/* ======================================================
+          INTELLIGENCE ROW (4-up)
+          ====================================================== */}
+      <section
+        className="grid gap-4"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}
+      >
+        <AiNextStepsCard
+          tasks={aiTasks}
+          guide={aiGuide}
+          trustScore={trustScore}
+          nextLevelName={nextLevelName}
+        />
+        <BlockchainProofCard trustScore={trustScore} level={level} />
+        <FranchiseNetworkCard
+          verified={franchiseVerified}
+          pending={franchisePending}
+        />
+        <ActivitySummaryCard
+          refills={refills}
+          requiredRefills={requiredRefills}
+          crbVerifications={crbVerifications}
+          requiredVerifications={requiredVerifications}
+          complaints={complaints}
+        />
+      </section>
+
+      {/* ======================================================
+          EARNINGS + BENEFITS (2-column)
+          ====================================================== */}
+      <section
+        className="grid gap-4"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}
+      >
+        <EarningsCard />
+        <BenefitsLadder currentLevel={level} />
+      </section>
+
+      {/* ======================================================
+          MODULE RAIL — bento grouped
+          ====================================================== */}
+      <section className="space-y-6 pt-2">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <h2
+              className="font-bold text-white"
+              style={{ fontSize: "clamp(18px, 2vw, 22px)", letterSpacing: "-0.3px" }}
+            >
+              DMO modules
+            </h2>
+            <p className="mt-1 text-[12px] text-white/55">
+              18 canonical modules grouped into 4 sections. Click any card to drill in.
+            </p>
+          </div>
+          <span
+            className="hidden rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[10px] font-semibold uppercase text-white/55 sm:inline-block"
+            style={{ letterSpacing: "0.18em" }}
+          >
+            18 modules · 4 groups
+          </span>
         </div>
-      </section>      {/* ââ 9 MODULES TAB âââââââââââââââââââââââââââââââ */}
-      {activeTab === "modules" && (
-        <section className="py-10 px-4">
-          <div className="max-w-6xl mx-auto">
 
-            {/* Module Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
-              {DMO_MODULES.map((mod) => (
-                <button
-                  key={mod.id}
-                  onClick={() => setActiveModule(activeModule === mod.id ? null : mod.id)}
-                  className={`text-left rounded-2xl border overflow-hidden transition-all hover:scale-[1.02] ${mod.borderColor} ${
-                    activeModule === mod.id ? "ring-2 ring-white/20 scale-[1.02]" : ""
-                  }`}
+        {DMO_NAV_GROUPS.map((group) => {
+          const sections = grouped.find((g) => g.key === group.key)?.sections ?? [];
+          if (sections.length === 0) return null;
+          return (
+            <div key={group.key} className="space-y-3">
+              <div className="flex items-center gap-3">
+                <span
+                  className={`text-[10px] font-semibold uppercase ${group.tint}`}
+                  style={{ letterSpacing: "0.22em" }}
                 >
-                  {/* Card header gradient */}
-                  <div className={`bg-gradient-to-br ${mod.color} p-4 flex items-start justify-between`}>
-                    <div className="text-4xl">{mod.icon}</div>
-                    <span className={`text-xs font-bold px-2 py-1 rounded-full border ${mod.statusColor}`}>
-                      {mod.status}
-                    </span>
-                  </div>
-
-                  {/* Card body */}
-                  <div className="bg-white/[0.04] p-4">
-                    <h3 className="font-black text-white text-base mb-1">{mod.shortName}</h3>
-                    <p className="text-xs text-white/50 mb-3">{mod.tagline}</p>
-                    <p className="text-xs text-white/40 leading-relaxed line-clamp-2">{mod.description}</p>
-                    <div className="mt-3 flex items-center gap-1 text-xs text-blue-400 font-semibold">
-                      {activeModule === mod.id ? "Hide details ▲" : "See details ▼"}
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            {/* Expanded module detail */}
-            {selectedModule && (
-              <div className={`rounded-3xl border ${selectedModule.borderColor} overflow-hidden animate-in fade-in`}>
-                <div className={`bg-gradient-to-br ${selectedModule.color} p-6 md:p-8`}>
-                  <div className="flex items-center gap-4">
-                    <div className="text-6xl">{selectedModule.icon}</div>
-                    <div>
-                      <div className="text-sm text-white/60 mb-1">Module Detail</div>
-                      <h2 className="text-2xl font-black text-white">{selectedModule.name}</h2>
-                      <p className="text-white/70 mt-1">{selectedModule.tagline}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/[0.04] p-6 md:p-8">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* Description */}
-                    <div className="md:col-span-2">
-                      <h3 className="text-sm font-black text-white/50 uppercase tracking-wider mb-3">What It Does</h3>
-                      <p className="text-white/80 text-base leading-relaxed mb-6">{selectedModule.description}</p>
-
-                      <h3 className="text-sm font-black text-white/50 uppercase tracking-wider mb-3">Features</h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {selectedModule.features.map((f) => (
-                          <div key={f} className="flex items-start gap-2 bg-black/20 rounded-xl p-3 text-sm text-white/70">
-                            {f}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Use cases + action */}
-                    <div>
-                      <h3 className="text-sm font-black text-white/50 uppercase tracking-wider mb-3">Who It Helps</h3>
-                      <div className="space-y-2 mb-6">
-                        {selectedModule.useCases.map((uc) => (
-                          <div key={uc} className="bg-black/20 rounded-xl p-3 text-sm text-white/70 flex items-center gap-2">
-                            <span className="text-green-400">✓</span> {uc}
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-bold mb-4 ${selectedModule.statusColor}`}>
-                        <span className="w-2 h-2 rounded-full bg-current animate-pulse" />
-                        Status: {selectedModule.status}
-                      </div>
-
-                      <button
-                        onClick={() => setActiveModule(null)}
-                        className="w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-semibold transition-all"
+                  {group.label}
+                </span>
+                <div className="h-px flex-1 bg-gradient-to-r from-white/15 via-white/5 to-transparent" />
+              </div>
+              <div
+                className="grid gap-3"
+                style={{
+                  gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                }}
+              >
+                {sections.map((section) => (
+                  <Link
+                    key={section.key}
+                    href={section.href}
+                    className="group relative overflow-hidden rounded-xl border border-white/[0.08] bg-[#13162A]/70 backdrop-blur-xl p-3 transition-all hover:-translate-y-[2px]"
+                    style={{
+                      transitionDuration: "220ms",
+                      transitionTimingFunction: "cubic-bezier(.2,.8,.2,1)",
+                    }}
+                  >
+                    <div
+                      className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      style={{
+                        background:
+                          "radial-gradient(ellipse 80% 60% at 10% 0%, rgba(123,110,246,0.22) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 90% 100%, rgba(43,191,160,0.18) 0%, transparent 55%)",
+                      }}
+                    />
+                    <div className="relative flex items-center gap-2.5">
+                      <span
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[15px]"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, rgba(123,110,246,0.18), rgba(43,191,160,0.14))",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                        }}
                       >
-                        Close ✕
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* ââ DEV PHASES TAB âââââââââââââââââââââââââââââââ */}
-      {activeTab === "phases" && (
-        <section className="py-10 px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl font-black text-white mb-2">🗺️ Development Roadmap</h2>
-              <p className="text-white/50">From Phase 1 to Phase 80, this is the EHB journey</p>
-            </div>
-
-            <div className="space-y-4">
-              {DMO_ROADMAP_PHASES.map((p, i) => (
-                <div
-                  key={i}
-                  className={`rounded-2xl border p-5 ${
-                    p.done
-                      ? "bg-green-950/20 border-green-500/30"
-                      : "bg-white/5 border-white/10"
-                  }`}
-                >
-                  <div className="flex gap-5">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0 ${
-                      p.done ? "bg-green-500/20 text-green-400" : "bg-white/10 text-white/30"
-                    }`}>
-                      {p.done ? "✅" : "⏳"}
-                    </div>
-
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-3">
-                        <span className="font-black text-white">{p.phase}</span>
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${p.done ? "bg-green-500/20 text-green-300" : "bg-white/10 text-white/40"}`}>
-                          {p.range}
-                        </span>
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${p.done ? "bg-emerald-500/20 text-emerald-300" : p.progress >= 40 ? "bg-blue-500/20 text-blue-300" : "bg-amber-500/20 text-amber-300"}`}>
-                          {p.statusLabel}
-                        </span>
-                      </div>
-                      <p className="text-sm text-white/50 mt-1">{p.desc}</p>
-
-                      <div className="mt-3">
-                        <div className="flex items-center justify-between text-[11px] text-white/40 mb-1">
-                          <span>Phase readiness</span>
-                          <span>{p.progress}%</span>
+                        {section.icon}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate text-[12px] font-semibold text-white">
+                          {section.label}
                         </div>
-                        <div className="bg-black/20 rounded-full h-2 overflow-hidden">
-                          <div
-                            className={`h-full rounded-full ${p.done ? "bg-gradient-to-r from-green-500 to-emerald-400" : "bg-gradient-to-r from-cyan-500 to-blue-500"}`}
-                            style={{ width: `${p.progress}%` }}
-                          />
+                        <div className="mt-0.5 truncate text-[9px] text-white/50">
+                          {section.items.length} sub-pages · open →
                         </div>
                       </div>
-
-                      <div className="mt-4 grid gap-4 md:grid-cols-2">
-                        <div>
-                          <p className="text-[11px] uppercase tracking-[0.18em] text-white/35 mb-2">Phase Outcomes</p>
-                          <ul className="space-y-1.5 text-sm text-white/60">
-                            {p.outcomes.map((item) => (
-                              <li key={item}>• {item}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <p className="text-[11px] uppercase tracking-[0.18em] text-white/35 mb-2">Next Focus</p>
-                          <ul className="space-y-1.5 text-sm text-white/60">
-                            {(p.nextFocus.length > 0 ? p.nextFocus : ["Phase delivered and closed."]).map((item) => (
-                              <li key={item}>• {item}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
+                      <span className="text-white/30 transition-all group-hover:translate-x-0.5 group-hover:text-[#A098F8]">
+                        →
+                      </span>
                     </div>
-                  </div>
-
-                  <div className={`mt-4 text-sm font-bold ${p.done ? "text-green-400" : p.progress >= 40 ? "text-blue-300" : "text-white/30"}`}>
-                    {p.statusLabel}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Overall progress */}
-            <div className="mt-8 bg-white/5 border border-white/10 rounded-2xl p-6">
-              <div className="flex justify-between items-center mb-3">
-                <span className="text-white font-bold">Overall Progress</span>
-                <span className="text-green-400 font-black">Phase {DMO_CURRENT_PHASE_MARKER} / 80</span>
+                  </Link>
+                ))}
               </div>
-              <div className="bg-white/5 rounded-full h-4 overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-green-500 via-cyan-500 to-blue-500 rounded-full"
-                  style={{ width: `${DMO_PHASE_PROGRESS}%` }}
-                />
-              </div>
-              <p className="text-xs text-white/30 mt-2">
-                {DMO_PHASE_PROGRESS}% complete — foundational systems are live and growth phases now have structured execution targets.
-              </p>
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* ââ GOVERNANCE TAB âââââââââââââââââââââââââââââââ */}
-      {activeTab === "governance" && (
-        <section className="py-10 px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl font-black text-white mb-2">🏛️ Digital Governance System</h2>
-              <p className="text-white/50">A fair, transparent, and automated governance model for EHB</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                {
-                  icon: "⚖️",
-                  title: "Fair Rules",
-                  desc: "Platform rules apply equally to everyone. AI helps keep major decisions consistent and fair.",
-                  color: "border-blue-500/30 bg-blue-950/20",
-                },
-                {
-                  icon: "🔍",
-                  title: "Full Transparency",
-                  desc: "Actions, transactions, and changes can be verified openly. Blockchain creates a permanent record that cannot be hidden.",
-                  color: "border-cyan-500/30 bg-cyan-950/20",
-                },
-                {
-                  icon: "🤖",
-                  title: "AI Decision Making",
-                  desc: "AI supports disputes, approvals, and flagging workflows with fast and always-available processing.",
-                  color: "border-purple-500/30 bg-purple-950/20",
-                },
-                {
-                  icon: "🗳️",
-                  title: "Community Voting",
-                  desc: "Franchisees and partners can vote on major platform changes using a community-driven process.",
-                  color: "border-green-500/30 bg-green-950/20",
-                },
-                {
-                  icon: "📋",
-                  title: "Compliance Tracking",
-                  desc: "Compliance for each franchisee and partner is tracked automatically with reminders before deadlines are missed.",
-                  color: "border-yellow-500/30 bg-yellow-950/20",
-                },
-                {
-                  icon: "🚨",
-                  title: "Dispute Resolution",
-                  desc: "Escalations follow a 3-step resolution path: AI review, human review, and final decision within 72 hours.",
-                  color: "border-red-500/30 bg-red-950/20",
-                },
-              ].map((item) => (
-                <div key={item.title} className={`rounded-2xl border p-6 ${item.color}`}>
-                  <div className="text-4xl mb-3">{item.icon}</div>
-                  <h3 className="text-lg font-black text-white mb-2">{item.title}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ââ CTA âââââââââââââââââââââââââââââââââââââââââââ */}
-      <section className="py-16 px-4 text-center">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-900/30 via-purple-900/20 to-cyan-900/30 border border-blue-400/20 rounded-3xl p-10">
-            <div className="text-5xl mb-4">⚙️</div>
-            <h2 className="text-2xl font-black text-white mb-3">Explore the EHB Platform</h2>
-            <p className="text-white/60 mb-8">See the full ecosystem, from franchise operations to the AI marketplace</p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link href="/franchise" className="px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl text-white font-bold transition-all hover:scale-105">
-                Apply for Franchise 🚀
-              </Link>
-              <Link href="/home" className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl text-white font-semibold transition-all">
-                Home Platform →
-              </Link>
-              <Link href="/development" className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl text-white font-semibold transition-all">
-                Dev Roadmap →
-              </Link>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </section>
+    </div>
+  );
+}
 
-    </main>
+/* ========================================================================
+   Helpers
+   ======================================================================== */
+
+function clamp(n: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, n));
+}
+
+/* ========================================================================
+   §7.12 Hero metric (animated counter)
+   ======================================================================== */
+
+function Metric({
+  delay,
+  value,
+  suffix,
+  label,
+  sub,
+  accent,
+}: {
+  delay: 1 | 2 | 3 | 4;
+  value: number;
+  suffix?: string;
+  label: string;
+  sub: string;
+  accent: string;
+}) {
+  const safeAccent = useThemeAccent(accent);
+  return (
+    <div className="flex flex-col gap-1.5">
+      <div
+        className={`ehb-num ehb-num-d${delay} font-bold text-white`}
+        style={{
+          fontSize: "clamp(22px, 2.1vw, 30px)",
+          lineHeight: 1,
+          letterSpacing: "-0.4px",
+          fontFamily: "'DM Sans', system-ui, sans-serif",
+        }}
+      >
+        {value}
+        {suffix ? (
+          <span className="ml-0.5 text-[0.42em] font-semibold text-white/45">
+            {suffix}
+          </span>
+        ) : null}
+      </div>
+      <div>
+        <p
+          className="text-[9px] font-semibold uppercase"
+          style={{ color: safeAccent, letterSpacing: "0.14em" }}
+        >
+          {label}
+        </p>
+        <p className="mt-0.5 text-[10px] text-white/45">{sub}</p>
+      </div>
+    </div>
+  );
+}
+
+/* ========================================================================
+   FraudBanner (ref image: red bordered warning with complaint/fraud detail)
+   ======================================================================== */
+
+function FraudBanner({
+  risk,
+  reasons,
+  complaints,
+  complaintLimit,
+}: {
+  risk: "LOW" | "MEDIUM" | "HIGH";
+  reasons: string[];
+  complaints: number;
+  complaintLimit: number;
+}) {
+  const sc = useSafeColor();
+  const nearLimit = complaints >= complaintLimit - 2;
+  const tone =
+    risk === "HIGH" || complaints >= complaintLimit
+      ? "#F05858"
+      : risk === "MEDIUM" || nearLimit
+        ? "#F0A030"
+        : "#F05858";
+  const messages =
+    reasons.length > 0
+      ? reasons.slice(0, 3)
+      : [
+          nearLimit
+            ? `Complaint limit ${complaints}/${complaintLimit} — aap limit ke paas hain. Pending complaints resolve karein.`
+            : "Anti-fraud AI ne suspicious pattern detect kiya. Inspector review pending.",
+        ];
+
+  return (
+    <section
+      className="relative overflow-hidden rounded-xl border p-4"
+      style={{
+        borderColor: `${tone}55`,
+        background: `linear-gradient(135deg, ${tone}18, rgba(13,15,28,0.92) 55%, rgba(13,15,28,0.92))`,
+      }}
+    >
+      <div className="flex items-start gap-3">
+        <span
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[15px]"
+          style={{
+            background: `${tone}24`,
+            border: `1px solid ${tone}55`,
+          }}
+        >
+          !
+        </span>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <p
+              className="text-[9px] font-semibold uppercase"
+              style={{ color: sc(tone), letterSpacing: "0.16em" }}
+            >
+              Fraud Detection · Risk {risk}
+            </p>
+            <span
+              className="rounded-full border px-1.5 py-0.5 text-[8px] font-semibold uppercase"
+              style={{
+                borderColor: `${tone}55`,
+                color: tone,
+                letterSpacing: "0.12em",
+              }}
+            >
+              Action required
+            </span>
+          </div>
+          <ul className="mt-1.5 space-y-0.5">
+            {messages.map((m, i) => (
+              <li key={i} className="text-[11px] text-white/85">
+                • {m}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <Link
+          href="/dmo/complaints"
+          className="shrink-0 self-center rounded-lg border px-3 py-1.5 text-[10px] font-semibold transition-colors"
+          style={{
+            borderColor: `${tone}55`,
+            color: tone,
+            background: `${tone}12`,
+          }}
+        >
+          Resolve now →
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+/* ========================================================================
+   ProfileTrustCard (ref image: avatar + STL halo + radial gauge + upgrade CTA)
+   ======================================================================== */
+
+function ProfileTrustCard({
+  name,
+  level,
+  levelName,
+  trustScore,
+  progressPct,
+  nextLevelName,
+}: {
+  name: string;
+  level: number;
+  levelName: string;
+  trustScore: number;
+  progressPct: number;
+  nextLevelName: string;
+}) {
+  const initials = getInitials(name);
+  const tone = getLevelTone(level);
+
+  return (
+    <div
+      className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-[#13162A]/70 backdrop-blur-xl p-4 pt-[22px]"
+      style={{
+        background:
+          "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(123,110,246,0.12), transparent 60%), rgba(19,22,42,0.92)",
+      }}
+    >
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #7B6EF6, #A098F8, transparent)" }} />
+      <div className="flex items-center gap-3">
+        {/* Avatar with STL halo */}
+        <div className="relative">
+          <div
+            className="relative flex h-12 w-12 items-center justify-center rounded-full text-[13px] font-bold text-white"
+            style={{
+              background: "linear-gradient(135deg, #1A1D33, #13162A)",
+              border: `1.5px solid ${tone}`,
+              boxShadow: `0 0 18px ${tone}35`,
+            }}
+          >
+            {initials}
+          </div>
+          <span
+            className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full px-1.5 py-[1px] text-[8px] font-black uppercase text-white"
+            style={{
+              background: `linear-gradient(135deg, ${tone}, rgba(123,110,246,0.9))`,
+              boxShadow: `0 2px 8px ${tone}55`,
+              letterSpacing: "0.08em",
+            }}
+          >
+            L{level}
+          </span>
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <p
+            className="text-[9px] font-semibold uppercase text-[#A098F8]"
+            style={{ letterSpacing: "0.16em" }}
+          >
+            EHB Operator
+          </p>
+          <h3 className="truncate text-[14px] font-bold text-white">{name}</h3>
+          <p className="mt-0.5 text-[10px] text-white/55">
+            L{level} {levelName} · next → {nextLevelName}
+          </p>
+        </div>
+      </div>
+
+      {/* Radial trust gauge */}
+      <div className="mt-4 flex items-center gap-4">
+        <TrustGauge score={trustScore} tone={tone} />
+        <div className="min-w-0 flex-1 space-y-2.5">
+          <div>
+            <div className="flex items-center justify-between">
+              <p
+                className="text-[8px] font-semibold uppercase text-white/55"
+                style={{ letterSpacing: "0.14em" }}
+              >
+                Progress to next level
+              </p>
+              <p className="text-[10px] font-bold text-white">{progressPct}%</p>
+            </div>
+            <div className="mt-1 h-1 w-full overflow-hidden rounded-full bg-white/8">
+              <div
+                className="h-full rounded-full"
+                style={{
+                  width: `${progressPct}%`,
+                  background: `linear-gradient(90deg, ${tone}, #A098F8)`,
+                  boxShadow: `0 0 10px ${tone}66`,
+                  transition: "width 600ms cubic-bezier(.2,.8,.2,1)",
+                }}
+              />
+            </div>
+          </div>
+          <Link
+            href="/dmo/stl"
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-[#7B6EF6]/40 bg-[#7B6EF6]/14 px-3 py-1.5 text-[10px] font-semibold text-[#C3BCFC] transition-colors hover:bg-[#7B6EF6]/22"
+          >
+            Upgrade to {nextLevelName} →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TrustGauge({ score, tone }: { score: number; tone: string }) {
+  const size = 84;
+  const radius = 34;
+  const circ = 2 * Math.PI * radius;
+  const offset = circ - (score / 100) * circ;
+  return (
+    <div
+      className="relative flex shrink-0 items-center justify-center"
+      style={{ height: size, width: size }}
+    >
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="rgba(255,255,255,0.08)"
+          strokeWidth={6}
+          fill="none"
+        />
+        <defs>
+          <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor={tone} />
+            <stop offset="100%" stopColor="#A098F8" />
+          </linearGradient>
+        </defs>
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="url(#gaugeGrad)"
+          strokeWidth={6}
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={circ}
+          strokeDashoffset={offset}
+          style={{ transition: "stroke-dashoffset 800ms cubic-bezier(.2,.8,.2,1)" }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span
+          className="font-bold text-white"
+          style={{ fontSize: 20, lineHeight: 1, letterSpacing: "-0.3px" }}
+        >
+          {score}
+        </span>
+        <span
+          className="mt-0.5 text-[7px] font-semibold uppercase text-white/55"
+          style={{ letterSpacing: "0.14em" }}
+        >
+          Trust
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function getInitials(name: string) {
+  const parts = name.trim().split(/\s+/).slice(0, 2);
+  return parts.map((p) => p[0]?.toUpperCase() ?? "").join("") || "EH";
+}
+
+function getLevelTone(level: number): string {
+  if (level >= 8) return "#F0A030";
+  if (level >= 6) return "#A098F8";
+  if (level >= 4) return "#2BBFA0";
+  if (level >= 2) return "#7B6EF6";
+  return "#38C878";
+}
+
+/* ========================================================================
+   StlLevelLadder (ref image: STL1→STL5 gem/shield progression)
+   ======================================================================== */
+
+const STL_LADDER = [
+  { level: 1, code: "L1", name: "FREE", icon: (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>), min: 0 },
+  { level: 2, code: "L2", name: "BASIC", icon: (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>), min: 21 },
+  { level: 3, code: "L3", name: "NORMAL", icon: (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>), min: 41 },
+  { level: 4, code: "L4", name: "STANDARD", icon: (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>), min: 56 },
+  { level: 5, code: "L5", name: "ADVANCED", icon: (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 3h12l4 6-10 13L2 9z"/></svg>), min: 66 },
+  { level: 6, code: "L6", name: "HIGH", icon: (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M12 9v4"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/></svg>), min: 76 },
+  { level: 7, code: "L7", name: "VIP", icon: (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>), min: 86 },
+  { level: 8, code: "L8", name: "SUPREME", icon: (<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5z"/><path d="M5 19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1H5v1z"/></svg>), min: 96 },
+];
+
+function StlLevelLadder({
+  currentLevel,
+  trustScore,
+}: {
+  currentLevel: number;
+  trustScore: number;
+}) {
+  return (
+    <div className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-[#13162A]/70 backdrop-blur-xl p-4 pt-[22px]">
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: "linear-gradient(90deg, #38C878, #2BBFA0, #7B6EF6, #A098F8, #F0A030)" }} />
+      <div className="flex items-center justify-between gap-2">
+        <div>
+          <p
+            className="text-[9px] font-semibold uppercase text-[#A098F8]"
+            style={{ letterSpacing: "0.16em" }}
+          >
+            STL Level Progression
+          </p>
+          <h3 className="mt-0.5 text-[12px] font-bold text-white">
+            8-tier trust ladder · L1 → L8 SUPREME
+          </h3>
+        </div>
+        <span className="rounded-full border border-[#A098F8]/30 bg-[#7B6EF6]/10 px-2 py-0.5 text-[9px] font-semibold text-[#C3BCFC]">
+          {trustScore}/100
+        </span>
+      </div>
+
+      {/* Tier chips */}
+      <div className="mt-3 grid grid-cols-8 gap-1">
+        {STL_LADDER.map((t) => {
+          const isCurrent = t.level === currentLevel;
+          const isPast = t.level < currentLevel;
+          const tone = getLevelTone(t.level);
+          return (
+            <div
+              key={t.level}
+              className="flex flex-col items-center gap-0.5 rounded-lg border px-1 py-1.5 transition-all"
+              style={{
+                borderColor: isCurrent
+                  ? `${tone}88`
+                  : isPast
+                    ? "rgba(56,200,120,0.28)"
+                    : "rgba(255,255,255,0.06)",
+                background: isCurrent
+                  ? `linear-gradient(180deg, ${tone}22, rgba(19,22,42,0.6))`
+                  : isPast
+                    ? "rgba(56,200,120,0.06)"
+                    : "rgba(255,255,255,0.02)",
+                boxShadow: isCurrent
+                  ? `0 0 14px ${tone}33, 0 1px 0 rgba(255,255,255,0.08) inset`
+                  : "none",
+              }}
+            >
+              <span className="flex items-center justify-center text-[13px] leading-none">{t.icon}</span>
+              <span
+                className="text-[8px] font-black"
+                style={{
+                  color: isCurrent ? tone : isPast ? "#38C878" : "rgba(255,255,255,0.45)",
+                }}
+              >
+                {t.code}
+              </span>
+              <span
+                className="text-[7px] font-semibold uppercase"
+                style={{
+                  color: isCurrent
+                    ? "rgba(255,255,255,0.92)"
+                    : "rgba(255,255,255,0.38)",
+                  letterSpacing: "0.04em",
+                }}
+              >
+                {t.name}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Progress bar */}
+      <div className="mt-3">
+        <div className="h-1 w-full overflow-hidden rounded-full bg-white/8">
+          <div
+            className="h-full rounded-full"
+            style={{
+              width: `${trustScore}%`,
+              background:
+                "linear-gradient(90deg, #38C878 0%, #2BBFA0 25%, #7B6EF6 55%, #A098F8 80%, #F0A030 100%)",
+              boxShadow: "0 0 12px rgba(160,152,248,0.45)",
+              transition: "width 800ms cubic-bezier(.2,.8,.2,1)",
+            }}
+          />
+        </div>
+        <div className="mt-1.5 flex items-center justify-between text-[9px] text-white/45">
+          <span>0</span>
+          <span>Current: {trustScore}/100</span>
+          <span>100 · SUPREME</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ========================================================================
+   VerificationCard (ref image: PSS/CRB/DMO checkmark row panels)
+   ======================================================================== */
+
+function VerificationCard({
+  title,
+  accent,
+  icon,
+  rows,
+  href,
+  cta,
+}: {
+  title: string;
+  accent: string;
+  icon: React.ReactNode;
+  rows: { label: string; ok: boolean; detail: string }[];
+  href: string;
+  cta: string;
+}) {
+  const sc = useSafeColor();
+  const okCount = rows.filter((r) => r.ok).length;
+  const total = rows.length;
+  const pct = Math.round((okCount / total) * 100);
+
+  return (
+    <div
+      className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-[#13162A]/70 backdrop-blur-xl p-4 pt-[22px] transition-all hover:-translate-y-[1px]"
+      style={{
+        background: `linear-gradient(180deg, ${accent}10, rgba(19,22,42,0.88))`,
+        transitionDuration: "220ms",
+      }}
+    >
+      {/* Accent bar */}
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }} />
+      <div className="flex items-center gap-2.5">
+        <span
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-[13px]"
+          style={{
+            background: `${accent}20`,
+            border: `1px solid ${accent}44`,
+          }}
+        >
+          {icon}
+        </span>
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-[11px] font-bold text-white">{title}</h3>
+          <p className="mt-0.5 text-[9px] text-white/50">
+            {okCount}/{total} checks · {pct}%
+          </p>
+        </div>
+        <span
+          className="rounded-full border px-1.5 py-0.5 text-[8px] font-bold uppercase"
+          style={{
+            borderColor: `${accent}55`,
+            background: `${accent}15`,
+            color: sc(accent),
+            letterSpacing: "0.1em",
+          }}
+        >
+          {pct === 100 ? "Ready" : "In progress"}
+        </span>
+      </div>
+
+      {/* rows */}
+      <ul className="mt-3 space-y-1.5">
+        {rows.map((r, i) => (
+          <li
+            key={i}
+            className="flex items-center gap-1.5 rounded-md border border-white/5 bg-white/[0.02] px-2 py-1.5"
+          >
+            <span
+              className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[9px] font-black"
+              style={{
+                background: r.ok ? "rgba(56,200,120,0.16)" : "rgba(240,160,48,0.14)",
+                border: r.ok
+                  ? "1px solid rgba(56,200,120,0.5)"
+                  : "1px solid rgba(240,160,48,0.45)",
+                color: r.ok ? "#38C878" : "#F0A030",
+              }}
+            >
+              {r.ok ? <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l5 5L20 7" /></svg> : <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 8v4m0 4h.01" /></svg>}
+            </span>
+            <span className="flex-1 truncate text-[10px] text-white/85">
+              {r.label}
+            </span>
+            <span className="shrink-0 text-[9px] font-semibold text-white/55">
+              {r.detail}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      {/* progress */}
+      <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/10">
+        <div
+          className="h-full rounded-full"
+          style={{
+            width: `${pct}%`,
+            background: `linear-gradient(90deg, ${accent}, #A098F8)`,
+            transition: "width 600ms cubic-bezier(.2,.8,.2,1)",
+          }}
+        />
+      </div>
+
+      <Link
+        href={href}
+        className="mt-3 inline-flex w-full items-center justify-center rounded-lg border px-3 py-1.5 text-[10px] font-semibold transition-colors"
+        style={{
+          borderColor: `${accent}44`,
+          color: sc(accent),
+          background: `${accent}10`,
+        }}
+      >
+        {cta}
+      </Link>
+    </div>
+  );
+}
+
+/* ========================================================================
+   AiNextStepsCard (ref image: "You need to…" assistant card)
+   ======================================================================== */
+
+function AiNextStepsCard({
+  tasks,
+  guide,
+  trustScore,
+  nextLevelName,
+}: {
+  tasks: string[];
+  guide: string;
+  trustScore: number;
+  nextLevelName: string;
+}) {
+  const list = tasks.length > 0 ? tasks.slice(0, 3) : [guide];
+  return (
+    <div
+      className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-[#13162A]/70 backdrop-blur-xl p-4 pt-[22px]"
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(123,110,246,0.10), rgba(19,22,42,0.88))",
+      }}
+    >
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #A098F8, transparent)" }} />
+      <div className="flex items-center gap-2.5">
+        <span
+          className="flex h-8 w-8 items-center justify-center rounded-lg"
+          style={{
+            background:
+              "linear-gradient(135deg, #A098F8, #7B6EF6 55%, #2BBFA0)",
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M16 14H8a4 4 0 0 0-4 4v2h16v-2a4 4 0 0 0-4-4z"/><circle cx="9" cy="6.5" r="0.5" fill="#fff"/><circle cx="15" cy="6.5" r="0.5" fill="#fff"/></svg>
+        </span>
+        <div className="min-w-0 flex-1">
+          <p
+            className="text-[9px] font-semibold uppercase text-[#A098F8]"
+            style={{ letterSpacing: "0.16em" }}
+          >
+            AI Assistant
+          </p>
+          <h3 className="text-[11px] font-bold text-white">Next mission steps</h3>
+        </div>
+      </div>
+
+      <p className="mt-2.5 text-[10px] text-white/55">
+        Complete these to reach{" "}
+        <span className="font-semibold text-white/80">{nextLevelName}</span>:
+      </p>
+
+      <ol className="mt-2 space-y-1.5">
+        {list.map((t, i) => (
+          <li key={i} className="flex items-start gap-1.5">
+            <span
+              className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[9px] font-black text-white"
+              style={{
+                background:
+                  "linear-gradient(135deg, #7B6EF6, #A098F8)",
+              }}
+            >
+              {i + 1}
+            </span>
+            <span className="text-[10px] leading-snug text-white/85">{t}</span>
+          </li>
+        ))}
+      </ol>
+
+      <div className="mt-3 flex items-center justify-between rounded-md border border-[#A098F8]/20 bg-[#7B6EF6]/10 px-2.5 py-1.5">
+        <span
+          className="text-[8px] font-semibold uppercase text-[#A098F8]"
+          style={{ letterSpacing: "0.12em" }}
+        >
+          Current score
+        </span>
+        <span className="text-[12px] font-black text-white">{trustScore}/100</span>
+      </div>
+    </div>
+  );
+}
+
+/* ========================================================================
+   BlockchainProofCard (ref image: hash + Moonbeam explorer link)
+   ======================================================================== */
+
+function BlockchainProofCard({
+  trustScore,
+  level,
+}: {
+  trustScore: number;
+  level: number;
+}) {
+  // Deterministic pseudo-hash for demo (never computed from PII).
+  const hash =
+    "0x" +
+    (level * 7919 + trustScore * 104729)
+      .toString(16)
+      .padStart(6, "0") +
+    "a9e42f8c7b6d01e8";
+
+  return (
+    <div
+      className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-[#13162A]/70 backdrop-blur-xl p-4 pt-[22px]"
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(43,191,160,0.10), rgba(19,22,42,0.88))",
+      }}
+    >
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #2BBFA0, transparent)" }} />
+      <div className="flex items-center gap-2.5">
+        <span
+          className="flex h-8 w-8 items-center justify-center rounded-lg"
+          style={{
+            background: "rgba(43,191,160,0.16)",
+            border: "1px solid rgba(43,191,160,0.4)",
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2BBFA0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="6" height="10" rx="1"/><rect x="16" y="7" width="6" height="10" rx="1"/><path d="M8 12h8"/><path d="M8 9h8"/><path d="M8 15h8"/></svg>
+        </span>
+        <div className="min-w-0 flex-1">
+          <p
+            className="text-[9px] font-semibold uppercase text-[#2BBFA0]"
+            style={{ letterSpacing: "0.16em" }}
+          >
+            Blockchain Proof
+          </p>
+          <h3 className="text-[11px] font-bold text-white">Confirmed on-chain</h3>
+        </div>
+      </div>
+
+      <div className="mt-3 rounded-md border border-white/5 bg-black/30 px-2.5 py-1.5">
+        <p
+          className="text-[8px] font-semibold uppercase text-white/45"
+          style={{ letterSpacing: "0.12em" }}
+        >
+          STL proof hash
+        </p>
+        <p
+          className="mt-0.5 truncate font-mono text-[10px] text-[#A098F8]"
+          title={hash}
+        >
+          {hash}
+        </p>
+      </div>
+
+      <div className="mt-2 flex items-center justify-between text-[9px] text-white/55">
+        <span>Network · Moonbeam</span>
+        <span className="inline-flex items-center gap-1">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#2BBFA0]" />
+          Confirmed
+        </span>
+      </div>
+
+      <Link
+        href="/dmo/blockchain-control"
+        className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-[#2BBFA0]/40 bg-[#2BBFA0]/10 px-3 py-1.5 text-[10px] font-semibold text-[#5FDCBF] transition-colors hover:bg-[#2BBFA0]/20"
+      >
+        View on explorer →
+      </Link>
+    </div>
+  );
+}
+
+/* ========================================================================
+   FranchiseNetworkCard (ref image: Sub → Master verification)
+   ======================================================================== */
+
+function FranchiseNetworkCard({
+  verified,
+  pending,
+}: {
+  verified: number;
+  pending: number;
+}) {
+  const total = verified + pending;
+  return (
+    <div
+      className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-[#13162A]/70 backdrop-blur-xl p-4 pt-[22px]"
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(240,160,48,0.10), rgba(19,22,42,0.88))",
+      }}
+    >
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #F0A030, transparent)" }} />
+      <div className="flex items-center gap-2.5">
+        <span
+          className="flex h-8 w-8 items-center justify-center rounded-lg"
+          style={{
+            background: "rgba(240,160,48,0.16)",
+            border: "1px solid rgba(240,160,48,0.4)",
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F0A030" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg>
+        </span>
+        <div className="min-w-0 flex-1">
+          <p
+            className="text-[9px] font-semibold uppercase text-[#F0A030]"
+            style={{ letterSpacing: "0.16em" }}
+          >
+            Franchise Network
+          </p>
+          <h3 className="text-[11px] font-bold text-white">
+            {total} nodes · {verified} verified
+          </h3>
+        </div>
+      </div>
+
+      {/* Tree rows */}
+      <div className="mt-3 space-y-1.5">
+        <NodeRow
+          label="Sub Franchise"
+          status={verified >= 1 ? "verified" : "pending"}
+          detail={verified >= 1 ? "Verified" : "Awaiting inspection"}
+        />
+        <NodeRow
+          label="Master Franchise"
+          status={verified >= 2 ? "verified" : "pending"}
+          detail={verified >= 2 ? "Verified" : "Pending review"}
+          indent
+        />
+        <NodeRow
+          label="Corporate"
+          status={verified >= 3 ? "verified" : pending > 0 ? "pending" : "locked"}
+          detail={verified >= 3 ? "Verified" : "Locked"}
+          indent={2}
+        />
+      </div>
+
+      <Link
+        href="/dmo/franchise"
+        className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-[#F0A030]/40 bg-[#F0A030]/10 px-3 py-1.5 text-[10px] font-semibold text-[#F5BB66] transition-colors hover:bg-[#F0A030]/20"
+      >
+        Open franchise →
+      </Link>
+    </div>
+  );
+}
+
+function NodeRow({
+  label,
+  status,
+  detail,
+  indent = 0,
+}: {
+  label: string;
+  status: "verified" | "pending" | "locked";
+  detail: string;
+  indent?: 0 | 1 | 2 | boolean;
+}) {
+  const sc = useSafeColor();
+  const pad = typeof indent === "boolean" ? (indent ? 12 : 0) : indent * 12;
+  const tone =
+    status === "verified" ? "#38C878" : status === "pending" ? "#F0A030" : "#6B6F80";
+  return (
+    <div
+      className="flex items-center gap-1.5 rounded-md border border-white/5 bg-white/[0.02] px-2.5 py-1.5"
+      style={{ marginLeft: pad }}
+    >
+      <span
+        className="h-1.5 w-1.5 rounded-full"
+        style={{ background: tone, boxShadow: `0 0 8px ${tone}aa` }}
+      />
+      <span className="flex-1 truncate text-[10px] text-white/85">{label}</span>
+      <span className="shrink-0 text-[9px] font-semibold" style={{ color: sc(tone) }}>
+        {detail}
+      </span>
+    </div>
+  );
+}
+
+/* ========================================================================
+   ActivitySummaryCard (ref image: tasks/refills/verifications + sparkline)
+   ======================================================================== */
+
+function ActivitySummaryCard({
+  refills,
+  requiredRefills,
+  crbVerifications,
+  requiredVerifications,
+  complaints,
+}: {
+  refills: number;
+  requiredRefills: number;
+  crbVerifications: number;
+  requiredVerifications: number;
+  complaints: number;
+}) {
+  // Deterministic sparkline points (demo-only trend)
+  const points = [4, 6, 5, 8, 7, 10, 9, 12, 11, 13, 14, 15];
+  const spark = buildSparkline(points, 200, 40);
+
+  return (
+    <div
+      className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-[#13162A]/70 backdrop-blur-xl p-4 pt-[22px]"
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(56,200,120,0.10), rgba(19,22,42,0.88))",
+      }}
+    >
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #38C878, transparent)" }} />
+      <div className="flex items-center gap-2.5">
+        <span
+          className="flex h-8 w-8 items-center justify-center rounded-lg"
+          style={{
+            background: "rgba(56,200,120,0.16)",
+            border: "1px solid rgba(56,200,120,0.4)",
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38C878" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </span>
+        <div className="min-w-0 flex-1">
+          <p
+            className="text-[9px] font-semibold uppercase text-[#38C878]"
+            style={{ letterSpacing: "0.16em" }}
+          >
+            Activity Summary
+          </p>
+          <h3 className="text-[11px] font-bold text-white">Last 12 weeks</h3>
+        </div>
+      </div>
+
+      <div className="mt-2.5">
+        <svg width="100%" height="32" viewBox="0 0 200 32" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#38C878" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#38C878" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <path d={spark.fill} fill="url(#sparkFill)" />
+          <path d={spark.line} fill="none" stroke="#38C878" strokeWidth={1.4} />
+        </svg>
+      </div>
+
+      <div className="mt-2.5 grid grid-cols-3 gap-1.5 text-center">
+        <StatChip label="Refills" value={`${refills}/${requiredRefills}`} tone="#38C878" />
+        <StatChip
+          label="Verifications"
+          value={`${crbVerifications}/${requiredVerifications}`}
+          tone="#2BBFA0"
+        />
+        <StatChip
+          label="Complaints"
+          value={String(complaints)}
+          tone={complaints > 0 ? "#F0A030" : "#38C878"}
+        />
+      </div>
+    </div>
+  );
+}
+
+function StatChip({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: string;
+  tone: string;
+}) {
+  const sc = useSafeColor();
+  return (
+    <div className="rounded-md border border-white/5 bg-white/[0.02] px-1.5 py-1.5">
+      <p className="text-[11px] font-black" style={{ color: sc(tone) }}>
+        {value}
+      </p>
+      <p
+        className="mt-0.5 text-[7px] font-semibold uppercase text-white/45"
+        style={{ letterSpacing: "0.1em" }}
+      >
+        {label}
+      </p>
+    </div>
+  );
+}
+
+function buildSparkline(values: number[], w: number, h: number) {
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+  const step = w / (values.length - 1);
+  const pts = values.map((v, i) => {
+    const x = i * step;
+    const y = h - ((v - min) / range) * (h - 4) - 2;
+    return [x, y] as const;
+  });
+  const line = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x},${y}`).join(" ");
+  const fill = `${line} L${w},${h} L0,${h} Z`;
+  return { line, fill };
+}
+
+/* ========================================================================
+   EarningsCard (ref image: +$132 today · +$50 bonus · -$23 penalty chart)
+   ======================================================================== */
+
+function EarningsCard() {
+  const series = [40, 55, 48, 72, 80, 95, 110, 124, 132];
+  const spark = buildSparkline(series, 320, 48);
+  return (
+    <div
+      className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-[#13162A]/70 backdrop-blur-xl p-4 pt-[22px]"
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(43,191,160,0.10), rgba(19,22,42,0.88))",
+      }}
+    >
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #2BBFA0, #38C878, transparent)" }} />
+      <div className="flex items-start justify-between gap-2.5">
+        <div>
+          <p
+            className="text-[9px] font-semibold uppercase text-[#2BBFA0]"
+            style={{ letterSpacing: "0.16em" }}
+          >
+            Wallet · Earnings
+          </p>
+          <h3 className="mt-0.5 text-[12px] font-bold text-white">
+            Today&apos;s trust rewards
+          </h3>
+        </div>
+        <Link
+          href="/dmo/wallet"
+          className="rounded-full border border-[#2BBFA0]/40 bg-[#2BBFA0]/10 px-2.5 py-0.5 text-[9px] font-semibold text-[#5FDCBF]"
+        >
+          Wallet →
+        </Link>
+      </div>
+
+      <div className="mt-3 flex items-end gap-4">
+        <div>
+          <p className="text-[8px] font-semibold uppercase text-white/55" style={{ letterSpacing: "0.12em" }}>
+            Net today
+          </p>
+          <p className="mt-0.5 text-[22px] font-black text-white leading-none">
+            +$132<span className="text-[11px] font-semibold text-white/50">.00</span>
+          </p>
+        </div>
+        <div className="flex-1">
+          <svg width="100%" height="48" viewBox="0 0 320 48" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="earnFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#2BBFA0" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#2BBFA0" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path d={spark.fill} fill="url(#earnFill)" />
+            <path d={spark.line} fill="none" stroke="#2BBFA0" strokeWidth={1.6} />
+          </svg>
+        </div>
+      </div>
+
+      <div className="mt-3 grid grid-cols-3 gap-1.5">
+        <DeltaChip label="Base" value="+$105" tone="#38C878" />
+        <DeltaChip label="Bonus" value="+$50" tone="#A098F8" />
+        <DeltaChip label="Penalty" value="−$23" tone="#F05858" />
+      </div>
+    </div>
+  );
+}
+
+function DeltaChip({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: string;
+  tone: string;
+}) {
+  const sc = useSafeColor();
+  return (
+    <div
+      className="rounded-md border px-2 py-1.5"
+      style={{
+        borderColor: `${tone}40`,
+        background: `${tone}10`,
+      }}
+    >
+      <p className="text-[11px] font-black" style={{ color: sc(tone) }}>
+        {value}
+      </p>
+      <p
+        className="mt-0.5 text-[7px] font-semibold uppercase text-white/50"
+        style={{ letterSpacing: "0.1em" }}
+      >
+        {label}
+      </p>
+    </div>
+  );
+}
+
+/* ========================================================================
+   BenefitsLadder (ref image: EHB-STL Benefits list)
+   ======================================================================== */
+
+const STL_BENEFITS = [
+  { level: 3, text: "Higher sales & marketplace visibility" },
+  { level: 4, text: "Lower commission rates on transactions" },
+  { level: 5, text: "Priority support + promoted listings" },
+  { level: 6, text: "Multi-franchise management unlock" },
+  { level: 7, text: "VIP dashboard + custom AI insights" },
+  { level: 8, text: "SUPREME — ecosystem governance vote" },
+];
+
+function BenefitsLadder({ currentLevel }: { currentLevel: number }) {
+  const sc = useSafeColor();
+  return (
+    <div className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-[#13162A]/70 backdrop-blur-xl p-4 pt-[22px]">
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #A098F8, #7B6EF6, transparent)" }} />
+      <div className="flex items-center gap-2.5">
+        <span
+          className="flex h-8 w-8 items-center justify-center rounded-lg"
+          style={{
+            background: "rgba(160,152,248,0.18)",
+            border: "1px solid rgba(160,152,248,0.4)",
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A098F8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 17.75l-6.172 3.245 1.179-6.873-5-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-5 4.867 1.179 6.873z"/></svg>
+        </span>
+        <div>
+          <p
+            className="text-[9px] font-semibold uppercase text-[#A098F8]"
+            style={{ letterSpacing: "0.16em" }}
+          >
+            EHB-STL Benefits
+          </p>
+          <h3 className="text-[11px] font-bold text-white">Unlocks per level</h3>
+        </div>
+      </div>
+
+      <ul className="mt-3 space-y-1.5">
+        {STL_BENEFITS.map((b) => {
+          const unlocked = currentLevel >= b.level;
+          const tone = unlocked ? "#38C878" : "rgba(255,255,255,0.35)";
+          return (
+            <li
+              key={b.level}
+              className="flex items-center gap-2 rounded-md border border-white/5 bg-white/[0.02] px-2.5 py-1.5"
+            >
+              <span
+                className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[8px] font-black"
+                style={{
+                  background: unlocked ? "rgba(56,200,120,0.18)" : "rgba(255,255,255,0.05)",
+                  border: unlocked
+                    ? "1px solid rgba(56,200,120,0.5)"
+                    : "1px solid rgba(255,255,255,0.1)",
+                  color: tone,
+                }}
+              >
+                L{b.level}
+              </span>
+              <span
+                className="flex-1 text-[10px]"
+                style={{ color: unlocked ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.5)" }}
+              >
+                {b.text}
+              </span>
+              <span
+                className="text-[8px] font-semibold uppercase"
+                style={{ color: sc(tone), letterSpacing: "0.1em" }}
+              >
+                {unlocked ? "Unlocked" : "Locked"}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }

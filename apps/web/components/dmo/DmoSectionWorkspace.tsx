@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { fetchJson } from "@/lib/fetchJson";
 import { getJpsOverview, type JpsOverview } from "@/lib/jps/data";
@@ -30,7 +31,7 @@ type ViewMeta = {
 
 type SectionMeta = {
   key: DmoSectionKey;
-  icon: string;
+  icon: ReactNode;
   label: string;
   href: string;
   description: string;
@@ -219,7 +220,7 @@ type SectionDataMap = {
 const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   applications: {
     key: "applications",
-    icon: "📋",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>,
     label: "Applications",
     href: "/dmo/applications",
     description: "Governance queue for intake, ownership, high risk screening, and SLA health.",
@@ -232,7 +233,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   approvals: {
     key: "approvals",
-    icon: "✅",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>,
     label: "Approvals",
     href: "/dmo/approvals",
     description: "Decision desk for pending, approved, rejected, and historical approvals.",
@@ -245,7 +246,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   jps: {
     key: "jps",
-    icon: "👤",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
     label: "JPS",
     href: "/dmo/jps",
     description: "Job profile system for professional identity, service mapping, and job readiness.",
@@ -258,7 +259,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   pss: {
     key: "pss",
-    icon: "🔐",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>,
     label: "PSS",
     href: "/dmo/pss",
     description: "Proof and Security System for verification, risk, fraud, and refill readiness.",
@@ -272,7 +273,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   crb: {
     key: "crb",
-    icon: "🏛",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>,
     label: "CRB",
     href: "/dmo/crb",
     description: "Certification board flow for review, inspections, certificates, and renewals.",
@@ -286,7 +287,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   franchise: {
     key: "franchise",
-    icon: "🏢",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>,
     label: "Franchise",
     href: "/dmo/franchise",
     description: "Operational bridge between DMO and local inspection/franchise execution.",
@@ -299,7 +300,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   stl: {
     key: "stl",
-    icon: "📊",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
     label: "EHB-STL",
     href: "/dmo/stl",
     description: "Trust score engine for ranking, scoring, history, and breakdown review.",
@@ -312,7 +313,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   industry: {
     key: "industry",
-    icon: "🌐",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>,
     label: "Industry",
     href: "/dmo/industry",
     description: "Industry verification, entity mapping, and weighted score visibility.",
@@ -325,7 +326,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   automation: {
     key: "automation",
-    icon: "🤖",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M16 14H8a4 4 0 0 0-4 4v2h16v-2a4 4 0 0 0-4-4z"/></svg>,
     label: "Automation",
     href: "/dmo/automation",
     description: "System rules, triggers, automated decisions, and AI fraud signals.",
@@ -338,7 +339,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   refilling: {
     key: "refilling",
-    icon: "🔁",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>,
     label: "Refilling",
     href: "/dmo/refilling",
     description: "Refill lifecycle for PSS and industry verification renewals.",
@@ -351,7 +352,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   affiliate: {
     key: "affiliate",
-    icon: "💸",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>,
     label: "Affiliate",
     href: "/dmo/affiliate",
     description: "Referral network performance, earnings, and active affiliate health.",
@@ -364,7 +365,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   notifications: {
     key: "notifications",
-    icon: "🔔",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>,
     label: "Notifications",
     href: "/dmo/notifications",
     description: "Operational alerts, critical warnings, and system messages.",
@@ -377,7 +378,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   penalty: {
     key: "penalty",
-    icon: "⚖️",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v18"/><path d="M5 8l7-5 7 5"/></svg>,
     label: "Penalty",
     href: "/dmo/penalty",
     description: "Penalty tracking for delays, refill misses, fraud, and appeals.",
@@ -390,7 +391,7 @@ const DMO_SECTION_META: Record<DmoSectionKey, SectionMeta> = {
   },
   settings: {
     key: "settings",
-    icon: "⚙️",
+    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/></svg>,
     label: "Settings",
     href: "/dmo/settings",
     description: "DMO operator accounts, role logic, permissions, and system rules.",
@@ -1532,16 +1533,16 @@ export function DmoSectionWorkspace({
                 {section.icon} {section.label}
               </p>
               <h1 className="mt-1 text-2xl font-semibold gradient-text">{viewMeta.title}</h1>
-              <p className="mt-1 max-w-3xl text-sm text-ehb-textBody">{viewMeta.description}</p>
+              <p className="mt-1 max-w-3xl text-sm text-white/70">{viewMeta.description}</p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Link href="/dmo" className="ehb-btn-secondary ehb-press">
+              <Link href="/dmo" className="rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/[0.08] transition-colors">
                 DMO Dashboard
               </Link>
-              <Link href={section.href} className="ehb-btn-secondary ehb-press">
+              <Link href={section.href} className="rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/[0.08] transition-colors">
                 {section.label} Home
               </Link>
-              <Link href="/home" className="ehb-btn-primary ehb-press">
+              <Link href="/home" className="rounded-lg bg-[#7B6EF6] px-4 py-2 text-sm font-medium text-white hover:bg-[#6B5EE6] transition-colors">
                 EHB Home
               </Link>
             </div>
@@ -1569,7 +1570,7 @@ export function DmoSectionWorkspace({
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <div className="text-sm font-semibold text-white">{presentation?.title ?? "Loading..."}</div>
-                <div className="text-xs text-ehb-textMuted">{presentation?.description ?? "Preparing section data..."}</div>
+                <div className="text-xs text-white/50">{presentation?.description ?? "Preparing section data..."}</div>
               </div>
             </div>
 
@@ -1581,7 +1582,7 @@ export function DmoSectionWorkspace({
 
             <div className="overflow-auto rounded-xl border border-white/10">
               <table className="min-w-full text-xs">
-                <thead className="bg-white/5 text-ehb-textBody">
+                <thead className="bg-white/5 text-white/70">
                   <tr>
                     {(presentation?.columns ?? []).map((column) => (
                       <th key={column} className="px-3 py-2 text-left font-medium">
@@ -1593,13 +1594,13 @@ export function DmoSectionWorkspace({
                 <tbody>
                   {loading || !presentation ? (
                     <tr>
-                      <td colSpan={6} className="px-3 py-8 text-center text-ehb-textMuted">
+                      <td colSpan={6} className="px-3 py-8 text-center text-white/50">
                         Loading section workspace...
                       </td>
                     </tr>
                   ) : presentation.rows.length === 0 ? (
                     <tr>
-                      <td colSpan={presentation.columns.length} className="px-3 py-8 text-center text-ehb-textMuted">
+                      <td colSpan={presentation.columns.length} className="px-3 py-8 text-center text-white/50">
                         {presentation.emptyState}
                       </td>
                     </tr>
@@ -1607,7 +1608,7 @@ export function DmoSectionWorkspace({
                     presentation.rows.map((row) => (
                       <tr key={row.id} className="border-t border-white/10">
                         {row.values.map((value, index) => (
-                          <td key={`${row.id}-${index}`} className="px-3 py-2 align-top text-ehb-textBody">
+                          <td key={`${row.id}-${index}`} className="px-3 py-2 align-top text-white/70">
                             {value}
                           </td>
                         ))}
@@ -1634,11 +1635,11 @@ export function DmoSectionWorkspace({
                         "rounded-xl border px-3 py-2 text-xs transition-colors",
                         isActive
                           ? "border-cyan-400/40 bg-cyan-500/15 text-cyan-100"
-                          : "border-white/10 bg-white/5 text-ehb-textBody hover:bg-white/10",
+                          : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10",
                       ].join(" ")}
                     >
                       <div className="font-medium">{item.label}</div>
-                      <div className="mt-1 text-[11px] text-ehb-textMuted">{item.description}</div>
+                      <div className="mt-1 text-[11px] text-white/50">{item.description}</div>
                     </Link>
                   );
                 })}
@@ -1649,7 +1650,7 @@ export function DmoSectionWorkspace({
               <div className="ehb-card-elevated space-y-2">
                 <div className="text-sm font-semibold text-white">Working Notes</div>
                 {presentation.notes.map((note) => (
-                  <div key={note} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-ehb-textBody">
+                  <div key={note} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/70">
                     {note}
                   </div>
                 ))}

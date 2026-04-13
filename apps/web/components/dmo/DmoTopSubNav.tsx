@@ -15,9 +15,9 @@ export function DmoTopSubNav({ section, pathname }: Props) {
       <div className="container-ehb py-2">
         <div className="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan-400/90">In this module</p>
-          <p className="text-xs text-ehb-textBody">
+          <p className="text-xs text-white/70">
             <span className="font-medium text-white/90">{section.label}</span>
-            <span className="text-ehb-textMuted"> — sub-pages</span>
+            <span className="text-white/50"> — sub-pages</span>
           </p>
         </div>
         <div
@@ -35,7 +35,7 @@ export function DmoTopSubNav({ section, pathname }: Props) {
                   "shrink-0 rounded-full border px-3 py-1.5 text-[11px] font-medium transition-colors whitespace-nowrap",
                   active
                     ? "border-cyan-400/45 bg-cyan-500/20 text-cyan-50 shadow-[0_0_0_1px_rgba(34,211,238,0.12)]"
-                    : "border-white/10 bg-white/[0.04] text-ehb-textBody hover:border-white/20 hover:bg-white/[0.07] hover:text-white",
+                    : "border-white/10 bg-white/[0.04] text-white/70 hover:border-white/20 hover:bg-white/[0.07] hover:text-white",
                 ].join(" ")}
               >
                 {item.label}

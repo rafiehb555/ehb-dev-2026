@@ -62,7 +62,7 @@ export function StlMetaJsonPanel() {
               </button>
               <button
                 type="button"
-                className="rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] text-ehb-textBody hover:bg-white/10"
+                className="rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] text-white/70 hover:bg-white/10"
                 onClick={() => void load(true)}
                 disabled={loading}
               >
@@ -72,7 +72,7 @@ export function StlMetaJsonPanel() {
           ) : null}
           <button
             type="button"
-            className="ehb-btn-secondary ehb-press text-xs"
+            className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/70 hover:bg-white/[0.08] active:scale-[0.97] transition-all"
             onClick={() => {
               const next = !open;
               setOpen(next);
@@ -85,11 +85,11 @@ export function StlMetaJsonPanel() {
         </div>
       </div>
       {!open ? (
-        <p className="text-[11px] text-ehb-textMuted">
+        <p className="text-[11px] text-white/50">
           Same bundle as this page — live route for integrations and mobile clients.
         </p>
       ) : loading ? (
-        <p className="text-xs text-ehb-textMuted">Loading…</p>
+        <p className="text-xs text-white/50">Loading…</p>
       ) : error ? (
         <div className="space-y-2">
           <p className="text-xs text-rose-200">{error}</p>

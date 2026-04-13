@@ -31,35 +31,35 @@ export default function PSSDrawer({
 
   return (
     <div className="fixed inset-y-0 right-0 z-[90] w-full max-w-[520px] border-l border-white/10 bg-[#0F141B]/95 p-6 backdrop-blur">
-      <button onClick={onClose} className="mb-4 rounded-lg border border-white/10 px-3 py-1 text-xs text-ehb-textBody hover:bg-white/5">
+      <button onClick={onClose} className="mb-4 rounded-lg border border-white/10 px-3 py-1 text-xs text-white/70 hover:bg-white/5">
         Close
       </button>
 
       <h3 className="text-xl font-semibold">{data.user.name}</h3>
-      <p className="text-xs text-ehb-textMuted">{data.user.email ?? "No email available"}</p>
+      <p className="text-xs text-white/50">{data.user.email ?? "No email available"}</p>
 
       <dl className="mt-3 grid grid-cols-2 gap-2 text-[11px]">
         {data.status ? (
           <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5">
-            <dt className="text-ehb-textMuted">Status</dt>
+            <dt className="text-white/50">Status</dt>
             <dd className="font-medium text-white">{data.status}</dd>
           </div>
         ) : null}
         {data.stage ? (
           <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5">
-            <dt className="text-ehb-textMuted">Stage</dt>
+            <dt className="text-white/50">Stage</dt>
             <dd className="font-medium text-white">{data.stage}</dd>
           </div>
         ) : null}
         {data.riskScore !== undefined ? (
           <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5">
-            <dt className="text-ehb-textMuted">Risk score</dt>
+            <dt className="text-white/50">Risk score</dt>
             <dd className="font-mono text-cyan-200">{data.riskScore}</dd>
           </div>
         ) : null}
         {data.risk ? (
           <div className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5">
-            <dt className="text-ehb-textMuted">Risk band</dt>
+            <dt className="text-white/50">Risk band</dt>
             <dd className="font-medium uppercase text-white">{data.risk}</dd>
           </div>
         ) : null}
@@ -72,7 +72,7 @@ export default function PSSDrawer({
             type="button"
             className={[
               "rounded-full px-3 py-1 text-[11px] transition-colors",
-              i === step ? "bg-blue-500 text-white" : "bg-white/10 text-ehb-textBody hover:bg-white/15",
+              i === step ? "bg-blue-500 text-white" : "bg-white/10 text-white/70 hover:bg-white/15",
             ].join(" ")}
             onClick={() => setStep(i)}
           >
@@ -82,7 +82,7 @@ export default function PSSDrawer({
       </div>
 
       <div className="mt-6 space-y-4">
-        <p className="text-sm text-ehb-textBody">Step: {activeStep}</p>
+        <p className="text-sm text-white/70">Step: {activeStep}</p>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}

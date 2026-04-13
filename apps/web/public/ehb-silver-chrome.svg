@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  EHB Silver Chrome Theme Background v2 (2026-04-11)
+  ====================================================
+  Procedural 3D liquid-chrome surface — brighter, glossier, more dimensional.
+  Reference: user-uploaded silver chrome ball image (glossy reflective sphere
+  on liquid silver base). User feedback:
+    "background man salver calor man 3d based background lgain"
+    "them b calor k hesab sa set krain ta k sb koch wazia nazar ahy"
+
+  Technique upgrades over v1:
+    1. Brighter base gradient (#f6f7fa → #babfcb → #6b7282) for premium look.
+    2. feDiffuseLighting with distant light for real 3D embossed relief.
+    3. feSpecularLighting pass for glossy highlight reflections.
+    4. Larger displacement scale (180) for more pronounced liquid flow.
+    5. Stronger highlight alpha (0.95) and deeper shadow alpha (0.7).
+    6. Iridescent brand overlays boosted to 0.14 so EHB purple/teal shimmer.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Brighter silver base (premium chrome look) -->
+    <linearGradient id="ehbSilverBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"    stop-color="#f6f7fa"/>
+      <stop offset="0.22" stop-color="#dde0e8"/>
+      <stop offset="0.48" stop-color="#b4bac6"/>
+      <stop offset="0.74" stop-color="#767d8e"/>
+      <stop offset="1"    stop-color="#353a49"/>
+    </linearGradient>
+
+    <!-- Bright specular highlight -->
+    <radialGradient id="ehbSilverHi" cx="50%" cy="50%" r="50%">
+      <stop offset="0"    stop-color="#ffffff" stop-opacity="0.98"/>
+      <stop offset="0.30" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="1"    stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Deep crevice shadow -->
+    <radialGradient id="ehbSilverLo" cx="50%" cy="50%" r="50%">
+      <stop offset="0"    stop-color="#05070f" stop-opacity="0.70"/>
+      <stop offset="0.40" stop-color="#05070f" stop-opacity="0.28"/>
+      <stop offset="1"    stop-color="#05070f" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Iridescent EHB purple -->
+    <radialGradient id="ehbSilverIridA" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#7b6ef6" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#7b6ef6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Iridescent EHB teal -->
+    <radialGradient id="ehbSilverIridB" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#2bbfa0" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#2bbfa0" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Liquid displacement filter: organic chrome flow -->
+    <filter id="ehbLiquid" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0058 0.010"
+                    numOctaves="4" seed="17" stitchTiles="stitch"/>
+      <feDisplacementMap in="SourceGraphic" scale="180"/>
+    </filter>
+
+    <!-- 3D emboss filter: feDiffuseLighting creates actual relief from turbulence -->
+    <filter id="ehb3D" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.004 0.008"
+                    numOctaves="3" seed="9"/>
+      <feDiffuseLighting lighting-color="#ffffff" surfaceScale="6" diffuseConstant="1.4">
+        <feDistantLight azimuth="315" elevation="62"/>
+      </feDiffuseLighting>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- Specular gloss pass -->
+    <filter id="ehbGloss" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.012"
+                    numOctaves="3" seed="5"/>
+      <feSpecularLighting surfaceScale="4" specularConstant="1.1"
+                          specularExponent="22" lighting-color="#ffffff">
+        <feDistantLight azimuth="270" elevation="58"/>
+      </feSpecularLighting>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- Fine grain filter -->
+    <filter id="ehbGrain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="3"/>
+      <feColorMatrix type="matrix"
+        values="0 0 0 0 1
+                0 0 0 0 1
+                0 0 0 0 1
+                0 0 0 0.10 0"/>
+    </filter>
+  </defs>
+
+  <!-- Silver base -->
+  <rect width="1920" height="1080" fill="url(#ehbSilverBase)"/>
+
+  <!-- 3D embossed relief layer (subtle) -->
+  <rect width="1920" height="1080" filter="url(#ehb3D)" opacity="0.28"
+        style="mix-blend-mode:overlay"/>
+
+  <!-- Liquified highlight + shadow ellipses form the wave pattern -->
+  <g filter="url(#ehbLiquid)">
+    <!-- highlight sweeps (bright chrome curves) -->
+    <ellipse cx="380"  cy="160"  rx="680" ry="260" fill="url(#ehbSilverHi)"/>
+    <ellipse cx="1480" cy="340"  rx="740" ry="310" fill="url(#ehbSilverHi)"/>
+    <ellipse cx="820"  cy="820"  rx="720" ry="280" fill="url(#ehbSilverHi)"/>
+    <ellipse cx="1640" cy="130"  rx="460" ry="200" fill="url(#ehbSilverHi)"/>
+    <ellipse cx="240"  cy="600"  rx="420" ry="200" fill="url(#ehbSilverHi)"/>
+    <ellipse cx="1100" cy="520"  rx="380" ry="170" fill="url(#ehbSilverHi)"/>
+
+    <!-- shadow crevices (deep chrome cut) -->
+    <ellipse cx="80"   cy="940"  rx="560" ry="250" fill="url(#ehbSilverLo)"/>
+    <ellipse cx="1780" cy="900"  rx="560" ry="250" fill="url(#ehbSilverLo)"/>
+    <ellipse cx="960"  cy="120"  rx="480" ry="220" fill="url(#ehbSilverLo)"/>
+    <ellipse cx="1260" cy="700"  rx="420" ry="190" fill="url(#ehbSilverLo)"/>
+    <ellipse cx="520"  cy="990"  rx="400" ry="180" fill="url(#ehbSilverLo)"/>
+
+    <!-- iridescent EHB brand peek-through -->
+    <ellipse cx="1240" cy="210"  rx="500" ry="220" fill="url(#ehbSilverIridA)"/>
+    <ellipse cx="360"  cy="790"  rx="500" ry="220" fill="url(#ehbSilverIridB)"/>
+  </g>
+
+  <!-- Glossy specular highlight overlay -->
+  <rect width="1920" height="1080" filter="url(#ehbGloss)" opacity="0.42"
+        style="mix-blend-mode:screen"/>
+
+  <!-- Fine grain overlay for surface realism -->
+  <rect width="1920" height="1080" filter="url(#ehbGrain)" opacity="0.38"/>
+</svg>

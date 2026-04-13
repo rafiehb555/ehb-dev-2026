@@ -35,7 +35,7 @@ export function StlTierSelector({ stlLevel, tiers = STL_TIER_CARDS }: Props) {
       <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-300/90">Choose tier</p>
-          <p className="text-sm text-ehb-textBody">Membership style selector — mirrors franchise & upgrade flows.</p>
+          <p className="text-sm text-white/70">Membership style selector — mirrors franchise & upgrade flows.</p>
         </div>
       </div>
       <div className="flex gap-2 overflow-x-auto pb-1 pt-0.5 [scrollbar-width:thin]">
@@ -68,7 +68,7 @@ export function StlTierSelector({ stlLevel, tiers = STL_TIER_CARDS }: Props) {
                 ) : null}
               </div>
               <p className="text-[13px] font-semibold text-white">{tier.name}</p>
-              <p className="mt-1 line-clamp-2 text-[11px] leading-snug text-ehb-textMuted">{tier.subtitle}</p>
+              <p className="mt-1 line-clamp-2 text-[11px] leading-snug text-white/50">{tier.subtitle}</p>
               <button
                 type="button"
                 onClick={() => {
@@ -79,7 +79,7 @@ export function StlTierSelector({ stlLevel, tiers = STL_TIER_CARDS }: Props) {
                   "mt-2 w-full rounded-lg border py-1.5 text-center text-[11px] font-semibold transition",
                   isSelected
                     ? "border-emerald-500/50 bg-emerald-500/15 text-emerald-200"
-                    : "border-white/15 bg-white/[0.04] text-ehb-textBody hover:border-cyan-400/35 hover:text-white",
+                    : "border-white/15 bg-white/[0.04] text-white/70 hover:border-cyan-400/35 hover:text-white",
                   locked ? "cursor-not-allowed border-white/10 text-white/40 hover:border-white/10 hover:text-white/40" : "",
                 ].join(" ")}
               >

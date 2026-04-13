@@ -45,7 +45,7 @@ export function StlTrustScoreRing({ value, size = 72, className = "" }: Props) {
         </defs>
       </svg>
       <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
-        <span className="text-[10px] font-medium uppercase tracking-wider text-ehb-textMuted">Trust</span>
+        <span className="text-[10px] font-medium uppercase tracking-wider text-white/50">Trust</span>
         <span className="text-lg font-bold tabular-nums text-white">{Math.round(pct)}</span>
       </div>
     </div>

@@ -1,31 +1,42 @@
 "use client";
 
+/**
+ * DMO — AI Recommendations & Insights
+ *   - VerificationUI primitives (no emojis, no custom classes)
+ *   - In-file demo data (prototype only, no fetch)
+ */
+
 import Link from "next/link";
 import { useState } from "react";
+import {
+  VerificationStatCard,
+  VerificationChip,
+  SectionHeader,
+  SeverityMeter,
+  type VerificationTone,
+} from "@/components/dmo/verification/VerificationUI";
 
-const MOCK_INSIGHTS = [
-  {
-    id: "1",
-    title: "IT services demand +22% in Rawalpindi this week",
-    body: "Trending from anonymized search and order signals — surface to matching providers.",
-    cta: { label: "View IT industry", href: "/industry/it" },
-    tone: "border-cyan-400/25 bg-cyan-500/10",
-  },
-  {
-    id: "2",
-    title: "3 new jobs match your saved skills",
-    body: "JPS + behavior signals — wire to GET /api/ai/recommendations when live.",
-    cta: { label: "Open jobs", href: "/search" },
-    tone: "border-violet-400/25 bg-violet-500/10",
-  },
-  {
-    id: "3",
-    title: "Your delivery service has 12 new leads",
-    body: "Buyer intent near your franchise zones — optional push via notifications.",
-    cta: { label: "Franchise ops", href: "/dmo/franchise" },
-    tone: "border-amber-400/25 bg-amber-500/10",
-  },
+type InsightTone = "cyan" | "purple" | "amber";
+
+type InsightCard = {
+  id: string;
+  title: string;
+  body: string;
+  tone: InsightTone;
+  cta: { label: string; href: string };
+};
+
+const INSIGHTS: InsightCard[] = [
+  { id: "1", title: "IT services demand +22% in Rawalpindi", tone: "cyan", body: "Trending from anonymized search and order signals — surface to matching providers.", cta: { label: "View IT industry", href: "/industry/it" } },
+  { id: "2", title: "3 new jobs match your saved skills", tone: "purple", body: "JPS + behavior signals — real-time matching based on STL profile + activity.", cta: { label: "Open jobs", href: "/search" } },
+  { id: "3", title: "12 new leads for your delivery service", tone: "amber", body: "Buyer intent near your franchise zones — optional push via notifications.", cta: { label: "Franchise ops", href: "/dmo/franchise" } },
 ];
+
+const INSIGHT_VTONE: Record<InsightTone, VerificationTone> = {
+  cyan: "cyan",
+  purple: "purple",
+  amber: "amber",
+};
 
 const TRENDING = [
   { industry: "Health", metric: "+18% bookings", tag: "WMS" },
@@ -33,129 +44,111 @@ const TRENDING = [
   { industry: "IT", metric: "+14% projects", tag: "SOT" },
 ];
 
+function InfoCell({ label, value, mono }: { label: string; value: React.ReactNode; mono?: boolean }) {
+  return (
+    <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
+      <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">{label}</p>
+      <p className={`mt-1 text-sm text-white/90 ${mono ? "font-mono" : ""}`}>{value}</p>
+    </div>
+  );
+}
+
 export default function DmoAiRecommendationsPage() {
   const [feedback, setFeedback] = useState<Record<string, "up" | "down" | null>>({});
 
   return (
-    <main className="min-h-screen text-white">
-      <div className="container-ehb py-8 space-y-8">
-        <header className="rounded-3xl border border-fuchsia-400/20 bg-gradient-to-b from-fuchsia-500/10 to-[#020b18]/95 p-5 md:p-7">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-fuchsia-200">Phases 16–22</p>
-              <h1 className="mt-1 text-2xl md:text-3xl font-semibold text-white">AI recommendations & insights</h1>
-              <p className="mt-2 max-w-3xl text-sm text-ehb-textBody">
-                Operator reference for the same cards users will see on Home, Dashboard, and industry pages. Content is
-                illustrative until event tracking and GET /api/ai/recommendations are connected.
-              </p>
+    <div className="space-y-6">
+      <header className="relative overflow-hidden rounded-2xl border border-[#7B6EF6]/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #7B6EF6 25%, #67E8F9 50%, #F0A030 75%, transparent 100%)" }} />
+        <div className="pointer-events-none absolute left-3 top-3 h-6 w-6 border-l-[1.5px] border-t-[1.5px] border-[#7B6EF6]/50" />
+        <div className="pointer-events-none absolute bottom-3 right-3 h-6 w-6 border-b-[1.5px] border-r-[1.5px] border-[#67E8F9]/45" />
+        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br from-[#7B6EF6]/20 via-[#67E8F9]/12 to-transparent blur-3xl" />
+        <div className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="min-w-0 space-y-2">
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em]">
+              <Link href="/dmo" className="text-white/40 hover:text-white/70 transition-colors">DMO</Link>
+              <span className="text-white/25">/</span>
+              <span className="text-[#A098F8]">AI Recommendations</span>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <Link href="/dmo/roadmap" className="ehb-btn-secondary ehb-press text-sm">
-                Roadmap
-              </Link>
-              <Link href="/dmo/automation" className="ehb-btn-primary ehb-press text-sm">
-                Automation
-              </Link>
-            </div>
+            <h1 className="text-2xl font-bold text-white md:text-3xl">AI Recommendations & Insights</h1>
+            <p className="max-w-2xl text-sm text-white/65">
+              Operator reference for the same cards users will see on Home, Dashboard, and
+              industry pages. Content is illustrative until event tracking is connected.
+            </p>
           </div>
-        </header>
+          <div className="flex flex-wrap gap-2">
+            <Link href="/dmo/roadmap" className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/75 transition-colors hover:border-white/20 hover:bg-white/[0.07] hover:text-white">Roadmap</Link>
+            <Link href="/dmo/automation" className="rounded-xl border border-[#7B6EF6]/50 bg-[#7B6EF6]/15 px-3 py-1.5 text-xs font-semibold text-[#A098F8] transition-colors hover:bg-[#7B6EF6]/25">Automation</Link>
+          </div>
+        </div>
+      </header>
 
-        <section className="space-y-3">
-          <div className="flex items-end justify-between gap-4 flex-wrap">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Dashboard-style cards</p>
-              <h2 className="text-xl font-semibold text-white">AI insight cards</h2>
-            </div>
-            <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] text-ehb-textMuted">
-              Component target: AIInsightCard
-            </span>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {MOCK_INSIGHTS.map((card) => (
-              <article
-                key={card.id}
-                className={`flex flex-col rounded-2xl border p-4 ${card.tone}`}
-              >
-                <h3 className="text-sm font-semibold text-white leading-snug">{card.title}</h3>
-                <p className="mt-2 flex-1 text-xs text-ehb-textBody">{card.body}</p>
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                  <Link
-                    href={card.cta.href}
-                    className="inline-flex rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/15"
-                  >
-                    {card.cta.label}
-                  </Link>
-                  <div className="flex items-center gap-1 rounded-full border border-white/10 bg-black/20 p-0.5">
-                    <button
-                      type="button"
-                      aria-label="Helpful"
-                      onClick={() => setFeedback((f) => ({ ...f, [card.id]: "up" }))}
-                      className={`rounded-full px-2 py-1 text-xs ${
-                        feedback[card.id] === "up" ? "bg-emerald-500/30 text-emerald-100" : "text-ehb-textMuted hover:bg-white/10"
-                      }`}
-                    >
-                      👍
-                    </button>
-                    <button
-                      type="button"
-                      aria-label="Not helpful"
-                      onClick={() => setFeedback((f) => ({ ...f, [card.id]: "down" }))}
-                      className={`rounded-full px-2 py-1 text-xs ${
-                        feedback[card.id] === "down" ? "bg-rose-500/30 text-rose-100" : "text-ehb-textMuted hover:bg-white/10"
-                      }`}
-                    >
-                      👎
-                    </button>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <VerificationStatCard tone="purple" label="Insights" value={INSIGHTS.length} sub="AI-generated cards" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.2 1 5.9L12 16.5l-5.3 2.8 1-5.9L3.5 9.2l5.9-.9L12 3z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /></svg>} />
+        <VerificationStatCard tone="teal" label="Trending" value={TRENDING.length} sub="industries rising" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M23 6l-9.5 9.5-5-5L1 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>} />
+        <VerificationStatCard tone="cyan" label="Smart search" value="Phase 20" sub="autocomplete ready" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="1.6" /><path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
+        <VerificationStatCard tone="green" label="Provider match" value="Phase 21" sub="AI ranking" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.6" /><circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.6" /><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" strokeWidth="1.6" /></svg>} />
+      </section>
 
-        <section className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 md:p-6">
-          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Phase 19 · Trending</p>
-              <h2 className="text-lg font-semibold text-white">Industry momentum (demo)</h2>
-            </div>
-            <span className="text-[11px] text-ehb-textMuted">Refresh every 6h when cron is live</span>
-          </div>
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            {TRENDING.map((t) => (
-              <div
-                key={t.industry}
-                className="rounded-2xl border border-white/10 bg-[#0B0F14]/80 px-4 py-3"
-              >
-                <div className="text-[11px] text-cyan-300/90">{t.tag}</div>
-                <div className="mt-1 text-sm font-semibold text-white">{t.industry}</div>
-                <div className="mt-1 text-xs text-emerald-300/90">{t.metric}</div>
+      {/* AI Insight cards */}
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader eyebrow="Dashboard-style cards" title="AI insight cards" />
+        <div className="mt-4 grid gap-4 md:grid-cols-3">
+          {INSIGHTS.map((card) => (
+            <div key={card.id} className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#1A1D33]/80 p-4 pt-[22px] transition-all duration-200 hover:-translate-y-[2px] hover:border-white/20">
+              <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: `linear-gradient(90deg, transparent, ${card.tone === "cyan" ? "#67E8F9" : card.tone === "purple" ? "#A098F8" : "#F0A030"}, transparent)` }} />
+              <VerificationChip tone={INSIGHT_VTONE[card.tone]}>{card.tone.toUpperCase()}</VerificationChip>
+              <h3 className="mt-2 text-sm font-semibold text-white leading-snug">{card.title}</h3>
+              <p className="mt-1.5 flex-1 text-[11px] text-white/55">{card.body}</p>
+              <div className="mt-3 flex items-center gap-2">
+                <Link href={card.cta.href} className="rounded-xl border border-white/10 bg-white/[0.06] px-3 py-1.5 text-[11px] font-semibold text-white/80 transition-colors hover:bg-white/[0.12]">
+                  {card.cta.label}
+                </Link>
+                <button type="button" onClick={() => setFeedback((f) => ({ ...f, [card.id]: "up" }))} className={`rounded-xl border px-2 py-1 text-[10px] transition-colors ${feedback[card.id] === "up" ? "border-[#38C878]/40 bg-[#38C878]/15 text-[#38C878]" : "border-white/10 bg-white/[0.04] text-white/40 hover:text-white/70"}`}>
+                  Helpful
+                </button>
+                <button type="button" onClick={() => setFeedback((f) => ({ ...f, [card.id]: "down" }))} className={`rounded-xl border px-2 py-1 text-[10px] transition-colors ${feedback[card.id] === "down" ? "border-[#F05858]/40 bg-[#F05858]/15 text-[#F05858]" : "border-white/10 bg-white/[0.04] text-white/40 hover:text-white/70"}`}>
+                  Not helpful
+                </button>
               </div>
-            ))}
-          </div>
-        </section>
+            </div>
+          ))}
+        </div>
+      </section>
 
-        <section className="grid gap-4 lg:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <h3 className="text-sm font-semibold text-white">Smart search (Phase 20)</h3>
-            <p className="mt-1 text-xs text-ehb-textBody">
-              Autocomplete + “people also searched” — UI pattern: reuse search page with suggestion chips below input.
-            </p>
-            <Link href="/search" className="mt-3 inline-flex text-sm font-semibold text-cyan-200 hover:text-cyan-100">
-              Open search →
-            </Link>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <h3 className="text-sm font-semibold text-white">Provider matching (Phase 21)</h3>
-            <p className="mt-1 text-xs text-ehb-textBody">
-              POST /api/ai/match — show top 5 cards with CRB + STL + response time when backend returns ranks.
-            </p>
-            <Link href="/dmo/queue" className="mt-3 inline-flex text-sm font-semibold text-cyan-200 hover:text-cyan-100">
-              Queue handoffs →
-            </Link>
-          </div>
-        </section>
-      </div>
-    </main>
+      {/* Trending industries */}
+      <section className="relative overflow-hidden rounded-2xl border border-cyan-400/25 bg-[#13162A]/70 p-5 pt-[22px]">
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent, #67E8F9, transparent)" }} />
+        <SectionHeader eyebrow="Phase 19 · Trending" title="Industry momentum" hint="Refresh every 6h when cron is live" />
+        <div className="mt-3">
+          <SeverityMeter segments={TRENDING.map((t) => ({ label: t.industry, value: parseInt(t.metric) || 10, tone: "teal" as VerificationTone }))} />
+        </div>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          {TRENDING.map((t) => (
+            <div key={t.industry} className="rounded-xl border border-white/10 bg-[#1A1D33]/80 px-4 py-3 transition-colors hover:border-cyan-400/30">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-300/80">{t.tag}</div>
+              <div className="mt-1 text-sm font-semibold text-white">{t.industry}</div>
+              <div className="mt-1 text-[11px] font-semibold text-[#38C878]">{t.metric}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Phase reference cards */}
+      <section className="grid gap-4 lg:grid-cols-2">
+        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#13162A]/70 p-5 pt-[22px] transition-all duration-200 hover:-translate-y-[2px] hover:border-white/20">
+          <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #67E8F9, transparent)" }} />
+          <SectionHeader title="Smart search (Phase 20)" />
+          <p className="mt-2 text-[12px] text-white/55">Autocomplete + "people also searched" — UI pattern: reuse search page with suggestion chips below input.</p>
+          <Link href="/search" className="mt-3 inline-block text-[11px] font-semibold text-[#A098F8] hover:text-white">Open search →</Link>
+        </div>
+        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#13162A]/70 p-5 pt-[22px] transition-all duration-200 hover:-translate-y-[2px] hover:border-white/20">
+          <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #A098F8, transparent)" }} />
+          <SectionHeader title="Provider matching (Phase 21)" />
+          <p className="mt-2 text-[12px] text-white/55">POST /api/ai/match — show top 5 cards with CRB + STL + response time when backend returns ranks.</p>
+          <Link href="/dmo/queue" className="mt-3 inline-block text-[11px] font-semibold text-[#A098F8] hover:text-white">Queue handoffs →</Link>
+        </div>
+      </section>
+    </div>
   );
 }

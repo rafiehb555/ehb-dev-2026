@@ -4,21 +4,20 @@ import useSTL from "@/hooks/useSTL";
 import AnimatedCard from "@/components/ui/AnimatedCard";
 import Button from "@/components/ui/Button";
 import CountUp from "@/components/ui/CountUp";
-import Skeleton from "@/components/ui/Skeleton";
 
 export default function Hero() {
-  const { data, loading, error } = useSTL();
+  const { data, error } = useSTL();
 
-  if (loading) {
-    return (
-      <div className="grid gap-4 md:grid-cols-2">
-        <Skeleton />
-        <Skeleton />
-      </div>
-    );
-  }
-
-  if (error || !data) {
+  /*
+   * `data` is never null on first render now: useSTL seeds the initial state
+   * with the client-safe demo snapshot, then silently refreshes in the
+   * background. This kills the "blank skeleton → flash → real data" delay
+   * that Rafi reported when clicking into the EHB-STL-LEVEL card.
+   *
+   * Only show the error surface if the initial demo fallback also failed to
+   * materialise (should be impossible — left in as a defensive rail).
+   */
+  if (!data) {
     return (
       <AnimatedCard>
         <p className="text-sm text-red-300">{error ?? "Failed to load STL data"}</p>

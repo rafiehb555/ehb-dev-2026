@@ -28,7 +28,7 @@ export function StlLevelJourneyTimeline({ currentLevel }: Props) {
           <Rocket className="h-5 w-5 text-cyan-400" aria-hidden />
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-300/90">Progress timeline</p>
-            <p className="text-sm text-ehb-textBody">Completed · current · locked — path to VIP</p>
+            <p className="text-sm text-white/70">Completed · current · locked — path to VIP</p>
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@ export function StlLevelJourneyTimeline({ currentLevel }: Props) {
                   {done ? <Check className="h-5 w-5" aria-hidden /> : locked ? <Lock className="h-4 w-4" aria-hidden /> : <Target className="h-5 w-5 text-amber-200" aria-hidden />}
                 </div>
                 <p className="mt-2 text-xs font-semibold text-white">{lv.label}</p>
-                <p className="mt-0.5 text-[10px] text-ehb-textMuted">{lv.short}</p>
+                <p className="mt-0.5 text-[10px] text-white/50">{lv.short}</p>
               </li>
             );
           })}

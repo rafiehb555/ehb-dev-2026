@@ -1,3 +1,5 @@
+"use client";
+
 import STLDashboard from "@/components/stl/STLDashboard";
 
 export default function EhbStlLevelPage() {
