@@ -1,6 +1,6 @@
 # Trusty Wallet — EHB Wallet System
 
-**Status:** Canonical spec (v1.0) · Merged from `uploads/ehb_trusty_wallet.md` (Batch-2, 2026-04-11)
+**Status:** Deep spec (v2.0) · Deep detail provided by founder 2026-04-14 · See `EHB-MASTER-INFO.md §63`
 **Related:** `STL.md §3` · `Blockchain.md` · `Finance.md` · `DMO.md §22.13` (Batch-1 wallet prompt)
 
 > ⚠️ **Bucket contradiction** — Batch-2 says wallet has **2 buckets** (Total = Locked + Free). Legacy docs said **3 wallets** (Main, Earnings, Lock). Resolution adopted here: **Free balance is the active bucket**, **Locked balance is the STL collateral bucket**, and **Earnings flow from "pending" → "approved" → Free balance** as a ledger state rather than a third wallet. Flagged for confirmation in `DMO.md §25`.

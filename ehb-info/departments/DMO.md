@@ -1,8 +1,8 @@
 # DMO — Decentralized Management Office
 
 **Department:** DMO
-**Role in EHB:** The governance brain of the entire platform
-**Document version:** 1.0 (merged base — awaiting user input)
+**Role in EHB:** The governance brain of the entire platform — 7 engines, decision core, dashboard
+**Document version:** 2.0 (deep detail provided by founder 2026-04-14)
 **Created:** 2026-04-11
 **Status:** 🟡 Planning in progress — user is about to provide new info
 **Parent doc:** `ehb-info/EHB-MASTER-INFO.md`

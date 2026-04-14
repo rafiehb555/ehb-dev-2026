@@ -1,8 +1,8 @@
 # JPS — Job Profile & Skill System
 
-> **Version:** 1.0  
-> **Created:** 2026-04-12  
-> **Build status:** ~30% complete
+> **Version:** 2.0  
+> **Created:** 2026-04-12 · **Updated:** 2026-04-14 (deep detail from founder)  
+> **Build status:** ~30% complete · **Spec status:** DEEP — see `EHB-MASTER-INFO.md §64`
 
 ---
 
