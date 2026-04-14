@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "declarationMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ehb/industry-registry": ["packages/industry-registry/src/index.ts"],
+      "@ehb/trust-engine": ["packages/trust-engine/src/index.ts"],
+      "@ehb/types": ["packages/types/src/index.ts"],
+      "@ehb/ui": ["packages/ui/src/index.ts"],
+      "@ehb/utils": ["packages/utils/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "dist", ".next", "backup", "archive"]
+}

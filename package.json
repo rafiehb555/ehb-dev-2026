@@ -1,0 +1,33 @@
+{
+  "name": "ehb-development-2026",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EHB Technologies (Pvt.) Ltd. — unified 32-industry super-app monorepo (Hybrid Architecture v1).",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:stl": "node scripts/test-stl.mjs",
+    "validate:folder-flow": "node scripts/folder-flow-validate.mjs",
+    "industry:add": "node scripts/add-industry.mjs",
+    "industry:scaffold-all": "node scripts/scaffold-all-industries.mjs",
+    "status:update": "node scripts/ehb-status-update.mjs",
+    "sync:agents": "node scripts/sync-agent-context.mjs",
+    "preinstall": "node -e \"if(!process.env.SKIP_VALIDATE)require('fs').existsSync('EHB-FOLDER-FLOW-MASTER.md')||(console.error('\\x1b[31mEHB-FOLDER-FLOW-MASTER.md missing — aborting\\x1b[0m'),process.exit(1))\""
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0"
+  }
+}

@@ -1,0 +1,8 @@
+import { Injectable } from "@nestjs/common";
+
+@Injectable()
+export class AgricultureService {
+  health() {
+    return { module: "agriculture", status: "ok" };
+  }
+}

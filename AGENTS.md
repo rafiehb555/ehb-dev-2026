@@ -10,6 +10,11 @@
 >
 > **Do NOT edit manually** unless you also update `docs/EHB_CONTEXT.md` (single source of
 > truth). Agents should read `docs/EHB_CONTEXT.md` for the full picture.
+>
+> **⚠ FOLDER FLOW CONTRACT:** Before creating, moving, or renaming ANY folder/file,
+> read **`EHB-FOLDER-FLOW-MASTER.md`** at the repo root. It is the authoritative
+> Hybrid Architecture v1 spec. It overrides anything in this file that conflicts.
+> New industries are added **only** via `scripts/add-industry.mjs` — never hand-create.
 
 ---
 

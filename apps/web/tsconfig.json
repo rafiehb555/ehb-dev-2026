@@ -17,7 +17,10 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@ehb/industry-registry": ["../../packages/industry-registry/src/index.ts"],
+      "@ehb/trust-engine": ["../../packages/trust-engine/src/index.ts"],
+      "@ehb/types": ["../../packages/types/src/index.ts"]
     },
     "plugins": [
       {

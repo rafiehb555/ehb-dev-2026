@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import AIInsightCard from "@/components/AIInsightCard";
 import { INDUSTRIES } from "@/lib/industry/config";
+import { IndustryGrid } from "@/components/core/IndustryGrid";
 
 // ════════════════════════════════════════════════════════════════
 //  EHB HOME PAGE — Microsoft Store Style Layout + All EHB Data
@@ -971,6 +972,19 @@ export default function HomePage() {
           </div>
         </section>
       </div>
+
+      {/* ══ ALL 32 INDUSTRIES — Powered by @ehb/industry-registry ══ */}
+      <section className="px-4 py-14 border-t border-white/5">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-white sm:text-3xl">All 32 Industries</h2>
+            <p className="mt-2 text-sm text-white/50">
+              Hybrid Architecture v1 — grouped by domain, powered by the EHB Industry Registry.
+            </p>
+          </div>
+          <IndustryGrid />
+        </div>
+      </section>
 
       {/* ══ FOOTER ════════════════════════════════════════════════ */}
       <footer className="border-t border-white/6 bg-[#040608] px-4 py-14">

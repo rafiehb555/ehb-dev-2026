@@ -49,6 +49,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { FolderFlowWidget } from "@/components/core/FolderFlowWidget";
 
 // ── TYPES ───────────────────────────────────────────────────────────────
 type Level = "high" | "med" | "low";
@@ -2000,6 +2001,10 @@ export default function DevelopmentPage() {
           }
         }
       `}} />
+      {/* NEW: FOLDER FLOW LIVE WIDGET (Hybrid Architecture v1) */}
+      <div style={{ padding: "16px 24px 0" }}>
+        <FolderFlowWidget />
+      </div>
       {/* NAV */}
       <div className="ehb-fade-up" style={s.nav}>
         <div style={s.navInner}>
