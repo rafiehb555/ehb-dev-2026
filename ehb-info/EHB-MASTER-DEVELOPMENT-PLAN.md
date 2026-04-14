@@ -2422,5 +2422,14 @@ Monitoring: Datadog or Grafana Cloud
 
 ---
 
-*EHB Technologies (Pvt.) Ltd. — Master Development Plan v1.0 — 2026-04-14*
+*EHB Technologies (Pvt.) Ltd. — Master Development Plan v1.1 — 2026-04-14*
 *AI-Led Development · 40 Weeks · 30% → 100% · Built for 100 Years*
+
+---
+
+## Update Log
+
+| Date | Version | Changes |
+|------|---------|---------|
+| 2026-04-14 | v1.0 | Initial Master Development Plan — 40-week schedule, full API/frontend/database specs |
+| 2026-04-14 | v1.1 | Added 5 GoSellr Product Guarantee APIs (guarantee set/get/update, claim, trust-display). Updated Product Detail page spec with Guarantee Strip + PSS/CRB/DMO Trust Bars. |

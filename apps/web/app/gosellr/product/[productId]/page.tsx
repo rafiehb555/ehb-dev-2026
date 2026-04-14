@@ -4,6 +4,11 @@ import { notFound, redirect } from "next/navigation";
 import { getGosellrProductById } from "@/lib/marketplace/gosellrProducts";
 import { GoSellrCartActions } from "@/components/gosellr/GoSellrCartActions";
 import { GoSellrProductStlLine } from "@/components/gosellr/GoSellrProductStlLine";
+import { TrustLevelStrip } from "@/components/gosellr/TrustLevelStrip";
+import { StlTrustRingBadge } from "@/components/gosellr/StlTrustRingBadge";
+import { PssCrbDmoTrustBars } from "@/components/gosellr/PssCrbDmoTrustBars";
+import { GuaranteeStrip } from "@/components/gosellr/GuaranteeStrip";
+import { StlMetaStrip } from "@/components/gosellr/StlMetaStrip";
 import AIInsightCard from "@/components/AIInsightCard";
 import { getCityByCode, getCountryByCode, getStateByCode } from "@/lib/locations";
 
@@ -41,6 +46,9 @@ export default function GosellrProductPage({
     const qs = sp.toString();
     return qs ? `?${qs}` : "";
   })();
+
+  const stlLevel = product.sellerStl ?? 1;
+  const stlScore = product.sellerScore ?? 0;
 
   return (
     <main className="min-h-screen text-white">
@@ -83,33 +91,48 @@ export default function GosellrProductPage({
         </header>
 
         <section className="grid gap-4 lg:grid-cols-12 items-start">
+          {/* Left column — Product image + badge */}
           <div className="lg:col-span-6">
-            <div className="rounded-3xl glass-card border p-5 overflow-hidden">
-              <div
-                className="relative h-[280px] rounded-2xl border bg-white/5 overflow-hidden"
-                style={{ borderColor: "rgba(51, 195, 255,0.25)" }}
-              >
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-contain p-4"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  priority
-                />
-              </div>
-              <div className="mt-4 flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-ehb-textBody">
-                  Badge: <span className="text-white font-semibold ml-1">{product.badge}</span>
-                </span>
-                <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-ehb-textBody">
-                  Tier: <span className="text-white font-semibold ml-1">{product.tier}</span>
-                </span>
+            <div className="rounded-3xl glass-card border overflow-hidden">
+              {/* Trust Level Strip at top */}
+              <TrustLevelStrip level={stlLevel} score={stlScore} />
+
+              <div className="p-5">
+                <div className="relative">
+                  <div
+                    className="relative h-[280px] rounded-2xl border bg-white/5 overflow-hidden"
+                    style={{ borderColor: "rgba(51, 195, 255,0.25)" }}
+                  >
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-contain p-4"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority
+                    />
+                  </div>
+
+                  {/* Floating STL ring badge */}
+                  <div className="absolute -top-3 -right-3">
+                    <StlTrustRingBadge level={stlLevel} score={stlScore} size={72} />
+                  </div>
+                </div>
+
+                <div className="mt-4 flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-ehb-textBody">
+                    Badge: <span className="text-white font-semibold ml-1">{product.badge}</span>
+                  </span>
+                  <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-[2px] text-[11px] text-ehb-textBody">
+                    Tier: <span className="text-white font-semibold ml-1">{product.tier}</span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-6">
+          {/* Right column — Details + Trust info */}
+          <div className="lg:col-span-6 space-y-4">
             <div className="rounded-3xl glass-panel border border-white/10 p-5 space-y-4">
               <div className="flex items-center justify-between gap-3">
                 <div>
@@ -124,6 +147,29 @@ export default function GosellrProductPage({
                 </div>
               </div>
 
+              {/* Guarantee Strip — full size */}
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-ehb-textMuted mb-1.5">
+                  Buyer Protection
+                </p>
+                <GuaranteeStrip
+                  moneyBackDays={product.moneyBackDays ?? null}
+                  replacementDays={product.replacementDays ?? null}
+                />
+              </div>
+
+              {/* PSS / CRB / DMO Trust Bars — full size */}
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-ehb-textMuted mb-1.5">
+                  Seller Trust Dimensions
+                </p>
+                <PssCrbDmoTrustBars
+                  pss={product.sellerPss ?? null}
+                  crb={product.sellerCrb ?? null}
+                  dmo={product.sellerDmo ?? null}
+                />
+              </div>
+
               <GoSellrProductStlLine productId={product.id} />
 
               <div className="flex items-center justify-between text-[11px] text-ehb-textMuted">
@@ -133,14 +179,13 @@ export default function GosellrProductPage({
                 <span className="text-white font-semibold">{product.rating.toFixed(1)} / 5.0</span>
               </div>
 
-              <div className="flex items-center justify-between gap-3">
-                <div className="space-y-1">
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-ehb-textMuted">Verified trust</p>
-                  <p className="text-sm text-ehb-textBody">
-                    PSS verified • CRB certified • EHB-STL-LEVEL trust (demo)
-                  </p>
-                </div>
-              </div>
+              {/* Meta Strip — full size */}
+              <StlMetaStrip
+                ruleNumber={product.sellerRule}
+                rating={product.rating}
+                refillingCount={product.sellerRefills}
+                examInfo={product.sellerExam}
+              />
 
               <AIInsightCard limit={1} compact />
 
@@ -161,4 +206,3 @@ export default function GosellrProductPage({
     </main>
   );
 }
-
