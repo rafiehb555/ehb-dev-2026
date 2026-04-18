@@ -1,0 +1,23 @@
+{
+  "name": "@ehb/pss-backend",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "EHB PSS — central trust engine (Proof & Security System)",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "bullmq": "^5.8.0",
+    "express": "^4.19.2",
+    "ioredis": "^5.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "vitest": "^1.6.0"
+  }
+}

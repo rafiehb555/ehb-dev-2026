@@ -294,6 +294,29 @@ open http://localhost:3000/development
 
 Full walkthrough: `docs/LAUNCH_GUIDE.md`.
 
+## 11. Canonical Auto-Sync
+
+When any canonical department file in `ehb-info/departments/*.md` changes, the master documentation must be updated automatically. A single command handles everything:
+
+```bash
+node scripts/sync-agent-context.mjs
+```
+
+This runs a two-stage pipeline:
+1. **Stage 1:** Mirrors `AGENTS.md` → `CLAUDE.md`, `.cursorrules`, `.github/copilot-instructions.md`
+2. **Stage 2:** Syncs canonical departments → master docs (`EHB-PSS-MASTER-PLAN.md`, `EHB-MASTER-DEVELOPMENT-PLAN.md`) and `CLAUDE.md` (AUTO:CANONICAL-COUNTS section)
+
+**Auto-managed sections** are delimited by HTML comments:
+```html
+<!-- AUTO:CANONICAL-START -->
+... auto-managed content (do not edit) ...
+<!-- AUTO:CANONICAL-END -->
+```
+
+Never hand-edit inside these delimiters — the sync script will overwrite them.
+
+**To add a new department:** Use the `ehb-department-scaffold` skill, which calls the sync at the end. Or create `ehb-info/departments/<CODE>.md` manually, then run `node scripts/sync-agent-context.mjs`.
+
 ---
 
-*EHB Technologies (Pvt.) Ltd. — Engineering · v1 · 2026-04-11*
+*EHB Technologies (Pvt.) Ltd. — Engineering · v1 · 2026-04-15*

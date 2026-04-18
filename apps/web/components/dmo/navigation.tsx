@@ -75,7 +75,7 @@ export const DMO_NAV_SECTIONS: DmoNavSection[] = [
   {
     key: "stl",
     icon: S('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'),
-    label: "STL Management",
+    label: "EHB STL MANAGEMENT",
     href: "/dmo/stl",
     groupKey: "verification",
     items: [
@@ -88,13 +88,31 @@ export const DMO_NAV_SECTIONS: DmoNavSection[] = [
     ],
   },
   {
+    key: "dmo-stl",
+    icon: S('<circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M3 12h18"/><path d="M5.64 5.64l12.72 12.72"/><path d="M18.36 5.64L5.64 18.36"/>'),
+    label: "DMO STL",
+    href: "/dmo/dmo-stl",
+    groupKey: "verification",
+    items: [
+      { key: "dmo-stl-all", label: "All STL (one page)", href: "/dmo/dmo-stl" },
+      { key: "dmo-stl-levels", label: "L0 → L8 Levels", href: "/dmo/dmo-stl#levels" },
+      { key: "dmo-stl-formula", label: "Formula & inputs", href: "/dmo/dmo-stl#formula" },
+      { key: "dmo-stl-types", label: "4 STL types", href: "/dmo/dmo-stl#types" },
+      { key: "dmo-stl-coin-lock", label: "Coin lock tiers", href: "/dmo/dmo-stl#coin-lock" },
+    ],
+  },
+  {
     key: "pss",
     icon: S('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>'),
     label: "PSS Monitoring",
     href: "/dmo/pss",
     groupKey: "verification",
     items: [
+      { key: "pss-queue", label: "Operator queue", href: "/dmo/pss/queue" },
       { key: "pss-cases", label: "Cases", href: "/dmo/pss/cases" },
+      { key: "pss-rules", label: "Rule engine", href: "/dmo/pss/rules" },
+      { key: "pss-webhooks", label: "Webhook monitor", href: "/dmo/pss/webhooks" },
+      { key: "pss-crb", label: "CRB override", href: "/dmo/pss/crb" },
       { key: "pss-steps", label: "Verification steps", href: "/dmo/pss/steps" },
       { key: "pss-risk", label: "Risk analysis", href: "/dmo/pss/risk" },
       { key: "pss-fraud", label: "Fraud detection", href: "/dmo/pss/fraud" },

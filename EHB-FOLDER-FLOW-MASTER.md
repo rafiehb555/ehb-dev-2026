@@ -342,6 +342,35 @@ If an AI violates any of the above, the commit must be reverted.
 | Date       | Version | Change                                                           | By    |
 |------------|---------|------------------------------------------------------------------|-------|
 | 2026-04-14 | v1.0    | Initial Hybrid Architecture spec. Locked.                        | Claude (on Rafi's confirmation A) |
+| 2026-04-14 | v1.1    | **GoSellr end-to-end seller flow** shipped: `(industries)/gosellr/seller-onboarding`, `(industries)/gosellr/my-journey`, `/dmo/gosellr` queue, APIs `/api/gosellr/flow`, `/api/gosellr/dmo/queue`, `/api/gosellr/dmo/approve`, `/api/gosellr/franchise/assign`, `/api/pss/submit`. New components: `GoSellrUserFlow`, `GoSellrDmoQueue`, `SellerOnboardingForm`, `ProductQuickViewModal`, `STLUserCard`, `PssVerificationWizard`. | Claude |
+| 2026-04-14 | v1.2    | **DMO sidebar updated** — renamed `STL Management` → `EHB STL Management`; added new module **`DMO STL`** at `/dmo/dmo-stl` (consolidated all-STL reference page: 9 levels, formula, 4 STL types, coin-lock tiers, live preview). Updated `apps/web/components/dmo/navigation.tsx`. | Claude |
+| 2026-04-14 | v1.3    | **Franchise Manager** — added `/api/franchise/my-sellers` endpoint + `FranchiseSellersPanel` component + `(core)/franchise/my-sellers` page. Lists SELLER-role `FranchiseUser` rows joined with their SELLER_ONBOARDING Applications. Closes the post-DMO loop (DMO approve → auto-assign → franchise sees seller). | Claude |
+| 2026-04-14 | v1.4    | **CRB Certification (user-facing)** — added `(core)/crb/certify` page + `CrbCertifyWizard` 3-step wizard (Type → Documents → Review) posting to existing `/api/crb/apply`. Sidebar shows user's own CRB applications with live status. Unlocks the CRB gate in the GoSellr journey. | Claude |
+| 2026-04-14 | v1.5    | **GoSellr Storefront** — added public `/api/gosellr/products` (search + category + sort by STL/price) and `(industries)/gosellr/store` page + `GoSellrStorefront` component. Product cards carry live STL trust badges pulled from seller's `Profile.stlLevel`. Quick-view opens `ProductQuickViewModal`. | Claude |
+
+---
+
+## 10a. Auto-Update Rule (MANDATORY — from 2026-04-14)
+
+**Hard rule for every AI agent (Claude, Cursor, Copilot, Aider, Continue, Cody, Codeium, future additions):**
+
+> Any time the user shares new information, requests a rename/move/add,
+> changes a naming policy, ships a new module/page/component/API/model/skill,
+> or introduces a new convention — the agent **must**, in the same turn,
+> append a row to §10 Changelog of this file **AND** update the relevant
+> section (§1–§11) if the change alters the architecture contract.
+
+Specifically:
+- **Renames** → update the name in-place AND log the rename in §10.
+- **New pages/APIs/modules** → add to the path spec (§2, §3) AND log in §10.
+- **New rules/policies** → add as their own §N subsection AND log in §10.
+- **Industry additions** → `scripts/add-industry.mjs` auto-updates; confirm a §10 row is emitted.
+- **Sidebar/navigation changes** → log in §10 with the old → new label mapping.
+- **Design tokens / UI conventions** → sync into `design-system/EHB-UIUX-SYSTEM.md`
+  AND log the cross-reference row in §10 here.
+
+No silent changes. If it's worth saying in chat, it's worth writing into
+the master plan. This file is the single source of truth — it must not rot.
 
 ---
 

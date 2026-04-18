@@ -415,7 +415,7 @@ export function DmoLandingPrototype() {
                       "hover:brightness-110",
                     ].join(" ")}
                   >
-                    Open STL Management →
+                    Open EHB STL MANAGEMENT →
                   </Link>
                   <Link
                     href="/dmo/ehb-stl-level"

@@ -1,94 +1,180 @@
 # JPS — Job Profile & Skill System
 
-> **Version:** 2.0  
-> **Created:** 2026-04-12 · **Updated:** 2026-04-14 (deep detail from founder)  
-> **Build status:** ~30% complete · **Spec status:** DEEP — see `EHB-MASTER-INFO.md §64`
+**Status:** Canonical spec (v1.0) · 2026-04-18
+**Related:** PSS.md v3.0 (identity), CRB.md (exams/certifications), STL.md v1.1 (trust scoring), DMO.md v1.3 (governance)
 
 ---
 
 ## 1. Purpose
 
-JPS (Job Profile & Skill) is EHB's AI-powered job matching and professional development system. It connects employers with workers/freelancers using skill-verified profiles backed by PSS identity, CRB certification, and STL trust levels.
+JPS is the complete career + jobs + skills ecosystem within EHB. It covers job posting, skill verification, AI matching, exams, contracts, salary, and inspector management. JPS is NOT just a job board — it is a trust-verified career platform where STL determines job access and salary tiers.
 
-## 2. Core Functions
+## 2. JPS Dashboard Sections
 
-### Job Matching
-- AI-powered skill-to-job matching engine
-- Worker profiles with verified skills (CRB-certified)
-- Employer job postings with requirements
-- Match scoring based on skills, experience, STL level, location
+| Section | Purpose |
+|---------|---------|
+| Profile STL (Personal Trust) | User's personal STL level display + progress |
+| Skills & Certifications | CRB-linked skill verification + exam results |
+| Job Applications | Apply, track, manage applications |
+| Active Jobs | Currently active job assignments |
+| Earnings / Salary | Salary tracking, payment history |
+| Contracts | Active/expired/renewed contracts |
+| Exam System | MCQ, practical, video tests (CRB approved) |
+| Inspector Management | Field inspectors for CRB, job verification, work audits |
 
-### Professional Profiles
-- Comprehensive skill inventory (self-declared + CRB-verified)
-- Education history (verified via CRB)
-- Work experience (employer-verified)
-- Designations and certifications
-- Portfolio/work samples
+## 3. Complete Job Flow
 
-### Contract System
-- 6-month contract cycles
-- Employer-employee connection engine
-- Contract terms, renewals, termination flows
-- Performance tracking during contract
+```
+User Register → PSS Complete → JPS Profile Create → Skill Add → Exam (CRB) → Apply Job → AI Matching → Interview/Selection → Contract Start → Work Tracking → Salary Release
+```
 
-## 3. User Flows
+Each step is event-driven. User cannot skip steps (PSS gate enforced).
 
-### Worker Flow
-1. Register → PSS identity verification
-2. Build JPS profile (skills, education, experience)
-3. CRB skill certification (category exams)
-4. AI generates skill radar chart
-5. Receive job match recommendations
-6. Apply to jobs → interview scheduler
-7. Accept contract → start working
-8. Performance tracked → STL impact
+## 4. Job Designations (STL + CRB based)
 
-### Employer Flow
-1. Register → PSS business verification
-2. Post job with requirements
-3. AI matches candidates (ranked by STL + skills)
-4. Review applications → shortlist
-5. Schedule interviews
-6. Offer contract → worker accepts
-7. Monitor performance
-8. Rate worker → impacts worker's STL
+| Designation | Requirements |
+|-------------|-------------|
+| Junior | PSS L3+, basic skills, entry exam |
+| Intermediate | PSS L4+, 6+ months experience, intermediate exam |
+| Senior | PSS L5+, 1+ year, advanced exam + CRB certification |
+| Expert | PSS L7+, 2+ years, expert exam + CRB physical verification |
 
-## 4. Integration Points
+Designations are EARNED through STL + CRB, not self-assigned.
 
-| System | Integration |
+## 5. Exam System
+
+| Type | Format | Verified By |
+|------|--------|-------------|
+| MCQ | Multiple choice (timed, AI-proctored) | AI auto-grade |
+| Practical | Task-based assessment | CRB inspector review |
+| Video Test | Live video demonstration of skill | CRB approve |
+
+Exam results feed CRB level. Pass = CRB level up. Fail = retry after 30 days.
+
+## 6. Contract System
+
+| Field | Rule |
+|-------|------|
+| Start Date | Set at hiring |
+| End Date | Fixed-term (3/6/12 months) or open-ended |
+| Auto Expiry | Contract expires if not renewed 7 days before end |
+| Renewal | Both parties must agree; new contract created |
+| Termination | Early exit = penalty (STL impact + contract breach fee) |
+
+## 7. Inspector Management
+
+Inspectors are CRB-linked field agents who:
+- Perform physical job site verification
+- Audit work quality
+- Report to DMO via inspection reports (GPS + photos)
+- Required PSS: L4+ (per PSS.md v3.0)
+
+## 8. User Types in JPS
+
+| Type | Role | PSS Min |
+|------|------|---------|
+| Employer | Posts jobs, hires, manages contracts | L2 (L3 recommended) |
+| Job Seeker | Creates profile, applies, takes exams | L1 (L3 recommended for visibility) |
+| Inspector | Verifies job sites, audits work | L4 |
+| Freelancer | Takes short-term tasks | L3 |
+
+## 9. STL Impact on JPS
+
+| Rule | Effect |
+|------|--------|
+| Low personal STL → fewer jobs visible | System filters high-tier jobs from low-STL users |
+| High STL → higher salary tier access | L7+ = premium job access |
+| Company STL → hiring quality | High STL company attracts better candidates |
+| STL in job ranking | Higher STL job seekers shown first to employers |
+
+## 10. Salary & Payment Model (LOCKED)
+
+**Salary Types:**
+| Type | Model | Example |
+|------|-------|---------|
+| Full-time | Monthly fixed salary | Rs. 50,000/month |
+| Freelance | Per-task payment | Rs. 500–5,000/task |
+| Commission | Percentage-based (optional roles) | 5–15% of deal |
+
+**Payment Flow:**
+1. Salary calculated → sent to EHB Wallet
+2. User choice: hold in wallet / bank transfer / reinvest
+3. All payments tracked in wallet history
+
+**Key rule:** All salary goes through EHB Wallet first (control + escrow + audit trail).
+
+## 11. Inspector Earning Model (LOCKED)
+
+**Hybrid model:**
+| Component | Amount |
+|-----------|--------|
+| Base salary | ~20,000 PKR/month |
+| Per inspection | 300–800 PKR/inspection |
+| STL bonus | High STL = higher per-inspection rate |
+
+## 12. FREE User Access in JPS (LOCKED)
+
+| Action | L0–L2 Users |
 |--------|-------------|
-| PSS | Identity verification required before profile |
-| CRB | Skill certification validates claimed skills |
-| STL | Higher STL = priority in job matching |
-| DMO | Oversees job marketplace governance |
-| Wallet | Payment for job services, contract fees |
-| AI | Matching algorithm, resume builder, skill gap analysis |
+| Browse jobs | ✅ Allowed |
+| Apply | ✅ Limited (3/week max) |
+| Priority ranking | ❌ No |
+| Badge | ⚠️ "Unverified" warning shown to employers |
 
-## 5. AI Modules
+## 13. AI Job Matching Priority (LOCKED)
 
-- **AI Resume Builder:** Generates optimized CVs from JPS profile data
-- **AI Skill Gap Analysis:** Identifies missing skills for desired jobs
-- **AI Job Recommender:** Pushes relevant jobs based on profile + behavior
-- **AI Interview Prep:** Practice questions based on job requirements
+Matching order (highest priority first):
+1. **STL** (Trust level) — EHB is trust-first
+2. **Skills** (matched to job requirements)
+3. **CRB Certification** (exam/verification level)
+4. **Experience** (years + completed contracts)
+5. **Location** (proximity to job)
 
-## 6. Key Metrics
+## 14. Contract Violation Rules (LOCKED)
 
-- Profile completeness score (0-100%)
-- Skill match percentage per job
-- Contract completion rate
-- Employer satisfaction rating
-- Time-to-hire analytics
+Progressive penalty system:
+| Strike | Penalty |
+|--------|---------|
+| 1st violation | Warning + log entry |
+| 2nd violation | Salary cut (pending salary deducted) |
+| 3rd violation | STL drop (-2 levels) + contract cancelled |
 
-## 7. API Endpoints (Planned)
+All violations logged in audit trail. Employer notified at each step.
 
-- `GET /api/jps/profile/:userId` — Get worker profile
-- `POST /api/jps/profile` — Create/update profile
-- `GET /api/jps/jobs` — List jobs with filters
-- `POST /api/jps/jobs` — Post a job (employer)
-- `GET /api/jps/match/:userId` — AI match recommendations
-- `POST /api/jps/apply` — Apply to a job
-- `GET /api/jps/contracts/:userId` — List contracts
+## 15. STL Impact on Jobs (LOCKED)
 
----
+| Rule | Effect |
+|------|--------|
+| All jobs visible to all | ✅ Browse unrestricted |
+| High STL = higher ranking | L7+ shown first to employers |
+| Premium jobs gated | Some jobs require minimum STL (employer sets) |
+| Company STL badge | Visible on job posts, filter: "L5+ companies only" |
 
-*EHB Technologies (Pvt.) Ltd. — JPS Department · v1.0 · 2026-04-12*
+## 16. Employment Types (LOCKED)
+
+Both allowed:
+- **Full-time:** Monthly contracts (3/6/12 months), fixed salary
+- **Freelance:** Per-task gigs, flexible, per-task payment
+
+## 17. Geographic Strategy (LOCKED)
+
+| Phase | Region |
+|-------|--------|
+| Phase 1 | Pakistan (local market) |
+| Phase 2 | Global expansion |
+
+## 18. AI Interview System (LOCKED)
+
+**Mode:** Optional (employer's choice)
+- **AI Screening:** AI conducts initial video interview (scripted questions, response analysis)
+- **Direct Interview:** Employer interviews directly
+- **Hybrid:** AI screens first, pass candidates go to employer
+
+Employer configures preference per job posting.
+
+## Changelog
+
+| Date | Ver | Change |
+|------|-----|--------|
+| 2026-04-18 | 1.0 | Created from founder deep definition. 8 dashboard sections, complete job flow, 4 designations, exam system, contract rules, inspector management, STL impact rules. 9 open questions logged. |
+| 2026-04-18 | 1.1 | All 11 open questions LOCKED. Added: salary model (full-time + freelance + commission), wallet-first payment, inspector hybrid earning, FREE user limits (3 apply/week), AI matching priority (STL→Skills→CRB→Experience→Location), contract violation progressive penalty, STL job impact, dual employment types, Pakistan-first strategy, optional AI interview. |

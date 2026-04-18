@@ -10,36 +10,63 @@
 
 STL is the **core ranking + trust score** that controls a user's, seller's, product's, or franchise's **visibility, earnings, access, and fee tier** across the entire EHB ecosystem. Every entity in EHB has an STL. The system is designed to be **fraud-resistant, dynamic, and auditable**.
 
-## 2. Canonical 10-level ladder (Batch-2 confirmed)
+## 2. Canonical 10-level ladder (v3.0, PSS.md aligned)
 
-| Level | Name      | Score band | Role in ecosystem                              |
-|-------|-----------|-----------:|------------------------------------------------|
-| L1    | FREE      |       0–20 | Entry — no verification, heavy restrictions    |
-| L2    | BASIC     |      21–40 | Phone/email verified, basic listing            |
-| L3    | NORMAL    |      41–60 | KYC verified, standard marketplace access      |
-| L4    | STANDARD  |      61–75 | CRB basic + activity streak                    |
-| L5    | ADVANCED  |      76–85 | CRB advanced, regular refills                  |
-| L6    | HIGH      |      86–92 | CRB professional, low complaints               |
-| L7    | PRO       |      93–96 | Verified professional, priority ranking        |
-| L8    | VIP       |      97–98 | Top-tier earnings, lower fees                  |
-| L9    | ELITE     |         99 | By DMO invitation / performance               |
-| L10   | SUPREME   |        100 | Manual DMO approval + full coin lock + 0 complaints |
+| Level | Name      | Score band | Role in ecosystem | EHB Responsibility |
+|-------|-----------|-----------:|---|---|
+| **L0** | **FREE** (pre-level) | —— | Browse/search only, outside STL system | 0% |
+| L1    | FREE (email verified) |       0–20 | Entry — email only, heavy restrictions    | 10% |
+| L2    | BASIC     |      21–40 | Phone/email verified, basic listing            | 20% |
+| L3    | NORMAL    |      41–60 | KYC verified, standard marketplace access      | 40% |
+| L4    | STANDARD  |      61–75 | CRB basic + activity streak                    | 55% |
+| L5    | ADVANCED  |      76–85 | CRB advanced, regular refills                  | 70% |
+| L6    | HIGH      |      86–92 | CRB professional, low complaints               | 80% |
+| L7    | PRO       |      93–96 | Verified professional, priority ranking        | 90% |
+| L8    | VIP       |      97–98 | Top-tier earnings, lower fees                  | 95% |
+| L9    | ELITE     |         99 | By DMO invitation / performance               | 98% |
+| L10   | SUPREME   |        100 | Manual DMO approval + full coin lock + 0 complaints | 100% |
 
-> ⚠️ **Code migration pending** — production code + 58 gold-master tests currently use legacy **L0 → L8 SUPREME (9 levels)**. Migration plan: feature flag `STL_V2_ENABLED`, legacy→new mapping in `DMO.md §23.3 S1`. **Do not rewrite `stlService.js` until user sign-off and test gold-masters are regenerated.**
+**Note:** L0 = pre-level, **outside PSS system**. User has not entered PSS verification flow; can only browse. EHB responsibility = 0% (user bears all risk). L1–L10 are **STL levels within PSS system** with escalating verification depth and EHB responsibility guarantees.
 
-## 3. Composite score inputs
+> ⚠️ **Code migration notes** — production code + 58 gold-master tests currently use legacy **L0 → L8 SUPREME (9 levels, no pre-level L0)**. Migration plan: feature flag `STL_V3_ENABLED` to switch ladder. Legacy L0 (email verified) maps to new L1. Legacy L8 maps to new L8. New L0 (pre-level) is purely UI-side filtering. **Do not rewrite `stlService.js` until user sign-off and tests regenerated.**
 
-`STL_SCORE = w_pss · PSS_trust + w_crb · CRB_verify + w_dmo · DMO_activity + w_lock · lock_factor − w_complaint · complaint_penalty`
+## 3. Composite score inputs (v3.0)
 
-Weights (w_*) are **not yet defined numerically** — placeholder 25/25/25/25 minus complaint penalty. Awaiting user input (see `DMO.md §25.2`).
+**Canonical formula (PSS.md v3.0 §3):**
 
-Inputs:
+```
+PSS_points = (PSS_level / 10) × 40        // 0–40 points
+CRB_points = (CRB_level / 10) × 40        // 0–40 points  
+DMO_points = (DMO_level / 10) × 40        // 0–40 points
 
-1. **PSS** — identity trust (0–100)
-2. **CRB** — verification + exams + refill adherence (0–100)
-3. **DMO** — activity + behaviour signals (0–100)
-4. **Wallet** — locked EHBGC vs level minimum (boolean + overflow bonus)
-5. **Complaints** — weighted count over rolling window (negative)
+Score = PSS_points + CRB_points + DMO_points  // 0–120 total
+
+Final_STL = MIN(Score / 1.2, lowest_component + 1)  // 0–100, MIN-chain
+```
+
+**Weights:**
+- PSS = 0.4 (identity/KYC)
+- CRB = 0.3 (certification/refills)
+- DMO = 0.3 (behavior/activity)
+
+**Inputs:**
+
+1. **PSS** — identity verification (L0–L10, see `PSS.md §2`)
+   - L0 = no verification (outside PSS, 0 points)
+   - L10 = full verified + clean history (40 points)
+2. **CRB** — certification + exams + refill adherence (L0–L10, see `CRB.md §3`)
+   - L0 = no certification (0 points)
+   - L10 = certified + all refills met (40 points)
+3. **DMO** — activity + behavior + risk scoring (L0–L10)
+   - L0 = inactive / high risk (0 points)
+   - L10 = active + clean behavioral history (40 points)
+4. **Token lock** — EHBGC locked per level (see `PSS.md §9`)
+   - L2–L10 lock amounts enforce commitment
+   - Lock removal triggers 15-day grace + 2-level downgrade
+5. **Complaints** — weighted count over rolling window (negative modifier)
+   - 3+ complaints unresolved ≥3 weeks → -2 STL levels
+
+**MIN-chain rule (anti-fraud):** If ANY component (PSS, CRB, DMO) is low, the entire STL is capped. Example: PSS L3 + CRB L10 + DMO L10 → Final capped at ≈L3 (personal identity is weakest link).
 
 ## 4. Master anti-fraud rule (MIN chain)
 
@@ -93,8 +120,21 @@ Any one of these triggers a downgrade candidate (DMO confirms):
 4. **Score bands for entities other than users** — do products use the same 0–100 bands?
 5. **L10 SUPREME approval** — who exactly approves? (DMO council? founder?)
 
+## 11. STL Entity Types
+
+Five types of STL exist in the EHB ecosystem:
+
+1. **Personal STL** — User's own identity trust (Master Key — blocks all others if low)
+2. **Product STL** — Individual product quality/trust = Seller STL + CRB + Reviews + Complaints
+3. **Service STL** — Service provider service trust
+4. **Franchise STL** — Franchise territory trust
+5. **Production Company STL** — Manufacturer company trust
+
+Each entity gets its own EHB-STL-Level independently. The MIN-chain still applies: `FINAL = MIN(productSTL, sellerSTL, companySTL, ownerSTL)`.
+
 ## Changelog
 
 | Date       | Ver | Change |
 |------------|-----|--------|
 | 2026-04-11 | 1.0 | Created from Batch-2 `uploads/ehb_stl.md` with Batch-1 master MIN rule + migration flag |
+| 2026-04-18 | 1.1 | Added 5 STL entity types (Personal, Product, Service, Franchise, Production Company) |

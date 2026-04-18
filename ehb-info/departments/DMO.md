@@ -55,17 +55,19 @@ no teachers, no drivers) — it governs the people and systems that do.
 
 ## 2. Role hierarchy  `[MERGED]`
 
-### 2.1 Seven DMO roles
+### 2.1 Seven DMO roles (v3.0 note: Admin = DMO-only, not a public user type)
 
-| Code | Role | Primary function |
-|------|------|------------------|
-| `SUPER_ADMIN`   | Super Admin (EHB Board) | Full platform access, final policy |
-| `DMO_DIRECTOR`  | DMO Director            | Heads DMO, reports to board |
-| `DMO_MANAGER`   | DMO Manager             | Per-module ownership (PSS, CRB, STL, etc.) |
-| `DMO_ANALYST`   | DMO Analyst             | Data monitoring + reports |
-| `DMO_SUPPORT`   | DMO Support             | Complaint handling, user support |
-| `DMO_INSPECTOR` | DMO Inspector           | CRB / PSS audit oversight |
-| `AI_SYSTEM`     | AI System               | Automated scoring / routing |
+| Code | Role | Primary function | Notes |
+|------|------|------------------|-------|
+| `SUPER_ADMIN`   | Super Admin (EHB Board) | Full platform access, final policy | Internal staff only |
+| `DMO_DIRECTOR`  | DMO Director            | Heads DMO, reports to board | Internal staff only |
+| `DMO_MANAGER`   | DMO Manager             | Per-module ownership (PSS, CRB, STL, etc.) | Internal staff only |
+| `DMO_ANALYST`   | DMO Analyst             | Data monitoring + reports | Internal staff only |
+| `DMO_SUPPORT`   | DMO Support             | Complaint handling, user support | Internal staff only |
+| `DMO_INSPECTOR` | DMO Inspector           | CRB / PSS audit oversight | Internal staff only |
+| `AI_SYSTEM`     | AI System               | Automated scoring / routing | Automated, not human |
+
+**Important (PSS.md v3.0 alignment):** "Admin" is **NOT a public user type**. It is a **DMO-only internal role**. The 9 public user types are: Buyer, Seller, Service Provider, Rider, Inspector, Franchise, Employer, Job Seeker, Production Company. Admins are EHB employees staffing DMO with L8+ PSS verification + mandatory 2FA.
 
 ### 2.2 Officer hierarchy (operations side)
 
@@ -1604,6 +1606,130 @@ These add to `§25` and must be answered together:
 
 ---
 
+## 27. DMO 10-Level Ladder (Final Names)
+
+DMO has its own 10-level ladder based on: Behavior (50%) + Activity (30%) + Risk Intelligence (20%).
+
+| Level | Name | Description |
+|-------|------|-------------|
+| L1 | Basic User | Limited tools, high restrictions |
+| L2 | Active | Basic functions, learning phase |
+| L3 | Verified | Basic automation, limited analytics |
+| L4 | Stable | Standard tools, moderate analytics |
+| L5 | Professional | Full operations tools, complaint handling |
+| L6 | Strong Operator | Advanced reports, team management |
+| L7 | Business Owner | AI automation, franchise interaction, full analytics |
+| L8 | High Performer | Multi-system control, high automation |
+| L9 | Authority | Priority decisions, advanced AI tools |
+| L10 | Elite | Full control, admin-level power |
+
+**Important:** DMO levels show as NUMBERS only (no named labels). Only EHB-STL gets named labels (FREE/BASIC/.../SUPREME).
+
+---
+
+## 28. DMO = SaaS Payment Model
+
+- **DMO is a paid subscription system**
+- **Monthly fee auto-deducted from user earnings**
+- **No earnings → manual payment required**
+- **No payment → DMO level decreases**
+- **DMO subscription = STL maintenance + tools access**
+
+---
+
+## 29. DMO Modules (Complete)
+
+Group into 8 categories:
+
+### 29.1 Core Control
+- PSS Monitoring
+- CRB Monitoring
+- DMO STL
+- Verification
+
+### 29.2 Management
+- EHB STL Management
+- Operations
+- Applications
+- Approvals
+
+### 29.3 Finance
+- Wallet Control
+- Earnings Engine
+- Refill Management
+
+### 29.4 Risk & Control
+- Complaints
+- Up-Guard (Security Layer)
+- Fraud Detection
+
+### 29.5 Business Control
+- Franchise Control
+- Offline → Online Conversion
+
+### 29.6 AI System
+- Intelligence Engine
+- Activity Engine
+- Task System
+- AI Assistant
+
+### 29.7 Data System
+- Analytics
+- Notifications
+- Settings
+- Live Monitoring
+
+### 29.8 Advanced
+- Blockchain Control
+
+---
+
+## 30. Admin = DMO Internal Role
+
+- **Admin is NOT a separate public user type**
+- **Admin = internal EHB staff operating within DMO**
+- **DMO Roles:** Super Admin, Admin, Operator, Franchise Operator
+- **PSS requirement for Admin:** L8+ with mandatory 2FA
+
+---
+
+## 31. DMO SaaS Billing System
+
+DMO operates as a paid SaaS (Software as a Service) platform.
+
+### 31.1 Fee Structure
+
+| EHB-STL Level | Monthly Fee (PKR) |
+|---|---|
+| L1–L2 | FREE |
+| L3–L4 | 500 |
+| L5–L6 | 1,000 |
+| L7–L8 | 3,000 |
+| L9–L10 | 5,000 |
+
+### 31.2 Billing Flow
+
+1. **Month start** → system checks wallet balance
+2. **Auto-deduct** from earnings/wallet
+3. **If insufficient** → 7-day warning
+4. **If still unpaid** → 15-day grace period
+5. **After grace** → DMO level decreases by 1
+6. **Continued non-payment** → further downgrades
+
+### 31.3 Billing Features
+
+- Billing history (all invoices)
+- Auto invoice generation (per cycle)
+- Subscription status display (current level + renewal date)
+- Grace period tracking (7–15 days)
+- Payment notifications + escalation alerts
+
+### 31.4 Key Rule
+
+**DMO subscription = STL maintenance + tools access.** No payment = no growth. Users who fail to maintain payment lose DMO level, restricting their platform capabilities until paid.
+
+---
+
 ## Changelog
 
 | Date       | Author | Change |
@@ -1611,7 +1737,9 @@ These add to `§25` and must be answered together:
 | 2026-04-11 | Claude | v1.0 — initial merge of 13 legacy docs into one structured DMO department file. Added §19 advanced suggestions. Added §20 open questions for the user to fill. |
 | 2026-04-11 | Claude | v1.1 — **Batch-1 merge** (Rafi's 9-prompt DMO+STL+GoSellr spec): added §22 (10-level STL, 18 DMO modules, Up-Guard, GoSellr order flow, product-card anti-fraud, API surface, frontend pages, 7-phase roadmap), §23 (my analysis + 5 new suggestions), §24 (10 consolidated contradictions awaiting Rafi), §25 (next-batch info needed). |
 | 2026-04-11 | Claude | v1.2 — **Batch-2 merge** (13 `.md` files uploaded): split STL/PSS/CRB/Wallet/Blockchain/GoSellr/Franchise/Finance/Affiliate/Industries into their own canonical files under `departments/`. Added §26 with 7 canonical overrides and 6 new contradictions (C1–C6). This DMO.md file is now DMO-only. |
+| 2026-04-18 | Claude | v1.3 — Added DMO 10-level ladder (§27), SaaS payment model (§28), complete modules list in 8 categories (§29), Admin as DMO-only role (§30). |
+| 2026-04-18 | Claude | v1.4 — Updated DMO level names to final (Basic User→Elite, L1–L10). Added SaaS billing system (§31): fee table, billing flow, grace period, key rule. |
 
 ---
 
-*EHB DMO — department plan · v1.2 · 2026-04-11 · Batch-2 merged · awaiting C1–C6 + §25 user input*
+*EHB DMO — department plan · v1.4 · 2026-04-18 · Updated DMO level names to final. Added SaaS billing system (fees, flow, grace period).*

@@ -2422,8 +2422,53 @@ Monitoring: Datadog or Grafana Cloud
 
 ---
 
-*EHB Technologies (Pvt.) Ltd. — Master Development Plan v1.1 — 2026-04-14*
+*EHB Technologies (Pvt.) Ltd. — Master Development Plan v1.3 — 2026-04-14*
 *AI-Led Development · 40 Weeks · 30% → 100% · Built for 100 Years*
+
+---
+
+## DMO Sidebar — STL Section (authoritative spec)
+
+**Sidebar group:** Verification
+**Department:** DMO (Decentralized Management Office)
+
+### Entry 1 — EHB STL MANAGEMENT
+- **Route:** `/dmo/stl`
+- **Label (sidebar):** `EHB STL MANAGEMENT` (all caps)
+- **Purpose:** Operational dashboard for the shipped EHB master STL — scoring, breakdown, history, ranking, per-user drilldowns.
+- **Sub-items:** Overview · EHB-STL-LEVEL reference · Scores · Breakdown · History · Ranking.
+
+### Entry 2 — DMO STL (NEW, v1.2)
+- **Route:** `/dmo/dmo-stl`
+- **Label (sidebar):** `DMO STL`
+- **Purpose:** ONE consolidated reference page for everything STL. For DMO operators, franchise admins, and auditors.
+- **Sections on the page:**
+  1. **Hero** — 3-line definition of STL.
+  2. **Levels L0 → L8** — 9 cards: FREE (grey) → BASIC (blue) → NORMAL (green) → HIGH (amber) → VIP (orange) → ULTRA (pink) → DIAMOND (purple) → PLATINUM (EHB purple) → SUPREME (EHB blue). Each card shows band, color, perks.
+  3. **Formula & inputs** — master MIN-rule across PSS score, CRB score, DMO score, coin-lock tier; shows input bands.
+  4. **4 STL types** — PSS-STL (cap L4 on identity), CRB-STL (cap L6 on physical+legal verification, on-chain hash), DMO-STL (cap L7 on governance bonus), EHB-STL (master, shipped, full range).
+  5. **Coin lock tiers** — lock amount → level boost mapping.
+  6. **Live preview** — STLUserCard rendered at every level for design QA.
+- **Component reuse:** `@/components/stl/STLUserCard` (single source of truth for the visual card).
+- **Design:** Dark glassmorphism per §6 of AGENTS.md. No lists in prose — uses glass cards with icon + color chip + band pill.
+
+---
+
+## Auto-Save Rule (v1.3, 2026-04-14) — MANDATORY
+
+> Every new information point, decision, rename, route, API, model field, UI
+> pattern, design token, or policy change discussed in any Cowork / Claude
+> Code / Cursor session — no matter how small — **must be auto-appended to
+> this Master Development Plan** before the session ends.
+>
+> Mirror the entry (when relevant) to:
+> - `EHB-FOLDER-FLOW-MASTER.md` — folder/route/flow changes
+> - `design-system/EHB-UIUX-SYSTEM.md` — UI tokens/components/patterns
+> - `docs/EHB_CONTEXT.md` — architectural facts
+> - `ehb-status.json` via `scripts/ehb-log-change.mjs` — build-state change
+>
+> No verbal-only agreements. If it's not in this file, it doesn't exist.
+> Agents reading this file at session start treat every line as ground truth.
 
 ---
 
@@ -2433,3 +2478,9 @@ Monitoring: Datadog or Grafana Cloud
 |------|---------|---------|
 | 2026-04-14 | v1.0 | Initial Master Development Plan — 40-week schedule, full API/frontend/database specs |
 | 2026-04-14 | v1.1 | Added 5 GoSellr Product Guarantee APIs (guarantee set/get/update, claim, trust-display). Updated Product Detail page spec with Guarantee Strip + PSS/CRB/DMO Trust Bars. |
+| 2026-04-14 | v1.2 | DMO Sidebar: renamed "EHB STL Management" → "EHB STL MANAGEMENT" (all-caps). Added new sidebar entry **"DMO STL"** (route: `/dmo/dmo-stl`) — a single consolidated page showing all STL concepts: L0→L8 levels, master MIN-formula + input bands (PSS/CRB/DMO), the 4 STL types (PSS-STL cap L4, CRB-STL cap L6, DMO-STL cap L7, EHB-STL master), coin-lock tiers, and live STLUserCard previews per level. Updated CTA labels across DMO landing pages. |
+| 2026-04-15 | v1.7 | **PSS Phase-2 shipped — user-side + backend completion.** (A) User-facing routes added under `apps/web/app/pss/`: `/pss` landing (3+2 action cards), `/pss/submit` (4-step wizard: identity → entity → documents → review with live progress bar + validation), `/pss/status/[id]` (live stage bar + RiskMeter + CriteriaChecklist + AuditTimeline + next-action panel), `/pss/refill/[id]` (missing-criteria filler with progress + re-score CTA), `/pss/badges` (on-chain certificate gallery with Polkadot hash + block), `/pss/franchise` (3-tier application: sub/corporate/country + requirements). (B) Backend modules completed: `modules/criteria/criteriaStore.js` (7 platform criteria sets seeded — gs_product_v4, ols_lawyer_v2, hps_doctor_v3, jps_freelancer_v2, wms_service_v1, obs_course_v1, agts_travel_v1) and `modules/audit/auditLog.js` (Mongoose AuditEvent model with SHA-256 hash-chain + verifyChain integrity check). (C) New API endpoints (routes wired into `server.js`): `GET /criteria`, `GET /criteria/:setName`, `GET /criteria/for/:platformId/:entityType`, `POST /users/verify`, `POST /users/bulk-status`, `POST /platforms/register` (returns platformKey + webhookSecret once), `GET /platforms`, `POST /platforms/:id/rotate`, `GET /ops/queue`, `POST /ops/:id/decision`, `POST /ops/:id/reroute`, `GET /ops/:id/audit`. (D) `modules/webhook/webhookDispatcher.js` — HMAC-signed outbound delivery with 3x exponential retry (0/30s/5min), in-memory queue (swap to BullMQ+Redis in prod), 8s abort timeout. (E) `packages/pss-client` extended with: `getCriteriaFor`, `getQueue`, `decideCase`, `rerouteCase`, `getAudit`, `registerPlatform`, `rotatePlatformKeys`. (F) Sidebar (`components/dmo/navigation.tsx`) gained `pss-crb` → `/dmo/pss/crb`. |
+| 2026-04-15 | v1.6 | **PSS real implementation — Phase-1 delivered.** (A) Reusable components in `apps/web/components/pss/`: `PSSCaseCard`, `AuditTimeline`, `RuleBuilder`, `WebhookStatusChip`, `CriteriaChecklist`, `RiskMeter`. (B) Mock data centralized in `apps/web/lib/pss/pssMockData.ts` (7 cases, 5 audit events, 15 criteria, 5 GoSellr rules, 6 webhook logs). (C) New Next.js pages wired to sidebar: `/dmo/pss/queue` (filtered case grid, 4 risk filters + 5 platform filters), `/dmo/pss/cases/[id]` (drill-in: subject + risk meter + criteria checklist + audit timeline + 4 action buttons), `/dmo/pss/rules` (per-platform rule builder, priority-ordered, operator support gte/lte/eq/between), `/dmo/pss/webhooks` (delivery monitor + HMAC snippet), `/dmo/pss/crb` (L6→L8 override UI with on-chain push). (D) Sidebar nav (`components/dmo/navigation.tsx`) extended with 4 new entries: Operator queue · Rule engine · Webhook monitor. (E) Backend scaffold created: `services/api/pss-backend/` (Express + Mongoose, port 6000, fail-open DB pattern per AGENTS.md §7.5), models `stlRequest` + `platformRule`, modules `stl-engine` (score calc + band map + PSS cap rule L4/L7/L8) + `rule-engine` (priority evaluator) + `webhook/webhookSigner` (HMAC SHA-256 + retry backoff), route `stlRoutes` (POST /stl/submit with idempotency, GET /stl/status/:id, internal `processPendingRequest`). (F) Shared lib `packages/pss-client/` — the golden rule: platforms only ever call PSS through this client. |
+| 2026-04-14 | v1.5 | **PSS UI/UX Prototype v1.0 delivered** — interactive single-file HTML at `ehb-info/EHB-PSS-UIUX-PROTOTYPE.html`. 10 click-through screens mapping the full 9-step STL flow: (0) user-flow overview with owner-color legend [user/PSS/DMO/CRB], (1) seller submit, (2) criteria load + request envelope, (3) score calc + L0→L8 band map, (4) admin rule engine with priority-ordered rules, (5) DMO operator queue with risk filters, (6) case drill-in (criteria breakdown + audit timeline + operator actions), (7) franchise manual review (PMDC-style license check for HPS doctor), (8) CRB override + on-chain hash push for L8, (9) signed webhook + live buyer-facing product card with STL badge, (10) refilling loop (ongoing KYC/license lifecycle). Built on EHB glassmorphism tokens (#0C0E1A / #13162A / #7B6EF6 / #2BBFA0 / #F0A030). Keyboard navigation (← →). |
+| 2026-04-14 | v1.4 | **PSS Master Plan v1.0 added** as sibling doc `ehb-info/EHB-PSS-MASTER-PLAN.md`. Covers: PSS as central trust engine (Proof & Security System), 4 structural principles, 8 core responsibilities, 9-step STL approval flow, STL score→level mapping (PSS caps at L4; L5–L7 franchise; L8 CRB-only), admin rule engine with priority-ordered routing, franchise auto-create (per-platform × per-area), CRB override authority, PSS↔DMO integration protocol (DMO acts only via PSS API — single source of truth), 27 PSS capabilities audit (23/27 enabled), tech architecture (Next.js + NestJS/Nx + MongoDB Atlas; no direct platform-to-platform calls), 11 PSS API endpoints, 4-week Phase-1 roadmap. Source upload docs normalized: SQ→STL, EDR→CRB, PSS full-form = "Proof & Security System". |
+| 2026-04-14 | v1.3 | **Auto-save rule activated:** Every new piece of information, decision, rename, route, API, UI pattern, or design token we discuss in any session MUST be auto-appended to this Master Development Plan (and mirrored to `EHB-FOLDER-FLOW-MASTER.md` / `design-system/EHB-UIUX-SYSTEM.md` where relevant). No verbal-only agreements — everything persists here. |

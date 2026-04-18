@@ -18,13 +18,22 @@ CRB is the **verification + activity validation engine**. It proves *what* someo
 3. **Refill system** — periodic renewal cycles that a seller must satisfy to keep their level
 4. **Multimedia proofs** — video demos, photo evidence, signed documents
 
-## 3. Verification levels
+## 3. Verification levels (10-level ladder, PSS v3.0 aligned)
 
-| Level         | Requirements                                               |
-|---------------|------------------------------------------------------------|
-| Basic         | Document upload + digital cross-check                      |
-| Advanced      | Basic + video proof + category exam                        |
-| Professional  | Advanced + physical verification by franchise + practical exam |
+| Level | Name | Requirements | STL Points | Refills per Window |
+|---|---|---|---|---|
+| L1 | Basic Docs | Document upload + digital cross-check | 4 | 1 |
+| L2 | Compliance Verified | Basic + compliance fields validated | 8 | 1 |
+| L3 | Financially Verified | Financial records + business registration | 12 | 2 |
+| L4 | Category Verified | Category-specific exam + video proof | 16 | 3 |
+| L5 | Professional Verified | Practical exam + proof submission | 20 | 4 |
+| L6 | Franchise Endorsed | Physical verification by franchise + checklist | 24 | 5 |
+| L7 | Expert Verified | Expert-level audit + physical inspection evidence | 28 | 6 |
+| L8 | Certified Professional | Full certification + multi-source validation | 32 | 7 |
+| L9 | High Assurance | Continuous validation + re-verification | 36 | 8 |
+| L10 | Certified Elite | All criteria maximum score + clean history | 40 | 10+ |
+
+**Note:** CRB L0–L10 ladder is independent of PSS L0–L10. They feed **different components** into the STL formula. CRB level = verification + exams + refill adherence. See `PSS.md §3` for how PSS + CRB + DMO compose into final STL.
 
 ## 4. Exam system
 
@@ -81,11 +90,12 @@ All three feed directly into STL as a downgrade signal or block upgrade.
 - More verified categories + on-time refills → higher STL growth rate
 - Missing refill or failed verification → **blocks STL upgrade**, puts user on downgrade queue
 
-## 10. Security & accountability
+## 10. Security & accountability (PSS v3.0 update)
 
 - Secure storage of proofs (encrypted, country-scoped)
 - Anti-tamper logs (every reviewer decision is signed + auditable)
 - **Reviewer accountability** — every approve/reject is attributed to a named officer with a weekly QA audit
+- **CRB Officer Edit Authority** — CRB officers can **EDIT submitted entity data** before making approval/rejection decision. Example: correct typos in address or company name without forcing seller resubmission. All edits logged in immutable audit trail with officer ID + timestamp.
 
 ## 11. Open questions for next batch
 

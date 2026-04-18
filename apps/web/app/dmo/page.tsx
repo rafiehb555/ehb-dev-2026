@@ -277,7 +277,7 @@ export default function DmoDashboardPage() {
                 href="/dmo/stl"
                 className="ehb-cta-primary inline-flex items-center gap-1.5 rounded-lg px-4 py-1.5 text-[11px] font-semibold text-white"
               >
-                Open STL Management →
+                Open EHB STL MANAGEMENT →
               </Link>
               <Link
                 href="/dmo/ehb-stl-level"
