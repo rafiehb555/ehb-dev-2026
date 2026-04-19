@@ -35,7 +35,12 @@ Thumbs.db
 
 # Local bulk / installers (too large for GitHub; keep outside git)
 ehb data/
-data/ehb-data/
+# Version-control curated EHB data under data/ehb-data/ (industries.json, seeds, etc.).
+# Exclude ad-hoc local dumps and generated toolchains committed by mistake:
+data/ehb-data/New folder/
+data/ehb-data/New folder (2)/
+data/ehb-data/**/.next/
+data/ehb-data/**/node_modules/
 
 # Backup folder (pre-restructure snapshot — keep locally, not in git)
 backup/

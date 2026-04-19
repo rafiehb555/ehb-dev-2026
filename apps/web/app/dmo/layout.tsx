@@ -1,35 +1,43 @@
 "use client";
 
 /**
- * DMO workspace shell — Phase 8 Silver Chrome theme (2026-04-11, v1.6).
+ * DMO Workspace Layout — Phase 1 Foundation (2026-04-19).
  *
- * Layout:
- *   ┌────────────────┬──────────────────────────────────────────────┐
- *   │                │  Topbar (breadcrumb + live + action buttons) │
- *   │                ├──────────────────────────────────────────────┤
- *   │   Sidebar      │  Sub-nav (current module's sub-pages pills)  │
- *   │   (grouped     ├──────────────────────────────────────────────┤
- *   │    modules)    │                                              │
- *   │                │               Module content                 │
- *   │                │                                              │
- *   └────────────────┴──────────────────────────────────────────────┘
+ * Responsive layout structure:
+ *   Desktop (lg+):
+ *     ┌─────────────┬─────────────────────────────┐
+ *     │             │  Topbar (sticky)            │
+ *     │  Sidebar    ├─────────────────────────────┤
+ *     │  (fixed)    │  Sub-nav (modules pills)    │
+ *     │             ├─────────────────────────────┤
+ *     │             │  Content (scrollable)       │
+ *     └─────────────┴─────────────────────────────┘
  *
- * Theme: `.ehb-silver-bg` — procedural liquid silver chrome surface
- * rendered from `public/ehb-silver-chrome.svg` with iridescent brand
- * overlays + a dark vignette so the dark glass cards + obsidian hero
- * remain readable on top. Requested by Rafi with the reference
- * silver liquid wave image ("new theam lgain is picture ko background
- * man use krain"). Previous `.ehb-premium-bg` near-black theme is still
- * defined in globals.css for rollback.
+ *   Mobile (sm):
+ *     ┌───────────────────────────┐
+ *     │  Topbar (sticky)          │
+ *     ├───────────────────────────┤
+ *     │  Content (scrollable)     │
+ *     ├───────────────────────────┤
+ *     │  Mobile Bottom Nav        │
+ *     │  (5 tabs)                 │
+ *     └───────────────────────────┘
  *
- * The drifting ambient orbs (§7.12) have been retuned to richer opacity
- * so they still register over the brighter chrome surface.
+ * Features:
+ *   - DmoThemeProvider: theme context for light/dark mode
+ *   - Sidebar: left fixed navigation (collapsible on desktop)
+ *   - Topbar: sticky top with breadcrumb + search + actions
+ *   - DmoTopSubNav: module-specific sub-navigation pills
+ *   - DmoMobileNav: bottom navigation for mobile
+ *   - CSS Grid responsive layout
+ *   - Page mesh background
  */
 
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { DmoSidebar } from "@/components/dmo/DmoSidebar";
 import { DmoTopbar } from "@/components/dmo/DmoTopbar";
+import { DmoMobileNav } from "@/components/dmo/DmoMobileNav";
 import { DmoTopSubNav } from "@/components/dmo/DmoTopSubNav";
 import { DmoThemeProvider, useEhbTheme } from "@/components/dmo/DmoThemeProvider";
 import { DmoThemeSwitcher } from "@/components/dmo/DmoThemeSwitcher";
@@ -40,29 +48,33 @@ import {
   getDmoSectionKeyFromPathname,
 } from "@/components/dmo/navigation";
 
-/* ------------------------------------------------------------------ */
-/* Inner shell (needs theme context to read current theme)             */
-/* ------------------------------------------------------------------ */
-
+/**
+ * Inner shell — requires theme context
+ */
 function DmoShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? "";
   const { theme } = useEhbTheme();
   const tokens = THEME_TOKENS[theme];
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
-  const activeSectionKey = useMemo(() => getDmoSectionKeyFromPathname(pathname), [pathname]);
+  const activeSectionKey = useMemo(
+    () => getDmoSectionKeyFromPathname(pathname),
+    [pathname]
+  );
 
   const selectedSection =
-    DMO_NAV_SECTIONS.find((section) => section.key === activeSectionKey) ?? DMO_NAV_SECTIONS[0];
+    DMO_NAV_SECTIONS.find((section) => section.key === activeSectionKey) ??
+    DMO_NAV_SECTIONS[0];
 
   const selectedGroup =
     DMO_NAV_GROUPS.find((g) => g.key === selectedSection?.groupKey) ?? null;
 
   return (
     <div
-      className="ehb-silver-bg relative isolate flex min-h-screen"
+      className="ehb-silver-bg relative isolate min-h-screen bg-[#0C0E1A]"
       style={{ backgroundColor: tokens.bg, color: tokens.text }}
     >
-      {/* Ambient cinematic background layer — fixed so every sub-page inherits it */}
+      {/* Ambient background layer — fixed */}
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
@@ -73,42 +85,69 @@ function DmoShell({ children }: { children: React.ReactNode }) {
         <div className="ehb-scan" />
       </div>
 
-      {/* Sidebar — sticky, hidden on very small screens */}
-      <div className="ehb-sidebar relative z-20 sticky top-0 hidden h-screen w-[272px] shrink-0 p-3 sm:block">
-        <DmoSidebar selectedSectionKey={activeSectionKey} />
-      </div>
-
-      {/* Main column */}
-      <div className="relative z-10 flex min-w-0 flex-1 flex-col overflow-x-hidden">
-        {/* Topbar + sub-nav — translucent, theme-aware */}
-        <div
-          className="sticky top-0 z-40 border-b backdrop-blur-xl"
-          style={{
-            background: tokens.topbarBg,
-            boxShadow: tokens.topbarShadow,
-            borderColor: tokens.border,
-          }}
-        >
-          <div className="container-ehb flex items-center justify-between gap-3 py-3">
-            <DmoTopbar group={selectedGroup} section={selectedSection ?? null} />
-            <DmoThemeSwitcher />
+      {/* Main layout grid: sidebar + main column */}
+      <div className="relative z-10 flex min-h-screen">
+        {/* Sidebar (desktop only) */}
+        <div className="hidden lg:block">
+          <div
+            className={[
+              "sticky top-0 h-screen transition-all duration-300",
+              isSidebarCollapsed ? "w-[72px]" : "w-[260px]",
+            ].join(" ")}
+          >
+            <DmoSidebar
+              selectedSectionKey={activeSectionKey}
+              onCollapsedChange={setIsSidebarCollapsed}
+            />
           </div>
-          {selectedSection ? (
-            <DmoTopSubNav section={selectedSection} pathname={pathname} />
-          ) : null}
         </div>
 
-        {/* Module content */}
-        <div className="container-ehb flex-1 py-5">{children}</div>
+        {/* Mobile sidebar (overlay) */}
+        <div className="lg:hidden">
+          <DmoSidebar selectedSectionKey={activeSectionKey} />
+        </div>
+
+        {/* Main content column */}
+        <div className="flex min-w-0 flex-1 flex-col overflow-x-hidden">
+          {/* Sticky topbar */}
+          <div
+            className="sticky top-0 z-40 border-b backdrop-blur-xl"
+            style={{
+              background: tokens.topbarBg,
+              boxShadow: tokens.topbarShadow,
+              borderColor: tokens.border,
+            }}
+          >
+            <div className="container-ehb flex items-center justify-between gap-3 py-3">
+              <DmoTopbar
+                group={selectedGroup}
+                section={selectedSection ?? null}
+              />
+              <DmoThemeSwitcher />
+            </div>
+
+            {/* Sub-navigation pills (module-specific) */}
+            {selectedSection ? (
+              <DmoTopSubNav section={selectedSection} pathname={pathname} />
+            ) : null}
+          </div>
+
+          {/* Page mesh background + content */}
+          <div className="page-mesh relative flex-1 overflow-y-auto">
+            <div className="container-ehb py-5">{children}</div>
+          </div>
+        </div>
       </div>
+
+      {/* Mobile bottom navigation */}
+      <DmoMobileNav />
     </div>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Root layout — wraps everything with the theme provider              */
-/* ------------------------------------------------------------------ */
-
+/**
+ * Root layout — wraps everything with the theme provider
+ */
 export default function DmoLayout({ children }: { children: React.ReactNode }) {
   return (
     <DmoThemeProvider>

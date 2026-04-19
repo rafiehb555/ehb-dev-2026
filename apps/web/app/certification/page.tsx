@@ -1,269 +1,332 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import type {
-  CRBApplicationStatus,
-  CRBApplicationType,
-  CRBDocumentType,
-} from "@/lib/crb/schemas";
+/**
+ * /certification — My Certificates Dashboard
+ * User-facing CRB dashboard showing active certificates, renewal schedule, and STL quality meter.
+ */
 
-type CRBDocument = { id: string; type: CRBDocumentType; fileUrl: string };
-type CRBInspection = { id: string; status: string; score: string | number | null; updatedAt: string };
-type CRBCertificate = { id: string; status: string; expiryDate: string; issuedAt: string };
-type CRBApplication = {
+import Link from "next/link";
+import { useState, useMemo } from "react";
+
+type CertificateStatus = "ACTIVE" | "EXPIRING" | "EXPIRED";
+type CertificateType = "BUSINESS_REGISTRATION" | "TAX_ID" | "TRADE_LICENSE" | "PROFESSIONAL_LICENSE" | "INSPECTION_REPORT" | "PRODUCT_CERT" | "SERVICE_CERT" | "COMPLIANCE";
+
+interface Certificate {
   id: string;
-  type: CRBApplicationType;
-  industry: string;
-  status: CRBApplicationStatus;
-  notes: string | null;
-  dmoTaskId: string | null;
-  createdAt: string;
-  documents: CRBDocument[];
-  inspection: CRBInspection | null;
-  certificate: CRBCertificate | null;
+  type: CertificateType;
+  name: string;
+  issuer: string;
+  issuedDate: string;
+  expiryDate: string;
+  status: CertificateStatus;
+  blockchainHash: string;
+  crbLevel: number;
+  renewalEligible: boolean;
+}
+
+interface UserProfile {
+  crbLevel: number;
+  totalCertificates: number;
+  activeCertificates: number;
+  expiringCertificates: number;
+  qualityScore: number;
+}
+
+/* ── Demo data ── */
+const DEMO_PROFILE: UserProfile = {
+  crbLevel: 7,
+  totalCertificates: 5,
+  activeCertificates: 4,
+  expiringCertificates: 1,
+  qualityScore: 87,
 };
 
-type ListResp = { ok: true; data: { items: CRBApplication[]; total: number; take: number; skip: number } };
-type ApiErr = { ok: false; error: { message: string } };
+const DEMO_CERTIFICATES: Certificate[] = [
+  {
+    id: "CERT-2024-001",
+    type: "BUSINESS_REGISTRATION",
+    name: "Business Registration Certificate",
+    issuer: "Ministry of Commerce",
+    issuedDate: "2024-03-15",
+    expiryDate: "2026-03-15",
+    status: "ACTIVE",
+    blockchainHash: "0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d",
+    crbLevel: 8,
+    renewalEligible: false,
+  },
+  {
+    id: "CERT-2024-002",
+    type: "TAX_ID",
+    name: "Tax Identification Number",
+    issuer: "FBR",
+    issuedDate: "2023-06-01",
+    expiryDate: "2026-06-01",
+    status: "ACTIVE",
+    blockchainHash: "0x2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e",
+    crbLevel: 7,
+    renewalEligible: false,
+  },
+  {
+    id: "CERT-2024-003",
+    type: "TRADE_LICENSE",
+    name: "Trade License",
+    issuer: "City Municipal Authority",
+    issuedDate: "2024-01-10",
+    expiryDate: "2025-05-10",
+    status: "EXPIRING",
+    blockchainHash: "0x3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f",
+    crbLevel: 6,
+    renewalEligible: true,
+  },
+  {
+    id: "CERT-2024-004",
+    type: "PROFESSIONAL_LICENSE",
+    name: "Professional Services License",
+    issuer: "Professional Standards Board",
+    issuedDate: "2024-07-20",
+    expiryDate: "2027-07-20",
+    status: "ACTIVE",
+    blockchainHash: "0x4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a",
+    crbLevel: 7,
+    renewalEligible: false,
+  },
+  {
+    id: "CERT-2024-005",
+    type: "INSPECTION_REPORT",
+    name: "Quality Inspection Report",
+    issuer: "CRB Verification Team",
+    issuedDate: "2024-09-01",
+    expiryDate: "2026-09-01",
+    status: "ACTIVE",
+    blockchainHash: "0x5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b",
+    crbLevel: 8,
+    renewalEligible: false,
+  },
+];
 
-const types: CRBApplicationType[] = ["SKILL", "SERVICE", "PRODUCT", "COMPANY"];
-const docTypes: CRBDocumentType[] = ["ID", "LICENSE", "PORTFOLIO", "EXPERIENCE", "OTHER"];
+const CERT_TYPE_ICONS: Record<CertificateType, string> = {
+  BUSINESS_REGISTRATION: "📋",
+  TAX_ID: "💰",
+  TRADE_LICENSE: "🏪",
+  PROFESSIONAL_LICENSE: "📜",
+  INSPECTION_REPORT: "✅",
+  PRODUCT_CERT: "📦",
+  SERVICE_CERT: "🛠",
+  COMPLIANCE: "🔒",
+};
 
-export default function CertificationPage() {
-  const [submitting, setSubmitting] = useState(false);
-  const [err, setErr] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+const CRB_LEVELS = [
+  { level: 1, name: "Registered", color: "#8890B0" },
+  { level: 2, name: "Verified", color: "#7B6EF6" },
+  { level: 3, name: "Certified", color: "#A098F8" },
+  { level: 4, name: "Trusted", color: "#2BBFA0" },
+  { level: 5, name: "Advanced", color: "#38C878" },
+  { level: 6, name: "Premium", color: "#F0A030" },
+  { level: 7, name: "Elite", color: "#7B6EF6" },
+  { level: 8, name: "Supreme", color: "#E91E63" },
+];
 
-  const [type, setType] = useState<CRBApplicationType>("SKILL");
-  const [industry, setIndustry] = useState("IT / Software");
-  const [notes, setNotes] = useState("");
-  const [docs, setDocs] = useState<Array<{ type: CRBDocumentType; fileUrl: string }>>([{ type: "ID", fileUrl: "" }]);
-
-  const [items, setItems] = useState<CRBApplication[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const canSubmit = useMemo(() => {
-    if (!industry.trim()) return false;
-    const filtered = docs.filter((d) => d.fileUrl.trim().length > 0);
-    return filtered.length >= 1 && filtered.every((d) => {
-      try {
-        new URL(d.fileUrl);
-        return true;
-      } catch {
-        return false;
-      }
-    });
-  }, [industry, docs]);
-
-  async function load() {
-    setLoading(true);
-    setErr(null);
-    try {
-      const res = await fetch("/api/crb/applications?take=50&skip=0", { cache: "no-store" });
-      const json = (await res.json()) as ListResp | ApiErr;
-      if (!res.ok || !("ok" in json) || json.ok === false) throw new Error((json as any)?.error?.message ?? "Failed");
-      setItems(json.data.items);
-    } catch (e: any) {
-      setErr(e?.message ?? "Failed to load");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    void load();
-  }, []);
-
-  async function submit() {
-    setSubmitting(true);
-    setErr(null);
-    setSuccess(null);
-    try {
-      const payload = {
-        type,
-        industry: industry.trim(),
-        notes: notes.trim() ? notes.trim() : undefined,
-        documents: docs.filter((d) => d.fileUrl.trim()).map((d) => ({ type: d.type, fileUrl: d.fileUrl.trim() })),
-      };
-      const res = await fetch("/api/crb/applications", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const json = await res.json();
-      if (!res.ok || json?.ok === false) throw new Error(json?.error?.message ?? "Submit failed");
-      setSuccess("Application submitted. It is now in CRB + DMO queue.");
-      setDocs([{ type: "ID", fileUrl: "" }]);
-      setNotes("");
-      await load();
-    } catch (e: any) {
-      setErr(e?.message ?? "Submit failed");
-    } finally {
-      setSubmitting(false);
-    }
-  }
+function CrbLevelMeter({ level, score }: { level: number; score: number }) {
+  const levelMeta = CRB_LEVELS[Math.min(level - 1, 7)];
+  const circumference = 2 * Math.PI * 45;
+  const offset = circumference - (score / 100) * circumference;
 
   return (
-    <main className="min-h-screen text-white">
-      <div className="container-ehb py-8 space-y-6">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-xl md:text-2xl font-semibold leading-tight gradient-text">CRB Certification</h1>
-          <p className="text-ehb-textMuted text-sm">
-            Apply for Skill / Service / Product / Company verification. Real workflow: CRB → Franchise inspection → Certificate → Registry → STL boost.
+    <div className="flex flex-col items-center justify-center space-y-4">
+      <div className="relative h-32 w-32">
+        <svg className="h-full w-full" style={{ transform: "rotate(-90deg)" }}>
+          <circle cx="64" cy="64" r="45" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="6" />
+          <circle
+            cx="64"
+            cy="64"
+            r="45"
+            fill="none"
+            stroke={levelMeta.color}
+            strokeWidth="6"
+            strokeDasharray={circumference}
+            strokeDashoffset={offset}
+            strokeLinecap="round"
+            style={{ transition: "stroke-dashoffset 0.6s ease" }}
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div className="text-3xl font-bold" style={{ color: levelMeta.color }}>
+            L{level}
+          </div>
+          <div className="text-[10px] font-semibold uppercase tracking-wider text-white/40">{score}%</div>
+        </div>
+      </div>
+      <div className="text-center">
+        <div className="text-sm font-semibold text-white">{levelMeta.name}</div>
+        <div className="text-[11px] text-white/50">Quality Rating</div>
+      </div>
+    </div>
+  );
+}
+
+function CertificateCard({ cert }: { cert: Certificate }) {
+  const statusColors = {
+    ACTIVE: { bg: "bg-emerald-500/10", border: "border-emerald-500/30", text: "text-emerald-300", label: "Active" },
+    EXPIRING: { bg: "bg-amber-500/10", border: "border-amber-500/30", text: "text-amber-300", label: "Expiring Soon" },
+    EXPIRED: { bg: "bg-red-500/10", border: "border-red-500/30", text: "text-red-300", label: "Expired" },
+  };
+
+  const colors = statusColors[cert.status];
+  const icon = CERT_TYPE_ICONS[cert.type];
+
+  const issuedDate = new Date(cert.issuedDate).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  const expiryDate = new Date(cert.expiryDate).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  return (
+    <div className="group overflow-hidden rounded-2xl border border-white/8 bg-gradient-to-br from-[#13162A] to-[#1A1D33] p-5 transition-all hover:border-white/16 hover:shadow-lg">
+      <div className="space-y-4">
+        {/* Header */}
+        <div className="flex items-start justify-between">
+          <div className="flex items-start gap-3">
+            <div className="text-3xl">{icon}</div>
+            <div>
+              <h3 className="text-sm font-semibold text-white">{cert.name}</h3>
+              <p className="text-[11px] text-white/50">{cert.issuer}</p>
+            </div>
+          </div>
+          <div className={`rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider ${colors.bg} border ${colors.border} ${colors.text}`}>
+            {colors.label}
+          </div>
+        </div>
+
+        {/* Dates */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="rounded-lg border border-white/8 bg-white/[0.03] p-2.5">
+            <div className="text-[9px] font-semibold uppercase tracking-wider text-white/40">Issued</div>
+            <div className="mt-1 text-xs font-semibold text-white">{issuedDate}</div>
+          </div>
+          <div className="rounded-lg border border-white/8 bg-white/[0.03] p-2.5">
+            <div className="text-[9px] font-semibold uppercase tracking-wider text-white/40">Expires</div>
+            <div className="mt-1 text-xs font-semibold text-white">{expiryDate}</div>
+          </div>
+        </div>
+
+        {/* CRB Level & Hash */}
+        <div className="flex items-center justify-between border-t border-white/5 pt-3">
+          <div className="flex items-center gap-2">
+            <div className="rounded-full bg-purple-500/20 px-2.5 py-1 text-[10px] font-semibold text-purple-200">CRB L{cert.crbLevel}</div>
+          </div>
+          <div className="font-mono text-[9px] text-white/30 hover:text-white/50" title={cert.blockchainHash}>
+            {cert.blockchainHash.slice(0, 10)}...
+          </div>
+        </div>
+
+        {/* Action */}
+        {cert.renewalEligible && (
+          <Link
+            href={`/certification/apply?renewal=${cert.id}`}
+            className="inline-block w-full rounded-lg bg-gradient-to-r from-purple-600 to-teal-600 px-3 py-2 text-center text-[11px] font-semibold text-white transition-all hover:shadow-lg hover:shadow-purple-500/20"
+          >
+            Renew Certificate
+          </Link>
+        )}
+
+        {!cert.renewalEligible && (
+          <Link
+            href={`/certification/${cert.id}`}
+            className="inline-block w-full rounded-lg border border-white/10 px-3 py-2 text-center text-[11px] font-semibold text-white transition-colors hover:bg-white/5"
+          >
+            View Details
+          </Link>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default function CertificationPage() {
+  const [selectedLevel, setSelectedLevel] = useState(DEMO_PROFILE.crbLevel);
+
+  const stats = useMemo(
+    () => [
+      { label: "Total Certificates", value: DEMO_PROFILE.totalCertificates, icon: "📑" },
+      { label: "Active", value: DEMO_PROFILE.activeCertificates, icon: "✅" },
+      { label: "Expiring Soon", value: DEMO_PROFILE.expiringCertificates, icon: "⚠️" },
+      { label: "Quality Score", value: `${DEMO_PROFILE.qualityScore}%`, icon: "⭐" },
+    ],
+    []
+  );
+
+  return (
+    <main className="min-h-screen bg-[#0C0E1A] text-white">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Page header */}
+        <div className="mb-8 space-y-2">
+          <div className="text-[11px] font-semibold uppercase tracking-widest text-white/45">Verification</div>
+          <h1 className="text-3xl font-bold">My Certificates</h1>
+          <p className="text-sm text-white/60">
+            Manage your CRB certifications and keep your service quality level (STL) elevated. Renew expiring certificates to maintain trust.
           </p>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-12">
-          <section className="glass-panel p-4 lg:col-span-5 space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-white">New Application</h2>
-              <span className="text-[11px] text-ehb-textMuted">Step 1–3 (v1)</span>
-            </div>
+        <div className="grid gap-8 lg:grid-cols-3">
+          {/* Left: CRB Level Meter */}
+          <div className="rounded-2xl border border-white/8 bg-gradient-to-br from-[#13162A] to-[#1A1D33] p-8">
+            <CrbLevelMeter level={selectedLevel} score={DEMO_PROFILE.qualityScore} />
+          </div>
 
-            {err ? <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-200">{err}</div> : null}
-            {success ? (
-              <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-sm text-emerald-200">{success}</div>
-            ) : null}
-
-            <div className="grid gap-3">
-              <label className="grid gap-1">
-                <span className="text-xs text-ehb-textBody">Type</span>
-                <select
-                  className="rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
-                  value={type}
-                  onChange={(e) => setType(e.target.value as CRBApplicationType)}
-                >
-                  {types.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              <label className="grid gap-1">
-                <span className="text-xs text-ehb-textBody">Industry</span>
-                <input
-                  className="rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
-                  value={industry}
-                  onChange={(e) => setIndustry(e.target.value)}
-                  placeholder="e.g., Construction, Healthcare, IT"
-                />
-              </label>
-
-              <label className="grid gap-1">
-                <span className="text-xs text-ehb-textBody">Notes (optional)</span>
-                <textarea
-                  className="min-h-[90px] rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Experience summary, portfolio highlights, etc."
-                />
-              </label>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold text-ehb-textBody">Documents (URLs)</h3>
-                <button
-                  className="text-xs rounded-full glass-panel px-3 py-1 hover:shadow-neon-blue transition-all"
-                  onClick={() => setDocs((d) => [...d, { type: "OTHER", fileUrl: "" }])}
-                  type="button"
-                >
-                  + Add
-                </button>
-              </div>
-
-              <div className="grid gap-2">
-                {docs.map((d, idx) => (
-                  <div key={idx} className="grid grid-cols-12 gap-2">
-                    <select
-                      className="col-span-4 rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
-                      value={d.type}
-                      onChange={(e) =>
-                        setDocs((prev) => prev.map((x, i) => (i === idx ? { ...x, type: e.target.value as CRBDocumentType } : x)))
-                      }
-                    >
-                      {docTypes.map((t) => (
-                        <option key={t} value={t}>
-                          {t}
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      className="col-span-8 rounded-xl bg-slate-950/40 border border-white/10 px-3 py-2 text-sm"
-                      value={d.fileUrl}
-                      onChange={(e) => setDocs((prev) => prev.map((x, i) => (i === idx ? { ...x, fileUrl: e.target.value } : x)))}
-                      placeholder="https://..."
-                    />
-                  </div>
-                ))}
-              </div>
-              <p className="text-[11px] text-ehb-textMuted">
-                v1 uses URL-based docs (works now). Next step: direct upload to S3/R2 with signed URLs.
-              </p>
-            </div>
-
-            <button
-              disabled={submitting || !canSubmit}
-              className="w-full rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-4 py-2 text-sm font-semibold text-slate-950 btn-glow disabled:opacity-40"
-              onClick={submit}
-            >
-              {submitting ? "Submitting..." : "Submit to CRB"}
-            </button>
-          </section>
-
-          <section className="glass-panel p-4 lg:col-span-7 space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-white">My Applications</h2>
-              <button
-                className="text-xs rounded-full glass-panel px-3 py-1 hover:shadow-neon-blue transition-all"
-                type="button"
-                onClick={() => load()}
-              >
-                Refresh
-              </button>
-            </div>
-
-            {loading ? <div className="text-sm text-ehb-textMuted">Loading...</div> : null}
-
-            {!loading && items.length === 0 ? (
-              <div className="rounded-xl border border-white/10 bg-slate-950/30 p-4 text-sm text-ehb-textBody">
-                No applications yet. Submit your first CRB certification.
-              </div>
-            ) : null}
-
-            <div className="grid gap-3">
-              {items.map((a) => (
-                <div key={a.id} className="rounded-2xl border border-white/10 bg-slate-950/30 p-4">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs rounded-full bg-white/10 px-2 py-1">{a.type}</span>
-                      <span className="text-xs rounded-full bg-white/10 px-2 py-1">{a.status}</span>
-                      {a.certificate?.status === "ACTIVE" ? (
-                        <span className="text-xs rounded-full bg-emerald-500/15 text-emerald-200 px-2 py-1">CERT ACTIVE</span>
-                      ) : null}
-                    </div>
-                    <div className="text-[11px] text-ehb-textMuted">#{a.id.slice(0, 8)} • {new Date(a.createdAt).toLocaleString()}</div>
-                  </div>
-                  <div className="mt-2 text-sm text-ehb-textBody">{a.industry}</div>
-                  <div className="mt-2 grid gap-1 text-[12px] text-ehb-textMuted">
-                    <div>Docs: {a.documents.length}</div>
-                    <div>
-                      Inspection: {a.inspection ? `${a.inspection.status}${a.inspection.score ? ` • score ${a.inspection.score}` : ""}` : "Not assigned"}
-                    </div>
-                    <div>
-                      Certificate: {a.certificate ? `${a.certificate.status} • exp ${new Date(a.certificate.expiryDate).toLocaleDateString()}` : "—"}
-                    </div>
-                    <div>DMO Task: {a.dmoTaskId ? a.dmoTaskId.slice(0, 10) : "—"}</div>
-                  </div>
+          {/* Right: Content */}
+          <div className="space-y-6 lg:col-span-2">
+            {/* Stats grid */}
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {stats.map((stat) => (
+                <div key={stat.label} className="rounded-xl border border-white/8 bg-white/[0.03] p-4 text-center backdrop-blur">
+                  <div className="text-2xl">{stat.icon}</div>
+                  <div className="mt-2 text-lg font-bold text-white">{stat.value}</div>
+                  <div className="mt-1 text-[10px] text-white/50">{stat.label}</div>
                 </div>
               ))}
             </div>
-          </section>
+
+            {/* CTA */}
+            <Link
+              href="/certification/apply"
+              className="block rounded-xl border border-purple-500/30 bg-gradient-to-r from-purple-600/20 to-teal-600/20 px-6 py-4 text-center transition-all hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10"
+            >
+              <div className="font-semibold text-white">Apply for New Certificate</div>
+              <div className="mt-1 text-sm text-white/60">Expand your service offerings and boost your STL level</div>
+            </Link>
+          </div>
         </div>
+
+        {/* Certificate cards */}
+        <div className="mt-12 space-y-4">
+          <h2 className="text-lg font-semibold text-white">Your Certificates</h2>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {DEMO_CERTIFICATES.map((cert) => (
+              <CertificateCard key={cert.id} cert={cert} />
+            ))}
+          </div>
+        </div>
+
+        {/* Empty state if no certs */}
+        {DEMO_CERTIFICATES.length === 0 && (
+          <div className="mt-12 rounded-2xl border border-white/8 bg-white/[0.02] p-12 text-center">
+            <div className="text-4xl">📋</div>
+            <h3 className="mt-4 text-lg font-semibold text-white">No Certificates Yet</h3>
+            <p className="mt-2 text-sm text-white/60">Start by applying for your first CRB certificate to build trust.</p>
+            <Link
+              href="/certification/apply"
+              className="mt-6 inline-block rounded-lg bg-purple-600 px-6 py-2 font-semibold text-white transition-all hover:bg-purple-700"
+            >
+              Apply Now
+            </Link>
+          </div>
+        )}
       </div>
     </main>
   );
 }
-

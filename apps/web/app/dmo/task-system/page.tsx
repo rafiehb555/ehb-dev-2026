@@ -1,404 +1,142 @@
 "use client";
 
 /**
- * DMO — Task System
- *   - VerificationUI primitives only (no <table>, no local Kpi)
- *   - Gradient accent bars, corner decorations
- *   - Claim/release semantics on unclaimed rows
+ * Task System — DMO Inbox (2026-04-19)
+ * Tasks assigned to current operator, priority sorted
  */
 
+import React from "react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import {
-  VerificationStatCard,
-  VerificationRowGrid,
-  VerificationDrawer,
-  VerificationChip,
-  SectionHeader,
-  FilterChipRow,
-  SeverityMeter,
-  type RowColumn,
-  type VerificationTone,
-} from "@/components/dmo/verification/VerificationUI";
+import { SectionHeader, VerificationStatCard, VerificationChip } from "@/components/dmo/verification/VerificationUI";
 
-/* ------------------------------------------------------------------ */
-/* Types                                                               */
-/* ------------------------------------------------------------------ */
-
-type TaskPriority = "low" | "normal" | "high" | "sla_breach";
-type TaskStatus = "unclaimed" | "claimed" | "in_progress" | "done";
-
-type Task = {
+interface Task {
   id: string;
   title: string;
-  origin: "STL" | "PSS" | "CRB" | "Complaints" | "Refill" | "Wallet";
-  priority: TaskPriority;
-  status: TaskStatus;
-  slaMinutesLeft: number;
-  assignee?: string;
-};
+  module: string;
+  priority: "low" | "medium" | "high" | "urgent";
+  dueAt: string;
+  assignedAt: string;
+}
 
-/* ------------------------------------------------------------------ */
-/* Demo data                                                           */
-/* ------------------------------------------------------------------ */
-
-const DEMO: Task[] = [
-  { id: "T-4421", title: "Review CRB inspection report · OLS Lahore", origin: "CRB", priority: "high", status: "claimed", slaMinutesLeft: 48, assignee: "dmo.ayesha" },
-  { id: "T-4420", title: "Respond to complaint CX-7740", origin: "Complaints", priority: "sla_breach", status: "unclaimed", slaMinutesLeft: -23 },
-  { id: "T-4419", title: "Expiring refill reminder batch · 12 sellers", origin: "Refill", priority: "normal", status: "in_progress", slaMinutesLeft: 340, assignee: "dmo.sara" },
-  { id: "T-4418", title: "STL dispute · counterfeit GoSellr seller", origin: "STL", priority: "high", status: "unclaimed", slaMinutesLeft: 90 },
-  { id: "T-4417", title: "PSS liveness override review", origin: "PSS", priority: "sla_breach", status: "claimed", slaMinutesLeft: -8, assignee: "dmo.hamza" },
-  { id: "T-4416", title: "Escrow release · APP-77240", origin: "Wallet", priority: "normal", status: "done", slaMinutesLeft: 0, assignee: "dmo.bilal" },
-  { id: "T-4415", title: "Weekly STL recalculation audit", origin: "STL", priority: "low", status: "unclaimed", slaMinutesLeft: 1440 },
+const MOCK_TASKS: Task[] = [
+  {
+    id: "TSK-5001",
+    title: "Review escalated complaint",
+    module: "complaints",
+    priority: "urgent",
+    dueAt: "2026-04-18T16:00:00Z",
+    assignedAt: "2026-04-18T14:00:00Z",
+  },
+  {
+    id: "TSK-5000",
+    title: "Assess fraud risk",
+    module: "fraud",
+    priority: "high",
+    dueAt: "2026-04-19T12:00:00Z",
+    assignedAt: "2026-04-18T10:00:00Z",
+  },
+  {
+    id: "TSK-4999",
+    title: "Moderate content flag",
+    module: "moderation",
+    priority: "medium",
+    dueAt: "2026-04-19T18:00:00Z",
+    assignedAt: "2026-04-18T09:00:00Z",
+  },
 ];
 
-/* ------------------------------------------------------------------ */
-/* Helpers                                                             */
-/* ------------------------------------------------------------------ */
-
-const PRIORITY_TONE: Record<TaskPriority, VerificationTone> = {
-  low: "cyan",
-  normal: "purple",
-  high: "amber",
-  sla_breach: "red",
-};
-
-const STATUS_TONE: Record<TaskStatus, VerificationTone> = {
-  unclaimed: "purple",
-  claimed: "cyan",
-  in_progress: "amber",
-  done: "green",
-};
-
-const ORIGIN_TONE: Record<Task["origin"], VerificationTone> = {
-  STL: "purple",
-  PSS: "teal",
-  CRB: "cyan",
-  Complaints: "red",
-  Refill: "green",
-  Wallet: "amber",
-};
-
-function slaBadge(mins: number): { label: string; tone: VerificationTone } {
-  if (mins < 0) return { label: `${Math.abs(mins)}m overdue`, tone: "red" };
-  if (mins < 60) return { label: `${mins}m left`, tone: "amber" };
-  const h = Math.floor(mins / 60);
-  return { label: `${h}h left`, tone: "green" };
-}
-
-function InfoCell({ label, value, mono }: { label: string; value: React.ReactNode; mono?: boolean }) {
-  return (
-    <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
-      <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">{label}</p>
-      <p className={`mt-1 text-sm text-white/90 ${mono ? "font-mono" : ""}`}>{value}</p>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Component                                                           */
-/* ------------------------------------------------------------------ */
-
-export default function TaskSystemPage() {
-  const [tasks, setTasks] = useState<Task[]>(DEMO);
-  const [statusFilter, setStatusFilter] = useState<"ALL" | TaskStatus>("ALL");
-  const [active, setActive] = useState<Task | null>(null);
-
-  const kpis = useMemo(
-    () => ({
-      unclaimed: tasks.filter((t) => t.status === "unclaimed").length,
-      inProgress: tasks.filter((t) => t.status === "in_progress" || t.status === "claimed").length,
-      breaches: tasks.filter((t) => t.priority === "sla_breach").length,
-      done: tasks.filter((t) => t.status === "done").length,
-    }),
-    [tasks]
-  );
-
-  const visible = useMemo(
-    () => (statusFilter === "ALL" ? tasks : tasks.filter((t) => t.status === statusFilter)),
-    [tasks, statusFilter]
-  );
-
-  function claim(id: string) {
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === id && t.status === "unclaimed"
-          ? { ...t, status: "claimed" as TaskStatus, assignee: "me" }
-          : t
-      )
-    );
+const getPriorityColor = (p: string) => {
+  switch (p) {
+    case "urgent":
+      return "bg-red-900/40 border-red-500/40 text-red-300";
+    case "high":
+      return "bg-orange-900/40 border-orange-500/40 text-orange-300";
+    case "medium":
+      return "bg-amber-900/40 border-amber-500/40 text-amber-300";
+    default:
+      return "bg-blue-900/40 border-blue-500/40 text-blue-300";
   }
+};
 
-  const columns: RowColumn<Task>[] = [
-    {
-      key: "task",
-      header: "Task",
-      width: "minmax(0,2.2fr)",
-      render: (r) => (
-        <div className="min-w-0">
-          <div className="font-mono text-[10px] text-white/45">{r.id}</div>
-          <div className="truncate text-sm font-semibold text-white">{r.title}</div>
-          {r.assignee ? (
-            <div className="text-[10px] text-white/50">assignee: {r.assignee}</div>
-          ) : null}
-        </div>
-      ),
-    },
-    {
-      key: "origin",
-      header: "Origin",
-      width: "minmax(0,0.8fr)",
-      render: (r) => <VerificationChip tone={ORIGIN_TONE[r.origin]}>{r.origin}</VerificationChip>,
-    },
-    {
-      key: "priority",
-      header: "Priority",
-      width: "minmax(0,0.9fr)",
-      render: (r) => (
-        <VerificationChip tone={PRIORITY_TONE[r.priority]}>
-          {r.priority.replace("_", " ")}
-        </VerificationChip>
-      ),
-    },
-    {
-      key: "status",
-      header: "Status",
-      width: "minmax(0,0.9fr)",
-      render: (r) => (
-        <VerificationChip tone={STATUS_TONE[r.status]}>
-          {r.status.replace("_", " ")}
-        </VerificationChip>
-      ),
-    },
-    {
-      key: "sla",
-      header: "SLA",
-      width: "minmax(0,0.8fr)",
-      render: (r) => {
-        const s = slaBadge(r.slaMinutesLeft);
-        return <VerificationChip tone={s.tone} size="xs">{s.label}</VerificationChip>;
-      },
-    },
-    {
-      key: "action",
-      header: "Action",
-      width: "minmax(0,0.8fr)",
-      align: "right",
-      render: (r) =>
-        r.status === "unclaimed" ? (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              claim(r.id);
-            }}
-            className="rounded-xl border border-[#7B6EF6]/50 bg-[#7B6EF6]/15 px-3 py-1 text-[11px] font-semibold text-[#A098F8] transition-colors hover:border-[#A098F8]/80 hover:bg-[#7B6EF6]/25 hover:text-white"
-          >
-            Claim
-          </button>
-        ) : (
-          <span className="text-[11px] text-white/40">—</span>
-        ),
-    },
-  ];
+export default function TaskSystem() {
+  const totalTasks = MOCK_TASKS.length;
+  const overdueTasks = 1;
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <header className="relative overflow-hidden rounded-2xl border border-[#A098F8]/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
-        <div
-          className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]"
-          style={{
-            background: "linear-gradient(90deg, transparent 0%, #A098F8 25%, #F0A030 50%, #F05858 75%, transparent 100%)",
-          }}
-        />
-        <div className="pointer-events-none absolute left-3 top-3 h-6 w-6 border-l-[1.5px] border-t-[1.5px] border-[#A098F8]/50" />
-        <div className="pointer-events-none absolute bottom-3 right-3 h-6 w-6 border-b-[1.5px] border-r-[1.5px] border-[#F0A030]/45" />
-        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br from-[#A098F8]/20 via-[#2BBFA0]/15 to-transparent blur-3xl" />
-        <div className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-          <div className="min-w-0 space-y-2">
-            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em]">
-              <Link href="/dmo" className="text-white/40 hover:text-white/70 transition-colors">DMO</Link>
-              <span className="text-white/25">/</span>
-              <span className="text-[#F0A030]">Tasks</span>
-            </div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#A098F8]">
-              Intelligence · Task System
-            </p>
-            <h1 className="text-2xl font-bold text-white md:text-3xl">Task System</h1>
-            <p className="max-w-2xl text-sm text-white/65">
-              Routing-rule-driven work queue for DMO operators. STL, PSS, CRB, Complaints,
-              Refill, Wallet — sab ki tasks yahaan come kar ke SLA clock ke saath route hoti
-              hain. Claim &amp; release semantics + burndown analytics.
-            </p>
-          </div>
+    <div className="min-h-screen" style={{ backgroundColor: "#0C0E1A" }}>
+      <div className="p-8 space-y-8">
+        <SectionHeader title="My Tasks" subtitle="Inbox of assigned tasks, priority sorted" />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <VerificationStatCard icon="📥" label="Inbox" value={totalTasks.toString()} delta="Assigned tasks" tone="info" />
+          <VerificationStatCard icon="⏰" label="Overdue" value={overdueTasks.toString()} delta="Requires action" tone="error" />
+          <VerificationStatCard icon="✓" label="Completed" value="12" delta="This week" tone="success" />
         </div>
-      </header>
 
-      {/* Stats */}
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <VerificationStatCard
-          tone="purple"
-          label="Unclaimed"
-          value={kpis.unclaimed}
-          sub="waiting for claim"
-          icon={
-            <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
-              <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
-              <path d="M8 12h8M12 8v8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
-          }
-        />
-        <VerificationStatCard
-          tone="cyan"
-          label="In progress"
-          value={kpis.inProgress}
-          sub="claimed + working"
-          icon={
-            <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
-              <path d="M12 4v8l5 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-              <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
-            </svg>
-          }
-        />
-        <VerificationStatCard
-          tone="red"
-          label="SLA breaches"
-          value={kpis.breaches}
-          sub="overdue tasks"
-          icon={
-            <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
-              <path d="M12 8v4m0 4h.01" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="1.4" />
-            </svg>
-          }
-        />
-        <VerificationStatCard
-          tone="green"
-          label="Done today"
-          value={kpis.done}
-          sub="completed"
-          icon={
-            <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
-              <path d="M5 12l4 4L19 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          }
-        />
-      </section>
-
-      {/* Status distribution */}
-      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <SectionHeader title="Status distribution" hint="Task queue breakdown" />
-        <SeverityMeter
-          segments={[
-            { label: "Unclaimed", value: kpis.unclaimed, tone: "purple" },
-            { label: "In progress", value: kpis.inProgress, tone: "cyan" },
-            { label: "Done", value: kpis.done, tone: "green" },
-          ]}
-        />
-      </section>
-
-      {/* Queue */}
-      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <SectionHeader
-          eyebrow="Work queue"
-          title="Tasks"
-          hint="Click a task row to open detail · SLA clock updates live"
-          right={<span className="text-[10px] text-white/45">{visible.length} task(s)</span>}
-        />
-        <div className="mt-3">
-          <FilterChipRow<"ALL" | TaskStatus>
-            options={[
-              { value: "ALL", label: `All · ${tasks.length}` },
-              { value: "unclaimed", label: `Unclaimed · ${kpis.unclaimed}` },
-              { value: "claimed", label: "Claimed" },
-              { value: "in_progress", label: "In progress" },
-              { value: "done", label: `Done · ${kpis.done}` },
-            ]}
-            value={statusFilter}
-            onChange={setStatusFilter}
-          />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <Link
+            href="/dmo/task-system/queues"
+            className="p-4 rounded-lg border text-center hover:bg-white/5 transition-all"
+            style={{ backgroundColor: "#13162A", borderColor: "rgba(255, 255, 255, 0.08)" }}
+          >
+            <div className="text-xl mb-2">📊</div>
+            <div className="text-xs font-semibold text-white">Queue Status</div>
+          </Link>
+          <Link
+            href="/dmo/task-system/sla"
+            className="p-4 rounded-lg border text-center hover:bg-white/5 transition-all"
+            style={{ backgroundColor: "#13162A", borderColor: "rgba(255, 255, 255, 0.08)" }}
+          >
+            <div className="text-xl mb-2">⏱</div>
+            <div className="text-xs font-semibold text-white">SLA Monitor</div>
+          </Link>
+          <Link
+            href="/dmo/task-system/routing"
+            className="p-4 rounded-lg border text-center hover:bg-white/5 transition-all"
+            style={{ backgroundColor: "#13162A", borderColor: "rgba(255, 255, 255, 0.08)" }}
+          >
+            <div className="text-xl mb-2">🔀</div>
+            <div className="text-xs font-semibold text-white">Routing</div>
+          </Link>
+          <Link
+            href="/dmo/task-system"
+            className="p-4 rounded-lg border text-center hover:bg-white/5 transition-all"
+            style={{ backgroundColor: "#13162A", borderColor: "rgba(255, 255, 255, 0.08)" }}
+          >
+            <div className="text-xl mb-2">⚙️</div>
+            <div className="text-xs font-semibold text-white">Settings</div>
+          </Link>
         </div>
-        <div className="mt-4">
-          <VerificationRowGrid<Task>
-            rows={visible}
-            columns={columns}
-            onRowClick={(r) => setActive(r)}
-            getRowTone={(r) => (r.priority === "sla_breach" ? "red" : STATUS_TONE[r.status])}
-            emptyTitle="No tasks in this bucket"
-            emptyHint="Switch filter to see tasks."
-          />
+
+        <div className="space-y-3">
+          {MOCK_TASKS.sort((a, b) => {
+            const priorityOrder = { urgent: 0, high: 1, medium: 2, low: 3 };
+            return priorityOrder[a.priority as keyof typeof priorityOrder] - priorityOrder[b.priority as keyof typeof priorityOrder];
+          }).map((task) => (
+            <div
+              key={task.id}
+              className="p-4 rounded-lg transition-all hover:bg-white/5 cursor-pointer"
+              style={{ backgroundColor: "#13162A", borderColor: "rgba(255, 255, 255, 0.08)", border: "1px solid" }}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1">
+                  <div className="flex gap-2 items-center mb-1">
+                    <span className="text-sm font-semibold text-white">{task.id}</span>
+                    <VerificationChip label={task.priority.toUpperCase()} className={getPriorityColor(task.priority)} />
+                    <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: "rgba(123, 110, 246, 0.2)", color: "#A098F8" }}>
+                      {task.module}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-300">{task.title}</p>
+                </div>
+                <div className="text-right text-xs text-gray-500">
+                  <p>Due: {task.dueAt.split("T")[0]}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </section>
-
-      {/* Drawer */}
-      <VerificationDrawer
-        open={Boolean(active)}
-        onClose={() => setActive(null)}
-        title={active ? active.title : "Task detail"}
-        subtitle={active ? `${active.id} · ${active.origin} module` : undefined}
-        severity={
-          active?.priority === "sla_breach"
-            ? "critical"
-            : active?.priority === "high"
-            ? "high"
-            : "info"
-        }
-      >
-        {active ? (
-          <div className="space-y-4">
-            <div className="flex flex-wrap gap-2">
-              <VerificationChip tone={ORIGIN_TONE[active.origin]}>{active.origin}</VerificationChip>
-              <VerificationChip tone={PRIORITY_TONE[active.priority]}>
-                {active.priority.replace("_", " ")}
-              </VerificationChip>
-              <VerificationChip tone={STATUS_TONE[active.status]}>
-                {active.status.replace("_", " ")}
-              </VerificationChip>
-              {(() => {
-                const s = slaBadge(active.slaMinutesLeft);
-                return <VerificationChip tone={s.tone}>{s.label}</VerificationChip>;
-              })()}
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              <InfoCell label="Task ID" value={active.id} mono />
-              <InfoCell label="Origin" value={active.origin} />
-              <InfoCell label="Assignee" value={active.assignee ?? "Unclaimed"} />
-              <InfoCell
-                label="SLA"
-                value={
-                  active.slaMinutesLeft < 0
-                    ? `${Math.abs(active.slaMinutesLeft)}m OVERDUE`
-                    : `${active.slaMinutesLeft}m remaining`
-                }
-                mono
-              />
-            </div>
-
-            <div className="grid grid-cols-3 gap-2 pt-2">
-              <button
-                type="button"
-                className="rounded-xl border border-[#7B6EF6]/40 bg-[#7B6EF6]/12 px-3 py-2 text-[11px] font-semibold text-[#A098F8] transition-colors hover:border-[#A098F8]/70 hover:bg-[#7B6EF6]/20"
-              >
-                Claim
-              </button>
-              <button
-                type="button"
-                className="rounded-xl border border-[#F0A030]/40 bg-[#F0A030]/12 px-3 py-2 text-[11px] font-semibold text-[#F0A030] transition-colors hover:border-[#F0A030]/70 hover:bg-[#F0A030]/20"
-              >
-                Escalate
-              </button>
-              <button
-                type="button"
-                className="rounded-xl border border-[#38C878]/40 bg-[#38C878]/12 px-3 py-2 text-[11px] font-semibold text-[#38C878] transition-colors hover:border-[#38C878]/70 hover:bg-[#38C878]/20"
-              >
-                Mark done
-              </button>
-            </div>
-          </div>
-        ) : null}
-      </VerificationDrawer>
+      </div>
     </div>
   );
 }

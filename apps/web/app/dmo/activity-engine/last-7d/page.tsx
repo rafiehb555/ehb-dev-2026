@@ -1,390 +1,98 @@
 "use client";
 
-import { useMemo, useState } from "react";
+/**
+ * DMO — Activity Engine: Last 7 Days
+ *   - Daily breakdown with trend comparison
+ *   - Weekly highlights and patterns
+ */
+
 import Link from "next/link";
+import { useMemo } from "react";
 import {
   VerificationStatCard,
-  VerificationRowGrid,
-  VerificationDrawer,
   VerificationChip,
   SectionHeader,
-  SeverityMeter,
-  type RowColumn,
-  type VerificationTone,
 } from "@/components/dmo/verification/VerificationUI";
 
-type DailyActivity = {
-  id: string;
-  date: string;
-  module: "STL" | "PSS" | "CRB" | "WALLET" | "FRANCHISE";
-  eventCount: number;
-  uniqueUsers: number;
-  alertCount: number;
+type DailyEvent = {
+  day: string;
+  count: number;
+  trend: number; // % change from previous
 };
 
-const DEMO_DAILY_ACTIVITY: DailyActivity[] = [
-  {
-    id: "day-001",
-    date: "2026-04-12",
-    module: "STL",
-    eventCount: 287,
-    uniqueUsers: 34,
-    alertCount: 3,
-  },
-  {
-    id: "day-002",
-    date: "2026-04-11",
-    module: "PSS",
-    eventCount: 412,
-    uniqueUsers: 52,
-    alertCount: 7,
-  },
-  {
-    id: "day-003",
-    date: "2026-04-10",
-    module: "CRB",
-    eventCount: 156,
-    uniqueUsers: 18,
-    alertCount: 1,
-  },
-  {
-    id: "day-004",
-    date: "2026-04-09",
-    module: "WALLET",
-    eventCount: 523,
-    uniqueUsers: 67,
-    alertCount: 2,
-  },
-  {
-    id: "day-005",
-    date: "2026-04-08",
-    module: "FRANCHISE",
-    eventCount: 201,
-    uniqueUsers: 22,
-    alertCount: 4,
-  },
-  {
-    id: "day-006",
-    date: "2026-04-07",
-    module: "STL",
-    eventCount: 298,
-    uniqueUsers: 38,
-    alertCount: 2,
-  },
-  {
-    id: "day-007",
-    date: "2026-04-06",
-    module: "PSS",
-    eventCount: 263,
-    uniqueUsers: 29,
-    alertCount: 1,
-  },
-  {
-    id: "day-008",
-    date: "2026-04-05",
-    module: "CRB",
-    eventCount: 189,
-    uniqueUsers: 25,
-    alertCount: 3,
-  },
-  {
-    id: "day-009",
-    date: "2026-04-04",
-    module: "WALLET",
-    eventCount: 445,
-    uniqueUsers: 58,
-    alertCount: 5,
-  },
-  {
-    id: "day-010",
-    date: "2026-04-03",
-    module: "FRANCHISE",
-    eventCount: 166,
-    uniqueUsers: 19,
-    alertCount: 2,
-  },
+const DEMO: DailyEvent[] = [
+  { day: "Apr 5", count: 142, trend: -8 },
+  { day: "Apr 6", count: 168, trend: +18 },
+  { day: "Apr 7", count: 195, trend: +16 },
+  { day: "Apr 8", count: 187, trend: -4 },
+  { day: "Apr 9", count: 214, trend: +14 },
+  { day: "Apr 10", count: 201, trend: -6 },
+  { day: "Apr 11", count: 168, trend: -16 },
 ];
 
-export default function Last7dActivityPage() {
-  const [selectedDay, setSelectedDay] = useState<DailyActivity | null>(null);
-  const [expandedDay, setExpandedDay] = useState<string | null>(null);
-
-  const stats = useMemo(() => {
-    const totalEvents = DEMO_DAILY_ACTIVITY.reduce((sum, d) => sum + d.eventCount, 0);
-    const dailyAvg = Math.round(totalEvents / 7);
-    const totalUsers = new Set(
-      DEMO_DAILY_ACTIVITY.map((d) => d.id)
-    ).size;
-
-    let maxDay = DEMO_DAILY_ACTIVITY[0];
-    for (const day of DEMO_DAILY_ACTIVITY) {
-      if (day.eventCount > maxDay.eventCount) {
-        maxDay = day;
-      }
-    }
-    const maxDayName = new Date(maxDay.date).toLocaleDateString("en-US", {
-      weekday: "long",
-    });
-
-    const growth = 12;
-
-    return {
-      totalEvents,
-      dailyAvg,
-      mostActiveDay: maxDayName,
-      growth: `+${growth}%`,
-    };
-  }, []);
-
-  const moduleDistribution = useMemo(() => {
-    const dist: Record<string, number> = {
-      STL: 0,
-      PSS: 0,
-      CRB: 0,
-      WALLET: 0,
-      FRANCHISE: 0,
-    };
-    for (const day of DEMO_DAILY_ACTIVITY) {
-      dist[day.module] = (dist[day.module] || 0) + day.eventCount;
-    }
-    return [
-      { label: "STL", value: dist.STL, tone: "purple" as VerificationTone },
-      { label: "PSS", value: dist.PSS, tone: "teal" as VerificationTone },
-      { label: "CRB", value: dist.CRB, tone: "amber" as VerificationTone },
-      { label: "WALLET", value: dist.WALLET, tone: "green" as VerificationTone },
-      { label: "FRANCHISE", value: dist.FRANCHISE, tone: "cyan" as VerificationTone },
-    ];
-  }, []);
-
-  const columns: RowColumn<DailyActivity>[] = [
-    {
-      key: "date",
-      header: "Date",
-      width: "minmax(0, 1fr)",
-      render: (day) => {
-        const dt = new Date(day.date);
-        return `${dt.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        })}`;
-      },
-    },
-    {
-      key: "module",
-      header: "Module",
-      width: "minmax(0, 0.9fr)",
-      render: (day) => (
-        <VerificationChip tone="purple">
-          {day.module}
-        </VerificationChip>
-      ),
-    },
-    {
-      key: "eventCount",
-      header: "Events",
-      width: "minmax(0, 0.8fr)",
-      render: (day) => (
-        <span style={{ color: "#A098F8", fontWeight: "600" }}>
-          {day.eventCount}
-        </span>
-      ),
-    },
-    {
-      key: "uniqueUsers",
-      header: "Unique Users",
-      width: "minmax(0, 1fr)",
-      render: (day) => (
-        <span style={{ color: "#2BBFA0", fontWeight: "600" }}>
-          {day.uniqueUsers}
-        </span>
-      ),
-    },
-    {
-      key: "alertCount",
-      header: "Alerts",
-      width: "minmax(0, 0.7fr)",
-      render: (day) => (
-        <VerificationChip tone={day.alertCount > 3 ? "red" : "amber"}>
-          {day.alertCount}
-        </VerificationChip>
-      ),
-    },
-  ];
+export default function Last7dPage() {
+  const stats = useMemo(
+    () => ({
+      totalEvents: DEMO.reduce((s, d) => s + d.count, 0),
+      avgPerDay: Math.round(DEMO.reduce((s, d) => s + d.count, 0) / DEMO.length),
+      peakDay: DEMO.reduce((max, d) => d.count > max.count ? d : max),
+      avgTrend: Math.round(DEMO.reduce((s, d) => s + d.trend, 0) / (DEMO.length - 1)),
+    }),
+    []
+  );
 
   return (
-    <div className="min-h-screen bg-[#0C0E1A] px-4 py-8 sm:px-6 lg:px-8">
-      <SectionHeader
-        title="DMO / Activity Engine / Last 7 Days"
-        hint="Daily event aggregation across all modules"
-      />
-
-      <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <VerificationStatCard
-          tone="purple"
-          label="Total Events"
-          value={stats.totalEvents.toString()}
-          sub="In last 7 days"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>
-          }
-        />
-
-        <VerificationStatCard
-          tone="teal"
-          label="Daily Average"
-          value={stats.dailyAvg.toString()}
-          sub="Events per day"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <polyline points="23 6 13.5 15.5 8.5 10.5 1 17" />
-              <polyline points="17 6 23 6 23 12" />
-            </svg>
-          }
-        />
-
-        <VerificationStatCard
-          tone="amber"
-          label="Most Active Day"
-          value={stats.mostActiveDay}
-          sub="Highest activity"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
-              <polyline points="13 2 13 9 20 9" />
-            </svg>
-          }
-        />
-
-        <VerificationStatCard
-          tone="green"
-          label="Growth"
-          value={stats.growth}
-          sub="Week-over-week"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <polyline points="19 12 12 19 5 12" />
-            </svg>
-          }
-        />
-      </div>
-
-      <div className="mb-6 rounded-2xl border border-white/10 bg-[#13162A]/70 p-5 backdrop-blur-xl">
-        <SectionHeader
-          title="Activity by Module"
-          hint="Visual breakdown of module activity"
-        />
-        <SeverityMeter segments={moduleDistribution} />
-      </div>
-
-      <div className="mb-6 rounded-2xl border border-white/10 bg-[#13162A]/70 p-5 backdrop-blur-xl">
-        <SectionHeader
-          title="Daily Activity"
-          hint="Click a row to view daily breakdown"
-        />
-        <VerificationRowGrid<DailyActivity>
-          rows={DEMO_DAILY_ACTIVITY}
-          columns={columns}
-          onRowClick={setSelectedDay}
-        />
-      </div>
-
-      {selectedDay && (
-        <VerificationDrawer
-          open={!!selectedDay}
-          onClose={() => setSelectedDay(null)}
-          title={`Daily Activity #${selectedDay.id}`}
-          subtitle={new Date(selectedDay.date).toLocaleDateString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-          severity={selectedDay.alertCount > 3 ? "critical" : selectedDay.alertCount > 1 ? "warning" : "info"}
-          children={
-            <div className="space-y-4">
-              <div>
-                <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-white/50">
-                  Module
-                </div>
-                <VerificationChip tone="purple">
-                  {selectedDay.module}
-                </VerificationChip>
-              </div>
-
-              <div>
-                <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-white/50">
-                  Total Events
-                </div>
-                <div className="text-2xl font-bold text-[#A098F8]">
-                  {selectedDay.eventCount}
-                </div>
-              </div>
-
-              <div>
-                <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-white/50">
-                  Unique Users
-                </div>
-                <div className="text-xl font-bold text-[#2BBFA0]">
-                  {selectedDay.uniqueUsers} users
-                </div>
-              </div>
-
-              <div>
-                <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-white/50">
-                  Alerts Triggered
-                </div>
-                <VerificationChip tone={selectedDay.alertCount > 3 ? "red" : "amber"}>
-                  {selectedDay.alertCount} alerts
-                </VerificationChip>
-              </div>
-
-              <div>
-                <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-white/50">
-                  Events per User
-                </div>
-                <div className="text-sm text-white/85">
-                  {(selectedDay.eventCount / selectedDay.uniqueUsers).toFixed(1)} avg
-                </div>
-              </div>
+    <div className="space-y-6">
+      <header className="relative overflow-hidden rounded-2xl border border-[#7B6EF6]/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #7B6EF6 25%, #2BBFA0 50%, #F0A030 75%, transparent 100%)" }} />
+        <div className="relative flex flex-col gap-4">
+          <div className="min-w-0 space-y-2">
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em]">
+              <Link href="/dmo" className="text-white/40 hover:text-white/70 transition-colors">DMO</Link>
+              <span className="text-white/25">/</span>
+              <span className="text-[#A098F8]">Activity Engine</span>
+              <span className="text-white/25">/</span>
+              <span className="text-[#A098F8]">Last 7 Days</span>
             </div>
-          }
-        />
-      )}
+            <h1 className="text-2xl font-bold text-white md:text-3xl">Activity Summary: Last 7 Days</h1>
+            <p className="max-w-2xl text-sm text-white/65">Daily breakdown and weekly trend analysis.</p>
+          </div>
+        </div>
+      </header>
+
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <VerificationStatCard tone="purple" label="Total events" value={stats.totalEvents} sub="week" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 2v20m-7-7h14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
+        <VerificationStatCard tone="amber" label="Avg per day" value={stats.avgPerDay} sub="events" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" /><path d="M12 7v5l3 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
+        <VerificationStatCard tone="green" label="Peak day" value={stats.peakDay.day} sub={`${stats.peakDay.count} events`} icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M9 19v-6a2 2 0 012-2h2a2 2 0 012 2v6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
+        <VerificationStatCard tone={stats.avgTrend >= 0 ? "green" : "red"} label="Avg trend" value={`${stats.avgTrend > 0 ? '+' : ''}${stats.avgTrend}%`} sub="day-over-day" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>} />
+      </section>
+
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader title="Daily breakdown" hint="Last 7 days with trend comparison" />
+        <div className="mt-4 space-y-3">
+          {DEMO.map((d, idx) => {
+            const maxCount = Math.max(...DEMO.map(x => x.count));
+            const width = (d.count / maxCount) * 100;
+            const isTrendUp = d.trend >= 0;
+            return (
+              <div key={idx} className="flex items-center gap-4">
+                <span className="w-12 text-sm font-semibold text-white/75">{d.day}</span>
+                <div className="flex-1">
+                  <div className="h-6 rounded-lg bg-[#1A1D33]/60 overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-[#7B6EF6] to-[#2BBFA0]" style={{ width: `${width}%` }} />
+                  </div>
+                </div>
+                <div className="text-right min-w-max">
+                  <p className="text-sm font-semibold text-white">{d.count}</p>
+                  <VerificationChip tone={isTrendUp ? "green" : "red"}>
+                    {isTrendUp ? '+' : ''}{d.trend}%
+                  </VerificationChip>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 }

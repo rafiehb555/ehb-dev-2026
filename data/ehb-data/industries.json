@@ -1,0 +1,40 @@
+[
+  { "code": "gosellr",       "name": "GoSellr",            "category": "E-commerce",        "group": "A", "accent": "#29ABE2", "icon": "shopping-bag",   "status": "active",       "trustMinStl": 3, "phase": 1 },
+  { "code": "ols",           "name": "OLS",                "category": "Legal",             "group": "A", "accent": "#7B6EF6", "icon": "scale",          "status": "active",       "trustMinStl": 4, "phase": 1 },
+  { "code": "wms",           "name": "WMS",                "category": "Medical",           "group": "A", "accent": "#F05858", "icon": "heart-pulse",    "status": "active",       "trustMinStl": 5, "phase": 1 },
+  { "code": "hps",           "name": "HPS / OBS",          "category": "Education",         "group": "A", "accent": "#22B14C", "icon": "graduation-cap", "status": "active",       "trustMinStl": 4, "phase": 1 },
+  { "code": "jps-industry",  "name": "JPS Marketplace",    "category": "Jobs",              "group": "A", "accent": "#F0A030", "icon": "briefcase",      "status": "active",       "trustMinStl": 3, "phase": 1 },
+  { "code": "agts",          "name": "AGTS",               "category": "Travel",            "group": "A", "accent": "#2BBFA0", "icon": "plane",          "status": "active",       "trustMinStl": 3, "phase": 1 },
+
+  { "code": "finance",       "name": "EHB Finance",        "category": "Finance",           "group": "B", "accent": "#38C878", "icon": "banknote",       "status": "beta",         "trustMinStl": 6, "phase": 2 },
+  { "code": "consulting",    "name": "Consulting Hub",     "category": "Consulting",        "group": "B", "accent": "#7B6EF6", "icon": "users-round",    "status": "beta",         "trustMinStl": 4, "phase": 2 },
+  { "code": "construction",  "name": "Build+",             "category": "Construction",      "group": "B", "accent": "#F59E0B", "icon": "hard-hat",       "status": "beta",         "trustMinStl": 4, "phase": 2 },
+  { "code": "agriculture",   "name": "AgriLink",           "category": "Agriculture",       "group": "B", "accent": "#22B14C", "icon": "sprout",         "status": "beta",         "trustMinStl": 3, "phase": 2 },
+  { "code": "automotive",    "name": "AutoMart",           "category": "Automotive",        "group": "B", "accent": "#E53935", "icon": "car",            "status": "beta",         "trustMinStl": 4, "phase": 2 },
+
+  { "code": "hospitality",   "name": "StayEase",           "category": "Hospitality",       "group": "C", "accent": "#2BBFA0", "icon": "hotel",          "status": "coming-soon",  "trustMinStl": 3, "phase": 2 },
+  { "code": "realestate",    "name": "EstatePro",          "category": "Real Estate",       "group": "C", "accent": "#A098F8", "icon": "building-2",     "status": "coming-soon",  "trustMinStl": 5, "phase": 2 },
+  { "code": "entertainment", "name": "EntertainX",         "category": "Entertainment",     "group": "C", "accent": "#F05858", "icon": "tv",             "status": "coming-soon",  "trustMinStl": 3, "phase": 2 },
+  { "code": "media",         "name": "MediaHub",           "category": "Media",             "group": "C", "accent": "#29ABE2", "icon": "newspaper",      "status": "coming-soon",  "trustMinStl": 3, "phase": 2 },
+  { "code": "fashion",       "name": "FashionFlow",        "category": "Fashion",           "group": "C", "accent": "#EC4899", "icon": "shirt",          "status": "coming-soon",  "trustMinStl": 3, "phase": 2 },
+
+  { "code": "beauty",        "name": "BeautyBloom",        "category": "Beauty",            "group": "D", "accent": "#EC4899", "icon": "sparkles",       "status": "coming-soon",  "trustMinStl": 3, "phase": 3 },
+  { "code": "fitness",       "name": "FitZone",            "category": "Fitness",           "group": "D", "accent": "#22B14C", "icon": "dumbbell",       "status": "coming-soon",  "trustMinStl": 3, "phase": 3 },
+  { "code": "logistics",     "name": "LogiTrack",          "category": "Logistics",         "group": "D", "accent": "#F0A030", "icon": "truck",          "status": "coming-soon",  "trustMinStl": 4, "phase": 3 },
+  { "code": "manufacturing", "name": "MakerHub",           "category": "Manufacturing",     "group": "D", "accent": "#64748B", "icon": "factory",        "status": "coming-soon",  "trustMinStl": 5, "phase": 3 },
+  { "code": "energy",        "name": "EnergyGrid",         "category": "Energy",            "group": "D", "accent": "#F59E0B", "icon": "zap",            "status": "coming-soon",  "trustMinStl": 5, "phase": 3 },
+
+  { "code": "technology",    "name": "TechSphere",         "category": "Technology",        "group": "E", "accent": "#29ABE2", "icon": "cpu",            "status": "coming-soon",  "trustMinStl": 4, "phase": 3 },
+  { "code": "telecom",       "name": "TelecomLink",        "category": "Telecom",           "group": "E", "accent": "#7B6EF6", "icon": "radio-tower",    "status": "coming-soon",  "trustMinStl": 4, "phase": 3 },
+  { "code": "government",    "name": "GovConnect",         "category": "Government",        "group": "E", "accent": "#1E40AF", "icon": "landmark",       "status": "coming-soon",  "trustMinStl": 7, "phase": 3 },
+  { "code": "ngo",           "name": "NGO Connect",        "category": "NGO",               "group": "E", "accent": "#22B14C", "icon": "hand-heart",     "status": "coming-soon",  "trustMinStl": 5, "phase": 3 },
+
+  { "code": "sports",        "name": "SportsArena",        "category": "Sports",            "group": "F", "accent": "#E53935", "icon": "trophy",         "status": "coming-soon",  "trustMinStl": 3, "phase": 3 },
+  { "code": "music",         "name": "MusicWave",          "category": "Music",             "group": "F", "accent": "#A098F8", "icon": "music",          "status": "coming-soon",  "trustMinStl": 3, "phase": 3 },
+  { "code": "gaming",        "name": "GameVerse",          "category": "Gaming",            "group": "F", "accent": "#8B5CF6", "icon": "gamepad-2",      "status": "coming-soon",  "trustMinStl": 3, "phase": 3 },
+
+  { "code": "food",          "name": "FoodTrust",          "category": "Food",              "group": "G", "accent": "#F0A030", "icon": "utensils",       "status": "coming-soon",  "trustMinStl": 4, "phase": 3 },
+  { "code": "pets",          "name": "PetCare+",           "category": "Pets",              "group": "G", "accent": "#22B14C", "icon": "paw-print",      "status": "coming-soon",  "trustMinStl": 3, "phase": 3 },
+  { "code": "weddings",      "name": "WeddingGlow",        "category": "Weddings",          "group": "G", "accent": "#EC4899", "icon": "heart",          "status": "coming-soon",  "trustMinStl": 4, "phase": 3 },
+  { "code": "events",        "name": "EventPulse",         "category": "Events",            "group": "G", "accent": "#F05858", "icon": "calendar-check", "status": "coming-soon",  "trustMinStl": 3, "phase": 3 }
+]

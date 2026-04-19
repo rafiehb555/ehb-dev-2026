@@ -1,342 +1,109 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 import {
   VerificationStatCard,
-  VerificationRowGrid,
-  VerificationDrawer,
-  VerificationChip,
   SectionHeader,
-  FilterChipRow,
-  type RowColumn,
-  type VerificationTone,
 } from "@/components/dmo/verification/VerificationUI";
 
-type Config = {
+type ConfigItem = {
   id: string;
-  configKey: string;
+  key: string;
   value: string;
-  category: "GENERAL" | "SECURITY" | "PERFORMANCE" | "FEATURE_FLAG";
-  lastModifiedAt: string;
-  modifiedBy: string;
+  type: "string" | "number" | "boolean" | "secret";
+  description: string;
 };
 
-const DEMO_CONFIG: Config[] = [
-  {
-    id: "cfg-001",
-    configKey: "MAX_LOGIN_ATTEMPTS",
-    value: "5",
-    category: "SECURITY",
-    lastModifiedAt: "2026-03-15T10:22:30Z",
-    modifiedBy: "rafi@ehb.tech",
-  },
-  {
-    id: "cfg-002",
-    configKey: "SESSION_TIMEOUT_MINUTES",
-    value: "30",
-    category: "SECURITY",
-    lastModifiedAt: "2026-02-28T14:45:00Z",
-    modifiedBy: "admin@ehb.tech",
-  },
-  {
-    id: "cfg-003",
-    configKey: "API_RATE_LIMIT",
-    value: "10000",
-    category: "PERFORMANCE",
-    lastModifiedAt: "2026-04-10T09:15:22Z",
-    modifiedBy: "rafi@ehb.tech",
-  },
-  {
-    id: "cfg-004",
-    configKey: "CACHE_TTL_SECONDS",
-    value: "3600",
-    category: "PERFORMANCE",
-    lastModifiedAt: "2026-03-20T16:30:15Z",
-    modifiedBy: "dev-team@ehb.tech",
-  },
-  {
-    id: "cfg-005",
-    configKey: "ENABLE_2FA",
-    value: "true",
-    category: "SECURITY",
-    lastModifiedAt: "2026-04-12T08:45:33Z",
-    modifiedBy: "rafi@ehb.tech",
-  },
-  {
-    id: "cfg-006",
-    configKey: "FEATURE_BLOCKCHAIN_SYNC",
-    value: "true",
-    category: "FEATURE_FLAG",
-    lastModifiedAt: "2026-04-12T12:20:10Z",
-    modifiedBy: "admin@ehb.tech",
-  },
-  {
-    id: "cfg-007",
-    configKey: "FEATURE_AI_RECOMMENDATIONS",
-    value: "true",
-    category: "FEATURE_FLAG",
-    lastModifiedAt: "2026-04-08T11:30:45Z",
-    modifiedBy: "rafi@ehb.tech",
-  },
-  {
-    id: "cfg-008",
-    configKey: "MAX_UPLOAD_SIZE_MB",
-    value: "100",
-    category: "GENERAL",
-    lastModifiedAt: "2026-03-10T13:15:22Z",
-    modifiedBy: "dev-team@ehb.tech",
-  },
+const CONFIG_ITEMS: ConfigItem[] = [
+  { id: "C-001", key: "STL_RECALC_HOUR", value: "03", type: "number", description: "Nightly STL recalculation UTC hour" },
+  { id: "C-002", key: "PSS_LIVENESS_THRESHOLD", value: "0.82", type: "number", description: "Liveness detection confidence threshold" },
+  { id: "C-003", key: "CRB_EXPIRY_WARNING_DAYS", value: "14", type: "number", description: "Days before certificate expiry to warn" },
+  { id: "C-004", key: "WALLET_HOLD_MAX_DAYS", value: "90", type: "number", description: "Maximum escrow hold duration in days" },
+  { id: "C-005", key: "AI_SUGGESTION_ENABLED", value: "true", type: "boolean", description: "Enable AI recommendations across DMO" },
+  { id: "C-006", key: "BLOCKCHAIN_ANCHOR_DAILY", value: "true", type: "boolean", description: "Daily Polkadot merkle anchoring" },
+  { id: "C-007", key: "SENDGRID_API_KEY", value: "••••••••••••••••", type: "secret", description: "SendGrid email service API key" },
+  { id: "C-008", key: "WEBHOOK_SIGNING_SECRET", value: "••••••••••••••••", type: "secret", description: "Ed25519 webhook signature key" },
 ];
 
-function InfoCell({ label, value, mono }: { label: string; value: React.ReactNode; mono?: boolean }) {
-  return (
-    <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
-      <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">{label}</p>
-      <p className={`mt-1 text-sm text-white/90 ${mono ? "font-mono" : ""}`}>{value}</p>
-    </div>
-  );
-}
-
-export default function SystemConfigPage() {
-  const [selectedConfig, setSelectedConfig] = useState<Config | null>(null);
-  const [categoryFilter, setCategoryFilter] = useState<string>("ALL");
-
-  const visibleConfigs = useMemo(() => {
-    if (categoryFilter === "ALL") return DEMO_CONFIG;
-    return DEMO_CONFIG.filter((c) => c.category === categoryFilter);
-  }, [categoryFilter]);
-
-  const stats = useMemo(() => {
-    const total = DEMO_CONFIG.length;
-    const modifiedToday = DEMO_CONFIG.filter((c) => {
-      const dt = new Date(c.lastModifiedAt);
-      const now = new Date();
-      return (
-        dt.getFullYear() === now.getFullYear() &&
-        dt.getMonth() === now.getMonth() &&
-        dt.getDate() === now.getDate()
-      );
-    }).length;
-    const featureFlags = DEMO_CONFIG.filter((c) => c.category === "FEATURE_FLAG").length;
-    const env = "PRODUCTION";
-
-    return { total, modifiedToday, featureFlags, env };
-  }, []);
-
-  const categoryOptions = [
-    { value: "ALL", label: "All Categories" },
-    { value: "GENERAL", label: "General" },
-    { value: "SECURITY", label: "Security" },
-    { value: "PERFORMANCE", label: "Performance" },
-    { value: "FEATURE_FLAG", label: "Feature Flags" },
-  ];
-
-  const getTone = (category: string): VerificationTone => {
-    switch (category) {
-      case "SECURITY":
-        return "red";
-      case "PERFORMANCE":
-        return "cyan";
-      case "FEATURE_FLAG":
-        return "purple";
-      case "GENERAL":
-        return "teal";
-      default:
-        return "teal";
-    }
-  };
-
-  const columns: RowColumn<Config>[] = [
-    {
-      key: "configKey",
-      header: "Config Key",
-      width: "minmax(0, 1.4fr)",
-      render: (c) => (
-        <span className="font-mono font-semibold text-white/80">
-          {c.configKey}
-        </span>
-      ),
-    },
-    {
-      key: "value",
-      header: "Value",
-      width: "minmax(0, 1fr)",
-      render: (c) => {
-        const isBool = c.value === "true" || c.value === "false";
-        return (
-          <span
-            className={`font-mono text-[11px] font-semibold ${
-              isBool ? (c.value === "true" ? "text-[#38C878]" : "text-[#F05858]") : "text-[#A098F8]"
-            }`}
-          >
-            {c.value}
-          </span>
-        );
-      },
-    },
-    {
-      key: "category",
-      header: "Category",
-      width: "minmax(0, 1.1fr)",
-      render: (c) => <VerificationChip tone={getTone(c.category)}>{c.category}</VerificationChip>,
-    },
-    {
-      key: "modifiedBy",
-      header: "Modified By",
-      width: "minmax(0, 1.1fr)",
-      render: (c) => (
-        <span className="text-[11px] text-white/53">{c.modifiedBy}</span>
-      ),
-    },
-    {
-      key: "lastModifiedAt",
-      header: "Last Modified",
-      width: "minmax(0, 1.1fr)",
-      align: "right",
-      render: (c) => {
-        const dt = new Date(c.lastModifiedAt);
-        return (
-          <span className="text-[11px] text-white/48">
-            {dt.toLocaleTimeString("en-US", {
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: true,
-            })}
-          </span>
-        );
-      },
-    },
-  ];
+export default function ConfigPage() {
+  const [editingKey, setEditingKey] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen space-y-6 bg-[#0C0E1A] p-[clamp(16px,3vw,32px)]">
-      <SectionHeader
-        eyebrow="DMO"
-        title="Settings / System Config"
-        hint="Platform settings and feature toggles"
-      />
-
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <VerificationStatCard
-          tone="purple"
-          label="Config Keys"
-          value={stats.total.toString()}
-          sub="Total settings"
-          icon={
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="1" />
-              <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24" />
-            </svg>
-          }
-        />
-        <VerificationStatCard
-          tone="amber"
-          label="Modified Today"
-          value={stats.modifiedToday.toString()}
-          sub="Recent changes"
-          icon={
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-            </svg>
-          }
-        />
-        <VerificationStatCard
-          tone="teal"
-          label="Feature Flags"
-          value={stats.featureFlags.toString()}
-          sub="Active toggles"
-          icon={
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 12h18M3 6h18M3 18h18" />
-            </svg>
-          }
-        />
-        <VerificationStatCard
-          tone="green"
-          label="Environment"
-          value={stats.env}
-          sub="Current env"
-          icon={
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
-              <path d="M12 6v6l4 2" />
-            </svg>
-          }
-        />
-      </div>
-
-      <div className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <div className="mb-4">
-          <SectionHeader title="Filter by Category" hint="Refine configurations by type" />
+    <div className="space-y-6">
+      <header className="relative overflow-hidden rounded-2xl border border-[#F0A030]/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #F0A030 25%, #7B6EF6 50%, #2BBFA0 75%, transparent 100%)" }} />
+        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br from-[#F0A030]/20 via-[#7B6EF6]/15 to-transparent blur-3xl" />
+        <div className="relative space-y-2">
+          <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em]">
+            <Link href="/dmo" className="text-white/40 hover:text-white/70 transition-colors">DMO</Link>
+            <span className="text-white/25">/</span>
+            <Link href="/dmo/settings" className="text-white/40 hover:text-white/70 transition-colors">Settings</Link>
+            <span className="text-white/25">/</span>
+            <span className="text-[#F0A030]">Config</span>
+          </div>
+          <h1 className="text-2xl font-bold text-white md:text-3xl">System Configuration</h1>
+          <p className="max-w-2xl text-sm text-white/65">
+            API keys, webhook URLs, SLA thresholds, auto-approve rules, email templates.
+            Changes take effect immediately.
+          </p>
         </div>
-        <FilterChipRow<string>
-          value={categoryFilter}
-          options={categoryOptions}
-          onChange={setCategoryFilter}
-        />
-      </div>
+      </header>
 
-      <div className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <SectionHeader
-          title="Configuration"
-          hint={`Showing ${visibleConfigs.length} of ${DEMO_CONFIG.length} settings`}
-        />
-        <VerificationRowGrid<Config>
-          rows={visibleConfigs}
-          columns={columns}
-          onRowClick={setSelectedConfig}
-          getRowTone={(c) => getTone(c.category)}
-        />
-      </div>
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <VerificationStatCard tone="purple" label="Config Keys" value={CONFIG_ITEMS.length} sub="total items" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" strokeWidth="1.6" /><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4" stroke="currentColor" strokeWidth="1.2" /></svg>} />
+        <VerificationStatCard tone="amber" label="Secrets" value="2" sub="API keys masked" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11z" stroke="currentColor" strokeWidth="1.2" /></svg>} />
+        <VerificationStatCard tone="teal" label="Type Distribution" value="4" sub="config types" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><rect x="3" y="3" width="7" height="7" stroke="currentColor" strokeWidth="1.6" /><rect x="14" y="3" width="7" height="7" stroke="currentColor" strokeWidth="1.6" /><rect x="3" y="14" width="7" height="7" stroke="currentColor" strokeWidth="1.6" /></svg>} />
+        <VerificationStatCard tone="green" label="Last Synced" value="2m ago" sub="to production" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M4 12a8 8 0 018-8V0c4.418 0 8 3.582 8 8h-2c0-3.316-2.686-6-6-6v8m0-8V0C4.582 0 2 3.582 2 8h2zm8 16v-8h-2v8c0 1.104.896 2 2 2h8c1.104 0 2-.896 2-2v-8h-2v8h-8z" stroke="currentColor" strokeWidth="1.2" /></svg>} />
+      </section>
 
-      {selectedConfig && (
-        <VerificationDrawer
-          open={!!selectedConfig}
-          onClose={() => setSelectedConfig(null)}
-          title={selectedConfig.configKey}
-          subtitle={`${selectedConfig.category} • Modified by ${selectedConfig.modifiedBy}`}
-          severity="info"
-          children={
-            <div className="space-y-4">
-              <div>
-                <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">Category</p>
-                <VerificationChip tone={getTone(selectedConfig.category)}>
-                  {selectedConfig.category}
-                </VerificationChip>
-              </div>
-              <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
-                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">Current Value</p>
-                <p className={`mt-1 font-mono text-sm font-semibold ${
-                  selectedConfig.value === "true" ? "text-[#38C878]" : selectedConfig.value === "false" ? "text-[#F05858]" : "text-[#A098F8]"
-                }`}>
-                  {selectedConfig.value}
-                </p>
-              </div>
-              <InfoCell label="Last Modified" value={new Date(selectedConfig.lastModifiedAt).toLocaleString()} mono />
-              <InfoCell label="Modified By" value={selectedConfig.modifiedBy} mono />
-              <div className="border-t border-white/8 pt-3">
-                <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">Change History</p>
-                <div className="space-y-1 text-[12px] text-white/75">
-                  <div>2026-04-12 08:45 • Changed to "{selectedConfig.value}" by {selectedConfig.modifiedBy}</div>
-                  <div>2026-04-10 14:22 • Changed to "previous_value" by admin@ehb.tech</div>
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader title="Configuration Items" hint="Click to edit any value" />
+        <div className="mt-4 space-y-2">
+          {CONFIG_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setEditingKey(item.key)}
+              className="w-full rounded-xl border border-white/8 bg-white/[0.03] p-4 text-left transition-colors hover:border-white/20 hover:bg-white/[0.05]"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <p className="font-mono text-[11px] font-semibold text-white/85">{item.key}</p>
+                    <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold ${
+                      item.type === "secret" ? "bg-[#F05858]/20 text-[#F05858]" :
+                      item.type === "boolean" ? "bg-[#2BBFA0]/20 text-[#2BBFA0]" :
+                      item.type === "number" ? "bg-[#7B6EF6]/20 text-[#7B6EF6]" :
+                      "bg-[#F0A030]/20 text-[#F0A030]"
+                    }`}>
+                      {item.type}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-[12px] text-white/60">{item.description}</p>
+                </div>
+                <div className="flex shrink-0 items-center gap-2">
+                  <code className="font-mono text-[11px] text-white/50">{item.value}</code>
+                  <span className="text-white/30">→</span>
                 </div>
               </div>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader title="Email Templates" hint="Customize DMO notifications" />
+        <div className="mt-4 space-y-2">
+          {["STL Downgrade Alert", "CRB Renewal Reminder", "Wallet Hold Notice", "Complaint Escalation"].map((template, i) => (
+            <div key={i} className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
+              <div className="flex items-center justify-between">
+                <p className="text-[12px] font-semibold text-white">{template}</p>
+                <button className="text-[10px] font-semibold text-[#7B6EF6] hover:text-[#A098F8]">Edit template</button>
+              </div>
             </div>
-          }
-          footer={
-            <div className="flex gap-2">
-              <button className="flex-1 rounded-lg border border-[#A098F8]/30 bg-[#7B6EF6]/15 px-3 py-2 text-[11px] font-semibold text-[#A098F8] hover:bg-[#7B6EF6]/25 transition">
-                Edit Value
-              </button>
-              <button className="flex-1 rounded-lg border border-[#2BBFA0]/30 bg-[#2BBFA0]/10 px-3 py-2 text-[11px] font-semibold text-[#2BBFA0] hover:bg-[#2BBFA0]/20 transition">
-                Audit Trail
-              </button>
-            </div>
-          }
-        />
-      )}
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

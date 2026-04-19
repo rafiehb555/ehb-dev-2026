@@ -1,214 +1,154 @@
 "use client";
 
 /**
- * DMO — Unified Operations Queue
- *   - VerificationUI primitives only (no emojis, no local styles)
- *   - In-file demo data (prototype only, no fetch)
+ * Task Queue — DMO (2026-04-19)
+ * SLA-based priority routing and operator assignment
  */
 
-import Link from "next/link";
-import { useMemo, useState } from "react";
-import {
-  VerificationStatCard,
-  VerificationRowGrid,
-  VerificationDrawer,
-  VerificationChip,
-  SectionHeader,
-  FilterChipRow,
-  SeverityMeter,
-  type RowColumn,
-  type VerificationTone,
-} from "@/components/dmo/verification/VerificationUI";
+import React from "react";
+import { SectionHeader, VerificationStatCard, VerificationChip } from "@/components/dmo/verification/VerificationUI";
 
-type Priority = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
-type QueueItemType = "APPLICATION" | "FRAUD_ALERT" | "COMPLAINT" | "ORDER_REVIEW" | "SELLER_ONBOARDING" | "COMPLIANCE" | "APPROVAL";
-
-type QueueItem = {
+interface QueuedTask {
   id: string;
-  type: QueueItemType;
-  priority: Priority;
-  title: string;
-  description: string;
-  entityId: string;
+  module: string;
+  type: string;
+  priority: "low" | "medium" | "high" | "urgent";
   createdAt: string;
-  actionUrl: string;
-};
+  assignedTo?: string;
+  slaHours: number;
+  timeInQueue: number;
+}
 
-const DEMO: QueueItem[] = [
-  { id: "Q-001", type: "FRAUD_ALERT", priority: "CRITICAL", title: "Fraud Alert: APPLICATION", description: "Risk score 92/100 — 3 signals detected on GoSellr PK", entityId: "app-goselr-pk-01", createdAt: "2026-04-12T10:00:00Z", actionUrl: "/dmo/fraud" },
-  { id: "Q-002", type: "COMPLAINT", priority: "CRITICAL", title: "Complaint: FRAUD", description: "Seller collected payment via external link, bypassing escrow", entityId: "seller-agts-mul", createdAt: "2026-04-12T09:30:00Z", actionUrl: "/dmo/moderation" },
-  { id: "Q-003", type: "COMPLIANCE", priority: "CRITICAL", title: "PSS compliance expired", description: "WMS Islamabad PSS certificate expired — refill overdue 4 days", entityId: "refill-wms-01", createdAt: "2026-04-08T00:00:00Z", actionUrl: "/dmo/refilling" },
-  { id: "Q-004", type: "ORDER_REVIEW", priority: "HIGH", title: "Order review required", description: "High-value order $4,200 flagged for manual verification", entityId: "ord-wms-44", createdAt: "2026-04-12T08:15:00Z", actionUrl: "/dmo/applications" },
-  { id: "Q-005", type: "SELLER_ONBOARDING", priority: "HIGH", title: "Seller onboarding: TechHub LHR", description: "IN_REVIEW · risk score 45", entityId: "app-techhub-lhr", createdAt: "2026-04-11T14:00:00Z", actionUrl: "/dmo/applications" },
-  { id: "Q-006", type: "APPLICATION", priority: "MEDIUM", title: "Application: FRANCHISE_UPGRADE", description: "AGTS Dubai requesting Corporate → Country tier promotion", entityId: "app-agts-dubai", createdAt: "2026-04-11T11:00:00Z", actionUrl: "/dmo/applications" },
-  { id: "Q-007", type: "COMPLIANCE", priority: "MEDIUM", title: "Industry refill due", description: "OLS Lahore industry cert expiring in 5 days", entityId: "refill-ols-02", createdAt: "2026-04-11T09:00:00Z", actionUrl: "/dmo/refilling" },
-  { id: "Q-008", type: "APPROVAL", priority: "LOW", title: "Approval required", description: "HPS Karachi L6 → L7 STL upgrade pending DMO sign-off", entityId: "app-hps-khi-l7", createdAt: "2026-04-10T16:00:00Z", actionUrl: "/dmo/approvals" },
+const MOCK_QUEUE: QueuedTask[] = [
+  {
+    id: "TSK-3201",
+    module: "complaints",
+    type: "Escalation Review",
+    priority: "urgent",
+    createdAt: "2026-04-18T14:00:00Z",
+    assignedTo: "operator@example.com",
+    slaHours: 4,
+    timeInQueue: 2,
+  },
+  {
+    id: "TSK-3200",
+    module: "fraud",
+    type: "Risk Assessment",
+    priority: "high",
+    createdAt: "2026-04-18T12:00:00Z",
+    assignedTo: "fraud.team@example.pk",
+    slaHours: 8,
+    timeInQueue: 4,
+  },
+  {
+    id: "TSK-3199",
+    module: "moderation",
+    type: "Content Review",
+    priority: "medium",
+    createdAt: "2026-04-18T10:00:00Z",
+    slaHours: 24,
+    timeInQueue: 6,
+  },
+  {
+    id: "TSK-3198",
+    module: "appeals",
+    type: "Appeal Decision",
+    priority: "high",
+    createdAt: "2026-04-17T16:00:00Z",
+    slaHours: 48,
+    timeInQueue: 22,
+  },
 ];
 
-const PRIORITY_TONE: Record<Priority, VerificationTone> = {
-  CRITICAL: "red",
-  HIGH: "amber",
-  MEDIUM: "purple",
-  LOW: "cyan",
+const getPriorityColor = (p: string) => {
+  switch (p) {
+    case "urgent":
+      return "bg-red-900/40 border-red-500/40 text-red-300";
+    case "high":
+      return "bg-orange-900/40 border-orange-500/40 text-orange-300";
+    case "medium":
+      return "bg-amber-900/40 border-amber-500/40 text-amber-300";
+    case "low":
+      return "bg-blue-900/40 border-blue-500/40 text-blue-300";
+    default:
+      return "bg-gray-900/40 border-gray-500/40 text-gray-300";
+  }
 };
 
-const TYPE_TONE: Record<QueueItemType, VerificationTone> = {
-  FRAUD_ALERT: "red",
-  COMPLAINT: "amber",
-  ORDER_REVIEW: "purple",
-  SELLER_ONBOARDING: "cyan",
-  APPLICATION: "teal",
-  COMPLIANCE: "amber",
-  APPROVAL: "green",
-};
+export default function TaskQueue() {
+  const totalInQueue = MOCK_QUEUE.length;
+  const urgentTasks = MOCK_QUEUE.filter((t) => t.priority === "urgent").length;
+  const avgWaitTime = "4.5h";
 
-function fmtTime(iso: string) {
-  const d = new Date(iso);
-  return Number.isNaN(d.getTime()) ? iso : d.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
-}
-
-function InfoCell({ label, value, mono }: { label: string; value: React.ReactNode; mono?: boolean }) {
-  return (
-    <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
-      <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">{label}</p>
-      <p className={`mt-1 text-sm text-white/90 ${mono ? "font-mono" : ""}`}>{value}</p>
-    </div>
-  );
-}
-
-export default function DmoQueuePage() {
-  const [rows] = useState<QueueItem[]>(DEMO);
-  const [priorityFilter, setPriorityFilter] = useState<"ALL" | Priority>("ALL");
-  const [active, setActive] = useState<QueueItem | null>(null);
-
-  const stats = useMemo(() => ({
-    critical: rows.filter((i) => i.priority === "CRITICAL").length,
-    high: rows.filter((i) => i.priority === "HIGH").length,
-    medium: rows.filter((i) => i.priority === "MEDIUM").length,
-    low: rows.filter((i) => i.priority === "LOW").length,
-  }), [rows]);
-
-  const visible = priorityFilter === "ALL" ? rows : rows.filter((i) => i.priority === priorityFilter);
-
-  const columns: RowColumn<QueueItem>[] = [
-    {
-      key: "item",
-      header: "Item",
-      width: "minmax(0,2.2fr)",
-      render: (r) => (
-        <div className="min-w-0">
-          <div className="truncate text-sm font-semibold text-white">{r.title}</div>
-          <div className="truncate text-[10px] text-white/50">{r.description}</div>
-        </div>
-      ),
-    },
-    { key: "type", header: "Type", width: "minmax(0,1fr)", render: (r) => <VerificationChip tone={TYPE_TONE[r.type]} size="xs">{r.type.replace(/_/g, " ")}</VerificationChip> },
-    { key: "priority", header: "Priority", width: "minmax(0,0.8fr)", render: (r) => <VerificationChip tone={PRIORITY_TONE[r.priority]}>{r.priority}</VerificationChip> },
-    { key: "date", header: "Created", width: "minmax(0,0.9fr)", align: "right", render: (r) => <span className="text-[10px] text-white/45">{fmtTime(r.createdAt)}</span> },
-  ];
+  const queueByModule = {
+    complaints: MOCK_QUEUE.filter((t) => t.module === "complaints").length,
+    fraud: MOCK_QUEUE.filter((t) => t.module === "fraud").length,
+    moderation: MOCK_QUEUE.filter((t) => t.module === "moderation").length,
+    appeals: MOCK_QUEUE.filter((t) => t.module === "appeals").length,
+  };
 
   return (
-    <div className="space-y-6">
-      <header className="relative overflow-hidden rounded-2xl border border-[#7B6EF6]/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
-        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #7B6EF6 20%, #F05858 40%, #F0A030 60%, #2BBFA0 80%, transparent 100%)" }} />
-        <div className="pointer-events-none absolute left-3 top-3 h-6 w-6 border-l-[1.5px] border-t-[1.5px] border-[#7B6EF6]/50" />
-        <div className="pointer-events-none absolute bottom-3 right-3 h-6 w-6 border-b-[1.5px] border-r-[1.5px] border-[#2BBFA0]/45" />
-        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br from-[#7B6EF6]/20 via-[#F05858]/12 to-transparent blur-3xl" />
-        <div className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-          <div className="min-w-0 space-y-2">
-            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em]">
-              <Link href="/dmo" className="text-white/40 hover:text-white/70 transition-colors">DMO</Link>
-              <span className="text-white/25">/</span>
-              <span className="text-[#A098F8]">Queue</span>
-            </div>
-            <h1 className="text-2xl font-bold text-white md:text-3xl">DMO Unified Operations Queue</h1>
-            <p className="max-w-2xl text-sm text-white/65">
-              Applications, Fraud, Complaints, Seller onboarding, Order reviews, Approvals,
-              Compliance — sab ek unified priority queue mein. Critical items top pa.
-            </p>
+    <div className="min-h-screen" style={{ backgroundColor: "#0C0E1A" }}>
+      <div className="p-8 space-y-8">
+        <SectionHeader title="Task Queue" subtitle="SLA-based priority routing and assignments" />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <VerificationStatCard icon="📋" label="Total in Queue" value={totalInQueue.toString()} delta="Pending tasks" tone="info" />
+          <VerificationStatCard icon="🚨" label="Urgent" value={urgentTasks.toString()} delta="High priority" tone="error" />
+          <VerificationStatCard icon="⏱" label="Avg Wait" value={avgWaitTime} delta="Time in queue" tone="warning" />
+          <VerificationStatCard icon="👤" label="Operators" value="8" delta="Available" tone="success" />
+        </div>
+
+        <div
+          className="p-6 rounded-lg border"
+          style={{
+            backgroundColor: "#13162A",
+            borderColor: "rgba(255, 255, 255, 0.08)",
+          }}
+        >
+          <h3 className="text-sm font-semibold text-white mb-4">Queue Depth by Module</h3>
+          <div className="grid grid-cols-4 gap-4">
+            {Object.entries(queueByModule).map(([module, count]) => (
+              <div key={module} className="text-center">
+                <div className="text-2xl font-bold text-purple-400">{count}</div>
+                <p className="text-xs text-gray-400 mt-1 capitalize">{module}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </header>
 
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <VerificationStatCard tone="red" label="Critical" value={stats.critical} sub="immediate action" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 8v4m0 4h.01" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="1.4" /></svg>} />
-        <VerificationStatCard tone="amber" label="High" value={stats.high} sub="needs review" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" /><path d="M12 7v5l3 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
-        <VerificationStatCard tone="purple" label="Medium" value={stats.medium} sub="standard flow" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /></svg>} />
-        <VerificationStatCard tone="cyan" label="Low" value={stats.low} sub="when available" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M5 12l4 4L19 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>} />
-      </section>
-
-      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <SectionHeader title="Priority distribution" hint="Across all item types" />
-        <SeverityMeter segments={[
-          { label: "Critical", value: stats.critical, tone: "red" },
-          { label: "High", value: stats.high, tone: "amber" },
-          { label: "Medium", value: stats.medium, tone: "purple" },
-          { label: "Low", value: stats.low, tone: "cyan" },
-        ]} />
-      </section>
-
-      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <SectionHeader eyebrow="Unified queue" title="Operations items" hint="Click row for detail + action" right={<span className="text-[10px] text-white/45">{visible.length} item(s)</span>} />
-        <div className="mt-3">
-          <FilterChipRow<"ALL" | Priority>
-            options={[
-              { value: "ALL" as const, label: `All · ${rows.length}` },
-              { value: "CRITICAL" as const, label: `Critical · ${stats.critical}` },
-              { value: "HIGH" as const, label: `High · ${stats.high}` },
-              { value: "MEDIUM" as const, label: `Medium · ${stats.medium}` },
-              { value: "LOW" as const, label: `Low · ${stats.low}` },
-            ]}
-            value={priorityFilter}
-            onChange={setPriorityFilter}
-          />
+        <div className="space-y-3">
+          {MOCK_QUEUE.map((task) => {
+            const percentSLA = (task.timeInQueue / task.slaHours) * 100;
+            return (
+              <div
+                key={task.id}
+                className="p-4 rounded-lg transition-all hover:bg-white/5"
+                style={{ backgroundColor: "#13162A", borderColor: "rgba(255, 255, 255, 0.08)", border: "1px solid" }}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <div className="flex gap-2 items-center mb-1">
+                      <span className="text-sm font-semibold text-white">{task.id}</span>
+                      <VerificationChip label={task.priority.toUpperCase()} className={getPriorityColor(task.priority)} />
+                    </div>
+                    <p className="text-sm text-gray-300">{task.type}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {task.module.toUpperCase()} {task.assignedTo ? `→ ${task.assignedTo}` : "→ Unassigned"}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <div className={`text-xs font-bold ${percentSLA > 75 ? "text-red-400" : percentSLA > 50 ? "text-amber-400" : "text-emerald-400"}`}>
+                      {task.timeInQueue}h / {task.slaHours}h
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">{Math.round(percentSLA)}% SLA</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
-        <div className="mt-4">
-          <VerificationRowGrid<QueueItem>
-            rows={visible}
-            columns={columns}
-            onRowClick={(r) => setActive(r)}
-            getRowTone={(r) => PRIORITY_TONE[r.priority]}
-            emptyTitle="No items in this priority"
-            emptyHint="Adjust filter to see queue items."
-          />
-        </div>
-      </section>
-
-      <VerificationDrawer
-        open={Boolean(active)}
-        onClose={() => setActive(null)}
-        title={active ? active.title : "Queue item detail"}
-        subtitle={active ? `${active.id} · ${active.type.replace(/_/g, " ")}` : undefined}
-        severity={active?.priority === "CRITICAL" ? "critical" : active?.priority === "HIGH" ? "high" : "warning"}
-      >
-        {active ? (
-          <div className="space-y-4">
-            <div className="flex flex-wrap gap-2">
-              <VerificationChip tone={PRIORITY_TONE[active.priority]}>{active.priority}</VerificationChip>
-              <VerificationChip tone={TYPE_TONE[active.type]}>{active.type.replace(/_/g, " ")}</VerificationChip>
-            </div>
-
-            <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 text-[13px] leading-relaxed text-white/75">
-              {active.description}
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              <InfoCell label="Queue ID" value={active.id} mono />
-              <InfoCell label="Type" value={active.type.replace(/_/g, " ")} />
-              <InfoCell label="Priority" value={active.priority} />
-              <InfoCell label="Entity ID" value={active.entityId} mono />
-              <InfoCell label="Created" value={fmtTime(active.createdAt)} />
-              <InfoCell label="Action URL" value={active.actionUrl} mono />
-            </div>
-
-            <div className="pt-2">
-              <a href={active.actionUrl} className="block w-full rounded-xl border border-[#7B6EF6]/40 bg-[#7B6EF6]/12 px-3 py-2.5 text-center text-[12px] font-semibold text-[#A098F8] transition-colors hover:border-[#A098F8]/70 hover:bg-[#7B6EF6]/20">
-                Review in module →
-              </a>
-            </div>
-          </div>
-        ) : null}
-      </VerificationDrawer>
+      </div>
     </div>
   );
 }

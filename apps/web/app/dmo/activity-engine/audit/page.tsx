@@ -1,11 +1,17 @@
 "use client";
 
-import { useMemo, useState } from "react";
+/**
+ * DMO — Activity Engine: Audit Log
+ *   - Searchable, filterable audit trail
+ *   - Columns: Timestamp, Actor, Action, Target, IP, Status
+ *   - Export button
+ */
+
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import {
   VerificationStatCard,
   VerificationRowGrid,
-  VerificationDrawer,
   VerificationChip,
   SectionHeader,
   FilterChipRow,
@@ -13,419 +19,195 @@ import {
   type VerificationTone,
 } from "@/components/dmo/verification/VerificationUI";
 
+type AuditAction = "CREATE" | "UPDATE" | "DELETE" | "APPROVE" | "REJECT" | "VIEW" | "EXPORT";
+type AuditStatus = "success" | "failure" | "pending";
+
 type AuditRecord = {
   id: string;
   timestamp: string;
   actor: string;
-  actorType: "USER" | "SYSTEM" | "AI" | "CRON";
-  action: string;
-  resource: string;
-  ipAddress: string;
-  result: "SUCCESS" | "FAILURE" | "BLOCKED";
+  action: AuditAction;
+  target: string;
+  targetId: string;
+  ip: string;
+  status: AuditStatus;
 };
 
-const DEMO_AUDIT_RECORDS: AuditRecord[] = [
-  {
-    id: "audit-12480",
-    timestamp: "2026-04-12T18:52:14Z",
-    actor: "user_pkg_002",
-    actorType: "USER",
-    action: "UPDATE_PROFILE",
-    resource: "User#user_pkg_002",
-    ipAddress: "192.168.1.45",
-    result: "SUCCESS",
-  },
-  {
-    id: "audit-12479",
-    timestamp: "2026-04-12T18:45:33Z",
-    actor: "sys_audit",
-    actorType: "SYSTEM",
-    action: "BULK_VERIFY",
-    resource: "STL#bulk_verify_3021",
-    ipAddress: "127.0.0.1",
-    result: "SUCCESS",
-  },
-  {
-    id: "audit-12478",
-    timestamp: "2026-04-12T18:32:15Z",
-    actor: "ai_fraud_detect",
-    actorType: "AI",
-    action: "FLAG_TRANSACTION",
-    resource: "Transaction#TXN-8547",
-    ipAddress: "10.0.0.88",
-    result: "SUCCESS",
-  },
-  {
-    id: "audit-12477",
-    timestamp: "2026-04-12T18:19:48Z",
-    actor: "user_crb_001",
-    actorType: "USER",
-    action: "SUBMIT_DOCUMENT",
-    resource: "CRB#doc_2847",
-    ipAddress: "203.45.67.89",
-    result: "SUCCESS",
-  },
-  {
-    id: "audit-12476",
-    timestamp: "2026-04-12T18:01:22Z",
-    actor: "wallet_system",
-    actorType: "SYSTEM",
-    action: "PROCESS_PAYMENT",
-    resource: "Wallet#escrow_5621",
-    ipAddress: "127.0.0.1",
-    result: "SUCCESS",
-  },
-  {
-    id: "audit-12475",
-    timestamp: "2026-04-12T17:44:10Z",
-    actor: "dmo_approver",
-    actorType: "USER",
-    action: "APPROVE_UPGRADE",
-    resource: "Franchise#PKG-4521",
-    ipAddress: "198.76.54.23",
-    result: "SUCCESS",
-  },
-  {
-    id: "audit-12474",
-    timestamp: "2026-04-12T17:22:56Z",
-    actor: "support_team",
-    actorType: "USER",
-    action: "ESCALATE_COMPLAINT",
-    resource: "Support#SUP-9284",
-    ipAddress: "172.16.0.45",
-    result: "BLOCKED",
-  },
-  {
-    id: "audit-12473",
-    timestamp: "2026-04-12T16:58:40Z",
-    actor: "user_wallet_089",
-    actorType: "USER",
-    action: "TOPUP_BALANCE",
-    resource: "Wallet#wallet_089",
-    ipAddress: "210.98.76.34",
-    result: "SUCCESS",
-  },
-  {
-    id: "audit-12472",
-    timestamp: "2026-04-12T16:31:05Z",
-    actor: "cron_stl_audit",
-    actorType: "CRON",
-    action: "SCHEDULED_AUDIT",
-    resource: "STL#schedule_3021",
-    ipAddress: "127.0.0.1",
-    result: "SUCCESS",
-  },
-  {
-    id: "audit-12471",
-    timestamp: "2026-04-12T15:47:33Z",
-    actor: "crb_officer",
-    actorType: "USER",
-    action: "CERTIFY_BATCH",
-    resource: "CRB#batch_2848",
-    ipAddress: "185.23.45.67",
-    result: "FAILURE",
-  },
+const DEMO: AuditRecord[] = [
+  { id: "AU-8825", timestamp: "2026-04-11T10:42:30Z", actor: "dmo.sara", action: "APPROVE", target: "CRB Application", targetId: "CRB-2741", ip: "203.0.113.42", status: "success" },
+  { id: "AU-8824", timestamp: "2026-04-11T10:35:15Z", actor: "dmo.hamza", action: "UPDATE", target: "STL Score", targetId: "STL-L7-482", ip: "203.0.113.58", status: "success" },
+  { id: "AU-8823", timestamp: "2026-04-11T10:20:00Z", actor: "pss.engine", action: "CREATE", target: "Verification Record", targetId: "PSS-VER-99241", ip: "10.0.1.5", status: "success" },
+  { id: "AU-8822", timestamp: "2026-04-11T10:15:45Z", actor: "dmo.ayesha", action: "VIEW", target: "Complaint Details", targetId: "CX-7740", ip: "203.0.113.61", status: "success" },
+  { id: "AU-8821", timestamp: "2026-04-11T10:10:20Z", actor: "wallet.svc", action: "CREATE", target: "Escrow Record", targetId: "ESC-77281", ip: "10.0.2.14", status: "success" },
+  { id: "AU-8820", timestamp: "2026-04-11T10:05:00Z", actor: "dmo.razi", action: "REJECT", target: "CRB Application", targetId: "CRB-2740", ip: "203.0.113.55", status: "success" },
+  { id: "AU-8819", timestamp: "2026-04-11T09:58:30Z", actor: "stl.cron", action: "CREATE", target: "STL Recalculation", targetId: "STL-REC-48201", ip: "10.0.1.3", status: "success" },
+  { id: "AU-8818", timestamp: "2026-04-11T09:45:15Z", actor: "dmo.admin", action: "DELETE", target: "Draft CRB Form", targetId: "DRF-291", ip: "203.0.113.50", status: "success" },
 ];
 
-function InfoCell({
-  label,
-  value,
-  mono,
-}: {
-  label: string;
-  value: React.ReactNode;
-  mono?: boolean;
-}) {
-  return (
-    <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
-      <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">
-        {label}
-      </p>
-      <p className={`mt-1 text-sm text-white/90 ${mono ? "font-mono" : ""}`}>
-        {value}
-      </p>
-    </div>
-  );
+const ACTION_TONE: Record<AuditAction, VerificationTone> = {
+  CREATE: "green",
+  UPDATE: "cyan",
+  DELETE: "red",
+  APPROVE: "green",
+  REJECT: "red",
+  VIEW: "purple",
+  EXPORT: "amber",
+};
+
+const STATUS_TONE: Record<AuditStatus, VerificationTone> = {
+  success: "green",
+  failure: "red",
+  pending: "amber",
+};
+
+function fmtTime(iso: string) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit" });
 }
 
-export default function AuditLogPage() {
-  const [selectedRecord, setSelectedRecord] = useState<AuditRecord | null>(null);
-  const [actorTypeFilter, setActorTypeFilter] = useState<string>("ALL");
+export default function AuditPage() {
+  const [filter, setFilter] = useState<"ALL" | AuditStatus>("ALL");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const visibleRecords = useMemo(() => {
-    if (actorTypeFilter === "ALL") return DEMO_AUDIT_RECORDS;
-    return DEMO_AUDIT_RECORDS.filter((rec) => rec.actorType === actorTypeFilter);
-  }, [actorTypeFilter]);
-
-  const stats = useMemo(() => {
-    return {
-      total: 12480,
-      system: 4200,
-      user: 8280,
-      flagged: 45,
-    };
-  }, []);
-
-  const actorTypeOptions = [
-    { value: "ALL", label: "All Actors" },
-    { value: "USER", label: "Users" },
-    { value: "SYSTEM", label: "System" },
-    { value: "AI", label: "AI" },
-    { value: "CRON", label: "Scheduled" },
-  ];
-
-  const getTone = (result: string): VerificationTone => {
-    switch (result) {
-      case "BLOCKED":
-        return "red";
-      case "FAILURE":
-        return "amber";
-      case "SUCCESS":
-        return "green";
-      default:
-        return "teal";
+  const visible = useMemo(() => {
+    let filtered = DEMO;
+    if (filter !== "ALL") {
+      filtered = filtered.filter((a) => a.status === filter);
     }
-  };
+    if (searchTerm) {
+      filtered = filtered.filter((a) =>
+        a.actor.includes(searchTerm.toLowerCase()) ||
+        a.action.includes(searchTerm.toUpperCase()) ||
+        a.target.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        a.targetId.includes(searchTerm.toUpperCase())
+      );
+    }
+    return filtered;
+  }, [filter, searchTerm]);
+
+  const stats = useMemo(
+    () => ({
+      total: DEMO.length,
+      success: DEMO.filter((a) => a.status === "success").length,
+      failure: DEMO.filter((a) => a.status === "failure").length,
+      pending: DEMO.filter((a) => a.status === "pending").length,
+    }),
+    []
+  );
 
   const columns: RowColumn<AuditRecord>[] = [
     {
       key: "timestamp",
       header: "Timestamp",
-      width: "minmax(0, 1.2fr)",
-      render: (rec) => {
-        const dt = new Date(rec.timestamp);
-        return (
-          <div className="text-xs">
-            <div>{dt.toLocaleDateString()}</div>
-            <div className="text-white/50">
-              {dt.toLocaleTimeString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: true,
-              })}
-            </div>
-          </div>
-        );
-      },
+      width: "minmax(0,1fr)",
+      render: (r) => <span className="font-mono text-[10px] text-white/55">{fmtTime(r.timestamp)}</span>,
     },
     {
       key: "actor",
       header: "Actor",
-      width: "minmax(0, 1.1fr)",
-      render: (rec) => <span>{rec.actor}</span>,
-    },
-    {
-      key: "actorType",
-      header: "Type",
-      width: "minmax(0, 0.8fr)",
-      render: (rec) => (
-        <VerificationChip tone="purple">{rec.actorType}</VerificationChip>
-      ),
+      width: "minmax(0,0.8fr)",
+      render: (r) => <span className="text-sm text-white/80">{r.actor}</span>,
     },
     {
       key: "action",
       header: "Action",
-      width: "minmax(0, 1.3fr)",
-      render: (rec) => (
-        <span className="text-white/85 text-xs">{rec.action}</span>
+      width: "minmax(0,0.8fr)",
+      render: (r) => <VerificationChip tone={ACTION_TONE[r.action]}>{r.action}</VerificationChip>,
+    },
+    {
+      key: "target",
+      header: "Target",
+      width: "minmax(0,1.5fr)",
+      render: (r) => (
+        <div className="min-w-0">
+          <div className="text-sm text-white">{r.target}</div>
+          <div className="font-mono text-[10px] text-white/45">{r.targetId}</div>
+        </div>
       ),
     },
     {
-      key: "resource",
-      header: "Resource",
-      width: "minmax(0, 1.2fr)",
-      render: (rec) => (
-        <span className="font-mono text-xs text-[#A098F8]">{rec.resource}</span>
-      ),
+      key: "ip",
+      header: "IP Address",
+      width: "minmax(0,1fr)",
+      render: (r) => <span className="font-mono text-[11px] text-white/70">{r.ip}</span>,
     },
     {
-      key: "result",
-      header: "Result",
-      width: "minmax(0, 0.9fr)",
-      render: (rec) => (
-        <VerificationChip tone={getTone(rec.result)}>
-          {rec.result}
-        </VerificationChip>
-      ),
+      key: "status",
+      header: "Status",
+      width: "minmax(0,0.8fr)",
+      render: (r) => <VerificationChip tone={STATUS_TONE[r.status]}>{r.status}</VerificationChip>,
     },
   ];
 
   return (
-    <div className="space-y-6 bg-[#0C0E1A] min-h-screen p-8">
-      <div className="relative overflow-hidden rounded-2xl border border-[#A098F8]/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
-        <div className="absolute top-0 left-0 h-px bg-gradient-to-r from-[#7B6EF6] to-transparent w-1/3" />
-        <div className="absolute top-3 left-4 text-[#7B6EF6] text-lg">⌈</div>
-        <div className="absolute bottom-3 right-4 text-[#7B6EF6] text-lg">⌋</div>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#A098F8]/5 via-transparent to-transparent blur-2xl pointer-events-none" />
-
-        <div className="relative">
-          <p className="text-xs font-semibold tracking-widest text-white/50 mb-2">
-            DMO / ACTIVITY ENGINE
-          </p>
-          <h1 className="text-3xl font-bold text-white mb-2">Audit Log</h1>
-          <p className="text-sm text-white/60">
-            Complete audit trail for compliance and forensics
-          </p>
+    <div className="space-y-6">
+      <header className="relative overflow-hidden rounded-2xl border border-[#7B6EF6]/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #7B6EF6 25%, #2BBFA0 50%, #F0A030 75%, transparent 100%)" }} />
+        <div className="pointer-events-none absolute left-3 top-3 h-6 w-6 border-l-[1.5px] border-t-[1.5px] border-[#7B6EF6]/50" />
+        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br from-[#7B6EF6]/20 via-[#2BBFA0]/15 to-transparent blur-3xl" />
+        <div className="relative flex flex-col gap-4">
+          <div className="min-w-0 space-y-2">
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em]">
+              <Link href="/dmo" className="text-white/40 hover:text-white/70 transition-colors">DMO</Link>
+              <span className="text-white/25">/</span>
+              <span className="text-[#A098F8]">Activity Engine</span>
+              <span className="text-white/25">/</span>
+              <span className="text-[#A098F8]">Audit Log</span>
+            </div>
+            <h1 className="text-2xl font-bold text-white md:text-3xl">Full Audit Log</h1>
+            <p className="max-w-2xl text-sm text-white/65">Searchable and filterable audit trail — immutable append-only log.</p>
+          </div>
         </div>
-      </div>
+      </header>
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <VerificationStatCard
-          tone="purple"
-          label="Total Records"
-          value="12480"
-          sub="All-time audit entries"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14 2 14 8 20 8" />
-              <line x1="12" y1="19" x2="12" y2="11" />
-              <line x1="9" y1="14" x2="15" y2="14" />
-            </svg>
-          }
-        />
-
-        <VerificationStatCard
-          tone="teal"
-          label="System Actions"
-          value="4200"
-          sub="Automated + scheduled"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="12" cy="12" r="1" />
-              <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24" />
-            </svg>
-          }
-        />
-
-        <VerificationStatCard
-          tone="amber"
-          label="User Actions"
-          value="8280"
-          sub="Manual operations"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-          }
-        />
-
-        <VerificationStatCard
-          tone="red"
-          label="Flagged"
-          value="45"
-          sub="Blocked or failed"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="8" x2="12" y2="12" />
-              <line x1="12" y1="16" x2="12.01" y2="16" />
-            </svg>
-          }
-        />
+        <VerificationStatCard tone="purple" label="Total records" value={stats.total} sub="all time" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M9 12h6m-6 4h6M9 8h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
+        <VerificationStatCard tone="green" label="Success" value={stats.success} sub="completed" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M5 12l4 4L19 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>} />
+        <VerificationStatCard tone="red" label="Failures" value={stats.failure} sub="errors logged" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>} />
+        <VerificationStatCard tone="amber" label="Pending" value={stats.pending} sub="in progress" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" /><path d="M12 7v5l3 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
       </section>
 
       <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <div className="mb-4">
-          <SectionHeader
-            title="Filter by Actor Type"
-            hint="Select actor type to refine audit results"
+        <SectionHeader title="Search & Filter" hint="Find audit records by actor, action, or target" />
+        <div className="mt-3 space-y-3">
+          <input
+            type="text"
+            placeholder="Search by actor, action, target, or ID..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full rounded-xl border border-white/10 bg-[#0C0E1A]/80 px-3 py-2 text-sm text-white placeholder:text-white/45 outline-none focus:border-[#7B6EF6]/55"
+          />
+          <FilterChipRow<"ALL" | AuditStatus>
+            options={[
+              { value: "ALL", label: `All · ${DEMO.length}` },
+              { value: "success", label: `Success · ${stats.success}` },
+              { value: "failure", label: `Failure · ${stats.failure}` },
+              { value: "pending", label: `Pending · ${stats.pending}` },
+            ]}
+            value={filter}
+            onChange={setFilter}
           />
         </div>
-        <FilterChipRow<string>
-          value={actorTypeFilter}
-          options={actorTypeOptions}
-          onChange={setActorTypeFilter}
-        />
       </section>
 
       <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <SectionHeader
-          title={`Audit Records (${visibleRecords.length} of 10)`}
-          hint="Click a row to view complete audit details"
-        />
+        <div className="flex items-center justify-between mb-4">
+          <SectionHeader title="Audit records" hint={`${visible.length} record(s) · immutable log`} />
+          <button
+            type="button"
+            className="rounded-xl border border-[#2BBFA0]/40 bg-[#2BBFA0]/12 px-3 py-1.5 text-xs font-semibold text-[#2BBFA0] transition-colors hover:border-[#2BBFA0]/80 hover:bg-[#2BBFA0]/25"
+          >
+            Export CSV
+          </button>
+        </div>
         <VerificationRowGrid<AuditRecord>
-          rows={visibleRecords}
+          rows={visible}
           columns={columns}
-          onRowClick={setSelectedRecord}
-          emptyTitle="No records found"
-          emptyHint="Try adjusting your filter"
+          emptyTitle="No audit records found"
+          emptyHint="Adjust search or filter to see logs."
         />
       </section>
-
-      {selectedRecord && (
-        <VerificationDrawer
-          open={!!selectedRecord}
-          onClose={() => setSelectedRecord(null)}
-          title={`Audit Record #${selectedRecord.id}`}
-          subtitle={new Date(selectedRecord.timestamp).toLocaleString()}
-          severity={
-            selectedRecord.result === "BLOCKED"
-              ? "critical"
-              : selectedRecord.result === "FAILURE"
-              ? "warning"
-              : "info"
-          }
-        >
-          <div className="space-y-4">
-            <InfoCell label="Timestamp" value={selectedRecord.timestamp} mono />
-            <InfoCell label="Actor" value={selectedRecord.actor} />
-            <div>
-              <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45 mb-2">
-                Actor Type
-              </p>
-              <VerificationChip tone="purple">
-                {selectedRecord.actorType}
-              </VerificationChip>
-            </div>
-            <InfoCell label="Action" value={selectedRecord.action} />
-            <InfoCell
-              label="Resource"
-              value={selectedRecord.resource}
-              mono
-            />
-            <InfoCell label="IP Address" value={selectedRecord.ipAddress} mono />
-            <div>
-              <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45 mb-2">
-                Result
-              </p>
-              <VerificationChip tone={getTone(selectedRecord.result)}>
-                {selectedRecord.result}
-              </VerificationChip>
-            </div>
-          </div>
-        </VerificationDrawer>
-      )}
     </div>
   );
 }

@@ -1,149 +1,144 @@
+"use client";
+
 /**
- * ═══════════════════════════════════════════════════════════════════════
- *  DMO STL — Consolidated ALL-STL page
- *  One page, every STL concept. For DMO / Admin operators.
+ * DMO STL — Consolidated reference page (V2 — 10-level system)
+ * All STL concepts on one page for DMO operators.
  *
- *  Sections:
- *    1. Hero              — what STL is, in 3 lines
- *    2. Levels L0 → L8    — 9 cards with color, band, perks
- *    3. Formula           — master MIN-rule + input bands (PSS/CRB/DMO)
- *    4. 4 STL types       — PSS-STL / CRB-STL / DMO-STL / EHB-STL
- *    5. Coin lock tiers   — lock → level boost mapping
- *    6. Live preview      — STLUserCard rendered at every level
- * ═══════════════════════════════════════════════════════════════════════
+ * Sections:
+ *   1. Hero            — what STL is
+ *   2. Levels L1→L10   — 10+1 cards (L0 pre-level + L1-L10)
+ *   3. Formula         — composite PSS×0.4 + CRB×0.3 + DMO×0.3, MIN-cap
+ *   4. 5 Entity Types  — Personal, Product, Service, Franchise, Production
+ *   5. Token Lock      — EHBGC lock per level
+ *   6. Source Caps     — Auto→L5, Franchise→L8, CRB→L9, DMO→L10
  */
 
-import { STLUserCard } from "@/components/stl/STLUserCard";
-
-export const metadata = {
-  title: "DMO STL — All STL on one page | EHB",
-  description: "Consolidated DMO STL reference: levels, formula, 4 STL types, coin-lock tiers, and live preview cards.",
-};
-
 const STL_LEVELS = [
-  { lvl: 0, key: "FREE",        color: "#9CA3AF", band: "0 – 9",     perks: "View-only. No commerce." },
-  { lvl: 1, key: "BASIC",       color: "#60A5FA", band: "10 – 24",   perks: "Can transact, low limits." },
-  { lvl: 2, key: "NORMAL",      color: "#22B14C", band: "25 – 39",   perks: "Standard commerce, full product listing." },
-  { lvl: 3, key: "HIGH",        color: "#F59E0B", band: "40 – 54",   perks: "Priority search rank, higher escrow." },
-  { lvl: 4, key: "VIP",         color: "#F97316", band: "55 – 69",   perks: "Featured placement, advanced analytics." },
-  { lvl: 5, key: "ULTRA",       color: "#EC4899", band: "70 – 79",   perks: "Global visibility, white-glove support." },
-  { lvl: 6, key: "DIAMOND",     color: "#A855F7", band: "80 – 87",   perks: "On-chain proof, auto-refill, concierge." },
-  { lvl: 7, key: "PLATINUM",    color: "#7B6EF6", band: "88 – 94",   perks: "Franchise-tier trust, revenue boost." },
-  { lvl: 8, key: "SUPREME",     color: "#29ABE2", band: "95 – 100",  perks: "Top 0.1%. Institutional-grade trust." },
+  { lvl: 0, key: "PRE-LEVEL", color: "#555A78", band: "—",        lock: 0,     resp: "0%",   perks: "Browse only. No commerce. Not in system." },
+  { lvl: 1, key: "FREE",      color: "#9CA3AF", band: "1 – 10",   lock: 0,     resp: "10%",  perks: "Email verified. Basic browse + limited actions." },
+  { lvl: 2, key: "BASIC",     color: "#60A5FA", band: "11 – 20",  lock: 50,    resp: "20%",  perks: "Can transact, low limits." },
+  { lvl: 3, key: "NORMAL",    color: "#38C878", band: "21 – 35",  lock: 100,   resp: "40%",  perks: "Standard commerce, full product listing." },
+  { lvl: 4, key: "STANDARD",  color: "#2BBFA0", band: "36 – 50",  lock: 250,   resp: "55%",  perks: "Extended features, moderate escrow." },
+  { lvl: 5, key: "ADVANCED",  color: "#F0A030", band: "51 – 65",  lock: 500,   resp: "70%",  perks: "Priority search, advanced analytics. Auto-cap." },
+  { lvl: 6, key: "HIGH",      color: "#F97316", band: "66 – 75",  lock: 1000,  resp: "80%",  perks: "Featured placement, white-glove support." },
+  { lvl: 7, key: "PRO",       color: "#EC4899", band: "76 – 85",  lock: 2500,  resp: "90%",  perks: "Top Ranking zone. Global visibility." },
+  { lvl: 8, key: "VIP",       color: "#A855F7", band: "86 – 92",  lock: 5000,  resp: "95%",  perks: "On-chain proof, auto-refill, concierge." },
+  { lvl: 9, key: "ELITE",     color: "#7B6EF6", band: "93 – 97",  lock: 10000, resp: "98%",  perks: "Franchise-tier trust, revenue boost." },
+  { lvl: 10, key: "SUPREME",  color: "#2BBFA0", band: "98 – 100", lock: 25000, resp: "100%", perks: "Top 0.1%. Full EHB backing. Institutional trust." },
 ] as const;
 
-const STL_TYPES = [
-  {
-    code: "PSS-STL",
-    name: "Personal Security System STL",
-    color: "#22B14C",
-    desc: "Identity trust — KYC + liveness + AML risk. Max L4 on identity alone.",
-    capLevel: 4,
-  },
-  {
-    code: "CRB-STL",
-    name: "Certification & Registry Board STL",
-    color: "#F59E0B",
-    desc: "Physical + legal verification. Certification hash pushed on-chain. Max L6.",
-    capLevel: 6,
-  },
-  {
-    code: "DMO-STL",
-    name: "DMO Governance STL",
-    color: "#7B6EF6",
-    desc: "Admin policy bonus. Approved onboarding + franchise + compliance. Max L7.",
-    capLevel: 7,
-  },
-  {
-    code: "EHB-STL",
-    name: "EHB Master STL (shipped)",
-    color: "#29ABE2",
-    desc: "Final STL = MIN(PSS, CRB, DMO, Coin-Lock tier). This is the one the user sees.",
-    capLevel: 8,
-  },
+const ENTITY_TYPES = [
+  { code: "Personal",    color: "#38C878", desc: "User's own trust level. Master key — if low, all others freeze.", icon: "👤" },
+  { code: "Product",     color: "#F0A030", desc: "Each product has its own STL. MIN-chained to seller STL.", icon: "📦" },
+  { code: "Service",     color: "#7B6EF6", desc: "Service provider trust. Covers professional services (legal, medical, etc.).", icon: "🔧" },
+  { code: "Franchise",   color: "#2BBFA0", desc: "Franchise entity STL. Country→Corporate→Sub→City→Online hierarchy.", icon: "🏢" },
+  { code: "Production",  color: "#EC4899", desc: "Production company STL. Manufacturing + quality verification.", icon: "🏭" },
 ] as const;
 
-const COIN_LOCK_TIERS = [
-  { tier: "None",       months: 0,  boost: "—",   cap: 3 },
-  { tier: "Bronze",     months: 3,  boost: "+1",  cap: 4 },
-  { tier: "Silver",     months: 6,  boost: "+2",  cap: 5 },
-  { tier: "Gold",       months: 12, boost: "+3",  cap: 6 },
-  { tier: "Platinum",   months: 24, boost: "+4",  cap: 7 },
-  { tier: "Supreme",    months: 36, boost: "+5",  cap: 8 },
-] as const;
-
-const FORMULA_INPUTS = [
-  { label: "Identity (PSS)",    w: 30, color: "#22B14C" },
-  { label: "Certification (CRB)", w: 25, color: "#F59E0B" },
-  { label: "DMO Governance",    w: 20, color: "#7B6EF6" },
-  { label: "Coin Lock",         w: 15, color: "#29ABE2" },
-  { label: "Activity Score",    w: 10, color: "#EC4899" },
+const SOURCE_CAPS = [
+  { source: "Auto (System)", cap: "L5 ADVANCED", color: "#F0A030", desc: "Maximum level achievable through automated verification only" },
+  { source: "Franchise",     cap: "L8 VIP",      color: "#A855F7", desc: "Franchise-approved users can reach up to L8" },
+  { source: "CRB",           cap: "L9 ELITE",    color: "#7B6EF6", desc: "CRB certification unlocks up to L9" },
+  { source: "DMO",           cap: "L10 SUPREME",  color: "#2BBFA0", desc: "Only DMO full approval can grant L10" },
 ] as const;
 
 export default function DmoStlPage() {
   return (
     <main className="min-h-screen bg-[#0C0E1A] px-4 py-8 text-white">
-      <div className="mx-auto max-w-7xl space-y-8">
+      <div className="mx-auto max-w-7xl space-y-10">
 
         {/* ── HERO ─────────────────────────────────────────────── */}
         <section
           className="relative overflow-hidden rounded-2xl p-8"
           style={{
-            background: "linear-gradient(135deg, rgba(41,171,226,0.12) 0%, rgba(19,22,42,0.95) 50%, rgba(123,110,246,0.12) 100%)",
+            background: "linear-gradient(135deg, rgba(43,191,160,0.12) 0%, rgba(19,22,42,0.95) 50%, rgba(123,110,246,0.12) 100%)",
             border: "1px solid rgba(255,255,255,0.08)",
           }}
         >
           <div
             aria-hidden
             className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-30 blur-3xl"
-            style={{ background: "#29ABE2" }}
+            style={{ background: "#7B6EF6" }}
           />
           <div className="relative">
             <div className="text-[11px] font-semibold uppercase tracking-widest text-white/45">
-              DMO · Verification
+              DMO · Verification · Complete Reference
             </div>
-            <h1 className="mt-1 text-3xl font-bold">DMO STL — All STL on One Page</h1>
-            <p className="mt-2 max-w-3xl text-sm text-white/65">
+            <h1 className="mt-1 text-3xl font-bold">DMO STL — All-in-One Reference</h1>
+            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/65">
               Service Trust Level (STL) is the single trust number every user, seller, franchise,
-              and service provider carries across all 32 EHB industries. It's computed from PSS
-              (identity), CRB (certification), DMO governance, coin-lock, and activity — then
-              capped by the <b>MIN-rule</b>. This page is your one-stop reference.
+              and entity carries across all EHB industries. Composite of <b>PSS × 0.4 + CRB × 0.3 + DMO × 0.3</b>,
+              capped by the <b>MIN-rule</b>. 10 levels (L1–L10) + L0 pre-level. 5 entity types.
             </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {["#levels", "#formula", "#entities", "#token-lock", "#source-caps"].map((a) => (
+                <a
+                  key={a}
+                  href={a}
+                  className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/70 transition hover:border-[#7B6EF6]/40 hover:text-white"
+                >
+                  {a.replace("#", "").replace("-", " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+                </a>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* ── LEVELS ───────────────────────────────────────────── */}
+        {/* ── QUICK STATS ──────────────────────────────────────── */}
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          {[
+            { label: "Total Levels", value: "11", sub: "L0 + L1–L10", color: "#7B6EF6" },
+            { label: "Entity Types", value: "5", sub: "Personal · Product · Service · Franchise · Production", color: "#2BBFA0" },
+            { label: "Top Ranking", value: "L7+", sub: "PRO / VIP / ELITE / SUPREME", color: "#F0A030" },
+            { label: "Components", value: "3", sub: "PSS 40% · CRB 30% · DMO 30%", color: "#38C878" },
+          ].map((s) => (
+            <div
+              key={s.label}
+              className="rounded-xl border border-white/[0.08] bg-[#13162A] p-4"
+            >
+              <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: s.color }}>{s.label}</div>
+              <div className="mt-1 text-2xl font-bold">{s.value}</div>
+              <div className="mt-1 text-[10px] text-white/45">{s.sub}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* ── LEVELS L0–L10 ────────────────────────────────────── */}
         <section id="levels">
-          <SectionHeader eyebrow="L0 → L8" title="The 9 STL Levels" />
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Hdr eyebrow="L0 → L10" title="The 10+1 STL Levels" />
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {STL_LEVELS.map((l) => (
               <div
                 key={l.lvl}
-                className="rounded-2xl p-5 transition-all hover:-translate-y-0.5"
+                className="rounded-xl p-5 transition-all hover:-translate-y-0.5"
                 style={{
-                  background: "rgba(19,22,42,0.85)",
+                  background: l.lvl === 0 ? "rgba(19,22,42,0.6)" : "rgba(19,22,42,0.85)",
                   border: `1px solid ${l.color}40`,
-                  boxShadow: `0 8px 24px ${l.color}12`,
+                  boxShadow: l.lvl >= 7 ? `0 0 20px ${l.color}25` : `0 8px 24px ${l.color}10`,
                 }}
               >
                 <div className="flex items-center justify-between">
                   <div
-                    className="flex h-12 w-12 items-center justify-center rounded-xl text-lg font-bold"
-                    style={{ background: `${l.color}22`, color: l.color, border: `1px solid ${l.color}66` }}
+                    className="flex h-11 w-11 items-center justify-center rounded-lg text-sm font-bold"
+                    style={{ background: `${l.color}22`, color: l.color, border: `1px solid ${l.color}55` }}
                   >
                     L{l.lvl}
                   </div>
                   <span
-                    className="rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
-                    style={{ background: `${l.color}18`, color: l.color, border: `1px solid ${l.color}55` }}
+                    className="rounded-md px-2 py-0.5 text-[10px] font-semibold"
+                    style={{ background: `${l.color}15`, color: l.color, border: `1px solid ${l.color}40` }}
                   >
                     {l.band}
                   </span>
                 </div>
-                <div className="mt-3 text-[18px] font-bold" style={{ color: l.color }}>
+                <div className="mt-3 text-lg font-bold" style={{ color: l.color }}>
                   {l.key}
                 </div>
-                <p className="mt-1 text-[12.5px] leading-relaxed text-white/55">{l.perks}</p>
+                <p className="mt-1 text-xs leading-relaxed text-white/55">{l.perks}</p>
+                <div className="mt-3 flex items-center justify-between text-[10px] text-white/40">
+                  <span>🔒 {l.lock.toLocaleString()} EHBGC</span>
+                  <span>🛡️ {l.resp}</span>
+                </div>
               </div>
             ))}
           </div>
@@ -151,40 +146,44 @@ export default function DmoStlPage() {
 
         {/* ── FORMULA ──────────────────────────────────────────── */}
         <section id="formula">
-          <SectionHeader eyebrow="Master Rule" title="STL Formula & Inputs" />
-          <div
-            className="rounded-2xl p-6"
-            style={{ background: "rgba(19,22,42,0.85)", border: "1px solid rgba(255,255,255,0.08)" }}
-          >
+          <Hdr eyebrow="Composite Rule" title="STL Formula" />
+          <div className="rounded-xl border border-white/[0.08] bg-[#13162A] p-6">
             <div
-              className="rounded-xl p-4 font-mono text-[13px] leading-relaxed"
-              style={{ background: "rgba(8,10,20,0.6)", border: "1px solid rgba(255,255,255,0.06)" }}
+              className="rounded-lg p-4 font-mono text-sm leading-relaxed"
+              style={{ background: "rgba(12,14,26,0.8)", border: "1px solid rgba(255,255,255,0.06)" }}
             >
-              <span className="text-white/40">// EHB STL = MIN of all gates</span>
+              <div className="text-white/40">{"// Step 1: Weighted composite"}</div>
+              <div>
+                <span className="text-[#7B6EF6]">Score</span> ={" "}
+                <span className="text-[#38C878]">PSS</span> × <span className="text-[#F0A030]">0.40</span> +{" "}
+                <span className="text-[#F0A030]">CRB</span> × <span className="text-[#F0A030]">0.30</span> +{" "}
+                <span className="text-[#2BBFA0]">DMO</span> × <span className="text-[#F0A030]">0.30</span>
+              </div>
               <br />
-              <span className="text-[#29ABE2]">STL</span> =
-              MIN(
-              <span className="text-[#22B14C]">pssLevel</span>,
-              <span className="text-[#F59E0B]">crbLevel</span>,
-              <span className="text-[#7B6EF6]">dmoLevel</span>,
-              <span className="text-[#29ABE2]">coinLockTier</span>
-              )
+              <div className="text-white/40">{"// Step 2: Anti-fraud MIN-cap"}</div>
+              <div>
+                <span className="text-[#7B6EF6]">Final_STL</span> ={" "}
+                <span className="text-[#F05858]">MIN</span>(Score, lowest_component + 1)
+              </div>
               <br />
-              <span className="text-white/40">// score = weighted sum of 5 inputs below</span>
+              <div className="text-white/40">{"// Step 3: MIN-chain (multi-entity)"}</div>
+              <div>
+                <span className="text-[#7B6EF6]">FINAL_EHB_STL</span> ={" "}
+                <span className="text-[#F05858]">MIN</span>(productSTL, sellerSTL, companySTL, ownerSTL)
+              </div>
             </div>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-              {FORMULA_INPUTS.map((f) => (
-                <div
-                  key={f.label}
-                  className="rounded-xl p-4"
-                  style={{ background: "rgba(26,29,51,0.9)", border: `1px solid ${f.color}30` }}
-                >
-                  <div className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: f.color }}>
-                    {f.label}
-                  </div>
-                  <div className="mt-2 text-2xl font-bold">{f.w}%</div>
-                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/5">
-                    <div className="h-full rounded-full" style={{ width: `${f.w * 3}%`, background: f.color }} />
+
+            <div className="mt-5 grid gap-3 sm:grid-cols-3">
+              {[
+                { label: "PSS (Identity)", weight: 40, color: "#38C878" },
+                { label: "CRB (Quality)",  weight: 30, color: "#F0A030" },
+                { label: "DMO (Behavior)", weight: 30, color: "#2BBFA0" },
+              ].map((f) => (
+                <div key={f.label} className="rounded-lg border border-white/[0.06] bg-[#1A1D33] p-4">
+                  <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: f.color }}>{f.label}</div>
+                  <div className="mt-2 text-3xl font-bold">{f.weight}%</div>
+                  <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/5">
+                    <div className="h-full rounded-full transition-all" style={{ width: `${f.weight}%`, background: f.color }} />
                   </div>
                 </div>
               ))}
@@ -192,69 +191,55 @@ export default function DmoStlPage() {
           </div>
         </section>
 
-        {/* ── 4 STL TYPES ──────────────────────────────────────── */}
-        <section id="types">
-          <SectionHeader eyebrow="Four STL types" title="PSS · CRB · DMO · EHB" />
-          <div className="grid gap-3 md:grid-cols-2">
-            {STL_TYPES.map((t) => (
+        {/* ── 5 ENTITY TYPES ───────────────────────────────────── */}
+        <section id="entities">
+          <Hdr eyebrow="5 Entity Types" title="STL applies to multiple entity types" />
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+            {ENTITY_TYPES.map((t) => (
               <div
                 key={t.code}
-                className="rounded-2xl p-5"
-                style={{
-                  background: "rgba(19,22,42,0.85)",
-                  border: `1px solid ${t.color}40`,
-                  boxShadow: `0 8px 20px ${t.color}10`,
-                }}
+                className="rounded-xl border p-5 transition hover:-translate-y-0.5"
+                style={{ background: "rgba(19,22,42,0.85)", borderColor: `${t.color}35` }}
               >
-                <div className="flex items-center justify-between">
-                  <span
-                    className="rounded-lg px-2.5 py-1 text-[11px] font-bold uppercase tracking-widest"
-                    style={{ background: `${t.color}1a`, color: t.color, border: `1px solid ${t.color}55` }}
-                  >
-                    {t.code}
-                  </span>
-                  <span className="text-[11px] text-white/40">Cap: L{t.capLevel}</span>
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{t.icon}</span>
+                  <span className="text-sm font-bold" style={{ color: t.color }}>{t.code}</span>
                 </div>
-                <div className="mt-3 text-[16px] font-semibold">{t.name}</div>
-                <p className="mt-1 text-[13px] leading-relaxed text-white/60">{t.desc}</p>
+                <p className="mt-2 text-xs leading-relaxed text-white/60">{t.desc}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* ── COIN LOCK ────────────────────────────────────────── */}
-        <section id="coin-lock">
-          <SectionHeader eyebrow="Stake to boost" title="Coin Lock Tiers" />
-          <div
-            className="overflow-hidden rounded-2xl"
-            style={{ background: "rgba(19,22,42,0.85)", border: "1px solid rgba(255,255,255,0.08)" }}
-          >
+        {/* ── TOKEN LOCK ───────────────────────────────────────── */}
+        <section id="token-lock">
+          <Hdr eyebrow="EHBGC Lock" title="Token Lock Requirements by Level" />
+          <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#13162A]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-left text-[11px] uppercase tracking-widest text-white/45">
-                  <th className="px-5 py-3">Tier</th>
-                  <th className="px-5 py-3">Lock duration</th>
-                  <th className="px-5 py-3">Level boost</th>
-                  <th className="px-5 py-3">Max STL cap</th>
+                <tr className="text-left text-[10px] uppercase tracking-widest text-white/40">
+                  <th className="px-5 py-3">Level</th>
+                  <th className="px-5 py-3">Name</th>
+                  <th className="px-5 py-3">EHBGC Lock</th>
+                  <th className="px-5 py-3">EHB Responsibility</th>
                 </tr>
               </thead>
               <tbody>
-                {COIN_LOCK_TIERS.map((t, i) => (
-                  <tr
-                    key={t.tier}
-                    className="border-t border-white/5 transition-colors hover:bg-white/[0.02]"
-                  >
-                    <td className="px-5 py-3 font-semibold">{t.tier}</td>
-                    <td className="px-5 py-3 text-white/60">{t.months === 0 ? "—" : `${t.months} months`}</td>
-                    <td className="px-5 py-3">
-                      <span
-                        className="rounded px-2 py-0.5 text-[11px] font-bold"
-                        style={{ background: "rgba(41,171,226,0.12)", color: "#29ABE2" }}
-                      >
-                        {t.boost}
-                      </span>
+                {STL_LEVELS.map((l) => (
+                  <tr key={l.lvl} className="border-t border-white/5 transition hover:bg-white/[0.02]">
+                    <td className="px-5 py-2.5">
+                      <span className="font-mono text-xs font-bold" style={{ color: l.color }}>L{l.lvl}</span>
                     </td>
-                    <td className="px-5 py-3">L{t.cap}</td>
+                    <td className="px-5 py-2.5 font-semibold" style={{ color: l.color }}>{l.key}</td>
+                    <td className="px-5 py-2.5 font-mono text-white/70">{l.lock.toLocaleString()}</td>
+                    <td className="px-5 py-2.5">
+                      <div className="flex items-center gap-2">
+                        <div className="h-1.5 w-16 overflow-hidden rounded-full bg-white/5">
+                          <div className="h-full rounded-full bg-[#2BBFA0]" style={{ width: l.resp }} />
+                        </div>
+                        <span className="text-xs text-white/60">{l.resp}</span>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -262,19 +247,47 @@ export default function DmoStlPage() {
           </div>
         </section>
 
-        {/* ── LIVE PREVIEW ─────────────────────────────────────── */}
-        <section id="preview">
-          <SectionHeader eyebrow="Live" title="STLUserCard — Rendered at Every Level" />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {STL_LEVELS.map((l) => (
-              <STLUserCard
-                key={l.lvl}
-                variant="compact"
-                name={`Sample ${l.key}`}
-                email={`${l.key.toLowerCase()}@ehb.com`}
-                stlLevel={l.lvl}
-                stlScore={Number(l.band.split("–")[1]?.trim() ?? l.band) - 1}
-              />
+        {/* ── SOURCE CAPS ──────────────────────────────────────── */}
+        <section id="source-caps">
+          <Hdr eyebrow="Verification Source" title="Maximum Level by Source" />
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {SOURCE_CAPS.map((s) => (
+              <div
+                key={s.source}
+                className="rounded-xl border p-5 transition hover:-translate-y-0.5"
+                style={{ background: "rgba(19,22,42,0.85)", borderColor: `${s.color}40` }}
+              >
+                <div className="text-[10px] font-semibold uppercase tracking-widest text-white/45">{s.source}</div>
+                <div className="mt-2 text-xl font-bold" style={{ color: s.color }}>{s.cap}</div>
+                <p className="mt-2 text-[11px] text-white/50">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── DOWNGRADE RULES ──────────────────────────────────── */}
+        <section>
+          <Hdr eyebrow="Enforcement" title="Downgrade Rules" />
+          <div className="space-y-2">
+            {[
+              { rule: "Fraud Detected", effect: "Instant drop to L0", color: "#F05858", icon: "🚨" },
+              { rule: "3 Complaints + 3 Weeks", effect: "-2 STL Levels", color: "#F0A030", icon: "⚠️" },
+              { rule: "Inactivity (30 days)", effect: "-1 Level per month", color: "#F0A030", icon: "💤" },
+              { rule: "Document Expiry", effect: "-2 Levels", color: "#F05858", icon: "📄" },
+              { rule: "Token Lock Removed", effect: "-2 Levels after 15-day grace", color: "#F0A030", icon: "🔓" },
+            ].map((r) => (
+              <div
+                key={r.rule}
+                className="flex items-center gap-4 rounded-lg border border-white/[0.06] bg-[#1A1D33] px-5 py-3"
+              >
+                <span className="text-lg">{r.icon}</span>
+                <div className="flex-1">
+                  <div className="text-sm font-semibold">{r.rule}</div>
+                </div>
+                <span className="rounded-md px-2.5 py-1 text-xs font-semibold" style={{ background: `${r.color}15`, color: r.color, border: `1px solid ${r.color}40` }}>
+                  {r.effect}
+                </span>
+              </div>
             ))}
           </div>
         </section>
@@ -284,13 +297,11 @@ export default function DmoStlPage() {
   );
 }
 
-function SectionHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
+function Hdr({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div className="mb-4">
-      <div className="text-[11px] font-semibold uppercase tracking-widest text-white/45">
-        {eyebrow}
-      </div>
-      <h2 className="mt-0.5 text-xl font-bold text-white">{title}</h2>
+      <div className="text-[10px] font-semibold uppercase tracking-widest text-white/40">{eyebrow}</div>
+      <h2 className="mt-0.5 text-xl font-bold">{title}</h2>
     </div>
   );
 }

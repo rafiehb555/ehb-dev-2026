@@ -1,22 +1,20 @@
 /**
- * DMO navigation — canonical 18-module structure (rebuild Phase 1, 2026-04-11).
+ * DMO navigation — canonical 18-module structure (rebuild Phase 1, 2026-04-19).
  *
  * Groups
  *   1. Overview        — 1 module
- *   2. Verification    — 4 modules (STL, PSS, CRB, Up-Guard)
+ *   2. Verification    — 5 modules (EHB STL, DMO STL, PSS, CRB, Up-Guard)
  *   3. Operations      — 7 modules (Applications, Approvals, Wallet, Earnings, Refill, Complaints, Franchise)
  *   4. Intelligence    — 7 modules (Activity, Tasks, AI, Analytics, Blockchain, Notifications, Settings)
  *
  * Naming rules (CLAUDE.md §6.2):
- *   STL = Service Trust Level             (NOT "Smart Tracking & Logistics")
- *   CRB = Certification & Registry Board  (NOT "Credit & Reputation Badge")
- *   PSS = Personal Security System        (NOT "Platform Security System")
+ *   STL = Service Trust Level             (L1 → L10 with 5 entity types)
+ *   CRB = Certification & Refill Board
+ *   PSS = Personal Security System
  *
  * Legacy routes under `/dmo/jps`, `/dmo/penalty`, `/dmo/affiliate`, `/dmo/industry`,
  * `/dmo/automation`, `/dmo/home`, `/dmo/roadmap` still exist on disk — they are
- * intentionally NOT in this sidebar to keep the canonical 18 modules clean. Those
- * pages fold into Applications / Complaints / Analytics / AI Assistant during
- * Phases 2–5.
+ * intentionally NOT in this sidebar to keep the canonical 18 modules clean.
  */
 
 import React from "react";
@@ -75,7 +73,7 @@ export const DMO_NAV_SECTIONS: DmoNavSection[] = [
   {
     key: "stl",
     icon: S('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'),
-    label: "EHB STL MANAGEMENT",
+    label: "EHB STL Management",
     href: "/dmo/stl",
     groupKey: "verification",
     items: [
@@ -95,9 +93,9 @@ export const DMO_NAV_SECTIONS: DmoNavSection[] = [
     groupKey: "verification",
     items: [
       { key: "dmo-stl-all", label: "All STL (one page)", href: "/dmo/dmo-stl" },
-      { key: "dmo-stl-levels", label: "L0 → L8 Levels", href: "/dmo/dmo-stl#levels" },
+      { key: "dmo-stl-levels", label: "L1 → L10 Levels", href: "/dmo/dmo-stl#levels" },
       { key: "dmo-stl-formula", label: "Formula & inputs", href: "/dmo/dmo-stl#formula" },
-      { key: "dmo-stl-types", label: "4 STL types", href: "/dmo/dmo-stl#types" },
+      { key: "dmo-stl-types", label: "5 STL entity types", href: "/dmo/dmo-stl#types" },
       { key: "dmo-stl-coin-lock", label: "Coin lock tiers", href: "/dmo/dmo-stl#coin-lock" },
     ],
   },

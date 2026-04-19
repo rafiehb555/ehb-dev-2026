@@ -74,6 +74,15 @@ function InfoCell({ label, value, mono }: { label: string; value: React.ReactNod
   );
 }
 
+const PHASE1_INDUSTRIES = [
+  { slug: "ecommerce", name: "GoSellr", icon: "🛒", color: "#7B6EF6", users: 3420, status: "verified" },
+  { slug: "legal", name: "OLS", icon: "⚖️", color: "#A098F8", users: 1240, status: "verified" },
+  { slug: "medical", name: "WMS", icon: "🏥", color: "#2BBFA0", users: 2150, status: "verified" },
+  { slug: "education", name: "HPS/OBS", icon: "🎓", color: "#F0A030", users: 4890, status: "verified" },
+  { slug: "jobs", name: "JPS", icon: "💼", color: "#38C878", users: 8940, status: "verified" },
+  { slug: "travel", name: "AGTS", icon: "✈️", color: "#67E8F9", users: 980, status: "verified" },
+];
+
 export default function DmoIndustryPage() {
   const [rows] = useState<IndustryVerification[]>(DEMO);
   const [statusFilter, setStatusFilter] = useState<"ALL" | VerifStatus>("ALL");
@@ -166,18 +175,31 @@ export default function DmoIndustryPage() {
         </div>
       </section>
 
-      {/* Industry links */}
-      <section className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
-        {["ecommerce", "legal", "medical", "education", "jobs", "travel"].map((slug) => (
-          <Link
-            key={slug}
-            href={`/industry/${slug}`}
-            className="group relative overflow-hidden rounded-xl border border-white/10 bg-[#13162A]/80 p-3 text-center transition-all duration-200 hover:-translate-y-[2px] hover:border-cyan-400/40"
-          >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/55">{slug}</p>
-            <p className="mt-1 text-[11px] font-semibold text-cyan-200 transition-colors group-hover:text-white">Open →</p>
-          </Link>
-        ))}
+      {/* Phase-1 Industries Hub */}
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader eyebrow="Phase 1" title="Live industries" hint="6 industries verified" />
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {PHASE1_INDUSTRIES.map((ind) => (
+            <Link
+              key={ind.slug}
+              href={`/dmo/industry/${ind.slug}`}
+              className="group relative overflow-hidden rounded-xl border bg-[#13162A]/85 p-4 transition-all duration-300 hover:-translate-y-[2px]"
+              style={{ borderColor: `${ind.color}55` }}
+            >
+              <span aria-hidden className="pointer-events-none absolute left-0 right-0 top-0 h-[2px]" style={{ background: `linear-gradient(90deg, transparent, ${ind.color}, transparent)` }} />
+              <div className="relative space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl">{ind.icon}</span>
+                  <VerificationChip tone="teal">Live</VerificationChip>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-white">{ind.name}</h3>
+                  <p className="text-[10px] text-white/50 mt-1">{ind.users.toLocaleString()} users</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <VerificationDrawer open={Boolean(active)} onClose={() => setActive(null)} title={active ? active.entityName : "Verification detail"} subtitle={active ? `${active.id} · ${active.industryName} · ${active.entityType}` : undefined} severity={active?.status === "REJECTED" ? "high" : active?.status === "PENDING" ? "warning" : "info"}>

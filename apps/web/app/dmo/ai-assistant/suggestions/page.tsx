@@ -1,396 +1,209 @@
 "use client";
 
-import { useState, useMemo } from "react";
+/**
+ * DMO — AI Suggestions
+ *   - Auto-generated action items from AI engine
+ *   - Each suggestion: accept/dismiss/details with action CTA
+ *   - Ranked by priority
+ */
+
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import {
   VerificationStatCard,
-  VerificationRowGrid,
-  VerificationDrawer,
   VerificationChip,
   SectionHeader,
-  FilterChipRow,
-  type RowColumn,
   type VerificationTone,
 } from "@/components/dmo/verification/VerificationUI";
 
-type SuggestionStatus = "PENDING" | "ACCEPTED" | "DISMISSED" | "EXPIRED";
-type ImpactLevel = "HIGH" | "MEDIUM" | "LOW";
+type SuggestionPriority = "critical" | "high" | "medium";
 
-type Suggestion = {
+type AISuggestion = {
   id: string;
-  suggestion: string;
-  module: string;
-  confidence: number;
-  impact: ImpactLevel;
-  status: SuggestionStatus;
+  title: string;
+  description: string;
+  impact: string;
+  priority: SuggestionPriority;
+  action: { href: string; label: string };
+  timestamp: string;
+  status: "pending" | "accepted" | "dismissed";
 };
 
-const DEMO_SUGGESTIONS: Suggestion[] = [
+const DEMO: AISuggestion[] = [
   {
-    id: "SG001",
-    suggestion: "Increase STL recalculation frequency for high-value transactions",
-    module: "STL",
-    confidence: 92,
-    impact: "HIGH",
-    status: "PENDING",
+    id: "SUG-8821",
+    title: "Auto-approve 12 CRB applications",
+    description: "L3+ sellers with clean audit history past SLA — auto-approval saves 2h operator time.",
+    impact: "Save 2h operator time · 12 approvals processed",
+    priority: "critical",
+    action: { href: "/dmo/crb/applications", label: "Review & auto-approve" },
+    timestamp: "2026-04-11T10:40:00Z",
+    status: "pending",
   },
   {
-    id: "SG002",
-    suggestion: "Flag PSS KYC rejections with liveness mismatches for manual review",
-    module: "PSS",
-    confidence: 88,
-    impact: "HIGH",
-    status: "ACCEPTED",
+    id: "SUG-8820",
+    title: "Flag 3 refills for escalation",
+    description: "WMS, OLS, AGTS refills < 24h to expiry — escalate to franchise managers now.",
+    impact: "Prevent 3 L-downgrades · proactive urgency",
+    priority: "critical",
+    action: { href: "/dmo/refill-management", label: "Open refill queue" },
+    timestamp: "2026-04-11T10:35:00Z",
+    status: "pending",
   },
   {
-    id: "SG003",
-    suggestion: "Batch CRB certification reviews by document type",
-    module: "CRB",
-    confidence: 85,
-    impact: "MEDIUM",
-    status: "PENDING",
+    id: "SUG-8819",
+    title: "Investigate AGTS Dubai revenue anomaly",
+    description: "+19.3% MoM growth suggests potential fraud or system miscounting. Cross-check escrow.",
+    impact: "Risk mitigation · verify $180K transaction batch",
+    priority: "high",
+    action: { href: "/dmo/wallet-control/escrow", label: "Audit escrow ledger" },
+    timestamp: "2026-04-11T10:30:00Z",
+    status: "pending",
   },
   {
-    id: "SG004",
-    suggestion: "Implement graduated wallet settlement thresholds by user tier",
-    module: "WALLET",
-    confidence: 79,
-    impact: "HIGH",
-    status: "DISMISSED",
+    id: "SUG-8818",
+    title: "Optimize STL L7 threshold floor",
+    description: "Current 4.0 floor is suboptimal — recommend 3.8 to balance quality + onboarding.",
+    impact: "Unlock 47 qualified sellers for Phase-2",
+    priority: "high",
+    action: { href: "/dmo/stl/scores", label: "Adjust threshold" },
+    timestamp: "2026-04-11T10:20:00Z",
+    status: "pending",
   },
   {
-    id: "SG005",
-    suggestion: "Add confidence threshold alert for STL predictions below 75%",
-    module: "STL",
-    confidence: 91,
-    impact: "MEDIUM",
-    status: "PENDING",
-  },
-  {
-    id: "SG006",
-    suggestion: "Optimize PSS liveness check retry strategy",
-    module: "PSS",
-    confidence: 82,
-    impact: "MEDIUM",
-    status: "ACCEPTED",
-  },
-  {
-    id: "SG007",
-    suggestion: "Create CRB fast-track for renewal certifications",
-    module: "CRB",
-    confidence: 86,
-    impact: "HIGH",
-    status: "PENDING",
-  },
-  {
-    id: "SG008",
-    suggestion: "Alert on wallet transaction patterns indicating potential fraud",
-    module: "WALLET",
-    confidence: 94,
-    impact: "HIGH",
-    status: "PENDING",
+    id: "SUG-8817",
+    title: "Rotate PSS liveness threshold",
+    description: "AGTS false-positive spike at 0.80 threshold — raise to 0.82 for 24h cooldown.",
+    impact: "Reduce false-positive rate by 18%",
+    priority: "medium",
+    action: { href: "/dmo/pss/refilling", label: "Update PSS config" },
+    timestamp: "2026-04-11T10:15:00Z",
+    status: "pending",
   },
 ];
 
-function impactTone(impact: ImpactLevel): VerificationTone {
-  if (impact === "HIGH") return "red";
-  if (impact === "MEDIUM") return "amber";
-  return "green";
+const PRIORITY_TONE: Record<SuggestionPriority, VerificationTone> = {
+  critical: "red",
+  high: "amber",
+  medium: "purple",
+};
+
+function fmtTime(iso: string) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
-function statusTone(status: SuggestionStatus): VerificationTone {
-  if (status === "PENDING") return "amber";
-  if (status === "ACCEPTED") return "green";
-  if (status === "DISMISSED") return "red";
-  return "cyan";
-}
+export default function AiSuggestionsPage() {
+  const [suggestions, setSuggestions] = useState<AISuggestion[]>(DEMO);
 
-export default function SuggestionsPage() {
-  const [selectedSuggestion, setSelectedSuggestion] =
-    useState<Suggestion | null>(null);
-  const [filterStatus, setFilterStatus] = useState<string>("ALL");
+  const stats = useMemo(
+    () => ({
+      total: suggestions.length,
+      pending: suggestions.filter((s) => s.status === "pending").length,
+      accepted: suggestions.filter((s) => s.status === "accepted").length,
+      dismissed: suggestions.filter((s) => s.status === "dismissed").length,
+    }),
+    [suggestions]
+  );
 
-  const filteredSuggestions = useMemo(() => {
-    if (filterStatus === "ALL") return DEMO_SUGGESTIONS;
-    return DEMO_SUGGESTIONS.filter((s) => s.status === filterStatus);
-  }, [filterStatus]);
+  function accept(id: string) {
+    setSuggestions((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, status: "accepted" as const } : s))
+    );
+  }
 
-  const stats = useMemo(() => {
-    return {
-      active: 15,
-      accepted: 42,
-      dismissed: 8,
-      accuracy: 87,
-    };
-  }, []);
+  function dismiss(id: string) {
+    setSuggestions((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, status: "dismissed" as const } : s))
+    );
+  }
 
-  const statusOptions = [
-    { value: "ALL", label: "All Statuses" },
-    { value: "PENDING", label: "Pending" },
-    { value: "ACCEPTED", label: "Accepted" },
-    { value: "DISMISSED", label: "Dismissed" },
-    { value: "EXPIRED", label: "Expired" },
-  ];
-
-  const columns: RowColumn<Suggestion>[] = [
-    {
-      key: "suggestion",
-      header: "Suggestion",
-      width: "minmax(0, 3fr)",
-      render: (rec) => (
-        <span className="text-white/85 text-xs">{rec.suggestion}</span>
-      ),
-    },
-    {
-      key: "module",
-      header: "Module",
-      width: "minmax(0, 1fr)",
-      render: (rec) => (
-        <VerificationChip tone="purple">{rec.module}</VerificationChip>
-      ),
-    },
-    {
-      key: "confidence",
-      header: "Confidence",
-      width: "minmax(0, 1.2fr)",
-      align: "right",
-      render: (rec) => (
-        <div className="flex items-center gap-2 justify-end">
-          <div className="w-10 h-1 rounded bg-[#1A1D33] overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-[#A098F8] to-[#7B6EF6]"
-              style={{ width: `${rec.confidence}%` }}
-            />
-          </div>
-          <span className="text-xs font-semibold text-white/85">
-            {rec.confidence}%
-          </span>
-        </div>
-      ),
-    },
-    {
-      key: "impact",
-      header: "Impact",
-      width: "minmax(0, 1fr)",
-      render: (rec) => (
-        <VerificationChip tone={impactTone(rec.impact)}>
-          {rec.impact}
-        </VerificationChip>
-      ),
-    },
-    {
-      key: "status",
-      header: "Status",
-      width: "minmax(0, 1.2fr)",
-      render: (rec) => (
-        <VerificationChip tone={statusTone(rec.status)}>
-          {rec.status}
-        </VerificationChip>
-      ),
-    },
-  ];
+  const pending = suggestions.filter((s) => s.status === "pending");
 
   return (
-    <div className="space-y-6 bg-[#0C0E1A] min-h-screen p-8">
-      <div className="relative overflow-hidden rounded-2xl border border-[#A098F8]/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
-        <div className="absolute top-0 left-0 h-px bg-gradient-to-r from-[#7B6EF6] to-transparent w-1/3" />
-        <div className="absolute top-3 left-4 text-[#7B6EF6] text-lg">⌈</div>
-        <div className="absolute bottom-3 right-4 text-[#7B6EF6] text-lg">⌋</div>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#A098F8]/5 via-transparent to-transparent blur-2xl pointer-events-none" />
-
-        <div className="relative">
-          <p className="text-xs font-semibold tracking-widest text-white/50 mb-2">
-            DMO / AI ASSISTANT
-          </p>
-          <h1 className="text-3xl font-bold text-white mb-2">AI Action Suggestions</h1>
-          <p className="text-sm text-white/60">
-            Real-time operational recommendations with confidence scoring and impact analysis
-          </p>
+    <div className="space-y-6">
+      <header className="relative overflow-hidden rounded-2xl border border-[#A098F8]/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #A098F8 25%, #7B6EF6 50%, #2BBFA0 75%, transparent 100%)" }} />
+        <div className="pointer-events-none absolute left-3 top-3 h-6 w-6 border-l-[1.5px] border-t-[1.5px] border-[#A098F8]/50" />
+        <div className="pointer-events-none absolute bottom-3 right-3 h-6 w-6 border-b-[1.5px] border-r-[1.5px] border-[#7B6EF6]/45" />
+        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br from-[#A098F8]/20 via-[#7B6EF6]/15 to-transparent blur-3xl" />
+        <div className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="min-w-0 space-y-2">
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em]">
+              <Link href="/dmo" className="text-white/40 hover:text-white/70 transition-colors">DMO</Link>
+              <span className="text-white/25">/</span>
+              <span className="text-[#A098F8]">AI Suggestions</span>
+            </div>
+            <h1 className="text-2xl font-bold text-white md:text-3xl">AI Suggestions</h1>
+            <p className="max-w-2xl text-sm text-white/65">
+              System-generated action items ranked by urgency. Accept to act, dismiss to archive.
+              Each suggestion includes impact estimate aur next step.
+            </p>
+          </div>
         </div>
-      </div>
+      </header>
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <VerificationStatCard
-          tone="purple"
-          label="Active"
-          value="15"
-          sub="Pending action"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          }
-        />
-
-        <VerificationStatCard
-          tone="green"
-          label="Accepted"
-          value="42"
-          sub="Implemented"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          }
-        />
-
-        <VerificationStatCard
-          tone="red"
-          label="Dismissed"
-          value="8"
-          sub="Not actionable"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          }
-        />
-
-        <VerificationStatCard
-          tone="teal"
-          label="Accuracy"
-          value="87%"
-          sub="Prediction success"
-          icon={
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-          }
-        />
+        <VerificationStatCard tone="purple" label="Total pending" value={stats.pending} sub="action items" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 2v20m-7-7h14M8 9h8M6 5h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
+        <VerificationStatCard tone="green" label="Accepted" value={stats.accepted} sub="acting on suggestions" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M5 12l4 4L19 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>} />
+        <VerificationStatCard tone="red" label="Dismissed" value={stats.dismissed} sub="archived" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>} />
+        <VerificationStatCard tone="amber" label="Avg impact" value="2.4h" sub="estimated time saved" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" /><path d="M12 7v5l3 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>} />
       </section>
 
-      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <div className="mb-4">
-          <SectionHeader
-            title="Filter by Status"
-            hint="Select status to refine suggestions"
-          />
-        </div>
-        <FilterChipRow<string>
-          value={filterStatus}
-          options={statusOptions}
-          onChange={setFilterStatus}
-        />
-      </section>
-
-      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <SectionHeader
-          title={`Suggestions (${filteredSuggestions.length} of 8)`}
-          hint="Click a suggestion to view reasoning and expected outcomes"
-        />
-        <VerificationRowGrid<Suggestion>
-          rows={filteredSuggestions}
-          columns={columns}
-          onRowClick={setSelectedSuggestion}
-          emptyTitle="No suggestions found"
-          emptyHint="Try adjusting your filter"
-        />
-      </section>
-
-      {selectedSuggestion && (
-        <VerificationDrawer
-          open={!!selectedSuggestion}
-          onClose={() => setSelectedSuggestion(null)}
-          title={selectedSuggestion.suggestion}
-          subtitle={`${selectedSuggestion.module} • Confidence: ${selectedSuggestion.confidence}%`}
-          severity={
-            selectedSuggestion.impact === "HIGH"
-              ? "critical"
-              : selectedSuggestion.impact === "MEDIUM"
-              ? "warning"
-              : "info"
-          }
-        >
-          <div className="space-y-4">
-            <div className="grid grid-cols-3 gap-3">
-              <div>
-                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45 mb-2">
-                  Module
-                </p>
-                <VerificationChip tone="purple">
-                  {selectedSuggestion.module}
-                </VerificationChip>
-              </div>
-
-              <div>
-                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45 mb-2">
-                  Impact
-                </p>
-                <VerificationChip tone={impactTone(selectedSuggestion.impact)}>
-                  {selectedSuggestion.impact}
-                </VerificationChip>
-              </div>
-
-              <div>
-                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45 mb-2">
-                  Status
-                </p>
-                <VerificationChip tone={statusTone(selectedSuggestion.status)}>
-                  {selectedSuggestion.status}
-                </VerificationChip>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45 mb-2">
-                Confidence Score
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="flex-1 h-2 rounded bg-[#1A1D33] overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-[#A098F8] to-[#7B6EF6]"
-                    style={{ width: `${selectedSuggestion.confidence}%` }}
-                  />
-                </div>
-                <span className="text-base font-bold text-white/85">
-                  {selectedSuggestion.confidence}%
-                </span>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-white/8 bg-[#1A1D33]/50 p-3">
-              <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45 mb-2">
-                Suggestion Details
-              </p>
-              <p className="text-xs text-white/85 leading-relaxed">
-                This {selectedSuggestion.impact.toLowerCase()}-impact AI suggestion
-                has a {selectedSuggestion.confidence}% confidence score and is
-                currently in {selectedSuggestion.status.toLowerCase()} status. The
-                system recommends this action to optimize your {selectedSuggestion.module}{" "}
-                module operations.
-              </p>
-            </div>
+      <section className="space-y-3">
+        <SectionHeader title="Pending suggestions" hint={`${pending.length} action item(s) await your decision`} />
+        {pending.length === 0 ? (
+          <div className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-12 text-center">
+            <p className="text-white/65">No pending suggestions — you're all caught up!</p>
           </div>
-        </VerificationDrawer>
-      )}
+        ) : (
+          pending.map((sug) => (
+            <div key={sug.id} className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5 transition-colors hover:border-white/20">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <VerificationChip tone={PRIORITY_TONE[sug.priority]}>
+                      {sug.priority.toUpperCase()}
+                    </VerificationChip>
+                    <span className="font-mono text-[10px] text-white/45">{sug.id}</span>
+                    <span className="text-[10px] text-white/40">{fmtTime(sug.timestamp)}</span>
+                  </div>
+                  <h3 className="mt-2 text-base font-semibold text-white">{sug.title}</h3>
+                  <p className="mt-1 text-sm text-white/65">{sug.description}</p>
+                  <div className="mt-3 rounded-xl border border-white/10 bg-white/[0.04] p-3">
+                    <p className="text-[11px] uppercase tracking-[0.15em] text-white/45">Impact</p>
+                    <p className="mt-1 text-[13px] text-white/85">{sug.impact}</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 lg:min-w-max">
+                  <Link
+                    href={sug.action.href}
+                    className="rounded-xl border border-[#2BBFA0]/40 bg-[#2BBFA0]/12 px-4 py-2 text-center text-xs font-semibold text-[#2BBFA0] transition-colors hover:border-[#2BBFA0]/80 hover:bg-[#2BBFA0]/25 hover:text-white"
+                  >
+                    {sug.action.label}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => accept(sug.id)}
+                    className="rounded-xl border border-[#7B6EF6]/40 bg-[#7B6EF6]/12 px-4 py-2 text-xs font-semibold text-[#A098F8] transition-colors hover:border-[#A098F8]/70 hover:bg-[#7B6EF6]/20"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => dismiss(sug.id)}
+                    className="rounded-xl border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold text-white/65 transition-colors hover:border-white/35 hover:bg-white/10"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </section>
     </div>
   );
 }

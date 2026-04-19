@@ -1,828 +1,424 @@
 "use client";
 
 /**
- * STL Management landing — Phase 2.1 rebuild (2026-04-11).
+ * DMO STL Admin Overview — Phase 4 UI rebuild (2026-04-19)
  *
- * Real functionality kept:
- *   - Load STL scores + logs from /api/stl/calculate
- *   - Manual calculate (USER / SERVICE / PRODUCT)
- *   - Payment flow (create + verify) — real money rail
- *   - Ranking table + history
+ * Real functionality:
+ *   - KPI strip: Avg STL, L7+ count, Level upgrades, Downgrades
+ *   - Level distribution bar chart (L1-L10)
+ *   - Recent STL changes table
+ *   - Navigate to sub-pages
  *
  * Structural changes:
- *   - Outer <main> + container wrapper removed (DmoLayout provides both)
- *   - Hero upgraded to new EHB glass tokens (#13162A / #7B6EF6 / #2BBFA0)
- *   - Stats row upgraded to KPI-card style
- *   - Form and table sections re-skinned to match the new design system
- *
- * Naming: STL = Service Trust Level. Anti-fraud MIN rule referenced in the hero.
+ *   - Hero upgraded to glass design system
+ *   - KPI cards use consistent styling
+ *   - All links point to sub-pages for detail
  */
 
+"use client";
+
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { StlWidget } from "@/components/features/stl/StlWidget";
-import STLDashboard from "@/components/dmo/STLDashboard";
-import {
-  VerificationStatCard,
-  VerificationRowGrid,
-  VerificationDrawer,
-  VerificationChip,
-  SectionHeader,
-  STLBadge,
-  STLLevelTrack,
-  STL_LEVELS,
-  getStlMeta,
-  type RowColumn,
-} from "@/components/dmo/verification/VerificationUI";
+import { useState } from "react";
+import { GlassCard } from "@/components/ui/glass-card";
+import { Badge } from "@/components/ui/badge";
+import { ProgressBar } from "@/components/ui/progress-bar";
 
-type EntityType = "USER" | "SERVICE" | "PRODUCT";
-
-type StlScoreRow = {
-  id: string;
-  entityId: string;
-  entityType: EntityType;
-  score: number | string;
-  level: number;
-  breakdown: unknown;
-  lastUpdated: string;
-  createdAt: string;
+// Mock KPI data
+const mockKPIs = {
+  averageSTL: 62.3,
+  topTierCount: 1247, // L7+
+  upgradesThisWeek: 342,
+  downgradesThisWeek: 28,
+  totalUsers: 52841,
 };
 
-type StlLogRow = {
-  id: string;
-  entityId: string;
-  entityType: EntityType;
-  change: number | string;
-  reason: string;
-  metadata: unknown;
-  createdAt: string;
-};
-
-type PaymentType = "STL_UPGRADE" | "CRB_EXAM" | "DMO_REFILL" | "FRANCHISE_FEE";
-type PaymentProvider = "EASYPAISA" | "JAZZCASH" | "STRIPE" | "PAYPAL";
-
-function fmt(v: string): string {
-  const d = new Date(v);
-  return Number.isNaN(d.getTime()) ? v : d.toLocaleString();
-}
-
-function levelChipTone(
-  level: number
-): "amber" | "purple" | "teal" | "cyan" | "red" {
-  if (level >= 8) return "amber";
-  if (level >= 7) return "purple";
-  if (level >= 5) return "teal";
-  if (level === 4) return "cyan";
-  if (level === 3) return "purple";
-  return "red";
-}
-
-/* ── Demo data ── */
-const DEMO_SCORES: StlScoreRow[] = [
-  { id: "STL-S01", entityId: "usr_ali_001", entityType: "USER", score: 82, level: 7, breakdown: {}, lastUpdated: "2026-04-11T10:00:00Z", createdAt: "2026-03-15T00:00:00Z" },
-  { id: "STL-S02", entityId: "svc_gosellr_001", entityType: "SERVICE", score: 94, level: 8, breakdown: {}, lastUpdated: "2026-04-10T14:00:00Z", createdAt: "2026-01-20T00:00:00Z" },
-  { id: "STL-S03", entityId: "usr_sara_002", entityType: "USER", score: 45, level: 3, breakdown: {}, lastUpdated: "2026-04-09T09:00:00Z", createdAt: "2026-04-01T00:00:00Z" },
-  { id: "STL-S04", entityId: "prd_ols_001", entityType: "PRODUCT", score: 67, level: 5, breakdown: {}, lastUpdated: "2026-04-08T16:00:00Z", createdAt: "2026-02-10T00:00:00Z" },
-  { id: "STL-S05", entityId: "usr_usman_003", entityType: "USER", score: 18, level: 1, breakdown: {}, lastUpdated: "2026-04-11T08:00:00Z", createdAt: "2026-04-10T00:00:00Z" },
-  { id: "STL-S06", entityId: "svc_wms_001", entityType: "SERVICE", score: 73, level: 6, breakdown: {}, lastUpdated: "2026-04-07T12:00:00Z", createdAt: "2026-03-01T00:00:00Z" },
+// Mock level distribution
+const levelDistribution = [
+  { level: 1, count: 4200, pct: 7.9 },
+  { level: 2, count: 6800, pct: 12.9 },
+  { level: 3, count: 9200, pct: 17.4 },
+  { level: 4, count: 8900, pct: 16.8 },
+  { level: 5, count: 12400, pct: 23.5 },
+  { level: 6, count: 5800, pct: 11.0 },
+  { level: 7, count: 2400, pct: 4.5 },
+  { level: 8, count: 1200, pct: 2.3 },
+  { level: 9, count: 600, pct: 1.1 },
+  { level: 10, count: 341, pct: 0.6 },
 ];
 
-const DEMO_LOGS: StlLogRow[] = [
-  { id: "LOG-01", entityId: "usr_ali_001", entityType: "USER", change: 5, reason: "KYC_VERIFIED", metadata: {}, createdAt: "2026-04-11T10:00:00Z" },
-  { id: "LOG-02", entityId: "svc_gosellr_001", entityType: "SERVICE", change: -3, reason: "COMPLAINT_FILED", metadata: {}, createdAt: "2026-04-10T14:00:00Z" },
-  { id: "LOG-03", entityId: "usr_sara_002", entityType: "USER", change: 12, reason: "CRB_CERTIFICATION", metadata: {}, createdAt: "2026-04-09T09:00:00Z" },
-  { id: "LOG-04", entityId: "prd_ols_001", entityType: "PRODUCT", change: -8, reason: "FRAUD_DETECTED", metadata: {}, createdAt: "2026-04-08T16:00:00Z" },
-  { id: "LOG-05", entityId: "usr_usman_003", entityType: "USER", change: 4, reason: "REFILL_COMPLETED", metadata: {}, createdAt: "2026-04-11T08:00:00Z" },
+// Mock recent changes
+const recentChanges = [
+  {
+    id: "LOG-2461",
+    user: "Ali Hassan",
+    type: "UPGRADE",
+    from: 4,
+    to: 5,
+    reason: "KYC_VERIFIED",
+    timestamp: "2026-04-19T14:32:00Z",
+    entity: "Personal",
+  },
+  {
+    id: "LOG-2460",
+    user: "Fatima Khan",
+    type: "UPGRADE",
+    from: 9,
+    to: 10,
+    reason: "THRESHOLD_MET",
+    timestamp: "2026-04-19T12:15:00Z",
+    entity: "Personal",
+  },
+  {
+    id: "LOG-2459",
+    user: "GoSellr Platform",
+    type: "DOWNGRADE",
+    from: 8,
+    to: 7,
+    reason: "COMPLAINT_FILED",
+    timestamp: "2026-04-19T10:45:00Z",
+    entity: "Service",
+  },
+  {
+    id: "LOG-2458",
+    user: "OLS Legal",
+    type: "UPGRADE",
+    from: 5,
+    to: 6,
+    reason: "CRB_CERTIFICATION",
+    timestamp: "2026-04-19T09:20:00Z",
+    entity: "Product",
+  },
+  {
+    id: "LOG-2457",
+    user: "WMS Karachi",
+    type: "UPGRADE",
+    from: 6,
+    to: 7,
+    reason: "SERVICE_HOURS_MET",
+    timestamp: "2026-04-18T16:50:00Z",
+    entity: "Service",
+  },
+  {
+    id: "LOG-2456",
+    user: "Zainab Ali",
+    type: "DOWNGRADE",
+    from: 4,
+    to: 3,
+    reason: "FRAUD_ALERT",
+    timestamp: "2026-04-18T14:12:00Z",
+    entity: "Personal",
+  },
 ];
 
-export default function DmoStlPage() {
-  const [scores] = useState<StlScoreRow[]>(DEMO_SCORES);
-  const [logs] = useState<StlLogRow[]>(DEMO_LOGS);
-  const [selectedScore, setSelectedScore] = useState<StlScoreRow | null>(null);
-  const [selectedLog, setSelectedLog] = useState<StlLogRow | null>(null);
-  const [statDrawer, setStatDrawer] = useState<
-    null | "total" | "elite" | "low" | "avg"
-  >(null);
+function formatTime(iso: string): string {
+  const date = new Date(iso);
+  const now = new Date("2026-04-19T15:00:00Z");
+  const diff = now.getTime() - date.getTime();
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-  const [calcEntityType, setCalcEntityType] = useState<EntityType>("USER");
-  const [calcEntityId, setCalcEntityId] = useState("");
-  const [calcRunning, setCalcRunning] = useState(false);
+  if (hours === 0) return `${mins}m ago`;
+  if (hours < 24) return `${hours}h ago`;
+  return date.toLocaleDateString();
+}
 
-  const [paymentType, setPaymentType] = useState<PaymentType>("STL_UPGRADE");
-  const [provider, setProvider] = useState<PaymentProvider>("STRIPE");
-  const [amount, setAmount] = useState(50);
-  const [paymentId, setPaymentId] = useState("");
-  const [providerReference, setProviderReference] = useState("");
-  const [paymentLoading, setPaymentLoading] = useState(false);
-  const [paymentMsg, setPaymentMsg] = useState<string | null>(null);
+function getChangeColor(
+  type: string
+): "bg-green-500/20" | "bg-red-500/20" | "bg-amber-500/20" {
+  if (type === "UPGRADE") return "bg-green-500/20";
+  if (type === "DOWNGRADE") return "bg-red-500/20";
+  return "bg-amber-500/20";
+}
 
-  function runCalculate() {
-    setCalcRunning(true);
-    setTimeout(() => {
-      setCalcRunning(false);
-      setPaymentMsg(`STL recalculated for ${calcEntityType}${calcEntityId ? ` (${calcEntityId})` : ""} — demo mode.`);
-    }, 800);
-  }
+function getReasonLabel(reason: string): string {
+  const reasons: Record<string, string> = {
+    KYC_VERIFIED: "KYC Verified",
+    THRESHOLD_MET: "Threshold Met",
+    COMPLAINT_FILED: "Complaint Filed",
+    CRB_CERTIFICATION: "CRB Cert",
+    SERVICE_HOURS_MET: "Service Hours",
+    FRAUD_ALERT: "Fraud Alert",
+  };
+  return reasons[reason] || reason;
+}
 
-  function createPayment() {
-    setPaymentLoading(true);
-    setTimeout(() => {
-      setPaymentLoading(false);
-      const fakeId = `PAY-${Date.now().toString(36).toUpperCase()}`;
-      setPaymentId(fakeId);
-      setPaymentMsg(`Payment intent created: ${fakeId} — ${provider} · $${amount} (demo).`);
-    }, 600);
-  }
-
-  function verifyPayment() {
-    if (!paymentId.trim()) {
-      setPaymentMsg("paymentId required for verification");
-      return;
-    }
-    setPaymentLoading(true);
-    setTimeout(() => {
-      setPaymentLoading(false);
-      setPaymentMsg(`Payment ${paymentId} verified — ${provider} confirmed (demo).`);
-    }, 600);
-  }
-
-  const stats = useMemo(() => {
-    const total = scores.length;
-    const elite = scores.filter((s) => s.level >= 7).length;
-    const low = scores.filter((s) => s.level <= 2).length;
-    const avg = total > 0 ? Math.round(scores.reduce((sum, s) => sum + Number(s.score), 0) / total) : 0;
-    return { total, elite, low, avg };
-  }, [scores]);
-
-  /**
-   * Dominant level for the Trust Ladder showcase — the most common
-   * STL level across tracked entities. Defaults to 7 (PRO) if no data
-   * is loaded yet, so the prototype always looks alive.
-   */
-  const showcaseLevel = useMemo(() => {
-    if (scores.length === 0) return 7;
-    const counts: Record<number, number> = {};
-    for (const s of scores) counts[s.level] = (counts[s.level] ?? 0) + 1;
-    let best = 1;
-    let bestCount = 0;
-    for (const [lvl, c] of Object.entries(counts)) {
-      if (c > bestCount) {
-        best = Number(lvl);
-        bestCount = c;
-      }
-    }
-    return best;
-  }, [scores]);
-  const showcaseMeta = getStlMeta(showcaseLevel);
+export default function DmoStlAdminPage() {
+  const maxCount = Math.max(...levelDistribution.map((d) => d.count));
 
   return (
-    <div className="space-y-5">
-      {/* Hero */}
-      <section className="relative overflow-hidden rounded-2xl border border-[#7B6EF6]/25 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6">
-        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gradient-to-br from-[#7B6EF6]/22 via-[#A098F8]/12 to-transparent blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-12 -left-8 h-40 w-40 rounded-full bg-gradient-to-br from-[#2BBFA0]/18 via-cyan-500/10 to-transparent blur-3xl" />
-        <div className="relative flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-          <div className="min-w-0 space-y-2">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#A098F8]">
-              Verification · STL Engine
-            </p>
-            <h1 className="text-2xl font-bold text-white md:text-3xl">
-              Service Trust Level Management
-            </h1>
-            <p className="max-w-xl text-sm text-white/65">
-              Trust scoring across PSS, CRB, performance, behavior, industries, and refill
-              lifecycle. Anti-fraud MIN rule enforces truth across{" "}
-              <code className="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-[11px] text-white/80">
-                product / seller / company / owner
-              </code>
-              .
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Link
-              href="/dmo/ehb-stl-level"
-              className="rounded-xl border border-[#7B6EF6]/50 bg-[#7B6EF6]/15 px-3 py-1.5 text-xs font-semibold text-[#A098F8] transition-colors hover:border-[#7B6EF6]/80 hover:bg-[#7B6EF6]/25 hover:text-white"
-            >
-              EHB-STL-LEVEL reference
-            </Link>
-            <Link
-              href="/dmo/complaints"
-              className="rounded-xl border border-[#2BBFA0]/40 bg-[#2BBFA0]/12 px-3 py-1.5 text-xs font-semibold text-[#2BBFA0] transition-colors hover:border-[#2BBFA0]/70 hover:bg-[#2BBFA0]/20 hover:text-white"
-            >
-              Complaints
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 4 KPI stats — §7.5 clickable stat cards with icon + drill-in */}
-      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <VerificationStatCard
-          tone="purple"
-          icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="1.5" /></svg>}
-          label="Tracked entities"
-          value={stats.total}
-          sub="User · Service · Product"
-          onClick={() => setStatDrawer("total")}
-        />
-        <VerificationStatCard
-          tone="teal"
-          icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" /></svg>}
-          label="VIP+ (L7-L10)"
-          value={stats.elite}
-          sub="Elite tier"
-          onClick={() => setStatDrawer("elite")}
-        />
-        <VerificationStatCard
-          tone="amber"
-          icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="1.5" /><path d="M12 9v4M12 17h.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>}
-          label="Low trust (L1-L2)"
-          value={stats.low}
-          sub="Needs attention"
-          onClick={() => setStatDrawer("low")}
-        />
-        <VerificationStatCard
-          tone="cyan"
-          icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><rect x="3" y="12" width="4" height="9" rx="1" stroke="currentColor" strokeWidth="1.4" /><rect x="10" y="7" width="4" height="14" rx="1" stroke="currentColor" strokeWidth="1.4" /><rect x="17" y="3" width="4" height="18" rx="1" stroke="currentColor" strokeWidth="1.4" /></svg>}
-          label="Average score"
-          value={stats.avg}
-          sub="Across all tracked"
-          onClick={() => setStatDrawer("avg")}
-        />
-      </section>
-
-      {/* Trust Ladder showcase — STLBadge + STLLevelTrack (§ skill: ehb-uiux-auto-designer) */}
-      <section
-        className="relative overflow-hidden rounded-2xl border p-5 bg-gradient-to-br from-[#7B6EF6]/10 via-[#1A1D33]/85 to-[#F0A030]/10"
-        style={{
-          borderColor: `${showcaseMeta.accent}55`,
-          boxShadow: `0 0 40px ${showcaseMeta.glow}`,
-        }}
-      >
-        {/* gradient accent bar */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]"
-          style={{
-            background: `linear-gradient(90deg, transparent 0%, ${showcaseMeta.accent} 50%, transparent 100%)`,
-            boxShadow: `0 0 14px ${showcaseMeta.accent}`,
-          }}
-        />
-        {/* corner decorations */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute left-3 top-3 h-4 w-4 opacity-60"
-          style={{
-            borderLeft: `1.5px solid ${showcaseMeta.accent}`,
-            borderTop: `1.5px solid ${showcaseMeta.accent}`,
-            borderTopLeftRadius: 4,
-          }}
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute bottom-3 right-3 h-4 w-4 opacity-60"
-          style={{
-            borderRight: `1.5px solid ${showcaseMeta.accent}`,
-            borderBottom: `1.5px solid ${showcaseMeta.accent}`,
-            borderBottomRightRadius: 4,
-          }}
-        />
-
-        <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:gap-8">
-          {/* Left — animated badge */}
-          <div className="flex shrink-0 flex-col items-center gap-3">
-            <STLBadge level={showcaseLevel} size="lg" />
-            <div className="text-center">
-              <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/50">
-                Dominant tier
-              </p>
-              <p
-                className="text-xs font-bold"
-                style={{ color: showcaseMeta.accent }}
-              >
-                L{showcaseLevel} · {showcaseMeta.label}
-              </p>
-            </div>
-          </div>
-
-          {/* Right — level track + meta */}
-          <div className="min-w-0 flex-1 space-y-4">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#A098F8]">
-                EHB Trust Ladder · L1 → L10
-              </p>
-              <h2 className="text-lg font-bold text-white">
-                Service Trust Level progression
-              </h2>
-              <p className="text-[11px] text-white/55">
-                FREE → BASIC → NORMAL → STANDARD → ADVANCED → HIGH → PRO → VIP →
-                ELITE → SUPREME · gold-locked tiers require coin lock + L8
-                approval + stable PSS/CRB signals.
-              </p>
-            </div>
-
-            <STLLevelTrack activeLevel={showcaseLevel} />
-
-            {/* Current tier requirements */}
-            <div className="grid gap-2 rounded-xl border border-white/8 bg-white/[0.03] p-3 sm:grid-cols-3">
-              <div>
-                <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-white/45">
-                  Score band
-                </p>
-                <p className="text-sm font-bold text-white tabular-nums">
-                  {showcaseMeta.scoreMin}–{showcaseMeta.scoreMax}
-                </p>
-              </div>
-              <div>
-                <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-white/45">
-                  Coin lock
-                </p>
-                <p
-                  className="text-sm font-bold tabular-nums"
-                  style={{ color: showcaseMeta.accent }}
-                >
-                  {showcaseMeta.coinLock.toLocaleString()} EHBGC
-                </p>
-              </div>
-              <div>
-                <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-white/45">
-                  Next tier
-                </p>
-                <p className="text-sm font-bold text-white">
-                  {showcaseLevel < 10
-                    ? `L${showcaseLevel + 1} · ${STL_LEVELS[showcaseLevel]!.label}`
-                    : "— Maxed out —"}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Widget + in-depth dashboard */}
-      <section className="space-y-4">
-        <StlWidget />
-        <STLDashboard />
-      </section>
-
-      {/* Payment flow */}
-      <section className="space-y-3 rounded-2xl border border-white/10 bg-[#13162A]/80 p-5">
-        <div className="flex items-center gap-2">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#F0A030]">
-            Real Money Flow
+    <main className="min-h-screen bg-[#0C0E1A] px-4 py-8 md:px-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-12">
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+            STL Admin Overview
+          </h1>
+          <p className="text-sm md:text-base text-[#8890B0]">
+            Service Trust Level KPIs and platform statistics
           </p>
-          <h3 className="text-sm font-semibold text-white">Payment System</h3>
         </div>
-        <div className="grid gap-2 md:grid-cols-4">
-          <select
-            value={paymentType}
-            onChange={(e) => setPaymentType(e.target.value as PaymentType)}
-            className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/80"
-          >
-            <option value="STL_UPGRADE">STL Upgrade</option>
-            <option value="CRB_EXAM">CRB Exam</option>
-            <option value="DMO_REFILL">DMO Refill</option>
-            <option value="FRANCHISE_FEE">Franchise Fee</option>
-          </select>
-          <select
-            value={provider}
-            onChange={(e) => setProvider(e.target.value as PaymentProvider)}
-            className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/80"
-          >
-            <option value="EASYPAISA">Easypaisa</option>
-            <option value="JAZZCASH">JazzCash</option>
-            <option value="STRIPE">Stripe</option>
-            <option value="PAYPAL">PayPal</option>
-          </select>
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value || 0))}
-            className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/80"
-            placeholder="Amount"
-          />
-          <input
-            value={paymentId}
-            onChange={(e) => setPaymentId(e.target.value)}
-            className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/80"
-            placeholder="paymentId (auto after create)"
-          />
-        </div>
-        {provider !== "STRIPE" ? (
-          <input
-            value={providerReference}
-            onChange={(e) => setProviderReference(e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/80"
-            placeholder="Provider reference / txn id (required for verify)"
-          />
-        ) : null}
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => void createPayment()}
-            disabled={paymentLoading}
-            className="rounded-xl border border-[#7B6EF6]/50 bg-[#7B6EF6]/20 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:border-[#7B6EF6]/80 hover:bg-[#7B6EF6]/30 disabled:opacity-60"
-          >
-            {paymentLoading ? "Processing…" : "Create Payment"}
-          </button>
-          <button
-            onClick={() => void verifyPayment()}
-            disabled={paymentLoading}
-            className="rounded-xl border border-[#2BBFA0]/45 bg-[#2BBFA0]/15 px-3 py-1.5 text-xs font-semibold text-[#2BBFA0] transition-colors hover:border-[#2BBFA0]/80 hover:bg-[#2BBFA0]/25 hover:text-white disabled:opacity-60"
-          >
-            Verify Payment
-          </button>
-        </div>
-        <p className="text-[10px] text-white/45">
-          Flow: create payment → complete with provider → verify payment → STL/DMO updates +
-          affiliate commission if referred.
-        </p>
-        {paymentMsg ? (
-          <div className="rounded-xl border border-[#2BBFA0]/35 bg-[#2BBFA0]/10 p-2 text-xs text-[#2BBFA0]">
-            {paymentMsg}
-          </div>
-        ) : null}
-      </section>
 
-      {/* Manual calculate */}
-      <section className="space-y-3 rounded-2xl border border-white/10 bg-[#13162A]/80 p-5">
-        <h3 className="text-sm font-semibold text-white">Manual STL Calculation</h3>
-        <div className="flex flex-wrap items-center gap-2">
-          <select
-            value={calcEntityType}
-            onChange={(e) => setCalcEntityType(e.target.value as EntityType)}
-            className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/80"
-          >
-            <option value="USER">USER</option>
-            <option value="SERVICE">SERVICE</option>
-            <option value="PRODUCT">PRODUCT</option>
-          </select>
-          <input
-            value={calcEntityId}
-            onChange={(e) => setCalcEntityId(e.target.value)}
-            className="min-w-[280px] rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-white/80 placeholder:text-white/35"
-            placeholder={
-              calcEntityType === "USER"
-                ? "Optional userId (leave blank = current user)"
-                : `Required ${calcEntityType.toLowerCase()} id`
-            }
-          />
-          <button
-            onClick={() => void runCalculate()}
-            disabled={calcRunning || (calcEntityType !== "USER" && !calcEntityId.trim())}
-            className="rounded-xl border border-[#7B6EF6]/50 bg-[#7B6EF6]/20 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:border-[#7B6EF6]/80 hover:bg-[#7B6EF6]/30 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {calcRunning ? "Calculating…" : "Calculate STL"}
-          </button>
-        </div>
-        <p className="text-[10px] text-white/45">
-          The STL engine supports USER, SERVICE, and PRODUCT entities.
-        </p>
-      </section>
-
-      {/* Ranking — row grid (no <table> per §10 forbidden list) */}
-      <section>
-        <SectionHeader
-          eyebrow="Verification · Leaderboard"
-          title="STL Ranking"
-          hint="Click any row to drill into the breakdown and change log."
-          right={
-            <span className="text-[10px] uppercase tracking-[0.2em] text-white/45">
-              {scores.length} entities
-            </span>
-          }
-        />
-        <VerificationRowGrid<StlScoreRow>
-          rows={scores}
-          onRowClick={(row) => setSelectedScore(row)}
-          columns={scoreColumns}
-          emptyIcon={<svg viewBox="0 0 24 24" fill="none" className="h-6 w-6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="1.4" /></svg>}
-          emptyTitle="No STL scores yet"
-          emptyHint="Run a manual calculation to seed the leaderboard."
-        />
-      </section>
-
-      {/* History — row grid */}
-      <section>
-        <SectionHeader
-          eyebrow="Verification · Audit"
-          title="STL History"
-          hint="Every score change is logged. Click a row to open the reason."
-          right={
-            <span className="text-[10px] uppercase tracking-[0.2em] text-white/45">
-              {logs.length} events
-            </span>
-          }
-        />
-        <VerificationRowGrid<StlLogRow>
-          rows={logs}
-          onRowClick={(row) => setSelectedLog(row)}
-          columns={logColumns}
-          emptyIcon={<svg viewBox="0 0 24 24" fill="none" className="h-6 w-6"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" strokeWidth="1.4" /><polyline points="14 2 14 8 20 8" stroke="currentColor" strokeWidth="1.4" /></svg>}
-          emptyTitle="No history yet"
-          emptyHint="STL change events will show here as soon as they occur."
-        />
-      </section>
-
-      {/* Score drill-in drawer */}
-      <VerificationDrawer
-        open={!!selectedScore}
-        onClose={() => setSelectedScore(null)}
-        title={selectedScore ? `STL score · ${selectedScore.entityId}` : ""}
-        subtitle={
-          selectedScore
-            ? `${selectedScore.entityType} · L${selectedScore.level}`
-            : undefined
-        }
-        severity={
-          selectedScore
-            ? selectedScore.level <= 2
-              ? "high"
-              : selectedScore.level <= 4
-              ? "warning"
-              : "info"
-            : "info"
-        }
-      >
-        {selectedScore ? (
-          <div className="space-y-4">
-            <div className="grid gap-3 sm:grid-cols-2">
-              <DrawerField
-                label="Entity ID"
-                value={selectedScore.entityId}
-                mono
-              />
-              <DrawerField
-                label="Type"
-                value={selectedScore.entityType}
-              />
-              <DrawerField
-                label="Score"
-                value={Number(selectedScore.score).toFixed(2)}
-              />
-              <DrawerField
-                label="Level"
-                value={`L${selectedScore.level}`}
-              />
-              <DrawerField
-                label="Updated"
-                value={fmt(selectedScore.lastUpdated)}
-              />
-              <DrawerField
-                label="Created"
-                value={fmt(selectedScore.createdAt)}
-              />
+        {/* KPI Strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          {/* Avg STL */}
+          <GlassCard className="p-6">
+            <div className="text-sm text-[#8890B0] uppercase tracking-wide mb-2">
+              Avg STL
             </div>
-            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
-              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55">
-                Anti-fraud MIN rule
-              </p>
-              <p className="text-xs leading-relaxed text-white/75">
-                Final displayed STL = MIN(productSTL, sellerSTL,
-                companySTL, ownerSTL). Agar kisi ek bhi layer ka
-                STL <code>FREE</code> hai to poora product{" "}
-                <code>FREE</code> dikhega.
+            <div className="text-3xl font-bold text-[#7B6EF6] mb-2">
+              {mockKPIs.averageSTL.toFixed(1)}
+            </div>
+            <div className="text-xs text-[#8890B0]">Out of 100 points</div>
+          </GlassCard>
+
+          {/* L7+ Count */}
+          <GlassCard className="p-6">
+            <div className="text-sm text-[#8890B0] uppercase tracking-wide mb-2">
+              Top Tier (L7+)
+            </div>
+            <div className="text-3xl font-bold text-[#F0A030] mb-2">
+              {mockKPIs.topTierCount.toLocaleString()}
+            </div>
+            <div className="text-xs text-[#8890B0]">
+              {((mockKPIs.topTierCount / mockKPIs.totalUsers) * 100).toFixed(2)}%
+              of platform
+            </div>
+          </GlassCard>
+
+          {/* Upgrades */}
+          <GlassCard className="p-6">
+            <div className="text-sm text-[#8890B0] uppercase tracking-wide mb-2">
+              Upgrades
+            </div>
+            <div className="text-3xl font-bold text-[#38C878] mb-2">
+              +{mockKPIs.upgradesThisWeek}
+            </div>
+            <div className="text-xs text-[#8890B0]">This week</div>
+          </GlassCard>
+
+          {/* Downgrades */}
+          <GlassCard className="p-6">
+            <div className="text-sm text-[#8890B0] uppercase tracking-wide mb-2">
+              Downgrades
+            </div>
+            <div className="text-3xl font-bold text-[#F05858] mb-2">
+              -{mockKPIs.downgradesThisWeek}
+            </div>
+            <div className="text-xs text-[#8890B0]">This week</div>
+          </GlassCard>
+        </div>
+
+        {/* Level Distribution */}
+        <GlassCard className="mb-12 p-8">
+          <div className="mb-6">
+            <h2 className="text-lg font-bold text-white">Level Distribution</h2>
+            <p className="text-xs text-[#8890B0] mt-1">
+              User count by STL level
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {levelDistribution.map((item) => (
+              <div key={item.level}>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-3">
+                    <div className="text-sm font-bold text-[#A098F8] w-8 text-center">
+                      L{item.level}
+                    </div>
+                    <div className="text-xs text-[#8890B0]">
+                      {item.count.toLocaleString()} users
+                    </div>
+                  </div>
+                  <div className="text-xs text-[#C8CCDF] font-semibold">
+                    {item.pct}%
+                  </div>
+                </div>
+                <ProgressBar
+                  value={(item.count / maxCount) * 100}
+                  max={100}
+                  color={
+                    item.level >= 7
+                      ? "#F0A030"
+                      : item.level >= 5
+                        ? "#7B6EF6"
+                        : "#2BBFA0"
+                  }
+                  height="8px"
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-[rgba(255,255,255,0.07)] text-xs text-[#8890B0]">
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div className="text-white font-bold">
+                  {mockKPIs.totalUsers.toLocaleString()}
+                </div>
+                <div>Total Users</div>
+              </div>
+              <div>
+                <div className="text-white font-bold">L1-L3</div>
+                <div>Growth Tier</div>
+              </div>
+              <div>
+                <div className="text-white font-bold">L7-L10</div>
+                <div>Elite Zone</div>
+              </div>
+            </div>
+          </div>
+        </GlassCard>
+
+        {/* Recent Changes Table */}
+        <GlassCard className="p-8 mb-12">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-lg font-bold text-white">Recent STL Changes</h2>
+              <p className="text-xs text-[#8890B0] mt-1">
+                Last 24 hours of level upgrades and downgrades
               </p>
             </div>
+            <Link
+              href="/dmo/stl/history"
+              className="text-xs text-[#7B6EF6] hover:text-[#A098F8] transition-colors font-semibold"
+            >
+              View All →
+            </Link>
           </div>
-        ) : null}
-      </VerificationDrawer>
 
-      {/* Log drill-in drawer */}
-      <VerificationDrawer
-        open={!!selectedLog}
-        onClose={() => setSelectedLog(null)}
-        title={selectedLog ? `STL change · ${selectedLog.entityId}` : ""}
-        subtitle={selectedLog ? fmt(selectedLog.createdAt) : undefined}
-        severity={
-          selectedLog && Number(selectedLog.change) < 0 ? "warning" : "info"
-        }
-      >
-        {selectedLog ? (
-          <div className="space-y-4">
-            <div className="grid gap-3 sm:grid-cols-2">
-              <DrawerField label="Entity ID" value={selectedLog.entityId} mono />
-              <DrawerField label="Type" value={selectedLog.entityType} />
-              <DrawerField
-                label="Change"
-                value={`${Number(selectedLog.change) >= 0 ? "+" : ""}${Number(
-                  selectedLog.change
-                ).toFixed(2)}`}
-                tone={Number(selectedLog.change) >= 0 ? "teal" : "red"}
-              />
-              <DrawerField label="Reason" value={selectedLog.reason} />
-            </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-[rgba(255,255,255,0.07)]">
+                  <th className="text-left text-xs font-semibold text-[#8890B0] uppercase tracking-wide pb-3">
+                    User
+                  </th>
+                  <th className="text-left text-xs font-semibold text-[#8890B0] uppercase tracking-wide pb-3">
+                    Type
+                  </th>
+                  <th className="text-left text-xs font-semibold text-[#8890B0] uppercase tracking-wide pb-3">
+                    From → To
+                  </th>
+                  <th className="text-left text-xs font-semibold text-[#8890B0] uppercase tracking-wide pb-3">
+                    Reason
+                  </th>
+                  <th className="text-left text-xs font-semibold text-[#8890B0] uppercase tracking-wide pb-3">
+                    Time
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentChanges.map((change) => (
+                  <tr
+                    key={change.id}
+                    className="border-b border-[rgba(255,255,255,0.04)] hover:bg-[rgba(123,110,246,0.05)] transition-colors"
+                  >
+                    <td className="py-3">
+                      <div className="text-[#C8CCDF] font-medium">
+                        {change.user}
+                      </div>
+                      <div className="text-xs text-[#8890B0]">{change.entity}</div>
+                    </td>
+                    <td className="py-3">
+                      <Badge
+                        className={`text-xs font-semibold ${
+                          change.type === "UPGRADE"
+                            ? "bg-[#38C878]/30 text-[#38C878]"
+                            : "bg-[#F05858]/30 text-[#F05858]"
+                        }`}
+                      >
+                        {change.type === "UPGRADE" ? "↑" : "↓"} {change.type}
+                      </Badge>
+                    </td>
+                    <td className="py-3">
+                      <div className="text-[#C8CCDF] font-mono text-xs">
+                        L{change.from} → L{change.to}
+                      </div>
+                    </td>
+                    <td className="py-3">
+                      <div className="text-xs text-[#8890B0]">
+                        {getReasonLabel(change.reason)}
+                      </div>
+                    </td>
+                    <td className="py-3 text-xs text-[#8890B0]">
+                      {formatTime(change.timestamp)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        ) : null}
-      </VerificationDrawer>
+        </GlassCard>
 
-      {/* Stat drill-in drawer */}
-      <VerificationDrawer
-        open={!!statDrawer}
-        onClose={() => setStatDrawer(null)}
-        title={
-          statDrawer === "total"
-            ? "Tracked entities"
-            : statDrawer === "elite"
-            ? "VIP+ entities (L7–L10)"
-            : statDrawer === "low"
-            ? "Low-trust entities (L1–L2)"
-            : statDrawer === "avg"
-            ? "Average STL score"
-            : ""
-        }
-      >
-        {statDrawer === "total" ? (
-          <div className="space-y-3 text-xs text-white/75">
-            <p>
-              Total entities currently tracked by the STL engine across USER,
-              SERVICE and PRODUCT.
-            </p>
-            <p className="text-white/60">
-              Count: <strong className="text-white">{stats.total}</strong>
-            </p>
-          </div>
-        ) : statDrawer === "elite" ? (
-          <div className="space-y-3">
-            <p className="text-xs text-white/75">
-              Entities in the VIP+ band (L7 PRO, L8 VIP, L9 ELITE, L10 SUPREME).
-            </p>
-            <div className="grid gap-2">
-              {scores
-                .filter((s) => s.level >= 7)
-                .slice(0, 8)
-                .map((s) => (
-                  <div
-                    key={s.id}
-                    className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-xs"
-                  >
-                    <span className="truncate text-white/85">{s.entityId}</span>
-                    <VerificationChip tone={levelChipTone(s.level)} size="xs">
-                      L{s.level}
-                    </VerificationChip>
-                  </div>
-                ))}
+        {/* Quick Links */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+          <Link
+            href="/dmo/stl/scores"
+            className="group relative overflow-hidden rounded-lg p-6 bg-[#13162A] border border-[rgba(255,255,255,0.08)] hover:border-[#7B6EF6]/40 transition-all"
+          >
+            <div className="relative z-10">
+              <div className="text-2xl mb-2">📊</div>
+              <h3 className="font-bold text-white mb-1">All User Scores</h3>
+              <p className="text-xs text-[#8890B0]">Filter and drill into any user STL</p>
             </div>
-          </div>
-        ) : statDrawer === "low" ? (
-          <div className="space-y-3">
-            <p className="text-xs text-white/75">
-              Entities flagged as low trust (L1 FREE / L2 BASIC). These need
-              PSS + CRB attention before any high-value listings.
-            </p>
-            <div className="grid gap-2">
-              {scores
-                .filter((s) => s.level <= 2)
-                .slice(0, 8)
-                .map((s) => (
-                  <div
-                    key={s.id}
-                    className="flex items-center justify-between rounded-xl border border-[#F05858]/30 bg-[#F05858]/8 px-3 py-2 text-xs"
-                  >
-                    <span className="truncate text-white/85">{s.entityId}</span>
-                    <VerificationChip tone="red" size="xs">
-                      L{s.level}
-                    </VerificationChip>
-                  </div>
-                ))}
+          </Link>
+
+          <Link
+            href="/dmo/stl/breakdown"
+            className="group relative overflow-hidden rounded-lg p-6 bg-[#13162A] border border-[rgba(255,255,255,0.08)] hover:border-[#2BBFA0]/40 transition-all"
+          >
+            <div className="relative z-10">
+              <div className="text-2xl mb-2">🔍</div>
+              <h3 className="font-bold text-white mb-1">Breakdown Detail</h3>
+              <p className="text-xs text-[#8890B0]">PSS × CRB × DMO formula</p>
             </div>
-          </div>
-        ) : statDrawer === "avg" ? (
-          <div className="space-y-3 text-xs text-white/75">
-            <p>
-              Rolling mean across all tracked entities. Formula includes PSS
-              trust, CRB verification + refill, DMO engagement, locked-coin
-              stake, minus valid complaint penalties.
-            </p>
-            <p className="text-white/60">
-              Current average:{" "}
-              <strong className="text-white">{stats.avg}</strong> / 100
-            </p>
-          </div>
-        ) : null}
-      </VerificationDrawer>
-    </div>
+          </Link>
+
+          <Link
+            href="/dmo/stl/ranking"
+            className="group relative overflow-hidden rounded-lg p-6 bg-[#13162A] border border-[rgba(255,255,255,0.08)] hover:border-[#F0A030]/40 transition-all"
+          >
+            <div className="relative z-10">
+              <div className="text-2xl mb-2">🏆</div>
+              <h3 className="font-bold text-white mb-1">Ranking Engine</h3>
+              <p className="text-xs text-[#8890B0]">View top 50 by category</p>
+            </div>
+          </Link>
+
+          <Link
+            href="/dmo/stl/history"
+            className="group relative overflow-hidden rounded-lg p-6 bg-[#13162A] border border-[rgba(255,255,255,0.08)] hover:border-[#38C878]/40 transition-all"
+          >
+            <div className="relative z-10">
+              <div className="text-2xl mb-2">📈</div>
+              <h3 className="font-bold text-white mb-1">Change History</h3>
+              <p className="text-xs text-[#8890B0]">Timeline of all upgrades/downgrades</p>
+            </div>
+          </Link>
+
+          <Link
+            href="/dmo/ehb-stl-level"
+            className="group relative overflow-hidden rounded-lg p-6 bg-[#13162A] border border-[rgba(255,255,255,0.08)] hover:border-[#A098F8]/40 transition-all"
+          >
+            <div className="relative z-10">
+              <div className="text-2xl mb-2">📖</div>
+              <h3 className="font-bold text-white mb-1">STL Reference</h3>
+              <p className="text-xs text-[#8890B0]">10-level table & formulas</p>
+            </div>
+          </Link>
+
+          <Link
+            href="/dmo/dmo-stl"
+            className="group relative overflow-hidden rounded-lg p-6 bg-[#13162A] border border-[rgba(255,255,255,0.08)] hover:border-[#7B6EF6]/40 transition-all"
+          >
+            <div className="relative z-10">
+              <div className="text-2xl mb-2">⚙️</div>
+              <h3 className="font-bold text-white mb-1">DMO STL View</h3>
+              <p className="text-xs text-[#8890B0]">All data in one dashboard</p>
+            </div>
+          </Link>
+        </div>
+      </div>
+    </main>
   );
 }
-
-/* ---------- Drawer field helper ---------- */
-function DrawerField({
-  label,
-  value,
-  mono,
-  tone,
-}: {
-  label: string;
-  value: string;
-  mono?: boolean;
-  tone?: "teal" | "red";
-}) {
-  const fg =
-    tone === "teal" ? "#2BBFA0" : tone === "red" ? "#F05858" : "#ffffff";
-  return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
-      <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-white/50">
-        {label}
-      </p>
-      <p
-        className={`mt-1 text-sm font-semibold ${mono ? "font-mono" : ""}`}
-        style={{ color: fg }}
-      >
-        {value}
-      </p>
-    </div>
-  );
-}
-
-/* ---------- Row columns ---------- */
-const scoreColumns: RowColumn<StlScoreRow>[] = [
-  {
-    key: "entity",
-    header: "Entity",
-    width: "minmax(0,1.8fr)",
-    render: (s) => (
-      <div className="min-w-0">
-        <div className="truncate font-semibold text-white">{s.entityId}</div>
-        <div className="text-[10px] text-white/45">{s.entityType}</div>
-      </div>
-    ),
-  },
-  {
-    key: "score",
-    header: "Score",
-    width: "minmax(0,0.8fr)",
-    render: (s) => (
-      <span className="font-mono tabular-nums text-white/85">
-        {Number(s.score).toFixed(2)}
-      </span>
-    ),
-  },
-  {
-    key: "level",
-    header: "Level",
-    width: "minmax(0,0.6fr)",
-    render: (s) => (
-      <VerificationChip tone={levelChipTone(s.level)} size="xs">
-        L{s.level}
-      </VerificationChip>
-    ),
-  },
-  {
-    key: "updated",
-    header: "Updated",
-    width: "minmax(0,1.2fr)",
-    align: "right",
-    render: (s) => (
-      <span className="text-[10px] text-white/45">{fmt(s.lastUpdated)}</span>
-    ),
-  },
-];
-
-const logColumns: RowColumn<StlLogRow>[] = [
-  {
-    key: "entity",
-    header: "Entity",
-    width: "minmax(0,1.6fr)",
-    render: (l) => (
-      <div className="min-w-0">
-        <div className="truncate font-semibold text-white">{l.entityId}</div>
-        <div className="text-[10px] text-white/45">{l.entityType}</div>
-      </div>
-    ),
-  },
-  {
-    key: "change",
-    header: "Change",
-    width: "minmax(0,0.7fr)",
-    render: (l) => {
-      const v = Number(l.change);
-      return (
-        <span
-          className="font-mono font-semibold tabular-nums"
-          style={{ color: v >= 0 ? "#2BBFA0" : "#F05858" }}
-        >
-          {v >= 0 ? "+" : ""}
-          {v.toFixed(2)}
-        </span>
-      );
-    },
-  },
-  {
-    key: "reason",
-    header: "Reason",
-    width: "minmax(0,1.8fr)",
-    render: (l) => (
-      <span className="block truncate text-white/75">{l.reason}</span>
-    ),
-  },
-  {
-    key: "at",
-    header: "When",
-    width: "minmax(0,1.1fr)",
-    align: "right",
-    render: (l) => (
-      <span className="text-[10px] text-white/45">{fmt(l.createdAt)}</span>
-    ),
-  },
-];
-
-// NOTE: Legacy StlStatCard removed — replaced by VerificationStatCard (§7.5 compliant).

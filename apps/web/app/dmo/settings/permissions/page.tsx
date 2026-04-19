@@ -1,346 +1,99 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 import {
   VerificationStatCard,
-  VerificationRowGrid,
-  VerificationDrawer,
-  VerificationChip,
   SectionHeader,
-  FilterChipRow,
-  type RowColumn,
-  type VerificationTone,
 } from "@/components/dmo/verification/VerificationUI";
 
-type Permission = {
-  id: string;
-  permissionName: string;
-  module: string;
-  actions: string;
-  assignedRoles: number;
-  isSystem: boolean;
+type RolePermissionMatrix = {
+  role: string;
+  stl: boolean;
+  pss: boolean;
+  crb: boolean;
+  wallet: boolean;
+  complaints: boolean;
+  ai: boolean;
+  analytics: boolean;
+  blockchain: boolean;
 };
 
-const DEMO_PERMISSIONS: Permission[] = [
-  {
-    id: "perm-001",
-    permissionName: "User Create",
-    module: "Users",
-    actions: "WRITE",
-    assignedRoles: 2,
-    isSystem: true,
-  },
-  {
-    id: "perm-002",
-    permissionName: "User Read",
-    module: "Users",
-    actions: "READ",
-    assignedRoles: 5,
-    isSystem: true,
-  },
-  {
-    id: "perm-003",
-    permissionName: "User Delete",
-    module: "Users",
-    actions: "DELETE",
-    assignedRoles: 1,
-    isSystem: true,
-  },
-  {
-    id: "perm-004",
-    permissionName: "Audit Log Access",
-    module: "Audit",
-    actions: "READ",
-    assignedRoles: 3,
-    isSystem: true,
-  },
-  {
-    id: "perm-005",
-    permissionName: "STL Configuration",
-    module: "STL",
-    actions: "WRITE, ADMIN",
-    assignedRoles: 2,
-    isSystem: true,
-  },
-  {
-    id: "perm-006",
-    permissionName: "STL View",
-    module: "STL",
-    actions: "READ",
-    assignedRoles: 4,
-    isSystem: true,
-  },
-  {
-    id: "perm-007",
-    permissionName: "Fraud Detection Override",
-    module: "Wallet",
-    actions: "WRITE, ADMIN",
-    assignedRoles: 1,
-    isSystem: true,
-  },
-  {
-    id: "perm-008",
-    permissionName: "Finance Report Export",
-    module: "Finance",
-    actions: "READ",
-    assignedRoles: 2,
-    isSystem: false,
-  },
-  {
-    id: "perm-009",
-    permissionName: "Compliance Override",
-    module: "Compliance",
-    actions: "WRITE",
-    assignedRoles: 1,
-    isSystem: false,
-  },
-  {
-    id: "perm-010",
-    permissionName: "System Configuration",
-    module: "System",
-    actions: "WRITE, ADMIN",
-    assignedRoles: 1,
-    isSystem: true,
-  },
+const PERMISSION_MATRIX: RolePermissionMatrix[] = [
+  { role: "Decision Maker", stl: true, pss: true, crb: true, wallet: true, complaints: true, ai: true, analytics: true, blockchain: true },
+  { role: "Risk Analyst", stl: true, pss: true, crb: true, wallet: false, complaints: true, ai: true, analytics: true, blockchain: false },
+  { role: "Trust Officer", stl: true, pss: true, crb: true, wallet: false, complaints: false, ai: false, analytics: true, blockchain: true },
+  { role: "Finance Manager", stl: false, pss: false, crb: false, wallet: true, complaints: false, ai: false, analytics: true, blockchain: false },
+  { role: "Operations Lead", stl: true, pss: false, crb: false, wallet: false, complaints: true, ai: false, analytics: true, blockchain: false },
+  { role: "Analytics Expert", stl: false, pss: false, crb: false, wallet: false, complaints: false, ai: false, analytics: true, blockchain: false },
+  { role: "AI Supervisor", stl: true, pss: true, crb: false, wallet: false, complaints: false, ai: true, analytics: true, blockchain: false },
 ];
 
-function InfoCell({ label, value, mono }: { label: string; value: React.ReactNode; mono?: boolean }) {
-  return (
-    <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
-      <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">{label}</p>
-      <p className={`mt-1 text-sm text-white/90 ${mono ? "font-mono" : ""}`}>{value}</p>
-    </div>
-  );
-}
+const MODULES = ["STL", "PSS", "CRB", "Wallet", "Complaints", "AI", "Analytics", "Blockchain"];
 
 export default function PermissionsPage() {
-  const [selectedPerm, setSelectedPerm] = useState<Permission | null>(null);
-  const [moduleFilter, setModuleFilter] = useState<string>("ALL");
-
-  const visiblePermissions = useMemo(() => {
-    if (moduleFilter === "ALL") return DEMO_PERMISSIONS;
-    return DEMO_PERMISSIONS.filter((p) => p.module === moduleFilter);
-  }, [moduleFilter]);
-
-  const stats = useMemo(() => {
-    const total = DEMO_PERMISSIONS.length;
-    const modules = new Set(DEMO_PERMISSIONS.map((p) => p.module)).size;
-    const customOverrides = DEMO_PERMISSIONS.filter((p) => !p.isSystem).length;
-    const auditEntries = 120;
-
-    return { total, modules, customOverrides, auditEntries };
-  }, []);
-
-  const moduleOptions = [
-    { value: "ALL", label: "All Modules" },
-    { value: "Users", label: "Users" },
-    { value: "Audit", label: "Audit" },
-    { value: "STL", label: "STL" },
-    { value: "Wallet", label: "Wallet" },
-    { value: "Finance", label: "Finance" },
-    { value: "Compliance", label: "Compliance" },
-    { value: "System", label: "System" },
-  ];
-
-  const getTone = (module: string): VerificationTone => {
-    const tones: Record<string, VerificationTone> = {
-      Users: "purple",
-      Audit: "teal",
-      STL: "green",
-      Wallet: "amber",
-      Finance: "cyan",
-      Compliance: "red",
-      System: "purple",
-    };
-    return tones[module] || "purple";
-  };
-
-  const getActionTone = (actions: string): VerificationTone => {
-    if (actions.includes("ADMIN")) return "red";
-    if (actions.includes("WRITE")) return "amber";
-    return "teal";
-  };
-
-  const columns: RowColumn<Permission>[] = [
-    {
-      key: "permissionName",
-      header: "Permission",
-      width: "minmax(0, 1.5fr)",
-      render: (p) => (
-        <span className="font-semibold text-white/80">
-          {!p.isSystem && "-"} {p.permissionName}
-        </span>
-      ),
-    },
-    {
-      key: "module",
-      header: "Module",
-      width: "minmax(0, 1.1fr)",
-      render: (p) => <VerificationChip tone={getTone(p.module)}>{p.module}</VerificationChip>,
-    },
-    {
-      key: "actions",
-      header: "Actions",
-      width: "minmax(0, 1.2fr)",
-      render: (p) => (
-        <VerificationChip tone={getActionTone(p.actions)}>{p.actions}</VerificationChip>
-      ),
-    },
-    {
-      key: "assignedRoles",
-      header: "Assigned Roles",
-      width: "minmax(0, 0.9fr)",
-      align: "right",
-      render: (p) => (
-        <span className="font-mono font-semibold text-[#A098F8]">
-          {p.assignedRoles}
-        </span>
-      ),
-    },
-  ];
+  const [editingRole, setEditingRole] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen space-y-6 bg-[#0C0E1A] p-[clamp(16px,3vw,32px)]">
-      <SectionHeader
-        eyebrow="DMO"
-        title="Settings / Permissions"
-        hint="Granular permissions for modules and features"
-      />
-
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <VerificationStatCard
-          tone="purple"
-          label="Total Permissions"
-          value={stats.total.toString()}
-          sub="System + custom"
-          icon={
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
-              <path d="M10 15l-3-3 1.4-1.4L10 12.2l5.6-5.6L17 8" />
-            </svg>
-          }
-        />
-        <VerificationStatCard
-          tone="teal"
-          label="Module Groups"
-          value={stats.modules.toString()}
-          sub="Modules covered"
-          icon={
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="3" width="7" height="7" />
-              <rect x="14" y="3" width="7" height="7" />
-              <rect x="14" y="14" width="7" height="7" />
-              <rect x="3" y="14" width="7" height="7" />
-            </svg>
-          }
-        />
-        <VerificationStatCard
-          tone="amber"
-          label="Custom Overrides"
-          value={stats.customOverrides.toString()}
-          sub="Custom rules"
-          icon={
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
-              <path d="M12 6v6l4 2" />
-            </svg>
-          }
-        />
-        <VerificationStatCard
-          tone="cyan"
-          label="Audit Entries"
-          value={stats.auditEntries.toString()}
-          sub="All-time changes"
-          icon={
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14 2 14 8 20 8" />
-            </svg>
-          }
-        />
-      </div>
-
-      <div className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <div className="mb-4">
-          <SectionHeader title="Filter by Module" hint="Refine permissions by module" />
+    <div className="space-y-6">
+      <header className="relative overflow-hidden rounded-2xl border border-[#06B6D4]/30 bg-gradient-to-br from-[#13162A] via-[#1A1D33] to-[#13162A] p-6 pt-[22px]">
+        <div className="pointer-events-none absolute left-0 right-0 top-0 h-[3px]" style={{ background: "linear-gradient(90deg, transparent 0%, #06B6D4 25%, #7B6EF6 50%, #F0A030 75%, transparent 100%)" }} />
+        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br from-[#06B6D4]/20 via-[#7B6EF6]/15 to-transparent blur-3xl" />
+        <div className="relative space-y-2">
+          <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em]">
+            <Link href="/dmo" className="text-white/40 hover:text-white/70 transition-colors">DMO</Link>
+            <span className="text-white/25">/</span>
+            <Link href="/dmo/settings" className="text-white/40 hover:text-white/70 transition-colors">Settings</Link>
+            <span className="text-white/25">/</span>
+            <span className="text-[#06B6D4]">Permissions</span>
+          </div>
+          <h1 className="text-2xl font-bold text-white md:text-3xl">Permission Matrix</h1>
+          <p className="max-w-2xl text-sm text-white/65">
+            Role-based access control — which role can access which DMO module.
+          </p>
         </div>
-        <FilterChipRow<string>
-          value={moduleFilter}
-          options={moduleOptions}
-          onChange={setModuleFilter}
-        />
-      </div>
+      </header>
 
-      <div className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
-        <SectionHeader
-          title="Permission Matrix"
-          hint={`Showing ${visiblePermissions.length} of ${DEMO_PERMISSIONS.length} permissions`}
-        />
-        <VerificationRowGrid<Permission>
-          rows={visiblePermissions}
-          columns={columns}
-          onRowClick={setSelectedPerm}
-          getRowTone={(p) => getTone(p.module)}
-        />
-      </div>
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <VerificationStatCard tone="purple" label="Total Roles" value={PERMISSION_MATRIX.length} sub="configured" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 2v20m-9-9h18" stroke="currentColor" strokeWidth="1.6" /></svg>} />
+        <VerificationStatCard tone="teal" label="Modules" value={MODULES.length} sub="domains" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><rect x="3" y="3" width="7" height="7" stroke="currentColor" strokeWidth="1.6" /><rect x="14" y="3" width="7" height="7" stroke="currentColor" strokeWidth="1.6" /><rect x="3" y="14" width="7" height="7" stroke="currentColor" strokeWidth="1.6" /></svg>} />
+        <VerificationStatCard tone="cyan" label="Total Assignments" value={PERMISSION_MATRIX.reduce((s, r) => s + Object.values(r).filter((v) => v === true).length, 0)} sub="access grants" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M9 12l2 2 4-4M7 20h10a2 2 0 002-2V6a2 2 0 00-2-2H7a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="currentColor" strokeWidth="1.6" /></svg>} />
+        <VerificationStatCard tone="green" label="Avg Access/Role" value="5.4" sub="modules per role" icon={<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" strokeWidth="1.6" /></svg>} />
+      </section>
 
-      {selectedPerm && (
-        <VerificationDrawer
-          open={!!selectedPerm}
-          onClose={() => setSelectedPerm(null)}
-          title={selectedPerm.permissionName}
-          subtitle={`${selectedPerm.module} module • ${selectedPerm.actions}`}
-          severity={selectedPerm.isSystem ? "info" : "warning"}
-          children={
-            <div className="space-y-4">
-              <div>
-                <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">Type</p>
-                <VerificationChip tone={selectedPerm.isSystem ? "teal" : "amber"}>
-                  {selectedPerm.isSystem ? "SYSTEM" : "CUSTOM"}
-                </VerificationChip>
-              </div>
-              <div>
-                <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">Module</p>
-                <VerificationChip tone={getTone(selectedPerm.module)}>
-                  {selectedPerm.module}
-                </VerificationChip>
-              </div>
-              <div>
-                <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">Actions</p>
-                <VerificationChip tone={getActionTone(selectedPerm.actions)}>
-                  {selectedPerm.actions}
-                </VerificationChip>
-              </div>
-              <div className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
-                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">Assigned to {selectedPerm.assignedRoles} Role{selectedPerm.assignedRoles !== 1 ? "s" : ""}</p>
-                <div className="mt-2 space-y-1 text-[12px] text-white/75">
-                  <div>• Super Admin</div>
-                  <div>• Admin{selectedPerm.assignedRoles > 1 ? "" : ""}</div>
-                  {selectedPerm.assignedRoles > 1 && <div>• Moderator</div>}
+      <section className="rounded-2xl border border-white/10 bg-[#13162A]/70 p-5">
+        <SectionHeader title="Permission Matrix" hint="Green = access granted" />
+        <div className="mt-4 overflow-x-auto">
+          <div className="inline-block min-w-full">
+            <div className="grid gap-2">
+              {PERMISSION_MATRIX.map((row) => (
+                <div key={row.role} className="flex gap-2">
+                  <div className="w-32 rounded-lg border border-white/8 bg-white/[0.03] px-3 py-2">
+                    <p className="text-[11px] font-semibold text-white truncate">{row.role}</p>
+                  </div>
+                  {MODULES.map((mod) => {
+                    const key = mod.toLowerCase().replace("-", "_") as keyof RolePermissionMatrix;
+                    const hasAccess = row[key];
+                    return (
+                      <div key={`${row.role}-${mod}`} className="w-16">
+                        <button
+                          className={`w-full rounded-lg border py-2 text-center text-[11px] font-semibold transition-colors ${
+                            hasAccess
+                              ? "border-[#38C878]/60 bg-[#38C878]/20 text-[#38C878]"
+                              : "border-white/15 bg-white/5 text-white/40"
+                          }`}
+                        >
+                          {hasAccess ? "✓" : "—"}
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
-              </div>
-              <div className="border-t border-white/8 pt-3">
-                <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">Override History</p>
-                <div className="space-y-1 text-[12px] text-white/75">
-                  <div>Last modified: 2026-04-05 by rafi@ehb.tech</div>
-                  <div>Previous: READ only</div>
-                </div>
-              </div>
+              ))}
             </div>
-          }
-          footer={
-            <div className="flex gap-2">
-              <button className="flex-1 rounded-lg border border-[#A098F8]/30 bg-[#7B6EF6]/15 px-3 py-2 text-[11px] font-semibold text-[#A098F8] hover:bg-[#7B6EF6]/25 transition">
-                Edit Permission
-              </button>
-              <button className="flex-1 rounded-lg border border-[#2BBFA0]/30 bg-[#2BBFA0]/10 px-3 py-2 text-[11px] font-semibold text-[#2BBFA0] hover:bg-[#2BBFA0]/20 transition">
-                View Audit Log
-              </button>
-            </div>
-          }
-        />
-      )}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
