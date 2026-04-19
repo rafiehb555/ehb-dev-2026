@@ -1,335 +1,403 @@
-import { KpiCard } from "@/components/ui/KpiCard";
-import { agentDashboardSummary } from "@/lib/agents/catalog";
+"use client";
 
-const dashboardStats = {
-  industriesTotal: 32,
-  industriesActive: 6,
-  usersTotal: "—",
-  providersTotal: "—",
-  franchisesTotal: "—",
-  aiToolsActive: "—",
-  validators: "—",
-  walletTx: "—"
-};
+import { useState } from "react";
+import {
+  BarChart3,
+  TrendingUp,
+  Users,
+  ShoppingCart,
+  DollarSign,
+  Zap,
+  ActivitySquare,
+  AlertCircle,
+  CheckCircle2,
+  Clock,
+} from "lucide-react";
+import { GlassCard } from "@/components/ui/glass-card";
+import { DataTable } from "@/components/ui/data-table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/Button";
 
-const coreSystems = [
-  "AI Department",
-  "Blockchain Department",
-  "Finance Department",
-  "Affiliate System",
-  "Franchise System",
-  "JPS – Job Profile & Skill",
-  "Verification Systems (PSS, CRB, STL)",
-  "DMO – Decentralized Management Office"
+interface StatCard {
+  label: string;
+  value: string | number;
+  change?: string;
+  icon: React.ReactNode;
+  trend?: "up" | "down" | "neutral";
+}
+
+interface ActivityEvent {
+  id: string;
+  type: "user" | "order" | "complaint" | "verification";
+  description: string;
+  timestamp: string;
+  status: "completed" | "pending" | "alert";
+}
+
+interface HealthItem {
+  service: string;
+  status: "healthy" | "degraded" | "critical";
+  uptime: string;
+  latency: string;
+}
+
+const platformStats: StatCard[] = [
+  {
+    label: "Total Users",
+    value: "24,582",
+    change: "+12.5%",
+    trend: "up",
+    icon: <Users className="w-5 h-5" />,
+  },
+  {
+    label: "Active Orders",
+    value: "1,847",
+    change: "+8.2%",
+    trend: "up",
+    icon: <ShoppingCart className="w-5 h-5" />,
+  },
+  {
+    label: "Revenue Today",
+    value: "$45,230",
+    change: "+24.3%",
+    trend: "up",
+    icon: <DollarSign className="w-5 h-5" />,
+  },
+  {
+    label: "Active Sellers",
+    value: "3,421",
+    change: "+5.1%",
+    trend: "up",
+    icon: <Zap className="w-5 h-5" />,
+  },
 ];
 
-const franchiseLevels = [
-  "Global Super Admin",
-  "Country Franchise",
-  "Corporate Franchise",
-  "Sub Franchise"
+const revenueStreams = [
+  { label: "Service Fee (40%)", value: 18092, color: "#7B6EF6" },
+  { label: "Affiliate (25%)", value: 11307.5, color: "#A098F8" },
+  { label: "Franchise Sales (20%)", value: 9046, color: "#2BBFA0" },
+  { label: "DMO Subscription (10%)", value: 4523, color: "#F0A030" },
+  { label: "Token Fees (5%)", value: 2261.5, color: "#F05858" },
 ];
 
-function Panel(props: { title: string; path?: string; children: React.ReactNode }) {
+const activityFeed: ActivityEvent[] = [
+  {
+    id: "1",
+    type: "user",
+    description: "New seller registered: TechPro Solutions",
+    timestamp: "2 minutes ago",
+    status: "completed",
+  },
+  {
+    id: "2",
+    type: "order",
+    description: "High-value order (₨250,000) - Waiting verification",
+    timestamp: "5 minutes ago",
+    status: "pending",
+  },
+  {
+    id: "3",
+    type: "verification",
+    description: "CRB verification approved for 12 users",
+    timestamp: "8 minutes ago",
+    status: "completed",
+  },
+  {
+    id: "4",
+    type: "complaint",
+    description: "Fraud alert: Duplicate listing patterns detected",
+    timestamp: "15 minutes ago",
+    status: "alert",
+  },
+  {
+    id: "5",
+    type: "order",
+    description: "Dispute raised on Order #5847 - Escrow locked",
+    timestamp: "22 minutes ago",
+    status: "alert",
+  },
+];
+
+const healthMonitor: HealthItem[] = [
+  {
+    service: "API Server",
+    status: "healthy",
+    uptime: "99.98%",
+    latency: "45ms",
+  },
+  {
+    service: "Database (MongoDB)",
+    status: "healthy",
+    uptime: "99.95%",
+    latency: "12ms",
+  },
+  {
+    service: "Blockchain (Polkadot)",
+    status: "healthy",
+    uptime: "99.99%",
+    latency: "250ms",
+  },
+  {
+    service: "AI Services (OpenAI)",
+    status: "degraded",
+    uptime: "98.5%",
+    latency: "1200ms",
+  },
+];
+
+function StatCardComponent(props: StatCard) {
   return (
-    <section className="glass-panel card-hover p-3 space-y-1.5">
-      <div className="flex items-center justify-between gap-2">
-        <h2 className="text-[10px] xs:text-[11px] font-semibold text-white">{props.title}</h2>
-        {props.path ? (
-          <span className="text-[10px] text-[#33C3FF]/80">Path: {props.path}</span>
-        ) : null}
+    <GlassCard className="p-4 space-y-2">
+      <div className="flex items-start justify-between">
+        <div className="space-y-1 flex-1">
+          <p className="text-xs text-white/60">{props.label}</p>
+          <p className="text-2xl font-bold text-white">{props.value}</p>
+        </div>
+        <div className="text-purple-400">{props.icon}</div>
       </div>
-      {props.children}
-    </section>
+      {props.change && (
+        <div
+          className={`text-xs font-semibold ${
+            props.trend === "up"
+              ? "text-emerald-400"
+              : props.trend === "down"
+                ? "text-red-400"
+                : "text-amber-400"
+          }`}
+        >
+          {props.change}
+        </div>
+      )}
+    </GlassCard>
   );
 }
 
-function Metric(props: { label: string; value: string }) {
+function RevenueChart() {
+  const total = revenueStreams.reduce((sum, item) => sum + item.value, 0);
+
   return (
-    <div className="flex flex-col gap-0.5 glass-panel p-1.5 rounded-lg">
-      <span className="text-[10px] xs:text-[11px] text-ehb-textBody">{props.label}</span>
-      <span className="text-xs font-semibold text-white">{props.value}</span>
-    </div>
-  );
-}
+    <GlassCard className="p-5 space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-sm font-semibold text-white flex items-center gap-2">
+          <BarChart3 className="w-4 h-4 text-purple-400" />
+          Revenue Breakdown (Today: ${total.toLocaleString()})
+        </h2>
+      </div>
 
-export default function AdminPage() {
-  return (
-    <main className="min-h-screen text-white">
-      <div className="container-ehb py-6 sm:py-8 space-y-5 sm:space-y-6 text-[10px] xs:text-[11px]">
-        <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <div className="space-y-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-ehb-textMuted">Super Admin Â· Control Panel</p>
-            <h1 className="text-lg sm:text-xl font-semibold leading-tight gradient-text">
-              EHB Global Super Admin
-            </h1>
-            <p className="text-ehb-textBody max-w-2xl">
-              Command center for managing industries, core systems, franchise network, AI marketplace,
-              finance, blockchain and platform health.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <a
-              href="/dmo/super-admin"
-              className="min-h-touch inline-flex items-center justify-center rounded-full border border-amber-500/35 bg-amber-500/10 px-3 py-1.5 font-semibold text-amber-100 hover:bg-amber-500/20 transition-all duration-200"
-            >
-              DMO-ADMIN
-            </a>
-            <a href="/" className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-3 py-1.5 font-semibold text-white hover:shadow-neon-blue transition-all duration-200">
-              â† Back to Landing
-            </a>
-            <a href="/admin/agents" className="min-h-touch inline-flex items-center justify-center rounded-full glass-panel px-3 py-1.5 font-semibold text-white hover:shadow-neon-blue transition-all duration-200">
-              View Agent Center
-            </a>
-            <a href="/development" className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow">
-              View Development Center
-            </a>
-          </div>
-        </header>
-
-        <section className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-          <KpiCard label="Industries" value={`${dashboardStats.industriesTotal}`} detail={`Active: ${dashboardStats.industriesActive}`} />
-          <KpiCard label="Users / Providers" value={dashboardStats.usersTotal} detail={`Providers: ${dashboardStats.providersTotal}`} />
-          <KpiCard label="Franchises" value={dashboardStats.franchisesTotal} detail="Global Â· Country Â· Corporate Â· Sub" />
-          <KpiCard label="AI / Blockchain" value={dashboardStats.aiToolsActive} detail={`Validators: ${dashboardStats.validators} Â· Wallet tx: ${dashboardStats.walletTx}`} />
-        </section>
-
-        <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
-          <Panel title="Core Systems Monitoring" path="/admin/core-systems">
-            <ul className="space-y-1 text-ehb-textBody">
-              {coreSystems.map((s) => (
-                <li key={s}>• {s}</li>
-              ))}
-            </ul>
-            <div className="mt-2 rounded-lg glass-panel border border-emerald-500/30 p-2 text-emerald-100">
-              <div className="font-semibold mb-0.5 text-[10px] xs:text-[11px]">Example: AI Department</div>
-              <p>Status: Active Â· Modules: 9 Â· Industries Connected: 6</p>
+      <div className="space-y-3">
+        {revenueStreams.map((stream, idx) => (
+          <div key={idx} className="space-y-1">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-white/80">{stream.label}</span>
+              <span className="text-white font-semibold">
+                ${stream.value.toLocaleString()}
+              </span>
             </div>
-          </Panel>
-          <Panel title="JPS Import Management" path="/admin/jps-import">
-            <p className="text-ehb-textBody mb-1">
-              Manage real JPS profile imports with validation, preview counts, and fallback restore.
-            </p>
-            <div className="glass-panel rounded-lg p-2 space-y-1.5">
-              <div className="font-semibold text-white">Connected Sources</div>
-              <p className="text-ehb-textBody">
-                API: <span className="text-cyan-300">/api/jps</span> Â· Import:{" "}
-                <span className="text-cyan-300">/api/jps/import</span>
-              </p>
-              <p className="text-ehb-textMuted">
-                Save imported data and it will instantly flow into DMO JPS, jobs, and profile pages.
-              </p>
-            </div>
-            <div className="mt-2">
-              <a
-                href="/admin/jps-import"
-                className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
-              >
-                Open JPS Import Manager
-              </a>
-            </div>
-          </Panel>
-        </section>
-
-        <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
-          <Panel title="Industry Management" path="/admin/industries">
-            <p className="text-ehb-textBody mb-1">Create, activate, pause and assign franchise for each industry.</p>
-            <div className="glass-panel rounded-lg p-2">
-              <div className="font-semibold text-white mb-0.5">Legal Services (EHB OLS)</div>
-              <p className="text-ehb-textBody">
-                Status: <span className="text-emerald-400 font-semibold">Active</span> Â· Categories: 12 Â· Services: 64 Â· Providers: 1,245
-              </p>
-              <p className="mt-1 text-ehb-textMuted">
-                Flow: Create Industry â†’ Add Categories â†’ Add Services â†’ Assign Franchise â†’ <span className="font-semibold text-[#33C3FF]">Industry Live</span>
-              </p>
-            </div>
-          </Panel>
-        </section>
-
-        <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
-          <Panel title="Franchise Management" path="/franchise">
-            <p className="text-ehb-textBody mb-1">Multi-layer franchise network for global, country, corporate and sub franchises.</p>
-            <div className="flex flex-wrap gap-1.5 mb-2">
-              {franchiseLevels.map((lvl) => (
-                <span key={lvl} className="inline-flex items-center rounded-full glass-panel px-2 py-0.5 text-[10px] text-white">
-                  {lvl}
-                </span>
-              ))}
-            </div>
-            <ul className="space-y-1 text-ehb-textBody">
-              <li>• Countries Active: 4</li>
-              <li>• Corporate Franchises: 12</li>
-              <li>• Sub Franchises: 120</li>
-            </ul>
-            <div className="mt-2 text-ehb-textBody">
-              Actions: <span className="text-white">approve · suspend · assign industry rights · view revenue</span>
-            </div>
-          </Panel>
-          <Panel title="AI Marketplace Management" path="/admin/ai-tools">
-            <p className="text-ehb-textBody mb-1">Configure AI tools, pricing and which industries can use each tool.</p>
-            <div className="grid grid-cols-2 gap-1.5 mb-2">
-              {["AI Lawyer", "AI Doctor", "AI Resume Builder", "AI Contract Generator", "AI Marketing Assistant", "AI Code Generator"].map((tool) => (
-                <span key={tool} className="inline-flex items-center rounded-lg glass-panel px-2 py-1 text-[10px] text-ehb-textBody">
-                  {tool}
-                </span>
-              ))}
-            </div>
-            <div className="grid grid-cols-2 gap-1 text-ehb-textBody">
-              <Metric label="Total AI Tools" value="—" />
-              <Metric label="Industries Using AI" value="—" />
-              <Metric label="API Usage" value="—" />
-              <Metric label="AI Revenue" value="—" />
-            </div>
-          </Panel>
-        </section>
-
-        <section className="grid gap-3 grid-cols-1 md:grid-cols-3">
-          <Panel title="Finance & Wallet Monitoring" path="/admin/finance">
-            <ul className="space-y-1 text-ehb-textBody">
-              <li>• Total Wallet Balance</li>
-              <li>• Transactions Today</li>
-              <li>• Escrow Active</li>
-              <li>• Affiliate Payouts</li>
-              <li>• Franchise Revenue</li>
-            </ul>
-            <p className="mt-1 text-ehb-textMuted">Wallets: User Â· Provider Â· Franchise Â· System.</p>
-          </Panel>
-          <Panel title="Blockchain Monitoring" path="/admin/blockchain">
-            <ul className="space-y-1 text-ehb-textBody">
-              <li>• Active Validators</li>
-              <li>• Total Transactions</li>
-              <li>• Smart Contracts Active</li>
-              <li>• Network Status</li>
-            </ul>
-            <p className="mt-1 text-ehb-textMuted">Validator snapshot: Validator ID Â· Country Â· Stake Amount Â· Status.</p>
-          </Panel>
-          <Panel title="Affiliate System Management" path="/admin/affiliate">
-            <ul className="space-y-1 text-ehb-textBody">
-              <li>• Total Affiliates</li>
-              <li>• Total Referrals</li>
-              <li>• Commission Paid</li>
-              <li>• Top Affiliates</li>
-            </ul>
-            <p className="mt-1 text-ehb-textMuted">Actions: approve affiliate Â· set commission rates Â· track referrals.</p>
-          </Panel>
-        </section>
-
-        <section className="grid gap-3 grid-cols-1 lg:grid-cols-2">
-          <Panel title="Development Monitoring" path="/admin/development">
-            <ul className="space-y-1 text-ehb-textBody">
-              <li>• AI Department – 40%</li>
-              <li>• Blockchain – 10%</li>
-              <li>• Finance – 35%</li>
-              <li>• Affiliate System – 20%</li>
-              <li>• Franchise System – 15%</li>
-              <li>• Industries – 5%</li>
-            </ul>
-            <div className="mt-2 rounded-lg glass-panel border border-amber-500/30 p-2 text-amber-100">
-              <div className="font-semibold mb-0.5 text-[10px] xs:text-[11px]">Example Alerts</div>
-              <ul className="space-y-1">
-                <li>• AI recommendation not connected to Marketplace.</li>
-                <li>• Wallet escrow missing for booking service.</li>
-                <li>• STL engine now supports user, service, and product trust recalculation.</li>
-              </ul>
-            </div>
-          </Panel>
-          <Panel title="Development Agent System" path="/admin/agents">
-            <p className="text-ehb-textBody mb-1">
-              Read-only control center for the 14 EHB development agents, their ownership model,
-              status language, and normal handoff order.
-            </p>
-            <div className="grid grid-cols-2 gap-1.5 text-ehb-textBody">
-              <Metric label="Total Agents" value={`${agentDashboardSummary.totalAgents}`} />
-              <Metric label="Shared Statuses" value={`${agentDashboardSummary.sharedStatuses}`} />
-              <Metric
-                label="Core / Domain / Advanced"
-                value={`${agentDashboardSummary.coreAgents} / ${agentDashboardSummary.domainAgents} / ${agentDashboardSummary.advancedAgents}`}
+            <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all"
+                style={{
+                  width: `${(stream.value / total) * 100}%`,
+                  backgroundColor: stream.color,
+                }}
               />
-              <Metric label="Default Start" value="CEO" />
             </div>
-            <div className="mt-2 rounded-lg glass-panel border border-cyan-500/30 p-2 text-cyan-100">
-              <div className="font-semibold mb-0.5 text-[10px] xs:text-[11px]">Version 1 guardrail</div>
-              <p>Reference dashboard only. Live telemetry should be added later when real signals exist.</p>
-            </div>
-            <div className="mt-2">
-              <a
-                href="/admin/agents"
-                className="min-h-touch inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#33C3FF] to-[#3b82f6] px-3 py-1.5 font-semibold text-slate-950 btn-glow"
-              >
-                Open Agent Control Center
-              </a>
-            </div>
-          </Panel>
-          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
-            <Panel title="Platform Health" path="/admin/platform-health">
-              <ul className="space-y-1 text-ehb-textBody">
-                <li>• API response time</li>
-                <li>• Server load</li>
-                <li>• Database health</li>
-                <li>• AI system performance</li>
-                <li>• Blockchain status</li>
-              </ul>
-            </Panel>
-            <Panel title="Search, Content & Permissions" path="/admin/search">
-              <p className="text-ehb-textBody mb-1">Controls for global search, content and role-based access.</p>
-              <ul className="space-y-1 text-ehb-textBody">
-                <li>• Boost providers, services and industries.</li>
-                <li>• Control recommendation AI.</li>
-                <li>• Manage landing / industry pages and marketplace content.</li>
-                <li>• Roles: Super Admin, System Admin, Industry Admin, Franchise Admin, Moderator.</li>
-              </ul>
-            </Panel>
           </div>
-        </section>
+        ))}
+      </div>
+    </GlassCard>
+  );
+}
 
-        <section className="grid gap-3 grid-cols-1 md:grid-cols-2">
-          <Panel title="Phase 81 — Fraud Detection" path="/admin/fraud">
-            <p className="text-ehb-textBody mb-1">
-              Fake providers/orders/listings detect + admin risk flags. (UI mock)
-            </p>
-            <ul className="space-y-1 text-ehb-textBody">
-              <li>• Duplicate listing patterns</li>
-              <li>• Location mismatch signals</li>
-              <li>• Risk score + severity workflow</li>
-            </ul>
-          </Panel>
+function QuickActions() {
+  const actions = [
+    { label: "Approve Sellers", icon: "✓", color: "emerald" },
+    { label: "Review Complaints", icon: "⚠", color: "amber" },
+    { label: "Manage Franchises", icon: "🏢", color: "blue" },
+    { label: "System Settings", icon: "⚙", color: "slate" },
+  ];
 
-          <Panel title="Phase 82 — Business Analytics" path="/admin/ai-analytics">
-            <p className="text-ehb-textBody mb-1">
-              Auto reports for franchise, provider, and platform teams. (UI mock)
-            </p>
-            <ul className="space-y-1 text-ehb-textBody">
-              <li>• Industry / Franchise / Provider tabs</li>
-              <li>• Period: 30d / This month / This quarter</li>
-              <li>• Template + later AI NLG</li>
-            </ul>
-          </Panel>
+  return (
+    <GlassCard className="p-5 space-y-4">
+      <h2 className="text-sm font-semibold text-white flex items-center gap-2">
+        <Zap className="w-4 h-4 text-amber-400" />
+        Quick Actions
+      </h2>
+      <div className="grid grid-cols-2 gap-3">
+        {actions.map((action, idx) => (
+          <button
+            key={idx}
+            className="p-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-colors text-sm font-medium text-white/80 hover:text-white flex flex-col items-center gap-2"
+          >
+            <span className="text-xl">{action.icon}</span>
+            <span className="text-xs text-center">{action.label}</span>
+          </button>
+        ))}
+      </div>
+    </GlassCard>
+  );
+}
 
-          <Panel title="Phase 83 — Location Intelligence" path="/admin/location-insights">
-            <p className="text-ehb-textBody mb-1">City/region demand insights + STL-adjusted gaps. (UI mock)</p>
-            <ul className="space-y-1 text-ehb-textBody">
-              <li>• City dropdown</li>
-              <li>• Industry dropdown</li>
-              <li>• Insight cards</li>
-            </ul>
-          </Panel>
+function ActivityFeedComponent() {
+  const statusConfig = {
+    completed: { icon: CheckCircle2, color: "text-emerald-400" },
+    pending: { icon: Clock, color: "text-amber-400" },
+    alert: { icon: AlertCircle, color: "text-red-400" },
+  };
 
-          <Panel title="Phase 84 — AI Automation" path="/admin/ai-automation">
-            <p className="text-ehb-textBody mb-1">AI action suggestions (activate service/add product/apply). (UI mock)</p>
-            <ul className="space-y-1 text-ehb-textBody">
-              <li>• City + industry context</li>
-              <li>• Confirm action flow (mock)</li>
-            </ul>
-          </Panel>
+  return (
+    <GlassCard className="p-5 space-y-4">
+      <h2 className="text-sm font-semibold text-white flex items-center gap-2">
+        <ActivitySquare className="w-4 h-4 text-cyan-400" />
+        Recent Activity Feed
+      </h2>
+      <div className="space-y-2">
+        {activityFeed.map((event) => {
+          const config = statusConfig[event.status];
+          const IconComponent = config.icon;
 
-          <Panel title="Phase 85 — Data Pipeline" path="/admin/ai-data-pipeline">
-            <p className="text-ehb-textBody mb-1">Ingestion â†’ storage â†’ scoring â†’ publish (UI mock).</p>
-            <ul className="space-y-1 text-ehb-textBody">
-              <li>• Run pipeline now (mock)</li>
-              <li>• Stage status cards</li>
-            </ul>
-          </Panel>
-        </section>
+          return (
+            <div
+              key={event.id}
+              className="flex gap-3 p-3 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-colors"
+            >
+              <IconComponent className={`w-4 h-4 flex-shrink-0 mt-0.5 ${config.color}`} />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-white/90">{event.description}</p>
+                <p className="text-[10px] text-white/50 mt-1">{event.timestamp}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </GlassCard>
+  );
+}
+
+function HealthMonitor() {
+  const statusConfig = {
+    healthy: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+    degraded: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+    critical: "bg-red-500/20 text-red-300 border-red-500/30",
+  };
+
+  return (
+    <GlassCard className="p-5 space-y-4">
+      <h2 className="text-sm font-semibold text-white flex items-center gap-2">
+        <ActivitySquare className="w-4 h-4 text-green-400" />
+        System Health Monitor
+      </h2>
+      <div className="space-y-2">
+        {healthMonitor.map((item, idx) => (
+          <div
+            key={idx}
+            className={`p-3 rounded-lg border ${statusConfig[item.status]}`}
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-xs font-semibold">{item.service}</p>
+                <p className="text-[10px] opacity-75 mt-1">
+                  Uptime: {item.uptime} • Latency: {item.latency}
+                </p>
+              </div>
+              <Badge variant="outline" className="text-[10px]">
+                {item.status === "healthy"
+                  ? "Live"
+                  : item.status === "degraded"
+                    ? "Slow"
+                    : "Down"}
+              </Badge>
+            </div>
+          </div>
+        ))}
+      </div>
+    </GlassCard>
+  );
+}
+
+export default function AdminDashboard() {
+  const [activeTab] = useState("overview");
+
+  return (
+    <main className="min-h-screen bg-[#0C0E1A] text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <div className="space-y-2 mb-8">
+          <p className="text-xs uppercase tracking-widest text-white/60">
+            Admin Control Panel
+          </p>
+          <h1 className="text-3xl font-bold">
+            <span className="bg-gradient-to-r from-purple-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent">
+              Platform Dashboard
+            </span>
+          </h1>
+          <p className="text-sm text-white/70">
+            Real-time monitoring and management of the EHB Global super-app
+          </p>
+        </div>
+
+        {/* Quick Navigation */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          <a
+            href="/admin/users"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 transition-all text-sm font-medium"
+          >
+            <Users className="w-4 h-4" />
+            Users
+          </a>
+          <a
+            href="/admin/sellers"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 transition-all text-sm font-medium"
+          >
+            <Zap className="w-4 h-4" />
+            Sellers
+          </a>
+          <a
+            href="/admin/orders"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 transition-all text-sm font-medium"
+          >
+            <ShoppingCart className="w-4 h-4" />
+            Orders
+          </a>
+          <a
+            href="/admin/commission"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 transition-all text-sm font-medium"
+          >
+            <DollarSign className="w-4 h-4" />
+            Commission
+          </a>
+          <a
+            href="/admin/franchise"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-300 hover:bg-purple-500/20 transition-all text-sm font-medium"
+          >
+            <TrendingUp className="w-4 h-4" />
+            Franchises
+          </a>
+        </div>
+
+        {/* Platform Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {platformStats.map((stat, idx) => (
+            <StatCardComponent key={idx} {...stat} />
+          ))}
+        </div>
+
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          {/* Revenue Chart - spans 2 columns */}
+          <div className="lg:col-span-2">
+            <RevenueChart />
+          </div>
+
+          {/* Quick Actions */}
+          <QuickActions />
+        </div>
+
+        {/* Activity and Health */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <ActivityFeedComponent />
+          <HealthMonitor />
+        </div>
       </div>
     </main>
   );

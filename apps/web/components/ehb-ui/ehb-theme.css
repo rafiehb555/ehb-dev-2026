@@ -1,0 +1,203 @@
+/* EHB Theme System — iOS Classic & Diamond Themes */
+
+:root {
+  /* iOS Classic Theme (Light) */
+  --ehb-theme-bg: #e8edf2;
+  --ehb-theme-surface: #ffffff;
+  --ehb-theme-surface-secondary: #f5f7fa;
+  --ehb-theme-primary: #f0a030;
+  --ehb-theme-primary-light: #f5b857;
+  --ehb-theme-primary-dark: #d4841f;
+  --ehb-theme-accent: #f0a030;
+  --ehb-theme-text: #1a1d33;
+  --ehb-theme-text-secondary: #6b7280;
+  --ehb-theme-border: rgba(0, 0, 0, 0.1);
+  --ehb-theme-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --ehb-theme-card-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+  /* Shared color palette */
+  --ehb-green-accent: #38c878;
+  --ehb-red-accent: #f05858;
+  --ehb-blue-accent: #2898c8;
+  --ehb-purple-accent: #7b6ef6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Diamond Theme (Dark) */
+    --ehb-theme-bg: #04060e;
+    --ehb-theme-surface: #0c0e1a;
+    --ehb-theme-surface-secondary: #13162a;
+    --ehb-theme-primary: #2898c8;
+    --ehb-theme-primary-light: #40a8e0;
+    --ehb-theme-primary-dark: #1868a0;
+    --ehb-theme-accent: #2898c8;
+    --ehb-theme-text: #f0f4f8;
+    --ehb-theme-text-secondary: #a0a8b8;
+    --ehb-theme-border: rgba(255, 255, 255, 0.08);
+    --ehb-theme-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --ehb-theme-card-hover: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* iOS Classic theme class override */
+:root.theme-ios-classic {
+  --ehb-theme-bg: #e8edf2;
+  --ehb-theme-surface: #ffffff;
+  --ehb-theme-surface-secondary: #f5f7fa;
+  --ehb-theme-primary: #f0a030;
+  --ehb-theme-primary-light: #f5b857;
+  --ehb-theme-primary-dark: #d4841f;
+  --ehb-theme-accent: #f0a030;
+  --ehb-theme-text: #1a1d33;
+  --ehb-theme-text-secondary: #6b7280;
+  --ehb-theme-border: rgba(0, 0, 0, 0.1);
+  --ehb-theme-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --ehb-theme-card-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Diamond theme class override */
+:root.theme-diamond {
+  --ehb-theme-bg: #04060e;
+  --ehb-theme-surface: #0c0e1a;
+  --ehb-theme-surface-secondary: #13162a;
+  --ehb-theme-primary: #2898c8;
+  --ehb-theme-primary-light: #40a8e0;
+  --ehb-theme-primary-dark: #1868a0;
+  --ehb-theme-accent: #2898c8;
+  --ehb-theme-text: #f0f4f8;
+  --ehb-theme-text-secondary: #a0a8b8;
+  --ehb-theme-border: rgba(255, 255, 255, 0.08);
+  --ehb-theme-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --ehb-theme-card-hover: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================================
+   ANIMATIONS
+   ============================================================================ */
+
+/* Diagonal shimmer sweep (plastic effect) */
+@keyframes ehb-sweep {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+/* Glowing ring pulse for current STL level */
+@keyframes ehb-ring-pulse {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(240, 160, 48, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(240, 160, 48, 0);
+  }
+}
+
+/* Live pill blink animation */
+@keyframes live-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Navigation accent hover animation */
+@keyframes nav-accent {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Subtle sparkle effect */
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* Reduce motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* STL Level gradient colors */
+:root {
+  /* L1 Gray */
+  --stl-l1-from: #b0b8c4;
+  --stl-l1-to: #8898a8;
+  --stl-l1-shadow: rgba(184, 152, 168, 0.4);
+
+  /* L2 Steel */
+  --stl-l2-from: #9aacbe;
+  --stl-l2-to: #7a8ea0;
+  --stl-l2-shadow: rgba(154, 172, 190, 0.4);
+
+  /* L3 Green */
+  --stl-l3-from: #50a050;
+  --stl-l3-to: #287828;
+  --stl-l3-shadow: rgba(80, 160, 80, 0.4);
+
+  /* L4 Blue */
+  --stl-l4-from: #2898c8;
+  --stl-l4-to: #1068a0;
+  --stl-l4-shadow: rgba(40, 152, 200, 0.4);
+
+  /* L5 Indigo */
+  --stl-l5-from: #4848c8;
+  --stl-l5-to: #282898;
+  --stl-l5-shadow: rgba(72, 72, 200, 0.4);
+
+  /* L6 Purple */
+  --stl-l6-from: #8838c8;
+  --stl-l6-to: #581898;
+  --stl-l6-shadow: rgba(136, 56, 200, 0.4);
+
+  /* L7 Pink */
+  --stl-l7-from: #c84898;
+  --stl-l7-to: #901868;
+  --stl-l7-shadow: rgba(200, 72, 152, 0.4);
+
+  /* L8 Gold */
+  --stl-l8-from: #c89010;
+  --stl-l8-to: #906000;
+  --stl-l8-shadow: rgba(200, 144, 16, 0.4);
+
+  /* L9 Orange */
+  --stl-l9-from: #a04800;
+  --stl-l9-to: #682800;
+  --stl-l9-shadow: rgba(160, 72, 0, 0.4);
+
+  /* L10 Royal */
+  --stl-l10-from: #581898;
+  --stl-l10-to: #300870;
+  --stl-l10-shadow: rgba(88, 24, 152, 0.4);
+}
