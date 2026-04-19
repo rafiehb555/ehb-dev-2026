@@ -360,7 +360,7 @@ EHB migrated legacy names. **All agents auto-apply these renames without being a
 | `SQLLevel` | `STLLevel` | Type name |
 | `sql_level` | `stl_level` | Mongoose column/identifier |
 | `SQL_LEVELS` | `STL_LEVELS` | Constant |
-| `EDR` | `CRB` | Certification & Registry Board (NOT "Electronic Data Records") |
+| `EDR` | `CRB` | Central Record Blockchain (NOT "Electronic Data Records") |
 
 ### Hard Rules
 1. Never introduce new `SQL` or `EDR` refs in EHB code/docs (excluding database query language names).

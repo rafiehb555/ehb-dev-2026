@@ -31,7 +31,7 @@ DMO (Decentralized Management Office) - Central Control System
 │   → Risk scoring, fraud detection, device intelligence
 │   → Refilling system for periodic re-verification
 │
-├── CRB (Certification & Registry Board)
+├── CRB (Central Record Blockchain)
 │   → Certification of skills, services, products, and companies
 │   → Inspection system + certificate issuing + expiry tracking
 │   → Works with franchise for physical verification
@@ -92,7 +92,7 @@ DMO (Decentralized Management Office) - Central Control System
 | DMO | Decentralized Management Office |
 | JPS | Job Profile & Skill |
 | PSS | Proof & Security System |
-| CRB | Certification & Registry Board |
+| CRB | Central Record Blockchain |
 | EHB-STL | EHB Service Trust Level |
 
 ## Final System View

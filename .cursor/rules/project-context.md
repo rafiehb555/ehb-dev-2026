@@ -36,7 +36,7 @@
 ## Core Systems
 - **DMO** - Decentralized Management Office (Governance)
 - **PSS** - Proof & Security System (Verification)
-- **CRB** - Certification & Registry Board
+- **CRB** - Central Record Blockchain
 - **STL** - Service Trust Level (Ranking)
 - **JPS** - Job Profile & Skill (User profiles)
 - **EHB Wallet** - Financial system

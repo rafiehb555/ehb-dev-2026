@@ -1092,7 +1092,7 @@ No Exam, No Interviews, No Designation, No Job
 | Legacy Name | Current Name | Notes |
 |-------------|-------------|-------|
 | SQL (Service Quality Level) | STL (Service Trust Level) | Only in EHB context |
-| EDR (Exam Decision Registry) | CRB (Certification & Registry Board) | All references |
+| EDR (Exam Decision Registry) | CRB (Central Record Blockchain) | All references |
 | EMO (Easy Management Office) | DMO (Decentralized Management Office) | All references |
 | Ali Dad | GoSellr | E-commerce brand |
 

@@ -1114,13 +1114,11 @@ history, behaviour.
 - Fake KYC → immediate penalty
 - Complaint spike → Up-Guard alert
 
-### 22.13 CRB — Skill + Refill Engine (Batch-1 canonical)  `[MERGED]`
+### 22.13 CRB — Skill + Refill Engine (Batch-1 canonical)  `[MERGED]` `[RESOLVED 2026-04-19]`
 
-**Full name correction:** Batch-1 says
-**CRB = Certification & Refill Board**, legacy says "Certification &
-**Registry** Board". Batch-1 makes more sense because refill is CRB's core
-job. I am treating **"Certification & Refill Board"** as canonical.
-`[CONFLICT 29.5]`
+**Full name correction:** CRB = **Central Record Blockchain** (confirmed by founder 2026-04-19).
+Previously conflicted between "Certification & Refill Board", "Certification & Registry Board",
+and "Certification & Regulatory Board". Naming now unified.
 
 **CRB responsibilities:**
 - Skill verification (digital)
@@ -1493,7 +1491,7 @@ into code until each is answered.
 | 2 | STL formula weights    | Implicit in stlService.js    | Not specified               | Default 25/25/25/25 |
 | 3 | DMO acronym            | Decentralized                | Dashboard (once) / Decentralized (once) | Decentralized |
 | 4 | PSS full name          | Proof & Security System      | Personal Security System    | Batch-1 canonical |
-| 5 | CRB full name          | Certification & Registry     | Certification & Refill Board| Batch-1 canonical |
+| 5 | CRB full name          | Central Record Blockchain    | Central Record Blockchain   | RESOLVED 2026-04-19 |
 | 6 | Revenue split          | 40/25/20/15 (franchise tiers)| 70/10/10/10 (order)         | Both (outer + inner) |
 | 7 | Blockchain stack       | Polkadot only                | BSC → Mosaic → Polkadot     | Batch-1 canonical |
 | 8 | DMO module count       | 8 core panels                | 18 modules                  | Batch-1 canonical (superset) |
@@ -1575,7 +1573,7 @@ Rafi uploaded 13 structured `.md` files covering the full department list. To ke
 
 | #  | Topic                       | Legacy / prior       | Batch-2                                    | Status |
 |----|------------------------------|----------------------|---------------------------------------------|--------|
-| C1 | CRB full name               | Certification & **Registry** Board (legacy)<br>Certification & **Refill** Board (Batch-1) | `ehb_crb.md` says "**Refill** Board" but `EHB_Industry_System.md` says "**Regulatory** Board" | `[AWAITING]` |
+| C1 | CRB full name               | Central Record Blockchain | RESOLVED 2026-04-19: Founder confirmed "Central Record Blockchain" as canonical | `[RESOLVED]` |
 | C2 | Coin lock numbers           | Batch-1 dual (L2 50/20 etc) | Batch-2 single (L2:20 etc)               | `[AWAITING]` |
 | C3 | Industry count              | Legacy 32 industries  | Batch-2 lists 16 (10 main + 6 support)      | `[AWAITING]` — is 16 the new target or Phase-1 only? |
 | C4 | Wallet bucket model         | Legacy 3 wallets (Main/Earnings/Lock) | Batch-2 2 buckets (Locked/Free) | `[AWAITING]` |
@@ -1730,6 +1728,127 @@ DMO operates as a paid SaaS (Software as a Service) platform.
 
 ---
 
+## 32. DMO Master Control Integration
+
+This section documents the 5 core engines that power DMO's automated governance:
+
+### 32.1 Decision Engine
+
+The central brain that processes all platform events and routes them to appropriate handlers.
+
+```javascript
+// DMO Decision Engine - Core Logic
+async function dmoDecisionEngine(event) {
+  const riskScore = await assessRisk(event);
+  const userSTL = await getSTL(event.userId);
+  const history = await getHistory(event.userId);
+  
+  if (riskScore > 80) {
+    return { action: 'BLOCK', reason: 'High risk detected', escalate: true };
+  }
+  if (riskScore > 50) {
+    return { action: 'REVIEW', reason: 'Medium risk — manual review', assignTo: 'DMO_MANAGER' };
+  }
+  if (userSTL.level <= 2 && event.type === 'HIGH_VALUE') {
+    return { action: 'HOLD', reason: 'Low STL + high value — escrow hold', duration: '48h' };
+  }
+  return { action: 'APPROVE', reason: 'Low risk — auto-approved', log: true };
+}
+```
+
+**Decision types handled:**
+- Order validation (STL check + fraud check)
+- Seller approval/suspension
+- Rider assignment optimization
+- Complaint routing + escalation
+- STL recalculation triggers
+- Wallet operations (freeze/release)
+- Franchise KPI enforcement
+
+### 32.2 Risk Engine
+
+Real-time risk assessment combining multiple signals:
+
+**Input signals:**
+- PSS trust score
+- CRB verification status
+- STL level + trajectory
+- Complaint history (count + severity)
+- Transaction patterns (Up-Guard)
+- Geographic anomalies
+- Time-based patterns
+
+**Risk levels:**
+
+| Risk Score | Level | DMO Action |
+|---|---|---|
+| 0-30 | LOW | Auto-approve |
+| 31-50 | MEDIUM | Monitor + log |
+| 51-80 | HIGH | Manual review required |
+| 81-100 | CRITICAL | Auto-block + escalate |
+
+### 32.3 Behavior Engine
+
+Tracks and scores user behavior across all platform interactions:
+
+**Behavior factors:**
+- Login frequency + session duration
+- Order completion rate
+- Response time to messages
+- Complaint resolution willingness
+- CRB refill compliance
+- Platform engagement depth
+
+**Behavior score weight in DMO level:**
+- Behavior: 50%
+- Activity: 30%
+- Risk Intelligence: 20%
+
+### 32.4 Permission Engine
+
+Controls what each user/role can do based on their STL, DMO level, and verification status:
+
+```javascript
+function checkPermission(userId, action) {
+  const user = getUser(userId);
+  const permissions = {
+    'SELL_PRODUCT': { minSTL: 2, minPSS: 2, crbRequired: true },
+    'ACCEPT_ORDER': { minSTL: 2, minPSS: 1 },
+    'BECOME_RIDER': { minSTL: 2, minPSS: 2, trainingRequired: true },
+    'BUY_FRANCHISE': { minSTL: 3, minPSS: 3, minDMO: 3 },
+    'SELL_FRANCHISE': { minSTL: 5, minPSS: 3, franchiseType: 'OF3+' },
+    'BULK_ORDER': { minSTL: 4, maxDaily: getSTLCap(user.stlLevel) },
+    'WITHDRAW_LARGE': { minSTL: 3, amlCheck: true, manualApproval: true },
+  };
+  
+  const rule = permissions[action];
+  if (!rule) return { allowed: false, reason: 'Unknown action' };
+  if (user.stlLevel < rule.minSTL) return { allowed: false, reason: `Requires STL L${rule.minSTL}+` };
+  if (rule.minPSS && user.pssLevel < rule.minPSS) return { allowed: false, reason: `Requires PSS L${rule.minPSS}+` };
+  if (rule.crbRequired && !user.crbVerified) return { allowed: false, reason: 'CRB verification required' };
+  return { allowed: true };
+}
+```
+
+### 32.5 Auto Action System
+
+Automated responses to platform events — no human intervention needed for routine operations:
+
+| Trigger | Auto Action | Condition |
+|---|---|---|
+| Order completed | STL recalculate for all parties | Always |
+| STL drops below L2 | Restrict selling privileges | Auto |
+| 3 complaints in 7 days | Temporary account hold | Auto |
+| Refill deadline missed | Send warning → 7-day grace → downgrade | Staged |
+| Wallet below lock requirement | STL freeze + notification | Auto |
+| Fraud signal confirmed | Wallet freeze + earnings hold + DMO alert | Auto |
+| SLA breach (complaint) | Auto-escalate to next level | Timer-based |
+| New franchise application | Route to correct franchise level for review | Auto |
+| Rider no deliveries for 7 days | Mark inactive + notification | Auto |
+| Seller no orders for 30 days | CRB refill reminder | Auto |
+
+---
+
 ## Changelog
 
 | Date       | Author | Change |
@@ -1739,7 +1858,8 @@ DMO operates as a paid SaaS (Software as a Service) platform.
 | 2026-04-11 | Claude | v1.2 — **Batch-2 merge** (13 `.md` files uploaded): split STL/PSS/CRB/Wallet/Blockchain/GoSellr/Franchise/Finance/Affiliate/Industries into their own canonical files under `departments/`. Added §26 with 7 canonical overrides and 6 new contradictions (C1–C6). This DMO.md file is now DMO-only. |
 | 2026-04-18 | Claude | v1.3 — Added DMO 10-level ladder (§27), SaaS payment model (§28), complete modules list in 8 categories (§29), Admin as DMO-only role (§30). |
 | 2026-04-18 | Claude | v1.4 — Updated DMO level names to final (Basic User→Elite, L1–L10). Added SaaS billing system (§31): fee table, billing flow, grace period, key rule. |
+| 2026-04-19 | Claude | v2.0 — Added DMO Master Control Integration (§32): 5 engines (Decision, Risk, Behavior, Permission, Auto Action). CRB renamed to "Central Record Blockchain" (§22.13 conflict RESOLVED). |
 
 ---
 
-*EHB DMO — department plan · v1.4 · 2026-04-18 · Updated DMO level names to final. Added SaaS billing system (fees, flow, grace period).*
+*EHB DMO — department plan · v2.0 · 2026-04-19 · Added DMO Master Control Integration (5 engines). CRB confirmed as Central Record Blockchain.*

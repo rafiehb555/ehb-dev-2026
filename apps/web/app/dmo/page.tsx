@@ -31,7 +31,7 @@
  * Canonical naming (CLAUDE.md §6.2):
  *   STL = Service Trust Level              (L1 FREE → L8 SUPREME)
  *   PSS = Personal Security System         (KYC, liveness, AML, complaints)
- *   CRB = Certification & Registry Board   (documents, exams, inspections)
+ *   CRB = Central Record Blockchain   (documents, exams, inspections)
  */
 
 import Link from "next/link";

@@ -100,7 +100,7 @@ PSS       CRB         STL AI
 
 ---
 
-### CRB – Certification & Registry Board
+### CRB – Central Record Blockchain
 
 **Type:** Physical Checks
 

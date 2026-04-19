@@ -12,7 +12,7 @@ Franchise System
 JPS – Job Profile & Skill
 Verification Systems
     PSS – Proof & Security System
-    CRB – Certification & Registry Board
+    CRB – Central Record Blockchain
     STL – Service Trust Level
 DMO – Decentralized Management Office
 Core Platform Tools

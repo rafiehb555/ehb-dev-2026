@@ -107,7 +107,7 @@ export const stlCardDisplayRules: string[] = [
 
 export const ecosystemLinks: { href: string; label: string; short: string; note: string }[] = [
   { href: "/dmo/pss", label: "EHB-PSS", short: "Proof & Security System", note: "Identity layers feed PSS portion of STL" },
-  { href: "/dmo/crb", label: "EHB-CRB", short: "Certification & Registry Board", note: "Certificates & inspections → CRB score" },
+  { href: "/dmo/crb", label: "EHB-CRB", short: "Central Record Blockchain", note: "Certificates & inspections → CRB score" },
   { href: "/dmo/jps/profiles", label: "EHB-JPS", short: "Job Profile & Skill", note: "Designations & salary multipliers use STL" },
   { href: "/dmo/industry", label: "Industries", short: "35 industries", note: "Industry verification boosts Industries component" },
   { href: "/dmo/refilling", label: "Refilling", short: "6-month cycle", note: "Drives Refilling component of score" },

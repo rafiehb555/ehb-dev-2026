@@ -11,7 +11,7 @@
 | **DMO** | Decentralized Management Office (central control) |
 | **JPS** | Job Profile & Skill (professional profiles) |
 | **PSS** | Proof & Security System (KYC/identity) |
-| **CRB** | Certification & Registry Board (physical certification) |
+| **CRB** | Central Record Blockchain (physical certification) |
 | **STL** | Service Trust Level (AI trust scoring) |
 | **AI Marketplace** | Services & products marketplace |
 | **Franchise Network** | Physical operations & inspections |

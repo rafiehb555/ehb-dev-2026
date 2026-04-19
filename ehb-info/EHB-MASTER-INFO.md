@@ -104,8 +104,8 @@ passes PSS on signup. PSS is the **first gate** before anything else.
 **Key APIs:** `/api/pss/status`, `/api/pss/submit`, `/api/pss/review`.
 **Owner of final review:** DMO PSS panel.
 
-### 4.2 CRB — Certification & Registry Board
-(Previously: EDR — "Exam Decision Registry". Renamed on 2026-04-11.)
+### 4.2 CRB — Central Record Blockchain
+(Previously: EDR — "Exam Decision Registry". Renamed on 2026-04-11. CRB officially renamed to "Central Record Blockchain" on 2026-04-19.)
 Physical office verification, professional certification (doctors, lawyers,
 engineers), legal compliance, product/service authentication. Every
 certificate hash goes on-chain (Polkadot). **6-month refilling cycle**.
@@ -509,7 +509,7 @@ rendered on `/development`.
 | EHB | Education · Health · Business |
 | EHBGC | EHB Global Coin (internal currency inside the wallet) |
 | PSS | Proof & Security System |
-| CRB | Certification & Registry Board |
+| CRB | Central Record Blockchain |
 | STL | Service Trust Level (L0 – L8 SUPREME) |
 | DMO | Decentralized Management Office |
 | JPS | Job Profile & Skill |
@@ -630,7 +630,7 @@ specifics during planning.
 | DMO — Decentralized Management Office  | `ehb-info/departments/DMO.md`         | **v1.2 — Batch-1 + Batch-2 merged** |
 | STL — Service Trust Level              | `ehb-info/departments/STL.md`         | **v1.0 — Batch-2 merged** |
 | PSS — Personal Security System         | `ehb-info/departments/PSS.md`         | **v1.0 — Batch-2 merged** |
-| CRB — Certification & Refill Board     | `ehb-info/departments/CRB.md`         | **v1.0 — Batch-2 merged** (naming C1 flagged) |
+| CRB — Central Record Blockchain     | `ehb-info/departments/CRB.md`         | **v2.0 — Batch-2 merged, renamed 2026-04-19** |
 | Wallet / Trusty Wallet                 | `ehb-info/departments/Wallet.md`      | **v1.0 — Batch-2 merged** |
 | Blockchain                             | `ehb-info/departments/Blockchain.md`  | **v1.0 — Batch-2 merged** |
 | GoSellr — Marketplace                  | `ehb-info/departments/GoSellr.md`     | **v1.0 — Batch-2 merged** |
@@ -1292,7 +1292,7 @@ COMPLETE DATA FLOW FOR A GOSELLR ORDER:
 | Legacy Name | Current Name | First Used | Changed To |
 |-------------|-------------|-----------|------------|
 | SQL (Service Quality Level) | STL (Service Trust Level) | 2022 | 2026-04-11 |
-| EDR (Exam Decision Registry) | CRB (Certification & Registry Board) | 2022 | 2026-04-11 |
+| EDR (Exam Decision Registry) | CRB (Central Record Blockchain) | 2022 | 2026-04-11, updated 2026-04-19 |
 | EMO (Easy Management Office) | DMO (Decentralized Management Office) | 2022 | 2026 |
 | Ali Dad | GoSellr | 2022 | 2023 |
 

@@ -110,7 +110,7 @@ Stores identity verification documents and status.
 
 ---
 
-## Collection: CRB (Certification & Registry Board)
+## Collection: CRB (Central Record Blockchain)
 
 Stores certifications, inspections, and on-chain hashes.
 

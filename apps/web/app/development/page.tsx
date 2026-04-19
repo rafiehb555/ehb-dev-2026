@@ -149,7 +149,7 @@ const FALLBACK = {
 
   departments: [
     { code: "PSS",  name: "Proof & Security System",         pct: 30, color: "#7B6EF6", icon: "🔐" },
-    { code: "CRB",  name: "Certification & Registry Board",  pct: 25, color: "#F0A030", icon: "📜" },
+    { code: "CRB",  name: "Central Record Blockchain",  pct: 25, color: "#F0A030", icon: "📜" },
     { code: "STL",  name: "Service Trust Level",             pct: 35, color: "#2BBFA0", icon: "⭐" },
     { code: "DMO",  name: "Decentralized Mgmt Office",       pct: 35, color: "#38C878", icon: "🏛️" },
     { code: "JPS",  name: "Job Profile & Skill",             pct: 30, color: "#A098F8", icon: "💼" },

@@ -137,7 +137,7 @@ Result:
 
 ## 6. GLOBAL CERTIFICATION AUTHORITY (CRB)
 
-EHB’s **CRB (Certification & Registry Board)** can act as a **global certification authority**, governed by:
+EHB’s **CRB (Central Record Blockchain)** can act as a **global certification authority**, governed by:
 
 - EHB Global Holding (policy)
 - Regional & Country companies (local execution)

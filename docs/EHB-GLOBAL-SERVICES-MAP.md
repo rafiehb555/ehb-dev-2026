@@ -191,7 +191,7 @@ AI automatically routes to relevant industry platform.
 | Document verification | Document authenticity |
 | Fraud detection | AI-based monitoring |
 
-## CRB - Certification & Registry Board
+## CRB - Central Record Blockchain
 | Function | Purpose |
 |----------|---------|
 | Certification issuance | Credentials |

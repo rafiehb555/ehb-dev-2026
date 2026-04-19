@@ -2,7 +2,7 @@ import { CrbCertifyWizard } from "@/components/crb/CrbCertifyWizard";
 
 export const metadata = {
   title: "CRB Certification | EHB",
-  description: "Apply for CRB (Certification & Registry Board) verification for your skill, service, product, or company.",
+  description: "Apply for CRB (Central Record Blockchain) verification for your skill, service, product, or company.",
 };
 
 export default function CrbCertifyPage() {

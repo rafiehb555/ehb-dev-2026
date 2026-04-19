@@ -154,7 +154,7 @@ Get PSS verification status (protected)
 
 ---
 
-## CRB (Certification & Registry Board) Endpoints
+## CRB (Central Record Blockchain) Endpoints
 
 ### POST /crb/apply
 Apply for CRB inspection (protected)

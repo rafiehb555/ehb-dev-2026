@@ -13,7 +13,7 @@
 
 ## Summary
 
-**PSS (Proof & Security System)** identity aur device trust establish karta hai (0–40 points toward STL per engine). **CRB (Certification & Registry Board)** physical / role certification add karta hai (0–20 cap). **STL (Service Trust Level)** in inputs plus performance, behavior, industries, refilling ko combine karke **0–100** score aur **L1–L5** level banata hai. **STL UI** DMO dashboards, user “My Trust” page, aur marketplace cards par yahi score dikhata hai. Ye doc **design-flow** anchor hai; implementation status `EHB_STL_FULL_PLAN` §2 mein.
+**PSS (Proof & Security System)** identity aur device trust establish karta hai (0–40 points toward STL per engine). **CRB (Central Record Blockchain)** physical / role certification add karta hai (0–20 cap). **STL (Service Trust Level)** in inputs plus performance, behavior, industries, refilling ko combine karke **0–100** score aur **L1–L5** level banata hai. **STL UI** DMO dashboards, user “My Trust” page, aur marketplace cards par yahi score dikhata hai. Ye doc **design-flow** anchor hai; implementation status `EHB_STL_FULL_PLAN` §2 mein.
 
 ## Preconditions
 

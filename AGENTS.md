@@ -62,7 +62,7 @@ Full detail in `docs/PROJECT_STRUCTURE.md`.
 6. **JPS** — Job Profile & Skill (AI matching).
 7. **Verification — PSS / CRB / STL**
    - **PSS** = Proof & Security System (KYC, liveness, AML).
-   - **CRB** = Certification & Registry Board (physical + legal verification).
+   - **CRB** = Central Record Blockchain (physical + legal verification).
    - **STL** = Service Trust Level (L0 → L8 SUPREME), formula in `services/api/stl-replit/services/stlService.js`.
 7. **DMO** — Decentralized Management Office (8-step user flow, L8 approval, policy).
 
@@ -136,7 +136,7 @@ docs, comments, prompts, commit messages, or UI copy — without being asked.
 | `SQL` (Service Quality Level) | `STL` (Service Trust Level) |
 | `SQLLevel` / `SQLLevelDashboard` / `SQL_LEVELS` | `STLLevel` / `STLLevelDashboard` / `STL_LEVELS` |
 | `sqlLevel` / `sql_level` | `stlLevel` / `stl_level` |
-| `EDR` (Exam Decision Registry) | `CRB` (Certification & Registry Board) |
+| `EDR` (Exam Decision Registry) | `CRB` (Central Record Blockchain) |
 
 **Case-preserving rules:**
 

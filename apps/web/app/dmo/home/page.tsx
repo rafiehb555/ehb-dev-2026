@@ -26,7 +26,7 @@ type DeptCard = {
 
 const CORE_DEPARTMENTS: DeptCard[] = [
   { title: "PSS — Proof & Security System", desc: "KYC/KYB identity verification, AML, and fraud risk analysis.", href: "/dmo/pss", cta: "Open PSS Control", accent: "#67E8F9", tone: "cyan" },
-  { title: "CRB — Certification Board", desc: "Certification lifecycle, inspection workflows, and compliance decisions.", href: "/dmo/crb", cta: "Open CRB", accent: "#A098F8", tone: "purple" },
+  { title: "CRB — Central Record Blockchain", desc: "Certification lifecycle, inspection workflows, and compliance decisions.", href: "/dmo/crb", cta: "Open CRB", accent: "#A098F8", tone: "purple" },
   { title: "STL · Trust Engine", desc: "Service Trust Level — score intelligence, ranking, and impact visibility.", href: "/dmo/ehb-stl-level", cta: "Open STL view", accent: "#2BBFA0", tone: "teal" },
   { title: "Franchise System", desc: "Ground inspections, escalation control, and regional operations.", href: "/franchise/inspections", cta: "Open Franchise Ops", accent: "#F0A030", tone: "amber" },
   { title: "Industry Engine", desc: "32-sector verification mapping and multi-industry trust controls.", href: "/dmo/industry", cta: "Open Industry Engine", accent: "#F05858", tone: "red" },

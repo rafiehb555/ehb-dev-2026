@@ -24,7 +24,7 @@
 
 ---
 
-### 2. CRB — Certification & Refill Board
+### 2. CRB — Central Record Blockchain
 
 | Attribute | Value |
 |-----------|-------|

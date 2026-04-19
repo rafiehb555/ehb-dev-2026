@@ -71,7 +71,7 @@ const CORE_DEPTS = [
   },
   {
     code: "CRB",
-    name: "Certification & Registry Board",
+    name: "Central Record Blockchain",
     desc: "Physical office verification, professional certification, document authenticity review, compliance enforcement, legal verification, and product/service authentication.",
     icon: "📋",
     color: "purple",
@@ -561,7 +561,7 @@ export default function HomePage() {
 
         {/* ── CRB CERTIFICATION ────────────────────────────────── */}
         <section className="py-10 border-b border-white/5">
-          <SH icon="📋" title="CRB — Certification & Registry Board" sub="Physical Certification System" />
+          <SH icon="📋" title="CRB — Central Record Blockchain" sub="Physical Certification System" />
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {CRB_BENEFITS.map((b) => (
               <div key={b.title} className="flex gap-3 rounded-2xl border border-purple-500/20 bg-purple-500/5 p-4 transition-all hover:border-purple-400/40 hover:-translate-y-0.5">

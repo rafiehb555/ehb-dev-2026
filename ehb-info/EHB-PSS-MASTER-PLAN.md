@@ -5,7 +5,7 @@
 > **Authoritative sources (canonical; read these first):**
 > - `ehb-info/departments/PSS.md` v3.0 — PSS = **Personal Security System** (10 levels, 27 features, 9 user types, L0 free)
 > - `ehb-info/departments/STL.md` v1.0 — **10-level ladder L1–L10** + composite formula
-> - `ehb-info/departments/CRB.md` v1.0 — **Certification & Refill Board** (verification + exams + refills)
+> - `ehb-info/departments/CRB.md` v2.0 — **Central Record Blockchain** (verification + exams + refills)
 > - `ehb-info/departments/DMO.md` v2.0 — **Decentralized Management Office** (governance, oversight)
 >
 > If anything in this file conflicts with canonical files above, the canonical files win.

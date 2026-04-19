@@ -256,7 +256,7 @@ model PSSRefill {
 }
 
 // ---------------------------------------------------------------------------
-// CRB v1 — Certification & Registry Board
+// CRB v2 — Central Record Blockchain
 // ---------------------------------------------------------------------------
 enum CRBApplicationType {
   SKILL

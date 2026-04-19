@@ -20,7 +20,7 @@ Step 3: STL (Service Trust Level calculation)
 ↓
 Step 4: PSS (Proof & Security System verification)
 ↓
-Step 5: CRB (Certification & Registry Board docs)
+Step 5: CRB (Central Record Blockchain docs)
 ↓
 Step 6: DMO (Decentralized Management Office approval)
 ↓

@@ -157,8 +157,8 @@ function extractCRBData() {
   if (!crbFile) return null;
 
   return {
-    version: "1.0",
-    purpose: "Certification & Refill Board",
+    version: "2.0",
+    purpose: "Central Record Blockchain",
     refillCadence: "per STL level",
   };
 }

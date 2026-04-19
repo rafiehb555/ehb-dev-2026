@@ -3,7 +3,7 @@
 Core systems: PSS, CRB, STL, DMO, JPS.
 
 - **pss/** – Proof & Security System (KYC, identity, fraud)
-- **crb/** – Certification & Registry Board
+- **crb/** – Central Record Blockchain
 - **stl/** – Service Trust Level
 - **dmo/** – Decentralized Management Office
 - **jps/** – Job Profile & Skill

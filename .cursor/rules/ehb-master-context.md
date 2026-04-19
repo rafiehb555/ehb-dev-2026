@@ -129,7 +129,7 @@ EHB is a **Super App Ecosystem** that integrates multiple industries into a sing
 - Document verification
 - Fraud detection
 
-## CRB - Certification & Registry Board
+## CRB - Central Record Blockchain
 **Functions:**
 - Certification
 - Skill testing
@@ -304,7 +304,7 @@ Build a **global AI-powered service marketplace** with strong verification, gove
 | SOT | Services of Technology | Tech |
 | DMO | Decentralized Management Office | Governance |
 | PSS | Proof & Security System | Verification |
-| CRB | Certification & Registry Board | Certification |
+| CRB | Central Record Blockchain | Certification |
 | STL | Service Trust Level | Trust Ranking |
 | JPS | Job Profile & Skill | User Profile |
 

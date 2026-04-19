@@ -21,7 +21,7 @@ Where a short code appears, prefer: **FULL NAME (SHORT-NAME)** — e.g. `EHB-STL
 | DMO | Decentralized Management Office | EHB-DMO (Decentralized Management Office) |
 | JPS | Job Profile & Skill | EHB-JPS (Job Profile & Skill) |
 | PSS | Proof & Security System | EHB-PSS (Proof & Security System) |
-| CRB | Certification & Registry Board | EHB-CRB (Certification & Registry Board) |
+| CRB | Central Record Blockchain | EHB-CRB (Central Record Blockchain) |
 | STL | Service Trust Level | EHB-STL-LEVEL (Service Trust Level) |
 | EHW | EHB Wallet | EHB-EHW (EHB Wallet) |
 | EAP | EHB Affiliate Program | EHB-EAP (EHB Affiliate Program) |

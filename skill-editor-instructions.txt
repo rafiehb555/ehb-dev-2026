@@ -53,7 +53,7 @@ ALWAYS use `background: X !important` (shorthand), NEVER `background-color`, to 
 - Trust score 0-100 (KYC + profile + complaints + behavior)
 - Complaint system: Low=warning, Medium=penalty, High=restriction
 
-### CRB (Certification & Registry Board) — NEVER use "EDR" for this
+### CRB (Central Record Blockchain) — NEVER use "EDR" for this
 - Verifications: Basic → Advanced → Expert → Master
 - Exam system: category-based, multiple difficulty levels
 - Refill system: periodic renewal, expiry windows

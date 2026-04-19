@@ -131,7 +131,7 @@ TRUST INFRASTRUCTURE
 ├ DMO (Decentralized Management Office)
 ├ JPS (Job Profile & Skill)
 ├ PSS (Proof & Security System)
-├ CRB (Certification & Registry Board)
+├ CRB (Central Record Blockchain)
 └ STL (Service Trust Level)
 ```
 

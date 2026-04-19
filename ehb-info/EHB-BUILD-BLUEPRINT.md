@@ -40,7 +40,7 @@
 
 ---
 
-## Phase 3 — CRB (Certification & Registry Board) + STL Engine
+## Phase 3 — CRB (Central Record Blockchain) + STL Engine
 
 **Objective:** Quality assurance, certifications, and composite trust scoring
 
@@ -803,7 +803,7 @@ f) **Fix Issues Section**
 
 #### 3. CRB Monitoring Page
 
-**Header:** "Certification & Registry Board (CRB) — Level 5"
+**Header:** "Central Record Blockchain (CRB) — Level 5"
 
 **Sections:**
 
@@ -1331,7 +1331,7 @@ e) **Seller Support**
 
 - **`EHB-MASTER-SYSTEM-PHASES.md`** — Phase-wise architecture overview (9 phases)
 - **`PSS.md`** — Personal Security System detailed spec
-- **`CRB.md`** — Certification & Registry Board rules
+- **`CRB.md`** — Central Record Blockchain rules
 - **`STL.md`** — Service Trust Level formula + gold-master tests
 - **`DMO.md`** — Governance system, 7 engines, SaaS billing
 - **`JPS.md`** — Job Profile & Skill career platform

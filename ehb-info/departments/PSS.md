@@ -1,10 +1,10 @@
-# PSS — Personal Security System
+# PSS — Proof & Security System
 
 **Status:** Canonical spec (v3.0) · Comprehensive rewrite with 10-level ladder, 9 user types, L0 pre-level, 9-step verification flow, EHB responsibility %, token lock mechanics · 2026-04-18
 
 **Related:** `STL.md` (composite formula), `CRB.md` (certification ladder), `DMO.md` (governance), `EHB-PSS-MASTER-PLAN.md` (implementation detail)
 
-> **Naming:** PSS = "Personal Security System" (canonical). Legacy "Proof & Security System" deprecated. Merged from HTML ecosystem flow + founder Q&A + existing canonical files.
+> **Naming:** PSS = "Proof & Security System" (canonical). Legacy "Personal Security System" deprecated. Merged from HTML ecosystem flow + founder Q&A + existing canonical files.
 
 ---
 

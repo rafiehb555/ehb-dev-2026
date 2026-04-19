@@ -134,8 +134,53 @@ Actions (in order of severity):
 3. **Cross-country transfer policy** — does PSS block international moves until re-verification?
 4. **Custody model** — managed-only for Phase-1, self-custody from Phase-2? Or both from day-1?
 
+## 13. Dual Token Wallet (CONFIRMED — LOCKED)
+
+### Wallet Balances (4 Types)
+
+| Balance Type | Token | Description |
+|---|---|---|
+| **EHBGC Balance** | EHBGC (stable) | Main working balance — payments, purchases, earnings |
+| **EHBGX Balance** | EHBGX (growth) | Rewards, bonuses, investment holdings |
+| **Locked Balance** | EHBGC | STL lock + Franchise lock (cannot be spent) |
+| **Earning Balance** | Mixed | Pending earnings awaiting clearance |
+
+### Wallet Features
+
+- **Convert:** EHBGC ↔ EHBGX (5% fee EHBGX→EHBGC, 2% fee EHBGC→EHBGX)
+- **Stake:** Lock EHBGX for APY (8-18% based on STL + duration)
+- **View APY:** Real-time staking yield display
+- **Transaction history:** Full ledger of all token movements
+- **Lock management:** View/manage STL and franchise locks
+
+### Rider Trusty Wallet (COD Extension)
+
+Riders have a special wallet mode for COD orders:
+- Balance determines how many COD orders can be accepted
+- Order value LOCKED from rider's balance on acceptance
+- After delivery completion → funds UNLOCK
+- Low balance = no COD orders
+- High STL = lower balance requirement
+
+### Minimum Withdrawal
+
+- **Threshold:** 1,000 PKR (or equivalent EHBGC)
+- Below threshold: held in wallet
+- Above threshold: withdrawal allowed
+- Methods: Bank transfer (3-5 days, 1-2%), USDT (1-24h, network fee), Mobile wallet (1-2 days, 1%), EHB Internal (instant, free)
+
+### Token Conversion Rules
+
+| Direction | Fee | Conditions |
+|---|---|---|
+| EHBGX → EHBGC | 5% | Available anytime, anti-dump limits apply |
+| EHBGC → EHBGX | 2% | Optional, admin-controlled availability |
+| Daily sell limit | 5% of EHBGX holding | Anti-dump protection |
+| Weekly cap | 20% of EHBGX holding | Prevents market crash |
+
 ## Changelog
 
 | Date       | Ver | Change |
 |------------|-----|--------|
+| 2026-04-19 | 2.0 | Dual token wallet system added (EHBGC + EHBGX). Rider Trusty Wallet for COD. Min withdrawal 1000 PKR. Token conversion rules (5%/2% fees). Staking integration. |
 | 2026-04-11 | 1.0 | Created from Batch-2 `uploads/ehb_trusty_wallet.md`; coin lock ladder now canonical, Batch-1 dual-ladder deprecated |

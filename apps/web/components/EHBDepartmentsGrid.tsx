@@ -75,7 +75,7 @@ export function EHBDepartmentsGrid() {
     {
       icon: "🧾",
       title: "CRB",
-      standFor: "Certification & Registry Board",
+      standFor: "Central Record Blockchain",
       desc: "Certifies skills/services/products and records them on the registry.",
       accent: "#8B5CF6",
       href: "/dmo/crb",

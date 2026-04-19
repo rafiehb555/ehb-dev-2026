@@ -217,7 +217,7 @@ messages. No exceptions.
 |---------|---------|----------------------------------------------------|
 | `SQL`   | `STL`   | Service Trust Level (L0–L8). NOT the SQL database. |
 | `sql*`  | `stl*`  | Identifier prefix: `sqlLevel` → `stlLevel`, etc.   |
-| `EDR`   | `CRB`   | Certification & Registry Board department.        |
+| `EDR`   | `CRB`   | Central Record Blockchain department.        |
 
 **Exception:** the only permitted `SQL` in this codebase is a *literal*
 reference to the SQL query language (inside `MySQL`, `PostgreSQL`, `SQLite`,

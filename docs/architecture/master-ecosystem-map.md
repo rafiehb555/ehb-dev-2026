@@ -43,7 +43,7 @@ Core systems:
   - Professional identity and skill profiles for individuals.
 - **PSS – Proof & Security System**
   - Identity, device, KYC/KYB, risk and fraud checks.
-- **CRB – Certification & Registry Board**
+- **CRB – Central Record Blockchain**
   - Formal certification, registry, and renewal authority.
 - **STL – Service Trust Level**
   - AI-driven trust score and ranking engine.
@@ -191,7 +191,7 @@ EHB GLOBAL ECOSYSTEM
 │  ├ DMO (Decentralized Management Office)
 │  ├ JPS (Job Profile & Skill)
 │  ├ PSS (Proof & Security System)
-│  ├ CRB (Certification & Registry Board)
+│  ├ CRB (Central Record Blockchain)
 │  └ STL (Service Trust Level)
 │
 ├ INDUSTRY VERIFICATION NETWORK

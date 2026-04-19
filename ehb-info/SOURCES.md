@@ -94,7 +94,7 @@ files when the user moves on from DMO.
 ### 3.1 PSS (Proof & Security System)
 - `docs/architecture/pss-*.md` *(if present — will merge into `ehb-info/departments/PSS.md`)*
 
-### 3.2 CRB (Certification & Registry Board)
+### 3.2 CRB (Central Record Blockchain)
 - `docs/architecture/crb-*.md` *(for future `ehb-info/departments/CRB.md`)*
 
 ### 3.3 STL (Service Trust Level)

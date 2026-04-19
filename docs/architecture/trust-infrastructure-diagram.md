@@ -15,7 +15,7 @@ EHB Trust Infrastructure is the **foundation** of the entire ecosystem. Its purp
 ## 4 Core Pillars
 
 1. **PSS** – Proof & Security System (Online verification)
-2. **CRB** – Certification & Registry Board (Physical verification)
+2. **CRB** – Central Record Blockchain (Physical verification)
 3. **STL** – Service Trust Level (AI reputation)
 4. **DMO** – Decentralized Management Office (Central control)
 

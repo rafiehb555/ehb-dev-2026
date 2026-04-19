@@ -1,4 +1,4 @@
-# CRB — Certification & Registry Board
+# CRB — Central Record Blockchain
 
 > Official Certification Authority for EHB Ecosystem
 
@@ -6,7 +6,7 @@
 
 # DEFINITION
 
-**CRB (Certification & Registry Board)** is EHB's **official certification authority** that verifies:
+**CRB (Central Record Blockchain)** is EHB's **official certification authority** that verifies:
 - Professionals (doctors, engineers, lawyers, mechanics)
 - Companies (businesses, agencies, institutions)
 - Products (authenticity, safety, compliance)

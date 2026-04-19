@@ -345,7 +345,7 @@ export const EHB_NAMES = {
   DMO: "EHB-DMO (Decentralized Management Office)",
   JPS: "EHB-JPS (Job Profile & Skill)",
   PSS: "EHB-PSS (Proof & Security System)",
-  CRB: "EHB-CRB (Certification & Registry Board)",
+  CRB: "EHB-CRB (Central Record Blockchain)",
   STL: "EHB-STL-LEVEL (Service Trust Level)",
   EHW: "EHB-EHW (EHB Wallet)",
   EAP: "EHB-EAP (EHB Affiliate Program)",

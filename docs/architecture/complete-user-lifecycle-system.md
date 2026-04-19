@@ -121,7 +121,7 @@ Result:
 
 ## 5. STAGE 5 — CRB CERTIFICATION
 
-**CRB (Certification & Registry Board)** issues official certifications.
+**CRB (Central Record Blockchain)** issues official certifications.
 
 CRB checks:
 

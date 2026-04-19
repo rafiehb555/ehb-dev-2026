@@ -9,8 +9,8 @@
  *
  * Naming rules (CLAUDE.md §6.2):
  *   STL = Service Trust Level             (L1 → L10 with 5 entity types)
- *   CRB = Certification & Refill Board
- *   PSS = Personal Security System
+ *   CRB = Central Record Blockchain
+ *   PSS = Proof & Security System
  *
  * Legacy routes under `/dmo/jps`, `/dmo/penalty`, `/dmo/affiliate`, `/dmo/industry`,
  * `/dmo/automation`, `/dmo/home`, `/dmo/roadmap` still exist on disk — they are

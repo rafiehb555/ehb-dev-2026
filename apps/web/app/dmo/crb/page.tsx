@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * DMO — CRB (Certification & Registry Board)
+ * DMO — CRB (Central Record Blockchain)
  *   - VerificationUI primitives (no framer-motion, no emojis, no legacy classes)
  *   - In-file demo data (prototype only, no fetch)
  */
@@ -205,7 +205,7 @@ export default function DmoCrbPage() {
               <span className="text-white/25">/</span>
               <span className="text-cyan-300">CRB</span>
             </div>
-            <h1 className="text-2xl font-bold text-white md:text-3xl">Certification & Registry Board</h1>
+            <h1 className="text-2xl font-bold text-white md:text-3xl">Central Record Blockchain</h1>
             <p className="max-w-2xl text-sm text-white/65">
               Physical + legal verification workflow — apply, document review, inspection,
               decision, certificate. DMO tasks aur franchise inspectors sa tightly integrated.

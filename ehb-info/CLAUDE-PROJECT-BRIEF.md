@@ -19,7 +19,7 @@ TAGLINE: "One Platform. 32 Industries. 700+ Services. Infinite Trust."
 
 CORE 8 SYSTEMS:
 1. PSS (Proof & Security System) — KYC/KYB, liveness, AML, fraud
-2. CRB (Certification & Registry Board) — physical + legal verification, on-chain hash
+2. CRB (Central Record Blockchain) — physical + legal verification, on-chain hash
 3. STL (Service Trust Level) — L1–L10 ladder (FREE→SUPREME), formula = MIN(score, lock, pss, crb, dmo)
 4. DMO (Decentralized Management Office) — central governance brain
 5. JPS (Job Profile & Skill) — AI-powered job/skill matching

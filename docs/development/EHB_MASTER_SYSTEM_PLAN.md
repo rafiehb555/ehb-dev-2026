@@ -30,7 +30,7 @@ CORRECT:
   EHB-DMO (Decentralized Management Office)
   EHB-JPS (Job Profile & Skill)
   EHB-PSS (Proof & Security System)
-  EHB-CRB (Certification & Registry Board)
+  EHB-CRB (Central Record Blockchain)
   GoSellr GSM (Global Shopping Management)
   EHB-EHW (EHB Wallet)
 
@@ -84,7 +84,7 @@ WRONG:
 | DMO | Decentralized Management Office | EHB-DMO (Decentralized Management Office) |
 | JPS | Job Profile & Skill | EHB-JPS (Job Profile & Skill) |
 | PSS | Proof & Security System | EHB-PSS (Proof & Security System) |
-| CRB | Certification & Registry Board | EHB-CRB (Certification & Registry Board) |
+| CRB | Central Record Blockchain | EHB-CRB (Central Record Blockchain) |
 | STL | Service Trust Level | EHB-STL-LEVEL (Service Trust Level) |
 | EHW | EHB Wallet | EHB-EHW (EHB Wallet) |
 | EAP | EHB Affiliate Program | EHB-EAP (EHB Affiliate Program) |
@@ -307,7 +307,7 @@ EHB-STL-LEVEL Score (0–100) =
 
 ---
 
-## SECTION 9: EHB-CRB (Certification & Registry Board)
+## SECTION 9: EHB-CRB (Central Record Blockchain)
 
 ### What It Is:
 Physical world verification via inspectors. Gives users real-world trust credibility.
@@ -699,7 +699,7 @@ EHB-STL-LEVEL (Service Trust Level) generated (starting L1)
     ↓
 User chooses role: Buyer / Seller / Job Seeker / Franchise / Inspector / Rider
     ↓
-EHB-CRB (Certification & Registry Board) — Physical verification (optional → STL boost)
+EHB-CRB (Central Record Blockchain) — Physical verification (optional → STL boost)
     ↓
 Go Live on platform (services/products/jobs)
     ↓
@@ -1069,7 +1069,7 @@ RESULT: World is missing a GLOBAL DIGITAL TRUST INFRASTRUCTURE
 | EHB-DMO (Decentralized Management Office) | Central governance, data registry, orchestration |
 | EHB-JPS (Job Profile & Skill) | Verified professional identity and skills |
 | EHB-PSS (Proof & Security System) | Identity, security, risk management |
-| EHB-CRB (Certification & Registry Board) | Certification issuance, registry, renewal |
+| EHB-CRB (Central Record Blockchain) | Certification issuance, registry, renewal |
 | EHB-STL-LEVEL (Service Trust Level) | AI-driven trust score and ranking |
 
 ### Competitive Positioning:

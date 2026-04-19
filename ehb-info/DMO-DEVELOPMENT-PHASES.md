@@ -24,7 +24,7 @@ validate, impossible to review), we split the work into 5 phases. Each phase is:
    `design-system/EHB-UIUX-SYSTEM.md` and `design-system/ai-behavior.md`
    (auto-upgrade rule, dark glass, DM Sans, #7B6EF6 purple, #2BBFA0 teal).
 5. **Naming-correct** — every new file uses the canonical names:
-   STL = Service Trust Level, CRB = Certification & Registry Board,
+   STL = Service Trust Level, CRB = Central Record Blockchain,
    PSS = Personal Security System. Legacy "Smart Tracking & Logistics",
    "Credit & Reputation Badge", "Platform Security System" strings are purged.
 

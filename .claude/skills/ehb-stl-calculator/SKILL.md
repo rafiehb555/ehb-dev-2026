@@ -10,7 +10,7 @@
 
 ## §1 — What is STL?
 
-**STL = Service Trust Level** (formerly SQL — Certification Registry Board Trust Level)
+**STL = Service Trust Level** (formerly SQL — Central Record Blockchain Trust Level)
 
 - **World's first 3-Dimensional Trust System** combining Identity, Physical, and Behavioral trust
 - Ranges from **L1 (FREE)** to **L10 (SUPREME)**
@@ -134,7 +134,7 @@ function calculateEHBSTL(
 ```
 RAW_INTERNAL_SCORE = (
   PSS_Score(0-40)           +  // Proof & Security System: KYC, liveness, AML
-  CRB_Score(0-15)           +  // Certification Registry Board: Business docs, legal
+  CRB_Score(0-15)           +  // Central Record Blockchain: Business docs, legal
   Behavior_Score(0-20)      +  // Payment on time, returns, disputes
   Wallet_Score(0-20)        +  // EHBGC locked, available liquidity
   Activity_Score(0-15)      +  // Sales volume, orders, engagement

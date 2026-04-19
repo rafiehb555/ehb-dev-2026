@@ -1,6 +1,6 @@
 # CRB System Quick Reference
 
-> Certification & Registry Board
+> Central Record Blockchain
 
 ## Purpose
 

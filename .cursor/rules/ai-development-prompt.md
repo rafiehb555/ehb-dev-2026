@@ -162,7 +162,7 @@ DMO is the **central governance and orchestration system** for the platform.
 - Document verification
 - Fraud detection
 
-## CRB - Certification & Registry Board
+## CRB - Central Record Blockchain
 **Responsible for:**
 - Certification issuance
 - Skill validation

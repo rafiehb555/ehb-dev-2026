@@ -1,5 +1,5 @@
 # EHB-PSS + CRB — Complete System Plan
-> PSS: Proof & Security System | CRB: Certification Registry Board
+> PSS: Proof & Security System | CRB: Central Record Blockchain
 > Version: 1.0 | April 2026 | Status: PLANNING
 
 ---

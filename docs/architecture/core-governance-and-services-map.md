@@ -12,7 +12,7 @@ These are **platform control systems**, not end-user services:
 |-------|--------------------------------|------------------------------------------|
 | STL   | Service Trust Level            | Service quality and trust ranking        |
 | PSS   | Proof & Security System        | Identity verification and security       |
-| CRB   | Certification & Registry Board | Skills and service certification         |
+| CRB   | Central Record Blockchain | Skills and service certification         |
 | DMO   | Decentralized Management Office| Business, service and operations control |
 
 They sit **under** all industries and services and are reused everywhere.
@@ -172,7 +172,7 @@ EHB PLATFORM
 ├ Governance & Trust
 │   ├ STL – Service Trust Level
 │   ├ PSS – Proof & Security System
-│   ├ CRB – Certification & Registry Board
+│   ├ CRB – Central Record Blockchain
 │   └ DMO – Decentralized Management Office
 │
 └ Service Domains

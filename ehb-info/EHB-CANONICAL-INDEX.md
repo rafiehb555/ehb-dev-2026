@@ -16,7 +16,7 @@ Located in `ehb-info/departments/` — each is versioned and machine-readable.
 |------|-----|--------|--------------|---------|
 | **STL.md** | 1.0 | Canonical | 2026-04-11 | 10-level ladder (L1 FREE → L10 SUPREME, 0–100 score), MIN-chain rule, composite formula, upgrade/downgrade conditions, 58 gold-master tests protected |
 | **PSS.md** | 2.0 | **Deep spec** | 2026-04-13 | 27 verification features across 5 categories (Identity, Financial, Business, Behavioral, Compliance), role-based requirements (Buyer/Seller/Rider/Inspector/Franchise/Admin), STL contribution 0–40 points |
-| **CRB.md** | 1.0 | Canonical | 2026-04-11 | Certification & Refill Board, refill cadence per STL level, on-chain certificate hashing (Polkadot), L9 ELITE source cap |
+| **CRB.md** | 2.0 | Canonical | 2026-04-19 | Central Record Blockchain, refill cadence per STL level, on-chain certificate hashing (Polkadot), L9 ELITE source cap |
 | **JPS.md** | 1.1 | Canonical | 2026-04-18 | Job Profile & Skill system — career platform with 8 dashboard sections, AI matching, exams, contracts, designations, inspector management, STL-gated job access. All 11 open questions locked: salary model (full-time + freelance + commission), wallet-first payment, FREE user limits, AI matching priority, contract violation penalties. |
 
 ### Governance & Operations

@@ -337,7 +337,7 @@ These four systems are reused across **all industries and services**:
   - Document verification
   - Fraud and security monitoring
 
-- **CRB – Certification & Registry Board**
+- **CRB – Central Record Blockchain**
   - Skill testing and exams
   - Professional certification
   - License verification

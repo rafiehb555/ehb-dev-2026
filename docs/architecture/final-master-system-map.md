@@ -77,7 +77,7 @@ Components:
   - Verified professional identity and skill system.
 - **PSS – Proof & Security System**
   - Identity, device, KYC/KYB, risk and fraud checks.
-- **CRB – Certification & Registry Board**
+- **CRB – Central Record Blockchain**
   - Certification issuance, registry, refilling, and renewal.
 - **STL – Service Trust Level**
   - AI-driven trust scoring and ranking engine.

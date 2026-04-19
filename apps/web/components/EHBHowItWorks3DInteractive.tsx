@@ -25,8 +25,8 @@ const NODE_DETAILS: Record<NodeKey, { title: string; standFor: string; desc: str
   },
   CRB: {
     title: "CRB",
-    standFor: "Certification & Registry Board",
-    desc: "Certification & Registry Board: certifies verified outcomes and records them.",
+    standFor: "Central Record Blockchain",
+    desc: "Central Record Blockchain: certifies verified outcomes and records them.",
     accent: "#8B5CF6",
   },
   STL: {

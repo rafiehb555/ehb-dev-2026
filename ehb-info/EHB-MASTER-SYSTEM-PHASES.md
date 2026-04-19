@@ -23,7 +23,7 @@
   - Fraud detection
   - Extended inactivity (>60 days)
 
-### CRB (Certification & Refill Board)
+### CRB (Central Record Blockchain)
 
 **Purpose:** Quality assurance + physical verification layer
 

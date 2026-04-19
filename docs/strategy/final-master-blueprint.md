@@ -65,7 +65,7 @@ EHB introduces a **Trust-Based Digital Ecosystem** built on five core systems:
   - Verified professional identity and skills.
 - **PSS – Proof & Security System**
   - Identity, security, and risk management.
-- **CRB – Certification & Registry Board**
+- **CRB – Central Record Blockchain**
   - Certification issuance, registry, and renewal.
 - **STL – Service Trust Level**
   - AI-driven trust score and ranking system.

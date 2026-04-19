@@ -11,7 +11,7 @@ export default function CrbOverridePage() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight">CRB Override Review</h1>
           <p className="mt-1 max-w-2xl text-sm text-[#8A8FAE]">
-            Certification & Registry Board — scope: all platforms, all areas. Franchise decisions override,
+            Central Record Blockchain — scope: all platforms, all areas. Franchise decisions override,
             L8 SUPREME assign, aur on-chain certificate hash push (Polkadot). Override event immutable.
           </p>
         </div>

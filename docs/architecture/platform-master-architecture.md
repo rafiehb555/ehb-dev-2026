@@ -35,7 +35,7 @@
                                   ▼
 ┌─────────────────────────────────────────────────────────────────────┐
 │                        CRB SYSTEM                                   │
-│           (Certification & Registry Board)                         │
+│           (Central Record Blockchain)                         │
 │    Skill Tests │ Inspections │ Interviews │ 6-Month Refilling      │
 └─────────────────────────────────┬───────────────────────────────────┘
                                   │

@@ -1,9 +1,7 @@
-# CRB — Certification & Refill Board
+# CRB — Central Record Blockchain
 
-**Status:** Canonical spec (v1.0) · Merged from `uploads/ehb_crb.md` (Batch-2, 2026-04-11)
+**Status:** Canonical spec (v2.0) · Renamed 2026-04-19 per founder confirmation
 **Related:** `STL.md §3` (input) · `DMO.md §22.12` (Batch-1 CRB prompt) · `EHB-MASTER-INFO.md §4.2`
-
-> ⚠️ **Naming contradiction inside Batch-2** — `uploads/ehb_crb.md` says **"Certification & Refill Board"** but `uploads/EHB_Industry_System.md` calls it **"Certification & Regulatory Board"**. Legacy docs said **"Certification & Registry Board"**. This file treats **"Certification & Refill Board"** as canonical (since refills are the system's core recurring job) but flags all three for user resolution (`DMO.md §24 row 5`, `DMO.md §25.1`).
 
 ---
 
@@ -108,4 +106,5 @@ All three feed directly into STL as a downgrade signal or block upgrade.
 
 | Date       | Ver | Change |
 |------------|-----|--------|
+| 2026-04-19 | 2.0 | CRB renamed from 'Certification & Refill Board' to 'Central Record Blockchain' per founder confirmation |
 | 2026-04-11 | 1.0 | Created from Batch-2 `uploads/ehb_crb.md`; naming contradiction flagged (Refill vs Regulatory vs Registry) |

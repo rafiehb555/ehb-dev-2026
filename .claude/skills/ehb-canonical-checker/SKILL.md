@@ -161,7 +161,7 @@ $ git commit -m "feat(stl): update level ladder"
 | `EDR`, `edr` | `CRB`, `crb` | CRITICAL |
 | `EDRPanel` | `CRBPanel` | CRITICAL |
 | `edrs` | `crbs` | CRITICAL |
-| "Exam Decision Registry" | "Certification & Registry Board" | WARNING |
+| "Exam Decision Registry" | "Central Record Blockchain" | WARNING |
 
 ### 9-Level → 10-Level Mapping
 

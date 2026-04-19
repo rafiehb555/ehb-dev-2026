@@ -44,7 +44,7 @@
 KYC/KYB, liveness detection, AML screening, fraud detection, document authenticity,
 address verification, behavioural risk monitoring. Every user passes PSS on signup.
 
-### 3.2 CRB — Certification & Registry Board
+### 3.2 CRB — Central Record Blockchain
 Physical office verification, professional certification (doctors, lawyers, engineers),
 legal compliance, product/service authentication. Certificate hashes go on-chain (Polkadot).
 6-month renewal cycle. Boosts STL by +15.

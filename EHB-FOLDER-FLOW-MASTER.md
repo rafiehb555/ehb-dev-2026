@@ -68,7 +68,7 @@ EHB DEVELOPMENT 2026/
 │   │   │   │   ├── wallet/                   # EHB Wallet
 │   │   │   │   ├── dmo/                      # DMO workflow + L8 approvals
 │   │   │   │   ├── pss/                      # Identity verification
-│   │   │   │   ├── crb/                      # Certification & Registry Board
+│   │   │   │   ├── crb/                      # Central Record Blockchain
 │   │   │   │   ├── stl/                      # Service Trust Level viewer
 │   │   │   │   ├── affiliate/                # Affiliate / referral
 │   │   │   │   └── development/              # Live project health dashboard

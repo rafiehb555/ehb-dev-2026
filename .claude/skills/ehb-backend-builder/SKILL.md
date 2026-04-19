@@ -912,7 +912,7 @@ Auto-apply these renames:
 - `SQL` → `STL` (Service Trust Level)
 - `sqlLevel` → `stlLevel`
 - `SQLLevelDashboard` → `STLLevelDashboard`
-- `EDR` → `CRB` (Certification & Registry Board)
+- `EDR` → `CRB` (Central Record Blockchain)
 
 ## Checklist Before Committing
 

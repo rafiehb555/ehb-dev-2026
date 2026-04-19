@@ -72,7 +72,7 @@ Core systems:
 | System               | Role                     |
 |----------------------|--------------------------|
 | PSS (Proof & Security System) | Identity & risk verification |
-| CRB (Certification & Registry Board) | Certification & physical inspections |
+| CRB (Central Record Blockchain) | Certification & physical inspections |
 | STL (Service Trust Level)    | AI-based trust score & levels |
 | Industry Authorities         | Domain-specific standards & authority |
 

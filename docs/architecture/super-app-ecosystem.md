@@ -214,7 +214,7 @@ Job Profile & Skill
 | Certificates | Authenticity check |
 | Fraud | AI detection |
 
-## 4.2 CRB — Certification & Registry Board
+## 4.2 CRB — Central Record Blockchain
 **Physical Verification**
 
 | Check | Method |

@@ -169,7 +169,7 @@ Monthly Fee: $50
 | System | Role |
 |--------|------|
 | PSS (Proof & Security System) | Identity base score |
-| CRB (Certification & Registry Board) | Physical verification boost |
+| CRB (Central Record Blockchain) | Physical verification boost |
 | DMO (Decentralized Management Office) | Supreme level control |
 | JPS (Job Profile & Skill) | Job access by EHB-STL |
 | EHW (EHB Wallet) | Earning limits by EHB-STL |

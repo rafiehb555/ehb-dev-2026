@@ -38,7 +38,7 @@ const STL_OVERRIDES: STLOverride[] = [
 const STL_SOURCES: STLSource[] = [
   { source: "PSS", maxCap: 5, description: "Proof & Security System verification level" },
   { source: "Franchise", maxCap: 8, description: "Franchise tier hierarchy limit" },
-  { source: "CRB", maxCap: 9, description: "Certification & Registry Board approval" },
+  { source: "CRB", maxCap: 9, description: "Central Record Blockchain approval" },
   { source: "DMO", maxCap: 10, description: "Decentralized Management Office override" },
 ];
 
